@@ -27,7 +27,9 @@ enum class MatchResult : std::uint8_t { None, TeamOne, TeamTwo, Draw };
 struct Config
 {
     std::uint8_t MinimumPerTeam = 1; // Development: 1; MVP playtest: 2. Team cap is always 2.
-    TimeMs PreparationMs = 8'000;
+    // Preparation is also the economy's buy phase: players stay in spawn without combat.
+    // 30 s (was 8 s) leaves time to read the buy menu and buy; a playtest proposal.
+    TimeMs PreparationMs = 30'000;
     TimeMs RoundMs = 90'000;
     TimeMs PlantMs = 3'000;
     TimeMs DefuseMs = 5'000;
