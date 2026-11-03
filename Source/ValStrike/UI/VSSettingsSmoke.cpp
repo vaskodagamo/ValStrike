@@ -81,6 +81,8 @@ public:
             TickRestart(PC, Age, Now);
         else
             TickFirst(PC, Age, Now);
+        // Never keep Slate widgets alive in this static object (engine exit).
+        Menu.Reset();
     }
 
 private:
@@ -571,7 +573,8 @@ private:
     {
         const TSharedPtr<SWidget> Widget = Tagged(Tag);
         if (!Widget || !FSlateApplication::IsInitialized()) return false;
-        const FVector2D Position = FVector2D(Widget->GetPaintSpaceGeometry().GetAbsolutePositionAtCoordinates(FVector2f(0.5f, 0.5f)));
+        // Tick-space geometry is desktop space, which Slate's hit-testing uses.
+        const FVector2D Position = FVector2D(Widget->GetTickSpaceGeometry().GetAbsolutePositionAtCoordinates(FVector2f(0.5f, 0.5f)));
         const TSet<FKey> None;
         const TSet<FKey> Left = {EKeys::LeftMouseButton};
         FSlateApplication& App = FSlateApplication::Get();
