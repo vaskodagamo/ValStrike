@@ -42,7 +42,7 @@ SERVER_CHECKS = (
     "economy_active", "starting_credits", "rewards_match_ledger", "purchase_deltas_match_ledger",
     "unaffordable_rejected", "starter_owned_rejected", "unknown_item_rejected", "replay_rejected",
     "out_of_phase_rejected", "dead_rejected", "spam_bounded", "refund_same_phase", "death_loses_purchase",
-    "survivor_keeps_purchase", "plant_reward", "kill_reward", "loss_streak", "credit_cap",
+    "survivor_keeps_purchase", "plant_reward", "kill_reward", "kill_live_victim_refused", "loss_streak", "credit_cap",
     "side_swap_reset", "rematch_reset", "duplicate_round_events_ignored", "grant_notifications",
 )
 CLIENT_CHECKS = ("single_private_wallet", "menu_opens_in_buy_phase", "menu_closes_after_buy_phase",
