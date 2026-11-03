@@ -277,7 +277,8 @@ private:
 
     FRotator AimAt(const AVSCharacter* Driver, const AVSCharacter* Target, bool bHead) const
     {
-        return (Target->GetActorLocation() + FVector(0, 0, bHead ? 72 : 0) - Driver->GetPawnViewLocation()).Rotation();
+        // Body shots aim at the chest (upper-torso zone, full weapon damage); head at the head zone.
+        return (Target->GetActorLocation() + FVector(0, 0, bHead ? 72 : 40) - Driver->GetPawnViewLocation()).Rotation();
     }
 
     void TickPractice(UWorld* World, double Time, AVSCharacter* Driver, AVSCharacter* Target)

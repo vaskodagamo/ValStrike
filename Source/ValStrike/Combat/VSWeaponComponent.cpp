@@ -5,6 +5,7 @@
 #include "../VSCharacter.h"
 #include "Engine/World.h"
 #include "GameFramework/PlayerController.h"
+#include "../Damage/VSDamageSubsystem.h"
 #include "../Match/VSMatchGameMode.h"
 #include "Net/UnrealNetwork.h"
 #include "TimerManager.h"
@@ -33,8 +34,6 @@ void UVSWeaponComponent::BeginPlay()
         FireInterval = FMath::IsFinite(FireInterval) ? FMath::Clamp(FireInterval, 0.05f, 5.0f) : 0.12f;
         ReloadDuration = FMath::IsFinite(ReloadDuration) ? FMath::Clamp(ReloadDuration, 0.1f, 20.0f) : 2.0f;
         Range = FMath::IsFinite(Range) ? FMath::Clamp(Range, 1.0f, 50000.0f) : 10000.0f;
-        BodyDamage = FMath::IsFinite(BodyDamage) ? FMath::Clamp(BodyDamage, 0.0f, 1000.0f) : 30.0f;
-        HeadDamage = FMath::IsFinite(HeadDamage) ? FMath::Clamp(HeadDamage, 0.0f, 1000.0f) : 100.0f;
         State.Magazine = MagazineCapacity;
         State.Reserve = InitialReserve;
     }
@@ -162,9 +161,19 @@ void UVSWeaponComponent::ServerRequestFire_Implementation(uint32 ShotId, FVector
     if (GetWorld()->LineTraceSingleByChannel(Hit, ServerOrigin,
         ServerOrigin + Direction.GetSafeNormal() * Range, ECC_Visibility, Query))
     {
-        if (AVSCharacter* Target = Cast<AVSCharacter>(Hit.GetActor()))
+        AVSCharacter* Target = Cast<AVSCharacter>(Hit.GetActor());
+        UVSDamageSubsystem* DamageService = UVSDamageSubsystem::Get(this);
+        if (Target && DamageService)
         {
-            Target->GetHealthComponent()->ApplyPointDamage(Target->IsHeadHit(Hit.GetComponent()) ? HeadDamage : BodyDamage);
+            // Zone lookup, the damage table, the health gate, attribution, stats and kill
+            // credit all live behind this one server call.
+            FVSWeaponHit Shot;
+            Shot.Shooter = Pawn;
+            Shot.Victim = Target;
+            Shot.HitComponent = Hit.GetComponent();
+            Shot.Weapon = DamageClass;
+            Shot.DistanceCm = Hit.Distance;
+            DamageService->ApplyWeaponHit(Shot);
         }
     }
     Pawn->ForceNetUpdate();

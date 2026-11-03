@@ -132,6 +132,7 @@ void UVSDamageSubsystem::PublishDamage(const FVSDamageEvent& Event)
     DamageDelegate.Broadcast(Event);
     if (Event.bKilled)
     {
+        // Kill rewards subscribe here (Economy binds OnKill from its own module).
         KillDelegate.Broadcast(Event);
     }
 }

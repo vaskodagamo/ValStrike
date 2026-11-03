@@ -134,7 +134,8 @@ private:
         const auto Snapshot = [&]() { return StateDetail(Driver, Target); };
         const auto Aim = [&](bool bHead)
         {
-            return (Target->GetActorLocation() + FVector(0, 0, bHead ? 72 : 0) - Driver->GetPawnViewLocation()).GetSafeNormal();
+            // Body shots aim at the chest (upper-torso zone, full weapon damage); head at the head zone.
+            return (Target->GetActorLocation() + FVector(0, 0, bHead ? 72 : 40) - Driver->GetPawnViewLocation()).GetSafeNormal();
         };
         if (!bReady)
         {
@@ -188,7 +189,10 @@ private:
         }
         if (Role == TEXT("observer"))
         {
-            PC->SetControlRotation(FRotator(0, 90, 0));
+            // Keep the yaw Place() gives the target (facing away from the driver), so the
+            // driver's body shots hit the chest zone from behind. Side-on, a chest-height
+            // shot meets the upper-arm zone (24, not 30) by design.
+            PC->SetControlRotation(FRotator::ZeroRotator);
             Key(PC, EKeys::W, Time >= 7.2 && Time < 8.1, bForwardHeld);
             Key(PC, EKeys::LeftMouseButton, (Time >= 7.3 && Time < 7.6) || (Time >= 41 && Time < 41.05), bFireHeld);
             Key(PC, EKeys::R, (Time >= 7.3 && Time < 7.6) || (Time >= 42 && Time < 42.1), bReloadHeld);
