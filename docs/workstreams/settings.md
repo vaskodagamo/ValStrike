@@ -23,3 +23,36 @@
 - The value is client-local: a plain controller member, never a replicated property, never sent in an RPC.
 - Window changes use `SetFullscreenMode`, `SetScreenResolution`, `ConfirmVideoMode` (the explicit Apply is the confirmation; there is no timed revert dialog), `ApplyResolutionSettings(false)` and `SaveSettings`. `ApplySettings` was not used because it also re-applies scalability, VSync and frame-rate limits that this page does not edit.
 - Windowed sizes are standard 16:9/16:10 sizes from 1280×720 that fit the work area, plus the current window size. The engine's `GetConvenientWindowedResolutions` produced 1283×721, 1425×1068 etc. on this 1710-wide desktop, which players would not recognise.
+
+## 2026-11-03 — Settings verification after PR #19 opened (appended 2026-11-04)
+
+PR #19 was merged into main at 2026-11-03 23:01 (merge `f1e3779`) while these runs were in progress.
+
+- Native `ValStrike.UI` on the final source (`fff06a8`, same source as `b18f038`): `Settings`, `ServerAddress` and `RoundPresentation` all `Result={Success}` (`Saved/Tests/UI/settings-automation-final.log`).
+- Mouse-look suite rerun: **PASS 8/8** at `fff06a8` (`Saved/Tests/CombatLook/20261103T221235Z_366980`). `lower_pitch_limit` measured exactly −89.900°. The earlier 7/8 run had measured yaw −9.5° in a MouseY-only phase, consistent with physical pointer input.
+- Exclusive Fullscreen (`--exclusive-fullscreen`) was **not run**. The attempt was queued behind the shared slot and cancelled when the join-key task started, so Fullscreen remains unverified on macOS.
+
+## 2026-11-04 — Optional private-server join key in the session menu
+
+**Branch/base:** `claude/join-key-menu` from `origin/main` `b35fc69` (includes PR #19 Settings and PR #21's server join key). Same worktree. Requested by the coordinating session; the server side belongs to the Server stream.
+
+**Scoped completion condition:** an optional key field beside the address that is readable at 960×540 and follows the menu's focus/keyboard rules; client validation with the server's rule; the key passed to `ConnectToServer` separately and appended only after address validation; never logged or shown. Verified by engine-free rule tests and by a rendered check against `ue.py server --join-key lan-Key_0001`: refused without the key, joined with it.
+
+**Changed paths:**
+
+- `Source/ValStrike/UI/VSJoinKey.h/.cpp` (new, standard library only): trim, empty = no key, rule through the server's `ValStrike::Server::IsValidJoinKey` (reused, not copied), `ComposeDestination` that refuses any URL syntax in the host:port.
+- `Source/ValStrike/UI/VSServerAddress.h/.cpp`: `Validate` unchanged. New `ValidateJoinKey` (its error text never echoes input) and `JoinDestination`.
+- `Source/ValStrike/VSPlayerController.h/.cpp`: `ConnectToServer(Address, JoinKey = "")`. The address is validated first; a failed address containing "JoinKey" gets a hint to use the key field. The key is validated and composed only after that. The status names the address only. Also ticks the new dev harness.
+- `Source/ValStrike/UI/SVSSessionMenu.h/.cpp`: masked `IsPassword` key field (168 px) beside the address, label "JOIN KEY · OPTIONAL", Tab order address → key → Connect. Cancel and Resume focus targets are now named members rather than navigation indices. Address and key fields keep focus after a rejected Enter (`ClearKeyboardFocusOnCommit(false)`); previously a rejected Enter dropped keyboard focus out of the menu.
+- `Source/ValStrike/UI/VSSessionState.h/.cpp`: `JoinKey` kept in memory only, so the field survives travel. The server's "Join key missing or wrong" refusal shows key guidance instead of "Could not reach the server".
+- `Source/ValStrike/UI/VSUISmoke.cpp`: one more Shift+Tab to reach the address (key field inserted).
+- Tests: `Tests/UI/VSJoinKeyTests.cpp` + `Tests/UI/test_join_key_rule.py` (engine-free), `Source/ValStrike/UI/VSJoinKeyAutomationTests.cpp` (`ValStrike.UI.JoinKey`), `Source/ValStrike/UI/VSJoinSmoke.h/.cpp` + `Tests/UI/test_join_key.py` (rendered), `Tests/UI/README.md`.
+- Server/, Build.cs, config, central docs, Combat/, VSCharacter.*, Damage/ and Economy/ are unchanged.
+
+**Evidence so far:**
+
+- Engine-free: `python3 -m unittest discover -s Tests/UI -p 'test_join_key_rule.py' -v` **2/2 OK**, also with `VS_JOIN_KEY_SANITIZE=1` (ASan/UBSan). This covers C++ assertions for empty/whitespace, 7/8/64/65 lengths, 13 bad-character cases including URL syntax, non-ASCII and embedded NUL, trimming, and composition refusing a key or any option in the address text. It also cross-checks the C++ rule against `ue.py`'s `join_key()` on 14 shared examples.
+- Editor build (Mac Development) **succeeded, no warnings** at `84708f3`.
+- Pending (queued behind the shared slot): native `ValStrike.UI` including `JoinKey`, the rendered `Tests/UI/test_join_key.py` run, and the UI session suite regression. Results will be appended here.
+
+**Known limitation (needs a central decision):** Unreal itself logs the travel URL with its options on the client (`LogNet: Browse:`, `LogLoad: LoadMap:`). The server logs the login options (`LogNet: Login request:`) and its command line (`-VSServerJoinKey=`). So keyed joins put the key into local log files even though ValStrike code never logs it. Keeping it off the client's lines needs a `ULocalPlayer` subclass that supplies `GetGameLoginOptions()`, registered through `LocalPlayerClassName` in `DefaultEngine.ini`. The server side is the Server stream's call. The rendered runner counts these engine-written occurrences per file and line kind, then redacts them, so test artifacts do not keep the key.
