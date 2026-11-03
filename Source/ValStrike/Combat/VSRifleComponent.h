@@ -35,6 +35,9 @@ public:
 #if !UE_BUILD_SHIPPING && !UE_BUILD_TEST
     bool DevelopmentReset();
     void DevelopmentRequest(uint32 ShotId, FVector Origin, FVector Direction);
+    // Match server smoke probes execute the real reload entry/completion paths.
+    void DevelopmentRequestReload();
+    void DevelopmentFinishReload();
     uint32 DevelopmentLastRequest() const { return LastRequestId; }
     uint32 DevelopmentRejections(const FName Reason) const { return Rejections.FindRef(Reason); }
 #endif

@@ -21,6 +21,7 @@
 #include "InputCoreTypes.h"
 #include "InputMappingContext.h"
 #include "InputModifiers.h"
+#include "Net/UnrealNetwork.h"
 #include "UObject/ConstructorHelpers.h"
 #include "ValStrike.h"
 
@@ -115,6 +116,57 @@ FVSPlayerHUDData AVSCharacter::GetHUDData() const
 void AVSCharacter::StopCombatInput()
 {
     Rifle->StopFire();
+}
+
+bool AVSCharacter::CanMatchMove() const
+{
+    return bMatchMovementAllowed && Health && Health->IsAlive();
+}
+
+bool AVSCharacter::CanMatchCombat() const
+{
+    return bMatchCombatAllowed && Health && Health->IsAlive();
+}
+
+void AVSCharacter::SetMatchGates(bool bMove, bool bCombat)
+{
+    if (!HasAuthority()) { return; }
+    const bool bChanged = bMatchMovementAllowed != bMove || bMatchCombatAllowed != bCombat;
+    bMatchMovementAllowed = bMove;
+    bMatchCombatAllowed = bCombat;
+    OnRep_MatchGates();
+    if (bChanged) { ForceNetUpdate(); }
+}
+
+void AVSCharacter::OnRep_MatchGates()
+{
+    if (!CanMatchCombat())
+    {
+        // Also cancels an authoritative reload; opening a gate never resumes
+        // previously held fire or a canceled reload.
+        Rifle->OwnerDied();
+    }
+    UCharacterMovementComponent* Movement = GetCharacterMovement();
+    if (!CanMatchMove())
+    {
+        bWalkHeld = false;
+        StopJumping();
+        UnCrouch();
+        ConsumeMovementInputVector();
+        Movement->StopMovementImmediately();
+        Movement->DisableMovement();
+    }
+    else if (Movement->MovementMode == MOVE_None)
+    {
+        Movement->SetMovementMode(MOVE_Walking);
+    }
+}
+
+void AVSCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+    Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+    DOREPLIFETIME(AVSCharacter, bMatchMovementAllowed);
+    DOREPLIFETIME(AVSCharacter, bMatchCombatAllowed);
 }
 
 void AVSCharacter::BeginPlay()
@@ -232,7 +284,7 @@ void AVSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 void AVSCharacter::Move(const FInputActionValue& Value)
 {
-    if (!Controller || !Health->IsAlive())
+    if (!Controller || !CanMatchMove())
     {
         return;
     }
@@ -255,12 +307,12 @@ void AVSCharacter::LookPitch(const FInputActionValue& Value)
     AddControllerPitchInput(Value.Get<float>() * MouseSensitivity);
 }
 
-void AVSCharacter::BeginFire() { Rifle->StartFire(); }
-void AVSCharacter::BeginReload() { Rifle->Reload(); }
-void AVSCharacter::BeginJump() { if (Health->IsAlive()) { Jump(); } }
-void AVSCharacter::BeginCrouch() { if (Health->IsAlive()) { Crouch(); } }
-void AVSCharacter::EndCrouch() { if (Health->IsAlive()) { UnCrouch(); } }
-void AVSCharacter::BeginWalk() { bWalkHeld = true; }
+void AVSCharacter::BeginFire() { if (CanMatchCombat()) { Rifle->StartFire(); } }
+void AVSCharacter::BeginReload() { if (CanMatchCombat()) { Rifle->Reload(); } }
+void AVSCharacter::BeginJump() { if (CanMatchMove()) { Jump(); } }
+void AVSCharacter::BeginCrouch() { if (CanMatchMove()) { Crouch(); } }
+void AVSCharacter::EndCrouch() { if (CanMatchMove()) { UnCrouch(); } }
+void AVSCharacter::BeginWalk() { bWalkHeld = CanMatchMove(); }
 void AVSCharacter::EndWalk() { bWalkHeld = false; }
 
 void AVSCharacter::OnStartCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust)
@@ -305,15 +357,5 @@ void AVSCharacter::HandleHealthChanged()
     const bool bAlive = Health->IsAlive();
     BodyHitRegion->SetCollisionEnabled(bAlive ? ECollisionEnabled::QueryOnly : ECollisionEnabled::NoCollision);
     HeadHitRegion->SetCollisionEnabled(bAlive ? ECollisionEnabled::QueryOnly : ECollisionEnabled::NoCollision);
-    if (!bAlive)
-    {
-        Rifle->OwnerDied();
-        StopJumping();
-        GetCharacterMovement()->StopMovementImmediately();
-        GetCharacterMovement()->DisableMovement();
-    }
-    else if (HasAuthority() && GetCharacterMovement()->MovementMode == MOVE_None)
-    {
-        GetCharacterMovement()->SetMovementMode(MOVE_Walking);
-    }
+    OnRep_MatchGates();
 }

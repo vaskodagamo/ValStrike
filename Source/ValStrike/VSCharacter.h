@@ -31,8 +31,14 @@ public:
     void StopCombatInput();
     UVSRifleComponent* GetRifleComponent() const { return Rifle; }
     UVSHealthComponent* GetHealthComponent() const { return Health; }
+    // Practice defaults stay open. Match mode drives these gates on the server;
+    // replicated gates also suppress local prediction/input while locked.
+    bool CanMatchMove() const;
+    bool CanMatchCombat() const;
+    void SetMatchGates(bool bMove, bool bCombat);
     bool IsHeadHit(const UPrimitiveComponent* Component) const;
     virtual FVector GetPawnViewLocation() const override;
+    virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
     virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
     virtual void OnStartCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust) override;
@@ -56,6 +62,15 @@ private:
     void BeginWalk();
     void EndWalk();
     void UpdatePrototypeVisuals();
+
+    UFUNCTION()
+    void OnRep_MatchGates();
+
+    UPROPERTY(ReplicatedUsing = OnRep_MatchGates)
+    bool bMatchMovementAllowed = true;
+
+    UPROPERTY(ReplicatedUsing = OnRep_MatchGates)
+    bool bMatchCombatAllowed = true;
 
     UPROPERTY(VisibleAnywhere, Category = "Combat")
     TObjectPtr<UVSRifleComponent> Rifle;

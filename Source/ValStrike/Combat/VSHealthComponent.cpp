@@ -1,6 +1,8 @@
 #include "VSHealthComponent.h"
 
+#include "../VSCharacter.h"
 #include "GameFramework/Actor.h"
+#include "../Match/VSMatchGameMode.h"
 #include "Net/UnrealNetwork.h"
 
 #if !UE_BUILD_SHIPPING && !UE_BUILD_TEST
@@ -38,6 +40,11 @@ float UVSHealthComponent::ApplyPointDamage(float Damage)
     {
         return 0.0f;
     }
+    AVSCharacter* Pawn = Cast<AVSCharacter>(Owner);
+    if (Pawn && !AVSMatchGameMode::AllowsDamage(Pawn))
+    {
+        return 0.0f;
+    }
 
     const float PreviousHealth = Health;
     Health = FMath::Clamp(Health - Damage, 0.0f, MaxHealth);
@@ -46,6 +53,10 @@ float UVSHealthComponent::ApplyPointDamage(float Damage)
     {
         Owner->ForceNetUpdate();
         OnLifeStateChanged.Broadcast();
+        if (Pawn && PreviousHealth > 0.0f && !IsAlive())
+        {
+            AVSMatchGameMode::ReportDeath(Pawn);
+        }
     }
     return AppliedDamage;
 }
