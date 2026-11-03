@@ -145,8 +145,12 @@ class EvaluationTests(unittest.TestCase):
                    "VSSERVER_PLAYERS count=0 at_ms=9000", state("allocated", "ending", "empty_timeout", 39000, 0),
                    state("ending", "exited", "drained", 39000, 0), "VSSERVER_EXIT code=0 session=s uptime_s=40")
         self.assertEqual(failed(runner.evaluate_joinkey(text, 0, REVISION, "Mac")), [])
-        leaked = text + log(f"LogInit: Command Line: -VSServerJoinKey={runner.JOIN_KEY}")
-        self.assertEqual(failed(runner.evaluate_joinkey(leaked, 0, REVISION, "Mac")), ["key_never_logged"])
+        echoed = text + log(f"LogInit: Command Line: -VSServerJoinKey={runner.JOIN_KEY}",
+                            f"LogNet: Login request: ?Name=x?JoinKey={runner.WRONG_KEY} userId: NULL:x",
+                            f"LogNet: Join request: /Game/Maps/VS_Graybox?Name=x?JoinKey={runner.JOIN_KEY}?SplitscreenCount=1")
+        self.assertEqual(failed(runner.evaluate_joinkey(echoed, 0, REVISION, "Mac")), [])
+        leaked = text + log(f"VSSERVER_ADMISSION rejected key={runner.WRONG_KEY}")
+        self.assertEqual(failed(runner.evaluate_joinkey(leaked, 0, REVISION, "Mac")), ["key_not_logged_by_server_code"])
         once = text.replace(rejection + "\n", "", 1).replace("PreLogin failure: Join key missing or wrong\n", "", 1)
         self.assertEqual(failed(runner.evaluate_joinkey(once, 0, REVISION, "Mac")), ["wrong_keys_rejected"])
 
