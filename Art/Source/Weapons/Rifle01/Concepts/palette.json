@@ -2,7 +2,12 @@
   "name": "ValStrike R01 Kestrel — stylized rifle concept palette",
   "date_europe_berlin": "2026-11-03",
   "color_space": "sRGB",
-  "status": "Original game asset concept, not final gameplay appearance",
+  "status": "Historical ART-02 concept palette; superseded for actual meshes and native materials by ART-03. Original values retained for provenance, not current gameplay appearance.",
+  "superseded_by": "../../Shared/weapon_palette.json",
+  "superseding_task": "ART-03",
+  "superseding_date_europe_berlin": "2026-11-03",
+  "current_default": "crimson",
+  "historical_scope": "The colors and constraints below describe the original concept image only. Legacy rifle material names remain, but current role/color/surface values come from the shared weapon palette.",
   "colors": [
     {
       "role": "Graphite receiver and structure",

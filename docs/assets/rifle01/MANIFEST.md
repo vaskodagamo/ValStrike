@@ -1,6 +1,77 @@
 # R01 Kestrel rifle asset
 
-Updated: 2026-11-03 (Europe/Berlin). Branch: `codex/rifle-asset`, based on `d076442`.
+## ART-03 current finish revision
+
+Updated: 2026-11-03 (Europe/Berlin). Current branch:
+`codex/pistol-weapon-finish`; checkout:
+`/Users/webproduktion3/Documents/ValStrike/.asset-worktrees/pistol-weapon-finish`.
+The completed ART-02 rifle at `cac8151` on `codex/rifle-asset` remains the
+geometry and historical-finish reference.
+
+The user's follow-up requests a stronger finish and a matching original P01
+pistol. R01 keeps its accepted geometry, dimensions, names, pivots, material
+slots and sockets. Its broad cream/teal treatment is replaced with cool
+gunmetal/steel separation, matte charcoal structure and restrained crimson.
+This is an art-only revision; it adds no weapon mechanics.
+
+The authoritative [shared palette](../../../Art/Source/Weapons/Shared/weapon_palette.json)
+defines three comparisons: charcoal/crimson (saved default), midnight/ice-blue
+and charcoal/copper-ember. All hex swatches are sRGB, decoded to linear shader
+constants in Blender and Unreal. The legacy rifle material names stay intact:
+
+| Material | Current role | sRGB | Roughness | Metallic |
+| --- | --- | --- | ---: | ---: |
+| `M_VS_R01_Graphite` | Structure / matte charcoal | `#303944` | 0.70 | 0 |
+| `M_VS_R01_Teal` | Satin gunmetal | `#52647B` | 0.48 | 0.15 |
+| `M_VS_R01_Ceramic` | Cool steel panel | `#8D9FB4` | 0.42 | 0.25 |
+| `M_VS_R01_Accent` | Restrained crimson | `#CF3D50` | 0.52 | 0 |
+
+The first native preview exposed overly dark high-metallic panels. This revised
+palette raises value separation and reduces metallic response; source and
+native assets were refreshed together and verified in a fresh process.
+
+**ART-03 finish complete:** the isolated Mac Editor target built in 22.29
+seconds with pinned UE 5.8.4 / Xcode 26.1.1. The material-only
+[source migration](../../../Art/Source/Weapons/Rifle01/Models/update_finish.py)
+passed actual saved/reopened Blender material assertions, exact geometry
+fingerprints and real FBX material/geometry round trips. Read-back values are
+in [finish_validation.json](../../../Art/Source/Weapons/Rifle01/Models/finish_validation.json).
+Final [native finish](unreal-finish-report.json) and
+[fresh-process reopen](unreal-finish-reopen-report.json) match, including actual
+linear shader constants and unchanged native mesh SHA-256 values. Ten native
+captures for both weapons passed and were visually inspected; see the
+[three-variant comparison](../pistol01/COMPARISON.md). Crimson remains selected.
+At sun 0.75 / sky 0.3 with fixed exposure, dark grip/rail details lose contrast;
+steel panels and silhouette remain visible. Actual low-light gameplay
+readability is still an integration acceptance item.
+
+Current native verification uses
+`Art/Source/Weapons/Pistol01/import_weapon_finish.py`; the combined capture
+workflow is `Art/Source/Weapons/Pistol01/inspect_weapon_finishes.py`. See
+[IMPORT.md](IMPORT.md) for exact commands and output names. Current capture
+evidence belongs to `docs/assets/pistol01/unreal-inspection-report.json` for
+both weapons. The established studio/first-person PNG filenames are reused
+with the completed ART-03 captures; historical ART-02 image hashes must not be
+used to validate later replacements.
+
+The native rifle mesh preservation anchors are:
+
+```text
+Body     559ebec2a5ad0882098c3487e2c1947a300628b2004bf34838e7c68cda40205b
+Magazine 07b9328195b8a7138b75e0b39259139feb365672b86d900094ea3caf4773c3fc
+```
+
+## ART-02 baseline and provenance (historical)
+
+The sections below retain the accepted original state, including its earlier
+palette and verification. `unreal-import-report.json`,
+`unreal-reopen-report.json` and `unreal-inspection-report.json` in this rifle
+folder are historical ART-02 evidence. Their original FBX/preview hashes refer
+to the earlier finish. Source and preview files at the same paths may now be
+revised by ART-03; current finish evidence is identified above. The concept
+image and exact generation prompt remain preserved as historical studies.
+
+Original update: 2026-11-03 (Europe/Berlin). Branch: `codex/rifle-asset`, based on `d076442`.
 
 **ART-02 — Done:** original stylized visual rifle, editable source model, body and separate-magazine FBX exports, native Unreal 5.8.4 imports, verified attachment sockets, fresh-process reopening, and studio/first-person composition previews completed. Source/native measurements and final visual inspection agree.
 
@@ -50,7 +121,7 @@ All socket rotations are identity and scales are 1. Attach the magazine to `Maga
 
 Both native meshes have zero simple/convex collision, disabled section collision, and `NoCollision` defaults. Equipped visual components should keep that profile. These are not character hit regions or dropped-item physics assets.
 
-## Materials and provenance
+## ART-02 materials and provenance (historical)
 
 The shader constants and Blender materials use the same sRGB palette decoded to linear. There are no image textures, normal maps, external meshes, scanned surfaces, fonts, or purchased inputs.
 
@@ -63,7 +134,7 @@ The shader constants and Blender materials use the same sRGB palette decoded to 
 
 Geometry, modeling scripts, palette adaptation, and native material authoring: Codex for ValStrike, 2026-11-03, using Blender 5.2.2 LTS (`d13f752e3b9c`) and Unreal 5.8.4 (`58902052`). The bitmap concept was generated with built-in OpenAI `image_gen.imagegen`; its exact prompt is linked above. The real model interprets that original art direction, with a more open stock and handguard. No third-party asset license dependency is introduced or new license/ownership guarantee asserted.
 
-## Verification and remaining work
+## ART-02 verification and remaining work (historical)
 
 - [mesh_validation.json](../../../Art/Source/Weapons/Rifle01/Models/mesh_validation.json): source bounds, counts, topology, UVs, transforms, socket layout, assembly envelope, and real FBX round-trip results.
 - [unreal-import-report.json](unreal-import-report.json): saved native geometry, material assignment, two UV channels, collision defaults, source hashes, and exact sockets.

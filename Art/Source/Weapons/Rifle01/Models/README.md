@@ -6,9 +6,20 @@ single-segment chamfers, broad color blocks, a genuinely open trigger guard,
 an open stock silhouette, simple iron sights, and a recessed muzzle. It has no
 internal mechanism, firing logic, animation, character hands, or gameplay wiring.
 
+**ART-03 finish revision, 2026-11-03:** work now continues on
+`codex/pistol-weapon-finish` in
+`/Users/webproduktion3/Documents/ValStrike/.asset-worktrees/pistol-weapon-finish`.
+The accepted ART-02 geometry, pivots, mesh names and attachment contract remain
+unchanged. The current finish is charcoal, cool gunmetal/steel and crimson.
+The original cream/teal concept is retained as historical art direction.
+
 ## Deliverables
 
 - `build_rifle01.py`: editable procedural source for both meshes and previews.
+- `update_finish.py`: material-only migration of the saved model and FBX files;
+  validates exact geometry preservation and serialized material values.
+- `finish_validation.json`: before/after geometry fingerprints, actual reopened
+  Blender shader values, shared palette hash and updated FBX hashes.
 - `R01_Kestrel.blend`: native editable model, separate source parts, export
   meshes, socket markers, and linked preview copies.
 - `Exports/SM_VS_Rifle01_Body.fbx`: the rifle body, 3,280 triangles.
@@ -58,6 +69,24 @@ hit geometry is supplied.
 Four shared materials use sRGB palette inputs decoded to linear in Blender.
 Broad color planes carry the style; no image textures or normal maps are used.
 
+The current authority is [weapon_palette.json](../../Shared/weapon_palette.json),
+shared with P01. Legacy rifle material and slot names remain unchanged so native
+mesh references stay compatible. Their current roles are:
+
+| Material | Current role | sRGB | Roughness | Metallic |
+| --- | --- | --- | --- | --- |
+| M_VS_R01_Graphite | Structure / matte charcoal | #303944 | 0.70 | 0 |
+| M_VS_R01_Teal | Satin gunmetal | #52647B | 0.48 | 0.15 |
+| M_VS_R01_Ceramic | Cool steel panel | #8D9FB4 | 0.42 | 0.25 |
+| M_VS_R01_Accent | Restrained crimson | #CF3D50 | 0.52 | 0 |
+
+The same shared file defines the ice-blue and copper/ember comparison variants.
+Colors are sRGB inputs; both Blender and Unreal decode them to linear constants.
+The first ART-03 native preview exposed overly dark high-metallic panels;
+the current palette raises value separation and reduces metallic response.
+No emission or textures are added. The previous ART-02 values below are retained
+only as concept/source history:
+
 | Material | sRGB | Roughness | Metallic |
 | --- | --- | --- | --- |
 | M_VS_R01_Graphite | #28343B | 0.62 | 0.15 |
@@ -71,7 +100,33 @@ No third-party asset license or attribution dependency is introduced.
 
 ## Regenerate or render
 
-Run from the rifle asset worktree root with the verified local Blender binary:
+For the current material-only revision, run from the assigned finish worktree:
+
+```sh
+cd /Users/webproduktion3/Documents/ValStrike/.asset-worktrees/pistol-weapon-finish
+/Applications/Blender.app/Contents/MacOS/Blender --background --factory-startup \
+  --python-exit-code 1 \
+  --python Art/Source/Weapons/Rifle01/Models/update_finish.py -- --skip-render
+```
+
+This command has passed the source checks for ART-03. It loads the existing
+`.blend`, revises only material values, exports the canonical meshes and reads
+the real FBX files back. It checks geometry bounds/counts/UV channels and ordered
+material names plus actual Base Color, Roughness and Metallic values. After
+saving and reopening the `.blend`, it compares vertex/face/UV/material-index/
+transform fingerprints for canonical meshes and editable parts, and checks the
+saved shader and viewport colors. `finish_validation.json` records measured
+values; `VALSTRIKE_RIFLE_FINISH_SOURCE_SUCCESS` is the success marker.
+Omit `--skip-render` to refresh both source previews in the same run.
+
+The native rifle meshes must stay byte-identical during this finish revision.
+Use the material update and fresh-process verification workflow in
+[IMPORT.md](../../../../../docs/assets/rifle01/IMPORT.md); do not reimport the
+rifle meshes to apply colors. Updated FBX material payloads legitimately change
+source file hashes while the original native geometry remains intact.
+
+The full procedural regeneration command is retained below for source
+reproducibility; it rebuilds geometry and is not the material-only migration:
 
 ```sh
 /Applications/Blender.app/Contents/MacOS/Blender --background --factory-startup \
@@ -80,8 +135,9 @@ Run from the rifle asset worktree root with the verified local Blender binary:
 ```
 
 This regenerates both exports, the `.blend`, validation report, and previews,
-overwriting this script's outputs. Preserve any hand edits first. Coordinate
-regeneration with the native importer and reimport afterward. It does not write
+overwriting this script's outputs. Preserve any hand edits first. A deliberate
+future geometry revision requires its own native reimport and contract review;
+ART-03 keeps the native rifle mesh packages unchanged. The script does not write
 Unreal `.uasset` or `.umap` files.
 
 To rerender the saved scene without rewriting the FBX exports, validation

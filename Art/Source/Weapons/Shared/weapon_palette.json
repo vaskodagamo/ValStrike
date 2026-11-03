@@ -1,0 +1,91 @@
+{
+  "name": "ValStrike weapon finish 01",
+  "date_europe_berlin": "2026-11-03",
+  "color_space": "sRGB; decode IEC 61966-2-1 into linear shader constants",
+  "default": "crimson",
+  "variants": {
+    "crimson": {
+      "label": "Charcoal / Crimson",
+      "roles": {
+        "Structure": {
+          "srgb_hex": "303944",
+          "roughness": 0.7,
+          "metallic": 0
+        },
+        "Gunmetal": {
+          "srgb_hex": "52647B",
+          "roughness": 0.48,
+          "metallic": 0.15
+        },
+        "Steel": {
+          "srgb_hex": "8D9FB4",
+          "roughness": 0.42,
+          "metallic": 0.25
+        },
+        "Accent": {
+          "srgb_hex": "CF3D50",
+          "roughness": 0.52,
+          "metallic": 0
+        }
+      }
+    },
+    "ice": {
+      "label": "Midnight / Ice-blue",
+      "roles": {
+        "Structure": {
+          "srgb_hex": "2B354A",
+          "roughness": 0.7,
+          "metallic": 0
+        },
+        "Gunmetal": {
+          "srgb_hex": "4C6684",
+          "roughness": 0.48,
+          "metallic": 0.15
+        },
+        "Steel": {
+          "srgb_hex": "93B1CA",
+          "roughness": 0.42,
+          "metallic": 0.25
+        },
+        "Accent": {
+          "srgb_hex": "60C9EB",
+          "roughness": 0.52,
+          "metallic": 0
+        }
+      }
+    },
+    "ember": {
+      "label": "Charcoal / Copper-ember",
+      "roles": {
+        "Structure": {
+          "srgb_hex": "303944",
+          "roughness": 0.7,
+          "metallic": 0
+        },
+        "Gunmetal": {
+          "srgb_hex": "626B77",
+          "roughness": 0.48,
+          "metallic": 0.15
+        },
+        "Steel": {
+          "srgb_hex": "A0A9B2",
+          "roughness": 0.42,
+          "metallic": 0.25
+        },
+        "Accent": {
+          "srgb_hex": "D77845",
+          "roughness": 0.52,
+          "metallic": 0
+        }
+      }
+    }
+  },
+  "rifle_material_roles": {
+    "M_VS_R01_Graphite": "Structure",
+    "M_VS_R01_Teal": "Gunmetal",
+    "M_VS_R01_Ceramic": "Steel",
+    "M_VS_R01_Accent": "Accent"
+  },
+  "provenance": "Original project palette authored by Codex following user feedback; no textures or purchased inputs.",
+  "native_readability_note": "ART-03 first native capture exposed dark high-metallic panels with existing lighting. Reduced metallic response and raised value separation; source/native stay synchronized."
+}

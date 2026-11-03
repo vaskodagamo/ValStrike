@@ -18,12 +18,12 @@ ROOT = Path(__file__).resolve().parent
 EXPORTS = ROOT / "Exports"
 PREVIEWS = ROOT / "Previews"
 BLEND = ROOT / "R01_Kestrel.blend"
-PALETTE = {
-    "M_VS_R01_Graphite": ("28343B", .62, .15),
-    "M_VS_R01_Teal": ("416F70", .58, 0.0),
-    "M_VS_R01_Ceramic": ("C8B89E", .72, 0.0),
-    "M_VS_R01_Accent": ("D39B58", .55, 0.0),
-}
+SHARED_PALETTE = Path(__file__).resolve().parents[2] / "Shared/weapon_palette.json"
+_FINISH = json.loads(SHARED_PALETTE.read_text())
+_ROLES = _FINISH["variants"][_FINISH["default"]]["roles"]
+PALETTE = {name: (_ROLES[role]["srgb_hex"], _ROLES[role]["roughness"], _ROLES[role]["metallic"])
+           for name, role in _FINISH["rifle_material_roles"].items()}
+
 SOCKETS = {
     "Muzzle": {"location_cm": [56, 0, 8.2], "rotation_degrees": [0, 0, 0]},
     "Grip": {"location_cm": [0, 0, 0], "rotation_degrees": [0, 0, 0]},

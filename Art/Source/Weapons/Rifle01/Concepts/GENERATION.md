@@ -1,5 +1,16 @@
 # R01 Kestrel concept generation
 
+**Historical ART-02 concept — superseded finish, 2026-11-03:** this image,
+its original palette and the exact submitted prompt below are preserved
+unchanged as design provenance. The user's later ART-03 brief replaces the
+cream/teal/amber finish with charcoal, cool gunmetal/steel and crimson on the
+actual model. [Shared weapon palette](../../Shared/weapon_palette.json) is the
+current source/native material authority and also defines the ice-blue and
+copper/ember comparisons. Legacy rifle material names remain for compatibility.
+This historical concept image does not represent the current finish; see the
+actual model/native previews and current evidence in
+[MANIFEST.md](../../../../../docs/assets/rifle01/MANIFEST.md).
+
 - Date: 2026-11-03 (Europe/Berlin).
 - Author/tool: Codex with the built-in OpenAI `image_gen.imagegen` tool; no CLI/API fallback.
 - Mode: new image, `stylized-concept`, opaque background.
@@ -7,7 +18,7 @@
 - Provenance: AI-generated original fictional game-rifle concept. Existing game references describe visual principles only; the prompt rejects identifiable Vandal/Phantom, real-brand, and existing asset copies. No external asset license, copyright assignment, or ownership guarantee is asserted. No purchases or paid-service commitments were made.
 - Project file: `VS_R01_Kestrel_Concept.png` — 1536 × 1024 PNG, copied without pixel edits.
 - Original generated output: `/Users/webproduktion3/.codex/generated_images/01a1a1d6-7d2f-7420-8848-0bd30d27c212/exec-dbc0689c-2eeb-4b8f-a7af-0c96eebf260d.png`.
-- Palette: `palette.json` records authoritative sRGB values. Painted swatches are approximate.
+- Palette: `palette.json` records the historical concept's authoritative sRGB values. Painted swatches are approximate; current materials use the shared ART-03 palette linked above.
 - Deliverable class: **bitmap concept art**. It is not a 3D model, exported mesh, native Unreal asset, engineering plan, or gameplay capture. The intended 86 cm game visual scale is a modeling target, not measured from this image.
 
 ## Visual inspection

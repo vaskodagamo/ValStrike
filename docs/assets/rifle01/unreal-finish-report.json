@@ -1,0 +1,223 @@
+{
+  "task": "ART-03",
+  "engine": "5.8.4-58902052+++UE5+Release-5.8",
+  "date_europe_berlin": "2026-11-03",
+  "mode": "author_and_save",
+  "palette_sha256": "4f85ac6d786ef6442304a68b5d654c3c16402d7d82a0ef31108edd1f3aac157f",
+  "variant": "crimson",
+  "units": "cm",
+  "forward": "+X",
+  "up": "+Z",
+  "gameplay_verified": false,
+  "animation_verified": false,
+  "assets": {
+    "SM_VS_Rifle01_Body": {
+      "asset": "/Game/Art/Weapons/Rifle01/Meshes/SM_VS_Rifle01_Body.SM_VS_Rifle01_Body",
+      "source_sha256": "cb35dc3287d5c8e217853552001fe1d67036af9c7516ccc096bbe90466b5f2ba",
+      "bounds_min_cm": [
+        -30.0,
+        -4.52,
+        -12.94506
+      ],
+      "bounds_max_cm": [
+        56.0,
+        4.52,
+        15.4
+      ],
+      "size_cm": [
+        86.0,
+        9.04,
+        28.34506
+      ],
+      "lod0_triangles": 3280,
+      "lod0_vertices": 7283,
+      "lods": 1,
+      "materials": [
+        "/Game/Art/Weapons/Rifle01/Materials/M_VS_R01_Graphite.M_VS_R01_Graphite",
+        "/Game/Art/Weapons/Rifle01/Materials/M_VS_R01_Teal.M_VS_R01_Teal",
+        "/Game/Art/Weapons/Rifle01/Materials/M_VS_R01_Accent.M_VS_R01_Accent",
+        "/Game/Art/Weapons/Rifle01/Materials/M_VS_R01_Ceramic.M_VS_R01_Ceramic"
+      ],
+      "uv_channels": 2,
+      "simple_collision_count": 0,
+      "convex_collision_count": 0,
+      "section_collision_enabled": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "collision_profile": "NoCollision",
+      "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+      "nanite_enabled": false,
+      "sockets": {
+        "Muzzle": {
+          "location_cm": [
+            56.0,
+            0.0,
+            8.2
+          ],
+          "roll_pitch_yaw_degrees": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Grip": {
+          "location_cm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "roll_pitch_yaw_degrees": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "SupportHand": {
+          "location_cm": [
+            31.0,
+            0.0,
+            2.4
+          ],
+          "roll_pitch_yaw_degrees": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Magazine": {
+          "location_cm": [
+            14.0,
+            0.0,
+            2.0
+          ],
+          "roll_pitch_yaw_degrees": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "unchanged_native_mesh_sha256": "559ebec2a5ad0882098c3487e2c1947a300628b2004bf34838e7c68cda40205b",
+      "source_export_materials_revised_without_native_mesh_reimport": true
+    },
+    "SM_VS_Rifle01_Magazine": {
+      "asset": "/Game/Art/Weapons/Rifle01/Meshes/SM_VS_Rifle01_Magazine.SM_VS_Rifle01_Magazine",
+      "source_sha256": "fc6af51dd3c743be50903505b748fa4cc1ccfef9e528b7962066d71ec98632c3",
+      "bounds_min_cm": [
+        -4.6,
+        -3.3,
+        -18.8
+      ],
+      "bounds_max_cm": [
+        9.05637,
+        3.3,
+        0.0
+      ],
+      "size_cm": [
+        13.65637,
+        6.6,
+        18.8
+      ],
+      "lod0_triangles": 488,
+      "lod0_vertices": 1086,
+      "lods": 1,
+      "materials": [
+        "/Game/Art/Weapons/Rifle01/Materials/M_VS_R01_Graphite.M_VS_R01_Graphite",
+        "/Game/Art/Weapons/Rifle01/Materials/M_VS_R01_Teal.M_VS_R01_Teal",
+        "/Game/Art/Weapons/Rifle01/Materials/M_VS_R01_Accent.M_VS_R01_Accent"
+      ],
+      "uv_channels": 2,
+      "simple_collision_count": 0,
+      "convex_collision_count": 0,
+      "section_collision_enabled": [
+        false,
+        false,
+        false
+      ],
+      "collision_profile": "NoCollision",
+      "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+      "nanite_enabled": false,
+      "sockets": {},
+      "unchanged_native_mesh_sha256": "07b9328195b8a7138b75e0b39259139feb365672b86d900094ea3caf4773c3fc",
+      "source_export_materials_revised_without_native_mesh_reimport": true
+    }
+  },
+  "materials": {
+    "M_VS_R01_Graphite": {
+      "path": "/Game/Art/Weapons/Rifle01/Materials/M_VS_R01_Graphite.M_VS_R01_Graphite",
+      "role": "Structure",
+      "srgb_hex": "303944",
+      "linear_base_color": [
+        0.02955683507025242,
+        0.040915198624134064,
+        0.05780543014407158
+      ],
+      "roughness": 0.699999988079071,
+      "metallic": 0.0,
+      "emissive_connected": false
+    },
+    "M_VS_R01_Teal": {
+      "path": "/Game/Art/Weapons/Rifle01/Materials/M_VS_R01_Teal.M_VS_R01_Teal",
+      "role": "Gunmetal",
+      "srgb_hex": "52647B",
+      "linear_base_color": [
+        0.08437620848417282,
+        0.12743768095970154,
+        0.19806931912899017
+      ],
+      "roughness": 0.47999998927116394,
+      "metallic": 0.15000000596046448,
+      "emissive_connected": false
+    },
+    "M_VS_R01_Ceramic": {
+      "path": "/Game/Art/Weapons/Rifle01/Materials/M_VS_R01_Ceramic.M_VS_R01_Ceramic",
+      "role": "Steel",
+      "srgb_hex": "8D9FB4",
+      "linear_base_color": [
+        0.26635560393333435,
+        0.34670406579971313,
+        0.4564110338687897
+      ],
+      "roughness": 0.41999998688697815,
+      "metallic": 0.25,
+      "emissive_connected": false
+    },
+    "M_VS_R01_Accent": {
+      "path": "/Game/Art/Weapons/Rifle01/Materials/M_VS_R01_Accent.M_VS_R01_Accent",
+      "role": "Accent",
+      "srgb_hex": "CF3D50",
+      "linear_base_color": [
+        0.6239603757858276,
+        0.04666508734226227,
+        0.0802198201417923
+      ],
+      "roughness": 0.5199999809265137,
+      "metallic": 0.0,
+      "emissive_connected": false
+    }
+  },
+  "original_native_import_provenance": "unreal-import-report.json (ART-02; historic FBX hashes)"
+}

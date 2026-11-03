@@ -9,24 +9,24 @@
   "up": "+Z",
   "palette": {
     "M_VS_R01_Graphite": {
-      "srgb_hex": "28343B",
-      "roughness": 0.62,
-      "metallic": 0.15
+      "srgb_hex": "303944",
+      "roughness": 0.7,
+      "metallic": 0
     },
     "M_VS_R01_Teal": {
-      "srgb_hex": "416F70",
-      "roughness": 0.58,
-      "metallic": 0.0
+      "srgb_hex": "52647B",
+      "roughness": 0.48,
+      "metallic": 0.15
     },
     "M_VS_R01_Ceramic": {
-      "srgb_hex": "C8B89E",
-      "roughness": 0.72,
-      "metallic": 0.0
+      "srgb_hex": "8D9FB4",
+      "roughness": 0.42,
+      "metallic": 0.25
     },
     "M_VS_R01_Accent": {
-      "srgb_hex": "D39B58",
-      "roughness": 0.55,
-      "metallic": 0.0
+      "srgb_hex": "CF3D50",
+      "roughness": 0.52,
+      "metallic": 0
     }
   },
   "assets": [
@@ -86,7 +86,66 @@
         ],
         "triangles": 3280,
         "uv_channels": 2,
-        "collision_meshes": 0
+        "collision_meshes": 0,
+        "materials": [
+          {
+            "material_name": "M_VS_R01_Graphite.001",
+            "canonical_material_name": "M_VS_R01_Graphite",
+            "expected_srgb_hex": "303944",
+            "linear_base_color_rgba": [
+              0.02955683507025242,
+              0.040915198624134064,
+              0.05780543014407158,
+              1.0
+            ],
+            "roughness": 0.699999988079071,
+            "metallic": 0.0,
+            "unlinked_principled_inputs": true
+          },
+          {
+            "material_name": "M_VS_R01_Teal.001",
+            "canonical_material_name": "M_VS_R01_Teal",
+            "expected_srgb_hex": "52647B",
+            "linear_base_color_rgba": [
+              0.08437620848417282,
+              0.12743768095970154,
+              0.19806931912899017,
+              1.0
+            ],
+            "roughness": 0.47999998927116394,
+            "metallic": 0.15000000596046448,
+            "unlinked_principled_inputs": true
+          },
+          {
+            "material_name": "M_VS_R01_Accent.001",
+            "canonical_material_name": "M_VS_R01_Accent",
+            "expected_srgb_hex": "CF3D50",
+            "linear_base_color_rgba": [
+              0.6239603757858276,
+              0.04666508734226227,
+              0.0802198201417923,
+              1.0
+            ],
+            "roughness": 0.5199999809265137,
+            "metallic": 0.0,
+            "unlinked_principled_inputs": true
+          },
+          {
+            "material_name": "M_VS_R01_Ceramic.001",
+            "canonical_material_name": "M_VS_R01_Ceramic",
+            "expected_srgb_hex": "8D9FB4",
+            "linear_base_color_rgba": [
+              0.26635560393333435,
+              0.34670406579971313,
+              0.4564110338687897,
+              1.0
+            ],
+            "roughness": 0.41999998688697815,
+            "metallic": 0.25,
+            "unlinked_principled_inputs": true
+          }
+        ],
+        "material_names_and_shader_values_passed": true
       }
     },
     {
@@ -144,7 +203,52 @@
         ],
         "triangles": 488,
         "uv_channels": 2,
-        "collision_meshes": 0
+        "collision_meshes": 0,
+        "materials": [
+          {
+            "material_name": "M_VS_R01_Graphite.001",
+            "canonical_material_name": "M_VS_R01_Graphite",
+            "expected_srgb_hex": "303944",
+            "linear_base_color_rgba": [
+              0.02955683507025242,
+              0.040915198624134064,
+              0.05780543014407158,
+              1.0
+            ],
+            "roughness": 0.699999988079071,
+            "metallic": 0.0,
+            "unlinked_principled_inputs": true
+          },
+          {
+            "material_name": "M_VS_R01_Teal.001",
+            "canonical_material_name": "M_VS_R01_Teal",
+            "expected_srgb_hex": "52647B",
+            "linear_base_color_rgba": [
+              0.08437620848417282,
+              0.12743768095970154,
+              0.19806931912899017,
+              1.0
+            ],
+            "roughness": 0.47999998927116394,
+            "metallic": 0.15000000596046448,
+            "unlinked_principled_inputs": true
+          },
+          {
+            "material_name": "M_VS_R01_Accent.001",
+            "canonical_material_name": "M_VS_R01_Accent",
+            "expected_srgb_hex": "CF3D50",
+            "linear_base_color_rgba": [
+              0.6239603757858276,
+              0.04666508734226227,
+              0.0802198201417923,
+              1.0
+            ],
+            "roughness": 0.5199999809265137,
+            "metallic": 0.0,
+            "unlinked_principled_inputs": true
+          }
+        ],
+        "material_names_and_shader_values_passed": true
       }
     }
   ],
@@ -230,5 +334,6 @@
     "No collision is supplied; this mesh is not authoritative hit or shot geometry.",
     "Both UV channels are isolated face tiles; no textures or light bake are used.",
     "Source/Blender export verification only; native Unreal and runtime checks are separate."
-  ]
+  ],
+  "finish_revision": "ART-03 crimson; geometry preserved"
 }
