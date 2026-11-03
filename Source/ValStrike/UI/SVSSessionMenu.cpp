@@ -17,9 +17,9 @@
 
 namespace
 {
-const FLinearColor Ink(0.025f, 0.045f, 0.065f, 1.0f);
+const FLinearColor MenuInk(0.025f, 0.045f, 0.065f, 1.0f);
 const FLinearColor Mint(0.30f, 0.95f, 0.76f, 1.0f);
-const FLinearColor Muted(0.68f, 0.76f, 0.80f, 1.0f);
+const FLinearColor MenuMuted(0.68f, 0.76f, 0.80f, 1.0f);
 
 TSharedRef<STextBlock> Label(const FText& Text, int32 Size, const FLinearColor& Color = FLinearColor::White)
 {
@@ -53,7 +53,7 @@ void SVSSessionMenu::Construct(const FArguments& Args)
             SNew(SBox).WidthOverride(520)
             [
                 SNew(SBorder).BorderImage(FCoreStyle::Get().GetBrush("WhiteBrush"))
-                .BorderBackgroundColor(Ink).Padding(22)
+                .BorderBackgroundColor(MenuInk).Padding(22)
                 [
                     SNew(SScrollBox)
                     + SScrollBox::Slot()
@@ -65,7 +65,7 @@ void SVSSessionMenu::Construct(const FArguments& Args)
                         [ Label(NSLOCTEXT("ValStrike", "SessionTitle", "SESSION"), 28) ]
                         + SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 16)
                         [
-                            SNew(STextBlock).Font(FCoreStyle::GetDefaultFontStyle("Regular", 13)).ColorAndOpacity(Muted)
+                            SNew(STextBlock).Font(FCoreStyle::GetDefaultFontStyle("Regular", 13)).ColorAndOpacity(MenuMuted)
                             .Text_Lambda([this]() {
                                 if (Controller.IsValid() && Controller->GetNetMode() == NM_Client)
                                     return NSLOCTEXT("ValStrike", "OnlineMenu", "Connected session • The match continues while this menu is open.");
@@ -75,7 +75,7 @@ void SVSSessionMenu::Construct(const FArguments& Args)
                             }).AutoWrapText(true)
                         ]
                         + SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 5)
-                        [ Label(NSLOCTEXT("ValStrike", "AddressLabel", "SERVER ADDRESS"), 12, Muted) ]
+                        [ Label(NSLOCTEXT("ValStrike", "AddressLabel", "SERVER ADDRESS"), 12, MenuMuted) ]
                         + SVerticalBox::Slot().AutoHeight()
                         [
                             SAssignNew(AddressInput, SEditableTextBox)
@@ -95,7 +95,7 @@ void SVSSessionMenu::Construct(const FArguments& Args)
                             })
                         ]
                         + SVerticalBox::Slot().AutoHeight().Padding(0, 5, 0, 6)
-                        [ Label(NSLOCTEXT("ValStrike", "AddressHelp", "IPv4 or hostname. Default port: 7777."), 12, Muted) ]
+                        [ Label(NSLOCTEXT("ValStrike", "AddressHelp", "IPv4 or hostname. Default port: 7777."), 12, MenuMuted) ]
                         + SVerticalBox::Slot().AutoHeight()
                         [
                             SNew(SBox).MinDesiredHeight(52)
@@ -161,7 +161,7 @@ void SVSSessionMenu::Construct(const FArguments& Args)
                             ]
                         ]
                         + SVerticalBox::Slot().AutoHeight().Padding(0, 12, 0, 0)
-                        [ Label(NSLOCTEXT("ValStrike", "MenuKeys", "Tab / Shift+Tab: navigate     Enter: select     Esc: resume"), 12, Muted) ]
+                        [ Label(NSLOCTEXT("ValStrike", "MenuKeys", "Tab / Shift+Tab: navigate     Enter: select     Esc: resume"), 12, MenuMuted) ]
                     ]
                 ]
             ]

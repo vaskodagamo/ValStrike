@@ -276,7 +276,7 @@ private:
     bool bNamed = false, bReady = false, bFinished = false, bFireHeld = false, bReloadHeld = false, bEscapeHeld = false;
     bool bCapturedMuzzle = false, bDiedDuringReload = false;
 };
-TUniquePtr<FPresentationSmoke> Smoke;
+TUniquePtr<FPresentationSmoke> PresentationSmoke;
 }
 #endif
 
@@ -301,6 +301,6 @@ void AVSRiflePresentationTestCharacter::BeginPlay()
 {
     Super::BeginPlay();
 #if !UE_BUILD_SHIPPING && !UE_BUILD_TEST
-    if (IsPresentationTest() && !Smoke) { Smoke = MakeUnique<FPresentationSmoke>(); }
+    if (IsPresentationTest() && !PresentationSmoke) { PresentationSmoke = MakeUnique<FPresentationSmoke>(); }
 #endif
 }

@@ -465,8 +465,8 @@ void VSUISmoke::Tick(AVSPlayerController* Controller, float DeltaTime)
 {
     // The game instance survives absolute travel, but the controller does not.
     // Process-local sequencing deliberately follows each new local controller.
-    static FSessionSmoke Smoke;
-    Smoke.Tick(Controller);
+    static FSessionSmoke SessionSmoke;
+    SessionSmoke.Tick(Controller);
 }
 
 #endif
