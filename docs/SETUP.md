@@ -101,6 +101,9 @@ This does not verify rendered remote-player appearance, mouse feel, focus change
 
 ```sh
 python3 -m unittest discover -s Tests -p 'test_ue.py' -v
+python3 -m unittest discover -s Tests/Server -p 'test_*.py' -v
+python3 Scripts/test_server_contract.py
+python3 Scripts/test_server_contract.py --sanitize
 git diff --check
 ```
 
@@ -132,3 +135,42 @@ python3 Tests/UI/test_session.py --engine /Users/webproduktion3/UE_5.8/UE_5.8 --
 ```
 
 The UI suite uses actual combat snapshots and firing/reload input on the integrated branch. The mouse-look runner injects engine axis events and checks rendered camera directions; it does not move a physical mouse. Combat tests use current-position hit registration over loopback without artificial latency/loss. See the latest WORK_LOG.md entry for verified combined results and `docs/workstreams/combat.md` / `ui.md` for the original branch evidence.
+
+## Dedicated server contract (SRV-03)
+
+Every dedicated-server process (`-server`, including the Editor-binary development server) runs `UVSServerSubsystem` under `Source/ValStrike/Server/`. Clients, PIE and standalone games never create it. It implements the provider-neutral contract in [decision 0002](decisions/0002-server-hosting.md):
+
+- **Allowlisted startup switches.** Only these `-VSServer*` switches are accepted. Any other `-VSServer*` switch, a duplicate or an invalid value stops startup with `VSSERVER_EXIT code=2`.
+
+  | Switch | Values |
+  | --- | --- |
+  | `-VSServerSession=<id>` | 1–64 letters, digits, `-` or `_`; default `local-<UTC time>-<pid>` |
+  | `-VSServerMaxPlayers=<n>` | 1–4 |
+  | `-VSServerExitWhenDone` | no value |
+  | `-VSServerEmptyTimeout=<s>` | 1–86400 (default 60); requires `-VSServerExitWhenDone` |
+  | `-VSServerResultGrace=<s>` | 0–3600 (default 15); requires `-VSServerExitWhenDone` |
+  | `-VSServerProvider=local` | `local` only |
+
+  The server also refuses any map or game mode outside the launcher allowlist. Allowed maps are VS_Graybox and Site01; allowed modes are practice and match, and match requires Site01. Development builds also allow the rifle presentation test mode on the graybox.
+- **Lifecycle.** States run Starting → Ready → Allocated → InMatch → Ending → Exited. The `local` provider logs each transition as a `VSSERVER_STATE` line, and logs a `VSSERVER_HEALTH` line every 10 s with players, frame time and tick rate. Without `-VSServerExitWhenDone`, nothing changes from earlier behavior: the server runs until stopped. With it, the server closes after a completed match once the rematch grace passes or everyone leaves, or after it has stayed empty for the timeout. Clients get a return-to-menu message, and the process exits with code 0. A startup failure (invalid switch, map or mode, or an invalid Site01 match contract) always exits. Linux and Windows return its non-zero code; the Mac Editor binary returns 0 for any requested exit, so check the `VSSERVER_EXIT` line there.
+- **Admission.** `AVSGameMode::PreLogin` asks the server subsystem after the engine's checks. Joins are refused while the server is starting or ending; otherwise the development `open` admission accepts everyone, as before.
+- **Version and results.** At startup the server logs a `VSSERVER_VERSION` line with the project version, Git revision, engine version and changelist, build configuration, target type and network version. `ValStrike.Build.cs` writes the revision into the untracked `Intermediate/VSBuildInfo/VSBuildInfo.h` header; a new commit triggers its regeneration on the next build. Uncommitted edits are not reflected in it. Each completed or abandoned match is logged as a single-line `VSSERVER_RESULT` JSON record and also saved to `Saved/ServerResults/<session>_match<n>.json`. The record holds per-round winners and reasons, scores, the result and team sizes, with no player names or addresses.
+
+Launcher flags map one-to-one onto the switches:
+
+```sh
+python3 Scripts/ue.py server --map site01 --mode match --session-id lan-01 --exit-when-done --result-grace 15
+```
+
+Runtime verification uses loopback ports 7871–7874. Build the Editor target first, then run:
+
+```sh
+python3 Scripts/with_ue_slot.py -- python3 Scripts/test_server_lifecycle.py --engine "$UE_ROOT"
+```
+
+The runner checks three scenarios, each with its own server:
+- **invalid:** an unknown switch fails startup.
+- **empty:** a practice server with one player slot admits one client, refuses a second as full and exits 0 after a measured 30 s empty timeout.
+- **match:** a Site01 match server with the development-only `-VSMatchFastTimings` switch runs six timeout rounds with two idle clients. It writes a 3–3 draw result, closes both clients after the 2 s grace and exits 0.
+
+Evidence goes to `Saved/Tests/ServerLifecycle/<run-id>/result.json`. It checks that the logged revision equals `HEAD`, so commit and rebuild before running it. These are Editor-binary processes on one Mac; they do not verify a packaged or Linux dedicated server (SRV-01/02, SET-03).

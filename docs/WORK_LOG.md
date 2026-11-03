@@ -220,6 +220,66 @@ This confirms that no suite needs macOS and that the rules and presentation sour
 
 **Next action:** Review and merge the unity-build fix. Consider making the runners' server-start limit configurable. Then run the rendered UI and mouse-look suites when someone can watch this Mac's screen.
 
+## 2026-11-03 Dedicated-server contract (SRV-03)
+
+**Request and scope:** The user asked to start implementing the server codebase. [Decision 0002](decisions/0002-server-hosting.md) names SRV-03, the provider-neutral server contract, as the first server task; it is the only one not blocked by Unreal source access. The work is on branch `claude/srv-03-server-contract`, cut from `claude/fix-unity-build` at `93b87c8` (it includes the PR #16 unity fix), in commits `86a2a6f` (implementation) and `c52b3b8` (runner timing fix and CI). The match-runtime stream is merged and idle. The `Match/` change only forwards rules effects and adds a development-only timing switch. The setup session was told which shared files changed; the new Weapons, Settings and Shot-effects sessions own none of them.
+
+**Changed:**
+- `Source/ValStrike/Server/VSServerContract.*` is engine-free C++ with only the standard library. It parses the allowlisted `-VSServer*` switches and checks the map/mode allowlist. It holds the lifecycle state machine (Starting → Ready → Allocated → InMatch → Ending → Exited) and its opt-in exit rules, and formats the single-line match result as JSON.
+- `VSServerSubsystem.*` is a game-instance subsystem created only in dedicated-server processes. It logs the `VSSERVER_VERSION` line, validates the startup switches and the loaded map/mode, and drives the lifecycle from the player count and match effects. It reports health every 10 s, sends clients a return-to-menu message when the server ends, and exits through the engine. Results are logged and saved under `Saved/ServerResults/`.
+- `VSServerProvider.*` defines the provider and admission interfaces. The `local` provider logs; the `open` admission accepts every join.
+- Hooks: `AVSGameMode::PreLogin` calls the admission check. `AVSMatchGameMode::ApplyEffects` forwards each new effect. `-VSMatchFastTimings` (development builds only) sets 1 s preparation, 3 s rounds and a 0.5 s result display for lifecycle runs.
+- `ValStrike.Build.cs` writes the Git revision to `Intermediate/VSBuildInfo/VSBuildInfo.h`. It registers HEAD and the branch ref as UBT external dependencies, so a commit regenerates the header.
+- `Scripts/ue.py server` gains `--session-id`, `--max-players`, `--exit-when-done`, `--empty-timeout` and `--result-grace`.
+- New tests: `Scripts/test_server_contract.py` with `Tests/Server/VSServerContractTests.cpp`, and `Scripts/test_server_lifecycle.py` with `Tests/Server/test_server_lifecycle_runner.py`. CI runs both engine-free parts.
+- SETUP.md documents the contract and commands. Decision 0002 has implementation notes.
+
+**Behavior change for every `-server` process:**
+- An unknown, duplicate or invalid `-VSServer*` switch stops startup, as does a map/mode outside the allowlist or an invalid Site01 match contract.
+- Joins are refused while the server is starting or ending.
+- `GameSession->MaxPlayers` comes from the switch; the default of 4 equals the existing config.
+
+Without `-VSServerExitWhenDone`, the server keeps running exactly as before.
+
+**Verification** (Unreal 5.8.4 CL 58902052, Xcode 26.1.1, Apple clang 17.0.0, M3 Mac, Development Editor binary, loopback, null RHI, no audio, no artificial latency/loss). Runtime runs used source at `c52b3b8`; only the docs were uncommitted, so runner metadata reports a dirty checkout.
+
+| Check | Result | Evidence |
+| --- | --- | --- |
+| Standalone contract, normal and ASan/UBSan | 16/16 cases, 141 checks each | `Saved/Tests/ServerContract/` |
+| Engine-free Python suites | 137 tests OK (helper 35, Site01 7, playtest 36, combat 19, match 22, presentation 11, server 7) | local run |
+| Editor build | Passed: 12.7 s at `86a2a6f` (full unity blob), 13.3 s at `c52b3b8` (makefile invalidated by the branch ref; header regenerated) | helper build receipt |
+| Server lifecycle | 26/26 (invalid 6, empty 9, match 11) | `Saved/Tests/ServerLifecycle/20261103T205536Z_fd21f8/result.json` |
+| Movement | 45/45 | `Saved/Tests/Movement/20261103T205721Z_ebbb74/result.json` |
+| Combat | 55/55 | `Saved/Tests/Combat/20261103T205833Z_ab01b6/result.json` |
+| Match | 43/43 | `Saved/Tests/Match/20261103T205957Z_edf73b/result.json` |
+| UI session, null RHI (not the documented mode) | 24/32. Fails at Slate Tab and character entry in the standalone client menu, before any network traffic; the server logged no connection attempt. Not a valid regression signal; see below | `Saved/Tests/UI/20261103T210348Z_dd944a/result.json` |
+| Presentation test mode on a dedicated server | Reached Ready as `development-test` (server-only probe, then stopped) | `Saved/Tests/ServerScratch/presentation_mode_server.log` |
+
+The module SHA256 for the runtime runs was `368925e2f3356593…`. Measurements from the lifecycle runner:
+- Invalid launch: the unknown switch was logged as `VSSERVER_EXIT code=2`, and the server never logged a map.
+- Empty timeout: 30,015 ms from the last player leaving to Ending (30,000 ms configured). A second client was refused with `PreLogin failure: Server full.` at `-VSServerMaxPlayers=1`.
+- Match: six idle timeout rounds produced a 3–3 draw with sides swapped after round 3, and the logged and saved records were identical. Ending came 2,013 ms after match completion (2,000 ms grace). Both clients disconnected 72 ms after the closing message (2,000 ms drain limit), and the process exited 0.
+- Health lines reported 56.8–57.2 Hz under `t.MaxFPS 60`, with average busy frame time of 0.34–0.59 ms and a 36 ms maximum in the first window.
+
+The scripted match smoke wrote two result records:
+- Match 1: a 3–3 draw covering all four win reasons.
+- Match 2, after a rematch: 6–0 for team one.
+
+The server logged no score mismatch and stayed up without the exit flag, as intended.
+
+**UI suite note:** SETUP documents the UI suite with `--rendered`. A headless run was tried here to avoid opening a window while another session was running the user's demo. The menu's Tab navigation and text entry need a laid-out Slate window, so the address check fails before the client sends a join. This failure occurs in the client process, which never creates the server subsystem. The server-side join path the UI suite would exercise (a client joining a practice server through `PreLogin`) passed in the movement and combat runs. The rendered UI suite has not been rerun on this branch.
+
+**Failed attempt retained:** In run `20261103T205225Z_9c6f4b`, the empty scenario failed. Its 4 s timeout, which also runs before anyone joins, expired before the cold editor client finished joining (about 8 s). The server behaved correctly; the runner was sized wrongly. `c52b3b8` raises the timeout to 30 s. The invalid and match scenarios passed in that run.
+
+**Limits:**
+- All runtime evidence comes from the Editor binary on one Mac. No packaged or Linux server, fleet provider, join tickets or multi-server host exists yet (SRV-01/02/04, SET-03).
+- The Mac Editor binary returns exit code 0 for every requested exit. Non-zero codes are implemented but unverified until a Linux/Windows run.
+- The network-version check is the engine default. It is not bound to the Git revision, and the revision header ignores uncommitted edits.
+- A future test game mode on a dedicated server must be added to `ValidateMapMode`.
+- The rendered UI, combat-look and rifle-presentation client suites were not run on this branch. Combat-look starts no dedicated server. The presentation server path is covered by the probe above, and the UI server path by the movement and combat joins. SRV-03 stays In progress until the rendered UI suite passes.
+
+**Next action:** Run `python3 Tests/UI/test_session.py --rendered` when the screen is free, and mark SRV-03 Done if it passes. Merge PR #16, then review and merge this branch. SRV-01 (Epic source access) remains the blocker for the packaged Linux server. When it lands, verify non-zero exit codes on Linux and decide whether to bind the revision into the network version (SET-03/REL-01).
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.
