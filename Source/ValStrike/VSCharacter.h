@@ -93,6 +93,8 @@ private:
     UPROPERTY(VisibleAnywhere, Category = "Prototype")
     TObjectPtr<UStaticMeshComponent> HeadVisual;
 
+    // Fallback only: an AVSPlayerController supplies the local player's saved
+    // setting (VSUserSettings, same 0.12 default). Never replicated.
     UPROPERTY(EditDefaultsOnly, Category = "Input", meta = (ClampMin = "0.01", ClampMax = "2.0"))
     float MouseSensitivity = 0.12f;
 
