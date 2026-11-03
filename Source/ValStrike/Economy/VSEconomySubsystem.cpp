@@ -3,6 +3,8 @@
 #include "VSEconomyWallet.h"
 #include "Tests/VSEconomySmoke.h"
 #include "../Combat/VSHealthComponent.h"
+#include "../Damage/VSDamageEvents.h"
+#include "../Damage/VSDamageSubsystem.h"
 #include "../Match/VSMatchGameState.h"
 #include "../Match/VSMatchPlayerState.h"
 #include "../Rules/VSMatchRules.h"
@@ -53,6 +55,12 @@ void UVSEconomySubsystem::Initialize(FSubsystemCollectionBase& Collection)
     Super::Initialize(Collection);
     PostLoginHandle = FGameModeEvents::OnGameModePostLoginEvent().AddUObject(this, &UVSEconomySubsystem::HandlePostLogin);
     LogoutHandle = FGameModeEvents::OnGameModeLogoutEvent().AddUObject(this, &UVSEconomySubsystem::HandleLogout);
+    // Attributed kills come from the damage service; it is initialized first and outlives us.
+    if (UVSDamageSubsystem* Damage = Collection.InitializeDependency<UVSDamageSubsystem>())
+    {
+        DamageSource = Damage;
+        KillHandle = Damage->OnKill().AddUObject(this, &UVSEconomySubsystem::HandleKill);
+    }
     ValStrikeEconomyTests::StartEconomySmoke();
 }
 
@@ -60,6 +68,8 @@ void UVSEconomySubsystem::Deinitialize()
 {
     FGameModeEvents::OnGameModePostLoginEvent().Remove(PostLoginHandle);
     FGameModeEvents::OnGameModeLogoutEvent().Remove(LogoutHandle);
+    if (UVSDamageSubsystem* Damage = DamageSource.Get()) { Damage->OnKill().Remove(KillHandle); }
+    DamageSource.Reset();
     Wallets.Reset();
     Super::Deinitialize();
 }
@@ -379,16 +389,30 @@ void UVSEconomySubsystem::HandleRequest(AVSEconomyWallet* Wallet, EVSEconomyRequ
     PublishWallets();
 }
 
-bool UVSEconomySubsystem::ReportKill(AController* Killer, AController* Victim)
+void UVSEconomySubsystem::HandleKill(const FVSDamageEvent& Event)
 {
-    if (!IsEconomyActive() || !Killer || !Victim || Killer == Victim) { return false; }
+    // Server-only broadcast; its pointers are valid only during this call.
+    if (!Event.bKilled || !IsEconomyActive()) { return; }
+    const bool bCredited = CreditKill(Event.Instigator, Event.VictimController, Event.Victim);
+#if !UE_BUILD_SHIPPING && !UE_BUILD_TEST
+    ++(bCredited ? KillsCredited : KillsRefused);
+#else
+    (void)bCredited;
+#endif
+}
+
+bool UVSEconomySubsystem::CreditKill(AController* Killer, AController* Victim, const APawn* VictimPawn)
+{
+    if (!Killer || !Victim || Killer == Victim) { return false; }
     const AVSEconomyWallet* KillerWallet = FindWallet(Killer);
     const AVSEconomyWallet* VictimWallet = FindWallet(Victim);
-    const AVSCharacter* VictimPawn = Cast<AVSCharacter>(Victim->GetPawn());
+    const AVSCharacter* VictimCharacter = Cast<AVSCharacter>(VictimPawn ? VictimPawn : Victim->GetPawn());
     // Never credit a report about a player who is not actually dead on the server.
-    if (!KillerWallet || !VictimWallet || !VictimPawn || !VictimPawn->GetHealthComponent() ||
-        VictimPawn->GetHealthComponent()->IsAlive())
+    if (!KillerWallet || !VictimWallet || !VictimCharacter || !VictimCharacter->GetHealthComponent() ||
+        VictimCharacter->GetHealthComponent()->IsAlive())
     {
+        UE_LOG(LogValStrike, Display, TEXT("VSECON kill refused: killer=%s victim=%s (no wallet or victim alive)"),
+            *GetNameSafe(Killer), *GetNameSafe(Victim));
         return false;
     }
     ObserveMatch();

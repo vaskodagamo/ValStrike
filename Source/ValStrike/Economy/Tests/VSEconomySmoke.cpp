@@ -5,6 +5,8 @@
 #include "../VSEconomyWallet.h"
 #include "../UI/VSEconomyClientSubsystem.h"
 #include "../../Combat/VSHealthComponent.h"
+#include "../../Damage/VSDamageEvents.h"
+#include "../../Damage/VSDamageSubsystem.h"
 #include "../../Match/VSMatchGameState.h"
 #include "../../Match/VSMatchObjective.h"
 #include "../../Match/VSMatchPlayerState.h"
@@ -177,13 +179,42 @@ private:
     void KillThroughHealth(UVSEconomySubsystem* Economy, APlayerController* Killer, APlayerController* Victim)
     {
         AVSCharacter* Pawn = Victim ? Cast<AVSCharacter>(Victim->GetPawn()) : nullptr;
-        const bool bDied = Pawn && Pawn->GetHealthComponent()->ApplyPointDamage(1000.0f) > 0.0f && !Pawn->GetHealthComponent()->IsAlive();
-        // Combat does not report killers yet (handoff); the harness reports through the same
-        // server-only entry point combat will call. A repeat report must not pay again.
-        const bool bFirst = Economy->ReportKill(Killer, Victim);
-        const bool bRepeat = Economy->ReportKill(Killer, Victim);
-        Check(TEXT("kill_reward"), bDied && bFirst && !bRepeat,
-            FString::Printf(TEXT("round=%d died=%d first=%d repeat=%d"), Sequence, bDied, bFirst, bRepeat));
+        UVSDamageSubsystem* Damage = UVSDamageSubsystem::Get(Economy);
+        const uint32 CreditedBefore = Economy->DevelopmentKillsCredited();
+        const uint32 RefusedBefore = Economy->DevelopmentKillsRefused();
+        // The fire path does not reach UVSDamageSubsystem yet (Damage Phase 2). The harness
+        // publishes the attributed kill through PublishDamage, the documented server entry for
+        // damage applied elsewhere, so the economy's OnKill subscription is what gets tested.
+        FVSDamageEvent Event;
+        Event.Instigator = Killer;
+        Event.InstigatorPawn = Killer ? Killer->GetPawn() : nullptr;
+        Event.VictimController = Victim;
+        Event.Victim = Pawn;
+        Event.Zone = ValStrike::Damage::HitZone::UpperTorso;
+        Event.Weapon = ValStrike::Damage::WeaponClass::Rifle;
+        Event.RequestedDamage = 1000.0f;
+        Event.bKilled = true;
+        const bool bProbeLiving = Sequence == 2;
+        if (Damage && Pawn && bProbeLiving)
+        {
+            // A kill notification about a player who is still alive must be refused.
+            Event.AppliedDamage = 1.0f;
+            Damage->PublishDamage(Event);
+        }
+        const float Applied = Pawn ? Pawn->GetHealthComponent()->ApplyPointDamage(1000.0f) : 0.0f;
+        const bool bDied = Pawn && Applied > 0.0f && !Pawn->GetHealthComponent()->IsAlive();
+        Event.AppliedDamage = Applied;
+        if (Damage && bDied)
+        {
+            Damage->PublishDamage(Event);
+            Damage->PublishDamage(Event); // A repeated notification must not pay again.
+        }
+        const uint32 Credited = Economy->DevelopmentKillsCredited() - CreditedBefore;
+        const uint32 Refused = Economy->DevelopmentKillsRefused() - RefusedBefore;
+        Check(TEXT("kill_reward"), Damage && bDied && Credited == 1 && Refused == (bProbeLiving ? 2u : 1u),
+            FString::Printf(TEXT("round=%d via UVSDamageSubsystem::OnKill: died=%d credited=%u refused=%u (repeat%s)"),
+                Sequence, bDied, Credited, Refused, bProbeLiving ? TEXT(" + living victim") : TEXT("")));
+        if (bProbeLiving) { Check(TEXT("kill_live_victim_refused"), Refused == 2, FString::Printf(TEXT("refused=%u"), Refused)); }
     }
 
     void OnGrant(APlayerController*, const FVSEconomyLoadout& Loadout, EVSEconomyGrantReason Reason)
