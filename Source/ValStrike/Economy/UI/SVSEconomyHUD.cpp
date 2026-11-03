@@ -221,9 +221,10 @@ TSharedRef<SWidget> SVSEconomyHUD::MakeRow(EVSEconomyItem Item, const FText& Key
         ]
         + SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
         [
-            SNew(SBox).WidthOverride(104)
+            // Wide enough for "REFUND"/"OWNED" at 960x540 without clipping.
+            SNew(SBox).WidthOverride(124)
             [
-                SNew(SButton).HAlign(HAlign_Center).ContentPadding(FMargin(10, 7))
+                SNew(SButton).HAlign(HAlign_Center).ContentPadding(FMargin(4, 7))
                 .ButtonColorAndOpacity_Lambda([this, Item]() {
                     const AVSEconomyWallet* W = LocalWallet();
                     return FSlateColor(W && W->GetView().CanRefund(Item) ? EconomyAlert : EconomyMint);
