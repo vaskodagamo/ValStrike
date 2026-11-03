@@ -11,4 +11,8 @@ class VALSTRIKE_API AVSHUD : public AHUD
 
 public:
     virtual void DrawHUD() override;
+
+private:
+    void DrawLabel(const FString& Text, float X, float Y, float Height, const FLinearColor& Color,
+        bool bCentered = false);
 };

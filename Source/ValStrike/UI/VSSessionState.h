@@ -1,0 +1,33 @@
+#pragma once
+
+#include "CoreMinimal.h"
+#include "Engine/EngineBaseTypes.h"
+#include "Subsystems/GameInstanceSubsystem.h"
+#include "VSSessionState.generated.h"
+
+class UNetDriver;
+
+/** Local connection feedback survives the engine's return-to-default-map travel. */
+UCLASS()
+class UVSSessionState : public UGameInstanceSubsystem
+{
+    GENERATED_BODY()
+public:
+    virtual void Initialize(FSubsystemCollectionBase& Collection) override;
+    virtual void Deinitialize() override;
+
+    FString Address;
+    FText Status;
+    bool bConnecting = false;
+    bool bError = false;
+    bool bOpenMenuOnArrival = false;
+
+    void SetStatus(const FText& Message, bool bIsError = false);
+
+private:
+    void NetworkFailure(UWorld* World, UNetDriver* Driver, ENetworkFailure::Type Type, const FString& Error);
+    void TravelFailure(UWorld* World, ETravelFailure::Type Type, const FString& Error);
+    void ShowFailure(const FText& Message);
+    FDelegateHandle NetworkFailureHandle;
+    FDelegateHandle TravelFailureHandle;
+};
