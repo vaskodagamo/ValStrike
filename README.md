@@ -2,7 +2,7 @@
 
 An original desktop tactical FPS: deliberate movement and round-based combat inspired by Counter-Strike, with a clean, stylized visual direction inspired by Valorant.
 
-**Current state:** bootstrap implementation. The C++ project, movement code, map generator, and development launcher are present. The Mac Editor target compiles and the generated arena loads in a development client. A three-process development movement smoke test passes 45 checks. Rendered movement acceptance and packaged multiplayer verification are pending.
+**Current state:** development combat and session foundation. The project includes replicated movement, a server-owned rifle, health/death, corrected mouse look, a live HUD and private-server menu. A complete objective match, final weapon presentation and packaged multiplayer remain in progress. Verification and its limits are recorded in the work log.
 
 **Confirmed direction:** desktop first, with a foundation that can grow into a larger game.
 

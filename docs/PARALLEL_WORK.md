@@ -14,7 +14,7 @@ Updated: 2026-11-03. The user requested parallel chats to accelerate the MVP. Th
 | Build the first tactical map | `Content/Maps/Site01/`, `Art/Source/Maps/Site01/`, `Tests/Maps/Site01/`, `docs/maps/site01/`, `docs/workstreams/tactical-map.md` | Original one-site 2v2 map using the finished environment kit; see MAP_BRIEF.md |
 | Implement round and objective rules | `Source/ValStrike/Rules/`, `Tests/Rules/`, `Scripts/test_round_rules.py`, `docs/workstreams/round-rules.md` | Deterministic match/objective model and tests; see ROUND_RULES_BRIEF.md |
 
-The current integration base is `codex/bootstrap-fps`. Each new stream uses its assigned Git worktree and branch. Never switch the integration checkout's branch or edit another stream's worktree. Central documentation is updated by integration; each stream maintains its own append-only log and handoff. The existing asset chat has its own scope and is already building the first rifle model; do not duplicate its art.
+The current integration branch is `codex/bootstrap-fps`, synchronized with reviewed merges to `main`. Each new stream uses its assigned Git worktree and branch. Never switch the integration checkout's branch or edit another stream's worktree. Central documentation is updated by integration; each stream maintains its own append-only log and handoff. The existing asset chat has its own scope and is already building the first rifle model; do not duplicate its art.
 
 Update on 2026-11-03: the original rifle asset chat has completed `cac8151` and is idle. The user requested a new pistol chat and a stronger rifle/pistol palette. The new weapon-asset workstream owns that follow-up in a separate checkout; it reuses the completed rifle and does not rebuild its accepted geometry. Pistol art does not expand the single-rifle gameplay milestone.
 
@@ -68,3 +68,9 @@ Both new chats started from shared-contract commit `b245939` on 2026-11-03. They
 - Implement round and objective rules: chat `01a1a208-8ed9-7651-8753-525b2b158f24`, branch `codex/round-rules`, checkout `.parallel-worktrees/round-rules`, starting from `fc3e857`.
 
 The map and rules chats started on 2026-11-03 and acknowledged their assigned checkouts. They are local project chats; all edits must use those explicit checkout paths even if the app displays the parent project directory.
+
+## Combat and UI integration, 2026-11-03
+
+Finished rifle `2a6b2d5` and HUD `4901718` are combined on `codex/integrate-combat-ui` for a reviewed PR to `main`. This includes mouse fix `8e81e84`. Integration adds real combat assertions to the UI regression; the original unavailable-data assertion belongs only to the earlier movement baseline. Root handles merge and synchronizing `codex/bootstrap-fps`.
+
+The tactical-map, round-rules and pistol/finish chats continue in their assigned checkouts. Their sources/assets are not included in this combat/UI increment, and their ownership stays intact. Keep completed branch history available for handoffs; no active branch is deleted or rebased. Full match, art and packaged acceptance gates remain open.

@@ -112,6 +112,31 @@ Record meaningful work sessions here in chronological order. Use Europe/Berlin d
 
 **Next action:** Review and integrate completed deliverables with combat/UI, then verify the actual server/client match loop. Each stream maintains its own log; integration owns central status and merge decisions.
 
+## 2026-11-03 Reviewed combat, mouse-look and HUD integration
+
+**Request and scope:** The user requested opening PRs and merging finished pushed work. Reviewed rifle branch `2a6b2d5` and HUD branch `4901718`; both source chats completed and their remote heads matched. Prepared `codex/integrate-combat-ui` from current integration plus the already-merged main history. No conflicts occurred. Independent source reviews found no production-code blocker in this scoped increment. Active map, round-rules and weapon-art branches retain their ownership and are not included.
+
+**Changed:** Combines authoritative rifle/ammo/reload, validated current-position traces, health/death and development reset with live HUD, safe private-server address entry, Escape/menu focus, connect/cancel/disconnect/quit and the vertical mouse fix `8e81e84`. Test commit `a06e02e` replaces the obsolete unavailable-combat UI assumption with actual standalone/replicated snapshots, held-fire menu release and reload checks. The gameplay implementation was not changed during integration. README, setup commands and backlog now describe this development foundation; GUN-01/02 are complete for their scoped behavior, while M2 and PLAY-03 remain open for their wider gates.
+
+**Build and tests:** Unreal 5.8.4 CL 58902052, Xcode 26.1.1, Mac arm64. Initial combined Editor build passed in 28.19 s; explicit UI test recompilation passed in 9.05 s. Logs are in this review checkout under `Saved/Tests/Integration/`. Final tests ran sequentially against the same compiled module from source revision `a06e02e` (only coordination docs were uncommitted). All recorded source hashes match the final source; Combat/CombatLook module hashes match the tested library. Forty lightweight Python checks passed (19 combat-runner and 21 launcher-helper), plus UI runner syntax and diff checks.
+
+| Suite | Result | Evidence under the review checkout |
+| --- | --- | --- |
+| UI | 72/72 passed | `Saved/Tests/UI/20261103T154130Z_43387b/result.json` |
+| Movement | 45/45 passed | `Saved/Tests/Movement/20261103T154220Z_b782f0/result.json` |
+| CombatLook | 8/8 passed | `Saved/Tests/CombatLook/20261103T154331Z_7ee134/result.json` |
+| Combat | 55/55 passed | `Saved/Tests/Combat/20261103T154418Z_1dabce/result.json` |
+
+Module SHA256: `1275645b01008fffbfa1c13a5467ba7a3d519004dff7517a5f9123ead8d38537`. Exact commands, engine metadata and process logs are retained with the reports. Development Editor processes used loopback, no artificial latency/loss and no audio: combat UDP 7823, movement 7827, UI server 7825 and silent timeout endpoint 7826. UI was rendered at 960×540; mouse-look at 1000×700. Setup/stream logs contain repeatable commands with configurable ports.
+
+**Observed integration:** Actual autonomous-client HUD reported 100/100 health and 30/90 ammo. Held fire consumed four rounds; Escape cleared held fire and ammo stayed at 26 over the sampled menu interval. Reload exposed its active state, then returned to 30 rounds with reserve 86. Inspected actual connected HUD, reload and menu screenshots; fields are readable and unclipped. Mouse axes, pitch limits and focus return passed. Combat and movement still pass with the custom controller/HUD present.
+
+**Failed attempt retained:** UI run `20261103T153927Z_c8b9e9` correctly failed because the initial compile overlapped the test source edit and retained an old test object. The native log still emitted the unavailable-combat assertion and lacked all new snapshots/screenshots. Forced recompilation of VSUISmoke.cpp fixed the stale test binary; the later complete suite passed. No failed run is counted as acceptance, and no production behavior was changed to make it pass.
+
+**Limits:** Development Editor verification only. Final rifle art/feedback, recoil, movement inaccuracy, phase/team eligibility, the objective match loop, physical-mouse/manual menu acceptance, rendered damage/death and respawn interactions, server-loss/listen-host/peer-activity checks, network impairment and packaged/cross-platform builds remain open. These are existing next gates, not claims of a complete MVP.
+
+**Next action:** Merge the reviewed integration PR to main and synchronize the integration checkout; then integrate the separately owned map/rules/art work when ready and complete the remaining runtime gates. Keep source branches and their handoff history available.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.

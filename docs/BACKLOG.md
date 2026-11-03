@@ -26,14 +26,14 @@ Updated: 2026-11-03. `Ready` means work can start; `Queued` means prerequisites 
 | MOVE-01 | Build graybox movement arena | In progress | SET-02 | Collision, player scale, spawns, stairs and cover are usable |
 | MOVE-02 | Add replicated FPS controls | In progress | SET-03, MOVE-01 | Walk, crouch, jump, mouse look and remote body state work for two clients |
 | MOVE-03 | Validate movement under latency/loss | Queued | MOVE-02 | Measured RTT/jitter/loss and corrections recorded; no repeatable stuck or divergent movement on supported conditions |
-| GUN-01 | Add server-owned rifle state | In progress | MOVE-02 | Cadence, ammo, reload, fire state and tuning data agree across server/clients |
-| GUN-02 | Add hits, health, death and development reset | Queued | GUN-01 | Server validates traces/damage; cover blocks shots; dead players cannot act; server-only development reset restores players/ammo for repeated tests |
+| GUN-01 | Add server-owned rifle state | Done | MOVE-02 | Cadence, ammo, reload, fire state and tuning data agree across server/clients |
+| GUN-02 | Add hits, health, death and development reset | Done | GUN-01 | Server validates traces/damage; cover blocks shots; dead players cannot act; server-only development reset restores players/ammo for repeated tests |
 | GUN-03 | Add immediate local feedback | Queued | GUN-02 | Recoil, crosshair, firing audio/effects, confirmed hits and death feedback work without duplicate effects |
 | GUN-04 | Verify weapon authority and network behavior | Queued | GUN-03, MOVE-03 | Invalid/repeated requests rejected; rule tests pass; moving-target hit behavior measured and limitations documented |
 
 Movement evidence (2026-11-03): a three-process loopback smoke test passed 45 checks covering normal/slow/crouched speeds, replicated stance/body bounds, camera height, jump/landing, walls, stairs and cover. MOVE-01/02 remain in progress until the rendered checks are complete; MOVE-03 latency/loss and SET-03 packaging are still open. See WORK_LOG.md and the repeatable command in SETUP.md.
 
-Parallel implementation: rifle gameplay is assigned to `codex/rifle-gameplay`; the independent HUD/session subset of PLAY-03 is assigned to `codex/hud-session`. Round-state integration, final sound/settings and existing dependencies remain open. Ownership and chat references are in PARALLEL_WORK.md.
+Integrated development foundation (2026-11-03): GUN-01/02 have server/two-client evidence, and the independent HUD/session subset of PLAY-03 has rendered integration evidence. The original branches are `codex/rifle-gameplay` and `codex/hud-session`. GUN-03/04, round eligibility, network impairment, final sound/settings and packaged acceptance remain open. Ownership and chat references are in PARALLEL_WORK.md.
 
 ## M3 Complete round loop
 
@@ -91,10 +91,10 @@ Add discovered bugs with an ID, severity, build/revision, platform, reproduction
 ### BUG-01 — Reversed mouse look
 
 - Severity: P1 for the current playtest controls.
-- Status: In progress; assigned to the “Implement rifle gameplay” chat on `codex/rifle-gameplay`.
+- Status: Fixed in `8e81e84`, included in the combat/UI integration. Rendered axis-event checks pass for all four directions, pitch limits and focus return. Physical mouse and manual Escape/resume acceptance remain part of the broader movement/UI checks.
 - Reported: 2026-11-03 by the user. Exact running build/affected axis not yet confirmed; the same mouse-look functions exist in integration `4fbef78` and the inspected gameplay worktree.
 - Reproduction: enter the game and move the mouse horizontally and vertically. User reports reversed camera movement.
 - Expected: right/left input turns right/left; up/down input looks up/down with normal non-inverted FPS defaults.
-- Investigation: `VSCharacter::LookPitch` explicitly negates MouseY input; this is a lead, not a verified diagnosis. Check mapping/configuration and actual input signs before changing either axis.
+- Verified cause: Unreal supplies positive MouseY for upward movement with legacy scales disabled; `VSCharacter::LookPitch` negated it again. Removed that extra sign; yaw and sensitivity are unchanged.
 - Completion: minimal fix, compiled C++, rendered verification of all four directions and pitch limits, focused evidence and separate commit where practical. Existing scripted movement checks force camera rotation and do not cover this defect.
-- Next action: review and integrate the gameplay chat’s focused fix; retain weapon/HUD changes independently.
+- Next action: complete the physical-mouse/menu acceptance pass on the integrated build. Keep the rendered regression for future input changes.

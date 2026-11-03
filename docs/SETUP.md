@@ -79,7 +79,7 @@ Server logs are written to `Saved/Logs/VS_Server_<port>.log`; each client gets `
 
 These are editor processes. They do not cook/package the game and do not satisfy the packaged dedicated-server gate. `build --target Game` builds the standalone game target; cooking and packaging remain separate work. Client/Server build targets require the source-engine path. The helper deliberately rejects other-platform builds from this Mac; use an actual Windows or Linux build environment for those targets.
 
-Controls: WASD, mouse look, Space jump, Left Ctrl crouch, Left Shift slow walk. Slow walk currently scales analog acceleration as well as speed; feel and camera behavior need runtime testing. The graybox is a movement test arena, not the final objective map. No weapons or round rules are implemented yet.
+Controls: WASD, mouse look, Space jump, Left Ctrl crouch, Left Shift slow walk, left mouse fire, R reload, Escape session menu. The menu supports private join by host:port, resume, disconnect and quit. The graybox remains a regression arena; there is no objective match or automatic round respawn yet. Rifle visuals, recoil, movement inaccuracy, sound and round eligibility remain separate work. Slow walk currently scales analog acceleration as well as speed; final physical input/feel acceptance is pending.
 
 ## Repeatable development movement test
 
@@ -119,3 +119,16 @@ The first Editor build passed UHT and all C++ compilation/link steps; captured o
 Two startup automation condition errors and an audio-device/sample-rate warning appeared in the first editor log; no project automation suite was invoked, and their origin remains unverified. Audio is not tested. Windows/Linux SDK discovery failures reflect absent target toolchains. About 382 GiB remained free after installation.
 
 Two separate editor clients joined the local development server on 127.0.0.1:7777 on 2026-11-03. Both completed map travel; full visible replication and movement acceptance are still pending. The corrected graybox lighting and basic forward movement were visually inspected. The initial sunlight setting was reduced from 5000 to 3.0 for fixed exposure.
+
+## Combat and session regression commands
+
+After building the Editor target, run these from the checkout being verified. Each runner closes only its own processes and writes exact commands, source hashes and results under `Saved/Tests/`. Use free ports if another chat is testing. These are development Editor tests, not packaged acceptance.
+
+```sh
+python3 Scripts/test_combat.py --engine /Users/webproduktion3/UE_5.8/UE_5.8
+python3 Scripts/test_movement.py --engine /Users/webproduktion3/UE_5.8/UE_5.8
+python3 Scripts/test_combat_look.py --engine /Users/webproduktion3/UE_5.8/UE_5.8
+python3 Tests/UI/test_session.py --engine /Users/webproduktion3/UE_5.8/UE_5.8 --rendered
+```
+
+The UI suite uses actual combat snapshots and firing/reload input on the integrated branch. The mouse-look runner injects engine axis events and checks rendered camera directions; it does not move a physical mouse. Combat tests use current-position hit registration over loopback without artificial latency/loss. See the latest WORK_LOG.md entry for verified combined results and `docs/workstreams/combat.md` / `ui.md` for the original branch evidence.
