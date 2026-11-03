@@ -153,6 +153,22 @@ Module SHA256: `1275645b01008fffbfa1c13a5467ba7a3d519004dff7517a5f9123ead8d38537
 
 **Next action:** Review finished commits in dependency order, then rehearse local server/two-client match flow and prepare the user's first real two-Mac LAN test. The coordinator handles publication/PRs and shared wiring; the active chats keep their bounded scopes. Packaged/server-source access is a separate open gate.
 
+## 2026-11-03 Second Mac checkout and proposed server hosting path
+
+**Request:** The user asked to set up the project on a second Mac, suggest how parallel AI agents can scale, and plan a server path that can grow to many servers.
+
+**Machine:** Apple M3, 16 GB memory, macOS 15.6.1 (24G90), arm64, about 81 GiB free. This is not the M4 machine described in SETUP.md. Its paths under `/Users/webproduktion3` do not exist here.
+
+**Setup changed:** The initial clone had aborted during checkout because Git LFS was absent: only four files were on disk and about 300 appeared as staged deletions. The four on-disk files matched `HEAD`. Installed Git LFS 3.8.1 (Homebrew), restored the tree and pulled all 102 LFS objects; the working tree was clean at `e6be4e8`. Also installed GitHub CLI 2.103.3 and Epic Games Launcher 20.3.3 (Homebrew cask). Full Xcode 26.1.1, the Metal Toolchain and Unreal 5.8.4 are not installed; they need the user's Apple and Epic sign-ins. `gh` is not yet authenticated.
+
+**Verification:** Engine-free suites passed: 33 helper/slot tests, 7 Site01 layout tests and 36 playtest-tooling tests. No Unreal build, editor launch or network test ran on this Mac. On the M4 Mac, Xcode plus Unreal consumed about 64 GiB; the current free space here would leave little room for builds and derived data.
+
+**Decision proposed:** Added [decision 0002](decisions/0002-server-hosting.md): one disposable server process per match, with staged growth from the current Editor-binary server to a packaged Linux server, several matches per host and, later, a fleet. Added SRV-01 to SRV-05 to the backlog. SRV-03, a provider-neutral lifecycle/admission/exit contract, can start on the Editor target now. No server code changed in this session.
+
+**Limits:** Hosting providers, image tags and costs are not verified for 5.8.4. Stage 3 options are candidates only. A separate session is adding engine-free CI on its own branch.
+
+**Next action:** The user frees disk space, installs Xcode 26.1.1 with the Metal Toolchain and Unreal 5.8.4, and runs `gh auth login`. Then set `UE_ROOT` for this Mac, run `doctor`, build the Editor target and run the smoke suites. In parallel, the account owner completes Epic–GitHub source access (SRV-01).
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.
