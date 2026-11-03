@@ -76,6 +76,18 @@ Record meaningful work sessions here in chronological order. Use Europe/Berlin d
 
 **Next action:** Integrate their reviewed commits one at a time and rerun gameplay/network/UI checks. Stream logs live under `docs/workstreams/`; the central backlog and log stay with integration. Creation/active status is not evidence that those features are implemented.
 
+## 2026-11-03 Pistol asset and weapon-finish follow-up
+
+**Request:** The user confirmed the rifle was done, liked its shape, requested cooler/more intimidating colors, and asked to start a new pistol asset chat.
+
+**Evidence reviewed:** The existing asset chat completed and is idle. Rifle commit `cac8151` on `codex/rifle-asset` has a clean checkout, editable Blender/FBX sources, native Unreal assets, and recorded import/socket/reopen checks. Inspected the actual Unreal studio preview: the broad cream panel and muted teal are the main palette elements being revised. Rifle gameplay is a separate active workstream.
+
+**Prepared:** Added WEAPON_ART_DIRECTION.md for ART-03: an original pistol and a shared stronger finish for both weapons, starting with charcoal, cool gunmetal/steel and restrained crimson accents. Require actual-material comparisons, readable values in first-person views, source/native consistency and preserved rifle geometry/socket measurements. A new isolated asset worktree will include the completed rifle and current integration instructions. The existing rifle branch remains the comparison reference.
+
+**Scope:** Pistol visual assets and rifle material/color revisions only; no pistol mechanics, weapon switching, inventory or economy added. Source code, maps, central documentation and the two active gameplay/UI worktrees remain under their existing ownership.
+
+**Next action:** Start the dedicated pistol/weapon-finish chat, review its previews and validation, then integrate the asset branch separately from gameplay changes.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.

@@ -10,8 +10,11 @@ Updated: 2026-11-03. The user requested two additional chats to accelerate the M
 | Add the first game assets (existing) | `Art/Source/`, `Content/Art/`, asset manifests and logs in its existing worktrees | Original stylized environment kit and rifle model |
 | Implement rifle gameplay | `Source/ValStrike/Combat/`, `VSCharacter.h/.cpp`, `Tests/Combat/`, uniquely named combat smoke files/scripts, `docs/workstreams/combat.md` | Server-owned rifle, ammo/reload, traces, health/death and focused tests |
 | Build HUD and session controls | `VSHUD.h/.cpp`, `Source/ValStrike/UI/`, new `VSPlayerController.h/.cpp`, `ValStrike.Build.cs` only for UI dependencies, `VSGameMode.cpp` only controller-class wiring, `Tests/UI/`, `docs/workstreams/ui.md` | Readable HUD and working join/menu controls |
+| Pistol and weapon finishes (new) | Pistol01 assets plus scoped Rifle01 material/color revisions in its own worktree | Original pistol and a cooler shared rifle/pistol finish; see WEAPON_ART_DIRECTION.md |
 
 The current integration base is `codex/bootstrap-fps`. Each new stream uses its assigned Git worktree and branch. Never switch the integration checkout's branch or edit another stream's worktree. Central documentation is updated by integration; each stream maintains its own append-only log and handoff. The existing asset chat has its own scope and is already building the first rifle model; do not duplicate its art.
+
+Update on 2026-11-03: the original rifle asset chat has completed `cac8151` and is idle. The user requested a new pistol chat and a stronger rifle/pistol palette. The new weapon-asset workstream owns that follow-up in a separate checkout; it reuses the completed rifle and does not rebuild its accepted geometry. Pistol art does not expand the single-rifle gameplay milestone.
 
 ## Shared contract
 

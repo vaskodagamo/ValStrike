@@ -62,6 +62,14 @@ Parallel implementation: rifle gameplay is assigned to `codex/rifle-gameplay`; t
 | REL-02 | Complete full 2v2 acceptance session | Queued | REL-01 | Four clients on at least two machines finish a match and rematch; disconnect and join checks pass |
 | REL-03 | Resolve blocking defects and record release | Queued | REL-02 | No known blockers; limits and build identifier recorded; installation/playtest handoff works |
 
+## Asset work in parallel
+
+| ID | Task | Status | Completion condition |
+| --- | --- | --- | --- |
+| ART-03 | Create pistol and revise rifle/pistol finishes | In progress | Original pistol source/export/native assets; consistent cooler weapon palette; inspected actual studio/first-person previews; rifle geometry/socket contract retained; integration limits recorded |
+
+The user explicitly requested pistol assets on 2026-11-03 after rifle asset commit `cac8151`. This art increment does not add pistol gameplay to the single-rifle MVP. See WEAPON_ART_DIRECTION.md.
+
 ## Follow-on work
 
 | ID | Task | Status | Entry condition |
