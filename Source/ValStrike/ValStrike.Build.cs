@@ -6,6 +6,6 @@ public class ValStrike : ModuleRules
     {
         PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
         PublicDependencyModuleNames.AddRange(new[] { "Core", "CoreUObject", "Engine" });
-        PrivateDependencyModuleNames.AddRange(new[] { "InputCore", "EnhancedInput" });
+        PrivateDependencyModuleNames.AddRange(new[] { "InputCore", "EnhancedInput", "Slate", "SlateCore" });
     }
 }

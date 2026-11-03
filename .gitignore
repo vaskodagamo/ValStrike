@@ -23,6 +23,7 @@ __pycache__/
 *.py[cod]
 .venv/
 .asset-worktrees/
+.parallel-worktrees/
 .env
 .env.*
 !*.example

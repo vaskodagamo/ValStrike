@@ -1,6 +1,11 @@
 #include "VSCharacter.h"
 
 #include "Camera/CameraComponent.h"
+#include "Combat/VSHealthComponent.h"
+#include "Combat/VSRifleComponent.h"
+#include "Combat/VSCombatSmoke.h"
+#include "Components/BoxComponent.h"
+#include "Components/SphereComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
@@ -25,6 +30,21 @@ AVSCharacter::AVSCharacter()
     SetReplicateMovement(true);
 
     GetCapsuleComponent()->InitCapsuleSize(34.0f, 88.0f);
+    GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Ignore);
+    Health = CreateDefaultSubobject<UVSHealthComponent>(TEXT("Health"));
+    Rifle = CreateDefaultSubobject<UVSRifleComponent>(TEXT("Rifle"));
+    BodyHitRegion = CreateDefaultSubobject<UBoxComponent>(TEXT("BodyHitRegion"));
+    HeadHitRegion = CreateDefaultSubobject<USphereComponent>(TEXT("HeadHitRegion"));
+    for (UShapeComponent* Region : {static_cast<UShapeComponent*>(BodyHitRegion), static_cast<UShapeComponent*>(HeadHitRegion)})
+    {
+        Region->SetupAttachment(GetCapsuleComponent());
+        Region->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+        Region->SetCollisionResponseToAllChannels(ECR_Ignore);
+        Region->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
+        Region->SetGenerateOverlapEvents(false);
+        Region->SetCanEverAffectNavigation(false);
+    }
+    HeadHitRegion->SetSphereRadius(16.0f);
     bUseControllerRotationYaw = true;
     bUseControllerRotationPitch = false;
     bUseControllerRotationRoll = false;
@@ -77,14 +97,39 @@ AVSCharacter::AVSCharacter()
     UpdatePrototypeVisuals();
 }
 
+FVSPlayerHUDData AVSCharacter::GetHUDData() const
+{
+    FVSPlayerHUDData Data;
+    Data.bHasHealth = true;
+    Data.Health = Health->GetHealth();
+    Data.MaxHealth = Health->GetMaxHealth();
+    Data.bAlive = Health->IsAlive();
+    Data.bHasWeapon = true;
+    Data.MagazineAmmo = Rifle->GetState().Magazine;
+    Data.MagazineCapacity = Rifle->GetMagazineCapacity();
+    Data.ReserveAmmo = Rifle->GetState().Reserve;
+    Data.bReloading = Rifle->GetState().bReloading;
+    return Data;
+}
+
+void AVSCharacter::StopCombatInput()
+{
+    Rifle->StopFire();
+}
+
 void AVSCharacter::BeginPlay()
 {
     Super::BeginPlay();
+    Health->OnLifeStateChanged.AddUObject(this, &AVSCharacter::HandleHealthChanged);
     UpdatePrototypeVisuals();
+    HandleHealthChanged();
+    ValStrikeTests::StartCombatSmoke();
 }
 
 void AVSCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+    StopCombatInput();
+    Health->OnLifeStateChanged.RemoveAll(this);
     if (InputSubsystem.IsValid() && MovementMapping)
     {
         InputSubsystem->RemoveMappingContext(MovementMapping);
@@ -114,6 +159,8 @@ void AVSCharacter::CreateInputMappings()
     JumpAction = MakeAction(TEXT("Jump"), EInputActionValueType::Boolean);
     CrouchAction = MakeAction(TEXT("Crouch"), EInputActionValueType::Boolean);
     WalkAction = MakeAction(TEXT("Walk"), EInputActionValueType::Boolean);
+    FireAction = MakeAction(TEXT("Fire"), EInputActionValueType::Boolean);
+    ReloadAction = MakeAction(TEXT("Reload"), EInputActionValueType::Boolean);
 
     const auto MapMovementKey = [this](FKey Key, bool bNegate, bool bUseYAxis)
     {
@@ -138,6 +185,8 @@ void AVSCharacter::CreateInputMappings()
     MovementMapping->MapKey(JumpAction, EKeys::SpaceBar);
     MovementMapping->MapKey(CrouchAction, EKeys::LeftControl);
     MovementMapping->MapKey(WalkAction, EKeys::LeftShift);
+    MovementMapping->MapKey(FireAction, EKeys::LeftMouseButton);
+    MovementMapping->MapKey(ReloadAction, EKeys::R);
 }
 
 void AVSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -162,7 +211,7 @@ void AVSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
     Input->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AVSCharacter::Move);
     Input->BindAction(LookYawAction, ETriggerEvent::Triggered, this, &AVSCharacter::LookYaw);
     Input->BindAction(LookPitchAction, ETriggerEvent::Triggered, this, &AVSCharacter::LookPitch);
-    Input->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
+    Input->BindAction(JumpAction, ETriggerEvent::Started, this, &AVSCharacter::BeginJump);
     Input->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
     Input->BindAction(JumpAction, ETriggerEvent::Canceled, this, &ACharacter::StopJumping);
     Input->BindAction(CrouchAction, ETriggerEvent::Started, this, &AVSCharacter::BeginCrouch);
@@ -172,13 +221,18 @@ void AVSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
     Input->BindAction(WalkAction, ETriggerEvent::Completed, this, &AVSCharacter::EndWalk);
     Input->BindAction(WalkAction, ETriggerEvent::Canceled, this, &AVSCharacter::EndWalk);
 
+    Input->BindAction(FireAction, ETriggerEvent::Started, this, &AVSCharacter::BeginFire);
+    Input->BindAction(FireAction, ETriggerEvent::Completed, this, &AVSCharacter::StopCombatInput);
+    Input->BindAction(FireAction, ETriggerEvent::Canceled, this, &AVSCharacter::StopCombatInput);
+    Input->BindAction(ReloadAction, ETriggerEvent::Started, this, &AVSCharacter::BeginReload);
+
     PlayerController->SetInputMode(FInputModeGameOnly());
     PlayerController->bShowMouseCursor = false;
 }
 
 void AVSCharacter::Move(const FInputActionValue& Value)
 {
-    if (!Controller)
+    if (!Controller || !Health->IsAlive())
     {
         return;
     }
@@ -198,11 +252,14 @@ void AVSCharacter::LookYaw(const FInputActionValue& Value)
 
 void AVSCharacter::LookPitch(const FInputActionValue& Value)
 {
-    AddControllerPitchInput(-Value.Get<float>() * MouseSensitivity);
+    AddControllerPitchInput(Value.Get<float>() * MouseSensitivity);
 }
 
-void AVSCharacter::BeginCrouch() { Crouch(); }
-void AVSCharacter::EndCrouch() { UnCrouch(); }
+void AVSCharacter::BeginFire() { Rifle->StartFire(); }
+void AVSCharacter::BeginReload() { Rifle->Reload(); }
+void AVSCharacter::BeginJump() { if (Health->IsAlive()) { Jump(); } }
+void AVSCharacter::BeginCrouch() { if (Health->IsAlive()) { Crouch(); } }
+void AVSCharacter::EndCrouch() { if (Health->IsAlive()) { UnCrouch(); } }
 void AVSCharacter::BeginWalk() { bWalkHeld = true; }
 void AVSCharacter::EndWalk() { bWalkHeld = false; }
 
@@ -227,4 +284,36 @@ void AVSCharacter::UpdatePrototypeVisuals()
     HeadVisual->SetRelativeLocation(FVector(0.0f, 0.0f, Height - 16.0f));
     HeadVisual->SetRelativeScale3D(FVector(0.32f));
     FirstPersonCamera->SetRelativeLocation(FVector(0.0f, 0.0f, Height * 0.5f - 24.0f));
+    BodyHitRegion->SetBoxExtent(FVector(25.0f, 20.0f, BodyHeight * 0.5f));
+    BodyHitRegion->SetRelativeLocation(FVector(0.0f, 0.0f, -16.0f));
+    HeadHitRegion->SetRelativeLocation(FVector(0.0f, 0.0f, Height * 0.5f - 16.0f));
+}
+
+bool AVSCharacter::IsHeadHit(const UPrimitiveComponent* Component) const
+{
+    return Component == HeadHitRegion;
+}
+
+FVector AVSCharacter::GetPawnViewLocation() const
+{
+    // Independent of the rendered camera and mesh smoothing on the server.
+    return GetActorLocation() + FVector(0.0f, 0.0f, GetCapsuleComponent()->GetScaledCapsuleHalfHeight() - 24.0f);
+}
+
+void AVSCharacter::HandleHealthChanged()
+{
+    const bool bAlive = Health->IsAlive();
+    BodyHitRegion->SetCollisionEnabled(bAlive ? ECollisionEnabled::QueryOnly : ECollisionEnabled::NoCollision);
+    HeadHitRegion->SetCollisionEnabled(bAlive ? ECollisionEnabled::QueryOnly : ECollisionEnabled::NoCollision);
+    if (!bAlive)
+    {
+        Rifle->OwnerDied();
+        StopJumping();
+        GetCharacterMovement()->StopMovementImmediately();
+        GetCharacterMovement()->DisableMovement();
+    }
+    else if (HasAuthority() && GetCharacterMovement()->MovementMode == MOVE_None)
+    {
+        GetCharacterMovement()->SetMovementMode(MOVE_Walking);
+    }
 }

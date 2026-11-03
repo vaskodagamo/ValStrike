@@ -2,7 +2,7 @@
 
 An original desktop tactical FPS: deliberate movement and round-based combat inspired by Counter-Strike, with a clean, stylized visual direction inspired by Valorant.
 
-**Current state:** bootstrap implementation. The C++ project, movement code, map generator, and development launcher are present. The Mac Editor target compiles and the generated arena loads in a development client. A three-process development movement smoke test passes 45 checks. Rendered movement acceptance and packaged multiplayer verification are pending.
+**Current state:** development combat and session foundation. The project includes replicated movement, a server-owned rifle, health/death, corrected mouse look, a live HUD and private-server menu. A complete objective match, final weapon presentation and packaged multiplayer remain in progress. Verification and its limits are recorded in the work log.
 
 **Confirmed direction:** desktop first, with a foundation that can grow into a larger game.
 
@@ -18,6 +18,10 @@ An original desktop tactical FPS: deliberate movement and round-based combat ins
 | [Backlog](docs/BACKLOG.md) | Ordered tasks, dependencies, and status |
 | [Work log](docs/WORK_LOG.md) | Work completed, verification, issues, and handoff |
 | [Asset chat brief](docs/ASSET_BRIEF.md) | Separate environment asset batch and starting prompt |
+| [Parallel work](docs/PARALLEL_WORK.md) | Chat ownership, shared combat/HUD contract, and integration |
+| [Weapon art direction](docs/WEAPON_ART_DIRECTION.md) | Pistol asset and revised rifle/pistol finishes |
+| [First tactical map](docs/MAP_BRIEF.md) | One-site layout, map ownership, spawn and objective metadata |
+| [Round rules foundation](docs/ROUND_RULES_BRIEF.md) | Isolated match/objective logic, tests and integration boundary |
 | [Agent instructions](AGENTS.md) | How future coding sessions maintain this project |
 
 ## First playable target

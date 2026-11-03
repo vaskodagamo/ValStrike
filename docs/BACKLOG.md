@@ -26,31 +26,37 @@ Updated: 2026-11-03. `Ready` means work can start; `Queued` means prerequisites 
 | MOVE-01 | Build graybox movement arena | In progress | SET-02 | Collision, player scale, spawns, stairs and cover are usable |
 | MOVE-02 | Add replicated FPS controls | In progress | SET-03, MOVE-01 | Walk, crouch, jump, mouse look and remote body state work for two clients |
 | MOVE-03 | Validate movement under latency/loss | Queued | MOVE-02 | Measured RTT/jitter/loss and corrections recorded; no repeatable stuck or divergent movement on supported conditions |
-| GUN-01 | Add server-owned rifle state | Queued | MOVE-02 | Cadence, ammo, reload, fire state and tuning data agree across server/clients |
-| GUN-02 | Add hits, health, death and development reset | Queued | GUN-01 | Server validates traces/damage; cover blocks shots; dead players cannot act; server-only development reset restores players/ammo for repeated tests |
+| GUN-01 | Add server-owned rifle state | Done | MOVE-02 | Cadence, ammo, reload, fire state and tuning data agree across server/clients |
+| GUN-02 | Add hits, health, death and development reset | Done | GUN-01 | Server validates traces/damage; cover blocks shots; dead players cannot act; server-only development reset restores players/ammo for repeated tests |
 | GUN-03 | Add immediate local feedback | Queued | GUN-02 | Recoil, crosshair, firing audio/effects, confirmed hits and death feedback work without duplicate effects |
 | GUN-04 | Verify weapon authority and network behavior | Queued | GUN-03, MOVE-03 | Invalid/repeated requests rejected; rule tests pass; moving-target hit behavior measured and limitations documented |
 
 Movement evidence (2026-11-03): a three-process loopback smoke test passed 45 checks covering normal/slow/crouched speeds, replicated stance/body bounds, camera height, jump/landing, walls, stairs and cover. MOVE-01/02 remain in progress until the rendered checks are complete; MOVE-03 latency/loss and SET-03 packaging are still open. See WORK_LOG.md and the repeatable command in SETUP.md.
 
+Integrated development foundation (2026-11-03): GUN-01/02 have server/two-client evidence, and the independent HUD/session subset of PLAY-03 has rendered integration evidence. The original branches are `codex/rifle-gameplay` and `codex/hud-session`. GUN-03/04, round eligibility, network impairment, final sound/settings and packaged acceptance remain open. Ownership and chat references are in PARALLEL_WORK.md.
+
 ## M3 Complete round loop
 
 | ID | Task | Status | Depends on | Completion condition |
 | --- | --- | --- | --- | --- |
-| RULE-01 | Implement teams and round state | Queued | GUN-04 | Preparation, active, round-end, match-end states; deterministic contested-event resolution and one score award |
+| RULE-01 | Implement teams and round state | In progress | GUN-04 | Preparation, active, round-end, match-end states; deterministic contested-event resolution and one score award |
 | RULE-02 | Implement objective carry/drop/interact | Queued | RULE-01 | Plant/defuse eligibility and interruption validated; death/disconnect drop and recovery work |
 | RULE-03 | Complete win conditions and match flow | Queued | RULE-02 | Elimination, timeout, defuse and detonation pass; six rounds, side swap, draw/win and rematch work |
 | RULE-04 | Handle joins and disconnects | Queued | RULE-03 | Late joins wait safely; teams capped; underfilled rosters pause before the next round with score preserved; empty server clears abandoned match |
 | RULE-05 | Run round regression checks | Queued | RULE-04 | All rule paths tested; ten consecutive rounds reset cleanly; edge-case evidence recorded |
 
+Parallel foundation started on 2026-11-03: `codex/round-rules` owns a deterministic rules model and focused tests covering RULE-01 through RULE-05. Runtime actors, replication, physical objective placement and networked acceptance remain integration dependencies. See ROUND_RULES_BRIEF.md; starting isolated model work does not waive GUN-04 or any milestone gate.
+
 ## M4 Stylized playable slice
 
 | ID | Task | Status | Depends on | Completion condition |
 | --- | --- | --- | --- | --- |
-| PLAY-01 | Turn test arena into one-site map | Queued | RULE-05 | Routes, timing, cover and spawn safety survive human playtest |
+| PLAY-01 | Turn test arena into one-site map | In progress | RULE-05 | Routes, timing, cover and spawn safety survive human playtest |
 | PLAY-02 | Establish original art treatment | Queued | PLAY-01 | One polished section sets palette/materials/lighting; consistent readable map and team silhouettes follow |
-| PLAY-03 | Complete HUD, menu, settings and sound | Queued | RULE-04 | Join flow and game state understandable; settings persist; footsteps/shots/objective audio communicate action |
+| PLAY-03 | Complete HUD, menu, settings and sound | In progress | RULE-04 | Join flow and game state understandable; settings persist; footsteps/shots/objective audio communicate action |
 | PLAY-04 | Profile and conduct usability playtest | Queued | PLAY-02, PLAY-03, SET-04 | Evidence includes screenshots, reference-hardware frame times, server timing, and new-tester observations |
+
+Parallel map prototype: `codex/tactical-map` builds a separate Site01 map from the completed environment kit. VS_Graybox remains the regression arena. Metadata, collision checks and route measurements precede integrated human playtests; full PLAY-01 acceptance still depends on RULE-05. See MAP_BRIEF.md.
 
 ## M5 Private MVP release
 
@@ -59,6 +65,14 @@ Movement evidence (2026-11-03): a three-process loopback smoke test passed 45 ch
 | REL-01 | Produce repeatable target builds | Queued | PLAY-04 | Packaged client/server built from recorded revision; development reset excluded; connection and startup instructions verified |
 | REL-02 | Complete full 2v2 acceptance session | Queued | REL-01 | Four clients on at least two machines finish a match and rematch; disconnect and join checks pass |
 | REL-03 | Resolve blocking defects and record release | Queued | REL-02 | No known blockers; limits and build identifier recorded; installation/playtest handoff works |
+
+## Asset work in parallel
+
+| ID | Task | Status | Completion condition |
+| --- | --- | --- | --- |
+| ART-03 | Create pistol and revise rifle/pistol finishes | In progress | Original pistol source/export/native assets; consistent cooler weapon palette; inspected actual studio/first-person previews; rifle geometry/socket contract retained; integration limits recorded |
+
+The user explicitly requested pistol assets on 2026-11-03 after rifle asset commit `cac8151`. This art increment does not add pistol gameplay to the single-rifle MVP. See WEAPON_ART_DIRECTION.md.
 
 ## Follow-on work
 
@@ -73,3 +87,14 @@ Movement evidence (2026-11-03): a three-process loopback smoke test passed 45 ch
 ## Bug record format
 
 Add discovered bugs with an ID, severity, build/revision, platform, reproduction steps, expected result, actual result, evidence, status, and next action. Runtime findings and remaining test coverage are recorded in WORK_LOG.md.
+
+### BUG-01 — Reversed mouse look
+
+- Severity: P1 for the current playtest controls.
+- Status: Fixed in `8e81e84`, included in the combat/UI integration. Rendered axis-event checks pass for all four directions, pitch limits and focus return. Physical mouse and manual Escape/resume acceptance remain part of the broader movement/UI checks.
+- Reported: 2026-11-03 by the user. Exact running build/affected axis not yet confirmed; the same mouse-look functions exist in integration `4fbef78` and the inspected gameplay worktree.
+- Reproduction: enter the game and move the mouse horizontally and vertically. User reports reversed camera movement.
+- Expected: right/left input turns right/left; up/down input looks up/down with normal non-inverted FPS defaults.
+- Verified cause: Unreal supplies positive MouseY for upward movement with legacy scales disabled; `VSCharacter::LookPitch` negated it again. Removed that extra sign; yaw and sensitivity are unchanged.
+- Completion: minimal fix, compiled C++, rendered verification of all four directions and pitch limits, focused evidence and separate commit where practical. Existing scripted movement checks force camera rotation and do not cover this defect.
+- Next action: complete the physical-mouse/menu acceptance pass on the integrated build. Keep the rendered regression for future input changes.
