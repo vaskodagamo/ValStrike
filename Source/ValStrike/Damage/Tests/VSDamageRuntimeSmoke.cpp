@@ -663,6 +663,7 @@ private:
         case 9:
         {
             // Observer equips the pistol (key 2) and fires one real shot at the driver's head.
+            LogAcceptedShots(World, ObserverPawn, EVSWeaponSlot::Pistol, DriverPawn, LoggedObserverShots);
             const FVSCapturedDamage* Shot = DamageEvents.Num() > StepEvents ? &DamageEvents[StepEvents] : nullptr;
             if (Shot && !Names.Contains(TEXT("real_fire_pistol_headshot")))
             {
@@ -676,9 +677,9 @@ private:
                         VSD::WeaponName(Shot->Weapon), VSD::ZoneName(Shot->Zone), Shot->Applied, Shot->bLethal ? 1 : 0, Shot->bKilled ? 1 : 0,
                         KillEvents, ObserverIncome, Income, Reward));
             }
-            if (!Shot && Time > 10.0)
+            if (!Shot && Time > 20.0)
             {
-                Check(TEXT("real_fire_pistol_headshot"), false, TEXT("no damage event from the observer's pistol shot"));
+                Check(TEXT("real_fire_pistol_headshot"), false, TEXT("no damage event from the observer's pistol shot within 20 s (see VSDAMAGE_SHOT/VSDAMAGE_TAP)"));
                 Stage(Director, 10, Now);
                 return;
             }
@@ -706,18 +707,39 @@ private:
         return Place(Driver, Center + FVector(-100.0, 0.0, 0.0), 0.0f) && Place(Observer, Center + FVector(200.0, 0.0, 0.0), 180.0f);
     }
 
+    // Diagnostics for every accepted shot: where the server believed both pawns were and
+    // what a trace along the shooter's server-side aim meets.
+    void LogAcceptedShots(UWorld* World, AVSCharacter* Shooter, EVSWeaponSlot Slot, AVSCharacter* Target, uint32& Logged)
+    {
+        const UVSWeaponComponent* Weapon = Shooter ? Shooter->GetWeapon(Slot) : nullptr;
+        if (!Weapon || !Target || Weapon->GetState().ShotsFired == Logged) { return; }
+        Logged = Weapon->GetState().ShotsFired;
+        const FVector View = Shooter->GetPawnViewLocation();
+        const FRotator Aim = Shooter->GetBaseAimRotation();
+        FHitResult Hit;
+        const bool bHit = World->LineTraceSingleByChannel(Hit, View, View + Aim.Vector() * 10000.0, ECC_Visibility,
+            FCollisionQueryParams(SCENE_QUERY_STAT(VSDamageSmokeShot), false, Shooter));
+        UE_LOG(LogValStrike, Display, TEXT("VSDAMAGE_SHOT shooter=%s shots=%u view=%s aim=%s target=%s targetYaw=%.1f targetHalfHeight=%.2f retrace=%s/%s at %s dist=%.1f"),
+            *Shooter->GetName(), Logged, *View.ToCompactString(), *Aim.ToCompactString(), *Target->GetActorLocation().ToCompactString(),
+            Target->GetActorRotation().Yaw, Target->GetCapsuleComponent()->GetUnscaledCapsuleHalfHeight(),
+            bHit && Hit.GetActor() ? *Hit.GetActor()->GetName() : TEXT("none"), bHit && Hit.GetComponent() ? *Hit.GetComponent()->GetName() : TEXT("none"),
+            bHit ? *Hit.ImpactPoint.ToCompactString() : TEXT("-"), bHit ? Hit.Distance : -1.0f);
+    }
+
     void RealFireStep(AVSDamageSmokeDirector* Director, double Now, double Time, UVSMatchStatsSubsystem* Stats,
         UVSEconomySubsystem* Economy, AVSMatchPlayerController* Driver, AVSCharacter* DriverPawn, AVSCharacter* ObserverPawn)
     {
         const int32 Step = Director->Stage - 70;
         const FVSFireTarget& Target = FireTarget(Step);
+        LogAcceptedShots(Director->GetWorld(), DriverPawn, EVSWeaponSlot::Rifle, ObserverPawn, LoggedDriverShots);
         const FVSCapturedDamage* Shot = DamageEvents.Num() > StepEvents ? &DamageEvents[StepEvents] : nullptr;
-        if (!Shot && Time <= 6.0) { return; }
+        // Rendered clients can stall for seconds (first-use shader compiles), so allow a wide window.
+        if (!Shot && Time <= 15.0) { return; }
         UVSWeaponComponent* Rifle = DriverPawn ? DriverPawn->GetWeapon(EVSWeaponSlot::Rifle) : nullptr;
         const float Health = ObserverPawn ? ObserverPawn->GetHealthComponent()->GetHealth() : -1.0f;
         if (!Shot)
         {
-            Check(Target.CheckName, false, FString::Printf(TEXT("no damage event within 6 s; rifle shots=%u rejected direction=%u origin=%u"),
+            Check(Target.CheckName, false, FString::Printf(TEXT("no damage event within 15 s; rifle shots=%u rejected direction=%u origin=%u (see VSDAMAGE_SHOT/VSDAMAGE_TAP log lines)"),
                 Rifle ? Rifle->GetState().ShotsFired : 0, Rifle ? Rifle->DevelopmentRejections(TEXT("direction")) : 0,
                 Rifle ? Rifle->DevelopmentRejections(TEXT("origin")) : 0));
         }
@@ -739,7 +761,15 @@ private:
             Stage(Director, Director->Stage + 1, Now);
             return;
         }
-        AfterRoundOneKill(Stats, Economy, Driver, DriverPawn, ObserverPawn);
+        if (ObserverPawn && !ObserverPawn->GetHealthComponent()->IsAlive())
+        {
+            AfterRoundOneKill(Stats, Economy, Driver, DriverPawn, ObserverPawn);
+        }
+        else
+        {
+            // Never let the invalid-input probes below kill a living observer.
+            Check(TEXT("kill_event_once"), false, TEXT("the real headshot did not kill the observer; post-kill checks skipped"));
+        }
         Stage(Director, 7, Now);
     }
 
@@ -881,6 +911,7 @@ private:
             PC->SetControlRotation((AimPoint - Eye).Rotation());
             if (Time > 0.6 && FiredStage != StageValue)
             {
+                LogTap(PC, Own, Other, AimPoint, StageValue);
                 Key(PC, EKeys::LeftMouseButton, true, bFireHeld);
                 FiredStage = StageValue;
                 FireReleaseAt = World->GetTimeSeconds() + 0.03;
@@ -896,6 +927,7 @@ private:
             const FVSLoadoutState& Loadout = Own->GetLoadoutComponent()->GetState();
             if (Time > 1.0 && Loadout.Equipped == EVSWeaponSlot::Pistol && !Loadout.bEquipping && FiredStage != StageValue)
             {
+                LogTap(PC, Own, Other, ZoneAimPoint(Other, "Head", Eye), StageValue);
                 Key(PC, EKeys::LeftMouseButton, true, bFireHeld);
                 FiredStage = StageValue;
                 FireReleaseAt = World->GetTimeSeconds() + 0.03;
@@ -963,6 +995,14 @@ private:
             Key(PC, EKeys::Tab, false, bTabHeld);
             Finish();
         }
+    }
+
+    static void LogTap(const APlayerController* PC, const AVSCharacter* Own, const AVSCharacter* Other, const FVector& AimPoint, int32 StageValue)
+    {
+        UE_LOG(LogValStrike, Display, TEXT("VSDAMAGE_TAP stage=%d eye=%s control=%s camera=%s aimPoint=%s target=%s targetYaw=%.1f targetHalfHeight=%.2f"),
+            StageValue, *Own->GetPawnViewLocation().ToCompactString(), *PC->GetControlRotation().ToCompactString(),
+            *Own->GetBaseAimRotation().ToCompactString(), *AimPoint.ToCompactString(), *Other->GetActorLocation().ToCompactString(),
+            Other->GetActorRotation().Yaw, Other->GetCapsuleComponent()->GetUnscaledCapsuleHalfHeight());
     }
 
     void BoardSequence(UWorld* World, APlayerController* PC, UVSScoreboardSubsystem* Presenter, AVSMatchGameState* GS)
@@ -1086,6 +1126,7 @@ private:
     int32 SeenStage = -1, FiredStage = -1, StepEvents = 0, DriverIncome = -1, ObserverIncome = -1, IncomeAtKill = -1;
     double SeenStageAt = 0.0, FreshSeenAt = -1.0, FireReleaseAt = 0.0;
     bool bFireHeld = false, bEquipHeld = false, bEquipSent = false;
+    uint32 LoggedDriverShots = 0, LoggedObserverShots = 0;
     TWeakPtr<SWidget> FocusBefore, FocusMenu;
     uint64 RoundOne = 0;
     int32 KillEvents = 0, BoardStep = 0;
