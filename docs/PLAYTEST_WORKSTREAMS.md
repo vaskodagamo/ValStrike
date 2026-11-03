@@ -23,6 +23,19 @@ Commit each reviewable deliverable locally on its assigned branch, with exact ch
 
 The base player controller, `VSMatchHUDData.h`, `VSHUDData.h`, build/project files, default configuration, existing smoke harnesses and all other files stay coordinator-owned. In particular, rifle presentation must not edit Character/Combat and round HUD must not implement a second GameState or objective RPC path. Record necessary shared changes as a precise handoff rather than taking file ownership.
 
+All six follow-ups were dispatched on 2026-11-03 from shared commit `a520ff2`; initial status snapshots showed all six active. Existing chat identities are retained:
+
+| Follow-up | Chat ID |
+| --- | --- |
+| Match runtime | `01a1a208-8ed9-7651-8753-525b2b158f24` |
+| Round HUD | `01a1a1f0-118e-7a92-837b-ef86f3c7aa60` |
+| Rifle presentation | `01a1a1f0-0648-7e91-aa70-f1452b983fe1` |
+| Mac playtest tooling | `01a1a208-0727-72e3-8082-407a1fd80bc4` |
+| Objective device | `01a1a1fa-ad9c-7c53-b206-86797861fb26` |
+| Site01 readability | `01a1a1d4-ad5c-76a3-8896-d9d65615be14` |
+
+The shared interface and assignments are published through [PR #7](https://github.com/vaskodagamo/ValStrike/pull/7). This status records kickoff, not feature completion.
+
 ## Match runtime: critical path
 
 Implement `AVSMatchGameMode` and `AVSMatchPlayerController` under `Match/`, deriving from the existing VS types, with replicated GameState/PlayerState/objective actors. Preserve VS_Graybox practice behavior and its existing smoke suites. Select the match mode through an explicit server URL override; do not edit the map, its WorldSettings or default config in this stream. The reflected game-mode path is `/Script/ValStrike.VSMatchGameMode`.

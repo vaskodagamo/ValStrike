@@ -149,7 +149,9 @@ Module SHA256: `1275645b01008fffbfa1c13a5467ba7a3d519004dff7517a5f9123ead8d38537
 
 **Verification:** Combined pinned Mac Editor build passed in 40.92 s, including rules and the new interface. Build log: `.parallel-worktrees/playtest-foundation/Saved/Tests/Coordination/foundation-build.log`. Five cross-worktree execution-slot tests, 21 existing launcher tests and seven map layout tests passed. Slot tests use real temporary Git worktrees and verify exclusion, cleanup, literal arguments and status propagation; no engine runs occur in those tests. Generated outputs are not shared between task checkouts. No new network/runtime acceptance is claimed for the neutral interface.
 
-**Next action:** Dispatch the six assignments with the exact committed common base, verify each chat acknowledges its new scope, and record active follow-ups. Review finished commits in dependency order, then rehearse local server/two-client match flow and prepare the user's first real two-Mac LAN test. Packaged/server-source access is a separate open gate.
+**Started:** Sent the six scoped follow-ups to the existing project chats with new assigned checkouts, common base `a520ff2`, local-commit handoffs and the heavy-engine slot requirement. Delivery succeeded for all six; initial snapshots showed all active. Match runtime, HUD, rifle presentation and Mac tooling explicitly acknowledged their new ownership in initial commentary. Chat IDs and exact paths are in PLAYTEST_WORKSTREAMS.md. Shared preparation is published through [PR #7](https://github.com/vaskodagamo/ValStrike/pull/7).
+
+**Next action:** Review finished commits in dependency order, then rehearse local server/two-client match flow and prepare the user's first real two-Mac LAN test. The coordinator handles publication/PRs and shared wiring; the active chats keep their bounded scopes. Packaged/server-source access is a separate open gate.
 
 ## Entry template
 
