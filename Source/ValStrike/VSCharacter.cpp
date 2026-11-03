@@ -77,6 +77,16 @@ AVSCharacter::AVSCharacter()
     UpdatePrototypeVisuals();
 }
 
+FVSPlayerHUDData AVSCharacter::GetHUDData() const
+{
+    return {}; // Combat workstream supplies replicated state when implemented.
+}
+
+void AVSCharacter::StopCombatInput()
+{
+    // Combat workstream releases held fire here. No weapon exists at this baseline.
+}
+
 void AVSCharacter::BeginPlay()
 {
     Super::BeginPlay();

@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "VSHUDData.h"
 #include "VSCharacter.generated.h"
 
 class UCameraComponent;
@@ -19,6 +20,10 @@ class VALSTRIKE_API AVSCharacter : public ACharacter
 
 public:
     AVSCharacter();
+
+    FVSPlayerHUDData GetHUDData() const;
+    // Release held combat input when a menu takes focus; gameplay stays server-owned.
+    void StopCombatInput();
 
     virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
     virtual void OnStartCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust) override;

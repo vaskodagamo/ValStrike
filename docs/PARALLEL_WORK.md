@@ -1,0 +1,48 @@
+# Parallel development ownership
+
+Updated: 2026-11-03. The user requested two additional chats to accelerate the MVP. This document assigns independent deliverables; it does not waive milestone acceptance gates.
+
+## Workstreams
+
+| Chat / stream | Owns | First deliverable |
+| --- | --- | --- |
+| Plan FPS game MVP (integration) | Shared contracts, central docs/backlog/log, maps, configuration, build/network verification, merge decisions | Combine reviewed changes and rerun movement/combat/UI checks |
+| Add the first game assets (existing) | `Art/Source/`, `Content/Art/`, asset manifests and logs in its existing worktrees | Original stylized environment kit and rifle model |
+| Rifle gameplay (new) | `Source/ValStrike/Combat/`, `VSCharacter.h/.cpp`, `Tests/Combat/`, uniquely named combat smoke files/scripts, `docs/workstreams/combat.md` | Server-owned rifle, ammo/reload, traces, health/death and focused tests |
+| HUD and session controls (new) | `VSHUD.h/.cpp`, `Source/ValStrike/UI/`, new `VSPlayerController.h/.cpp`, `ValStrike.Build.cs` only for UI dependencies, `VSGameMode.cpp` only controller-class wiring, `Tests/UI/`, `docs/workstreams/ui.md` | Readable HUD and working join/menu controls |
+
+The current integration base is `codex/bootstrap-fps`. Each new stream uses its assigned Git worktree and branch. Never switch the integration checkout's branch or edit another stream's worktree. Central documentation is updated by integration; each stream maintains its own append-only log and handoff. The existing asset chat has its own scope and is already building the first rifle model; do not duplicate its art.
+
+## Shared contract
+
+`VSHUDData.h` is integration-owned. `AVSCharacter::GetHUDData() const` returns a plain `FVSPlayerHUDData` snapshot:
+
+- `bHasHealth`, `Health`, `MaxHealth`, `bAlive` describe available health state.
+- `bHasWeapon`, `MagazineAmmo`, `MagazineCapacity`, `ReserveAmmo`, `bReloading` describe available weapon state.
+- At this baseline both availability flags are false. UI hides unavailable fields; missing health must not be displayed as death. No fake scores or timers.
+- Combat populates the getter from authoritative replicated components. UI only reads this contract and does not include combat implementation headers or edit `VSCharacter`.
+- UI calls `AVSCharacter::StopCombatInput()` before taking input focus, and flushes pressed keys. Combat implements this hook to release held fire through its normal validated path. It does not pause the server or cancel a reload by itself.
+
+Propose contract changes in the stream handoff rather than silently creating a second interface or changing another stream's files. The contract is intentionally native C++; use code widgets or existing engine drawing without requiring shared Blueprint assets.
+
+## Rifle gameplay scope
+
+Implement GUN-01 and the independent GUN-02 foundation against the existing movement baseline. One configurable hitscan rifle, fixed loadout, fire cadence, magazine/reserve ammunition and reload; server-owned health and death. Bind fire/reload through existing Enhanced Input. Use engine replication and authoritative traces; clients never supply a final victim/damage result. Validate ownership, alive state, ammo, cadence, reload, duplicate shot requests and view plausibility. Current server positions are the initial hit-registration policy. Round-phase validation stays an explicit integration dependency until round rules exist.
+
+Keep cosmetics minimal and use temporary engine geometry if needed. Do not wait for, import, or modify the rifle art branch. Preserve the movement harness and current movement behavior. Any reset/test controls must be explicit development-only code excluded from Shipping. Test successful firing/reloading/damage plus invalid requests and cover obstruction; distinguish unit tests, editor network evidence and packaged acceptance. Do not claim a complete GUN-04 gate or production anti-cheat.
+
+## HUD and session scope
+
+Implement the independent PLAY-03 UI foundation: crosshair, available health/ammo/reload/death state, Escape menu, private server address entry/connect, resume, and quit/disconnect behavior with clear failures. Keep it usable by keyboard and mouse. Validate addresses before travel; do not concatenate arbitrary console commands. Multiplayer menu opening must not pause the server. A local placeholder snapshot is unavailable data, not simulated gameplay.
+
+The UI may add a custom player controller and wire only its class in the existing game mode constructor. Combat owns pawn input and state; UI owns menu focus. Avoid changing map, project descriptor, engine config or character source. If adding Slate/UMG, keep build dependencies scoped. A live UI smoke check must work against the baseline with unavailable combat data, then integration verifies real combat updates. Mouse sensitivity, round HUD, final sound and broader settings can remain documented follow-ups rather than invented functionality.
+
+## Verification, resource use and handoff
+
+- Use Unreal 5.8.4 at `/Users/webproduktion3/UE_5.8/UE_5.8` and Xcode 26.1.1. Each worktree has its own generated outputs; never share/copy live Binaries or Intermediate between them.
+- Build through `Scripts/ue.py`, which passes `-WaitMutex`. Avoid simultaneous full-engine builds. Prefer bounded tests and close only processes started by the current stream. The machine has 24 GB RAM; do not keep several unnecessary editors running.
+- The asset chat may be rendering/importing. Do not use global quit/kill commands or take over its interactive editor. Use explicit project paths and process-specific logs.
+- GitHub source access last returned 404. Continue available editor work; do not repeatedly request account setup or describe a launcher-engine process as a packaged dedicated server.
+- Keep Valorant-like stylized graphics, not CS2-like photorealism. Use original art and clear silhouettes.
+- Commit and push only the stream's own branch. Do not merge into the integration branch or another stream. Hand back branch/commit, changed paths, exact verification evidence, remaining limitations, and integration instructions in the final message and stream log.
+- Integration will merge one stream at a time, resolve shared-file conflicts, run the movement and combat regressions, then verify the HUD with real replicated data. A clean branch alone is not acceptance.

@@ -4,6 +4,8 @@
 
 Read `README.md`, `docs/MVP_PLAN.md`, `docs/BACKLOG.md`, and the latest entry in `docs/WORK_LOG.md`. Read `docs/SETUP.md` when working on builds, and the engine decision when changing architecture.
 
+For parallel work, also read `docs/PARALLEL_WORK.md`. Use the assigned worktree, respect file ownership, and maintain the stream-specific log; the integration chat owns central documentation and merges.
+
 The user confirmed desktop first and authorized implementation on the Unreal baseline. The initial toolchain is pinned to Unreal Engine 5.8.4 and Xcode 26.1.1 on macOS. Do not silently switch engines or versions, expand the MVP, or describe the game as playable before runtime verification.
 
 ## Work in small verified increments

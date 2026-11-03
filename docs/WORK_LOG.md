@@ -64,6 +64,16 @@ Record meaningful work sessions here in chronological order. Use Europe/Berlin d
 
 **Next action:** Finish the brief rendered movement checklist, then implement GUN-01 server-owned rifle state and GUN-02 authoritative damage/death. Keep the stylized environment asset work independent until integration. Resolve Epic source access for SET-03 in parallel.
 
+## 2026-11-03 Parallel gameplay and UI workstreams
+
+**Request:** The user requested two additional chats to accelerate development. The existing “Add the first game assets” chat already completed an environment kit on `codex/environment-kit` and is working on rifle art on `codex/rifle-asset`; those assets remain separate from gameplay integration.
+
+**Prepared:** Added `docs/PARALLEL_WORK.md` with ownership boundaries, verification requirements, resource guidance and handoff rules. Two new workstreams are rifle gameplay (GUN-01/02 foundation) and HUD/session controls (independent PLAY-03 foundation). This chat retains shared contracts, maps/configuration, central documentation, build/network verification and merging. Added a plain read-only HUD snapshot and neutral `GetHUDData`/`StopCombatInput` hooks on the character so UI can compile independently; no health/weapon behavior is simulated at this baseline. Added ignored local worktree storage.
+
+**Verification:** The shared contract compiles successfully with the pinned Mac Editor target in 9.44 seconds. Whitespace checks passed. No new gameplay runtime claim is made; the prior 45-check movement result remains tied to its recorded source hashes.
+
+**Next action:** Start the two chats in assigned isolated worktrees, then integrate their reviewed commits one at a time and rerun gameplay/network/UI checks. Stream logs live under `docs/workstreams/`; the central backlog and log stay with integration.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.

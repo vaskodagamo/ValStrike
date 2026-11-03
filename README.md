@@ -18,6 +18,7 @@ An original desktop tactical FPS: deliberate movement and round-based combat ins
 | [Backlog](docs/BACKLOG.md) | Ordered tasks, dependencies, and status |
 | [Work log](docs/WORK_LOG.md) | Work completed, verification, issues, and handoff |
 | [Asset chat brief](docs/ASSET_BRIEF.md) | Separate environment asset batch and starting prompt |
+| [Parallel work](docs/PARALLEL_WORK.md) | Chat ownership, shared combat/HUD contract, and integration |
 | [Agent instructions](AGENTS.md) | How future coding sessions maintain this project |
 
 ## First playable target
