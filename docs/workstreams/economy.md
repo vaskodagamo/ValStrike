@@ -169,3 +169,46 @@ PR #18 was merged by the integration session at 22:53, before the runtime checks
 - An out-of-catalog item value sent over the RPC is narrowed by enum serialization. `None` is still rejected as unknown; the server never trusts the value.
 
 **Next action.** Phase 2, part A (approved by the coordinating session): subscribe to `UVSDamageSubsystem::OnKill()` in place of the `ReportKill` handoff. Part B (weapon grant) waits for the coordinator's go-ahead.
+
+## 2026-11-04 — Phase 2, part A: kill rewards from the damage service
+
+**Request.** On 2026-11-03 the coordinating session asked for this after damage Phase 1 (#22) merged: credit kills from `UVSDamageSubsystem::OnKill()` in place of the `ReportKill` handoff, editing only economy paths. Branch `claude/economy-kill-rewards`, PR #24.
+
+**Change** (`e0d8f2d`).
+- `UVSEconomySubsystem` gets the damage service with `Collection.InitializeDependency<UVSDamageSubsystem>()` and subscribes to `OnKill()` on the server. It unsubscribes in `Deinitialize`.
+- For each `FVSDamageEvent` with `bKilled`, it uses `Instigator`, `VictimController` and `Victim` only during the broadcast.
+- The kill is refused when:
+  - the killer or victim has no wallet, or killer equals victim;
+  - the victim's `UVSHealthComponent` is still alive;
+  - the victim was already credited this round (model `Duplicate`);
+  - the round is not live (model `WrongPhase`).
+- A team kill is recorded as a death without a reward.
+- The public `ReportKill` is removed; crediting is a private path.
+- The kill reward is unchanged at 200. `IsHeadshot()` is not used, because the tuning table has no headshot bonus.
+- No `Damage/`, `Combat/` or `VSCharacter.*` file changed.
+
+**Kill path used for verification.** Real fire reaches `OnKill` only after Damage Phase 2.
+- The harness kills through `ApplyPointDamage`, then publishes the attributed kill with `UVSDamageSubsystem::PublishDamage`, then publishes it again.
+- In round 2 it also publishes a kill notification for a still-living player.
+- These events also reach the scoreboard stats in that test world.
+
+**Evidence.**
+- Clean unity Editor build at `e0d8f2d`: PASS. The module now builds as three unity blobs.
+- Engine-free checks at `e0d8f2d`:
+  - economy rules 17/17 (246 checks), normal and sanitized;
+  - round rules 31/31 (974 checks);
+  - runner contract 9/9;
+  - `git diff --check` clean.
+- Network run `Saved/Tests/Economy/network_20261103T230713Z_1d5908` was **interrupted by SIGTERM after 109 s**: the user's new verification policy stopped this session's runtime runs. Its result is therefore FAIL by interruption and is **not** a pass.
+- Before the stop, rounds 1–2 showed:
+  - each `OnKill` kill credited exactly once;
+  - the repeated notification refused (`duplicate`);
+  - the living-victim notification refused before the model;
+  - balances 2800/4000 and 3300/3000, matching the ledger.
+
+**Verification policy change.** On 2026-11-04 the user said: "every session running tests and compiling this is horrible waisting time and tokens". Streams now run only engine-free tests. Integration runs one combined build and runtime pass per batch and returns failures. Runtime verification for part A is therefore pending in the integration batch:
+- `python3 Scripts/with_ue_slot.py -- python3 Scripts/test_economy.py --network --engine <UE>`: expect PASS with 35 checks, including `server: kill_reward` and `server: kill_live_victim_refused`, and the per-round ledger 2800/4000, 3300/3000, 5000/3500, 2500/4000, 4700/7200, 7400/9000, then 800/800.
+- `python3 Scripts/with_ue_slot.py -- python3 Scripts/test_match.py --engine <UE>`: expect 43/43.
+- `python3 Scripts/with_ue_slot.py -- python3 Scripts/test_combat.py --engine <UE>`: expect 55/55.
+
+**Next action.** Integration batch result for PR #24. Part B (weapon grant) waits for the coordinator's go-ahead.
