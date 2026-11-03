@@ -24,6 +24,7 @@ const FLinearColor MenuInk(0.025f, 0.045f, 0.065f, 1.0f);
 const FLinearColor Mint(0.30f, 0.95f, 0.76f, 1.0f);
 const FLinearColor MenuMuted(0.68f, 0.76f, 0.80f, 1.0f);
 const FLinearColor MenuError(1.0f, 0.55f, 0.45f, 1.0f);
+constexpr float JoinKeyFieldWidth = 168.0f;
 
 TSharedRef<STextBlock> Label(const FText& Text, int32 Size, const FLinearColor& Color = FLinearColor::White)
 {
@@ -73,7 +74,7 @@ void SVSSessionMenu::Construct(const FArguments& Args)
 
 TSharedRef<SWidget> SVSSessionMenu::MakeSessionPage()
 {
-    TSharedPtr<SButton> ConnectButton, CancelButton, ResumeButton, DisconnectButton, QuitButton;
+    TSharedPtr<SButton> ConnectButton, DisconnectButton, QuitButton;
     const UVSSessionState* State = Controller.IsValid() ? Controller->GetSessionState() : nullptr;
     TSharedRef<SWidget> Page =
         SNew(SVerticalBox)
@@ -93,27 +94,67 @@ TSharedRef<SWidget> SVSSessionMenu::MakeSessionPage()
             }).AutoWrapText(true)
         ]
         + SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 5)
-        [ Label(NSLOCTEXT("ValStrike", "AddressLabel", "SERVER ADDRESS"), 12, MenuMuted) ]
+        [
+            SNew(SHorizontalBox)
+            + SHorizontalBox::Slot().FillWidth(1).Padding(0, 0, 8, 0)
+            [ Label(NSLOCTEXT("ValStrike", "AddressLabel", "SERVER ADDRESS"), 12, MenuMuted) ]
+            + SHorizontalBox::Slot().AutoWidth()
+            [
+                SNew(SBox).WidthOverride(JoinKeyFieldWidth)
+                [ Label(NSLOCTEXT("ValStrike", "JoinKeyLabel", "JOIN KEY  ·  OPTIONAL"), 12, MenuMuted) ]
+            ]
+        ]
         + SVerticalBox::Slot().AutoHeight()
         [
-            SAssignNew(AddressInput, SEditableTextBox)
-            .Font(FCoreStyle::GetDefaultFontStyle("Regular", 17)).Padding(FMargin(10, 7))
-            .Text(State ? FText::FromString(State->Address) : FText::GetEmpty())
-            .HintText(NSLOCTEXT("ValStrike", "AddressHint", "192.168.1.20:7777"))
-            .IsEnabled_Lambda([this]() { return !IsConnecting(); })
-            .OnTextChanged_Lambda([this](const FText& Text) {
-                if (Controller.IsValid())
-                    if (UVSSessionState* Session = Controller->GetSessionState()) Session->Address = Text.ToString();
-            })
-            .OnTextCommitted_Lambda([this](const FText&, ETextCommit::Type Commit) {
-                if (Commit == ETextCommit::OnEnter)
-                {
-                    Connect();
-                }
-            })
+            SNew(SHorizontalBox)
+            + SHorizontalBox::Slot().FillWidth(1).Padding(0, 0, 8, 0)
+            [
+                SAssignNew(AddressInput, SEditableTextBox).Tag(FName(TEXT("VS.Address")))
+                .Font(FCoreStyle::GetDefaultFontStyle("Regular", 17)).Padding(FMargin(10, 7))
+                .Text(State ? FText::FromString(State->Address) : FText::GetEmpty())
+                .HintText(NSLOCTEXT("ValStrike", "AddressHint", "192.168.1.20:7777"))
+                .IsEnabled_Lambda([this]() { return !IsConnecting(); })
+                // Keep focus in the field after a rejected Enter so keyboard use continues.
+                .ClearKeyboardFocusOnCommit(false)
+                .OnTextChanged_Lambda([this](const FText& Text) {
+                    if (Controller.IsValid())
+                        if (UVSSessionState* Session = Controller->GetSessionState()) Session->Address = Text.ToString();
+                })
+                .OnTextCommitted_Lambda([this](const FText&, ETextCommit::Type Commit) {
+                    if (Commit == ETextCommit::OnEnter)
+                    {
+                        Connect();
+                    }
+                })
+            ]
+            + SHorizontalBox::Slot().AutoWidth()
+            [
+                SNew(SBox).WidthOverride(JoinKeyFieldWidth)
+                [
+                    // Masked: the key never appears on screen, in screenshots or in logs from this code.
+                    SAssignNew(JoinKeyInput, SEditableTextBox).Tag(FName(TEXT("VS.JoinKey")))
+                    .Font(FCoreStyle::GetDefaultFontStyle("Regular", 17)).Padding(FMargin(10, 7))
+                    .IsPassword(true)
+                    .Text(State ? FText::FromString(State->JoinKey) : FText::GetEmpty())
+                    .HintText(NSLOCTEXT("ValStrike", "JoinKeyHint", "none"))
+                    .IsEnabled_Lambda([this]() { return !IsConnecting(); })
+                    .SelectAllTextWhenFocused(true).SelectAllTextOnCommit(true)
+                    .ClearKeyboardFocusOnCommit(false)
+                    .OnTextChanged_Lambda([this](const FText& Text) {
+                        if (Controller.IsValid())
+                            if (UVSSessionState* Session = Controller->GetSessionState()) Session->JoinKey = Text.ToString();
+                    })
+                    .OnTextCommitted_Lambda([this](const FText&, ETextCommit::Type Commit) {
+                        if (Commit == ETextCommit::OnEnter)
+                        {
+                            Connect();
+                        }
+                    })
+                ]
+            ]
         ]
         + SVerticalBox::Slot().AutoHeight().Padding(0, 5, 0, 6)
-        [ Label(NSLOCTEXT("ValStrike", "AddressHelp", "IPv4 or hostname. Default port: 7777."), 12, MenuMuted) ]
+        [ Label(NSLOCTEXT("ValStrike", "AddressHelp", "IPv4 or hostname. Default port: 7777. Key only if the host set one."), 12, MenuMuted) ]
         + SVerticalBox::Slot().AutoHeight()
         [
             SNew(SBox).MinDesiredHeight(52)
@@ -191,7 +232,7 @@ TSharedRef<SWidget> SVSSessionMenu::MakeSessionPage()
         ]
         + SVerticalBox::Slot().AutoHeight().Padding(0, 12, 0, 0)
         [ Label(NSLOCTEXT("ValStrike", "MenuKeys", "Tab / Shift+Tab: navigate     Enter: select     Esc: resume"), 12, MenuMuted) ];
-    Navigation = {AddressInput, ConnectButton, CancelButton, ResumeButton, SettingsButton, DisconnectButton, QuitButton};
+    Navigation = {AddressInput, JoinKeyInput, ConnectButton, CancelButton, ResumeButton, SettingsButton, DisconnectButton, QuitButton};
     return Page;
 }
 
@@ -348,7 +389,7 @@ TSharedRef<SWidget> SVSSessionMenu::InitialFocus() const
     {
         return SettingsNavigation[0].ToSharedRef();
     }
-    return Navigation[IsConnecting() ? 2 : 3].ToSharedRef();
+    return IsConnecting() ? CancelButton.ToSharedRef() : ResumeButton.ToSharedRef();
 }
 
 void SVSSessionMenu::FocusWidget(const TSharedPtr<SWidget>& Widget) const
@@ -365,13 +406,13 @@ FReply SVSSessionMenu::Connect()
 {
     if (Controller.IsValid() && AddressInput && !IsConnecting())
     {
-        Controller->ConnectToServer(AddressInput->GetText().ToString());
+        Controller->ConnectToServer(AddressInput->GetText().ToString(), JoinKeyInput ? JoinKeyInput->GetText().ToString() : FString());
         if (IsConnecting())
         {
             // Slate caches enabled attributes. Refresh Cancel before assigning
             // focus, for both button clicks and text-commit delegates.
-            Navigation[2]->UpdateAllAttributes();
-            FSlateApplication::Get().SetKeyboardFocus(Navigation[2], EFocusCause::SetDirectly);
+            CancelButton->UpdateAllAttributes();
+            FSlateApplication::Get().SetKeyboardFocus(CancelButton, EFocusCause::SetDirectly);
         }
     }
     return FReply::Handled();

@@ -57,6 +57,9 @@ private:
     TWeakObjectPtr<AVSPlayerController> Controller;
     TSharedPtr<SWidgetSwitcher> Pages;
     TSharedPtr<SEditableTextBox> AddressInput;
+    TSharedPtr<SEditableTextBox> JoinKeyInput;
+    TSharedPtr<SButton> CancelButton;
+    TSharedPtr<SButton> ResumeButton;
     TSharedPtr<SButton> SettingsButton;
     TSharedPtr<SSlider> SensitivitySlider;
     TSharedPtr<SEditableTextBox> SensitivityInput;

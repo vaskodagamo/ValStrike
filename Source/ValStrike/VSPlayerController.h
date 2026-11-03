@@ -22,7 +22,8 @@ public:
     bool IsSessionMenuOpen() const { return bSessionMenuOpen; }
     void SetSessionMenuOpen(bool bOpen);
     void ToggleSessionMenu();
-    void ConnectToServer(const FString& Address);
+    // JoinKey comes from its own field (empty: none) and is never parsed from Address.
+    void ConnectToServer(const FString& Address, const FString& JoinKey = FString());
     void CancelConnection();
     void DisconnectFromServer();
     void QuitSession();

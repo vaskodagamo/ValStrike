@@ -64,6 +64,13 @@ void UVSSessionState::NetworkFailure(UWorld* World, UNetDriver* Driver, ENetwork
     {
         return;
     }
+    // The server's refusal text for a private server (Server/VSServerProvider). It
+    // never contains either key; show actionable guidance instead of "unreachable".
+    if (Error.Contains(TEXT("Join key missing or wrong")))
+    {
+        ShowFailure(NSLOCTEXT("ValStrike", "JoinKeyRefused", "Join key missing or wrong. Enter the key the host gave you, then connect again."));
+        return;
+    }
     switch (Type)
     {
     case ENetworkFailure::ConnectionTimeout:

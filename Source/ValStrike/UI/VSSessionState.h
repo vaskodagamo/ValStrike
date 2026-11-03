@@ -17,6 +17,9 @@ public:
     virtual void Deinitialize() override;
 
     FString Address;
+    // Optional private-server key, kept in memory only so the field survives travel.
+    // Never saved, logged or shown unmasked.
+    FString JoinKey;
     FText Status;
     bool bConnecting = false;
     bool bError = false;
