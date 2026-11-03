@@ -40,3 +40,32 @@ Raw client request checks covered duplicate/stale IDs, back-to-back cadence, for
 **Additional verification:** `python3 Scripts/test_movement.py --engine /Users/webproduktion3/UE_5.8/UE_5.8` passed **45/45 checks**, exit 0, on the same compiled module. Evidence: `Saved/Tests/Movement/20261103T151505Z_72b7e1/result.json`, one editor server/two clients on loopback UDP 7789, null RHI/no audio/no artificial latency or loss. Server/owner movement speeds stayed 450 / 202.5 / 180 cm/s; crouch/stand capsule, camera, jump/landing, body alignment, boundary, stairs and cover checks all passed. The test runners closed only their own processes. Git status confirms no map/material changes; generated outputs remain ignored.
 
 **Next action:** Integration reviews and merges this branch, rebuilds/reruns the two smoke commands, then performs rendered HUD/menu and rifle-art integration. Round eligibility and the documented packaged/network-condition gates remain open.
+
+## 2026-11-03 — BUG-01 vertical mouse-look correction
+
+**Request:** Integration relayed the user's reversed-mouse report as a priority while this stream was finishing the rifle handoff. Verified both axes rather than flipping both.
+
+**Cause and smallest correction:** `Config/DefaultInput.ini` disables legacy input scales. UE 5.8.4 `SceneViewport.cpp:928–931` preserves screen-right X and converts screen-up to positive MouseY; `PlayerController.cpp:6082–6087` applies those signs directly when legacy scales are disabled. The character's extra negative sign inverted pitch. Removed only that unary minus in `AVSCharacter::LookPitch`; yaw and sensitivity are unchanged. Engine `BaseInput.ini:30–31` additionally supplies MouseX/MouseY sensitivity 0.07, and the character retains its 0.12 multiplier.
+
+**Isolated fix commit:** `8e81e84` changes one line in `Source/ValStrike/VSCharacter.cpp`. It can be cherry-picked before rifle commit `df3fea5`. A `git merge-file -p` three-way check against b245939 produced exactly the baseline character with this one sign change and no combat additions; no integration checkout or branch was modified. Merge the full branch later rather than manually copying character files.
+
+**Focused evidence:** Added the opt-in, Shipping/Test-excluded `VSCombatLookSmoke.h/.cpp`, wired through the existing combat smoke bootstrap, plus `Scripts/test_combat_look.py` and six runner tests. Ordinary look input uses simulated MouseX/MouseY axis events through PlayerController and Enhanced Input, with resets only between scenarios. It measures the actual rendered camera and control rotation, captures eight required PNGs, and fails if evidence is incomplete. This differs from the movement driver, which forces rotation every tick and cannot validate mouse look.
+
+Before-fix run `Saved/Tests/CombatLook/20261103T152145Z_fcd796/result.json` reproduced correct horizontal signs but negative pitch for positive MouseY and positive pitch for negative MouseY. Its initial expected magnitude omitted inherited 0.07 sensitivity, so it reported seven failures; that expectation was corrected without changing game sensitivity. Fixed run `Saved/Tests/CombatLook/20261103T152431Z_ad5d0b/result.json` passed **8/8**, exit 0, with actual rendered camera yaw +8.4/right and -8.4/left, pitch +8.4/up and -8.4/down for injected ±1000 input; limits +89.9/-89.9; ignored focus input stayed zero; restored focus accepted both axes. Inspected the direction and pitch-limit PNGs: geometry shifts consistently with the logged view direction; upper/lower limits show sky/ground. The client was a single rendered standalone Editor game, 1000×700 window, 60 FPS cap, no audio. Build succeeded in 13.21 s with the pinned toolchain; log `Saved/Logs/MouseLookBuild.log`. Six new runner tests passed.
+
+```sh
+python3 Scripts/ue.py --engine /Users/webproduktion3/UE_5.8/UE_5.8 build --target Editor --platform Mac
+python3 Scripts/test_combat_look.py --engine /Users/webproduktion3/UE_5.8/UE_5.8
+python3 -m unittest discover -s Tests/Combat -p 'test_combat_look_runner.py' -v
+```
+
+**Verification limits:** This rendered test injects engine axis events; it does not move a physical mouse or prove macOS raw-device behavior. The native input sign path was inspected in the pinned engine source. The focus check exercises IgnoreLookInput/reset/GameOnly; this checkout does not include the UI stream's Escape menu, so actual menu/capture return is pending integration. Only read-only native window inspection was performed; no input or edits were sent to the asset stream's editor. Integration should verify physical right/left/up/down plus Escape/resume after cherry-picking `8e81e84`.
+
+**Push authorization:** Automatic approval initially rejected the upload as requiring explicit destination/payload authorization. The user then explicitly approved pushing this branch's source, tests and handoff log to the existing `github.com/vaskodagamo/ValStrike` repository. Only this stream branch is to be pushed; integration retains merge ownership.
+
+
+## 2026-11-03 — Final combined build verification
+
+**Final evidence after BUG-01:** The same final Editor module passed all three runtime suites: rendered look **8/8** (`CombatLook/20261103T152431Z_ad5d0b`), movement **45/45** (`Movement/20261103T152555Z_3a1b20`), and combat **55/55** (`Combat/20261103T152730Z_a1a889`), under `Saved/Tests/`, each with exit 0 and its own result.json. The final combat hold accepted 16 additional shots (17 total), with replicated state agreement and all prior authority/reload/cover/death checks passing. Final source/runner hashes were verified against the combat report before committing; module SHA256 is `7cd61c09d9b758669e1e0c169e5e326b0715928868801cdd2eacff52b752327c`. Nineteen Combat runner tests (13 combat + 6 look) and the 21 existing helper tests passed. No additional source changes followed these results.
+
+**Handoff:** `codex/rifle-gameplay`; rifle implementation `df3fea5`, independently cherry-pickable mouse fix `8e81e84`, followed by the rendered regression harness and this log. Source changes are confined to the assigned character/combat/test/script paths. Integration may take `8e81e84` first, then merge the branch and rerun the documented commands. Physical-mouse/Escape-resume acceptance, round-phase enforcement, rendered multiplayer/art feedback, latency/loss and packaged/platform gates remain explicitly pending. This stream did not merge anything.

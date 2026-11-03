@@ -1,4 +1,5 @@
 #include "VSCombatSmoke.h"
+#include "VSCombatLookSmoke.h"
 
 #if !UE_BUILD_SHIPPING && !UE_BUILD_TEST
 
@@ -300,6 +301,7 @@ TUniquePtr<FVSCombatSmoke> Smoke;
 
 void ValStrikeTests::StartCombatSmoke()
 {
+    ValStrikeTests::StartCombatLookSmoke();
     FString Role;
     if (!Smoke && FParse::Value(FCommandLine::Get(), TEXT("VSCombatSmoke="), Role)
         && (Role == TEXT("server") || Role == TEXT("driver") || Role == TEXT("observer")))
