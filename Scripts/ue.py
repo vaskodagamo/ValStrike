@@ -2,6 +2,8 @@
 """Local Unreal helpers. Server/client launches use the editor, not packaged builds."""
 
 import argparse
+import importlib.util
+import ipaddress
 import json
 import os
 from pathlib import Path
@@ -14,7 +16,11 @@ ROOT = Path(__file__).resolve().parents[1]
 ENGINE_VERSION = (5, 8, 4)
 XCODE_VERSION = "26.1.1"
 MAP = "/Game/Maps/VS_Graybox"
+MAPS = {"graybox": MAP, "site01": "/Game/Maps/Site01/VS_Site01"}
+MODES = {"practice": "/Script/ValStrike.VSGameMode",
+         "match": "/Script/ValStrike.VSMatchGameMode"}
 GENERATOR_VERSION = 2
+_playtest = None
 
 
 class SetupError(Exception):
@@ -55,8 +61,31 @@ def project_file(root):
     return require_file(root / "ValStrike.uproject", "Run this helper from the ValStrike checkout.")
 
 
-def map_file(root):
-    return require_file(root / "Content/Maps/VS_Graybox.umap", "Build the Editor target, then run generate-map.")
+def playtest_check(name, *args):
+    """Lazy import keeps bootstrap/build commands independent of asset probes."""
+    global _playtest
+    if _playtest is None:
+        spec = importlib.util.spec_from_file_location("vs_playtest", Path(__file__).with_name("check_playtest.py"))
+        _playtest = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(_playtest)
+    try:
+        return getattr(_playtest, name)(*args)
+    except _playtest.PreflightError as error:
+        raise SetupError(str(error)) from error
+
+
+def selected_map(key):
+    if key not in MAPS:
+        raise SetupError("Map must be graybox or site01; arbitrary Unreal URLs are not accepted.")
+    return MAPS[key]
+
+
+def map_file(root, key="graybox"):
+    asset = selected_map(key)
+    path = require_file(root / "Content" / (asset[6:] + ".umap"),
+                        "Restore this revision's assets with git lfs pull; do not regenerate a missing playtest map.")
+    playtest_check("basic_map_assets", root, key)
+    return path
 
 
 def generation_marker(root):
@@ -107,12 +136,18 @@ def command(args, engine, root, host):
         if (root / "Content/Maps/VS_Graybox.umap").exists():
             raise SetupError("VS_Graybox already exists; generate-map will not overwrite an edited map.")
         return argv + ["/Engine/Maps/Entry", f"-ExecutePythonScript={script}", "-unattended", "-log"]
-    map_file(root)
+    key = getattr(args, "map", "graybox")
+    map_file(root, key)
     if args.action == "editor":
-        return argv + [MAP, "-log"]
+        return argv + [selected_map(key), "-log"]
     if args.action == "server":
+        mode = args.mode
+        if mode not in MODES:
+            raise SetupError("Server mode must be practice or match.")
+        if mode == "match" and key != "site01":
+            raise SetupError("Match requires --map site01 and its authored spawn/site markers.")
         log = root / "Saved/Logs" / f"VS_Server_{args.port}.log"
-        return argv + [MAP, "-server", "-nullrhi", "-nosound", "-unattended",
+        return argv + [selected_map(key) + "?game=" + MODES[mode], "-server", "-nullrhi", "-nosound", "-unattended",
                        f"-port={args.port}", f"-abslog={log}"]
     log = root / "Saved/Logs" / f"VS_Client_{os.getpid()}.log"
     return argv + [args.address, "-game", "-windowed", "-ResX=1280", "-ResY=720", f"-abslog={log}"]
@@ -145,12 +180,18 @@ def check_xcode():
     return f"Xcode {XCODE_VERSION}; Metal compiler runs"
 
 
+def content_summary(root, key):
+    result = playtest_check("validate_assets", root, key)
+    return (f"{result['committed_native_count']} committed native packages match LFS hashes; "
+            f"{result['selected_dependency_count']} selected-map dependencies present")
+
+
 def doctor(args, root, host):
     checks = [
         ("Engine", lambda: engine_path(args.engine)),
         ("Project", lambda: project_file(root)),
         ("Editor", lambda: editor_binary(engine_path(args.engine), host)),
-        ("Graybox map", lambda: map_file(root)),
+        (f"{args.map} map and dependencies", lambda: map_file(root, args.map)),
     ]
     failures = 0
     for label, check in checks:
@@ -168,8 +209,11 @@ def doctor(args, root, host):
         for argv in probes:
             print("DRY RUN probe:", shlex.join(argv))
         print("Tool probes were not executed; this is not a readiness result.")
+        print("DRY RUN: Git revision and committed LFS hashes were not checked.")
     else:
-        checks = [("Git LFS", lambda: probe(probes[0]))]
+        checks = [("Git LFS", lambda: probe(probes[0])),
+                  ("Checkout", lambda: json.dumps(playtest_check("checkout_revision", root), sort_keys=True)),
+                  ("Hydrated content", lambda: content_summary(root, args.map))]
         if host == "Mac":
             checks.append(("Mac toolchain", check_xcode))
         for label, check in checks:
@@ -194,7 +238,18 @@ def address(value):
     # Keep this a host:port, not an Unreal URL with injected travel options.
     if not re.fullmatch(r"[A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])?:[0-9]+", value):
         raise argparse.ArgumentTypeError("use hostname:port or IPv4:port (for example 127.0.0.1:7777)")
-    port(value.rsplit(":", 1)[1])
+    host, number = value.rsplit(":", 1)
+    if re.fullmatch(r"[0-9.]+", host):
+        try:
+            parsed = ipaddress.IPv4Address(host)
+        except ipaddress.AddressValueError as error:
+            raise argparse.ArgumentTypeError("use a valid dotted IPv4 host address") from error
+        if parsed.is_unspecified or parsed.is_multicast or host == "255.255.255.255":
+            raise argparse.ArgumentTypeError("use the server's unicast host address, not a bind/broadcast address")
+    elif len(host) > 253 or any(not re.fullmatch(r"[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?", part)
+                                for part in host.split(".")):
+        raise argparse.ArgumentTypeError("use a valid hostname without empty or invalid labels")
+    port(number)
     return value
 
 
@@ -203,14 +258,18 @@ def parser():
     result.add_argument("--engine", help="Unreal installation root or Engine directory; defaults to UE_ROOT")
     result.add_argument("--dry-run", action="store_true", help="validate paths and print argv without executing tools")
     actions = result.add_subparsers(dest="action", required=True)
-    actions.add_parser("doctor", help="check prerequisites; missing generated map is reported as incomplete setup")
+    doctor_parser = actions.add_parser("doctor", help="check exact tools, revision, hydrated LFS content and selected map")
+    doctor_parser.add_argument("--map", choices=tuple(MAPS), default="graybox")
     build = actions.add_parser("build", help="compile only; does not cook or package")
     build.add_argument("--target", choices=("Editor", "Game", "Client", "Server"), default="Editor")
     build.add_argument("--platform", choices=("Mac", "Win64", "Linux"), help="defaults to native host; cross-compilation is not supported")
     actions.add_parser("generate-map", help="create the initial graybox using Unreal's Python editor plugin")
-    actions.add_parser("editor", help="open the generated graybox")
+    editor = actions.add_parser("editor", help="inspect a fixed map without rewriting its WorldSettings")
+    editor.add_argument("--map", choices=tuple(MAPS), default="graybox")
     server = actions.add_parser("server", help="editor development server; NOT a packaged dedicated server")
     server.add_argument("--port", type=port, default=7777)
+    server.add_argument("--map", choices=tuple(MAPS), default="graybox")
+    server.add_argument("--mode", choices=tuple(MODES), default="practice")
     client = actions.add_parser("client", help="editor development client; NOT a packaged client")
     client.add_argument("--address", type=address, default="127.0.0.1:7777")
     return result
@@ -222,10 +281,23 @@ def main(argv=None, root=ROOT):
         host = host_platform()
         if args.action == "doctor":
             return doctor(args, root, host)
-        invocation = command(args, engine_path(args.engine), root, host)
-        print(("DRY RUN: " if args.dry_run else "RUN: ") + shlex.join(invocation), flush=True)
+        engine = engine_path(args.engine)
+        invocation = command(args, engine, root, host)
         if args.dry_run:
+            print("DRY RUN: " + shlex.join(invocation), flush=True)
+            if args.action == "server" and args.mode == "match":
+                print("Compiled match class is NOT verified in dry-run; a real launch probes it before starting a server.")
             return 0
+        build_inputs = None
+        if args.action == "build" and host == "Mac":
+            check_xcode()
+            if args.target == "Editor":
+                build_inputs = playtest_check("build_inputs", root, engine)
+        if args.action in ("server", "client", "editor"):
+            playtest_check("validate_assets", root, getattr(args, "map", "graybox"))
+        if args.action == "server" and args.mode == "match":
+            playtest_check("probe_native", engine, root, args.map, args.mode)
+        print("RUN: " + shlex.join(invocation), flush=True)
         if args.action in ("server", "client"):
             print("Development editor process only; this does not verify packaged client/server builds.", flush=True)
             (root / "Saved/Logs").mkdir(parents=True, exist_ok=True)
@@ -234,6 +306,9 @@ def main(argv=None, root=ROOT):
         result = subprocess.run(invocation, cwd=root, check=False)
         if result.returncode:
             return result.returncode if result.returncode > 0 else 1
+        if build_inputs is not None:
+            receipt = playtest_check("record_editor_build", root, engine, build_inputs)
+            print("Verified Editor build receipt: " + receipt["inputs"]["source_fingerprint"], flush=True)
         if args.action == "generate-map":
             verify_generation(root)  # Python failure can leave a partial map despite editor exit 0.
         return 0
