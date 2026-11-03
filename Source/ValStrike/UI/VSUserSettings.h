@@ -61,10 +61,18 @@ namespace VSUserSettings
     FWindowState CurrentWindowState();
     /** Desktop size used by Windowed Fullscreen. */
     FIntPoint DesktopResolution();
+    /** Primary display work area (desktop minus menu bar/taskbar/dock). */
+    FIntPoint WorkAreaSize();
     /**
-     * Sorted, unique choices for a mode. Windowed uses the engine's convenient
-     * window sizes plus CurrentWindowed (when valid); Fullscreen uses the
-     * display's supported modes; Windowed Fullscreen is the desktop size only.
+     * Standard 16:9 and 16:10 window sizes from 1280x720 that fit inside the
+     * work area. (The engine's "convenient" sizes are display fractions such
+     * as 1283x721 on a 1710-wide desktop, which players do not recognise.)
+     */
+    TArray<FIntPoint> StandardWindowedResolutions(FIntPoint WorkArea);
+    /**
+     * Sorted, unique choices for a mode. Windowed uses the standard sizes plus
+     * CurrentWindowed (when valid); Fullscreen uses the display's supported
+     * modes; Windowed Fullscreen is the desktop size only.
      */
     TArray<FIntPoint> ResolutionOptions(EWindowMode::Type Mode, FIntPoint CurrentWindowed);
     /** Sorts by area, then width, and removes duplicates and invalid sizes. */

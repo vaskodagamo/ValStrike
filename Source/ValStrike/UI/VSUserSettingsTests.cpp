@@ -149,6 +149,13 @@ bool FVSUserSettingsTest::RunTest(const FString& Parameters)
     TestEqual(TEXT("Nearest match"), ClosestResolutionIndex(Sizes, FIntPoint(1300, 790)), 1);
     TestEqual(TEXT("Larger than all"), ClosestResolutionIndex(Sizes, FIntPoint(3000, 2000)), 3);
     TestEqual(TEXT("Empty list"), ClosestResolutionIndex({}, FIntPoint(1280, 720)), INDEX_NONE);
+    const TArray<FIntPoint> Laptop = StandardWindowedResolutions(FIntPoint(1710, 1000));
+    const TArray<FIntPoint> LaptopExpected = {{1280, 720}, {1280, 800}, {1366, 768}, {1440, 900}, {1600, 900}};
+    TestTrue(TEXT("Standard sizes that fit a 1710x1000 work area"), Laptop == LaptopExpected);
+    TestTrue(TEXT("Exact work-area size is excluded"), StandardWindowedResolutions(FIntPoint(1280, 720)).Num() == 0);
+    TestTrue(TEXT("4K work area offers 16:9 and 16:10 up to 3200x1800"),
+        StandardWindowedResolutions(FIntPoint(3840, 2100)).Contains(FIntPoint(3200, 1800))
+        && !StandardWindowedResolutions(FIntPoint(3840, 2100)).Contains(FIntPoint(3840, 2160)));
     TestEqual(TEXT("Resolution text"), ResolutionText(FIntPoint(1280, 720)).ToString(), FString(TEXT("1280 × 720")));
     return true;
 }

@@ -3,6 +3,7 @@
 #include "CoreGlobals.h"
 #include "Engine/Engine.h"
 #include "Engine/GameViewportClient.h"
+#include "Framework/Application/SlateApplication.h"
 #include "GameFramework/GameUserSettings.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Misc/ConfigCacheIni.h"
@@ -188,12 +189,46 @@ void VSUserSettings::NormalizeResolutions(TArray<FIntPoint>& Resolutions)
     }
 }
 
+FIntPoint VSUserSettings::WorkAreaSize()
+{
+    FDisplayMetrics Metrics;
+    if (FSlateApplication::IsInitialized())
+    {
+        FSlateApplication::Get().GetCachedDisplayMetrics(Metrics);
+    }
+    else
+    {
+        FDisplayMetrics::RebuildDisplayMetrics(Metrics);
+    }
+    const FPlatformRect& Area = Metrics.PrimaryDisplayWorkAreaRect;
+    return FIntPoint(Area.Right - Area.Left, Area.Bottom - Area.Top);
+}
+
+TArray<FIntPoint> VSUserSettings::StandardWindowedResolutions(FIntPoint WorkArea)
+{
+    static const FIntPoint Sizes[] = {
+        {1280, 720}, {1366, 768}, {1600, 900}, {1920, 1080}, {2560, 1440}, {3200, 1800}, {3840, 2160},
+        {1280, 800}, {1440, 900}, {1680, 1050}, {1920, 1200}, {2560, 1600},
+    };
+    TArray<FIntPoint> Result;
+    for (const FIntPoint& Size : Sizes)
+    {
+        // Strictly smaller leaves room for the window frame, as the engine does.
+        if (Size.X < WorkArea.X && Size.Y < WorkArea.Y)
+        {
+            Result.Add(Size);
+        }
+    }
+    NormalizeResolutions(Result);
+    return Result;
+}
+
 TArray<FIntPoint> VSUserSettings::ResolutionOptions(EWindowMode::Type Mode, FIntPoint CurrentWindowed)
 {
     TArray<FIntPoint> Options;
     if (Mode == EWindowMode::Windowed)
     {
-        UKismetSystemLibrary::GetConvenientWindowedResolutions(Options);
+        Options = StandardWindowedResolutions(WorkAreaSize());
         Options.Add(CurrentWindowed);
     }
     else if (Mode == EWindowMode::Fullscreen)

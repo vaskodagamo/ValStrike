@@ -14,6 +14,7 @@
 #include "GameFramework/GameUserSettings.h"
 #include "GameFramework/Pawn.h"
 #include "HAL/FileManager.h"
+#include "HAL/PlatformApplicationMisc.h"
 #include "HAL/PlatformTime.h"
 #include "Input/Events.h"
 #include "InputCoreTypes.h"
@@ -26,6 +27,7 @@
 #include "UnrealClient.h"
 #include "Widgets/Input/SEditableTextBox.h"
 #include "Widgets/Input/SSlider.h"
+#include "Widgets/SWindow.h"
 #include "Widgets/Text/STextBlock.h"
 
 namespace
@@ -91,6 +93,7 @@ private:
         switch (Stage)
         {
         case 0:
+            ActivateOnce();
             if (!PC->GetPawn() || !PC->GetPawn()->InputComponent || !Menu || Age < 2.0) return;
             {
                 const FConfigFile* File = GConfig ? GConfig->FindConfigFile(GGameUserSettingsIni) : nullptr;
@@ -129,7 +132,7 @@ private:
             Screenshot(TEXT("menu"));
             Check(TEXT("menu_focuses_resume"), FocusedTag() == NAME_None && FocusedText() == TEXT("Resume  ·  Esc"), FocusedText());
             SlateKey(EKeys::Tab);
-            Check(TEXT("tab_reaches_settings_button"), FocusedTag() == FName(TEXT("VS.Settings")), FocusedTag().ToString());
+            Check(TEXT("tab_reaches_settings_button"), IsFocused(TEXT("VS.Settings")), FocusedTag().ToString());
             Check(TEXT("mouse_click_settings_button"), Click(TEXT("VS.Settings")));
             Next(Now);
             break;
@@ -137,7 +140,7 @@ private:
             if (Age < 0.3) return;
             Check(TEXT("mouse_click_opens_settings"), Menu->IsSettingsOpen());
             if (!Menu->IsSettingsOpen()) SlateKey(EKeys::Enter);
-            Check(TEXT("settings_focuses_slider"), FocusedTag() == FName(TEXT("VS.SensitivitySlider")), FocusedTag().ToString());
+            Check(TEXT("settings_focuses_slider"), IsFocused(TEXT("VS.SensitivitySlider")), FocusedTag().ToString());
             Check(TEXT("settings_show_default_sensitivity"), SliderValue() == VSUserSettings::DefaultMouseSensitivity && ValueText() == TEXT("0.120"),
                 FString::Printf(TEXT("slider=%.4f text=%s"), SliderValue(), *ValueText()));
             Check(TEXT("settings_show_current_window"), Menu->GetPendingWindowMode() == EWindowMode::Windowed && Menu->GetPendingResolution() == SettingsInitialWindow,
@@ -170,7 +173,7 @@ private:
             break;
         case 11:
             if (Age < 0.2) return;
-            Check(TEXT("tab_reaches_sensitivity_value"), FocusedTag() == FName(TEXT("VS.SensitivityValue")), FocusedTag().ToString());
+            Check(TEXT("tab_reaches_sensitivity_value"), IsFocused(TEXT("VS.SensitivityValue")), FocusedTag().ToString());
             Type(TEXT("5"));
             SlateKey(EKeys::Enter);
             Next(Now);
@@ -207,7 +210,7 @@ private:
             break;
         case 16:
             if (Age < 0.2) return;
-            Check(TEXT("tab_reaches_window_mode"), FocusedTag() == FName(TEXT("VS.WindowMode")), FocusedTag().ToString());
+            Check(TEXT("tab_reaches_window_mode"), IsFocused(TEXT("VS.WindowMode")), FocusedTag().ToString());
             SlateKey(EKeys::Left);
             Next(Now);
             break;
@@ -222,7 +225,7 @@ private:
         case 18:
             if (Age < 0.4) return;
             SlateKey(EKeys::Tab);
-            Check(TEXT("tab_skips_fixed_desktop_resolution"), FocusedTag() == FName(TEXT("VS.ApplyDisplay")), FocusedTag().ToString());
+            Check(TEXT("tab_skips_fixed_desktop_resolution"), IsFocused(TEXT("VS.ApplyDisplay")), FocusedTag().ToString());
             SlateKey(EKeys::Enter);
             Next(Now);
             break;
@@ -244,7 +247,7 @@ private:
             if (Age < 0.5) return;
             // Apply -> (fixed resolution skipped) -> window mode.
             SlateKey(EKeys::Tab, true);
-            Check(TEXT("shift_tab_returns_to_window_mode"), FocusedTag() == FName(TEXT("VS.WindowMode")), FocusedTag().ToString());
+            Check(TEXT("shift_tab_returns_to_window_mode"), IsFocused(TEXT("VS.WindowMode")), FocusedTag().ToString());
             if (!bExclusiveFullscreen)
             {
                 Stage = 30;
@@ -288,7 +291,7 @@ private:
                 FString::Printf(TEXT("mode=%d"), int32(Menu->GetPendingWindowMode())));
             FocusTagged(TEXT("VS.WindowMode"));
             SlateKey(EKeys::Tab);
-            Check(TEXT("tab_reaches_resolution"), FocusedTag() == FName(TEXT("VS.Resolution")), FocusedTag().ToString());
+            Check(TEXT("tab_reaches_resolution"), IsFocused(TEXT("VS.Resolution")), FocusedTag().ToString());
             {
                 const int32 Target = Menu->GetResolutionOptions().Find(SettingsChosenWindow);
                 const int32 Current = Menu->GetResolutionOptions().Find(Menu->GetPendingResolution());
@@ -307,7 +310,7 @@ private:
         case 33:
             if (Age < 0.4) return;
             SlateKey(EKeys::Tab);
-            Check(TEXT("tab_reaches_apply"), FocusedTag() == FName(TEXT("VS.ApplyDisplay")), FocusedTag().ToString());
+            Check(TEXT("tab_reaches_apply"), IsFocused(TEXT("VS.ApplyDisplay")), FocusedTag().ToString());
             SlateKey(EKeys::Enter);
             Next(Now);
             break;
@@ -327,7 +330,7 @@ private:
             if (Age < 0.5) return;
             SlateKey(EKeys::Escape);
             Check(TEXT("escape_returns_to_session_page"), !Menu->IsSettingsOpen() && PC->IsSessionMenuOpen(), FocusedText());
-            Check(TEXT("back_focuses_settings_button"), FocusedTag() == FName(TEXT("VS.Settings")), FocusedTag().ToString());
+            Check(TEXT("back_focuses_settings_button"), IsFocused(TEXT("VS.Settings")), FocusedTag().ToString());
             Next(Now);
             break;
         case 36:
@@ -363,6 +366,7 @@ private:
         switch (Stage)
         {
         case 0:
+            ActivateOnce();
             if (!PC->GetPawn() || !PC->GetPawn()->InputComponent || !Menu || Age < 2.0) return;
             Check(TEXT("restart_loads_saved_sensitivity"), PC->GetMouseSensitivity() == SettingsChosenSensitivity,
                 FString::Printf(TEXT("%.4f"), PC->GetMouseSensitivity()));
@@ -387,7 +391,7 @@ private:
         case 4:
             if (Age < 0.4) return;
             SlateKey(EKeys::Tab);
-            Check(TEXT("restart_tab_reaches_settings_button"), FocusedTag() == FName(TEXT("VS.Settings")), FocusedTag().ToString());
+            Check(TEXT("restart_tab_reaches_settings_button"), IsFocused(TEXT("VS.Settings")), FocusedTag().ToString());
             SlateKey(EKeys::Enter);
             Next(Now);
             break;
@@ -562,6 +566,26 @@ private:
         return Widget ? Widget->GetTypeAsString() : TEXT("<none>");
     }
 
+    bool IsFocused(const TCHAR* Tag) const
+    {
+        // Composite widgets (SEditableTextBox) give focus to an inner child.
+        const TSharedPtr<SWidget> Widget = Tagged(Tag);
+        return Widget && (Widget->HasKeyboardFocus() || Widget->HasFocusedDescendants());
+    }
+
+    void ActivateOnce()
+    {
+        // A launched window can sit on an inactive macOS Space, where Slate
+        // hit-testing (FMacWindow::IsPointInWindow) rejects every point. Make the
+        // game the active app, as a player clicking its window would.
+        if (bActivated) return;
+        bActivated = true;
+#if PLATFORM_MAC
+        FPlatformApplicationMisc::ActivateApplication();
+        LogLine(TEXT("VSSET_ACTIVATE requested"));
+#endif
+    }
+
     void FocusTagged(const TCHAR* Tag) const
     {
         if (const TSharedPtr<SWidget> Widget = Tagged(Tag))
@@ -578,11 +602,14 @@ private:
         const TSet<FKey> None;
         const TSet<FKey> Left = {EKeys::LeftMouseButton};
         FSlateApplication& App = FSlateApplication::Get();
+        const TSharedPtr<SWindow> Window = App.FindWidgetWindow(Widget.ToSharedRef());
+        const bool bHitTestable = Window && Window->IsScreenspaceMouseWithin(Position);
         App.ProcessMouseMoveEvent(FPointerEvent(FSlateApplicationBase::CursorPointerIndex, Position, Position, None, EKeys::Invalid, 0.0f, FModifierKeysState()));
         App.ProcessMouseButtonDownEvent(nullptr, FPointerEvent(FSlateApplicationBase::CursorPointerIndex, Position, Position, Left, EKeys::LeftMouseButton, 0.0f, FModifierKeysState()));
         App.ProcessMouseButtonUpEvent(FPointerEvent(FSlateApplicationBase::CursorPointerIndex, Position, Position, None, EKeys::LeftMouseButton, 0.0f, FModifierKeysState()));
-        LogLine(FString::Printf(TEXT("VSSET_CLICK %s at (%.1f, %.1f)"), Tag, Position.X, Position.Y));
-        return true;
+        LogLine(FString::Printf(TEXT("VSSET_CLICK %s at (%.1f, %.1f) hit_testable=%s"), Tag, Position.X, Position.Y,
+            bHitTestable ? TEXT("true") : TEXT("false")));
+        return bHitTestable;
     }
 
     static void Type(const TCHAR* Text)
@@ -637,6 +664,7 @@ private:
     bool bFinished = false;
     bool bRestart = false;
     bool bExclusiveFullscreen = false;
+    bool bActivated = false;
     FString Phase;
     FString ScreenshotDirectory;
     TSharedPtr<SVSSessionMenu> Menu;
