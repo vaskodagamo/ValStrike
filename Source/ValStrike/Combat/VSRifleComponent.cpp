@@ -4,6 +4,7 @@
 #include "../VSCharacter.h"
 #include "Engine/World.h"
 #include "GameFramework/PlayerController.h"
+#include "../Match/VSMatchGameMode.h"
 #include "Net/UnrealNetwork.h"
 #include "TimerManager.h"
 
@@ -64,10 +65,13 @@ bool UVSRifleComponent::HasValidOwner() const
 void UVSRifleComponent::StartFire()
 {
     AVSCharacter* Pawn = Character();
-    if (bFireHeld || !Pawn || !Pawn->IsLocallyControlled() || !Pawn->GetHealthComponent()->IsAlive()) { return; }
+    if (bFireHeld || !Pawn || !Pawn->IsLocallyControlled() || !Pawn->CanMatchCombat()) { return; }
     bFireHeld = true;
     SendShot();
-    GetWorld()->GetTimerManager().SetTimer(LocalFireTimer, this, &UVSRifleComponent::SendShot, FireInterval, true);
+    if (bFireHeld)
+    {
+        GetWorld()->GetTimerManager().SetTimer(LocalFireTimer, this, &UVSRifleComponent::SendShot, FireInterval, true);
+    }
 }
 
 void UVSRifleComponent::StopFire()
@@ -79,7 +83,7 @@ void UVSRifleComponent::StopFire()
 void UVSRifleComponent::SendShot()
 {
     AVSCharacter* Pawn = Character();
-    if (!bFireHeld || !Pawn || !Pawn->IsLocallyControlled() || !Pawn->GetHealthComponent()->IsAlive())
+    if (!bFireHeld || !Pawn || !Pawn->IsLocallyControlled() || !Pawn->CanMatchCombat())
     {
         StopFire();
         return;
@@ -122,7 +126,13 @@ void UVSRifleComponent::ServerRequestFire_Implementation(uint32 ShotId, FVector 
         Reject(TEXT("direction")); return;
     }
 
-    // RULE-01 integration must add phase eligibility here and in reload.
+    // The live server gate processes expired deadlines before any ammo or hit
+    // effect. Replicated flags alone may still describe the previous phase.
+    if (!AVSMatchGameMode::AllowsCombat(Pawn) || !Pawn->CanMatchCombat())
+    {
+        Reject(TEXT("phase"));
+        return;
+    }
     // Current-position hit registration: no client victim, damage or rewind.
     NextServerFireTime = FMath::Max(Now, NextServerFireTime) + FireInterval;
     --State.Magazine;
@@ -143,13 +153,19 @@ void UVSRifleComponent::ServerRequestFire_Implementation(uint32 ShotId, FVector 
 void UVSRifleComponent::Reload()
 {
     AVSCharacter* Pawn = Character();
-    if (Pawn && Pawn->IsLocallyControlled()) { ServerRequestReload(); }
+    if (Pawn && Pawn->IsLocallyControlled() && Pawn->CanMatchCombat()) { ServerRequestReload(); }
 }
 
 void UVSRifleComponent::ServerRequestReload_Implementation()
 {
-    if (!HasValidOwner() || !Character()->GetHealthComponent()->IsAlive()
-        || State.bReloading || State.Magazine >= MagazineCapacity || State.Reserve <= 0) { return; }
+    if (!HasValidOwner() || !Character()->GetHealthComponent()->IsAlive()) { return; }
+    AVSCharacter* Pawn = Character();
+    if (!AVSMatchGameMode::AllowsCombat(Pawn) || !Pawn->CanMatchCombat())
+    {
+        Reject(TEXT("phase"));
+        return;
+    }
+    if (State.bReloading || State.Magazine >= MagazineCapacity || State.Reserve <= 0) { return; }
     State.bReloading = true;
     GetWorld()->GetTimerManager().SetTimer(ReloadTimer, this, &UVSRifleComponent::FinishReload, ReloadDuration, false);
     Character()->ForceNetUpdate();
@@ -161,6 +177,13 @@ void UVSRifleComponent::FinishReload()
     {
         State.bReloading = false;
         GetOwner()->ForceNetUpdate();
+        return;
+    }
+    AVSCharacter* Pawn = Character();
+    if (!AVSMatchGameMode::AllowsCombat(Pawn) || !Pawn->CanMatchCombat())
+    {
+        Reject(TEXT("phase"));
+        OwnerDied();
         return;
     }
     const int32 Transfer = FMath::Min(MagazineCapacity - State.Magazine, State.Reserve);
@@ -202,11 +225,33 @@ bool UVSRifleComponent::DevelopmentReset()
 void UVSRifleComponent::DevelopmentRequest(uint32 ShotId, FVector Origin, FVector Direction)
 {
     FString Role;
-    if (FParse::Value(FCommandLine::Get(), TEXT("VSCombatSmoke="), Role)
-        && (Role == TEXT("server") || Role == TEXT("driver") || Role == TEXT("observer")))
+    const bool CombatSmoke = FParse::Value(FCommandLine::Get(), TEXT("VSCombatSmoke="), Role)
+        && (Role == TEXT("server") || Role == TEXT("driver") || Role == TEXT("observer"));
+    const bool MatchSmoke = FParse::Value(FCommandLine::Get(), TEXT("VSMatchSmoke="), Role) && Role == TEXT("server");
+    if (CombatSmoke || MatchSmoke)
     {
         NextLocalShotId = ShotId;
         ServerRequestFire(ShotId, Origin, Direction);
+    }
+}
+
+void UVSRifleComponent::DevelopmentRequestReload()
+{
+    FString Role;
+    if (GetOwner() && GetOwner()->HasAuthority() &&
+        FParse::Value(FCommandLine::Get(), TEXT("VSMatchSmoke="), Role) && Role == TEXT("server"))
+    {
+        ServerRequestReload();
+    }
+}
+
+void UVSRifleComponent::DevelopmentFinishReload()
+{
+    FString Role;
+    if (GetOwner() && GetOwner()->HasAuthority() && State.bReloading &&
+        FParse::Value(FCommandLine::Get(), TEXT("VSMatchSmoke="), Role) && Role == TEXT("server"))
+    {
+        FinishReload();
     }
 }
 #endif
