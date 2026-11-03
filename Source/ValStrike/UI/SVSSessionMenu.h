@@ -7,6 +7,7 @@
 class AVSPlayerController;
 class SButton;
 class SEditableTextBox;
+class SSlider;
 class SWidgetSwitcher;
 
 class SVSSessionMenu : public SCompoundWidget
@@ -57,6 +58,7 @@ private:
     TSharedPtr<SWidgetSwitcher> Pages;
     TSharedPtr<SEditableTextBox> AddressInput;
     TSharedPtr<SButton> SettingsButton;
+    TSharedPtr<SSlider> SensitivitySlider;
     TSharedPtr<SEditableTextBox> SensitivityInput;
     TSharedPtr<SButton> ModeButton;
     TSharedPtr<SButton> ResolutionButton;

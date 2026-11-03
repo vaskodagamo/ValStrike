@@ -197,7 +197,6 @@ TSharedRef<SWidget> SVSSessionMenu::MakeSessionPage()
 
 TSharedRef<SWidget> SVSSessionMenu::MakeSettingsPage()
 {
-    TSharedPtr<SSlider> Slider;
     TSharedPtr<SButton> ApplyButton, BackButton;
     TSharedRef<SWidget> Page =
         SNew(SVerticalBox)
@@ -208,21 +207,34 @@ TSharedRef<SWidget> SVSSessionMenu::MakeSettingsPage()
         + SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 12)
         [
             SNew(STextBlock).Font(FCoreStyle::GetDefaultFontStyle("Regular", 13)).ColorAndOpacity(MenuMuted).AutoWrapText(true)
-            .Text(NSLOCTEXT("ValStrike", "SettingsHelp", "Saved on this computer only. Never sent to a server."))
+            .Text(NSLOCTEXT("ValStrike", "SettingsHelp", "Sensitivity applies immediately. Saved on this computer only."))
         ]
         + SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 5)
-        [ Label(NSLOCTEXT("ValStrike", "SensitivityLabel", "MOUSE SENSITIVITY"), 12, MenuMuted) ]
-        + SVerticalBox::Slot().AutoHeight()
+        [
+            SNew(SHorizontalBox)
+            + SHorizontalBox::Slot().FillWidth(1)
+            [ Label(NSLOCTEXT("ValStrike", "SensitivityLabel", "MOUSE SENSITIVITY"), 12, MenuMuted) ]
+            + SHorizontalBox::Slot().AutoWidth()
+            [
+                Label(FText::Format(NSLOCTEXT("ValStrike", "SensitivityRange", "{0} – {1}   ·   default {2}"),
+                    FText::FromString(VSUserSettings::FormatMouseSensitivity(VSUserSettings::MinMouseSensitivity)),
+                    FText::FromString(VSUserSettings::FormatMouseSensitivity(VSUserSettings::MaxMouseSensitivity)),
+                    FText::FromString(VSUserSettings::FormatMouseSensitivity(VSUserSettings::DefaultMouseSensitivity))), 12, MenuMuted)
+            ]
+        ]
+        + SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 12)
         [
             SNew(SHorizontalBox)
             + SHorizontalBox::Slot().FillWidth(1).VAlign(VAlign_Center).Padding(0, 0, 12, 0)
             [
-                SAssignNew(Slider, SSlider).Tag(FName(TEXT("VS.SensitivitySlider")))
+                SAssignNew(SensitivitySlider, SSlider).Tag(FName(TEXT("VS.SensitivitySlider")))
                 .MinValue(VSUserSettings::MinMouseSensitivity).MaxValue(VSUserSettings::MaxMouseSensitivity)
                 .StepSize(VSUserSettings::MouseSensitivityStep)
                 // Arrow keys change the value directly; no gamepad-style accept lock.
                 .RequiresControllerLock(false)
-                .SliderHandleColor(Mint).SliderBarColor(MenuMuted)
+                // The default slider has no focus outline; brighten it for keyboard users.
+                .SliderHandleColor_Lambda([this]() { return SensitivitySlider && SensitivitySlider->HasKeyboardFocus() ? FLinearColor::White : Mint; })
+                .SliderBarColor_Lambda([this]() { return SensitivitySlider && SensitivitySlider->HasKeyboardFocus() ? Mint : MenuMuted; })
                 .Value_Lambda([this]() { return GetSensitivity(); })
                 .OnValueChanged_Lambda([this](float Value) { SetSensitivity(Value); })
             ]
@@ -239,13 +251,6 @@ TSharedRef<SWidget> SVSSessionMenu::MakeSettingsPage()
                     else CommitSensitivityText(true);
                 })
             ]
-        ]
-        + SVerticalBox::Slot().AutoHeight().Padding(0, 5, 0, 12)
-        [
-            Label(FText::Format(NSLOCTEXT("ValStrike", "SensitivityRange", "{0} to {1}. Default {2}. Applies immediately."),
-                FText::FromString(VSUserSettings::FormatMouseSensitivity(VSUserSettings::MinMouseSensitivity)),
-                FText::FromString(VSUserSettings::FormatMouseSensitivity(VSUserSettings::MaxMouseSensitivity)),
-                FText::FromString(VSUserSettings::FormatMouseSensitivity(VSUserSettings::DefaultMouseSensitivity))), 12, MenuMuted)
         ]
         + SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 5)
         [ Label(NSLOCTEXT("ValStrike", "WindowModeLabel", "WINDOW MODE"), 12, MenuMuted) ]
@@ -269,9 +274,9 @@ TSharedRef<SWidget> SVSSessionMenu::MakeSettingsPage()
                 [this](int32 Direction) { CycleResolution(Direction); },
                 [this]() { return CanChooseResolution(); })
         ]
-        + SVerticalBox::Slot().AutoHeight().Padding(0, 6, 0, 0)
+        + SVerticalBox::Slot().AutoHeight().Padding(0, 4, 0, 2)
         [
-            SNew(SBox).MinDesiredHeight(36)
+            SNew(SBox).MinDesiredHeight(24)
             [
                 SNew(STextBlock).Font(FCoreStyle::GetDefaultFontStyle("Regular", 13)).AutoWrapText(true)
                 .ColorAndOpacity_Lambda([this]() { return bSettingsError ? MenuError : Mint; })
@@ -297,7 +302,7 @@ TSharedRef<SWidget> SVSSessionMenu::MakeSettingsPage()
         ]
         + SVerticalBox::Slot().AutoHeight().Padding(0, 12, 0, 0)
         [ Label(NSLOCTEXT("ValStrike", "SettingsKeys", "Tab: navigate     Left/Right: change     Enter: select     Esc: back"), 12, MenuMuted) ];
-    SettingsNavigation = {Slider, SensitivityInput, ModeButton, ResolutionButton, ApplyButton, BackButton};
+    SettingsNavigation = {SensitivitySlider, SensitivityInput, ModeButton, ResolutionButton, ApplyButton, BackButton};
     return Page;
 }
 
