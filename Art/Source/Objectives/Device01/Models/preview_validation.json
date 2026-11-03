@@ -1,0 +1,45 @@
+{
+  "captures": [
+    {
+      "state": "Idle",
+      "lighting": "Neutral",
+      "path": "Previews/D01_Relay_Idle_Neutral.png",
+      "sha256": "d1f1bb40c7ce4569d526037e765d7a6185aea0cd9557d2e740e495bbfffb364b",
+      "kind": "actual Blender mesh render; not gameplay/native Unreal"
+    },
+    {
+      "state": "Armed",
+      "lighting": "Neutral",
+      "path": "Previews/D01_Relay_Armed_Neutral.png",
+      "sha256": "72482ab7b42e44f559c6771d5a420f633ea8891d6815f9b2284da79ebb9d3486",
+      "kind": "actual Blender mesh render; not gameplay/native Unreal"
+    },
+    {
+      "state": "Defused",
+      "lighting": "Neutral",
+      "path": "Previews/D01_Relay_Defused_Neutral.png",
+      "sha256": "acbd3bdb6d42f7dc937c3ed433af98702eba5f61622e6e5892339055d16b8099",
+      "kind": "actual Blender mesh render; not gameplay/native Unreal"
+    },
+    {
+      "state": "Idle",
+      "lighting": "Dim",
+      "path": "Previews/D01_Relay_Idle_Dim.png",
+      "sha256": "b6e48fc90f936667c994563bb44831c1cdb157e8ebbc840c9135121bddf0b5f3",
+      "kind": "actual Blender mesh render; not gameplay/native Unreal"
+    }
+  ],
+  "camera_location_cm": [
+    38,
+    -54,
+    46
+  ],
+  "orthographic_scale_cm": 43,
+  "resolution": [
+    1400,
+    1000
+  ],
+  "neutral_world_strength": 0.4,
+  "dim_world_strength": 0.07,
+  "dim_area_light_multiplier": 0.18
+}

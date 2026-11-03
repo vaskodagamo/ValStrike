@@ -1,0 +1,576 @@
+{
+  "task": "ART-04",
+  "engine": "5.8.4-58902052+++UE5+Release-5.8",
+  "run_id": "67b61fbbe03b44bdb58779ad42a13038",
+  "date_europe_berlin": "2026-11-03",
+  "fresh_reopen_verified": true,
+  "appearance_sha256": "3e4ec41f16c35299a6027cdb226ab0b8a6d7b946595d169d8798f06d75f5927f",
+  "fbx_sha256": "f93e72c5f2bacd794dd49f2b5d482400fd648e23c4ba8b58c8f93cccca182520",
+  "captures": [
+    {
+      "kind": "Studio",
+      "status": "Idle",
+      "output": "docs/assets/device01/Previews/D01_Unreal_Studio_Idle.png",
+      "resolution": [
+        1600,
+        1000
+      ],
+      "camera_location_cm": [
+        45.0,
+        70.0,
+        65.0
+      ],
+      "camera_rotation_degrees": {
+        "pitch": -36.017846661718785,
+        "yaw": -122.7352262721076,
+        "roll": -3.1805546814635176e-15
+      },
+      "horizontal_fov_degrees": 31.0,
+      "sun_intensity": 3.0,
+      "sky_intensity": 1.0,
+      "auto_exposure": false,
+      "exposure_bias": 0,
+      "device_world_transform": {
+        "translation_cm": [
+          0.0,
+          0.0,
+          0.05
+        ],
+        "rotation_quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "carry_socket_world": {
+        "translation_cm": [
+          0.0,
+          0.0,
+          8.05
+        ],
+        "rotation_quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "slot_names": [
+        "Shell",
+        "Trim",
+        "Status"
+      ],
+      "status_material": "/Game/Art/Objectives/Device01/Materials/MI_VS_D01_StatusIdle.MI_VS_D01_StatusIdle",
+      "collision_profile": "NoCollision",
+      "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+      "composition": "actual native mesh, unsaved editor stage; no gameplay, player or hands",
+      "sha256": "2426a676b15df1c3c995da37a991d794021e424ec958866111db9fe8392b04ff"
+    },
+    {
+      "kind": "Studio",
+      "status": "Armed",
+      "output": "docs/assets/device01/Previews/D01_Unreal_Studio_Armed.png",
+      "resolution": [
+        1600,
+        1000
+      ],
+      "camera_location_cm": [
+        45.0,
+        70.0,
+        65.0
+      ],
+      "camera_rotation_degrees": {
+        "pitch": -36.017846661718785,
+        "yaw": -122.7352262721076,
+        "roll": -3.1805546814635176e-15
+      },
+      "horizontal_fov_degrees": 31.0,
+      "sun_intensity": 3.0,
+      "sky_intensity": 1.0,
+      "auto_exposure": false,
+      "exposure_bias": 0,
+      "device_world_transform": {
+        "translation_cm": [
+          0.0,
+          0.0,
+          0.05
+        ],
+        "rotation_quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "carry_socket_world": {
+        "translation_cm": [
+          0.0,
+          0.0,
+          8.05
+        ],
+        "rotation_quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "slot_names": [
+        "Shell",
+        "Trim",
+        "Status"
+      ],
+      "status_material": "/Game/Art/Objectives/Device01/Materials/MI_VS_D01_StatusArmed.MI_VS_D01_StatusArmed",
+      "collision_profile": "NoCollision",
+      "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+      "composition": "actual native mesh, unsaved editor stage; no gameplay, player or hands",
+      "sha256": "84e624528344ceedb2b4af1a5190745efcba79704941c88af7110fafb9c6cbdd"
+    },
+    {
+      "kind": "Studio",
+      "status": "Defused",
+      "output": "docs/assets/device01/Previews/D01_Unreal_Studio_Defused.png",
+      "resolution": [
+        1600,
+        1000
+      ],
+      "camera_location_cm": [
+        45.0,
+        70.0,
+        65.0
+      ],
+      "camera_rotation_degrees": {
+        "pitch": -36.017846661718785,
+        "yaw": -122.7352262721076,
+        "roll": -3.1805546814635176e-15
+      },
+      "horizontal_fov_degrees": 31.0,
+      "sun_intensity": 3.0,
+      "sky_intensity": 1.0,
+      "auto_exposure": false,
+      "exposure_bias": 0,
+      "device_world_transform": {
+        "translation_cm": [
+          0.0,
+          0.0,
+          0.05
+        ],
+        "rotation_quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "carry_socket_world": {
+        "translation_cm": [
+          0.0,
+          0.0,
+          8.05
+        ],
+        "rotation_quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "slot_names": [
+        "Shell",
+        "Trim",
+        "Status"
+      ],
+      "status_material": "/Game/Art/Objectives/Device01/Materials/MI_VS_D01_StatusDefused.MI_VS_D01_StatusDefused",
+      "collision_profile": "NoCollision",
+      "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+      "composition": "actual native mesh, unsaved editor stage; no gameplay, player or hands",
+      "sha256": "087cb829b4dc9f356beb8f2d4bf82834e4e462ba87b3d63821350d680e469ab5"
+    },
+    {
+      "kind": "Dim",
+      "status": "Idle",
+      "output": "docs/assets/device01/Previews/D01_Unreal_Dim_Idle.png",
+      "resolution": [
+        1600,
+        1000
+      ],
+      "camera_location_cm": [
+        45.0,
+        70.0,
+        65.0
+      ],
+      "camera_rotation_degrees": {
+        "pitch": -36.017846661718785,
+        "yaw": -122.7352262721076,
+        "roll": -3.1805546814635176e-15
+      },
+      "horizontal_fov_degrees": 31.0,
+      "sun_intensity": 0.75,
+      "sky_intensity": 0.3,
+      "auto_exposure": false,
+      "exposure_bias": 0,
+      "device_world_transform": {
+        "translation_cm": [
+          0.0,
+          0.0,
+          0.05
+        ],
+        "rotation_quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "carry_socket_world": {
+        "translation_cm": [
+          0.0,
+          0.0,
+          8.05
+        ],
+        "rotation_quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "slot_names": [
+        "Shell",
+        "Trim",
+        "Status"
+      ],
+      "status_material": "/Game/Art/Objectives/Device01/Materials/MI_VS_D01_StatusIdle.MI_VS_D01_StatusIdle",
+      "collision_profile": "NoCollision",
+      "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+      "composition": "actual native mesh, unsaved editor stage; no gameplay, player or hands",
+      "sha256": "9d5faaec188ea20fd43cce4f94d650fafa8e89d28afc86e1eb2de609fe36d7e3"
+    },
+    {
+      "kind": "Dim",
+      "status": "Armed",
+      "output": "docs/assets/device01/Previews/D01_Unreal_Dim_Armed.png",
+      "resolution": [
+        1600,
+        1000
+      ],
+      "camera_location_cm": [
+        45.0,
+        70.0,
+        65.0
+      ],
+      "camera_rotation_degrees": {
+        "pitch": -36.017846661718785,
+        "yaw": -122.7352262721076,
+        "roll": -3.1805546814635176e-15
+      },
+      "horizontal_fov_degrees": 31.0,
+      "sun_intensity": 0.75,
+      "sky_intensity": 0.3,
+      "auto_exposure": false,
+      "exposure_bias": 0,
+      "device_world_transform": {
+        "translation_cm": [
+          0.0,
+          0.0,
+          0.05
+        ],
+        "rotation_quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "carry_socket_world": {
+        "translation_cm": [
+          0.0,
+          0.0,
+          8.05
+        ],
+        "rotation_quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "slot_names": [
+        "Shell",
+        "Trim",
+        "Status"
+      ],
+      "status_material": "/Game/Art/Objectives/Device01/Materials/MI_VS_D01_StatusArmed.MI_VS_D01_StatusArmed",
+      "collision_profile": "NoCollision",
+      "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+      "composition": "actual native mesh, unsaved editor stage; no gameplay, player or hands",
+      "sha256": "a7be91e1457ad58ed553c9d951050fd721daebc6de2c71fae891d88d16fdf726"
+    },
+    {
+      "kind": "Dim",
+      "status": "Defused",
+      "output": "docs/assets/device01/Previews/D01_Unreal_Dim_Defused.png",
+      "resolution": [
+        1600,
+        1000
+      ],
+      "camera_location_cm": [
+        45.0,
+        70.0,
+        65.0
+      ],
+      "camera_rotation_degrees": {
+        "pitch": -36.017846661718785,
+        "yaw": -122.7352262721076,
+        "roll": -3.1805546814635176e-15
+      },
+      "horizontal_fov_degrees": 31.0,
+      "sun_intensity": 0.75,
+      "sky_intensity": 0.3,
+      "auto_exposure": false,
+      "exposure_bias": 0,
+      "device_world_transform": {
+        "translation_cm": [
+          0.0,
+          0.0,
+          0.05
+        ],
+        "rotation_quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "carry_socket_world": {
+        "translation_cm": [
+          0.0,
+          0.0,
+          8.05
+        ],
+        "rotation_quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "slot_names": [
+        "Shell",
+        "Trim",
+        "Status"
+      ],
+      "status_material": "/Game/Art/Objectives/Device01/Materials/MI_VS_D01_StatusDefused.MI_VS_D01_StatusDefused",
+      "collision_profile": "NoCollision",
+      "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+      "composition": "actual native mesh, unsaved editor stage; no gameplay, player or hands",
+      "sha256": "cb16fa54841b8c6269e87783f16d753b6e90ea37102c806ee04ab2ff4daf657e"
+    },
+    {
+      "kind": "Carry",
+      "status": "Idle",
+      "output": "docs/assets/device01/Previews/D01_Unreal_Carry_Idle.png",
+      "resolution": [
+        1600,
+        1000
+      ],
+      "camera_location_cm": [
+        0.0,
+        0.0,
+        160.0
+      ],
+      "camera_rotation_degrees": {
+        "pitch": 0.0,
+        "yaw": 0.0,
+        "roll": 0.0
+      },
+      "horizontal_fov_degrees": 85.0,
+      "sun_intensity": 3.0,
+      "sky_intensity": 1.0,
+      "auto_exposure": false,
+      "exposure_bias": 0,
+      "device_world_transform": {
+        "translation_cm": [
+          42.0,
+          8.0,
+          140.0
+        ],
+        "rotation_quaternion_xyzw": [
+          0.0,
+          -0.0,
+          0.707107,
+          0.707107
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "carry_socket_world": {
+        "translation_cm": [
+          42.0,
+          8.0,
+          148.0
+        ],
+        "rotation_quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.707107,
+          0.707107
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "slot_names": [
+        "Shell",
+        "Trim",
+        "Status"
+      ],
+      "status_material": "/Game/Art/Objectives/Device01/Materials/MI_VS_D01_StatusIdle.MI_VS_D01_StatusIdle",
+      "collision_profile": "NoCollision",
+      "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+      "composition": "actual native mesh, unsaved editor stage; no gameplay, player or hands",
+      "sha256": "b8484e8594e3987797930d669a65518f8bc153d05f23cef510c10f29b6d24980"
+    },
+    {
+      "kind": "PlayerEye",
+      "status": "Armed",
+      "output": "docs/assets/device01/Previews/D01_Unreal_PlayerEye_Armed.png",
+      "resolution": [
+        1600,
+        1000
+      ],
+      "camera_location_cm": [
+        0.0,
+        100.0,
+        160.0
+      ],
+      "camera_rotation_degrees": {
+        "pitch": -57.171458208587474,
+        "yaw": -90.0,
+        "roll": -2.948058652561373e-15
+      },
+      "horizontal_fov_degrees": 75.0,
+      "sun_intensity": 3.0,
+      "sky_intensity": 1.0,
+      "auto_exposure": false,
+      "exposure_bias": 0,
+      "device_world_transform": {
+        "translation_cm": [
+          0.0,
+          0.0,
+          0.05
+        ],
+        "rotation_quaternion_xyzw": [
+          0.0,
+          -0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "carry_socket_world": {
+        "translation_cm": [
+          0.0,
+          0.0,
+          8.05
+        ],
+        "rotation_quaternion_xyzw": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "slot_names": [
+        "Shell",
+        "Trim",
+        "Status"
+      ],
+      "status_material": "/Game/Art/Objectives/Device01/Materials/MI_VS_D01_StatusArmed.MI_VS_D01_StatusArmed",
+      "collision_profile": "NoCollision",
+      "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+      "composition": "actual native mesh, unsaved editor stage; no gameplay, player or hands",
+      "sha256": "1b3c12ec9e0871ed8c7a2afc3893949b88f06178bef9398a244f4f40f98240c8"
+    }
+  ],
+  "scene": "transient editor composition; no assets/maps saved",
+  "runtime_verified": false,
+  "glyph_orientation": "View from native+Y corresponds to source-Y; +X source U, -Y native V",
+  "status_behavior": "Material selection is a presentation fixture, not replicated game state; no time/pulse/countdown",
+  "elapsed_seconds": 42.242
+}

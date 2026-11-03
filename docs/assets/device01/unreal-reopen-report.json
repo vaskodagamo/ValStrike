@@ -1,0 +1,191 @@
+{
+  "task": "ART-04",
+  "engine": "5.8.4-58902052+++UE5+Release-5.8",
+  "date_europe_berlin": "2026-11-03",
+  "mode": "fresh_process_reopen",
+  "appearance_sha256": "3e4ec41f16c35299a6027cdb226ab0b8a6d7b946595d169d8798f06d75f5927f",
+  "source_validation_sha256": "773ddc2c1474a547e66c41b206eb745271c825bf2b9ef358463505ea968753ef",
+  "mesh": {
+    "asset": "/Game/Art/Objectives/Device01/Meshes/SM_VS_Device01.SM_VS_Device01",
+    "bounds_min_cm": [
+      -15.000001,
+      -9.000002,
+      0.0
+    ],
+    "bounds_max_cm": [
+      15.000001,
+      9.000002,
+      10.0
+    ],
+    "dimensions_cm": [
+      30.000002,
+      18.000004,
+      10.0
+    ],
+    "triangles": 910,
+    "native_vertices": 2038,
+    "lods": 1,
+    "uv_channels": 2,
+    "slot_names": [
+      "Shell",
+      "Trim",
+      "Status"
+    ],
+    "materials": [
+      "/Game/Art/Objectives/Device01/Materials/M_VS_D01_Shell.M_VS_D01_Shell",
+      "/Game/Art/Objectives/Device01/Materials/M_VS_D01_Trim.M_VS_D01_Trim",
+      "/Game/Art/Objectives/Device01/Materials/MI_VS_D01_StatusIdle.MI_VS_D01_StatusIdle"
+    ],
+    "nanite": false,
+    "simple_collision_count": 0,
+    "convex_collision_count": 0,
+    "section_collision_enabled": [
+      false,
+      false,
+      false
+    ],
+    "collision_profile": "NoCollision",
+    "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "sockets": {
+      "Carry": {
+        "location_cm": [
+          0.0,
+          0.0,
+          8.0
+        ],
+        "roll_pitch_yaw_degrees": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "fbx_sha256": "f93e72c5f2bacd794dd49f2b5d482400fd648e23c4ba8b58c8f93cccca182520"
+  },
+  "materials": {
+    "Shell": {
+      "asset": "/Game/Art/Objectives/Device01/Materials/M_VS_D01_Shell.M_VS_D01_Shell",
+      "linear_base_color": [
+        0.02955683507025242,
+        0.04970656707882881,
+        0.0802198201417923,
+        1.0
+      ],
+      "roughness": 0.699999988079071,
+      "metallic": 0.0
+    },
+    "Trim": {
+      "asset": "/Game/Art/Objectives/Device01/Materials/M_VS_D01_Trim.M_VS_D01_Trim",
+      "linear_base_color": [
+        0.26635560393333435,
+        0.34670406579971313,
+        0.4564110338687897,
+        1.0
+      ],
+      "roughness": 0.5,
+      "metallic": 0.15000000596046448
+    },
+    "StatusGraph": {
+      "parameters": [
+        "Background",
+        "GlyphColor",
+        "GlyphEmission",
+        "GlyphMask",
+        "Metallic",
+        "Roughness"
+      ],
+      "uv_channel": 0,
+      "sampler_type": "<MaterialSamplerType.SAMPLERTYPE_MASKS: 4>",
+      "default_mask": "/Game/Art/Objectives/Device01/Textures/T_VS_D01_StatusIdle.T_VS_D01_StatusIdle",
+      "base_color_mask_links_verified": true,
+      "glyph_only_emission_links_verified": true
+    },
+    "Status": {
+      "Idle": {
+        "asset": "/Game/Art/Objectives/Device01/Materials/MI_VS_D01_StatusIdle.MI_VS_D01_StatusIdle",
+        "parent": "/Game/Art/Objectives/Device01/Materials/M_VS_D01_Status.M_VS_D01_Status",
+        "linear_glyph_color": [
+          0.28314873576164246,
+          0.40724021196365356,
+          0.5394794940948486,
+          1.0
+        ],
+        "linear_background": [
+          0.005181516520678997,
+          0.009721217676997185,
+          0.016807375475764275,
+          1.0
+        ],
+        "glyph_emission": 0.15000000596046448,
+        "roughness": 0.6499999761581421,
+        "metallic": 0.0,
+        "glyph": "hollow ring with short horizontal bar",
+        "mask": "/Game/Art/Objectives/Device01/Textures/T_VS_D01_StatusIdle.T_VS_D01_StatusIdle",
+        "srgb": false,
+        "compression": "TC_MASKS",
+        "address_mode": "clamp",
+        "source_mask_sha256": "0dc4a76eb424ec3efaba2985e9c85226360c29bd419d37cf3dde284b5df80b49"
+      },
+      "Armed": {
+        "asset": "/Game/Art/Objectives/Device01/Materials/MI_VS_D01_StatusArmed.MI_VS_D01_StatusArmed",
+        "parent": "/Game/Art/Objectives/Device01/Materials/M_VS_D01_Status.M_VS_D01_Status",
+        "linear_glyph_color": [
+          0.8879231214523315,
+          0.44520118832588196,
+          0.07421357184648514,
+          1.0
+        ],
+        "linear_background": [
+          0.005181516520678997,
+          0.009721217676997185,
+          0.016807375475764275,
+          1.0
+        ],
+        "glyph_emission": 0.15000000596046448,
+        "roughness": 0.6499999761581421,
+        "metallic": 0.0,
+        "glyph": "triangle and exclamation mark",
+        "mask": "/Game/Art/Objectives/Device01/Textures/T_VS_D01_StatusArmed.T_VS_D01_StatusArmed",
+        "srgb": false,
+        "compression": "TC_MASKS",
+        "address_mode": "clamp",
+        "source_mask_sha256": "be7a67490f66b49841a5097e2769611e207b7783a75e7511e4d82a1352b312f1"
+      },
+      "Defused": {
+        "asset": "/Game/Art/Objectives/Device01/Materials/MI_VS_D01_StatusDefused.MI_VS_D01_StatusDefused",
+        "parent": "/Game/Art/Objectives/Device01/Materials/M_VS_D01_Status.M_VS_D01_Status",
+        "linear_glyph_color": [
+          0.2746773064136505,
+          0.6583748459815979,
+          0.577580451965332,
+          1.0
+        ],
+        "linear_background": [
+          0.005181516520678997,
+          0.009721217676997185,
+          0.016807375475764275,
+          1.0
+        ],
+        "glyph_emission": 0.15000000596046448,
+        "roughness": 0.6499999761581421,
+        "metallic": 0.0,
+        "glyph": "checkmark in square",
+        "mask": "/Game/Art/Objectives/Device01/Textures/T_VS_D01_StatusDefused.T_VS_D01_StatusDefused",
+        "srgb": false,
+        "compression": "TC_MASKS",
+        "address_mode": "clamp",
+        "source_mask_sha256": "8f40938275f4a514eaccb1383bd213bcf3ac484021bcc87d546da59a4c1342ce"
+      }
+    }
+  },
+  "forward_axis": "+X",
+  "up_axis": "+Z",
+  "units": "cm",
+  "runtime_verified": false,
+  "gameplay_verified": false
+}
