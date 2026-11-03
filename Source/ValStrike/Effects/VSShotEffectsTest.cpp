@@ -239,7 +239,9 @@ private:
         const bool bServer = Role == TEXT("server");
         if ((bServer && World->GetNetMode() != NM_DedicatedServer) || (!bServer && World->GetNetMode() != NM_Client)) { return; }
         const AVSShotEffectsTestGameState* Clock = Cast<AVSShotEffectsTestGameState>(World->GetGameState());
-        const double Time = (bServer || !Clock ? World->GetGameState()->GetServerWorldTimeSeconds() : Clock->EstimateServerSeconds()) - Start;
+        double Time = (bServer || !Clock ? World->GetGameState()->GetServerWorldTimeSeconds() : Clock->EstimateServerSeconds()) - Start;
+        // Scripted steps must never re-trigger: the client timeline only moves forward.
+        if (!bServer) { Time = FMath::Max(Time, LastClientTime); LastClientTime = Time; }
         if (!bServer) { IsolateFromDesktopInput(World); }
         if (!bServer && NamedWorld.Get() != World)
         {
@@ -412,19 +414,24 @@ private:
 
     void DriveShooter(APlayerController* PC, double Time)
     {
-        bool bFire = false;
+        // One click per planned shot: press when the timeline crosses the press time,
+        // release on the next tick. A click never depends on hitting a time window.
         for (int32 Index = 0; Index < ShotFxPlanCount; ++Index)
         {
             if (Once(100 + Index, Time, ShotFxPlan[Index].AimAt)) { PC->SetControlRotation(ShotFxPlan[Index].Aim); }
-            bFire |= Time >= ShotFxPlan[Index].Press && Time < ShotFxPlan[Index].Press + 0.05;
+            if (Once(200 + Index, Time, ShotFxPlan[Index].Press)) { ClickTicks = 1; }
         }
+        const bool bFire = ClickTicks > 0;
+        ClickTicks = FMath::Max(ClickTicks - 1, 0);
         // Two held bursts sweep across the west wall: more marks than the pool holds.
         const bool bBurstA = Time >= 23.0 && Time < 26.8;
         const bool bBurstB = Time >= 29.6 && Time < 31.4;
         if (bBurstA) { PC->SetControlRotation(FRotator(0, FMath::Lerp(200.0, 160.0, FMath::Clamp((Time - 23.0) / 3.6, 0.0, 1.0)), 0)); }
         if (bBurstB) { PC->SetControlRotation(FRotator(0, FMath::Lerp(160.0, 190.0, FMath::Clamp((Time - 29.6) / 1.8, 0.0, 1.0)), 0)); }
         Key(PC, EKeys::LeftMouseButton, bFire || bBurstA || bBurstB, bFireHeld);
-        Key(PC, EKeys::R, Time >= 27.0 && Time < 27.1, bReloadHeld);
+        if (Once(300, Time, 27.0)) { ReloadTicks = 1; }
+        Key(PC, EKeys::R, ReloadTicks > 0, bReloadHeld);
+        ReloadTicks = FMath::Max(ReloadTicks - 1, 0);
     }
 
     FStatsMark MarkStats(const UVSShotEffectsSubsystem& Fx, const AVSCharacter* Shooter) const
@@ -469,17 +476,23 @@ private:
                     S.Effects, S.Baselines, Fx->GetTracerPoolSize(), Fx->GetMarkPoolSize()));
         }
 
+        // The frame that first draws an effect ends before the next tick, so measure
+        // every frame from the detection tick for 1.5 s of real time.
         const double RealNow = FPlatformTime::Seconds();
-        if (LastRealTick > 0.0 && FirstEffectRealTime > 0.0 && RealNow - FirstEffectRealTime < 1.5)
-        {
-            LongestFrameAfterFirstEffect = FMath::Max(LongestFrameAfterFirstEffect, RealNow - LastRealTick);
-        }
+        const double FrameSeconds = LastRealTick > 0.0 ? RealNow - LastRealTick : 0.0;
         LastRealTick = RealNow;
-        if (FirstEffectRealTime > 0.0 && RealNow - FirstEffectRealTime >= 1.5 && First(16))
+        if (FirstEffectRealTime > 0.0 && !Steps.Contains(16))
         {
-            Check(TEXT("first_effect_no_stall"), LongestFrameAfterFirstEffect < 0.5,
-                FString::Printf(TEXT("longest_frame_s=%.3f (includes the screenshot capture)"), LongestFrameAfterFirstEffect));
+            LongestFrameAfterFirstEffect = FMath::Max(LongestFrameAfterFirstEffect, FrameSeconds);
+            if (RealNow - FirstEffectRealTime >= 1.5 && First(16))
+            {
+                Check(TEXT("first_effect_no_stall"), LongestFrameAfterFirstEffect < 0.5,
+                    FString::Printf(TEXT("longest_frame_s=%.3f (includes a screenshot capture)"), LongestFrameAfterFirstEffect));
+            }
         }
+        // Prime the screenshot path before any effect so its one-time cost is not
+        // attributed to the first effect; also documents the scene beforehand.
+        if (Once(17, Time, 0.6)) { Capture(TEXT("start")); }
 
         // Attribute each new effect to the planned shot window it appeared in.
         if (S.Effects != SeenEffects)
@@ -703,6 +716,8 @@ private:
     uint32 TrackedShots = 0, BurstServerShots = 0, UnexpectedServerShots = 0;
     uint32 FirstShooterId = 0, ObserverId = 0, TrackedShooterId = 0;
     int32 ObserverRejoins = 0;
+    int32 ClickTicks = 0, ReloadTicks = 0;
+    double LastClientTime = -1.0e9;
     double LastRealTick = 0.0, FirstEffectRealTime = 0.0, LongestFrameAfterFirstEffect = 0.0;
     bool bReady = false, bFinished = false, bFireHeld = false, bReloadHeld = false, bRejoinRequested = false;
 };
@@ -743,13 +758,16 @@ void AVSShotEffectsTestCharacter::BeginPlay()
 
 double AVSShotEffectsTestGameState::EstimateServerSeconds() const
 {
-    if (LastServerSeconds < 0.0) { return GetServerWorldTimeSeconds(); }
-    return LastServerSeconds + (FPlatformTime::Seconds() - LastReceiptRealSeconds);
+    if (ClockSamples.IsEmpty()) { return GetServerWorldTimeSeconds(); }
+    double Offset = ClockSamples[0].Offset;
+    for (const FClockSample& Sample : ClockSamples) { Offset = FMath::Min(Offset, Sample.Offset); }
+    return FPlatformTime::Seconds() - Offset;
 }
 
 void AVSShotEffectsTestGameState::OnRep_ReplicatedWorldTimeSecondsDouble()
 {
     Super::OnRep_ReplicatedWorldTimeSecondsDouble();
-    LastServerSeconds = ReplicatedWorldTimeSecondsDouble;
-    LastReceiptRealSeconds = FPlatformTime::Seconds();
+    const double Now = FPlatformTime::Seconds();
+    ClockSamples.Add({Now - ReplicatedWorldTimeSecondsDouble, Now});
+    ClockSamples.RemoveAll([Now](const FClockSample& Sample) { return Now - Sample.Received > 3.0; });
 }

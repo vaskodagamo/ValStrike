@@ -34,7 +34,7 @@ SHOT_LABELS = ("wall", "floor", "cover", "player", "wall_dim", "muzzle", "rejoin
 CLIENT_CHECKS = (
     "subsystem_present", "effect_shaders_ready", "effect_materials", "tracer_short_lived",
     "mark_hold", "mark_fading", "mark_faded", "effects_inert", "respawn_no_replay", "long_mark_timing",
-    "burst_accounting", "pool_cap", "no_unexpected_effects",
+    "burst_accounting", "pool_cap", "no_unexpected_effects", "first_effect_no_stall",
 ) + tuple(f"shot_{label}" for label in SHOT_LABELS)
 REQUIRED_CHECKS = {
     "server": ("two_players", "no_effects_on_server", "player_damage", "respawn", "burst_shots",
@@ -43,7 +43,7 @@ REQUIRED_CHECKS = {
     "shooter": CLIENT_CHECKS + ("quiet_during_rejoin",),
     "observer": CLIENT_CHECKS + ("rejoin_no_replay",),
 }
-CLIENT_SCREENSHOTS = ("tracer_neutral", "fade", "player", "tracer_dim", "muzzle", "marks_neutral", "marks_dim", "rejoin")
+CLIENT_SCREENSHOTS = ("start", "tracer_neutral", "fade", "player", "tracer_dim", "muzzle", "marks_neutral", "marks_dim", "rejoin")
 REQUIRED_SCREENSHOTS = {"server": (), "shooter": CLIENT_SCREENSHOTS, "observer": CLIENT_SCREENSHOTS}
 # Cosmetic impact points must match the server's reference trace for stationary targets.
 # The shooter's own client knows its exact aim. Observers see a remote shooter's yaw only

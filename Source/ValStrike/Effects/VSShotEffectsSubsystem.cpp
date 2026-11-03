@@ -163,16 +163,21 @@ void UVSShotEffectsSubsystem::WarmUp()
     // The first draw of a new material creates its GPU pipeline states, which
     // stalled the first shot by about two seconds in an uncooked Mac client. Draw one
     // tracer and one mark fully transparent in front of the camera for a few
-    // frames at world start instead. Skipped without a renderer.
+    // frames once the local view is live instead. Skipped without a renderer.
     if (!FApp::CanEverRender()) { bWarmedUp = true; return; }
     const APlayerController* PC = GEngine ? GEngine->GetFirstLocalPlayerController(GetWorld()) : nullptr;
-    if (!PC || !PC->PlayerCameraManager) { return; } // Wait for a local view.
+    // Wait until the camera renders a real view (a possessed pawn or spectator);
+    // during the first loading frames nothing may be drawn.
+    if (!PC || !PC->PlayerCameraManager || PC->PlayerCameraManager->GetCameraCacheTime() <= 0.0f || PC->GetViewTarget() == PC)
+    {
+        return;
+    }
     if (WarmupFramesLeft < 0)
     {
         if (!EnsureEffectsActor()) { bWarmedUp = true; return; }
         if (Tracers.IsEmpty()) { Tracers.AddDefaulted_GetRef().Component = MakeEffectComponent(TEXT("VSShotTracer"), TracerMesh, TracerMaterial); }
         if (Marks.IsEmpty()) { Marks.AddDefaulted_GetRef().Component = MakeEffectComponent(TEXT("VSImpactMark"), MarkMesh, MarkMaterial); }
-        WarmupFramesLeft = 3;
+        WarmupFramesLeft = 8;
     }
     UStaticMeshComponent* Tracer = Tracers[0].bActive ? nullptr : Tracers[0].Component.Get();
     UStaticMeshComponent* Mark = Marks[0].bActive ? nullptr : Marks[0].Component.Get();
@@ -180,8 +185,9 @@ void UVSShotEffectsSubsystem::WarmUp()
     {
         const FVector Camera = PC->PlayerCameraManager->GetCameraLocation();
         const FRotator View = PC->PlayerCameraManager->GetCameraRotation();
-        const FVector Ahead = Camera + View.Vector() * 150.0;
-        const FVector Side = FRotationMatrix(View).GetUnitAxis(EAxis::Y) * 20.0;
+        // Close enough that no level geometry can occlude it.
+        const FVector Ahead = Camera + View.Vector() * 60.0;
+        const FVector Side = FRotationMatrix(View).GetUnitAxis(EAxis::Y) * 10.0;
         if (Tracer)
         {
             PlaceTracer(*Tracer, Ahead - Side, Ahead + Side);
@@ -191,7 +197,7 @@ void UVSShotEffectsSubsystem::WarmUp()
         }
         if (Mark)
         {
-            PlaceMark(*Mark, Ahead, -View.Vector(), 10.0);
+            PlaceMark(*Mark, Ahead, -View.Vector(), 6.0);
             Mark->SetCustomPrimitiveDataFloat(0, 0.0f); // Fade 0: fully transparent.
             Mark->SetCustomPrimitiveDataFloat(1, 1.0f);
             Marks[0].LastOpacity = Marks[0].LastHeat = -1.0f;

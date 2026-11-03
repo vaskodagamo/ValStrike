@@ -17,9 +17,11 @@ public:
 };
 
 /**
- * Test clock: the engine's client estimate averages time deltas and lags for a
- * long time after a hitch (world time advances at most 0.4 s per frame). This
- * extrapolates the latest replicated server time with real elapsed time.
+ * Test clock. The engine's client estimate averages deltas and lagged ~1.6 s for
+ * a long time after a client hitch (world time advances at most 0.4 s per frame).
+ * Each replicated server time sample gives real_receipt - server_time = offset +
+ * delay with delay >= 0; the smallest value in a 3 s window estimates the offset,
+ * which is smooth, ignores late samples and follows server-clock drift.
  */
 UCLASS(NotBlueprintable, Transient)
 class AVSShotEffectsTestGameState : public AGameStateBase
@@ -30,8 +32,8 @@ public:
 protected:
     virtual void OnRep_ReplicatedWorldTimeSecondsDouble() override;
 private:
-    double LastServerSeconds = -1.0;
-    double LastReceiptRealSeconds = 0.0;
+    struct FClockSample { double Offset; double Received; };
+    TArray<FClockSample> ClockSamples;
 };
 
 UCLASS(NotBlueprintable, Transient)
