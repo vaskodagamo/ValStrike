@@ -8,7 +8,7 @@ Use the exact **coordinator-published full commit** on every Mac. A branch named
 
 ## 1. Prepare each Mac and checkout
 
-Required: Apple silicon, Git with Git LFS, Python 3, **Unreal Engine 5.8.4**, full **Xcode 26.1.1** selected, and a working Metal compiler. The existing development machine uses UE changelist 58902052 and Xcode build 17B100. Verify the other Mac instead of assuming its installed Unreal version matches. The project helper enforces the patch/toolchain pins; keep both machines aligned.
+Required: Apple silicon, Git with Git LFS, Python 3.9 or newer, **Unreal Engine 5.8.4**, full **Xcode 26.1.1** selected, and a working Metal compiler. The existing development machine uses UE changelist 58902052 and Xcode build 17B100. Verify the other Mac instead of assuming its installed Unreal version matches. The project helper enforces the patch/toolchain pins; keep both machines aligned.
 
 Install missing tools through their official distribution channels. Open Xcode and finish any first-launch/license/component setup it requests. Select the installed full Xcode in Xcode's Locations settings; Command Line Tools alone are insufficient. No engine/source account setup is required for this installed-engine Editor test. Coordinate a free engine slot; do not close another person's editor.
 
@@ -172,12 +172,14 @@ Only after the match adapter/HUD are integrated, test role-correct spawns, prepa
 | Rehearsal/publication record — coordinator fills | Result |
 | --- | --- |
 | Published repository URL and full commit | Pending |
-| Fresh source/LFS checkout, preflight and build | Pending local rehearsal |
-| One local server/two-client result, map/mode/port | Pending local rehearsal |
-| Exact session runner CLI and cleanup result | CLI above; runtime/cleanup result pending rehearsal |
-| Match class integrated and successful match launch | Pending parallel dependency |
+| Fresh source/LFS checkout, preflight and build | Passed locally at `cb891e6`: 70 LFS files, 31 native Content hashes, clean independent checkout, Editor build 30.70s |
+| One local server/two-client result, map/mode/port | Passed at `cb891e6`: Site01 / practice / UDP7861; two headless clients, 25s after connection. Connection evidence only |
+| Exact session runner CLI and cleanup result | Local rehearsal CLI above; server + both clients exited0 after owned cleanup; their process groups were absent |
+| Match class integrated and successful match launch | Pending parallel dependency; actual native unavailable-class rejection verified at `cb891e6`, with no fallback server |
 | Other Mac model/macOS/toolchain/preflight/build | Pending real second-Mac evidence |
 | Actual two-Mac LAN result and logs | Pending user session |
 | Human gameplay findings and bug reports | Pending user session |
+
+See [source rehearsal evidence](SOURCE_REHEARSAL.md) for exact scope and artifacts. The tested tooling commit is local; it is not the coordinator-published integrated playtest revision.
 
 Keep packaged builds, performance, network impairment and cross-platform results separate. This checklist does not complete those gates.
