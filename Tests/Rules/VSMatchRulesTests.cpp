@@ -162,7 +162,7 @@ void DefaultTimingAndPhaseGates()
     REQUIRE(Joined.Status == FrameStatus::Applied);
     CHECK(Count(Joined, EffectKind::PrepareRound) == 1);
     CHECK(F.State().CurrentPhase == Phase::Preparation);
-    CHECK(F.State().PhaseDeadline == 8'000);
+    CHECK(F.State().PhaseDeadline == 30'000);
     CHECK(F.State().RosterCount(Team::One) == 1);
     CHECK(F.State().ParticipantCount(Team::Two) == 1);
     CHECK(F.State().LivingCount(Team::One) == 1);
@@ -170,11 +170,13 @@ void DefaultTimingAndPhaseGates()
     CHECK(F.State().Objective.Carrier == 1);
     CHECK(!F.State().CanMove(1));
     CHECK(!F.State().CanCombat(2));
-    F.Step(7'999);
+    F.Step(29'999);
     CHECK(F.State().CurrentPhase == Phase::Preparation);
-    const StepResult Active = F.Step(8'000);
+    // The longer buy phase still keeps everyone in spawn with combat closed until the deadline.
+    CHECK(!F.State().CanMove(1) && !F.State().CanCombat(1) && !F.State().CanCombat(2));
+    const StepResult Active = F.Step(30'000);
     CHECK(F.State().CurrentPhase == Phase::Active);
-    CHECK(F.State().PhaseDeadline == 98'000);
+    CHECK(F.State().PhaseDeadline == 120'000);
     CHECK(F.State().CanMove(1));
     CHECK(F.State().CanCombat(2));
     CHECK(!F.State().CanCombat(99));
