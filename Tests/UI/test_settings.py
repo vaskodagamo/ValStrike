@@ -30,8 +30,7 @@ from test_movement import stop
 FIRST_CHECKS = (
     "fresh_settings_have_no_sensitivity", "unset_sensitivity_uses_default", "initial_window_is_windowed_960x540",
     "default_sensitivity_turns_expected_degrees", "escape_opens_menu", "menu_focuses_resume",
-    "tab_reaches_settings_button", "mouse_click_settings_button", "mouse_click_opens_settings",
-    "settings_focuses_slider", "settings_show_default_sensitivity", "settings_show_current_window",
+    "tab_reaches_settings_button", "enter_opens_settings", "settings_focuses_slider", "settings_show_default_sensitivity", "settings_show_current_window",
     "slider_right_arrow_applies_immediately", "slider_left_arrow_steps_back", "tab_reaches_sensitivity_value",
     "typed_value_clamps_to_maximum", "invalid_text_rejected_with_error", "typed_value_applies_immediately",
     "sensitivity_in_game_user_settings", "tab_reaches_window_mode", "left_selects_windowed_fullscreen",
@@ -40,6 +39,8 @@ FIRST_CHECKS = (
     "mouse_click_window_mode_arrow", "arrow_selects_windowed", "tab_reaches_resolution",
     "windowed_options_include_1280x720", "arrow_keys_select_1280x720", "tab_reaches_apply",
     "windowed_1280x720_applied", "windowed_saved_to_game_user_settings", "apply_reports_result",
+    "mouse_click_back_button", "mouse_back_returns_to_session_page", "mouse_click_settings_button",
+    "mouse_click_opens_settings", "reopened_settings_show_applied_window",
     "escape_returns_to_session_page", "back_focuses_settings_button", "escape_resumes_with_game_input",
     "new_sensitivity_scales_look", "look_ratio_matches_sensitivity_ratio",
 )

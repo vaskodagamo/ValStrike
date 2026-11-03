@@ -191,15 +191,12 @@ void VSUserSettings::NormalizeResolutions(TArray<FIntPoint>& Resolutions)
 
 FIntPoint VSUserSettings::WorkAreaSize()
 {
+    if (!FSlateApplication::IsInitialized())
+    {
+        return DesktopResolution();
+    }
     FDisplayMetrics Metrics;
-    if (FSlateApplication::IsInitialized())
-    {
-        FSlateApplication::Get().GetCachedDisplayMetrics(Metrics);
-    }
-    else
-    {
-        FDisplayMetrics::RebuildDisplayMetrics(Metrics);
-    }
+    FSlateApplication::Get().GetCachedDisplayMetrics(Metrics);
     const FPlatformRect& Area = Metrics.PrimaryDisplayWorkAreaRect;
     return FIntPoint(Area.Right - Area.Left, Area.Bottom - Area.Top);
 }

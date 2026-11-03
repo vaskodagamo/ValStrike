@@ -14,7 +14,6 @@
 #include "GameFramework/GameUserSettings.h"
 #include "GameFramework/Pawn.h"
 #include "HAL/FileManager.h"
-#include "HAL/PlatformApplicationMisc.h"
 #include "HAL/PlatformTime.h"
 #include "Input/Events.h"
 #include "InputCoreTypes.h"
@@ -93,7 +92,6 @@ private:
         switch (Stage)
         {
         case 0:
-            ActivateOnce();
             if (!PC->GetPawn() || !PC->GetPawn()->InputComponent || !Menu || Age < 2.0) return;
             {
                 const FConfigFile* File = GConfig ? GConfig->FindConfigFile(GGameUserSettingsIni) : nullptr;
@@ -133,13 +131,12 @@ private:
             Check(TEXT("menu_focuses_resume"), FocusedTag() == NAME_None && FocusedText() == TEXT("Resume  ·  Esc"), FocusedText());
             SlateKey(EKeys::Tab);
             Check(TEXT("tab_reaches_settings_button"), IsFocused(TEXT("VS.Settings")), FocusedTag().ToString());
-            Check(TEXT("mouse_click_settings_button"), Click(TEXT("VS.Settings")));
+            SlateKey(EKeys::Enter);
             Next(Now);
             break;
         case 6:
             if (Age < 0.3) return;
-            Check(TEXT("mouse_click_opens_settings"), Menu->IsSettingsOpen());
-            if (!Menu->IsSettingsOpen()) SlateKey(EKeys::Enter);
+            Check(TEXT("enter_opens_settings"), Menu->IsSettingsOpen());
             Check(TEXT("settings_focuses_slider"), IsFocused(TEXT("VS.SensitivitySlider")), FocusedTag().ToString());
             Check(TEXT("settings_show_default_sensitivity"), SliderValue() == VSUserSettings::DefaultMouseSensitivity && ValueText() == TEXT("0.120"),
                 FString::Printf(TEXT("slider=%.4f text=%s"), SliderValue(), *ValueText()));
@@ -328,15 +325,34 @@ private:
             break;
         case 35:
             if (Age < 0.5) return;
-            SlateKey(EKeys::Escape);
-            Check(TEXT("escape_returns_to_session_page"), !Menu->IsSettingsOpen() && PC->IsSessionMenuOpen(), FocusedText());
-            Check(TEXT("back_focuses_settings_button"), IsFocused(TEXT("VS.Settings")), FocusedTag().ToString());
+            // Windowed mouse use, after macOS has activated the game for the
+            // fullscreen round trip. A window on an inactive Space is not hit-testable.
+            Check(TEXT("mouse_click_back_button"), Click(TEXT("VS.SettingsBack")));
             Next(Now);
             break;
         case 36:
             if (Age < 0.3) return;
+            Check(TEXT("mouse_back_returns_to_session_page"), !Menu->IsSettingsOpen() && PC->IsSessionMenuOpen());
+            Check(TEXT("mouse_click_settings_button"), Click(TEXT("VS.Settings")));
+            Stage = 360;
+            Entered = Now;
+            break;
+        case 360:
+            if (Age < 0.3) return;
+            Check(TEXT("mouse_click_opens_settings"), Menu->IsSettingsOpen());
+            Check(TEXT("reopened_settings_show_applied_window"), Menu->GetPendingWindowMode() == EWindowMode::Windowed
+                && Menu->GetPendingResolution() == SettingsChosenWindow, Menu->GetPendingResolution().ToString());
             SlateKey(EKeys::Escape);
-            Next(Now);
+            Check(TEXT("escape_returns_to_session_page"), !Menu->IsSettingsOpen() && PC->IsSessionMenuOpen(), FocusedText());
+            Check(TEXT("back_focuses_settings_button"), IsFocused(TEXT("VS.Settings")), FocusedTag().ToString());
+            Stage = 361;
+            Entered = Now;
+            break;
+        case 361:
+            if (Age < 0.3) return;
+            SlateKey(EKeys::Escape);
+            Stage = 37;
+            Entered = Now;
             break;
         case 37:
             if (Age < 0.3) return;
@@ -366,7 +382,6 @@ private:
         switch (Stage)
         {
         case 0:
-            ActivateOnce();
             if (!PC->GetPawn() || !PC->GetPawn()->InputComponent || !Menu || Age < 2.0) return;
             Check(TEXT("restart_loads_saved_sensitivity"), PC->GetMouseSensitivity() == SettingsChosenSensitivity,
                 FString::Printf(TEXT("%.4f"), PC->GetMouseSensitivity()));
@@ -573,19 +588,6 @@ private:
         return Widget && (Widget->HasKeyboardFocus() || Widget->HasFocusedDescendants());
     }
 
-    void ActivateOnce()
-    {
-        // A launched window can sit on an inactive macOS Space, where Slate
-        // hit-testing (FMacWindow::IsPointInWindow) rejects every point. Make the
-        // game the active app, as a player clicking its window would.
-        if (bActivated) return;
-        bActivated = true;
-#if PLATFORM_MAC
-        FPlatformApplicationMisc::ActivateApplication();
-        LogLine(TEXT("VSSET_ACTIVATE requested"));
-#endif
-    }
-
     void FocusTagged(const TCHAR* Tag) const
     {
         if (const TSharedPtr<SWidget> Widget = Tagged(Tag))
@@ -664,7 +666,6 @@ private:
     bool bFinished = false;
     bool bRestart = false;
     bool bExclusiveFullscreen = false;
-    bool bActivated = false;
     FString Phase;
     FString ScreenshotDirectory;
     TSharedPtr<SVSSessionMenu> Menu;
