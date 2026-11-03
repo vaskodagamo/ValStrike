@@ -36,3 +36,41 @@ Observers see a remote shooter's yaw through the replicated actor rotation. By d
 ### Server contract handoff
 
 The rendered test launches the dedicated server on the normal VS_Graybox practice mode (`ue.MAP`, no `?game=`). Its switches all use the `-VSShotEffects*` prefix, so SRV-03's `ValidateMapMode`/`-VSServer*` allowlist needs no change for it.
+
+## 2026-11-04 — Implementation committed; compile and rendered run 4 pending (integration batch)
+
+**Status:** in progress. The completion condition is not met: the latest commits are not compiled and the rendered test has not yet passed. Per the user's verification policy, relayed by integration on 2026-11-04, this stream stops building and testing; integration runs the compile and rendered run 4 once in its combined batch and returns failures here.
+
+**Commits:**
+- `636d832` adds the subsystem, the materials, the fixture and the tests.
+- `50ec37c` adds the material warm-up and hardens the test.
+- `40a7a83` makes the warm-up wait for a live view and makes the test clicks deterministic.
+- `22b1d98` moves the fixture to practice mode on ports 7901–7904 and adds the handoffs.
+
+No shared file, build file, config, other stream's file or central document is changed.
+
+**Verified evidence (all Development Editor on the M3 Mac with UE 5.8.4 / Xcode 26.1.1; loopback; no artificial latency):**
+- Engine-free: 68/68 reducer checks (`Tests/Effects/shot_effects_state_test.cpp`, Apple clang 17, `-Wall -Wextra -Werror -pedantic`). The 13/13 runner unit tests pass at `22b1d98`.
+- Materials: `M_VSShotTracer` and `M_VSImpactMark` were created, compiled and saved by the Unreal Python commandlet, exit 0, with `-AllowCommandletRendering`. Report: `Saved/Tests/Effects/materials.json`. Both are unlit (tracer additive, mark translucent), use only custom-primitive-data parameters and no textures. The engine Cylinder and Plane have centered pivots (extent 50 cm). The only warnings were the expected not-found messages before creation and an API deprecation, since fixed with a fallback.
+- Builds: full unity builds succeeded at `636d832` (14.2 s) and `50ec37c` (18.3 s). `40a7a83` and `22b1d98` have **not** been compiled.
+- Rendered runs (`Saved/Tests/ShotEffects/<run>/result.json`). One null-RHI dedicated server and two rendered 1000×700 `-game` clients; runs 1–3 still used ports 7871 and the old test game mode.
+  - `20261103T212632Z_c633b6` (`636d832`): failed with `players_not_ready`. The client windows received real desktop keyboard/mouse input: 30 unscripted shots and a reload. Fixed: the fixture now ignores OS input on its clients.
+  - `20261103T214248Z_5069a2` (`636d832` plus uncommitted fixes): 63/71. All per-shot checks, the pool cap (32 active of 32, oldest recycled), fading, no replay on respawn and rejoin, and no server subsystem/actors/components passed. Failures:
+    - A ~2.3 s first-draw stall shifted the client's engine clock by ~1.6 s, so later clicks went out late.
+    - Observer impacts were 8–10 cm from the server point. This matches the 8-bit replicated yaw (precision handoff above).
+  - `20261103T222819Z_b8690f` (`50ec37c`): 56/73. The new extrapolated clock jittered ~0.1 s, so one scripted click was skipped and one doubled. The first-effect stall (~1.6 s) still happened: the warm-up had run during loading frames.
+- Screenshots inspected from runs 2–3:
+  - The tracer reads as a thin, warm-white line in first person and for the observer.
+  - With R01 visuals it starts exactly at the muzzle in both views.
+  - Impact marks are small pale rings with dark cores that stay readable in dim light.
+  - The incoming tracer is visible to the struck observer, with no mark in their camera.
+  - No effects exist on the dedicated server.
+
+**Fixes not yet compiled (`40a7a83`, `22b1d98`):**
+- The warm-up now waits for a live camera view target and draws 60 cm ahead for 8 frames.
+- Clicks and reload are edge-triggered and released on the next tick.
+- The client clock uses the minimum receipt offset over a 3 s window of replicated server-time samples, read by reflection, and is monotonic.
+- A priming "start" screenshot is taken before any effect, and the stall is measured across frames.
+- The fixture runs on the normal practice mode, started by a module hook. The tracer is expected from any visible `Muzzle` mesh.
+
+**Next action:** integration compiles `22b1d98` and runs `test_shot_effects.py` plus the movement, combat and match suites in its batch, then reports any failures to this stream. A failing `first_effect_no_stall` would mean the warm-up does not remove the first-shot pipeline stall; that is a real gameplay defect to fix here, not a test-only issue.
