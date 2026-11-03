@@ -328,6 +328,10 @@ private:
     {
         ++KillEvents;
         LastKiller = Event.Instigator && Event.Instigator->PlayerState ? Event.Instigator->PlayerState->GetPlayerName() : FString();
+        // OnKill fires right after the damage path's ReportKill and before the match
+        // resolves the round, so this income contains the kill reward but no round result.
+        UWorld* World = Event.Victim ? Event.Victim->GetWorld() : nullptr;
+        IncomeAtKill = WalletIncome(World ? World->GetSubsystem<UVSEconomySubsystem>() : nullptr, Event.Instigator);
     }
 
     static TArray<FVSDamageProbe> BuildProbes(const UVSHitZoneSet* Zones)
@@ -662,13 +666,13 @@ private:
             const FVSCapturedDamage* Shot = DamageEvents.Num() > StepEvents ? &DamageEvents[StepEvents] : nullptr;
             if (Shot && !Names.Contains(TEXT("real_fire_pistol_headshot")))
             {
-                const int32 Income = WalletIncome(Economy, Observer);
+                const int32 Income = IncomeAtKill;
                 const int32 Reward = Economy ? Economy->GetModel().GetTuning().KillReward : -1;
                 Check(TEXT("real_fire_pistol_headshot"), DamageEvents.Num() == StepEvents + 1 && Shot->Instigator == VSDamageObserverName &&
                     Shot->Victim == VSDamageDriverName && Shot->Weapon == VSD::WeaponClass::Pistol && Shot->Zone == VSD::HitZone::Head &&
                     Shot->bLethal && Shot->bKilled && Shot->Applied == 100.0f && KillEvents == 2 && LastKiller == VSDamageObserverName &&
                     DriverPawn && !DriverPawn->GetHealthComponent()->IsAlive() && Income == ObserverIncome + Reward,
-                    FString::Printf(TEXT("pistol (key 2) head: weapon=%hs zone=%hs applied=%.1f lethalRule=%d killed=%d killEvents=%d economyIncome %d -> %d (+%d)"),
+                    FString::Printf(TEXT("pistol (key 2) head: weapon=%hs zone=%hs applied=%.1f lethalRule=%d killed=%d killEvents=%d killer income %d before, %d inside OnKill (kill reward +%d)"),
                         VSD::WeaponName(Shot->Weapon), VSD::ZoneName(Shot->Zone), Shot->Applied, Shot->bLethal ? 1 : 0, Shot->bKilled ? 1 : 0,
                         KillEvents, ObserverIncome, Income, Reward));
             }
@@ -744,11 +748,10 @@ private:
     {
         Check(TEXT("kill_event_once"), KillEvents == 1 && LastKiller == VSDamageDriverName,
             FString::Printf(TEXT("OnKill broadcasts=%d killer=%s"), KillEvents, *LastKiller));
-        const int32 Income = WalletIncome(Economy, Driver);
         const int32 Reward = Economy ? Economy->GetModel().GetTuning().KillReward : -1;
-        Check(TEXT("economy_kill_reward"), Economy && Economy->IsEconomyActive() && Reward > 0 && Income == DriverIncome + Reward,
-            FString::Printf(TEXT("killer round income %d -> %d, kill reward %d (UVSEconomySubsystem::ReportKill from the damage path)"),
-                DriverIncome, Income, Reward));
+        Check(TEXT("economy_kill_reward"), Economy && Economy->IsEconomyActive() && Reward > 0 && IncomeAtKill == DriverIncome + Reward,
+            FString::Printf(TEXT("killer round income %d before the shot, %d inside OnKill (kill reward %d via ReportKill in the damage path), %d after the round result"),
+                DriverIncome, IncomeAtKill, Reward, WalletIncome(Economy, Driver)));
 
         UVSHitZoneSet* ObserverZones = UVSHitZoneSet::FindOn(ObserverPawn);
         const UVSHitZoneSet* DriverZones = UVSHitZoneSet::FindOn(DriverPawn);
@@ -1080,7 +1083,7 @@ private:
     TWeakObjectPtr<UVSDamageSubsystem> BoundDamage;
     TWeakObjectPtr<AVSCharacter> RoundOneDriver, RoundOneObserver;
     FString RoundOneOwn, RoundOneOther;
-    int32 SeenStage = -1, FiredStage = -1, StepEvents = 0, DriverIncome = -1, ObserverIncome = -1;
+    int32 SeenStage = -1, FiredStage = -1, StepEvents = 0, DriverIncome = -1, ObserverIncome = -1, IncomeAtKill = -1;
     double SeenStageAt = 0.0, FreshSeenAt = -1.0, FireReleaseAt = 0.0;
     bool bFireHeld = false, bEquipHeld = false, bEquipSent = false;
     TWeakPtr<SWidget> FocusBefore, FocusMenu;
