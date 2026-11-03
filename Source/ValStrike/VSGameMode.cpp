@@ -11,6 +11,7 @@
 #include "VSHUD.h"
 #include "VSPlayerController.h"
 #include "ValStrike.h"
+#include "Server/VSServerSubsystem.h"
 
 AVSGameMode::AVSGameMode()
 {
@@ -62,4 +63,14 @@ AActor* AVSGameMode::ChoosePlayerStart_Implementation(AController* Player)
         UE_LOG(LogValStrike, Warning, TEXT("No unobstructed PlayerStart; add free starts to the graybox map."));
     }
     return BestStart;
+}
+
+void AVSGameMode::PreLogin(const FString& Options, const FString& Address,
+    const FUniqueNetIdRepl& UniqueId, FString& ErrorMessage)
+{
+    Super::PreLogin(Options, Address, UniqueId, ErrorMessage);
+    if (const UVSServerSubsystem* Server = UVSServerSubsystem::Get(this))
+    {
+        Server->CheckAdmission(Options, Address, UniqueId, ErrorMessage);
+    }
 }

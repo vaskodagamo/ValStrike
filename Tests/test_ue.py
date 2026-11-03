@@ -120,6 +120,28 @@ class UnrealHelperTests(unittest.TestCase):
         with self.assertRaisesRegex(ue.SetupError, "requires --map site01"):
             ue.command(ue.parser().parse_args(["server", "--mode", "match"]), self.engine, self.root, "Mac")
 
+    def test_server_contract_flags_map_to_allowlisted_switches(self):
+        self.make(self.root / "Content/Maps/VS_Graybox.umap")
+        default = ue.command(ue.parser().parse_args(["server"]), self.engine, self.root, "Mac")
+        self.assertFalse([item for item in default if item.startswith("-VSServer")])
+        args = ue.parser().parse_args(["server", "--session-id", "lan-01_a", "--max-players", "2", "--exit-when-done",
+                                       "--empty-timeout", "30", "--result-grace", "0"])
+        argv = ue.command(args, self.engine, self.root, "Mac")
+        self.assertEqual([item for item in argv if item.startswith("-VSServer")],
+                         ["-VSServerSession=lan-01_a", "-VSServerMaxPlayers=2", "-VSServerExitWhenDone",
+                          "-VSServerEmptyTimeout=30", "-VSServerResultGrace=0"])
+        for timer in (["--empty-timeout", "30"], ["--result-grace", "5"]):
+            with self.subTest(timer=timer), self.assertRaisesRegex(ue.SetupError, "require --exit-when-done"):
+                ue.command(ue.parser().parse_args(["server"] + timer), self.engine, self.root, "Mac")
+
+    def test_server_contract_flags_reject_invalid_values(self):
+        for option, value in (("--session-id", "-lead"), ("--session-id", "a?game=x"), ("--session-id", "a b"),
+                              ("--session-id", "x" * 65), ("--max-players", "0"), ("--max-players", "5"),
+                              ("--empty-timeout", "0"), ("--empty-timeout", "86401"), ("--empty-timeout", "-1"),
+                              ("--result-grace", "3601"), ("--result-grace", "1.5"), ("--max-players", "+2")):
+            with self.subTest(option=option, value=value), redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
+                ue.parser().parse_args(["server", option, value])
+
     def test_map_and_mode_reject_untrusted_urls_and_console_options(self):
         for option, value in (("--map", "/Game/Other"), ("--map", "site01?listen"),
                               ("--mode", "/Script/Other.Mode"), ("--mode", "match?Exec=Quit")):

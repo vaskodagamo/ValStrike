@@ -20,6 +20,7 @@
 #include "Misc/CommandLine.h"
 #include "Misc/Parse.h"
 #include "../ValStrike.h"
+#include "../Server/VSServerSubsystem.h"
 #include "Tests/VSMatchSmoke.h"
 
 namespace R = ValStrike::Rules;
@@ -53,6 +54,13 @@ void AVSMatchGameMode::InitGame(const FString& MapName, const FString& Options, 
         Config.DefuseMs = 700;
         Config.DetonationMs = 2500;
         ResultDisplaySeconds = 0.7f;
+    }
+    else if (FParse::Param(FCommandLine::Get(), TEXT("VSMatchFastTimings")))
+    {
+        // Development-only short rounds for server lifecycle runs: idle rounds end by timeout.
+        Config.PreparationMs = 1000;
+        Config.RoundMs = 3000;
+        ResultDisplaySeconds = 0.5f;
     }
 #endif
     Rules = R::MatchRules(Config);
@@ -519,12 +527,15 @@ void AVSMatchGameMode::ApplyFrame(int64 At, const TArray<R::Event>& Events)
 
 void AVSMatchGameMode::ApplyEffects(const R::StepResult& Result)
 {
+    UVSServerSubsystem* Server = UVSServerSubsystem::Get(this);
     for (const R::Effect& Effect : Result.Effects)
     {
         if (Effect.EffectId <= LastEffect) { continue; }
         LastEffect = Effect.EffectId;
         UE_LOG(LogValStrike, Display, TEXT("VSMATCH effect=%llu kind=%d at=%lld round=%llu winner=%d reason=%d"),
             Effect.EffectId, static_cast<int32>(Effect.Kind), Effect.At, Effect.RoundId, static_cast<int32>(Effect.TeamId), static_cast<int32>(Effect.Reason));
+        // Lifecycle and result reporting only; the server subsystem never changes match state.
+        if (Server) { Server->HandleMatchEffect(Effect, Rules.Read()); }
         switch (Effect.Kind)
         {
         case R::EffectKind::PrepareRound:
