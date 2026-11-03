@@ -8,8 +8,8 @@ Updated: 2026-11-03. The user requested two additional chats to accelerate the M
 | --- | --- | --- |
 | Plan FPS game MVP (integration) | Shared contracts, central docs/backlog/log, maps, configuration, build/network verification, merge decisions | Combine reviewed changes and rerun movement/combat/UI checks |
 | Add the first game assets (existing) | `Art/Source/`, `Content/Art/`, asset manifests and logs in its existing worktrees | Original stylized environment kit and rifle model |
-| Rifle gameplay (new) | `Source/ValStrike/Combat/`, `VSCharacter.h/.cpp`, `Tests/Combat/`, uniquely named combat smoke files/scripts, `docs/workstreams/combat.md` | Server-owned rifle, ammo/reload, traces, health/death and focused tests |
-| HUD and session controls (new) | `VSHUD.h/.cpp`, `Source/ValStrike/UI/`, new `VSPlayerController.h/.cpp`, `ValStrike.Build.cs` only for UI dependencies, `VSGameMode.cpp` only controller-class wiring, `Tests/UI/`, `docs/workstreams/ui.md` | Readable HUD and working join/menu controls |
+| Implement rifle gameplay | `Source/ValStrike/Combat/`, `VSCharacter.h/.cpp`, `Tests/Combat/`, uniquely named combat smoke files/scripts, `docs/workstreams/combat.md` | Server-owned rifle, ammo/reload, traces, health/death and focused tests |
+| Build HUD and session controls | `VSHUD.h/.cpp`, `Source/ValStrike/UI/`, new `VSPlayerController.h/.cpp`, `ValStrike.Build.cs` only for UI dependencies, `VSGameMode.cpp` only controller-class wiring, `Tests/UI/`, `docs/workstreams/ui.md` | Readable HUD and working join/menu controls |
 
 The current integration base is `codex/bootstrap-fps`. Each new stream uses its assigned Git worktree and branch. Never switch the integration checkout's branch or edit another stream's worktree. Central documentation is updated by integration; each stream maintains its own append-only log and handoff. The existing asset chat has its own scope and is already building the first rifle model; do not duplicate its art.
 
@@ -46,3 +46,11 @@ The UI may add a custom player controller and wire only its class in the existin
 - Keep Valorant-like stylized graphics, not CS2-like photorealism. Use original art and clear silhouettes.
 - Commit and push only the stream's own branch. Do not merge into the integration branch or another stream. Hand back branch/commit, changed paths, exact verification evidence, remaining limitations, and integration instructions in the final message and stream log.
 - Integration will merge one stream at a time, resolve shared-file conflicts, run the movement and combat regressions, then verify the HUD with real replicated data. A clean branch alone is not acceptance.
+
+## Active chat references
+
+- Implement rifle gameplay: chat `01a1a1f0-0648-7e91-aa70-f1452b983fe1`, branch `codex/rifle-gameplay`, checkout `.parallel-worktrees/rifle-gameplay`.
+- Build HUD and session controls: chat `01a1a1f0-118e-7a92-837b-ef86f3c7aa60`, branch `codex/hud-session`, checkout `.parallel-worktrees/hud-session`.
+- Existing Add the first game assets: chat `01a1a1d4-ad5c-76a3-8896-d9d65615be14`; its environment and rifle-art branches are separate from the two new gameplay/UI workstreams.
+
+Both new chats started from shared-contract commit `b245939` on 2026-11-03. They are local project chats operating in the explicitly assigned Git worktrees; their app-level project directory may still show the main ValStrike folder.

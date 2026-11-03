@@ -26,12 +26,14 @@ Updated: 2026-11-03. `Ready` means work can start; `Queued` means prerequisites 
 | MOVE-01 | Build graybox movement arena | In progress | SET-02 | Collision, player scale, spawns, stairs and cover are usable |
 | MOVE-02 | Add replicated FPS controls | In progress | SET-03, MOVE-01 | Walk, crouch, jump, mouse look and remote body state work for two clients |
 | MOVE-03 | Validate movement under latency/loss | Queued | MOVE-02 | Measured RTT/jitter/loss and corrections recorded; no repeatable stuck or divergent movement on supported conditions |
-| GUN-01 | Add server-owned rifle state | Queued | MOVE-02 | Cadence, ammo, reload, fire state and tuning data agree across server/clients |
+| GUN-01 | Add server-owned rifle state | In progress | MOVE-02 | Cadence, ammo, reload, fire state and tuning data agree across server/clients |
 | GUN-02 | Add hits, health, death and development reset | Queued | GUN-01 | Server validates traces/damage; cover blocks shots; dead players cannot act; server-only development reset restores players/ammo for repeated tests |
 | GUN-03 | Add immediate local feedback | Queued | GUN-02 | Recoil, crosshair, firing audio/effects, confirmed hits and death feedback work without duplicate effects |
 | GUN-04 | Verify weapon authority and network behavior | Queued | GUN-03, MOVE-03 | Invalid/repeated requests rejected; rule tests pass; moving-target hit behavior measured and limitations documented |
 
 Movement evidence (2026-11-03): a three-process loopback smoke test passed 45 checks covering normal/slow/crouched speeds, replicated stance/body bounds, camera height, jump/landing, walls, stairs and cover. MOVE-01/02 remain in progress until the rendered checks are complete; MOVE-03 latency/loss and SET-03 packaging are still open. See WORK_LOG.md and the repeatable command in SETUP.md.
+
+Parallel implementation: rifle gameplay is assigned to `codex/rifle-gameplay`; the independent HUD/session subset of PLAY-03 is assigned to `codex/hud-session`. Round-state integration, final sound/settings and existing dependencies remain open. Ownership and chat references are in PARALLEL_WORK.md.
 
 ## M3 Complete round loop
 
@@ -49,7 +51,7 @@ Movement evidence (2026-11-03): a three-process loopback smoke test passed 45 ch
 | --- | --- | --- | --- | --- |
 | PLAY-01 | Turn test arena into one-site map | Queued | RULE-05 | Routes, timing, cover and spawn safety survive human playtest |
 | PLAY-02 | Establish original art treatment | Queued | PLAY-01 | One polished section sets palette/materials/lighting; consistent readable map and team silhouettes follow |
-| PLAY-03 | Complete HUD, menu, settings and sound | Queued | RULE-04 | Join flow and game state understandable; settings persist; footsteps/shots/objective audio communicate action |
+| PLAY-03 | Complete HUD, menu, settings and sound | In progress | RULE-04 | Join flow and game state understandable; settings persist; footsteps/shots/objective audio communicate action |
 | PLAY-04 | Profile and conduct usability playtest | Queued | PLAY-02, PLAY-03, SET-04 | Evidence includes screenshots, reference-hardware frame times, server timing, and new-tester observations |
 
 ## M5 Private MVP release

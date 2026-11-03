@@ -72,7 +72,9 @@ Record meaningful work sessions here in chronological order. Use Europe/Berlin d
 
 **Verification:** The shared contract compiles successfully with the pinned Mac Editor target in 9.44 seconds. Whitespace checks passed. No new gameplay runtime claim is made; the prior 45-check movement result remains tied to its recorded source hashes.
 
-**Next action:** Start the two chats in assigned isolated worktrees, then integrate their reviewed commits one at a time and rerun gameplay/network/UI checks. Stream logs live under `docs/workstreams/`; the central backlog and log stay with integration.
+**Started:** Created “Implement rifle gameplay” (`01a1a1f0-0648-7e91-aa70-f1452b983fe1`) and “Build HUD and session controls” (`01a1a1f0-118e-7a92-837b-ef86f3c7aa60`). Both reported active work and acknowledged their assigned checkouts. Branches `codex/rifle-gameplay` and `codex/hud-session` start at shared-contract commit `b245939`.
+
+**Next action:** Integrate their reviewed commits one at a time and rerun gameplay/network/UI checks. Stream logs live under `docs/workstreams/`; the central backlog and log stay with integration. Creation/active status is not evidence that those features are implemented.
 
 ## Entry template
 
