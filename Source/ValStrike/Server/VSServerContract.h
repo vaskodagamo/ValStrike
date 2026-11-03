@@ -18,6 +18,8 @@ constexpr TimeMs MaxEmptyTimeoutMs = 86'400'000;
 constexpr TimeMs MaxResultGraceMs = 3'600'000;
 constexpr TimeMs DrainMs = 2'000; // Time for the closing message to reach clients before exit.
 constexpr std::size_t MaxSessionIdLength = 64;
+constexpr std::size_t MinJoinKeyLength = 8;
+constexpr std::size_t MaxJoinKeyLength = 64;
 
 // Process exit codes. Zero is reserved for a completed lifecycle.
 constexpr int ExitCompleted = 0;
@@ -34,6 +36,7 @@ struct LaunchOptions
     TimeMs ResultGraceMs = DefaultResultGraceMs;
     int MaxPlayers = MaxPlayersCap;
     std::string Provider = "local";
+    std::string JoinKey; // Empty: open admission. Otherwise every join must carry the same key.
 };
 
 // One command-line switch without its leading dash: "Key" or "Key=Value".
@@ -61,8 +64,12 @@ struct ParseResult
 //   VSServerResultGrace=<seconds 0..3600>        (requires VSServerExitWhenDone)
 //   VSServerMaxPlayers=<1..4>
 //   VSServerProvider=local
+//   VSServerJoinKey=<[A-Za-z0-9_-]{8,64}>
 ParseResult ParseLaunchOptions(const std::vector<Switch>& Switches);
 bool IsValidSessionId(const std::string& Value);
+bool IsValidJoinKey(const std::string& Value);
+// Constant-time comparison of a client's supplied key with the configured one; false when no key is configured.
+bool JoinKeyMatches(const std::string& Expected, const std::string& Supplied);
 
 // ---- Map and mode allowlist ---------------------------------------------------
 
