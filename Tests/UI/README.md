@@ -57,3 +57,23 @@ Look checks measure the rotation change across the injection over three frames. 
 Mouse clicks are synthesized through `FSlateApplication` at the widget's desktop-space centre, so they use real Slate hit-testing without moving the OS cursor. On macOS, Unreal's `FMacWindow::IsPointInWindow` rejects every point while the window is on an inactive Space, which is the case for a window launched behind another full-screen app. The runner therefore does its windowed mouse checks after the Windowed Fullscreen round trip, when macOS has activated the game, and logs `hit_testable` for every click.
 
 `--exclusive-fullscreen` also applies exclusive Fullscreen. On macOS Unreal captures the display (`CGDisplayCapture`) and may switch its display mode, so it is opt-in. Screenshots, logs, the saved ini and `result.json` are written under `Saved/Tests/Settings/<run-id>/`.
+
+## Private-server join key
+
+The session page has an optional, masked **Join key** field beside the server address (Tab order: address → join key → Connect). Empty means no key. Otherwise it must match the server's rule, 8–64 letters, digits, `-` or `_`; surrounding spaces are trimmed. The client reuses the server's own `ValStrike::Server::IsValidJoinKey` through the engine-free `Source/ValStrike/UI/VSJoinKey.*`, so the two cannot drift. An invalid key shows a status-line error and does not travel. `AVSPlayerController::ConnectToServer(Address, JoinKey)` validates the address unchanged and appends `?JoinKey=<key>` only to the validated `host:port`. A key typed into the address field is refused with a hint to use the key field. When a server started with `-VSServerJoinKey` refuses a join, the status line reads "Join key missing or wrong. Enter the key the host gave you, then connect again." The key is kept in game-instance memory only, so the field survives travel. It is never saved, never shown unmasked and never logged by ValStrike code. Address and key fields keep keyboard focus after a rejected Enter.
+
+Unreal itself writes the travel URL, with its options, to the client log (`Browse:`, `LoadMap:`), and the server writes the login options and its command line. So a joined client's and a keyed server's local logs contain the key. Keeping it out of the client's lines would need a `ULocalPlayer::GetGameLoginOptions()` override, which means setting `LocalPlayerClassName` in `DefaultEngine.ini`; that is a central change outside this stream.
+
+Engine-free rule tests (system C++ compiler; set `VS_JOIN_KEY_SANITIZE=1` for ASan/UBSan):
+
+```sh
+python3 -m unittest discover -s Tests/UI -p 'test_join_key_rule.py' -v
+```
+
+Native automation `ValStrike.UI.JoinKey` covers the FString wrappers, key-in-address refusal and the composed URL through Unreal's `FURL` parser and the server's `ParseOption`. Rendered check against a real keyed server (loopback port 7883 by default):
+
+```sh
+python3 Scripts/with_ue_slot.py -- python3 Tests/UI/test_join_key.py --engine "$UE_ROOT"
+```
+
+The runner starts `ue.py server --join-key lan-Key_0001` and a 960×540 client whose `-VSJoinSmoke` harness gets the key from the `VSJOINSMOKE_KEY` environment variable, never its command line. The harness drives the real menu: an invalid key and a key in the address are refused before travel, a keyless join is refused by the server, and the key typed into the masked field joins. Afterwards every text artifact is scanned. A key in a ValStrike log line or in `result.json` fails the run; Unreal's own occurrences are counted per file and line kind, then redacted. Evidence goes to `Saved/Tests/JoinKey/<run-id>/`.

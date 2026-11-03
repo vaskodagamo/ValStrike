@@ -1,5 +1,9 @@
 #include "VSServerAddress.h"
 
+#include "VSJoinKey.h"
+
+#include <string>
+
 #define LOCTEXT_NAMESPACE "VSServerAddress"
 
 namespace
@@ -120,6 +124,33 @@ bool VSServerAddress::Validate(const FString& Input, FString& OutAddress, FText&
     // FURL can interpret a single-label host as a protocol or local map.
     OutAddress = FString::Printf(TEXT("%s:%d"), *Host.ToLower(), Port);
     return true;
+}
+
+bool VSServerAddress::ValidateJoinKey(const FString& Input, FString& OutKey, FText& OutError)
+{
+    OutKey.Reset();
+    OutError = FText::GetEmpty();
+    std::string Key;
+    switch (ValStrike::JoinKey::Parse(std::string(TCHAR_TO_UTF8(*Input)), Key))
+    {
+    case ValStrike::JoinKey::EInput::None:
+        return true;
+    case ValStrike::JoinKey::EInput::Valid:
+        OutKey = UTF8_TO_TCHAR(Key.c_str());
+        return true;
+    default:
+        OutError = LOCTEXT("JoinKeyRule", "The join key must be 8 to 64 letters, digits, - or _. Leave it empty if the server has no key.");
+        return false;
+    }
+}
+
+bool VSServerAddress::JoinDestination(const FString& ValidAddress, const FString& Key, FString& OutDestination)
+{
+    std::string Destination;
+    const bool bComposed = ValStrike::JoinKey::ComposeDestination(
+        std::string(TCHAR_TO_UTF8(*ValidAddress)), std::string(TCHAR_TO_UTF8(*Key)), Destination);
+    OutDestination = bComposed ? FString(UTF8_TO_TCHAR(Destination.c_str())) : FString();
+    return bComposed;
 }
 
 #undef LOCTEXT_NAMESPACE

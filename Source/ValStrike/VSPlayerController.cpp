@@ -9,6 +9,7 @@
 #include "InputCoreTypes.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "UI/SVSSessionMenu.h"
+#include "UI/VSJoinSmoke.h"
 #include "UI/VSServerAddress.h"
 #include "UI/VSSessionState.h"
 #include "UI/VSSettingsSmoke.h"
@@ -37,6 +38,7 @@ void AVSPlayerController::PlayerTick(float DeltaTime)
 #if !UE_BUILD_SHIPPING && !UE_BUILD_TEST
     VSUISmoke::Tick(this, DeltaTime);
     VSSettingsSmoke::Tick(this, DeltaTime);
+    VSJoinSmoke::Tick(this, DeltaTime);
 #endif
 }
 
@@ -200,7 +202,7 @@ void AVSPlayerController::ToggleSessionMenu()
     }
 }
 
-void AVSPlayerController::ConnectToServer(const FString& Address)
+void AVSPlayerController::ConnectToServer(const FString& Address, const FString& JoinKey)
 {
     UVSSessionState* State = GetSessionState();
     if (!IsLocalController() || !State || State->bConnecting)
@@ -211,16 +213,38 @@ void AVSPlayerController::ConnectToServer(const FString& Address)
     FText Error;
     if (!VSServerAddress::Validate(Address, ValidAddress, Error))
     {
+        // Never take a key from the address text; point to the key field instead.
+        if (Address.Contains(TEXT("JoinKey"), ESearchCase::IgnoreCase))
+        {
+            Error = NSLOCTEXT("ValStrike", "KeyInAddress", "Enter the join key in the Join key field, not in the server address.");
+        }
         State->SetStatus(Error, true);
         return;
     }
+    FString Key;
+    FString Destination;
+    if (!VSServerAddress::ValidateJoinKey(JoinKey, Key, Error))
+    {
+        State->SetStatus(Error, true);
+        return;
+    }
+    if (!VSServerAddress::JoinDestination(ValidAddress, Key, Destination))
+    {
+        State->SetStatus(NSLOCTEXT("ValStrike", "DestinationInvalid", "This address cannot be joined. Check it and try again."), true);
+        return;
+    }
     State->Address = ValidAddress;
+    State->JoinKey = Key;
     State->bOpenMenuOnArrival = false;
     State->bConnecting = true;
-    State->SetStatus(FText::Format(NSLOCTEXT("ValStrike", "Connecting", "Connecting to {0}…"), FText::FromString(ValidAddress)));
+    // Status text, like every log line here, names the address only, never the key.
+    State->SetStatus(FText::Format(Key.IsEmpty()
+        ? NSLOCTEXT("ValStrike", "Connecting", "Connecting to {0}…")
+        : NSLOCTEXT("ValStrike", "ConnectingWithKey", "Connecting to {0} with a join key…"), FText::FromString(ValidAddress)));
     SetSessionMenuOpen(true);
-    // Validated host:port only. Never execute player-supplied console text or URL options.
-    ClientTravel(FString(TEXT("unreal://")) + ValidAddress, TRAVEL_Absolute);
+    // Validated host:port plus, at most, the validated JoinKey option. Never
+    // execute player-supplied console text or other URL options.
+    ClientTravel(FString(TEXT("unreal://")) + Destination, TRAVEL_Absolute);
 }
 
 void AVSPlayerController::CancelConnection()

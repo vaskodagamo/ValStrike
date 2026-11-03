@@ -150,8 +150,9 @@ public:
             Entered = Now;
             if (FSlateApplication::IsInitialized())
             {
-                // Resume -> Connect -> address. Disabled Cancel is skipped by
-                // the menu's keyboard navigation, exactly as in a real session.
+                // Resume -> Connect -> join key -> address. Disabled Cancel is
+                // skipped by the menu's keyboard navigation, as in a real session.
+                SlateKey(EKeys::Tab, true);
                 SlateKey(EKeys::Tab, true);
                 SlateKey(EKeys::Tab, true);
                 for (const TCHAR Character : Address)
