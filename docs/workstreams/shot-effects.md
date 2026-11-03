@@ -2,7 +2,7 @@
 
 ## 2026-11-03 — Client-only tracers and impact marks started
 
-**Assignment/base:** side session started by the integration chat; branch `claude/shot-effects-5daad8`, worktree `.claude/worktrees/shot-effects-5daad8`, base `claude/playtest-base` = `93b87c8` (main + PR #16). Owned paths: `Source/ValStrike/Effects/**`, `Content/Effects/**`, `Tests/Effects/`, `Scripts/test_shot_effects.py`, this log. Everything else is read-only. Loopback ports 7871–7874.
+**Assignment/base:** side session started by the integration chat; branch `claude/shot-effects-5daad8`, worktree `.claude/worktrees/shot-effects-5daad8`, base `claude/playtest-base` = `93b87c8` (main + PR #16). Owned paths: `Source/ValStrike/Effects/**`, `Content/Effects/**`, `Tests/Effects/`, `Scripts/test_shot_effects.py`, this log. Everything else is read-only. Loopback ports 7901–7904 (moved from 7871–7874 at the coordinator's request; those belong to the Server codebase session).
 
 **Completion condition:** when any player fires an accepted shot, every client (shooter and observers) sees one short tracer from the weapon toward where the shot went and one small impact mark where it hit (walls, floor, cover, players). A self-contained, opt-in rendered test (server + shooter + observer) proves exactly one tracer and one impact per accepted shot on both clients, no effects on the dedicated server, no replay on join or respawn, the pool cap and fading marks, with inspected shooter/observer screenshots in neutral and dim light. The movement, combat and match suites still pass with the subsystem present. Committed, pushed, and a ready-for-review PR to `main`.
 
@@ -20,4 +20,19 @@
 
 ### Pistol handoff
 
-Pistol shots plug in without new RPCs if the pistol component exposes the same public read-only accepted-shot counter (for example `GetState().ShotsFired`) and `GetFireInterval()`, plus a `Range` UPROPERTY or a public getter. In `UVSShotEffectsSubsystem::ObserveCharacters`, add a second block next to the rifle block that calls `Watches.FindOrAdd(<pistol component>)` and `Observe(<pistol ShotsFired>, Now, <pistol interval>)`, then `SpawnShotEffect(*Pawn, *Pistol, ...)`. Each component keeps its own cache, so switching weapons never replays the other weapon's shots. `SM_VS_Pistol01_Body` already has a body-space `Muzzle` socket at (16.7, 0, 4.75) cm (`docs/assets/pistol01/MANIFEST.md`). Hide the inactive weapon's meshes; the visible-mesh lookup then picks the right muzzle. A public `GetRange()` on both weapons would replace the reflected-property read.
+Pistol shots plug in without new RPCs. The Weapons session's PR #20 (not on this branch's base) adds the needed read-only accessors on `AVSCharacter`: `GetAcceptedShotCount(EVSWeaponSlot)`, `GetWeapon(EVSWeaponSlot)` (a `UVSWeaponComponent`, the shared base of rifle and pistol), `GetEquippedWeaponSlot()` and `GetWeaponPresentation(slot)->GetMuzzleTransform(FTransform&)`. After both merge, in `UVSShotEffectsSubsystem::ObserveCharacters`:
+
+1. Replace the rifle-only block with a loop over both slots. For each, key the watch by `GetWeapon(slot)`, call `Observe(GetAcceptedShotCount(slot), Now, GetWeapon(slot)->GetFireInterval())`, then `SpawnShotEffect(*Pawn, *GetWeapon(slot), ...)`.
+2. Each weapon component keeps its own cache. Counters advance only while their weapon is equipped, so switching never replays the other weapon's shots.
+3. Optionally, prefer `GetMuzzleTransform` over the socket search in `TracerOrigin`. The current visible-mesh lookup already works, because `SM_VS_Pistol01_Body` has a body-space `Muzzle` socket at (16.7, 0, 4.75) cm (`docs/assets/pistol01/MANIFEST.md`) and inactive weapons are hidden.
+4. `WeaponRange` reads the reflected `Range` property and includes superclass properties, so it keeps working if `Range` moves to `UVSWeaponComponent`. A public `GetRange()` would be cleaner.
+
+The rendered fixture attaches the R01 presentation only when the shooter has no mesh with a `Muzzle` socket. It expects whichever visible `Muzzle` mesh the view has, so it keeps working once PR #20's own weapon visuals are on the character. On this base the first five shots use the camera-relative fallback and the later ones the R01 muzzle.
+
+### Precision handoff
+
+Observers see a remote shooter's yaw through the replicated actor rotation. By default Unreal quantizes it to 8 bits per axis (1.40625° steps), so an observer's cosmetic impact can sit up to about 12 cm sideways at 10 m from the server's hit. The shooter's own client is exact. Recommended one-line change in `AVSCharacter`'s constructor, owned by Weapons/integration: `GetReplicatedMovement_Mutable().RotationQuantizationLevel = ERotatorQuantization::ShortComponents;` (0.0055° steps). It also makes remote turning smoother. The rendered test bounds observer impacts accordingly.
+
+### Server contract handoff
+
+The rendered test launches the dedicated server on the normal VS_Graybox practice mode (`ue.MAP`, no `?game=`). Its switches all use the `-VSShotEffects*` prefix, so SRV-03's `ValidateMapMode`/`-VSServer*` allowlist needs no change for it.

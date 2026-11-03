@@ -147,23 +147,24 @@ class ShotEffectsRunnerTests(unittest.TestCase):
 
     def test_ports_and_launch_commands_are_isolated(self):
         with self.assertRaises(argparse.ArgumentTypeError):
-            runner.effects_port("7851")
-        self.assertEqual(runner.effects_port("7874"), 7874)
+            runner.effects_port("7871")
+        self.assertEqual(runner.effects_port("7904"), 7904)
         output = Path("/tmp/vs-shot-effects")
-        server = runner.launch_command("UnrealEditor", "ValStrike.uproject", output, "server", 7871, 45)
+        server = runner.launch_command("UnrealEditor", "ValStrike.uproject", output, "server", 7901, 45)
         self.assertIn("-nullrhi", server)
-        self.assertIn("-port=7871", server)
-        self.assertIn(f"{runner.ue.MAP}?game={runner.GAME_MODE}", server)
+        self.assertIn("-port=7901", server)
+        self.assertIn(runner.ue.MAP, server)
+        self.assertFalse(any("?game=" in part for part in server))  # Practice mode, no test game mode.
         self.assertIn("-VSShotEffectsTest=server", server)
-        shooter = runner.launch_command("UnrealEditor", "ValStrike.uproject", output, "shooter", 7871, 45)
-        self.assertIn("127.0.0.1:7871?Name=VSShotFxShooter", shooter)
+        shooter = runner.launch_command("UnrealEditor", "ValStrike.uproject", output, "shooter", 7901, 45)
+        self.assertIn("127.0.0.1:7901?Name=VSShotFxShooter", shooter)
         self.assertNotIn("-nullrhi", shooter)
-        self.assertIn("-VSShotEffectsPort=7871", shooter)
+        self.assertIn("-VSShotEffectsPort=7901", shooter)
         self.assertIn("-VSShotEffectsStart=45", shooter)
         with self.assertRaises(ValueError):
-            runner.launch_command("UnrealEditor", "ValStrike.uproject", output, "owner", 7871, 45)
+            runner.launch_command("UnrealEditor", "ValStrike.uproject", output, "owner", 7901, 45)
         with self.assertRaises(ValueError):
-            runner.launch_command("UnrealEditor", "ValStrike.uproject", output, "shooter", 7871, float("inf"))
+            runner.launch_command("UnrealEditor", "ValStrike.uproject", output, "shooter", 7901, float("inf"))
         with self.assertRaises(argparse.ArgumentTypeError):
             runner.launch_command("UnrealEditor", "ValStrike.uproject", output, "shooter", 7861, 45)
 

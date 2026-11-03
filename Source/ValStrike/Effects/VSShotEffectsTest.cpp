@@ -1,7 +1,12 @@
-#include "VSShotEffectsTest.h"
+// Opt-in rendered shot-effects test (Development builds only). It runs on the
+// normal practice game mode: the server and both clients start the harness from
+// a module hook when launched with -VSShotEffectsTest=server|shooter|observer.
+// No test game mode, pawn or game state, so the server's map/mode allowlist is unaffected.
+#include "CoreMinimal.h"
 
 #if !UE_BUILD_SHIPPING && !UE_BUILD_TEST
 #include "VSShotEffectsSubsystem.h"
+#include "../VSCharacter.h"
 #include "../Combat/VSHealthComponent.h"
 #include "../Combat/VSRifleComponent.h"
 #include "../Presentation/VSRiflePresentationComponent.h"
@@ -27,11 +32,14 @@
 #include "Materials/MaterialInterface.h"
 #include "MaterialShared.h"
 #include "Misc/CommandLine.h"
+#include "Misc/DelayedAutoRegister.h"
 #include "Misc/FileHelper.h"
 #include "Misc/Parse.h"
 #include "Misc/Paths.h"
 #include "SceneInterface.h"
+#include "Components/MeshComponent.h"
 #include "UObject/UObjectIterator.h"
+#include "UObject/UnrealType.h"
 #include "UnrealClient.h"
 
 // File-local names are unique to this file: the unity build compiles every
@@ -233,13 +241,69 @@ private:
         return IsRunningDedicatedServer() && !bSubsystem && Actors == 0 && Components == 0;
     }
 
+    /**
+     * Client clock. UE 5.8's own estimate averages deltas and lagged ~1.6 s for a
+     * long time after a client hitch (world time advances at most 0.4 s per
+     * frame). Each new replicated server time seen gives real_now - server_time =
+     * offset + delay (delay >= 0); the smallest value in a 3 s window estimates the
+     * offset: smooth, immune to late samples, and it follows server-clock drift.
+     * The replicated value is protected, so it is read by reflection.
+     */
+    double ClientServerSeconds(const AGameStateBase* GameState)
+    {
+        static const FDoubleProperty* Replicated =
+            FindFProperty<FDoubleProperty>(AGameStateBase::StaticClass(), TEXT("ReplicatedWorldTimeSecondsDouble"));
+        const double Now = FPlatformTime::Seconds();
+        if (GameState != ClockGameState.Get())
+        {
+            ClockGameState = GameState;
+            ClockSamples.Reset();
+            LastReplicatedSeconds = -1.0;
+        }
+        const double Value = Replicated ? Replicated->GetPropertyValue_InContainer(GameState) : -1.0;
+        if (Value > 0.0 && Value != LastReplicatedSeconds)
+        {
+            LastReplicatedSeconds = Value;
+            ClockSamples.Add({Now - Value, Now});
+        }
+        while (ClockSamples.Num() > 1 && Now - ClockSamples[0].Received > 3.0) { ClockSamples.RemoveAt(0); }
+        if (ClockSamples.IsEmpty()) { return GameState->GetServerWorldTimeSeconds(); }
+        double Offset = ClockSamples[0].Offset;
+        for (const FClockSample& Sample : ClockSamples) { Offset = FMath::Min(Offset, Sample.Offset); }
+        return Now - Offset;
+    }
+
+    // The mesh this client should see the tracer leave from: a visible weapon mesh
+    // with a Muzzle socket for this view (R01 presentation, or later weapon visuals).
+    static const UMeshComponent* VisibleMuzzleMesh(const AVSCharacter* Shooter, bool bFirstPersonView)
+    {
+        TInlineComponentArray<UMeshComponent*> Meshes(Shooter);
+        for (const UMeshComponent* Mesh : Meshes)
+        {
+            if (Mesh && Mesh->IsRegistered() && Mesh->IsVisible() && Mesh->DoesSocketExist(UVSShotEffectsSubsystem::MuzzleSocket)
+                && !(bFirstPersonView ? Mesh->bOwnerNoSee : Mesh->bOnlyOwnerSee))
+            {
+                return Mesh;
+            }
+        }
+        return nullptr;
+    }
+    static bool HasAnyMuzzleMesh(const AVSCharacter* Shooter)
+    {
+        TInlineComponentArray<UMeshComponent*> Meshes(Shooter);
+        for (const UMeshComponent* Mesh : Meshes)
+        {
+            if (Mesh && Mesh->DoesSocketExist(UVSShotEffectsSubsystem::MuzzleSocket)) { return true; }
+        }
+        return false;
+    }
+
     void Tick(UWorld* World, ELevelTick TickType, float DeltaSeconds)
     {
         if (bFinished || !World || !World->IsGameWorld() || !World->GetGameState()) { return; }
         const bool bServer = Role == TEXT("server");
         if ((bServer && World->GetNetMode() != NM_DedicatedServer) || (!bServer && World->GetNetMode() != NM_Client)) { return; }
-        const AVSShotEffectsTestGameState* Clock = Cast<AVSShotEffectsTestGameState>(World->GetGameState());
-        double Time = (bServer || !Clock ? World->GetGameState()->GetServerWorldTimeSeconds() : Clock->EstimateServerSeconds()) - Start;
+        double Time = (bServer ? World->GetGameState()->GetServerWorldTimeSeconds() : ClientServerSeconds(World->GetGameState())) - Start;
         // Scripted steps must never re-trigger: the client timeline only moves forward.
         if (!bServer) { Time = FMath::Max(Time, LastClientTime); LastClientTime = Time; }
         if (!bServer) { IsolateFromDesktopInput(World); }
@@ -402,7 +466,9 @@ private:
 
     void EnsureVisual(AVSCharacter* Shooter)
     {
-        if (Shooter->FindComponentByClass<UVSRiflePresentationComponent>()) { return; }
+        // A character that already shows weapon meshes (for example after the
+        // weapons work merges) keeps them; never add a second rifle.
+        if (Shooter->FindComponentByClass<UVSRiflePresentationComponent>() || HasAnyMuzzleMesh(Shooter)) { return; }
         UVSRiflePresentationComponent* Visual = NewObject<UVSRiflePresentationComponent>(Shooter);
         Shooter->AddInstanceComponent(Visual);
         Visual->RegisterComponent();
@@ -509,10 +575,8 @@ private:
                 Result.Record = Record;
                 const UStaticMeshComponent* Tracer = Fx->GetTracerComponent(Record.TracerSlot);
                 Result.bTracerVisible = Record.bTracer && Tracer && Tracer->IsVisible();
-                const UVSRiflePresentationComponent* Visual = Shooter->FindComponentByClass<UVSRiflePresentationComponent>();
-                Result.bExpectMuzzle = Visual && Visual->IsInitialized() && Shooter->GetHUDData().bAlive;
-                const UStaticMeshComponent* Body = Result.bExpectMuzzle
-                    ? (bShooter ? Visual->GetFirstPersonBody() : Visual->GetWorldBody()) : nullptr;
+                const UMeshComponent* Body = VisibleMuzzleMesh(Shooter, bShooter);
+                Result.bExpectMuzzle = Body != nullptr;
                 Result.ExpectedMuzzle = Body;
                 Result.ExpectedMuzzleLocation = Body ? Body->GetSocketLocation(UVSShotEffectsSubsystem::MuzzleSocket) : FVector::ZeroVector;
                 Result.HitRole = RoleOf(Record.HitActor.Get(), Shooter, Observer);
@@ -701,7 +765,7 @@ private:
 
     FString Role, Output;
     float Start = 45;
-    int32 Port = 7871;
+    int32 Port = 7901;
     FDelegateHandle Delegate;
     TArray<FString> Checks;
     TArray<FString> Shots;
@@ -718,56 +782,20 @@ private:
     int32 ObserverRejoins = 0;
     int32 ClickTicks = 0, ReloadTicks = 0;
     double LastClientTime = -1.0e9;
+    struct FClockSample { double Offset; double Received; };
+    TArray<FClockSample> ClockSamples;
+    TWeakObjectPtr<const AGameStateBase> ClockGameState;
+    double LastReplicatedSeconds = -1.0;
     double LastRealTick = 0.0, FirstEffectRealTime = 0.0, LongestFrameAfterFirstEffect = 0.0;
     bool bReady = false, bFinished = false, bFireHeld = false, bReloadHeld = false, bRejoinRequested = false;
 };
 
 TUniquePtr<FVSShotEffectsSmoke> ShotEffectsSmoke;
-}
-#endif
 
-AVSShotEffectsTestGameMode::AVSShotEffectsTestGameMode()
+// Runs once engine init has finished (immediately if this module loads later).
+FDelayedAutoRegisterHelper ShotEffectsSmokeRegistration(EDelayedRegisterRunPhase::EndOfEngineInit, []()
 {
-#if !UE_BUILD_SHIPPING && !UE_BUILD_TEST
-    if (VSShotEffectsTestDetail::IsShotEffectsTest())
-    {
-        DefaultPawnClass = AVSShotEffectsTestCharacter::StaticClass();
-        GameStateClass = AVSShotEffectsTestGameState::StaticClass();
-    }
-#endif
-}
-
-void AVSShotEffectsTestGameMode::InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage)
-{
-    Super::InitGame(MapName, Options, ErrorMessage);
-#if !UE_BUILD_SHIPPING && !UE_BUILD_TEST
-    if (!VSShotEffectsTestDetail::IsShotEffectsTest()) { ErrorMessage = TEXT("Shot effects fixture requires explicit development opt-in."); }
-#else
-    ErrorMessage = TEXT("Shot effects fixture is unavailable in Shipping/Test.");
-#endif
-}
-
-void AVSShotEffectsTestCharacter::BeginPlay()
-{
-    Super::BeginPlay();
-#if !UE_BUILD_SHIPPING && !UE_BUILD_TEST
-    using namespace VSShotEffectsTestDetail;
     if (IsShotEffectsTest() && !ShotEffectsSmoke) { ShotEffectsSmoke = MakeUnique<FVSShotEffectsSmoke>(); }
+});
+}
 #endif
-}
-
-double AVSShotEffectsTestGameState::EstimateServerSeconds() const
-{
-    if (ClockSamples.IsEmpty()) { return GetServerWorldTimeSeconds(); }
-    double Offset = ClockSamples[0].Offset;
-    for (const FClockSample& Sample : ClockSamples) { Offset = FMath::Min(Offset, Sample.Offset); }
-    return FPlatformTime::Seconds() - Offset;
-}
-
-void AVSShotEffectsTestGameState::OnRep_ReplicatedWorldTimeSecondsDouble()
-{
-    Super::OnRep_ReplicatedWorldTimeSecondsDouble();
-    const double Now = FPlatformTime::Seconds();
-    ClockSamples.Add({Now - ReplicatedWorldTimeSecondsDouble, Now});
-    ClockSamples.RemoveAll([Now](const FClockSample& Sample) { return Now - Sample.Received > 3.0; });
-}

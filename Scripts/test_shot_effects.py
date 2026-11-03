@@ -28,8 +28,8 @@ import with_ue_slot
 
 
 ROLES = ("server", "shooter", "observer")
-GAME_MODE = "/Script/ValStrike.VSShotEffectsTestGameMode"
-# Fixed names form the contract with the opt-in native fixture (Effects/VSShotEffectsTest.cpp).
+# The server runs the normal practice mode on VS_Graybox; the opt-in native fixture
+# (Effects/VSShotEffectsTest.cpp) starts from -VSShotEffectsTest. Its fixed names form this contract.
 SHOT_LABELS = ("wall", "floor", "cover", "player", "wall_dim", "muzzle", "rejoin")
 CLIENT_CHECKS = (
     "subsystem_present", "effect_shaders_ready", "effect_materials", "tracer_short_lived",
@@ -63,8 +63,8 @@ def impact_tolerance(role, distance_cm):
 
 def effects_port(value):
     parsed = ue.port(value)
-    if not 7871 <= parsed <= 7874:
-        raise argparse.ArgumentTypeError("Shot effects ports are reserved to 7871..7874")
+    if not 7901 <= parsed <= 7904:
+        raise argparse.ArgumentTypeError("Shot effects ports are reserved to 7901..7904")
     return parsed
 
 
@@ -193,8 +193,7 @@ def launch_command(executable, project, output, role, port, start):
     port = effects_port(port)
     if not math.isfinite(start) or not 10 <= start <= 300:
         raise ValueError("Shared start offset must be between 10 and 300 seconds")
-    destination = (f"{ue.MAP}?game={GAME_MODE}" if role == "server"
-                   else f"127.0.0.1:{port}?Name=VSShotFx{role.title()}")
+    destination = ue.MAP if role == "server" else f"127.0.0.1:{port}?Name=VSShotFx{role.title()}"
     command = [str(executable), str(project), destination,
                "-server" if role == "server" else "-game", "-nosound",
                f"-VSShotEffectsTest={role}", f"-VSShotEffectsStart={start:g}", f"-VSShotEffectsPort={port}",
@@ -262,7 +261,7 @@ def wait_for_listen(log_path, process, port, limit):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--engine", help="Unreal root; defaults to UE_ROOT")
-    parser.add_argument("--port", type=effects_port, default=7871)
+    parser.add_argument("--port", type=effects_port, default=7901)
     parser.add_argument("--start", type=float, default=45.0,
                         help="Shared start offset on the server clock; clients must be connected by then")
     parser.add_argument("--server-start-timeout", type=float, default=90.0)
