@@ -290,6 +290,35 @@ The server logged no score mismatch and stayed up without the exit flag, as inte
 
 **Next action:** Merge PR #16, then publish and review `claude/srv-03-server-contract`. SRV-01 source access remains the server-path blocker.
 
+## 2026-11-04 Join key and server tick rate
+
+**Request and scope:** After SRV-03, the user chose two server follow-ups: a join key for private servers (decision 0002 item 4) and a chosen, measured tick rate (item 7, SET-04). Branch `claude/srv-join-key-tickrate`, [PR #21](https://github.com/vaskodagamo/ValStrike/pull/21). The client menu field is UI-owned and was handed off; the coordinator reports it as PR #25.
+
+**Changed:**
+- `-VSServerJoinKey=<key>` (8–64 of `[A-Za-z0-9_-]`) joins the allowlisted switches. With a key, `FVSJoinKeyAdmission` requires `?JoinKey=<key>` in the join URL and compares it in constant time; the refusal text is "Join key missing or wrong". Server code never logs or returns either key.
+- `ue.py server --join-key` and `ue.py client --join-key`; the client helper appends the option in code after address validation.
+- `NetServerMaxTickRate=60` in `Config/DefaultEngine.ini`; `VSSERVER_MAP` reports the configured value.
+- Lifecycle runner: no `t.MaxFPS` for the server, a `joinkey` scenario, a measured-vs-configured tick-rate check (±10 %), and `--net-tick-rate 30|60` for measurement runs.
+
+**Verification** (Unreal 5.8.4, Xcode 26.1.1, M3 Mac, Development Editor binary, loopback, null RHI, no audio, no artificial latency/loss, source `0471bb3`):
+
+| Check | Result | Evidence |
+| --- | --- | --- |
+| Standalone contract, normal and sanitized | 17/17 cases, 162 checks | `Saved/Tests/ServerContract/` |
+| Engine-free Python suites | helper 36, runner 9 OK | local |
+| Editor build | Passed, 14.2 s, after 198 slot retries | helper receipt |
+| Lifecycle at 60 Hz | invalid 6/6, empty 9/9, match 13/13, joinkey 7/8 (see below) | `Saved/Tests/ServerLifecycle/20261103T224708Z_7eece1/` |
+| Lifecycle match at 30 Hz | 13/13 | `Saved/Tests/ServerLifecycle/20261103T225002Z_766c93/` |
+| Movement / combat / match | 45/45, 55/55, 43/43 | `Saved/Tests/{Movement,Combat,Match}/20261103T2250*`, `…2251*`, `…2253*` |
+
+Tick-rate measurement, idle two-client Site01 match, windows after warm-up: cap 60 → 57.1–57.2 Hz, busy 0.43–0.48 ms average, 1.3–1.7 ms max; cap 30 → 29.2 Hz, busy 0.46–0.49 ms average, 1.3–10.7 ms max. The engine's frame cap lands about 5 % under the nominal rate. Busy time is the same at both rates, so 60 is kept.
+
+**Joinkey scenario:** the server refused the keyless and wrong-key clients (two `PreLogin failure: Join key missing or wrong` lines), admitted the right key, and exited after the empty timeout; seven checks passed. The eighth, `key_never_logged`, failed because the engine itself echoes the command line (`LogInit`, `LogCsvProfiler`) and every join URL (`LogNet: Login request`/`Join request`). Server code added no key to the log. The check was narrowed to "no server-code line carries a key", with a unit test for the engine echoes. The corrected scenario was not rerun: the rerun was stopped from outside this session, and the coordinator asks that runtime testing now go through an integration batch.
+
+**Decision on the key:** documented as a LAN privacy key, not a secret. It is visible in the process list and in the engine's log echoes on both server and client (the Settings session also found `LogNet: Browse` and `LogLoad: LoadMap` on the client). Hiding it would need either log redaction or a different transport (`ULocalPlayer::GetGameLoginOptions` on the client, which needs a central config change; an environment variable or file on the server). Signed join tickets remain Stage 3 work. The user decides whether any of that is worth doing before the LAN playtest.
+
+**Next action:** rerun the `joinkey` scenario in the integration batch; merge PR #21 after review. SET-04 re-measures the tick rate with four players on a packaged server.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.

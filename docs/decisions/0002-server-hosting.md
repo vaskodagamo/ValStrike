@@ -53,9 +53,9 @@ These small, provider-neutral pieces work at Stage 0. They make Stages 2–3 an 
 
 ## Implementation notes (SRV-03, 2026-11-03)
 
-- Items 1–4 and 6 are implemented as described. Startup switches use a `-VSServer*` prefix, so a misspelled switch fails the launch instead of being silently ignored. Timers without `-VSServerExitWhenDone` are rejected for the same reason.
+- Items 1–4 and 6 are implemented as described. Item 4 gained an optional join key on 2026-11-03 (`-VSServerJoinKey`): a shared LAN key checked in constant time, visible in the process list and the engine's URL echoes, so not a secret. Signed join tickets remain Stage 3 work. Startup switches use a `-VSServer*` prefix, so a misspelled switch fails the launch instead of being silently ignored. Timers without `-VSServerExitWhenDone` are rejected for the same reason.
 - Item 5: the version line is logged, and the revision is captured at build time. Rejecting mismatched clients still relies on the engine's default network version. That covers the engine changelist, project name and `ProjectVersion`, not the Git revision. Binding the revision into the network version would also block LAN tests between Macs on slightly different commits. Decide that with the first packaged build (SET-03/REL-01).
-- Item 7: `VSSERVER_HEALTH` reports frame time and tick rate every 10 s. Choosing `NetServerMaxTickRate` remains part of SET-04.
+- Item 7: `VSSERVER_HEALTH` reports frame time and tick rate every 10 s. `NetServerMaxTickRate` is set to 60 (2026-11-03); idle two-player measurements at 30 and 60 showed the same sub-millisecond busy time, so the higher rate costs nothing measurable yet. SET-04 re-measures with four players on the packaged server.
 - The Mac Editor binary returns exit code 0 for every engine-requested exit. Non-zero failure codes take effect on Linux/Windows; on the Mac, runners read the `VSSERVER_EXIT` line.
 
 ## Alternatives considered
