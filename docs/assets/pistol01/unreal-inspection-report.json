@@ -1,0 +1,1326 @@
+{
+  "engine": "5.8.4-58902052+++UE5+Release-5.8",
+  "run_id": "2e984733e1da45a18be9d03e044d3ea3",
+  "date_europe_berlin": "2026-11-03",
+  "scene": "transient editor stage; no maps/packages saved",
+  "captures": [
+    {
+      "weapon": "Rifle01",
+      "kind": "Studio",
+      "variant": "crimson",
+      "output": "docs/assets/rifle01/Previews/VS_Rifle01_Unreal_Studio.png",
+      "resolution": [
+        1600,
+        1000
+      ],
+      "camera_location_cm": [
+        90.0,
+        -180.0,
+        85.0
+      ],
+      "camera_rotation_degrees": {
+        "pitch": -18.81133986761215,
+        "yaw": 113.96248897457819,
+        "roll": -3.975693351829396e-15
+      },
+      "horizontal_fov_degrees": 32.0,
+      "sun_intensity": 3.0,
+      "sky_intensity": 1.0,
+      "auto_exposure": false,
+      "exposure_bias": 0,
+      "assembly": {
+        "Body": {
+          "world": {
+            "translation_cm": [
+              0.0,
+              0.0,
+              16.9
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "collision": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        "Magazine": {
+          "world": {
+            "translation_cm": [
+              14.0,
+              0.0,
+              18.9
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "collision": "<CollisionEnabled.NO_COLLISION: 0>",
+          "relative": {
+            "translation_cm": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "attachment_error_cm": 0.0
+        }
+      },
+      "material_source": "saved native materials",
+      "composition": "actual native meshes in unsaved editor scene; no arms, HUD, or gameplay",
+      "sha256": "73b19f81969480522fd4b72d17ac8794538a53b61ecded31bd19da450798119f"
+    },
+    {
+      "weapon": "Rifle01",
+      "kind": "Studio",
+      "variant": "ice",
+      "output": "docs/assets/rifle01/Previews/VS_Rifle01_Unreal_Studio_ice.png",
+      "resolution": [
+        1600,
+        1000
+      ],
+      "camera_location_cm": [
+        90.0,
+        -180.0,
+        85.0
+      ],
+      "camera_rotation_degrees": {
+        "pitch": -18.81133986761215,
+        "yaw": 113.96248897457819,
+        "roll": -3.975693351829396e-15
+      },
+      "horizontal_fov_degrees": 32.0,
+      "sun_intensity": 3.0,
+      "sky_intensity": 1.0,
+      "auto_exposure": false,
+      "exposure_bias": 0,
+      "assembly": {
+        "Body": {
+          "world": {
+            "translation_cm": [
+              0.0,
+              0.0,
+              16.9
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "collision": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        "Magazine": {
+          "world": {
+            "translation_cm": [
+              14.0,
+              0.0,
+              18.9
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "collision": "<CollisionEnabled.NO_COLLISION: 0>",
+          "relative": {
+            "translation_cm": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "attachment_error_cm": 0.0
+        }
+      },
+      "material_source": "transient variant constants from shared palette",
+      "composition": "actual native meshes in unsaved editor scene; no arms, HUD, or gameplay",
+      "sha256": "29facabf53367bb3f328db070a58c4e8ce92dced717733a2e722d8f661cc8274"
+    },
+    {
+      "weapon": "Rifle01",
+      "kind": "Studio",
+      "variant": "ember",
+      "output": "docs/assets/rifle01/Previews/VS_Rifle01_Unreal_Studio_ember.png",
+      "resolution": [
+        1600,
+        1000
+      ],
+      "camera_location_cm": [
+        90.0,
+        -180.0,
+        85.0
+      ],
+      "camera_rotation_degrees": {
+        "pitch": -18.81133986761215,
+        "yaw": 113.96248897457819,
+        "roll": -3.975693351829396e-15
+      },
+      "horizontal_fov_degrees": 32.0,
+      "sun_intensity": 3.0,
+      "sky_intensity": 1.0,
+      "auto_exposure": false,
+      "exposure_bias": 0,
+      "assembly": {
+        "Body": {
+          "world": {
+            "translation_cm": [
+              0.0,
+              0.0,
+              16.9
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "collision": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        "Magazine": {
+          "world": {
+            "translation_cm": [
+              14.0,
+              0.0,
+              18.9
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "collision": "<CollisionEnabled.NO_COLLISION: 0>",
+          "relative": {
+            "translation_cm": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "attachment_error_cm": 0.0
+        }
+      },
+      "material_source": "transient variant constants from shared palette",
+      "composition": "actual native meshes in unsaved editor scene; no arms, HUD, or gameplay",
+      "sha256": "a05047bcdc333545961e762b1fa00794793dd6055eb7d4f54e4ad1d821e9e552"
+    },
+    {
+      "weapon": "Pistol01",
+      "kind": "Studio",
+      "variant": "crimson",
+      "output": "docs/assets/pistol01/Previews/VS_Pistol01_Unreal_Studio.png",
+      "resolution": [
+        1600,
+        1000
+      ],
+      "camera_location_cm": [
+        38.0,
+        -65.0,
+        35.0
+      ],
+      "camera_rotation_degrees": {
+        "pitch": -19.224606346987635,
+        "yaw": 117.26588202734041,
+        "roll": -4.770832022195275e-15
+      },
+      "horizontal_fov_degrees": 29.0,
+      "sun_intensity": 3.0,
+      "sky_intensity": 1.0,
+      "auto_exposure": false,
+      "exposure_bias": 0,
+      "assembly": {
+        "Body": {
+          "world": {
+            "translation_cm": [
+              0.0,
+              0.0,
+              10.95
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "collision": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        "Slide": {
+          "world": {
+            "translation_cm": [
+              0.0,
+              0.0,
+              13.95
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "collision": "<CollisionEnabled.NO_COLLISION: 0>",
+          "relative": {
+            "translation_cm": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "attachment_error_cm": 0.0
+        },
+        "Magazine": {
+          "world": {
+            "translation_cm": [
+              0.0,
+              0.0,
+              10.95
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "collision": "<CollisionEnabled.NO_COLLISION: 0>",
+          "relative": {
+            "translation_cm": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "attachment_error_cm": 0.0
+        }
+      },
+      "material_source": "saved native materials",
+      "composition": "actual native meshes in unsaved editor scene; no arms, HUD, or gameplay",
+      "sha256": "a73e1a3ffbc89efb7f98132c1cc7b589d04df62f2b9ed90a87d737c78db6d7f3"
+    },
+    {
+      "weapon": "Pistol01",
+      "kind": "Studio",
+      "variant": "ice",
+      "output": "docs/assets/pistol01/Previews/VS_Pistol01_Unreal_Studio_ice.png",
+      "resolution": [
+        1600,
+        1000
+      ],
+      "camera_location_cm": [
+        38.0,
+        -65.0,
+        35.0
+      ],
+      "camera_rotation_degrees": {
+        "pitch": -19.224606346987635,
+        "yaw": 117.26588202734041,
+        "roll": -4.770832022195275e-15
+      },
+      "horizontal_fov_degrees": 29.0,
+      "sun_intensity": 3.0,
+      "sky_intensity": 1.0,
+      "auto_exposure": false,
+      "exposure_bias": 0,
+      "assembly": {
+        "Body": {
+          "world": {
+            "translation_cm": [
+              0.0,
+              0.0,
+              10.95
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "collision": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        "Slide": {
+          "world": {
+            "translation_cm": [
+              0.0,
+              0.0,
+              13.95
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "collision": "<CollisionEnabled.NO_COLLISION: 0>",
+          "relative": {
+            "translation_cm": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "attachment_error_cm": 0.0
+        },
+        "Magazine": {
+          "world": {
+            "translation_cm": [
+              0.0,
+              0.0,
+              10.95
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "collision": "<CollisionEnabled.NO_COLLISION: 0>",
+          "relative": {
+            "translation_cm": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "attachment_error_cm": 0.0
+        }
+      },
+      "material_source": "transient variant constants from shared palette",
+      "composition": "actual native meshes in unsaved editor scene; no arms, HUD, or gameplay",
+      "sha256": "6a69724f3784e74c0d200dea71c497a5e725f219db8ed97f017c87df7c701456"
+    },
+    {
+      "weapon": "Pistol01",
+      "kind": "Studio",
+      "variant": "ember",
+      "output": "docs/assets/pistol01/Previews/VS_Pistol01_Unreal_Studio_ember.png",
+      "resolution": [
+        1600,
+        1000
+      ],
+      "camera_location_cm": [
+        38.0,
+        -65.0,
+        35.0
+      ],
+      "camera_rotation_degrees": {
+        "pitch": -19.224606346987635,
+        "yaw": 117.26588202734041,
+        "roll": -4.770832022195275e-15
+      },
+      "horizontal_fov_degrees": 29.0,
+      "sun_intensity": 3.0,
+      "sky_intensity": 1.0,
+      "auto_exposure": false,
+      "exposure_bias": 0,
+      "assembly": {
+        "Body": {
+          "world": {
+            "translation_cm": [
+              0.0,
+              0.0,
+              10.95
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "collision": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        "Slide": {
+          "world": {
+            "translation_cm": [
+              0.0,
+              0.0,
+              13.95
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "collision": "<CollisionEnabled.NO_COLLISION: 0>",
+          "relative": {
+            "translation_cm": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "attachment_error_cm": 0.0
+        },
+        "Magazine": {
+          "world": {
+            "translation_cm": [
+              0.0,
+              0.0,
+              10.95
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "collision": "<CollisionEnabled.NO_COLLISION: 0>",
+          "relative": {
+            "translation_cm": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "attachment_error_cm": 0.0
+        }
+      },
+      "material_source": "transient variant constants from shared palette",
+      "composition": "actual native meshes in unsaved editor scene; no arms, HUD, or gameplay",
+      "sha256": "c3637f4692191796548d3a32555123f292158f4c5a150845dc050d3f32c7e1bd"
+    },
+    {
+      "weapon": "Rifle01",
+      "kind": "FirstPerson",
+      "variant": "crimson",
+      "output": "docs/assets/rifle01/Previews/VS_Rifle01_Unreal_FirstPerson.png",
+      "resolution": [
+        1600,
+        1000
+      ],
+      "camera_location_cm": [
+        0.0,
+        0.0,
+        160.0
+      ],
+      "camera_rotation_degrees": {
+        "pitch": 0.0,
+        "yaw": 0.0,
+        "roll": 0.0
+      },
+      "horizontal_fov_degrees": 85.0,
+      "sun_intensity": 3.0,
+      "sky_intensity": 1.0,
+      "auto_exposure": false,
+      "exposure_bias": 0,
+      "assembly": {
+        "Body": {
+          "world": {
+            "translation_cm": [
+              32.0,
+              16.0,
+              142.0
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "collision": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        "Magazine": {
+          "world": {
+            "translation_cm": [
+              46.0,
+              16.0,
+              144.0
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "collision": "<CollisionEnabled.NO_COLLISION: 0>",
+          "relative": {
+            "translation_cm": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "attachment_error_cm": 0.0
+        }
+      },
+      "material_source": "saved native materials",
+      "composition": "actual native meshes in unsaved editor scene; no arms, HUD, or gameplay",
+      "grip_offset_from_camera_cm": [
+        32,
+        16,
+        -18
+      ],
+      "sha256": "996812e85899214c1d5afade3a6d27a12122e19df2291798fe5c6cea00ffb6e1"
+    },
+    {
+      "weapon": "Rifle01",
+      "kind": "FirstPerson_Dim",
+      "variant": "crimson",
+      "output": "docs/assets/rifle01/Previews/VS_Rifle01_Unreal_FirstPerson_Dim.png",
+      "resolution": [
+        1600,
+        1000
+      ],
+      "camera_location_cm": [
+        0.0,
+        0.0,
+        160.0
+      ],
+      "camera_rotation_degrees": {
+        "pitch": 0.0,
+        "yaw": 0.0,
+        "roll": 0.0
+      },
+      "horizontal_fov_degrees": 85.0,
+      "sun_intensity": 0.75,
+      "sky_intensity": 0.3,
+      "auto_exposure": false,
+      "exposure_bias": 0,
+      "assembly": {
+        "Body": {
+          "world": {
+            "translation_cm": [
+              32.0,
+              16.0,
+              142.0
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "collision": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        "Magazine": {
+          "world": {
+            "translation_cm": [
+              46.0,
+              16.0,
+              144.0
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "collision": "<CollisionEnabled.NO_COLLISION: 0>",
+          "relative": {
+            "translation_cm": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "attachment_error_cm": 0.0
+        }
+      },
+      "material_source": "saved native materials",
+      "composition": "actual native meshes in unsaved editor scene; no arms, HUD, or gameplay",
+      "grip_offset_from_camera_cm": [
+        32,
+        16,
+        -18
+      ],
+      "sha256": "286bf7057f8b04bb9160346454ddeef6bd4f0555ddfa378fd34338688aa7495d"
+    },
+    {
+      "weapon": "Pistol01",
+      "kind": "FirstPerson",
+      "variant": "crimson",
+      "output": "docs/assets/pistol01/Previews/VS_Pistol01_Unreal_FirstPerson.png",
+      "resolution": [
+        1600,
+        1000
+      ],
+      "camera_location_cm": [
+        0.0,
+        0.0,
+        160.0
+      ],
+      "camera_rotation_degrees": {
+        "pitch": 0.0,
+        "yaw": 0.0,
+        "roll": 0.0
+      },
+      "horizontal_fov_degrees": 85.0,
+      "sun_intensity": 3.0,
+      "sky_intensity": 1.0,
+      "auto_exposure": false,
+      "exposure_bias": 0,
+      "assembly": {
+        "Body": {
+          "world": {
+            "translation_cm": [
+              34.0,
+              12.0,
+              146.0
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "collision": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        "Slide": {
+          "world": {
+            "translation_cm": [
+              34.0,
+              12.0,
+              149.0
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "collision": "<CollisionEnabled.NO_COLLISION: 0>",
+          "relative": {
+            "translation_cm": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "attachment_error_cm": 0.0
+        },
+        "Magazine": {
+          "world": {
+            "translation_cm": [
+              34.0,
+              12.0,
+              146.0
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "collision": "<CollisionEnabled.NO_COLLISION: 0>",
+          "relative": {
+            "translation_cm": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "attachment_error_cm": 0.0
+        }
+      },
+      "material_source": "saved native materials",
+      "composition": "actual native meshes in unsaved editor scene; no arms, HUD, or gameplay",
+      "grip_offset_from_camera_cm": [
+        34,
+        12,
+        -14
+      ],
+      "sha256": "a700436bad21d60f801a248322281be5c704d323e545f11cdfb824735e56b4de"
+    },
+    {
+      "weapon": "Pistol01",
+      "kind": "FirstPerson_Dim",
+      "variant": "crimson",
+      "output": "docs/assets/pistol01/Previews/VS_Pistol01_Unreal_FirstPerson_Dim.png",
+      "resolution": [
+        1600,
+        1000
+      ],
+      "camera_location_cm": [
+        0.0,
+        0.0,
+        160.0
+      ],
+      "camera_rotation_degrees": {
+        "pitch": 0.0,
+        "yaw": 0.0,
+        "roll": 0.0
+      },
+      "horizontal_fov_degrees": 85.0,
+      "sun_intensity": 0.75,
+      "sky_intensity": 0.3,
+      "auto_exposure": false,
+      "exposure_bias": 0,
+      "assembly": {
+        "Body": {
+          "world": {
+            "translation_cm": [
+              34.0,
+              12.0,
+              146.0
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "collision": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        "Slide": {
+          "world": {
+            "translation_cm": [
+              34.0,
+              12.0,
+              149.0
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "collision": "<CollisionEnabled.NO_COLLISION: 0>",
+          "relative": {
+            "translation_cm": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "attachment_error_cm": 0.0
+        },
+        "Magazine": {
+          "world": {
+            "translation_cm": [
+              34.0,
+              12.0,
+              146.0
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "collision": "<CollisionEnabled.NO_COLLISION: 0>",
+          "relative": {
+            "translation_cm": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "attachment_error_cm": 0.0
+        }
+      },
+      "material_source": "saved native materials",
+      "composition": "actual native meshes in unsaved editor scene; no arms, HUD, or gameplay",
+      "grip_offset_from_camera_cm": [
+        34,
+        12,
+        -14
+      ],
+      "sha256": "ce0fbc3dd246b8ed9545e5304fd5121c8a8a59260b05749935744b7be541f868"
+    }
+  ],
+  "runtime_verified": false,
+  "gameplay_verified": false,
+  "palette": {
+    "name": "ValStrike weapon finish 01",
+    "date_europe_berlin": "2026-11-03",
+    "color_space": "sRGB; decode IEC 61966-2-1 into linear shader constants",
+    "default": "crimson",
+    "variants": {
+      "crimson": {
+        "label": "Charcoal / Crimson",
+        "roles": {
+          "Structure": {
+            "srgb_hex": "303944",
+            "roughness": 0.7,
+            "metallic": 0
+          },
+          "Gunmetal": {
+            "srgb_hex": "52647B",
+            "roughness": 0.48,
+            "metallic": 0.15
+          },
+          "Steel": {
+            "srgb_hex": "8D9FB4",
+            "roughness": 0.42,
+            "metallic": 0.25
+          },
+          "Accent": {
+            "srgb_hex": "CF3D50",
+            "roughness": 0.52,
+            "metallic": 0
+          }
+        }
+      },
+      "ice": {
+        "label": "Midnight / Ice-blue",
+        "roles": {
+          "Structure": {
+            "srgb_hex": "2B354A",
+            "roughness": 0.7,
+            "metallic": 0
+          },
+          "Gunmetal": {
+            "srgb_hex": "4C6684",
+            "roughness": 0.48,
+            "metallic": 0.15
+          },
+          "Steel": {
+            "srgb_hex": "93B1CA",
+            "roughness": 0.42,
+            "metallic": 0.25
+          },
+          "Accent": {
+            "srgb_hex": "60C9EB",
+            "roughness": 0.52,
+            "metallic": 0
+          }
+        }
+      },
+      "ember": {
+        "label": "Charcoal / Copper-ember",
+        "roles": {
+          "Structure": {
+            "srgb_hex": "303944",
+            "roughness": 0.7,
+            "metallic": 0
+          },
+          "Gunmetal": {
+            "srgb_hex": "626B77",
+            "roughness": 0.48,
+            "metallic": 0.15
+          },
+          "Steel": {
+            "srgb_hex": "A0A9B2",
+            "roughness": 0.42,
+            "metallic": 0.25
+          },
+          "Accent": {
+            "srgb_hex": "D77845",
+            "roughness": 0.52,
+            "metallic": 0
+          }
+        }
+      }
+    },
+    "rifle_material_roles": {
+      "M_VS_R01_Graphite": "Structure",
+      "M_VS_R01_Teal": "Gunmetal",
+      "M_VS_R01_Ceramic": "Steel",
+      "M_VS_R01_Accent": "Accent"
+    },
+    "provenance": "Original project palette authored by Codex following user feedback; no textures or purchased inputs.",
+    "native_readability_note": "ART-03 first native capture exposed dark high-metallic panels with existing lighting. Reduced metallic response and raised value separation; source/native stay synchronized."
+  },
+  "palette_sha256": "4f85ac6d786ef6442304a68b5d654c3c16402d7d82a0ef31108edd1f3aac157f",
+  "saved_sockets_component_space": {
+    "Grip": {
+      "location_cm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_degrees": {
+        "pitch": 0.0,
+        "yaw": 0.0,
+        "roll": 0.0
+      },
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "Magazine": {
+      "location_cm": [
+        14.0,
+        0.0,
+        2.0
+      ],
+      "rotation_degrees": {
+        "pitch": 0.0,
+        "yaw": 0.0,
+        "roll": 0.0
+      },
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "Muzzle": {
+      "location_cm": [
+        56.0,
+        0.0,
+        8.2
+      ],
+      "rotation_degrees": {
+        "pitch": 0.0,
+        "yaw": 0.0,
+        "roll": 0.0
+      },
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "SupportHand": {
+      "location_cm": [
+        31.0,
+        0.0,
+        2.4
+      ],
+      "rotation_degrees": {
+        "pitch": 0.0,
+        "yaw": 0.0,
+        "roll": 0.0
+      },
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    }
+  },
+  "native_body_bounds_cm": {
+    "min": [
+      -30.0,
+      -4.52,
+      -12.94506
+    ],
+    "max": [
+      56.0,
+      4.52,
+      15.4
+    ]
+  },
+  "lighting": {
+    "sun_intensity": 3.0,
+    "captured_sky_intensity": 1.0,
+    "key_ray_direction": [
+      0.33515,
+      0.58652,
+      -0.73734
+    ],
+    "auto_exposure": false,
+    "exposure_bias": 0.0
+  },
+  "elapsed_seconds": 60.912
+}

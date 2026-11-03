@@ -1,0 +1,339 @@
+{
+  "name": "R01 Kestrel",
+  "author": "Codex, original fictional ValStrike weapon art",
+  "date_europe_berlin": "2026-11-03",
+  "tool": "Blender 5.2.2 LTS",
+  "external_inputs": [],
+  "units": "centimeters",
+  "forward": "+X",
+  "up": "+Z",
+  "palette": {
+    "M_VS_R01_Graphite": {
+      "srgb_hex": "303944",
+      "roughness": 0.7,
+      "metallic": 0
+    },
+    "M_VS_R01_Teal": {
+      "srgb_hex": "52647B",
+      "roughness": 0.48,
+      "metallic": 0.15
+    },
+    "M_VS_R01_Ceramic": {
+      "srgb_hex": "8D9FB4",
+      "roughness": 0.42,
+      "metallic": 0.25
+    },
+    "M_VS_R01_Accent": {
+      "srgb_hex": "CF3D50",
+      "roughness": 0.52,
+      "metallic": 0
+    }
+  },
+  "assets": [
+    {
+      "name": "SM_VS_Rifle01_Body",
+      "file": "Exports/SM_VS_Rifle01_Body.fbx",
+      "pivot": "Grip attachment at local zero",
+      "bounds_min_cm": [
+        -30.0,
+        -4.519999980926514,
+        -12.945055961608887
+      ],
+      "bounds_max_cm": [
+        56.0,
+        4.519999980926514,
+        15.399999618530273
+      ],
+      "dimensions_cm": [
+        86.0,
+        9.039999961853027,
+        28.34505558013916
+      ],
+      "vertices": 1758,
+      "triangles": 3280,
+      "material_slots": [
+        "M_VS_R01_Graphite",
+        "M_VS_R01_Teal",
+        "M_VS_R01_Accent",
+        "M_VS_R01_Ceramic"
+      ],
+      "uv_channels": [
+        "UV0",
+        "UV1_Lightmap"
+      ],
+      "textures": [],
+      "collision": "none; presentation asset",
+      "source_closed_manifold_shells": true,
+      "source_signed_volume_cm3": 6867.7204753865,
+      "source_transforms_identity": true,
+      "uv_bounds_and_triangle_areas_passed": true,
+      "fbx_roundtrip": {
+        "passed": true,
+        "bounds_min_cm": [
+          -30.0,
+          -4.5200042724609375,
+          -12.945055961608887
+        ],
+        "bounds_max_cm": [
+          56.0,
+          4.519996166229248,
+          15.399999618530273
+        ],
+        "dimensions_cm": [
+          86.0,
+          9.040000438690186,
+          28.34505558013916
+        ],
+        "triangles": 3280,
+        "uv_channels": 2,
+        "collision_meshes": 0,
+        "materials": [
+          {
+            "material_name": "M_VS_R01_Graphite.001",
+            "canonical_material_name": "M_VS_R01_Graphite",
+            "expected_srgb_hex": "303944",
+            "linear_base_color_rgba": [
+              0.02955683507025242,
+              0.040915198624134064,
+              0.05780543014407158,
+              1.0
+            ],
+            "roughness": 0.699999988079071,
+            "metallic": 0.0,
+            "unlinked_principled_inputs": true
+          },
+          {
+            "material_name": "M_VS_R01_Teal.001",
+            "canonical_material_name": "M_VS_R01_Teal",
+            "expected_srgb_hex": "52647B",
+            "linear_base_color_rgba": [
+              0.08437620848417282,
+              0.12743768095970154,
+              0.19806931912899017,
+              1.0
+            ],
+            "roughness": 0.47999998927116394,
+            "metallic": 0.15000000596046448,
+            "unlinked_principled_inputs": true
+          },
+          {
+            "material_name": "M_VS_R01_Accent.001",
+            "canonical_material_name": "M_VS_R01_Accent",
+            "expected_srgb_hex": "CF3D50",
+            "linear_base_color_rgba": [
+              0.6239603757858276,
+              0.04666508734226227,
+              0.0802198201417923,
+              1.0
+            ],
+            "roughness": 0.5199999809265137,
+            "metallic": 0.0,
+            "unlinked_principled_inputs": true
+          },
+          {
+            "material_name": "M_VS_R01_Ceramic.001",
+            "canonical_material_name": "M_VS_R01_Ceramic",
+            "expected_srgb_hex": "8D9FB4",
+            "linear_base_color_rgba": [
+              0.26635560393333435,
+              0.34670406579971313,
+              0.4564110338687897,
+              1.0
+            ],
+            "roughness": 0.41999998688697815,
+            "metallic": 0.25,
+            "unlinked_principled_inputs": true
+          }
+        ],
+        "material_names_and_shader_values_passed": true
+      }
+    },
+    {
+      "name": "SM_VS_Rifle01_Magazine",
+      "file": "Exports/SM_VS_Rifle01_Magazine.fbx",
+      "pivot": "Insertion anchor at local zero",
+      "bounds_min_cm": [
+        -4.599999904632568,
+        -3.299999952316284,
+        -18.799999237060547
+      ],
+      "bounds_max_cm": [
+        9.05637264251709,
+        3.299999952316284,
+        0.0
+      ],
+      "dimensions_cm": [
+        13.656372547149658,
+        6.599999904632568,
+        18.799999237060547
+      ],
+      "vertices": 262,
+      "triangles": 488,
+      "material_slots": [
+        "M_VS_R01_Graphite",
+        "M_VS_R01_Teal",
+        "M_VS_R01_Accent"
+      ],
+      "uv_channels": [
+        "UV0",
+        "UV1_Lightmap"
+      ],
+      "textures": [],
+      "collision": "none; presentation asset",
+      "source_closed_manifold_shells": true,
+      "source_signed_volume_cm3": 1266.8226133905873,
+      "source_transforms_identity": true,
+      "uv_bounds_and_triangle_areas_passed": true,
+      "fbx_roundtrip": {
+        "passed": true,
+        "bounds_min_cm": [
+          -4.600000381469727,
+          -3.300001382827759,
+          -18.799999237060547
+        ],
+        "bounds_max_cm": [
+          9.05637264251709,
+          3.3000001907348633,
+          0.0
+        ],
+        "dimensions_cm": [
+          13.656373023986816,
+          6.600001573562622,
+          18.799999237060547
+        ],
+        "triangles": 488,
+        "uv_channels": 2,
+        "collision_meshes": 0,
+        "materials": [
+          {
+            "material_name": "M_VS_R01_Graphite.001",
+            "canonical_material_name": "M_VS_R01_Graphite",
+            "expected_srgb_hex": "303944",
+            "linear_base_color_rgba": [
+              0.02955683507025242,
+              0.040915198624134064,
+              0.05780543014407158,
+              1.0
+            ],
+            "roughness": 0.699999988079071,
+            "metallic": 0.0,
+            "unlinked_principled_inputs": true
+          },
+          {
+            "material_name": "M_VS_R01_Teal.001",
+            "canonical_material_name": "M_VS_R01_Teal",
+            "expected_srgb_hex": "52647B",
+            "linear_base_color_rgba": [
+              0.08437620848417282,
+              0.12743768095970154,
+              0.19806931912899017,
+              1.0
+            ],
+            "roughness": 0.47999998927116394,
+            "metallic": 0.15000000596046448,
+            "unlinked_principled_inputs": true
+          },
+          {
+            "material_name": "M_VS_R01_Accent.001",
+            "canonical_material_name": "M_VS_R01_Accent",
+            "expected_srgb_hex": "CF3D50",
+            "linear_base_color_rgba": [
+              0.6239603757858276,
+              0.04666508734226227,
+              0.0802198201417923,
+              1.0
+            ],
+            "roughness": 0.5199999809265137,
+            "metallic": 0.0,
+            "unlinked_principled_inputs": true
+          }
+        ],
+        "material_names_and_shader_values_passed": true
+      }
+    }
+  ],
+  "sockets": {
+    "Muzzle": {
+      "location_cm": [
+        56,
+        0,
+        8.2
+      ],
+      "rotation_degrees": [
+        0,
+        0,
+        0
+      ]
+    },
+    "Grip": {
+      "location_cm": [
+        0,
+        0,
+        0
+      ],
+      "rotation_degrees": [
+        0,
+        0,
+        0
+      ]
+    },
+    "SupportHand": {
+      "location_cm": [
+        31,
+        0,
+        2.4
+      ],
+      "rotation_degrees": [
+        0,
+        0,
+        0
+      ]
+    },
+    "Magazine": {
+      "location_cm": [
+        14,
+        0,
+        2
+      ],
+      "rotation_degrees": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "assembly": {
+    "magazine_location_cm": [
+      14,
+      0,
+      2
+    ],
+    "magazine_rotation_degrees": [
+      0,
+      0,
+      0
+    ],
+    "magazine_scale": [
+      1,
+      1,
+      1
+    ]
+  },
+  "fbx_export": {
+    "axis_forward": "-Y",
+    "axis_up": "Z",
+    "global_scale": 1,
+    "scene_scale_length": 0.01,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "apply_unit_scale": true,
+    "bake_space_transform": false
+  },
+  "limitations": [
+    "Presentation-only static meshes; no firing, animation, rig, hands, or gameplay wiring.",
+    "Disconnected closed chamfered shells intentionally overlap inside the silhouette.",
+    "No collision is supplied; this mesh is not authoritative hit or shot geometry.",
+    "Both UV channels are isolated face tiles; no textures or light bake are used.",
+    "Source/Blender export verification only; native Unreal and runtime checks are separate."
+  ],
+  "finish_revision": "ART-03 crimson; geometry preserved"
+}

@@ -1,0 +1,493 @@
+{
+  "engine": "5.8.4-58902052+++UE5+Release-5.8",
+  "run_id": "243fe76474e14eb080d1c8fc430bc703",
+  "scene": "fresh unsaved editor world; no packages saved",
+  "captures": [
+    {
+      "kind": "Studio",
+      "composition": "Native assembled body and socket-attached magazine; scale 1; no gameplay",
+      "resolution": [
+        1600,
+        1000
+      ],
+      "camera_location_cm": [
+        90.0,
+        -180.0,
+        85.0
+      ],
+      "camera_rotation_degrees": {
+        "pitch": -18.81134,
+        "yaw": 113.962489,
+        "roll": -0.0
+      },
+      "horizontal_fov_degrees": 32.0,
+      "assembly": {
+        "body_world_transform": {
+          "translation_cm": [
+            0.0,
+            0.0,
+            16.9
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "magazine_world_transform": {
+          "translation_cm": [
+            14.0,
+            0.0,
+            18.9
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "magazine_socket_world_transform": {
+          "translation_cm": [
+            14.0,
+            0.0,
+            18.9
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "magazine_relative_transform": {
+          "translation_cm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "attachment_position_error_cm": 0.0,
+        "attachment_socket": "Magazine",
+        "weld_simulated_bodies": false,
+        "muzzle_forward_world": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "socket_world_transforms": {
+          "Grip": {
+            "translation_cm": [
+              0.0,
+              0.0,
+              16.9
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "Magazine": {
+            "translation_cm": [
+              14.0,
+              0.0,
+              18.9
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "Muzzle": {
+            "translation_cm": [
+              56.0,
+              0.0,
+              25.1
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "SupportHand": {
+            "translation_cm": [
+              31.0,
+              0.0,
+              19.3
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        },
+        "equipped_component_collision": {
+          "SM_VS_Rifle01_Body": {
+            "profile": "NoCollision",
+            "enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+          },
+          "SM_VS_Rifle01_Magazine": {
+            "profile": "NoCollision",
+            "enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+          }
+        }
+      },
+      "output": "docs/assets/rifle01/Previews/VS_Rifle01_Unreal_Studio.png",
+      "sha256": "e86ffbcec96748ab5d83b2616baf890c49e80fde3be35ef4bcce6b348732570a",
+      "capture_completed": true
+    },
+    {
+      "kind": "FirstPerson",
+      "composition": "First-person visual composition only; grip offset (32,16,-18) cm; no gameplay or arms",
+      "resolution": [
+        1600,
+        1000
+      ],
+      "camera_location_cm": [
+        0.0,
+        0.0,
+        160.0
+      ],
+      "camera_rotation_degrees": {
+        "pitch": 0.0,
+        "yaw": 0.0,
+        "roll": 0.0
+      },
+      "horizontal_fov_degrees": 85.0,
+      "assembly": {
+        "body_world_transform": {
+          "translation_cm": [
+            32.0,
+            16.0,
+            142.0
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "magazine_world_transform": {
+          "translation_cm": [
+            46.0,
+            16.0,
+            144.0
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "magazine_socket_world_transform": {
+          "translation_cm": [
+            46.0,
+            16.0,
+            144.0
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "magazine_relative_transform": {
+          "translation_cm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation_quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "attachment_position_error_cm": 0.0,
+        "attachment_socket": "Magazine",
+        "weld_simulated_bodies": false,
+        "muzzle_forward_world": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "socket_world_transforms": {
+          "Grip": {
+            "translation_cm": [
+              32.0,
+              16.0,
+              142.0
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "Magazine": {
+            "translation_cm": [
+              46.0,
+              16.0,
+              144.0
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "Muzzle": {
+            "translation_cm": [
+              88.0,
+              16.0,
+              150.2
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "SupportHand": {
+            "translation_cm": [
+              63.0,
+              16.0,
+              144.4
+            ],
+            "rotation_quaternion_xyzw": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        },
+        "equipped_component_collision": {
+          "SM_VS_Rifle01_Body": {
+            "profile": "NoCollision",
+            "enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+          },
+          "SM_VS_Rifle01_Magazine": {
+            "profile": "NoCollision",
+            "enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+          }
+        }
+      },
+      "muzzle_expected_normalized_image_xy": [
+        0.59921,
+        0.59723
+      ],
+      "grip_offset_from_camera_cm": [
+        32,
+        16,
+        -18
+      ],
+      "rear_stock_may_be_cropped_by_camera_near_plane": true,
+      "output": "docs/assets/rifle01/Previews/VS_Rifle01_Unreal_FirstPerson.png",
+      "sha256": "8e5b2ffa6a406fc27f11af06cd1aeb406cbe776c2d40b3429b9b43a965f8a744",
+      "capture_completed": true
+    }
+  ],
+  "native_coordinate_convention": "+X forward; +Y camera-right; +Z up; centimeters",
+  "source_to_native_convention": "FBX reflects source Y; socket Y positions are all zero",
+  "runtime_verified": false,
+  "gameplay_verified": false,
+  "first_person_integration_verified": false,
+  "animation_verified": false,
+  "saved_sockets_component_space": {
+    "Grip": {
+      "location_cm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_degrees": {
+        "pitch": 0.0,
+        "yaw": 0.0,
+        "roll": 0.0
+      },
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "Magazine": {
+      "location_cm": [
+        14.0,
+        0.0,
+        2.0
+      ],
+      "rotation_degrees": {
+        "pitch": 0.0,
+        "yaw": 0.0,
+        "roll": 0.0
+      },
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "Muzzle": {
+      "location_cm": [
+        56.0,
+        0.0,
+        8.2
+      ],
+      "rotation_degrees": {
+        "pitch": 0.0,
+        "yaw": 0.0,
+        "roll": 0.0
+      },
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "SupportHand": {
+      "location_cm": [
+        31.0,
+        0.0,
+        2.4
+      ],
+      "rotation_degrees": {
+        "pitch": 0.0,
+        "yaw": 0.0,
+        "roll": 0.0
+      },
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    }
+  },
+  "native_body_bounds_cm": {
+    "min": [
+      -30.0,
+      -4.52,
+      -12.94506
+    ],
+    "max": [
+      56.0,
+      4.52,
+      15.4
+    ]
+  },
+  "lighting": {
+    "sun_intensity": 3.0,
+    "captured_sky_intensity": 1.0,
+    "key_ray_direction": [
+      0.33515,
+      0.58652,
+      -0.73734
+    ],
+    "auto_exposure": false,
+    "exposure_bias": 0.0
+  },
+  "elapsed_seconds": 11.609
+}
