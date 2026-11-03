@@ -23,6 +23,7 @@
 #include "InputModifiers.h"
 #include "Net/UnrealNetwork.h"
 #include "UObject/ConstructorHelpers.h"
+#include "VSPlayerController.h"
 #include "ValStrike.h"
 
 AVSCharacter::AVSCharacter()
@@ -299,12 +300,15 @@ void AVSCharacter::Move(const FInputActionValue& Value)
 
 void AVSCharacter::LookYaw(const FInputActionValue& Value)
 {
-    AddControllerYawInput(Value.Get<float>() * MouseSensitivity);
+    // The local player's saved setting; MouseSensitivity covers other controllers.
+    const AVSPlayerController* PC = Cast<AVSPlayerController>(Controller);
+    AddControllerYawInput(Value.Get<float>() * (PC ? PC->GetMouseSensitivity() : MouseSensitivity));
 }
 
 void AVSCharacter::LookPitch(const FInputActionValue& Value)
 {
-    AddControllerPitchInput(Value.Get<float>() * MouseSensitivity);
+    const AVSPlayerController* PC = Cast<AVSPlayerController>(Controller);
+    AddControllerPitchInput(Value.Get<float>() * (PC ? PC->GetMouseSensitivity() : MouseSensitivity));
 }
 
 void AVSCharacter::BeginFire() { if (CanMatchCombat()) { Rifle->StartFire(); } }

@@ -11,7 +11,9 @@
 #include "UI/SVSSessionMenu.h"
 #include "UI/VSServerAddress.h"
 #include "UI/VSSessionState.h"
+#include "UI/VSSettingsSmoke.h"
 #include "UI/VSUISmoke.h"
+#include "UI/VSUserSettings.h"
 #include "VSCharacter.h"
 #include "ValStrike.h"
 
@@ -34,12 +36,42 @@ void AVSPlayerController::PlayerTick(float DeltaTime)
     CreateSessionMenu();
 #if !UE_BUILD_SHIPPING && !UE_BUILD_TEST
     VSUISmoke::Tick(this, DeltaTime);
+    VSSettingsSmoke::Tick(this, DeltaTime);
 #endif
 }
 
 UVSSessionState* AVSPlayerController::GetSessionState() const
 {
     return GetGameInstance() ? GetGameInstance()->GetSubsystem<UVSSessionState>() : nullptr;
+}
+
+float AVSPlayerController::GetMouseSensitivity() const
+{
+    if (!MouseSensitivity.IsSet())
+    {
+        MouseSensitivity = VSUserSettings::LoadMouseSensitivity();
+    }
+    return MouseSensitivity.GetValue();
+}
+
+void AVSPlayerController::SetMouseSensitivity(float Value)
+{
+    const float Clamped = VSUserSettings::ClampMouseSensitivity(Value);
+    if (Clamped != GetMouseSensitivity())
+    {
+        MouseSensitivity = Clamped;
+        // In memory now, so travel keeps it; written to disk by SaveUserSettings.
+        VSUserSettings::StoreMouseSensitivity(Clamped);
+        bUserSettingsDirty = true;
+    }
+}
+
+void AVSPlayerController::SaveUserSettings()
+{
+    if (bUserSettingsDirty)
+    {
+        bUserSettingsDirty = !VSUserSettings::SaveUserSettings();
+    }
 }
 
 FVSMatchHUDData AVSPlayerController::GetMatchHUDData() const
@@ -76,6 +108,7 @@ void AVSPlayerController::CreateSessionMenu()
 
 void AVSPlayerController::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+    SaveUserSettings();
     if (SessionMenu && GetWorld()->GetGameViewport() && GetLocalPlayer())
     {
         GetWorld()->GetGameViewport()->RemoveViewportWidgetForPlayer(GetLocalPlayer(), SessionMenu.ToSharedRef());
@@ -135,6 +168,11 @@ void AVSPlayerController::SetSessionMenuOpen(bool bOpen)
         {
             Character->StopCombatInput();
         }
+    }
+    else
+    {
+        SessionMenu->CloseSettings(false);
+        SaveUserSettings();
     }
     FlushPressedKeys();
     bSessionMenuOpen = bOpen;
@@ -229,6 +267,7 @@ void AVSPlayerController::QuitSession()
 {
     if (IsLocalController())
     {
+        SaveUserSettings();
         UKismetSystemLibrary::QuitGame(this, this, EQuitPreference::Quit, false);
     }
 }
