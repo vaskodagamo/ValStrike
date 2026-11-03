@@ -1,0 +1,38 @@
+# Unreal generated output
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+Build/
+!Build/.gitkeep
+.vs/
+.idea/
+*.sln
+*.suo
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.opendb
+*.xcodeproj/
+*.xcworkspace/
+*.xcuserstate
+
+# Local tools and operating system files
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+.asset-worktrees/
+.env
+.env.*
+!*.example
+
+# Never vendor engine installations or downloads
+UnrealEngine/
+UE_*/
+*.xip
+*.dmg
+
+# Packaged output belongs outside source control
+Artifacts/
+Releases/
