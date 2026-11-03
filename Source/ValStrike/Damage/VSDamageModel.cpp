@@ -41,7 +41,7 @@ DamageTable VSDamageModelBuildDefault()
     Rifle.DistanceFalloff = Falloff{false, 2500.0f, 5000.0f, 0.85f};
 
     WeaponProfile& Pistol = Table.Weapons[static_cast<std::size_t>(WeaponClass::Pistol)];
-    Pistol.BaseDamage = 22.0f; // Five upper-torso hits.
+    Pistol.BaseDamage = 20.0f; // The Weapons stream's pistol body damage: five upper-torso hits.
     Pistol.ZoneMultiplier = VSDamageModelAnatomy();
     Pistol.HeadIsLethal = true;
     Pistol.DistanceFalloff = Falloff{false, 1500.0f, 3500.0f, 0.75f};

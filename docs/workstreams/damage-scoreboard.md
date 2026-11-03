@@ -20,18 +20,18 @@ Owned paths: `Source/ValStrike/Damage/**`, `Source/ValStrike/Scoreboard/**`, `Te
 - A lethal head rule per weapon returns `LethalDamage` (10000). The existing server health clamp then ends the life. The rule ignores falloff and never fires for a weapon with 0 base damage.
 - Clamps: base damage 0..500, multipliers 0..10, falloff scale 0..1, and distances 0..10 km. Non-finite values fall back to safe defaults. An inverted falloff range collapses to a step at its start distance. Unknown zones and weapons return 0 with a status.
 
-**Proposed values, one table** (`VSDamageModelBuildDefault`). These are ValStrike proposals for playtest tuning, not taken from another game. The rifle keeps today's 30 body damage, so its upper-torso time-to-kill is unchanged.
+**Proposed values, one table** (`VSDamageModelBuildDefault`). These are ValStrike proposals for playtest tuning, not taken from another game. The rifle keeps today's 30 body damage, so its upper-torso time-to-kill is unchanged. The pistol base matches the Weapons stream's pistol body damage (20). That stream's pistol head damage is 60, but the brief asks for a lethal head on both weapons, so Phase 2 makes pistol headshots lethal; integration should confirm that choice.
 
-| Zone | Multiplier | Rifle (base 30) | Pistol (base 22) | Rifle hits to kill 100 HP |
+| Zone | Multiplier | Rifle (base 30) | Pistol (base 20) | Rifle hits to kill 100 HP |
 | --- | --- | --- | --- | --- |
 | Head | lethal (4.0 if the rule is off) | kill | kill | 1 |
-| Upper torso (chest, shoulders) | 1.00 | 30 | 22 | 4 |
-| Lower torso (stomach, pelvis) | 0.90 | 27 | 20 | 4 |
-| Upper arm | 0.80 | 24 | 18 | 5 |
-| Forearm / hand | 0.70 | 21 | 15 | 5 |
-| Thigh | 0.80 | 24 | 18 | 5 |
-| Lower leg | 0.70 | 21 | 15 | 5 |
-| Foot | 0.55 | 17 | 12 | 6 |
+| Upper torso (chest, shoulders) | 1.00 | 30 | 20 | 4 |
+| Lower torso (stomach, pelvis) | 0.90 | 27 | 18 | 4 |
+| Upper arm | 0.80 | 24 | 16 | 5 |
+| Forearm / hand | 0.70 | 21 | 14 | 5 |
+| Thigh | 0.80 | 24 | 16 | 5 |
+| Lower leg | 0.70 | 21 | 14 | 5 |
+| Foot | 0.55 | 17 | 11 | 6 |
 
 Distance falloff is defined but **off** for both weapons. Rifle: full damage to 25 m, then linear down to 0.85× at 50 m and beyond. Pistol: full to 15 m, then down to 0.75× at 35 m.
 

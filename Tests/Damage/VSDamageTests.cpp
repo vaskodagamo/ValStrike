@@ -72,10 +72,10 @@ void EveryZoneAndWeaponMatchesProposalTable()
         {WeaponClass::Rifle, HitZone::UpperArm, 24}, {WeaponClass::Rifle, HitZone::Forearm, 21},
         {WeaponClass::Rifle, HitZone::Thigh, 24}, {WeaponClass::Rifle, HitZone::LowerLeg, 21},
         {WeaponClass::Rifle, HitZone::Foot, 17},
-        {WeaponClass::Pistol, HitZone::UpperTorso, 22}, {WeaponClass::Pistol, HitZone::LowerTorso, 20},
-        {WeaponClass::Pistol, HitZone::UpperArm, 18}, {WeaponClass::Pistol, HitZone::Forearm, 15},
-        {WeaponClass::Pistol, HitZone::Thigh, 18}, {WeaponClass::Pistol, HitZone::LowerLeg, 15},
-        {WeaponClass::Pistol, HitZone::Foot, 12},
+        {WeaponClass::Pistol, HitZone::UpperTorso, 20}, {WeaponClass::Pistol, HitZone::LowerTorso, 18},
+        {WeaponClass::Pistol, HitZone::UpperArm, 16}, {WeaponClass::Pistol, HitZone::Forearm, 14},
+        {WeaponClass::Pistol, HitZone::Thigh, 16}, {WeaponClass::Pistol, HitZone::LowerLeg, 14},
+        {WeaponClass::Pistol, HitZone::Foot, 11},
     };
     for (const Expected& Row : Table)
     {
@@ -133,7 +133,7 @@ void HeadCanBeConfiguredNonLethal()
     const HitResult Rifle = Hit(WeaponClass::Rifle, HitZone::Head, 0.0f, Table);
     CHECK(!Rifle.Lethal && Rifle.Damage == 120.0f && Rifle.Multiplier == 4.0f);
     const HitResult Pistol = Hit(WeaponClass::Pistol, HitZone::Head, 0.0f, Table);
-    CHECK(!Pistol.Lethal && Pistol.Damage == 88.0f);
+    CHECK(!Pistol.Lethal && Pistol.Damage == 80.0f);
     // The lethal rule never turns a zero-damage weapon into a kill.
     Table = DefaultTable();
     Table.Weapons[0].BaseDamage = 0.0f;
@@ -146,7 +146,7 @@ void FalloffIsOffByDefault()
     for (float Distance : {0.0f, 2500.0f, 5000.0f, 1e6f})
     {
         CHECK(Hit(WeaponClass::Rifle, HitZone::UpperTorso, Distance).Damage == 30.0f);
-        CHECK(Hit(WeaponClass::Pistol, HitZone::UpperTorso, Distance).Damage == 22.0f);
+        CHECK(Hit(WeaponClass::Pistol, HitZone::UpperTorso, Distance).Damage == 20.0f);
     }
 }
 
@@ -163,8 +163,8 @@ void FalloffInterpolatesAndClampsWhenEnabled()
     CHECK(Near(End.FalloffScale, 0.85, 1e-6) && End.Damage == 26.0f); // 25.5 rounds up
     CHECK(Hit(WeaponClass::Rifle, HitZone::UpperTorso, 1e6f, Table).Damage == 26.0f);
     // Pistol: full to 15 m, 0.75 at 35 m.
-    CHECK(Hit(WeaponClass::Pistol, HitZone::UpperTorso, 3500.0f, Table).Damage == 17.0f); // 16.5
-    CHECK(Hit(WeaponClass::Pistol, HitZone::Foot, 3500.0f, Table).Damage == 9.0f); // 9.075
+    CHECK(Hit(WeaponClass::Pistol, HitZone::UpperTorso, 3500.0f, Table).Damage == 15.0f); // 20 x 0.75
+    CHECK(Hit(WeaponClass::Pistol, HitZone::Foot, 3500.0f, Table).Damage == 8.0f); // 8.25
     // Monotone non-increasing with distance.
     float Previous = 1e9f;
     for (float Distance = 0.0f; Distance <= 6000.0f; Distance += 50.0f)
