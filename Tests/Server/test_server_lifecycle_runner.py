@@ -31,9 +31,9 @@ def state(source, target, reason, at, players):
     return f"VSSERVER_STATE from={source} to={target} reason={reason} at_ms={at} players={players}"
 
 
-def empty_log(wait_ms=4000):
+def empty_log(wait_ms=30000):
     return log(version(),
-               "VSSERVER_CONFIG session=s exit_when_done=true empty_timeout_s=4 result_grace_s=15 max_players=1 "
+               "VSSERVER_CONFIG session=s exit_when_done=true empty_timeout_s=30 result_grace_s=15 max_players=1 "
                "provider=local admission=open",
                "VSSERVER_MAP map=graybox mode=practice port=7871 max_players=1",
                state("starting", "ready", "listening", 1000, 0),
@@ -98,8 +98,8 @@ class EvaluationTests(unittest.TestCase):
 
     def test_empty_timeout(self):
         self.assertEqual(failed(runner.evaluate_empty(empty_log(), 0, REVISION, "Mac")), [])
-        self.assertEqual(failed(runner.evaluate_empty(empty_log(3999), 0, REVISION, "Mac")), ["empty_timeout_measured"])
-        self.assertEqual(failed(runner.evaluate_empty(empty_log(5001), 0, REVISION, "Mac")), ["empty_timeout_measured"])
+        self.assertEqual(failed(runner.evaluate_empty(empty_log(29999), 0, REVISION, "Mac")), ["empty_timeout_measured"])
+        self.assertEqual(failed(runner.evaluate_empty(empty_log(31001), 0, REVISION, "Mac")), ["empty_timeout_measured"])
         self.assertIn("version_line", failed(runner.evaluate_empty(empty_log(), 0, "b" * 40, "Mac")))
         refused = empty_log().replace("PreLogin failure: Server full.", "")
         self.assertEqual(failed(runner.evaluate_empty(refused, 0, REVISION, "Mac")), ["max_players_enforced"])
@@ -137,7 +137,7 @@ class CommandTests(unittest.TestCase):
         empty = runner.server_command("UE", "P.uproject", output, "empty", 7872, "s-empty")
         self.assertEqual(empty[2], "/Game/Maps/VS_Graybox")
         self.assertIn("-VSServerMaxPlayers=1", empty)
-        self.assertIn("-VSServerEmptyTimeout=4", empty)
+        self.assertIn("-VSServerEmptyTimeout=30", empty)
         match_command = runner.server_command("UE", "P.uproject", output, "match", 7874, "s-match")
         self.assertEqual(match_command[2], "/Game/Maps/Site01/VS_Site01?game=/Script/ValStrike.VSMatchGameMode")
         self.assertIn("-VSMatchFastTimings", match_command)
@@ -152,11 +152,12 @@ class CommandTests(unittest.TestCase):
         for port in (7870, 7875, "x"):
             with self.subTest(port=port), self.assertRaises(Exception):
                 runner.server_port(port)
-        client = runner.client_command("UE", "P", Path("/tmp"), 7871, "VSServerProbeA")
+        client = runner.client_command("UE", "P", Path("/tmp"), "empty", 7871, "VSServerProbeA")
+        self.assertIn("-abslog=/tmp/empty_VSServerProbeA.log", client)
         self.assertEqual(client[2], "127.0.0.1:7871?Name=VSServerProbeA")
         for name in ("A?listen", "", "a b"):
             with self.subTest(name=name), self.assertRaises(ValueError):
-                runner.client_command("UE", "P", Path("/tmp"), 7871, name)
+                runner.client_command("UE", "P", Path("/tmp"), "empty", 7871, name)
 
 
 if __name__ == "__main__":

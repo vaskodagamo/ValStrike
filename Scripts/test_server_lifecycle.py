@@ -33,7 +33,8 @@ from test_match import stop
 SCENARIOS = ("invalid", "empty", "match")
 MATCH_MAP = "/Game/Maps/Site01/VS_Site01"
 MATCH_MODE = "/Script/ValStrike.VSMatchGameMode"
-EMPTY_TIMEOUT_S = 4
+# Long enough for a cold editor client to join first: the timer also runs before anyone joins.
+EMPTY_TIMEOUT_S = 30
 RESULT_GRACE_S = 2
 DRAIN_MS = 2000
 EVENT = re.compile(r"(VSSERVER_[A-Z_]+)(?: (.*))?$")
@@ -236,11 +237,13 @@ def server_command(executable, project, output, scenario, port, session):
     return command + [f"-VSServerResultGrace={RESULT_GRACE_S}", "-VSServerEmptyTimeout=60", "-VSMatchFastTimings"]
 
 
-def client_command(executable, project, output, port, name):
+def client_command(executable, project, output, scenario, port, name):
     if not re.fullmatch(r"[A-Za-z0-9]{1,24}", name):
         raise ValueError(f"Invalid client name: {name}")
+    if scenario not in SCENARIOS:
+        raise ValueError(f"Unknown scenario: {scenario}")
     return [str(executable), str(project), f"127.0.0.1:{server_port(port)}?Name={name}", "-game", "-nullrhi",
-            "-nosound", "-unattended", f"-abslog={output / (name + '.log')}", "-ExecCmds=t.MaxFPS 60"]
+            "-nosound", "-unattended", f"-abslog={output / f'{scenario}_{name}.log'}", "-ExecCmds=t.MaxFPS 60"]
 
 
 def sha256(path):
@@ -260,14 +263,14 @@ def git(root, *args):
 class Scenario:
     """Owns one scenario's processes; every process is stopped before the scenario returns."""
 
-    def __init__(self, executable, project, output, port, limit):
-        self.executable, self.project, self.output, self.port = executable, project, output, port
+    def __init__(self, name, executable, project, output, port, limit):
+        self.name, self.executable, self.project, self.output, self.port = name, executable, project, output, port
         self.deadline = time.monotonic() + limit
         self.processes, self.streams, self.commands = {}, [], {}
 
     def launch(self, role, command):
         self.commands[role] = command
-        stream = (self.output / f"{role}.stdout.log").open("w")
+        stream = (self.output / f"{self.name}_{role}.stdout.log").open("w")
         self.streams.append(stream)
         self.processes[role] = subprocess.Popen(command, cwd=ue.ROOT, stdout=stream, stderr=subprocess.STDOUT,
                                                 start_new_session=os.name == "posix")
@@ -304,7 +307,7 @@ class Scenario:
 
 def run_scenario(name, executable, project, output, port, limit, run_id):
     session = f"{run_id}-{name}".replace("_", "-")
-    owner = Scenario(executable, project, output, port, limit)
+    owner = Scenario(name, executable, project, output, port, limit)
     problem, process_exit, client_exits = None, None, {}
     began = time.monotonic()
     try:
@@ -313,22 +316,24 @@ def run_scenario(name, executable, project, output, port, limit, run_id):
             process_exit = owner.wait_server_exit()
         elif name == "empty":
             owner.wait_for(name, "to=ready", "the ready state")
-            owner.launch("client_a", client_command(executable, project, output, port, "VSServerProbeA"))
+            owner.launch("client_a", client_command(executable, project, output, name, port, "VSServerProbeA"))
             owner.wait_for(name, "to=allocated", "the first client to join")
-            owner.launch("client_b", client_command(executable, project, output, port, "VSServerProbeB"))
+            owner.launch("client_b", client_command(executable, project, output, name, port, "VSServerProbeB"))
             owner.wait_for(name, "PreLogin failure: Server full.", "the second client to be refused")
             client_exits["client_b"] = owner.stop_role("client_b")
             client_exits["client_a"] = owner.stop_role("client_a")
             process_exit = owner.wait_server_exit()
         else:
             owner.wait_for(name, "to=ready", "the ready state")
-            owner.launch("client_a", client_command(executable, project, output, port, "VSServerProbeA"))
-            owner.launch("client_b", client_command(executable, project, output, port, "VSServerProbeB"))
+            owner.launch("client_a", client_command(executable, project, output, name, port, "VSServerProbeA"))
+            owner.launch("client_b", client_command(executable, project, output, name, port, "VSServerProbeB"))
             process_exit = owner.wait_server_exit()
     except (RuntimeError, OSError) as error:
         problem = str(error)
     finally:
         exits_before = owner.close()
+    if process_exit is None and exits_before.get("server") is not None:
+        process_exit = exits_before["server"]  # Exited on its own before the runner waited for it.
     log = owner.log(name)
     revision = git(ue.ROOT, "rev-parse", "HEAD")
     host = ue.host_platform()
