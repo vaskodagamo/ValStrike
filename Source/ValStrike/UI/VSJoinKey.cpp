@@ -1,6 +1,6 @@
-#include "UI/VSJoinKey.h"
+#include "VSJoinKey.h"
 
-#include "Server/VSServerContract.h"
+#include "../Server/VSServerContract.h"
 
 namespace ValStrike::JoinKey
 {
