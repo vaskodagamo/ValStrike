@@ -1,0 +1,21 @@
+{
+  "name": "D01 Relay — original ValStrike objective prop",
+  "date_europe_berlin": "2026-11-03",
+  "color_space": "sRGB hex; decode to linear for Blender/Unreal constants",
+  "material_slot_order": ["Shell", "Trim", "Status"],
+  "Shell": {"srgb_hex": "303F50", "roughness": 0.7, "metallic": 0.0},
+  "Trim": {"srgb_hex": "8D9FB4", "roughness": 0.5, "metallic": 0.15},
+  "Status": {
+    "background_srgb_hex": "101923",
+    "roughness": 0.65,
+    "metallic": 0.0,
+    "glyph_emissive_strength": 0.15,
+    "states": {
+      "Idle": {"srgb_hex": "91ABC2", "glyph": "hollow ring with short horizontal bar"},
+      "Armed": {"srgb_hex": "F2B24D", "glyph": "triangle and exclamation mark"},
+      "Defused": {"srgb_hex": "8FD4C8", "glyph": "checkmark in square"}
+    }
+  },
+  "provenance": "Original project-authored form and geometric glyphs. No fonts, external meshes, scans or purchased inputs.",
+  "runtime_boundary": "State materials are visual inputs only; replicated objective state and selection belong to runtime. No time, pulse or countdown behavior."
+}

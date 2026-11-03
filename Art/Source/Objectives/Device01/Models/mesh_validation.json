@@ -1,0 +1,314 @@
+{
+  "name": "D01 Relay",
+  "task": "ART-04",
+  "date_europe_berlin": "2026-11-03",
+  "tool": "Blender 5.2.2 LTS",
+  "provenance": "Original project-authored mesh and mathematical glyph masks; no external assets/fonts/textures",
+  "units": "centimeters",
+  "forward": "+X",
+  "up": "+Z",
+  "pivot": "bottom center (0,0,0)",
+  "assets": [
+    {
+      "name": "SM_VS_Device01",
+      "file": "Exports/SM_VS_Device01.fbx",
+      "bounds_min_cm": [
+        -15.0,
+        -9.0,
+        0.0
+      ],
+      "bounds_max_cm": [
+        15.0,
+        9.0,
+        10.0
+      ],
+      "dimensions_cm": [
+        30.0,
+        18.0,
+        10.0
+      ],
+      "vertices": 492,
+      "triangles": 910,
+      "material_slots": [
+        "Shell",
+        "Trim",
+        "Status"
+      ],
+      "uv_channels": [
+        "UV0",
+        "UV1_Lightmap"
+      ],
+      "transforms_identity": true,
+      "closed_manifold_shells_except_status": true,
+      "intentional_open_status_triangles": 2,
+      "open_status_boundary_edges": 4,
+      "closed_shell_signed_volume_cm3": 5046.8128375507395,
+      "nondegenerate_geometry_uvs": true,
+      "collision": "none; visual only, runtime owns placement/collision",
+      "fbx_roundtrip": {
+        "passed": true,
+        "bounds_min_cm": [
+          -15.000000953674316,
+          -9.000001907348633,
+          0.0
+        ],
+        "bounds_max_cm": [
+          15.000000953674316,
+          9.000001907348633,
+          10.0
+        ],
+        "dimensions_cm": [
+          30.000001907348633,
+          18.000003814697266,
+          10.0
+        ],
+        "triangles": 910,
+        "material_slots": [
+          "Shell",
+          "Trim",
+          "Status"
+        ],
+        "uv_channels": 2,
+        "status_uv_mapping_verified": true,
+        "collision_meshes": 0
+      }
+    }
+  ],
+  "sockets": {
+    "Carry": {
+      "location_cm": [
+        0,
+        0,
+        8
+      ],
+      "rotation_degrees": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    }
+  },
+  "appearance": {
+    "name": "D01 Relay \u2014 original ValStrike objective prop",
+    "date_europe_berlin": "2026-11-03",
+    "color_space": "sRGB hex; decode to linear for Blender/Unreal constants",
+    "material_slot_order": [
+      "Shell",
+      "Trim",
+      "Status"
+    ],
+    "Shell": {
+      "srgb_hex": "303F50",
+      "roughness": 0.7,
+      "metallic": 0.0
+    },
+    "Trim": {
+      "srgb_hex": "8D9FB4",
+      "roughness": 0.5,
+      "metallic": 0.15
+    },
+    "Status": {
+      "background_srgb_hex": "101923",
+      "roughness": 0.65,
+      "metallic": 0.0,
+      "glyph_emissive_strength": 0.15,
+      "states": {
+        "Idle": {
+          "srgb_hex": "91ABC2",
+          "glyph": "hollow ring with short horizontal bar"
+        },
+        "Armed": {
+          "srgb_hex": "F2B24D",
+          "glyph": "triangle and exclamation mark"
+        },
+        "Defused": {
+          "srgb_hex": "8FD4C8",
+          "glyph": "checkmark in square"
+        }
+      }
+    },
+    "provenance": "Original project-authored form and geometric glyphs. No fonts, external meshes, scans or purchased inputs.",
+    "runtime_boundary": "State materials are visual inputs only; replicated objective state and selection belong to runtime. No time, pulse or countdown behavior."
+  },
+  "appearance_sha256": "3e4ec41f16c35299a6027cdb226ab0b8a6d7b946595d169d8798f06d75f5927f",
+  "status_surface": {
+    "plane_z_cm": 8.81,
+    "x_min_max_cm": [
+      -4,
+      4
+    ],
+    "y_min_max_cm": [
+      -2.5,
+      2.5
+    ],
+    "uv0_formula": "U=(X+4)/8; V=(Y+2.5)/5; source +Z normal",
+    "uv0_corners": [
+      [
+        [
+          -4,
+          -2.5,
+          8.81
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      [
+        [
+          4,
+          -2.5,
+          8.81
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      [
+        [
+          4,
+          2.5,
+          8.81
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      [
+        [
+          -4,
+          2.5,
+          8.81
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    ]
+  },
+  "textures": {
+    "Idle": {
+      "file": "Textures/T_VS_D01_StatusIdle.png",
+      "size": [
+        256,
+        256
+      ],
+      "color_space": "Non-Color / linear data; native sRGB false",
+      "channels": "RGB equal mask; alpha opaque",
+      "sha256": "0dc4a76eb424ec3efaba2985e9c85226360c29bd419d37cf3dde284b5df80b49",
+      "saved_png_value_min_max": [
+        0.0,
+        1.0
+      ],
+      "saved_png_distinct_values": [
+        0.0,
+        0.109804,
+        0.223529,
+        0.333333,
+        0.443137,
+        0.556863,
+        0.666667,
+        0.776471,
+        0.890196,
+        1.0
+      ],
+      "saved_png_coverage_mean": 0.09017597299407498,
+      "saved_png_horizontal_mirror_difference_mean": 0.0,
+      "packed_source_matches_disk_within_8bit_step": true
+    },
+    "Armed": {
+      "file": "Textures/T_VS_D01_StatusArmed.png",
+      "size": [
+        256,
+        256
+      ],
+      "color_space": "Non-Color / linear data; native sRGB false",
+      "channels": "RGB equal mask; alpha opaque",
+      "sha256": "be7a67490f66b49841a5097e2769611e207b7783a75e7511e4d82a1352b312f1",
+      "saved_png_value_min_max": [
+        0.0,
+        1.0
+      ],
+      "saved_png_distinct_values": [
+        0.0,
+        0.109804,
+        0.223529,
+        0.333333,
+        0.443137,
+        0.556863,
+        0.666667,
+        0.776471,
+        0.890196,
+        1.0
+      ],
+      "saved_png_coverage_mean": 0.07883013586706511,
+      "saved_png_horizontal_mirror_difference_mean": 0.0,
+      "packed_source_matches_disk_within_8bit_step": true
+    },
+    "Defused": {
+      "file": "Textures/T_VS_D01_StatusDefused.png",
+      "size": [
+        256,
+        256
+      ],
+      "color_space": "Non-Color / linear data; native sRGB false",
+      "channels": "RGB equal mask; alpha opaque",
+      "sha256": "8f40938275f4a514eaccb1383bd213bcf3ac484021bcc87d546da59a4c1342ce",
+      "saved_png_value_min_max": [
+        0.0,
+        1.0
+      ],
+      "saved_png_distinct_values": [
+        0.0,
+        0.109804,
+        0.223529,
+        0.333333,
+        0.443137,
+        0.556863,
+        0.666667,
+        0.776471,
+        0.890196,
+        1.0
+      ],
+      "saved_png_coverage_mean": 0.10688117562131083,
+      "saved_png_horizontal_mirror_difference_mean": 0.05835296058739914,
+      "packed_source_matches_disk_within_8bit_step": true,
+      "asymmetric_check_orientation_samples": {
+        "left_lower_stroke": 1.0,
+        "right_upper_stroke": 1.0,
+        "left_upper_clear": 0.0,
+        "right_lower_clear": 0.0
+      },
+      "orientation": "Short stroke at source -X/lower V; long rising stroke toward source +X/+Y"
+    }
+  },
+  "fbx_export": {
+    "axis_forward": "-Y",
+    "axis_up": "Z",
+    "global_scale": 1,
+    "scene_scale_length": 0.01,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "apply_unit_scale": true,
+    "embedded_textures": false,
+    "status_shader": "Native importer must rebuild status mask/color shader; FBX does not encode arbitrary Blender node graphs"
+  },
+  "saved_blend_reopen": {
+    "passed": true,
+    "geometry_material_values_masks_packing_relative_paths": true
+  },
+  "limits": [
+    "Static visual mesh only; no gameplay, collision, mechanisms, animation or VFX behavior",
+    "Three status glyphs use the same surface and slot, with runtime selection owned elsewhere",
+    "Two UV channels; non-status UVs are isolated face tiles, no light-bake/texture-density acceptance",
+    "Closed shell pieces intentionally overlap internally; only status surface is open (2 triangles)",
+    "Source previews are actual Blender meshes, not native Unreal or gameplay verification"
+  ]
+}
