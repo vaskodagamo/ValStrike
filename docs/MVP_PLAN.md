@@ -1,6 +1,6 @@
 # ValStrike MVP plan
 
-Planning baseline: 2026-11-03. Desktop first is confirmed by the user. Engine, game-rule values, and platform targets below are recommendations unless explicitly marked confirmed.
+Planning baseline: 2026-11-03. Desktop first and starting implementation on the Unreal baseline are confirmed by the user. Game-rule values and external platform targets remain proposed.
 
 ## Product goal
 
@@ -43,7 +43,7 @@ A match requires at least one player per team in development mode and two per te
 
 ## Technical foundation
 
-Recommended engine: Unreal Engine 5. Pin a supported release after the toolchain spike. Use a small C++ project with the engine's character movement and replication. The first-person template may supply a starting viewpoint and input, but its gameplay must still be verified for multiplayer. Use Lyra as a reference when useful rather than adopting its whole framework initially.
+Selected engine: Unreal Engine 5.8.4, paired with Xcode 26.1.1 for this Mac. Validate that pair during the toolchain spike. Use a small C++ project with the engine's character movement and replication. The first-person template may supply a starting viewpoint and input, but its gameplay must still be verified for multiplayer. Use Lyra as a reference when useful rather than adopting its whole framework initially.
 
 | Responsibility | Proposed home |
 | --- | --- |
@@ -121,4 +121,4 @@ For game bots, add a practice opponent after human multiplayer works: navigation
 
 Choose a backlog task, implement one observable increment, verify it, update its status, and append evidence and the next action to the work log. Record major technical choices in decision documents. Keep bugs in the backlog with reproduction steps and expected/actual behavior. Maintain a playable verified baseline as soon as M1 exists.
 
-Open setup choices: exact engine/Xcode pair; Windows tester/build access; Linux server build access; reference performance hardware; asset budget. Resolve these as dependencies arise. No paid services or asset purchases are included in this planning baseline.
+Open setup choices: Windows tester/build access; Linux server build access; reference performance hardware; asset budget. Resolve these as dependencies arise. No paid services or asset purchases are included in this planning baseline.

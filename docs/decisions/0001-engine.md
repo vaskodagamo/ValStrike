@@ -2,7 +2,7 @@
 
 Date: 2026-11-03
 
-Status: Recommended planning baseline; toolchain validation pending.
+Status: Selected for implementation after the user's go-ahead on 2026-11-03; toolchain validation pending.
 
 ## Context
 
@@ -12,7 +12,7 @@ The first deliverable is a small playable multiplayer FPS, with AI assistance us
 
 ## Recommendation
 
-Use Unreal Engine 5. Select and pin the exact release after a compatibility spike on the development Mac.
+Use Unreal Engine 5.8.4 with Xcode 26.1.1 on the development Mac. Confirm compilation and runtime behavior during the compatibility spike.
 Keep authoritative gameplay, weapon rules, round logic, and network validation in C++.
 Use thin Blueprints for asset references, tuning, animation, effects, and UI composition.
 Start with a small project; consult Lyra as a reference without adopting its full architecture.

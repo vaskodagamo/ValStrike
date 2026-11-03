@@ -2,11 +2,11 @@
 
 An original desktop tactical FPS: deliberate movement and round-based combat inspired by Counter-Strike, with a clean, stylized visual direction inspired by Valorant.
 
-**Current state:** planning only. No playable game, engine project, or verified build exists yet.
+**Current state:** bootstrap implementation. The C++ project, movement code, map generator, and development launcher are present. Unreal compilation and gameplay verification are still pending.
 
 **Confirmed direction:** desktop first, with a foundation that can grow into a larger game.
 
-**Recommended foundation:** Unreal Engine 5, C++ gameplay, and small Blueprints for presentation and tuning. The exact engine release will be pinned after checking the development toolchain. Runtime validation is the next step.
+**Foundation:** Unreal Engine 5.8.4, C++ gameplay, and small Blueprints for presentation and tuning. The Mac toolchain is pinned to Xcode 26.1.1. Runtime validation is the next step.
 
 ## Project documents
 
@@ -23,4 +23,16 @@ An original desktop tactical FPS: deliberate movement and round-based combat ins
 
 A private 2v2 match on one small map with one objective site, one rifle, fixed loadouts, and a complete plant/defuse round loop. Prove 1v1 networking before expanding to four players. A separate authoritative server decides damage and round outcomes.
 
-The first implementation milestone is a reproducible project build and two clients connected to a server. See tasks `SET-01` through `SET-04` in the backlog. There are no valid game launch commands yet.
+The first implementation milestone is a reproducible project build and two clients connected to a server. See tasks `SET-01` through `SET-04` in the backlog. [Setup](docs/SETUP.md) contains the bootstrap commands and distinguishes development editor launches from packaged-server verification.
+
+Run the helper's prerequisite report from the repository root:
+
+```sh
+python3 Scripts/ue.py --engine "/Users/Shared/Epic Games/UE_5.8" doctor
+```
+
+This reports missing setup rather than claiming the game works. The helper's unit tests run without Unreal:
+
+```sh
+python3 -m unittest discover -s Tests -p 'test_ue.py' -v
+```

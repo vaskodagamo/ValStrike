@@ -4,7 +4,7 @@
 
 Read `README.md`, `docs/MVP_PLAN.md`, `docs/BACKLOG.md`, and the latest entry in `docs/WORK_LOG.md`. Read `docs/SETUP.md` when working on builds, and the engine decision when changing architecture.
 
-The user has confirmed desktop first. Unreal Engine 5 with C++ gameplay is the recommended planning baseline; the exact version and toolchain are not pinned yet. Do not silently switch engines, expand the MVP, or describe the game as playable before runtime verification.
+The user confirmed desktop first and authorized implementation on the Unreal baseline. The initial toolchain is pinned to Unreal Engine 5.8.4 and Xcode 26.1.1 on macOS. Do not silently switch engines or versions, expand the MVP, or describe the game as playable before runtime verification.
 
 ## Work in small verified increments
 
