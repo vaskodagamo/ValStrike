@@ -54,16 +54,16 @@ def result(session="run-match"):
             "participants": {"team_one": 1, "team_two": 1}, "rounds": runner.expected_rounds()}
 
 
-def match_log(record=None, drain_ms=300, players_at_exit=0):
+def match_log(record=None, drain_ms=300, players_at_exit=0, tick_rate=60, measured=("59.9", "60.0")):
     record = result() if record is None else record
     return log(version(),
-               "VSSERVER_MAP map=site01 mode=match port=7871 max_players=4",
+               f"VSSERVER_MAP map=site01 mode=match port=7871 max_players=4 net_tick_rate={tick_rate}",
                state("starting", "ready", "listening", 1000, 0),
                state("ready", "allocated", "player_joined", 2000, 1),
                "VSSERVER_MATCH event=started match=1 at_ms=2100 session=run-match",
                state("allocated", "in_match", "match_started", 2100, 2),
-               "VSSERVER_HEALTH state=in_match players=2 frames=600 frame_ms_avg=1.20 frame_ms_max=4.00 "
-               "tick_hz=60.0 uptime_s=10",
+               *[f"VSSERVER_HEALTH state=in_match players=2 frames=600 frame_ms_avg=1.20 frame_ms_max=4.00 "
+                 f"tick_hz={rate} uptime_s=10" for rate in measured],
                "VSSERVER_MATCH event=completed match=1 at_ms=30000 session=run-match",
                "VSSERVER_RESULT " + json.dumps(record, separators=(",", ":")),
                state("in_match", "ending", "match_complete", 32000, 2),
@@ -122,6 +122,34 @@ class EvaluationTests(unittest.TestCase):
             early = match_log().replace("at_ms=30000", "at_ms=31000")
             self.assertEqual(failed(runner.evaluate_match(early, 0, REVISION, "Mac", "run-match", path)), ["result_grace"])
 
+    def test_tick_rate_must_match_configuration(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "run-match_match1.json"
+            path.write_text(json.dumps(result()) + "\n")
+            ok = runner.evaluate_match(match_log(tick_rate=30, measured=("57.0", "29.9", "30.0")), 0, REVISION, "Mac", "run-match", path)
+            self.assertEqual(failed(ok), [])  # the first window (warm-up) is ignored
+            slow = runner.evaluate_match(match_log(tick_rate=60, measured=("60.0", "52.0")), 0, REVISION, "Mac", "run-match", path)
+            self.assertEqual(failed(slow), ["tick_rate_measured"])
+            odd = runner.evaluate_match(match_log(tick_rate=45), 0, REVISION, "Mac", "run-match", path)
+            self.assertEqual(failed(odd), ["tick_rate_configured", "tick_rate_measured"])
+
+    def test_joinkey_evaluation(self):
+        rejection = "VSSERVER_ADMISSION rejected state=ready admission=join_key reason=Join key missing or wrong"
+        text = log(version(),
+                   "VSSERVER_CONFIG session=s exit_when_done=true empty_timeout_s=30 result_grace_s=15 max_players=4 "
+                   "provider=local admission=join_key",
+                   state("starting", "ready", "listening", 1000, 0),
+                   rejection, "PreLogin failure: Join key missing or wrong",
+                   rejection, "PreLogin failure: Join key missing or wrong",
+                   "VSSERVER_PLAYERS count=1 at_ms=5000", state("ready", "allocated", "player_joined", 5000, 1),
+                   "VSSERVER_PLAYERS count=0 at_ms=9000", state("allocated", "ending", "empty_timeout", 39000, 0),
+                   state("ending", "exited", "drained", 39000, 0), "VSSERVER_EXIT code=0 session=s uptime_s=40")
+        self.assertEqual(failed(runner.evaluate_joinkey(text, 0, REVISION, "Mac")), [])
+        leaked = text + log(f"LogInit: Command Line: -VSServerJoinKey={runner.JOIN_KEY}")
+        self.assertEqual(failed(runner.evaluate_joinkey(leaked, 0, REVISION, "Mac")), ["key_never_logged"])
+        once = text.replace(rejection + "\n", "", 1).replace("PreLogin failure: Join key missing or wrong\n", "", 1)
+        self.assertEqual(failed(runner.evaluate_joinkey(once, 0, REVISION, "Mac")), ["wrong_keys_rejected"])
+
     def test_expected_rounds_swap_sides_and_draw(self):
         rounds = runner.expected_rounds()
         self.assertEqual([r["attacking_team"] for r in rounds], [1, 1, 1, 2, 2, 2])
@@ -140,6 +168,16 @@ class CommandTests(unittest.TestCase):
         self.assertIn("-VSServerEmptyTimeout=30", empty)
         match_command = runner.server_command("UE", "P.uproject", output, "match", 7874, "s-match")
         self.assertEqual(match_command[2], "/Game/Maps/Site01/VS_Site01?game=/Script/ValStrike.VSMatchGameMode")
+        self.assertFalse([item for item in match_command if "MaxFPS" in item])
+        keyed = runner.server_command("UE", "P.uproject", output, "joinkey", 7873, "s-key", 30)
+        self.assertIn(f"-VSServerJoinKey={runner.JOIN_KEY}", keyed)
+        self.assertIn("-ini:Engine:[/Script/OnlineSubsystemUtils.IpNetDriver]:NetServerMaxTickRate=30", keyed)
+        with self.assertRaises(ValueError):
+            runner.server_command("UE", "P", output, "match", 7871, "s", 45)
+        client = runner.client_command("UE", "P", output, "joinkey", 7873, "VSServerProbeC", runner.JOIN_KEY)
+        self.assertEqual(client[2], f"127.0.0.1:7873?Name=VSServerProbeC?JoinKey={runner.JOIN_KEY}")
+        with self.assertRaises(ValueError):
+            runner.client_command("UE", "P", output, "joinkey", 7873, "VSServerProbeC", "bad key")
         self.assertIn("-VSMatchFastTimings", match_command)
         self.assertIn("-VSServerResultGrace=2", match_command)
         self.assertIn(f"-abslog={output / 'match_server.log'}", match_command)

@@ -3,6 +3,8 @@
 #include "CoreMinimal.h"
 #include "VSServerContract.h"
 
+#include <string>
+
 struct FUniqueNetIdRepl;
 
 /** Periodic server health sample; frame time excludes the engine's idle wait for the tick-rate cap. */
@@ -61,6 +63,21 @@ public:
     virtual const TCHAR* GetName() const = 0;
     /** Returns false and sets OutError to reject the join. */
     virtual bool Admit(const FVSAdmissionRequest& Request, FString& OutError) const = 0;
+};
+
+/**
+ * Private-server admission: the join URL must carry ?JoinKey=<key> equal to the server's
+ * -VSServerJoinKey. The launcher and runners add the option in code; it is never typed as a URL.
+ */
+class FVSJoinKeyAdmission final : public IVSServerAdmission
+{
+public:
+    explicit FVSJoinKeyAdmission(std::string InKey) : Key(MoveTemp(InKey)) {}
+    virtual const TCHAR* GetName() const override { return TEXT("join_key"); }
+    virtual bool Admit(const FVSAdmissionRequest& Request, FString& OutError) const override;
+
+private:
+    std::string Key;
 };
 
 /** Development admission: accepts everyone, as before SRV-03. */

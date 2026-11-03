@@ -134,6 +134,20 @@ class UnrealHelperTests(unittest.TestCase):
             with self.subTest(timer=timer), self.assertRaisesRegex(ue.SetupError, "require --exit-when-done"):
                 ue.command(ue.parser().parse_args(["server"] + timer), self.engine, self.root, "Mac")
 
+    def test_join_key_is_the_only_client_url_option(self):
+        self.make(self.root / "Content/Maps/VS_Graybox.umap")
+        plain = ue.command(ue.parser().parse_args(["client"]), self.engine, self.root, "Mac")
+        self.assertEqual(plain[2], "127.0.0.1:7777")
+        keyed = ue.command(ue.parser().parse_args(["client", "--address", "10.0.0.5:7777", "--join-key", "lan-Key_01"]),
+                           self.engine, self.root, "Mac")
+        self.assertEqual(keyed[2], "10.0.0.5:7777?JoinKey=lan-Key_01")
+        server = ue.command(ue.parser().parse_args(["server", "--join-key", "lan-Key_01"]), self.engine, self.root, "Mac")
+        self.assertIn("-VSServerJoinKey=lan-Key_01", server)
+        for value in ("short7_", "has space", "a?game=x", "k/ey12345", "x" * 65):
+            for action in ("server", "client"):
+                with self.subTest(action=action, value=value), redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
+                    ue.parser().parse_args([action, "--join-key", value])
+
     def test_server_contract_flags_reject_invalid_values(self):
         for option, value in (("--session-id", "-lead"), ("--session-id", "a?game=x"), ("--session-id", "a b"),
                               ("--session-id", "x" * 65), ("--max-players", "0"), ("--max-players", "5"),

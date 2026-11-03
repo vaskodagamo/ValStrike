@@ -8,6 +8,9 @@ Scenarios, each with its own server process on loopback ports 7871-7874:
   match    Site01 match server with exit-when-done and development fast timings: two idle
            clients play six timeout rounds; the server writes the result, closes both clients
            after the result grace and exits 0.
+  joinkey  Private practice server with a join key: a client without the key and one with a
+           wrong key are refused, one with the right key joins, and the key never appears in
+           the server log. The server then exits after the empty timeout.
 
 Build the Editor target first and wrap this whole runner with with_ue_slot.py. This is
 loopback development evidence, not packaged, Linux or fleet acceptance.
@@ -30,7 +33,9 @@ import uuid
 import ue
 from test_match import stop
 
-SCENARIOS = ("invalid", "empty", "match")
+SCENARIOS = ("invalid", "empty", "match", "joinkey")
+JOIN_KEY = "lifecycle-Key_01"
+WRONG_KEY = "lifecycle-Key_02"
 MATCH_MAP = "/Game/Maps/Site01/VS_Site01"
 MATCH_MODE = "/Script/ValStrike.VSMatchGameMode"
 # Long enough for a cold editor client to join first: the timer also runs before anyone joins.
@@ -67,6 +72,8 @@ def arguments(argv=None):
     parser.add_argument("--port", type=server_port, default=7871)
     parser.add_argument("--scenario", choices=SCENARIOS + ("all",), default="all")
     parser.add_argument("--timeout", type=timeout_seconds, default=180.0, help="per-scenario limit in seconds")
+    parser.add_argument("--net-tick-rate", type=int, choices=(30, 60),
+                        help="measurement only: override NetServerMaxTickRate for this run's servers")
     return parser.parse_args(argv)
 
 
@@ -165,6 +172,25 @@ def evaluate_empty(log, process_exit, revision, host):
     return checks
 
 
+def evaluate_joinkey(log, process_exit, revision, host):
+    checks, events = [], parse_events(log)
+    version_checks(checks, events, revision)
+    config = first(events, "VSSERVER_CONFIG")
+    check(checks, "config_line", config is not None and config["fields"].get("admission") == "join_key",
+          config["fields"] if config else "missing")
+    rejected = [e for e in events if e["kind"] == "VSSERVER_ADMISSION" and e["fields"].get("admission") == "join_key"]
+    check(checks, "wrong_keys_rejected", len(rejected) == 2 and all("Join key" in e["payload"] for e in rejected)
+          and log.count("PreLogin failure: Join key missing or wrong") == 2,
+          [e["payload"] for e in rejected] or "no join_key rejection")
+    check(checks, "key_never_logged", JOIN_KEY not in log and WRONG_KEY not in log, "neither key string in server.log")
+    counts = [int(e["fields"].get("count", -1)) for e in events if e["kind"] == "VSSERVER_PLAYERS"]
+    check(checks, "right_key_admitted", counts == [1, 0], counts)
+    path_check(checks, events, [("starting", "ready", "listening"), ("ready", "allocated", "player_joined"),
+                                ("allocated", "ending", "empty_timeout"), ("ending", "exited", "drained")])
+    exit_checks(checks, events, 0, process_exit, host)
+    return checks
+
+
 def expected_rounds():
     # Idle players: every round ends by timeout and the defending team wins; sides swap after three.
     return [{"round": n, "attacking_team": 1 if n <= 3 else 2, "winning_team": 2 if n <= 3 else 1,
@@ -177,6 +203,8 @@ def evaluate_match(log, process_exit, revision, host, session, result_file):
     map_line = first(events, "VSSERVER_MAP")
     check(checks, "map_line", map_line is not None and map_line["fields"].get("map") == "site01"
           and map_line["fields"].get("mode") == "match", map_line["fields"] if map_line else "missing")
+    tick_rate = int(map_line["fields"].get("net_tick_rate", 0)) if map_line else 0
+    check(checks, "tick_rate_configured", tick_rate in (30, 60), {"net_tick_rate": tick_rate})
     path_check(checks, events, [("starting", "ready", "listening"), ("ready", "allocated", "player_joined"),
                                 ("allocated", "in_match", "match_started"), ("in_match", "ending", "match_complete"),
                                 ("ending", "exited", "drained")])
@@ -217,32 +245,47 @@ def evaluate_match(log, process_exit, revision, host, session, result_file):
     check(checks, "health_reported", bool(health) and all(int(e["fields"].get("frames", 0)) > 0
           and float(e["fields"].get("tick_hz", 0)) > 0 for e in health),
           [e["fields"] for e in health] or "no VSSERVER_HEALTH line")
+    # The server runs without t.MaxFPS, so the measured rate must follow the configured cap.
+    rates = [float(e["fields"].get("tick_hz", 0)) for e in health[1:]] or [float(e["fields"].get("tick_hz", 0)) for e in health]
+    check(checks, "tick_rate_measured", bool(rates) and tick_rate > 0
+          and all(0.9 * tick_rate <= rate <= 1.05 * tick_rate for rate in rates),
+          {"configured": tick_rate, "measured_hz": rates})
     exit_checks(checks, events, 0, process_exit, host)
     return checks
 
 
-def server_command(executable, project, output, scenario, port, session):
+def server_command(executable, project, output, scenario, port, session, net_tick_rate=None):
     if scenario not in SCENARIOS:
         raise ValueError(f"Unknown scenario: {scenario}")
+    if net_tick_rate not in (None, 30, 60):
+        raise ValueError("net tick rate must be 30 or 60")
     port = server_port(port)
     destination = f"{MATCH_MAP}?game={MATCH_MODE}" if scenario == "match" else ue.MAP
+    # No t.MaxFPS: the server must run at its configured NetServerMaxTickRate.
     command = [str(executable), str(project), destination, "-server", "-nullrhi", "-nosound", "-unattended",
                f"-port={port}", "-multihome=127.0.0.1", f"-abslog={output / (scenario + '_server.log')}",
-               "-ExecCmds=t.MaxFPS 60", f"-VSServerSession={session}"]
+               f"-VSServerSession={session}"]
+    if net_tick_rate is not None:
+        command.append(f"-ini:Engine:[/Script/OnlineSubsystemUtils.IpNetDriver]:NetServerMaxTickRate={net_tick_rate}")
     if scenario == "invalid":
         return command + ["-VSServerTypo"]
     command += ["-VSServerExitWhenDone"]
     if scenario == "empty":
         return command + [f"-VSServerEmptyTimeout={EMPTY_TIMEOUT_S}", "-VSServerMaxPlayers=1"]
+    if scenario == "joinkey":
+        return command + [f"-VSServerEmptyTimeout={EMPTY_TIMEOUT_S}", f"-VSServerJoinKey={JOIN_KEY}"]
     return command + [f"-VSServerResultGrace={RESULT_GRACE_S}", "-VSServerEmptyTimeout=60", "-VSMatchFastTimings"]
 
 
-def client_command(executable, project, output, scenario, port, name):
+def client_command(executable, project, output, scenario, port, name, join_key=None):
     if not re.fullmatch(r"[A-Za-z0-9]{1,24}", name):
         raise ValueError(f"Invalid client name: {name}")
     if scenario not in SCENARIOS:
         raise ValueError(f"Unknown scenario: {scenario}")
-    return [str(executable), str(project), f"127.0.0.1:{server_port(port)}?Name={name}", "-game", "-nullrhi",
+    if join_key is not None and not re.fullmatch(r"[A-Za-z0-9_-]{8,64}", join_key):
+        raise ValueError("Invalid join key")
+    destination = f"127.0.0.1:{server_port(port)}?Name={name}" + (f"?JoinKey={join_key}" if join_key else "")
+    return [str(executable), str(project), destination, "-game", "-nullrhi",
             "-nosound", "-unattended", f"-abslog={output / f'{scenario}_{name}.log'}", "-ExecCmds=t.MaxFPS 60"]
 
 
@@ -305,13 +348,13 @@ class Scenario:
         return exits_before
 
 
-def run_scenario(name, executable, project, output, port, limit, run_id):
+def run_scenario(name, executable, project, output, port, limit, run_id, net_tick_rate=None):
     session = f"{run_id}-{name}".replace("_", "-")
     owner = Scenario(name, executable, project, output, port, limit)
     problem, process_exit, client_exits = None, None, {}
     began = time.monotonic()
     try:
-        owner.launch("server", server_command(executable, project, output, name, port, session))
+        owner.launch("server", server_command(executable, project, output, name, port, session, net_tick_rate))
         if name == "invalid":
             process_exit = owner.wait_server_exit()
         elif name == "empty":
@@ -322,6 +365,23 @@ def run_scenario(name, executable, project, output, port, limit, run_id):
             owner.wait_for(name, "PreLogin failure: Server full.", "the second client to be refused")
             client_exits["client_b"] = owner.stop_role("client_b")
             client_exits["client_a"] = owner.stop_role("client_a")
+            process_exit = owner.wait_server_exit()
+        elif name == "joinkey":
+            owner.wait_for(name, "to=ready", "the ready state")
+            owner.launch("client_a", client_command(executable, project, output, name, port, "VSServerProbeA"))
+            owner.wait_for(name, "PreLogin failure: Join key missing or wrong", "the keyless client to be refused")
+            client_exits["client_a"] = owner.stop_role("client_a")
+            owner.launch("client_b", client_command(executable, project, output, name, port, "VSServerProbeB", WRONG_KEY))
+            while owner.log(name).count("PreLogin failure: Join key missing or wrong") < 2:
+                if owner.processes["server"].poll() is not None:
+                    raise RuntimeError("Server exited before the wrong-key client was refused")
+                if time.monotonic() >= owner.deadline:
+                    raise RuntimeError("Timed out waiting for the wrong-key client to be refused")
+                time.sleep(0.2)
+            client_exits["client_b"] = owner.stop_role("client_b")
+            owner.launch("client_c", client_command(executable, project, output, name, port, "VSServerProbeC", JOIN_KEY))
+            owner.wait_for(name, "to=allocated", "the keyed client to join")
+            client_exits["client_c"] = owner.stop_role("client_c")
             process_exit = owner.wait_server_exit()
         else:
             owner.wait_for(name, "to=ready", "the ready state")
@@ -341,6 +401,8 @@ def run_scenario(name, executable, project, output, port, limit, run_id):
         checks = evaluate_invalid(log, process_exit, revision, host)
     elif name == "empty":
         checks = evaluate_empty(log, process_exit, revision, host)
+    elif name == "joinkey":
+        checks = evaluate_joinkey(log, process_exit, revision, host)
     else:
         result_file = ue.ROOT / "Saved/ServerResults" / f"{session}_match1.json"
         checks = evaluate_match(log, process_exit, revision, host, session, result_file)
@@ -375,7 +437,8 @@ def main(argv=None):
     results = []
     for name in scenarios:
         print(f"Server lifecycle: running {name}", flush=True)
-        results.append(run_scenario(name, executable, project, output, args.port, args.timeout, run_id))
+        results.append(run_scenario(name, executable, project, output, args.port, args.timeout, run_id,
+                                    args.net_tick_rate))
     module_after = sha256(module)
     problem = None if module_before == module_after else "Editor module changed during the runtime test"
     passed = not problem and all(result["passed"] for result in results)
@@ -385,6 +448,7 @@ def main(argv=None):
         "engine": str(engine), "engine_build": json.loads((engine / "Build/Build.version").read_text()),
         "conditions": "Local Development editor processes on loopback, null RHI, no audio, no artificial "
                       "latency/loss; the Mac editor binary is not a packaged dedicated server",
+        "net_tick_rate_override": args.net_tick_rate,
         "runner_command": [sys.executable, str(Path(__file__).resolve()), *(sys.argv[1:] if argv is None else argv)],
         "scenarios": results,
     }

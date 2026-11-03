@@ -1,6 +1,7 @@
 #include "VSServerProvider.h"
 
 #include "../ValStrike.h"
+#include "Kismet/GameplayStatics.h"
 
 // Log lines use a fixed VSSERVER_* prefix and key=value fields so runners and hosts can parse them.
 void FVSLocalServerProvider::OnTransition(const ValStrike::Server::Transition& Transition, int32 Players)
@@ -23,4 +24,13 @@ void FVSLocalServerProvider::OnHealth(const FVSServerHealth& Health)
 void FVSLocalServerProvider::OnMatchResult(const FString& ResultJson)
 {
     UE_LOG(LogValStrike, Display, TEXT("VSSERVER_RESULT %s"), *ResultJson);
+}
+
+bool FVSJoinKeyAdmission::Admit(const FVSAdmissionRequest& Request, FString& OutError) const
+{
+    const FString Supplied = UGameplayStatics::ParseOption(Request.Options, TEXT("JoinKey"));
+    if (ValStrike::Server::JoinKeyMatches(Key, std::string(TCHAR_TO_UTF8(*Supplied)))) { return true; }
+    // Neither key is logged or returned to the client.
+    OutError = TEXT("Join key missing or wrong");
+    return false;
 }
