@@ -9,12 +9,14 @@
 #include "GameFramework/PlayerStart.h"
 #include "VSCharacter.h"
 #include "VSHUD.h"
+#include "VSPlayerController.h"
 #include "ValStrike.h"
 
 AVSGameMode::AVSGameMode()
 {
     DefaultPawnClass = AVSCharacter::StaticClass();
     HUDClass = AVSHUD::StaticClass();
+    PlayerControllerClass = AVSPlayerController::StaticClass();
 }
 
 AActor* AVSGameMode::ChoosePlayerStart_Implementation(AController* Player)
