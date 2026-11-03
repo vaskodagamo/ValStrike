@@ -104,3 +104,91 @@ Distance falloff is defined but **off** for both weapons. Rifle: full damage to 
    - Rerun the combat, match and movement suites, and `Tests/Damage/run_runtime.py`.
    - Its `rifle_path_unchanged` check is Phase 1 specific and should become "rifle hits resolve to zones" with real fire RPCs.
    - Delete or adapt the Shadow-mode checks.
+
+### Verification
+
+**Machine and toolchain:** Apple M3, 16 GB, macOS 15.6.1, Xcode 26.1.1, Unreal 5.8.4 (`++UE5+Release-5.8`). Every Unreal build and run went through `Scripts/with_ue_slot.py`. All runtime evidence is development-editor loopback evidence at clean commit `61c5eb9`, Editor module SHA256 `7f2e1911c21972573f0eaffdb3b6953f8caca4dc9b5e86344f14185f4cc01e1f`.
+
+**Build:** the first build of this checkout compiled the full unity blob (`Module.ValStrike.cpp`, every module file in one translation unit) from committed sources, in 36.7 s with 0 warnings. Later builds were incremental.
+
+**Standalone suites:** `python3 Scripts/test_damage.py`, with and without `--sanitize` (ASan/UBSan), using Apple clang 17 with `-std=c++17 -Wall -Wextra -Wpedantic -Wshadow -Werror`.
+
+- Damage model and layout: 14/14 cases, 1091 checks.
+- Stats ledger: 11/11 cases, 112 checks.
+- The sources also compile cleanly with `-Wshadow-all -Wconversion`.
+- A deliberate foot-multiplier mutation (0.55 → 0.60) failed 3 checks, which shows the table is actually tested.
+- Evidence: `Saved/Tests/Damage/20261103T221244Z_a569c1/result.json` (normal) and `Saved/Tests/Damage/20261103T221246Z_2f6a56/result.json` (sanitized).
+
+**Runner contract:** `python3 -m unittest discover -s Tests/Damage -p 'test_*.py'` ran 12 tests, all OK, without launching Unreal.
+
+**Runtime smoke** (`python3 Scripts/with_ue_slot.py -- python3 Tests/Damage/run_runtime.py --engine …`):
+
+- **Setup:** Site01 in `VSMatchGameMode`, with a dedicated `-server` (null RHI) on port 7921. Two `-game` clients (driver and observer) render at 960 × 540 over loopback, with no audio and no artificial latency or loss.
+- **Result:** **44/44 checks passed** in 54 s. Evidence: `Saved/Tests/DamageRuntime/20261103T220224Z_8ffb44/result.json`, server/client logs and `Screenshots/`.
+- **Server checks:**
+  - Every pawn has exactly one zone set: 13 shapes in Shadow mode on Visibility, QueryOnly, every other channel ignored, no physics, overlap events or navigation, hidden and not replicated.
+  - Standing layout: half-height 88, head z 72 r 16, chest top 56, feet at −88.
+  - A real client crouch (Left Ctrl through the driver's input) gave the crouched layout: half-height 56, head z 40, chest top 24.
+  - After standing up, the layout returned to 88.
+  - 19 server traces (13 front, 4 side-arm, from above the head, from behind the chest) resolved to the expected zones, covering all 8 zone types. This held crouched, in Shadow mode with a multi-hit trace, and in Authoritative mode with a single-hit trace.
+  - The live rifle's single-hit trace still hits `HeadHitRegion`/`BodyHitRegion`, not the zones.
+  - Through the hook, at 300 cm:
+    - Thigh hit: 24 damage, health 76.
+    - Head hit: lethal; 100 applied and the victim died.
+    - One `OnKill` was broadcast, with the correct killer.
+  - These all applied 0 without events: a dead victim, another pawn's shape, an invalid weapon class, the victim's legacy `BodyHitRegion`, a null component, and any hit during preparation (the match damage gate).
+  - The dead victim's zones switched to NoCollision.
+  - Stats after round 1: the killer had K1 D0 HS1 DMG100 and the victim K0 D1 DMG24. The round was won by elimination.
+  - Round-2 fresh pawns had rebuilt zones and both rows showed alive within the same frame (published on possession).
+  - In round 2, a raw `ApplyPointDamage` death with no shooter counted D+1 without any kill credit. The score was 1:1.
+- **Client checks** (both clients):
+  - The autonomous and simulated pawns have zones. The simulated capsule is 87.99 because of CharacterMovement's 0.01 cm proxy shrink.
+  - The stats actor replicates (not authority on the client) with 2 rows.
+  - Crouched zones were seen on the driver's own pawn and on the observer's simulated driver.
+  - The replicated kill was seen.
+  - The board is hidden by default. Tab shows it as HitTestInvisible and non-focusable, with keyboard focus unchanged (`SViewport`); releasing Tab hides it.
+  - With the menu open, Tab plus a forced show leaves the board hidden and menu focus on its `SButton`.
+  - The final replicated stats matched, and the board's round score matched `AVSMatchGameState` at 1:1.
+  - The observer's debug draw drew the other player's zones and not its own.
+- **Screenshots inspected:**
+  - `observer_zones_standing.png` and `observer_zones_crouched.png` show colour-coded zones on the prototype.
+  - `driver_scoreboard.png` and `observer_scoreboard.png` show both teams with K/D/A/HS/DMG, ping and alive/dead. They are readable at 960 × 540, with the local row highlighted and the round HUD strip still visible.
+  - `*_scoreboard_final.png` shows the 1:1 state.
+
+**Existing suites with these components present** (same commit and module; movement on port 7922, combat on 7923; the match runner only accepts 7831–7834):
+
+| Suite | Result | Evidence |
+| --- | --- | --- |
+| Movement | 45/45 | `Saved/Tests/Movement/20261103T220749Z_3024db/result.json` |
+| Combat | 55/55 | `Saved/Tests/Combat/20261103T220902Z_37b827/result.json` |
+| Match | 43/43 | `Saved/Tests/Match/20261103T221026Z_df2122/result.json` |
+
+**Failed attempt retained:** the first runtime run, `Saved/Tests/DamageRuntime/20261103T215722Z_db9991` at `b3635df`, failed: its reports recorded 41 checks, 38 passed, and three required check results were missing (both clients' fresh-pawn check and the observer's crouch check) (only an uncommitted doc edit made the checkout dirty). Fixed in `d2a1479`:
+
+- `client_zones_present` failed because the 0.01 cm comparison was stricter than the engine's simulated-proxy capsule shrink.
+- `client_fresh_pawn_zones` never ran, because the check compared weak pointers to destroyed round-one pawns.
+- The observer's crouch check was skipped, because it timed stages with the estimated server clock.
+- `stats_persist_across_rounds` saw a stale "dead" row, because the stats only re-published at the 4 Hz sync.
+
+The fixes:
+
+- The test tolerance is now 0.05 cm.
+- Round-one pawns are compared by name.
+- Clients time stages with a local clock.
+- **Product fix:** the stats now publish from each controller's `OnNewPawn`, so a respawn shows as alive immediately.
+- The scoreboard now names the round that just ended during Resolved ("ROUND 1 / 6", not "ROUND 2 / 6") and sits below the round HUD strip.
+
+### Limitations
+
+- **Live gameplay is unchanged by design.** Real rifle kills count deaths only, with no kill credit and no zone damage, until Phase 2 routes fire through `ApplyWeaponHit`.
+- **Hook tests drive the hook directly.** The runtime test calls `ApplyWeaponHit` from the server harness with real zone components, not through a client fire RPC.
+- **Zones are prototype boxes.** They match the box-and-sphere prototype, not an anatomical model. They are not yet bound to bones, because no skeletal character exists.
+- **No lag compensation.** Hit registration uses current server positions; NEXT-02 is unchanged.
+- **Assists are untested at runtime.** They are implemented and unit-tested, but the 1v1 runtime test cannot produce one. The 40-damage threshold is a proposal.
+- **Stats lifetime:** stats reset on a rematch or when the rules clear the match. Players who disconnect lose their row.
+- **Not covered:** a late-join spectator row, 2v2, packaged builds, LAN, a real human Tab key press, and a physical-mouse pass.
+- **Debug view:** in development builds anyone can enable `vs.Damage.DrawHitZones`. It is never compiled into Shipping or Test builds.
+
+### Next action
+
+Integration reviews the PR. After the Weapons PR merges, run Phase 2 as planned above. Optionally add `Scripts/test_damage.py` (normal and `--sanitize`) and the `Tests/Damage` unittest to the engine-free CI workflow, which the server session owns.
