@@ -100,6 +100,16 @@ Record meaningful work sessions here in chronological order. Use Europe/Berlin d
 
 **Next action:** Review the targeted commit and runtime evidence, integrate it, and update BUG-01 status.
 
+## 2026-11-03 Tactical map and round-rules kickoff
+
+**Request:** The user accepted starting two further chats for the first tactical map and round/objective rules.
+
+**Prepared:** Added MAP_BRIEF.md and ROUND_RULES_BRIEF.md, assigned disjoint file ownership in PARALLEL_WORK.md, and marked the independent RULE-01 and PLAY-01 foundations in progress. Map work reuses environment-kit commit `8acb0d4`, creates a separate Site01 map and leaves the regression arena intact. Rules work implements a deterministic C++ domain model with focused tests while active weapon and HUD chats retain their existing actors. A versioned authored-data contract covers spawn roles, site bounds and device recovery; Unreal adapter wiring remains integration work.
+
+**Verification/limits:** Reviewed the environment branch delta from its merge base: it adds only environment assets, sources and scoped asset documentation. The new branch will include those assets without replacing the current project code or regression map. This kickoff changes coordination documents only and makes no new gameplay, map-completion or test-pass claim. Existing packaged-server and network acceptance gates remain open.
+
+**Next action:** Start both chats in their assigned checkouts, record their references, then review and integrate completed work with the existing combat/UI streams.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.

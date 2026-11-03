@@ -39,20 +39,24 @@ Parallel implementation: rifle gameplay is assigned to `codex/rifle-gameplay`; t
 
 | ID | Task | Status | Depends on | Completion condition |
 | --- | --- | --- | --- | --- |
-| RULE-01 | Implement teams and round state | Queued | GUN-04 | Preparation, active, round-end, match-end states; deterministic contested-event resolution and one score award |
+| RULE-01 | Implement teams and round state | In progress | GUN-04 | Preparation, active, round-end, match-end states; deterministic contested-event resolution and one score award |
 | RULE-02 | Implement objective carry/drop/interact | Queued | RULE-01 | Plant/defuse eligibility and interruption validated; death/disconnect drop and recovery work |
 | RULE-03 | Complete win conditions and match flow | Queued | RULE-02 | Elimination, timeout, defuse and detonation pass; six rounds, side swap, draw/win and rematch work |
 | RULE-04 | Handle joins and disconnects | Queued | RULE-03 | Late joins wait safely; teams capped; underfilled rosters pause before the next round with score preserved; empty server clears abandoned match |
 | RULE-05 | Run round regression checks | Queued | RULE-04 | All rule paths tested; ten consecutive rounds reset cleanly; edge-case evidence recorded |
 
+Parallel foundation started on 2026-11-03: `codex/round-rules` owns a deterministic rules model and focused tests covering RULE-01 through RULE-05. Runtime actors, replication, physical objective placement and networked acceptance remain integration dependencies. See ROUND_RULES_BRIEF.md; starting isolated model work does not waive GUN-04 or any milestone gate.
+
 ## M4 Stylized playable slice
 
 | ID | Task | Status | Depends on | Completion condition |
 | --- | --- | --- | --- | --- |
-| PLAY-01 | Turn test arena into one-site map | Queued | RULE-05 | Routes, timing, cover and spawn safety survive human playtest |
+| PLAY-01 | Turn test arena into one-site map | In progress | RULE-05 | Routes, timing, cover and spawn safety survive human playtest |
 | PLAY-02 | Establish original art treatment | Queued | PLAY-01 | One polished section sets palette/materials/lighting; consistent readable map and team silhouettes follow |
 | PLAY-03 | Complete HUD, menu, settings and sound | In progress | RULE-04 | Join flow and game state understandable; settings persist; footsteps/shots/objective audio communicate action |
 | PLAY-04 | Profile and conduct usability playtest | Queued | PLAY-02, PLAY-03, SET-04 | Evidence includes screenshots, reference-hardware frame times, server timing, and new-tester observations |
+
+Parallel map prototype: `codex/tactical-map` builds a separate Site01 map from the completed environment kit. VS_Graybox remains the regression arena. Metadata, collision checks and route measurements precede integrated human playtests; full PLAY-01 acceptance still depends on RULE-05. See MAP_BRIEF.md.
 
 ## M5 Private MVP release
 

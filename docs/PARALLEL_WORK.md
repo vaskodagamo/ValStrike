@@ -1,20 +1,24 @@
 # Parallel development ownership
 
-Updated: 2026-11-03. The user requested two additional chats to accelerate the MVP. This document assigns independent deliverables; it does not waive milestone acceptance gates.
+Updated: 2026-11-03. The user requested parallel chats to accelerate the MVP. This document assigns independent deliverables; it does not waive milestone acceptance gates.
 
 ## Workstreams
 
 | Chat / stream | Owns | First deliverable |
 | --- | --- | --- |
-| Plan FPS game MVP (integration) | Shared contracts, central docs/backlog/log, maps, configuration, build/network verification, merge decisions | Combine reviewed changes and rerun movement/combat/UI checks |
+| Plan FPS game MVP (integration) | Shared contracts, central docs/backlog/log, existing regression map, configuration, build/network verification, merge decisions | Combine reviewed changes and rerun movement/combat/UI checks |
 | Add the first game assets (existing) | `Art/Source/`, `Content/Art/`, asset manifests and logs in its existing worktrees | Original stylized environment kit and rifle model |
 | Implement rifle gameplay | `Source/ValStrike/Combat/`, `VSCharacter.h/.cpp`, `Tests/Combat/`, uniquely named combat smoke files/scripts, `docs/workstreams/combat.md` | Server-owned rifle, ammo/reload, traces, health/death and focused tests |
 | Build HUD and session controls | `VSHUD.h/.cpp`, `Source/ValStrike/UI/`, new `VSPlayerController.h/.cpp`, `ValStrike.Build.cs` only for UI dependencies, `VSGameMode.cpp` only controller-class wiring, `Tests/UI/`, `docs/workstreams/ui.md` | Readable HUD and working join/menu controls |
 | Create pistol and upgrade weapon colors | Pistol01 assets plus scoped Rifle01 material/color revisions in its own worktree | Original pistol and a cooler shared rifle/pistol finish; see WEAPON_ART_DIRECTION.md |
+| Build the first tactical map | `Content/Maps/Site01/`, `Art/Source/Maps/Site01/`, `Tests/Maps/Site01/`, `docs/maps/site01/`, `docs/workstreams/tactical-map.md` | Original one-site 2v2 map using the finished environment kit; see MAP_BRIEF.md |
+| Implement round and objective rules | `Source/ValStrike/Rules/`, `Tests/Rules/`, `Scripts/test_round_rules.py`, `docs/workstreams/round-rules.md` | Deterministic match/objective model and tests; see ROUND_RULES_BRIEF.md |
 
 The current integration base is `codex/bootstrap-fps`. Each new stream uses its assigned Git worktree and branch. Never switch the integration checkout's branch or edit another stream's worktree. Central documentation is updated by integration; each stream maintains its own append-only log and handoff. The existing asset chat has its own scope and is already building the first rifle model; do not duplicate its art.
 
 Update on 2026-11-03: the original rifle asset chat has completed `cac8151` and is idle. The user requested a new pistol chat and a stronger rifle/pistol palette. The new weapon-asset workstream owns that follow-up in a separate checkout; it reuses the completed rifle and does not rebuild its accepted geometry. Pistol art does not expand the single-rifle gameplay milestone.
+
+The subsequent tactical-map and round-rules chats are independent foundations for PLAY-01 and RULE-01 through RULE-05. The map chat owns only the new Site01 map namespace; VS_Graybox and defaults remain integration-owned. The rules chat owns isolated C++ domain logic, not the active gameplay/UI actors. MAP_BRIEF.md defines version 1 of the authored spawn/site/recovery metadata. Integration will wire that metadata and the rules API into the server actors after review. Unit tests and a saved map do not complete the networked match milestone.
 
 ## Shared contract
 
