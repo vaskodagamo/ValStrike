@@ -90,3 +90,82 @@ On 2026-11-03 the coordinating session relayed a user-approved change ("yes we n
 - Rules still keep players in spawn with combat closed during preparation. The default-timing rules test now checks the 30 s deadline and that movement and combat stay closed at 29.999 s.
 - The match smoke (`Scripts/test_match.py`) pins its own 3 s preparation through `-VSMatchSmoke=server`, so it is unaffected. The Server session's `-VSMatchFastTimings` (1 s preparation, 3 s rounds) is too short for the buy-menu scenario. The economy network test therefore runs the real default and allows 480 s.
 - `docs/MVP_PLAN.md` still says "8-second preparation"; the integration session owns that update. Other runtime scenarios that run match mode with default timings (for example a Weapons match scenario) now wait 30 s per preparation.
+
+### Verification evidence (2026-11-03, loopback Development Editor, M3 / 16 GB, UE 5.8.4 CL 58902052, Xcode 26.1.1)
+
+PR #18 was merged by the integration session at 22:53, before the runtime checks below had finished. They ran afterwards and are recorded here. Two fixes they prompted follow in a separate PR.
+
+**Engine-free checks** on the merged tree (`main` 89f3c9c plus this branch, merge `5db0d79`):
+
+| Check | Result |
+| --- | --- |
+| Economy rules (`Scripts/test_economy.py`) | 17/17 cases, 246 checks |
+| Economy rules with ASan/UBSan (`--sanitize`) | 17/17 cases, 246 checks |
+| Round rules with the 30 s default, normal and sanitized | 31/31 cases, 974 checks |
+| Server contract | 16/16 cases, 141 checks |
+| Economy runner contract (`Tests/Economy/test_economy_runner.py`) | 9/9 |
+| `test_ue*`, `Tests/Match`, `Tests/Server`, `Tests/Playtest` | OK |
+| `git diff --check` | clean |
+
+**Builds.** A clean unity Editor build (one `Module.ValStrike.cpp` blob) passed at `5db0d79` (21 s). It passed again at `faa5ec8` and `26dc7bb`, on top of `main` 862e938 (Weapons #20 and Settings #19 merged). No unity name clashes.
+
+**Server + two-client network test**: `python3 Scripts/test_economy.py --network`, Site01, `match` mode, default timings (30 s preparation), ports 7911.
+
+- `Saved/Tests/Economy/network_20261103T220349Z_99d88c/result.json`, revision `5db0d79`, clean checkout, null RHI: **PASS, 34/34**, 237 s.
+- Server-side checks, all on the server:
+  - starting credits;
+  - each round's opening, post-purchase and result balances against an independent ledger computed from the tuning table;
+  - rejections: unaffordable rifle, starter pistol already owned, unknown item, replayed request id, out-of-phase request from a living player, request from a dead player;
+  - 40 rifle RPCs in one client frame: 1 applied, 23 already owned, 16 rate-limited, charged once;
+  - buy/refund/buy within one phase;
+  - the fallen lose the purchased rifle, the survivor keeps it;
+  - plant reward to the attacker who planted and then lost;
+  - kill credit, with the repeat report refused;
+  - loss streak 1700/2200/2700 after the swap;
+  - credit cap: 10 400 uncapped becomes 9000;
+  - full reset at the side swap (a held rifle was removed) and on rematch;
+  - replayed round events ignored, 5 of 5, every round;
+  - grant notifications for purchase, refund, round start and reset.
+- Client-side checks:
+  - each client sees exactly one wallet, its own;
+  - B opens the menu with the cursor during the buy phase;
+  - the menu closes, the cursor hides and look input returns when the round goes live;
+  - Escape opens the session menu over the buy menu, and B cannot reopen it underneath;
+  - the rematch reset is seen.
+- The runner compared all 26 replicated checkpoints per player with the server ledger: no mismatches.
+- Server balances per round (team One / team Two): 2800/4000, 3300/3000, 5000/3500, then after the swap 2500/4000, 4700/7200, 7400/9000; rematch 800/800. They match `Tests/Economy` `network_scenario_ledger` exactly.
+- Real paths used:
+  - the plant and the defuse are real held E inputs;
+  - deaths go through `UVSHealthComponent::ApplyPointDamage`;
+  - purchases use the wallet RPC;
+  - menu keys use the controller input stack.
+- Kill credit came from the harness through the server-only `ReportKill`. No combat code reported killers at this revision.
+
+**Rendered run** (`--rendered`: alpha at 960×540, others null RHI).
+- First attempt at `faa5ec8` on `main` 862e938: `network_20261103T221352Z_fdc134`, PASS 36/36. Inspecting the screenshots found the BUY/OWNED/REFUND labels clipped by a 104 px button.
+- Fixed in `26dc7bb` (124 px button, smaller padding) and rerun: `Saved/Tests/Economy/network_20261103T223550Z_ceab96/result.json`, **PASS, 36/36**, 245 s, clean checkout.
+- That includes `keyboard_purchase`: key "2" sent through Slate to the focused menu bought the rifle (request 6, applied, 100 CR left). It also includes Escape sent through Slate.
+- Screenshots inspected (`…/screenshots/`):
+  - `01-credits-hud`: badge under the brand with the "B BUY MENU" hint;
+  - `02-buy-menu-round1`: 800 CR, pistol FREE/OWNED, rifle 2,700 CR shown as unaffordable with BUY disabled, status of the last probe;
+  - `03-escape-over-buy`: the session menu on top, buy menu and badge hidden;
+  - `04-buy-menu-purchased`: 100 CR, "LAST ROUND +2,000", rifle REFUND, the confirmation line;
+  - `05-round-live`: menu closed, badge without hint, the plant prompt.
+- Text is readable at 960×540. The orange "Multiple directional lights…" text in these captures is an engine development message about Site01 lighting, not economy UI. While open, the buy menu covers the round HUD's objective line; the phase header stays visible.
+
+**Existing suites with the economy present**, at `26dc7bb` (`main` 862e938 + fixes), clean checkout:
+
+| Suite | Result | Evidence |
+| --- | --- | --- |
+| Match | **43/43** | `Saved/Tests/Match/20261103T223955Z_0a51ab` (economy active: 80 `VSECON` server lines) |
+| Movement | **45/45** | `Saved/Tests/Movement/20261103T224203Z_8c2558` |
+| Combat | **55/55** | `Saved/Tests/Combat/20261103T224315Z_162a04` |
+
+**Limits.**
+- Loopback Development Editor only: no packaged build, LAN, second machine, latency or loss.
+- Mouse clicks on the menu buttons were not injected. The buttons are SButtons and visible with the cursor shown, but only keyboard paths were driven.
+- Kill credit is not reached by real fire yet (handoff 1). Weapons do not follow ownership yet (handoff 2).
+- A reconnecting player gets a new identity and starts at 800 credits; there are no accounts.
+- An out-of-catalog item value sent over the RPC is narrowed by enum serialization. `None` is still rejected as unknown; the server never trusts the value.
+
+**Next action.** Phase 2, part A (approved by the coordinating session): subscribe to `UVSDamageSubsystem::OnKill()` in place of the `ReportKill` handoff. Part B (weapon grant) waits for the coordinator's go-ahead.

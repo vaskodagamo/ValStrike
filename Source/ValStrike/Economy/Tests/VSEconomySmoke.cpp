@@ -453,6 +453,12 @@ private:
         }
     }
 
+    void AdvanceStep(double Now)
+    {
+        ++Step;
+        StepAt = Now;
+    }
+
     void ClientTick(UWorld* World)
     {
         AVSPlayerController* Controller = Cast<AVSPlayerController>(World->GetFirstPlayerController());
@@ -507,10 +513,12 @@ private:
         const bool bBuying = Phase == SmokeMatchPhase::Preparation && GS->Match.RoundId == View.RoundId && View.bBuyOpen;
         const double T = Now - OpenAt;
         const bool bPrevious = View.LastRequestId == Wallet->GetLocalRequestId(); // Previous request judged.
-        if (bBuying && Sequence == 1)
+        // Rendered clients can stall for over a second around captures; keep steps apart in time.
+        const bool bStepReady = Now - StepAt >= 0.35;
+        if (bBuying && Sequence == 1 && bStepReady)
         {
-            if (Step == 0 && T > 0.6) { if (bOne) { Screenshot(0); } ++Step; }
-            else if (Step == 1 && T > 1.0) { PressKey(Controller, EKeys::B); ++Step; }
+            if (Step == 0 && T > 0.6) { if (bOne) { Screenshot(0); } AdvanceStep(Now); }
+            else if (Step == 1 && T > 1.0) { PressKey(Controller, EKeys::B); AdvanceStep(Now); }
             else if (Step == 2 && T > 1.5)
             {
                 Check(TEXT("menu_opens_in_buy_phase"), UI->IsBuyMenuOpen() && Controller->bShowMouseCursor,
@@ -525,10 +533,10 @@ private:
                     // Resend the last request id: the server must not evaluate it again.
                     Wallet->ServerRequest(EVSEconomyRequest::Purchase, EVSEconomyItem::Rifle, View.RoundId, Wallet->GetLocalRequestId());
                 }
-                ++Step;
+                AdvanceStep(Now);
             }
-            else if (Step == 3 && T > 2.2) { if (bOne) { Screenshot(1); } ++Step; }
-            else if (Step == 4 && T > 2.8) { TypeKey(Controller, EKeys::Escape); ++Step; }
+            else if (Step == 3 && T > 2.2) { if (bOne) { Screenshot(1); } AdvanceStep(Now); }
+            else if (Step == 4 && T > 2.8) { TypeKey(Controller, EKeys::Escape); AdvanceStep(Now); }
             else if (Step == 5 && T > 3.3)
             {
                 const bool bYielded = Controller->IsSessionMenuOpen() && !UI->IsBuyMenuOpen();
@@ -536,31 +544,31 @@ private:
                 PressKey(Controller, EKeys::B); // Must not reopen over the session menu.
                 EscapeEvidence = FString::Printf(TEXT("escape: session=%d buy=%d"), Controller->IsSessionMenuOpen(), UI->IsBuyMenuOpen());
                 bEscapeOk = bYielded;
-                ++Step;
+                AdvanceStep(Now);
             }
             else if (Step == 6 && T > 3.8)
             {
                 bEscapeOk &= Controller->IsSessionMenuOpen() && !UI->IsBuyMenuOpen();
                 EscapeEvidence += FString::Printf(TEXT("; B over session: session=%d buy=%d"), Controller->IsSessionMenuOpen(), UI->IsBuyMenuOpen());
                 Controller->SetSessionMenuOpen(false);
-                ++Step;
+                AdvanceStep(Now);
             }
             else if (Step == 7 && T > 4.3)
             {
                 bEscapeOk &= !Controller->IsSessionMenuOpen() && !Controller->bShowMouseCursor;
                 PressKey(Controller, EKeys::B); // Reopen and leave it open into the live round.
-                ++Step;
+                AdvanceStep(Now);
             }
             else if (Step == 8 && T > 4.8)
             {
                 bEscapeOk &= UI->IsBuyMenuOpen();
                 Check(TEXT("escape_menu_keeps_focus"), bEscapeOk, EscapeEvidence + FString::Printf(TEXT("; resumed then B: buy=%d"), UI->IsBuyMenuOpen()));
-                ++Step;
+                AdvanceStep(Now);
             }
         }
-        else if (bBuying && Sequence == 2)
+        else if (bBuying && Sequence == 2 && bStepReady)
         {
-            if (Step == 0 && T > 0.8) { PressKey(Controller, EKeys::B); bMenuUsed = true; ++Step; }
+            if (Step == 0 && T > 0.8) { PressKey(Controller, EKeys::B); bMenuUsed = true; AdvanceStep(Now); }
             else if (Step == 1 && T > 1.3)
             {
                 if (bOne)
@@ -573,7 +581,7 @@ private:
                 {
                     for (int32 Index = 0; Index < 40; ++Index) { Wallet->RequestPurchase(EVSEconomyItem::Rifle); }
                 }
-                ++Step;
+                AdvanceStep(Now);
             }
             else if (Step == 2 && T > 2.4)
             {
@@ -584,17 +592,17 @@ private:
                         View.LastStatus == static_cast<uint8>(EcoStatus::Applied) && View.Owns(EVSEconomyItem::Rifle) && View.CanRefund(EVSEconomyItem::Rifle),
                         FString::Printf(TEXT("Slate key 2: request=%u judged=%u status=%u credits=%d"), KeyboardRequest, View.LastRequestId, View.LastStatus, View.Credits));
                 }
-                ++Step;
+                AdvanceStep(Now);
             }
         }
-        else if (bBuying && Sequence == 3)
+        else if (bBuying && Sequence == 3 && bStepReady)
         {
-            if (Step == 0 && T > 0.8) { PressKey(Controller, EKeys::B); bMenuUsed = true; ++Step; }
-            else if (bOne && Step == 1 && T > 1.2) { Wallet->RequestPurchase(EVSEconomyItem::Rifle); ++Step; } // Survivor: already owned.
+            if (Step == 0 && T > 0.8) { PressKey(Controller, EKeys::B); bMenuUsed = true; AdvanceStep(Now); }
+            else if (bOne && Step == 1 && T > 1.2) { Wallet->RequestPurchase(EVSEconomyItem::Rifle); AdvanceStep(Now); } // Survivor: already owned.
             else if (!bOne && Step >= 1 && Step <= 3 && T > 1.2 + 0.5 * Step && bPrevious)
             {
                 UI->ActivateItem(EVSEconomyItem::Rifle); // Buy, then refund (still refundable), then buy.
-                ++Step;
+                AdvanceStep(Now);
             }
         }
 
@@ -654,7 +662,7 @@ private:
     uint32 KeyboardRequest = 0;
     int32 Sequence = 0, ClosedSequence = 0, ResultSequence = 0, ActiveSequence = 0, MenuChecked = 0, Step = 0, Actions = 0;
     int32 ExpectOne = 0, ExpectTwo = 0, StreakOne = 0, StreakTwo = 0, RifleGrants = 0, ResetRifleGrants = 0;
-    double ActiveAt = 0.0, OpenAt = 0.0, FinishAt = 0.0, CompleteAt = 0.0;
+    double ActiveAt = 0.0, OpenAt = 0.0, FinishAt = 0.0, CompleteAt = 0.0, StepAt = 0.0;
     bool bFinished = false, bRendered = false, bSubscribed = false, bEHeld = false, bDeadProbe = false;
     bool bRematchRequested = false, bMenuUsed = false, bEscapeOk = false, bTwoHadRifle = false;
 };
