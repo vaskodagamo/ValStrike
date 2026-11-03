@@ -83,3 +83,14 @@ The user explicitly requested pistol assets on 2026-11-03 after rifle asset comm
 ## Bug record format
 
 Add discovered bugs with an ID, severity, build/revision, platform, reproduction steps, expected result, actual result, evidence, status, and next action. Runtime findings and remaining test coverage are recorded in WORK_LOG.md.
+
+### BUG-01 — Reversed mouse look
+
+- Severity: P1 for the current playtest controls.
+- Status: In progress; assigned to the “Implement rifle gameplay” chat on `codex/rifle-gameplay`.
+- Reported: 2026-11-03 by the user. Exact running build/affected axis not yet confirmed; the same mouse-look functions exist in integration `4fbef78` and the inspected gameplay worktree.
+- Reproduction: enter the game and move the mouse horizontally and vertically. User reports reversed camera movement.
+- Expected: right/left input turns right/left; up/down input looks up/down with normal non-inverted FPS defaults.
+- Investigation: `VSCharacter::LookPitch` explicitly negates MouseY input; this is a lead, not a verified diagnosis. Check mapping/configuration and actual input signs before changing either axis.
+- Completion: minimal fix, compiled C++, rendered verification of all four directions and pitch limits, focused evidence and separate commit where practical. Existing scripted movement checks force camera rotation and do not cover this defect.
+- Next action: review and integrate the gameplay chat’s focused fix; retain weapon/HUD changes independently.

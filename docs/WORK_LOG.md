@@ -90,6 +90,16 @@ Record meaningful work sessions here in chronological order. Use Europe/Berlin d
 
 **Next action:** Review the new chat’s palette comparisons, actual previews and validation, then integrate the asset branch separately from gameplay changes. No pistol completion or new finish result is claimed at kickoff.
 
+## 2026-11-03 Reversed mouse-look bug assigned
+
+**Request:** The user reported reversed mouse movement and explicitly requested assigning an existing or new session to fix it.
+
+**Action:** Sent BUG-01 as a priority follow-up to “Implement rifle gameplay” (`01a1a1f0-0648-7e91-aa70-f1452b983fe1`), which already owns the character input code. Requested a minimal separate fix where practical, verification of horizontal and vertical directions, pitch limits and focus behavior, and continuation of the rifle task afterward. No additional competing character-code worktree was started.
+
+**Evidence/limits:** Integration and inspected gameplay source both map MouseX to positive yaw and MouseY to an explicitly negated pitch callback. The pitch sign is a hypothesis until input-path/runtime verification. The prior movement harness fixes ControlRotation every tick and did not test mouse direction. Message delivery succeeded; bug-fix completion is not yet claimed.
+
+**Next action:** Review the targeted commit and runtime evidence, integrate it, and update BUG-01 status.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.
