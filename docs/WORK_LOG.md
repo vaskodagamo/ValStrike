@@ -86,7 +86,9 @@ Record meaningful work sessions here in chronological order. Use Europe/Berlin d
 
 **Scope:** Pistol visual assets and rifle material/color revisions only; no pistol mechanics, weapon switching, inventory or economy added. Source code, maps, central documentation and the two active gameplay/UI worktrees remain under their existing ownership.
 
-**Next action:** Start the dedicated pistol/weapon-finish chat, review its previews and validation, then integrate the asset branch separately from gameplay changes.
+**Started:** Created “Create pistol and upgrade weapon colors” (`01a1a1fa-ad9c-7c53-b206-86797861fb26`) on `codex/pistol-weapon-finish` in `.asset-worktrees/pistol-weapon-finish`. The task checkout includes the current integration instructions plus the completed rifle branch, merged only into this new asset branch.
+
+**Next action:** Review the new chat’s palette comparisons, actual previews and validation, then integrate the asset branch separately from gameplay changes. No pistol completion or new finish result is claimed at kickoff.
 
 ## Entry template
 
