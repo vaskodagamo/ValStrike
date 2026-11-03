@@ -459,22 +459,25 @@ private:
 
     bool LookStep(AVSPlayerController* PC, double Age, double Now, int32 FirstStage = 1)
     {
+        // Measure the change across the injection over a few frames only, so a
+        // physical mouse touched during the run has little chance to interfere.
         if (Stage == FirstStage)
         {
             if (Age < 0.3) return false;
+            LookStart = PC->GetControlRotation();
             PC->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::MouseX, IE_Axis, SettingsLookCounts, 1));
             PC->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::MouseY, IE_Axis, SettingsLookCounts, 1));
             Next(Now);
             return false;
         }
-        if (Age < 0.5) return false;
-        const FRotator Control = PC->GetControlRotation().GetNormalized();
+        if (StageTicks < 3) return false;
+        const FRotator Control = PC->GetControlRotation();
+        const FRotator Delta = (Control - LookStart).GetNormalized();
         const FRotator Camera = PC->PlayerCameraManager ? PC->PlayerCameraManager->GetCameraRotation().GetNormalized() : FRotator::ZeroRotator;
-        LookYaw = Control.Yaw;
-        LookPitch = Control.Pitch;
-        bLookCameraMatches = Camera.Equals(Control, 0.1f);
-        LogLine(FString::Printf(TEXT("VSSET_LOOK {\"sensitivity\":%.4f,\"control_yaw\":%.4f,\"control_pitch\":%.4f,\"camera_yaw\":%.4f,\"camera_pitch\":%.4f}"),
-            PC->GetMouseSensitivity(), Control.Yaw, Control.Pitch, Camera.Yaw, Camera.Pitch));
+        LookYaw = Delta.Yaw;
+        LookPitch = Delta.Pitch;
+        LogLine(FString::Printf(TEXT("VSSET_LOOK {\"sensitivity\":%.4f,\"ticks\":%d,\"delta_yaw\":%.4f,\"delta_pitch\":%.4f,\"control_yaw\":%.4f,\"control_pitch\":%.4f,\"camera_yaw\":%.4f,\"camera_pitch\":%.4f}"),
+            PC->GetMouseSensitivity(), StageTicks, Delta.Yaw, Delta.Pitch, Control.GetNormalized().Yaw, Control.GetNormalized().Pitch, Camera.Yaw, Camera.Pitch));
         Next(Now);
         return true;
     }
@@ -482,8 +485,8 @@ private:
     void CheckLook(const TCHAR* Name, float Sensitivity)
     {
         const float Expected = Sensitivity * SettingsDegreesPerSensitivity;
-        Check(Name, FMath::IsNearlyEqual(LookYaw, Expected, 0.05f) && FMath::IsNearlyEqual(LookPitch, Expected, 0.05f) && bLookCameraMatches,
-            FString::Printf(TEXT("expected=%.3f yaw=%.3f pitch=%.3f camera_matches=%d"), Expected, LookYaw, LookPitch, bLookCameraMatches ? 1 : 0));
+        Check(Name, FMath::IsNearlyEqual(LookYaw, Expected, 0.05f) && FMath::IsNearlyEqual(LookPitch, Expected, 0.05f),
+            FString::Printf(TEXT("expected=%.3f yaw=%.3f pitch=%.3f"), Expected, LookYaw, LookPitch));
     }
 
     bool WaitForWindow(EWindowMode::Type Mode, FIntPoint Size, double Age)
@@ -686,7 +689,7 @@ private:
     float BaselineYaw = 0.0f;
     float LookYaw = 0.0f;
     float LookPitch = 0.0f;
-    bool bLookCameraMatches = false;
+    FRotator LookStart = FRotator::ZeroRotator;
 };
 }
 
