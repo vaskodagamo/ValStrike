@@ -2,7 +2,7 @@
 
 Date: 2026-11-03
 
-Status: Selected for implementation after the user's go-ahead on 2026-11-03; toolchain validation pending.
+Status: Selected for implementation after the user's go-ahead on 2026-11-03; local Mac C++ build and editor map generation verified; packaged and target-platform validation pending.
 
 ## Context
 

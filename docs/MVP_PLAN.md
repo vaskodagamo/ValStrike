@@ -6,7 +6,7 @@ Planning baseline: 2026-11-03. Desktop first and starting implementation on the 
 
 Build a small, enjoyable tactical FPS that proves movement, shooting, and networked round play. The larger ambition is a competitive team shooter. The first release is a private playtest, not a production competitive service.
 
-Use Counter-Strike as a reference for deliberate movement, lethal weapons, team roles, and objective pressure. Use Valorant as a reference for readable silhouettes, controlled colors, simple materials, and clear effects. Create our own maps, characters, branding, audio, and assets. Visual quality depends on art direction and animation as well as the engine.
+Use Counter-Strike as a reference for deliberate movement, lethal weapons, team roles, and objective pressure. The user explicitly confirmed Valorant-like stylized graphics, not CS2-like photorealism. Use Valorant as a reference for readable silhouettes, controlled colors, simple materials, and clear effects. Create our own maps, characters, branding, audio, and assets. Visual quality depends on art direction and animation as well as the engine.
 
 ## What the MVP includes
 

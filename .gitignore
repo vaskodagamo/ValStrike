@@ -22,6 +22,7 @@ Build/
 __pycache__/
 *.py[cod]
 .venv/
+.asset-worktrees/
 .env
 .env.*
 !*.example

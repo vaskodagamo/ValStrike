@@ -14,8 +14,8 @@ Updated: 2026-11-03. `Ready` means work can start; `Queued` means prerequisites 
 
 | ID | Task | Status | Depends on | Completion condition |
 | --- | --- | --- | --- | --- |
-| SET-01 | Pin and prepare engine/toolchain | In progress | PLAN-02 | Compatible release, full Xcode/SDK, disk capacity, and install locations recorded; toolchain launches |
-| SET-02 | Create C++ project and source control setup | In progress | SET-01 | Test map runs; project compiles; generated outputs excluded; binary asset storage configured |
+| SET-01 | Pin and prepare engine/toolchain | Done | PLAN-02 | Compatible release, full Xcode/SDK, disk capacity, and install locations recorded; toolchain launches |
+| SET-02 | Create C++ project and source control setup | Done | SET-01 | Test map runs; project compiles; generated outputs excluded; binary asset storage configured |
 | SET-03 | Prove packaged server/client connection | Queued | SET-02 | Source-engine server build path works; two client processes connect to packaged headless server; steps repeatable |
 | SET-04 | Establish target-platform and performance baseline | Queued | SET-03 | Tester platforms chosen; actual target client/server builds launched; reference hardware, rendering settings, and tick configuration recorded |
 
@@ -70,4 +70,4 @@ Updated: 2026-11-03. `Ready` means work can start; `Queued` means prerequisites 
 
 ## Bug record format
 
-Add discovered bugs with an ID, severity, build/revision, platform, reproduction steps, expected result, actual result, evidence, status, and next action. No runtime bugs have been assessed because no game exists yet.
+Add discovered bugs with an ID, severity, build/revision, platform, reproduction steps, expected result, actual result, evidence, status, and next action. Runtime findings and remaining test coverage are recorded in WORK_LOG.md.

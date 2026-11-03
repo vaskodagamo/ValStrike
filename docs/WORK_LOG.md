@@ -34,6 +34,22 @@ Record meaningful work sessions here in chronological order. Use Europe/Berlin d
 
 **Next action:** Finish the engine installation, compile ValStrikeEditor, generate and inspect the arena, then connect two development clients. Record runtime results in the next entry and update the setup/backlog evidence.
 
+## 2026-11-03 First runtime checkpoint and asset handoff
+
+**Tasks:** SET-01 and SET-02 complete; SET-03, MOVE-01 and MOVE-02 remain incomplete.
+
+**Changed:** Generated the native graybox map and four bootstrap materials through Unreal Editor. The first rendered view exposed an overexposure defect: sunlight at 5000 with fixed exposure washed out the arena. Changed the generator to intensity 3.0 (generator version 2), migrated the existing map through Unreal Python, saved/reopened it, and visually confirmed readable floor, walls, cover, sky and HUD. Disabled the unused default AndroidFileServer plugin and removed its automatically generated machine-specific settings. Development server/client helpers now write distinct absolute log files without GUI log windows. Added docs/ASSET_BRIEF.md with a separate worktree workflow and environment-kit starting prompt. The user explicitly reconfirmed Valorant-like stylized graphics, not CS2-like photorealism; this is explicit in the plan and asset prompt.
+
+**Toolchain evidence:** Launcher engine 5.8.4, changelist 58902052, installed at `/Users/webproduktion3/UE_5.8/UE_5.8`. Xcode 26.1.1 (17B100), macOS SDK 26.1, Apple clang 17.0.0 and Metal 32023.830 execute successfully. The helper doctor passed. Initial Editor target build passed UHT, compilation and linking in 29.25 seconds (`Saved/Logs/BootstrapBuild.log`). About 382 GiB free after installation.
+
+**Runtime evidence:** Generation saved/reopened 24 actors with four spawn points and Map Check zero errors/warnings. The lighting migration reports `VALSTRIKE_LIGHTING_FIXED` in `Saved/Logs/LightingFix.log`. A separate headless editor development server accepted two distinct client connections on loopback port 7777 at 15:34:29 and 15:34:54 Europe/Berlin; both completed map travel. Logs: `Saved/Logs/VS_Server_7777.log`, `VS_Client_8143.log`, `VS_Client_10185.log`. Rendered client inspection confirmed the corrected arena/HUD and basic forward movement; jump input was exercised but a complete movement/collision/replicated-body test was not completed. These are development editor processes, not packaged game/server acceptance.
+
+**Checks:** 21 helper tests pass, including distinct runtime logs and dry-run preservation; JSON/Python syntax and whitespace checks pass. Native binary assets are tracked with Git LFS. No weapon or round-rule implementation is claimed.
+
+**Open findings:** Initial editor logs contain two startup automation condition errors whose origin is unverified, plus audio-device/sample-rate warnings. Headless editor logs include editor widget-factory warnings. They did not prevent the observed map generation or client joins; audio and a warning-free runtime have not been demonstrated. Crouch, slow-walk speed, stairs, collision, visible remote movement and latency/loss still need systematic tests. GitHub source access last returned 404 even though the user reports linking GitHub in Epic; the separate organization invitation may still be pending. Packaged dedicated-server, Windows and Linux builds remain unverified.
+
+**Next action:** Complete the two-client movement checklist and source-access check, then prove packaged client/server builds. The separate asset chat can start with concepts and a small original environment kit using docs/ASSET_BRIEF.md; it owns separate asset folders and its own log.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.

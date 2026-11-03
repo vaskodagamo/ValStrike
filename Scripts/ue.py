@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 ENGINE_VERSION = (5, 8, 4)
 XCODE_VERSION = "26.1.1"
 MAP = "/Game/Maps/VS_Graybox"
-GENERATOR_VERSION = 1
+GENERATOR_VERSION = 2
 
 
 class SetupError(Exception):
@@ -111,8 +111,11 @@ def command(args, engine, root, host):
     if args.action == "editor":
         return argv + [MAP, "-log"]
     if args.action == "server":
-        return argv + [MAP, "-server", "-nullrhi", "-nosound", f"-port={args.port}", "-log"]
-    return argv + [args.address, "-game", "-windowed", "-ResX=1280", "-ResY=720", "-log"]
+        log = root / "Saved/Logs" / f"VS_Server_{args.port}.log"
+        return argv + [MAP, "-server", "-nullrhi", "-nosound", "-unattended",
+                       f"-port={args.port}", f"-abslog={log}"]
+    log = root / "Saved/Logs" / f"VS_Client_{os.getpid()}.log"
+    return argv + [args.address, "-game", "-windowed", "-ResX=1280", "-ResY=720", f"-abslog={log}"]
 
 
 def probe(argv):
@@ -225,6 +228,7 @@ def main(argv=None, root=ROOT):
             return 0
         if args.action in ("server", "client"):
             print("Development editor process only; this does not verify packaged client/server builds.", flush=True)
+            (root / "Saved/Logs").mkdir(parents=True, exist_ok=True)
         if args.action == "generate-map":
             generation_marker(root).unlink(missing_ok=True)
         result = subprocess.run(invocation, cwd=root, check=False)

@@ -65,13 +65,35 @@ class UnrealHelperTests(unittest.TestCase):
             self.assertEqual(self.run_cli(["--dry-run", "server"]), 1)
             run.assert_not_called()
 
+    def test_runtime_commands_use_separate_absolute_logs_without_console_windows(self):
+        self.make(self.root / "Content/Maps/VS_Graybox.umap")
+        args = ue.parser().parse_args(["server", "--port", "7778"])
+        server = ue.command(args, self.engine, self.root, "Mac")
+        with patch.object(ue.os, "getpid", return_value=12345):
+            client = ue.command(ue.parser().parse_args(["client"]), self.engine, self.root, "Mac")
+        self.assertIn(f"-abslog={self.root / 'Saved/Logs/VS_Server_7778.log'}", server)
+        self.assertIn(f"-abslog={self.root / 'Saved/Logs/VS_Client_12345.log'}", client)
+        self.assertIn("-unattended", server)
+        self.assertNotIn("-log", server)
+        self.assertNotIn("-log", client)
+        self.assertFalse((self.root / "Saved/Logs").exists())
+
+    def test_runtime_log_directory_is_created_only_for_real_launch(self):
+        self.make(self.root / "Content/Maps/VS_Graybox.umap")
+        with patch.object(ue.subprocess, "run", return_value=ue.subprocess.CompletedProcess([], 0)) as run:
+            self.assertEqual(self.run_cli(["--dry-run", "server"]), 0)
+            run.assert_not_called()
+            self.assertFalse((self.root / "Saved/Logs").exists())
+            self.assertEqual(self.run_cli(["server"]), 0)
+            self.assertTrue((self.root / "Saved/Logs").is_dir())
+
     def test_map_generation_requires_output_even_if_process_exits_zero(self):
         with patch.object(ue.subprocess, "run", return_value=ue.subprocess.CompletedProcess([], 0)):
             self.assertEqual(self.run_cli(["generate-map"]), 1)
 
     def test_partial_map_without_fresh_success_marker_is_a_failure(self):
         marker = ue.generation_marker(self.root)
-        self.make(marker, json.dumps({"map": ue.MAP, "generator_version": 1, "actor_count": 20}))
+        self.make(marker, json.dumps({"map": ue.MAP, "generator_version": ue.GENERATOR_VERSION, "actor_count": 20}))
 
         def failed_script(*args, **kwargs):
             self.assertFalse(marker.exists(), "A stale success result must be removed before execution")
@@ -84,7 +106,7 @@ class UnrealHelperTests(unittest.TestCase):
     def test_complete_generation_requires_map_and_matching_success_marker(self):
         def successful_script(*args, **kwargs):
             self.make(self.root / "Content/Maps/VS_Graybox.umap")
-            self.make(ue.generation_marker(self.root), json.dumps({"map": ue.MAP, "generator_version": 1, "actor_count": 20}))
+            self.make(ue.generation_marker(self.root), json.dumps({"map": ue.MAP, "generator_version": ue.GENERATOR_VERSION, "actor_count": 20}))
             return ue.subprocess.CompletedProcess([], 0)
 
         with patch.object(ue.subprocess, "run", side_effect=successful_script):
@@ -92,8 +114,8 @@ class UnrealHelperTests(unittest.TestCase):
 
     def test_generation_rejects_invalid_success_marker(self):
         self.make(self.root / "Content/Maps/VS_Graybox.umap")
-        valid = {"map": ue.MAP, "generator_version": 1, "actor_count": 20}
-        invalid = [{**valid, "map": "/Game/Other"}, {**valid, "generator_version": 2},
+        valid = {"map": ue.MAP, "generator_version": ue.GENERATOR_VERSION, "actor_count": 20}
+        invalid = [{**valid, "map": "/Game/Other"}, {**valid, "generator_version": ue.GENERATOR_VERSION + 1},
                    {**valid, "actor_count": 0}, {**valid, "actor_count": True}, []]
         for result in invalid:
             with self.subTest(result=result):

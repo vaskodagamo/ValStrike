@@ -132,7 +132,9 @@ def main():
     sun_light = sun.get_component_by_class(unreal.DirectionalLightComponent)
     sun_light.set_mobility(unreal.ComponentMobility.MOVABLE)
     sun_light.set_editor_property("atmosphere_sun_light", True)
-    sun_light.set_intensity(5000.0)
+    # Auto exposure is disabled for the movement slice. Keep the sun in a low
+    # range for that fixed exposure; daylight-scale lux washes out the palette.
+    sun_light.set_intensity(3.0)
     spawn(unreal.SkyAtmosphere, "VS_Atmosphere", (0, 0, 0))
     sky = spawn(unreal.SkyLight, "VS_SkyLight", (0, 0, 800))
     sky_light = sky.get_component_by_class(unreal.SkyLightComponent)
@@ -151,7 +153,7 @@ def main():
     require(worlds.get_editor_world().get_world_settings().get_editor_property("default_game_mode") == game_mode,
             "Saved map did not retain the VSGameMode override.")
     marker.parent.mkdir(parents=True, exist_ok=True)
-    marker.write_text(json.dumps({"map": MAP, "generator_version": 1,
+    marker.write_text(json.dumps({"map": MAP, "generator_version": 2,
                                   "actor_count": len(saved_actors)}, indent=2) + "\n", encoding="utf-8")
     unreal.log(f"VALSTRIKE_GRAYBOX_SUCCESS: saved and reopened {MAP}; {len(saved_actors)} actors.")
 
