@@ -85,6 +85,14 @@ The user authorized curating all six existing project chats on 2026-11-03. PLAYT
 | --- | --- | --- | --- |
 | PLAY-05 | Review Site01 readability before first playtest | In progress | Actual viewpoint evidence and concise actionable findings; no unscheduled map edits or claim of human balance acceptance |
 
+## Continuous integration
+
+Engine-free checks run on GitHub-hosted runners so parallel branches are verified without the shared local Unreal slot. They do not replace editor, packaged, dedicated-server or network verification.
+
+| ID | Task | Status | Completion condition |
+| --- | --- | --- | --- |
+| CI-01 | Run engine-free checks on every PR and push to main | In progress | `.github/workflows/checks.yml` merged to main; an observed GitHub Actions run passes the Python suites, standalone C++ rules/presentation tests (normal and sanitizer, g++ and clang++), `git diff --check` and LFS checks |
+
 ## Follow-on work
 
 | ID | Task | Status | Entry condition |

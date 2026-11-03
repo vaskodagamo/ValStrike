@@ -153,6 +153,30 @@ Module SHA256: `1275645b01008fffbfa1c13a5467ba7a3d519004dff7517a5f9123ead8d38537
 
 **Next action:** Review finished commits in dependency order, then rehearse local server/two-client match flow and prepare the user's first real two-Mac LAN test. The coordinator handles publication/PRs and shared wiring; the active chats keep their bounded scopes. Packaged/server-source access is a separate open gate.
 
+## 2026-11-03 Engine-free GitHub Actions checks (CI-01)
+
+**Request and scope:** The coordinator session asked for CI that verifies parallel agent branches without the shared Unreal slot, as a first step before any self-hosted Unreal runner. Branch `claude/ci-engine-free-checks` adds `.github/workflows/checks.yml` and the CI-01 backlog row. No Unreal build, engine download, self-hosted runner or secret is involved. No existing script, test or source file was changed.
+
+**Workflow:** Runs on every pull request and every push to `main`, on `ubuntu-latest`, with read-only token permissions. Superseded PR runs are cancelled; main runs are not. Actions are pinned to commit SHAs: `actions/checkout` v7.0.1 `3d3c42e5` (2026-07-17) and `actions/setup-python` v7.0.0 `5fda3b95` (2026-07-19), both node24.
+
+| Job | Steps |
+| --- | --- |
+| Python tests (no Unreal) | Python 3.13; `python3 -m unittest discover -v` for `-s Tests -p 'test_ue*.py'`, then `-p 'test_*.py'` in `Tests/Maps/Site01`, `Tests/Playtest`, `Tests/Combat`, `Tests/Match` and `Tests/Presentation`, one step each |
+| Standalone C++ tests (g++, clang++) | `python3 Scripts/test_round_rules.py --compiler <cc>`, the same with `--sanitize` (ASan/UBSan), then the documented `rifle_presentation_state_test.cpp` compile and run with `-std=c++17 -Wall -Wextra -Werror -pedantic` |
+| Whitespace and Git LFS | Full-history checkout without LFS. Base is the PR base SHA, or the previous main tip for pushes, falling back to `HEAD^`. `git diff --check <base> HEAD`. `git lfs fsck --pointers` on HEAD and on `<base>..HEAD`. `git lfs pull --include="Content/**"`, then `check_playtest.validate_assets` for `graybox` and `site01` |
+
+**Decisions:** No suite should need macOS. Each test file says it never launches Unreal, and the tests patch Mac-only checks such as `host_platform`. The first Linux confirmation is the GitHub run. `Tests/Combat`, `Tests/Match` and `Tests/Presentation` are engine-free and pass, so they run alongside the three suites named in the request, for 128 tests rather than 76. `Tests/UI/test_session.py` is an Unreal runner with no unittest cases and is excluded. The rules and presentation sources include only the standard library. The script defaults to `c++` on Linux; CI names both compilers explicitly to catch portability problems before the Unreal compilers see them. The LFS check uses the existing engine-free preflight function rather than the full preflight CLI, which requires macOS, Xcode and an engine path. Only `Content/` is downloaded: 42 objects, about 1.1 MB at `e6be4e8`, against 102 objects and about 55 MB in total. Python 3.13 matches the local evidence.
+
+**Local evidence:** M3 Mac, macOS 15.6.1 arm64, Homebrew Python 3.13.3, git-lfs 3.8.1, Apple clang 15.0.0 (clang-1500.3.9.4), at workflow commit `361f25a` on base `e6be4e8`. Each command is copied from the workflow. Python: 33, 7, 36, 19, 22 and 11 tests, all OK. Rules: 31/31 cases and 973 checks passed with `--compiler g++` and `--compiler clang++`, both normal and sanitized. Presentation state: 47/47 checks with each compiler. On this Mac both compiler names are Apple clang; no real GCC was available, so GCC coverage first comes from the GitHub run. The whitespace/LFS step scripts were extracted from the workflow and run verbatim in a fresh `GIT_LFS_SKIP_SMUDGE=1` clone from GitHub, with `EVENT_NAME=pull_request` and the base `e6be4e8`. The diff check and both pointer checks passed. The Content pull fetched 42 objects from GitHub LFS. `graybox` (5 dependencies) and `site01` (13 dependencies) validated all 42 committed Content natives.
+
+**Negative probes:** These were run in that scratch clone only and never pushed. A commit adding a trailing-space line failed `git diff --check` with exit 2. A 2 KB random `.uasset` committed without the LFS filter failed `git lfs fsck --pointers` with exit 1 ("should have been a pointer but was not"). A canonical pointer to an object never uploaded passed the pointer check, as designed. It failed the Content step with exit 2 when GitHub LFS returned "[404] Object does not exist on the server". With the pull failure suppressed, `validate_assets` still failed with exit 1 on the unresolved pointer.
+
+**GitHub run:** Not observed yet. `gh` is not logged in on this Mac, so no PR could be opened from this session. Pushing a non-main branch does not trigger the workflow. CI-01 stays in progress until a real run is observed and the workflow is merged.
+
+**Limits:** These are source-level checks only. They give no editor, packaged, dedicated-server, network or cross-platform game verification. `Art/Source` LFS objects (about 54 MB) are checked as pointers but not downloaded, so a missing upload there would not be caught. `ubuntu-latest` and the runner's compiler versions float; each job prints its tool versions. The rules script's evidence under `Saved/Tests/RoundRules` exists only for the length of a run.
+
+**Next action:** Open the PR from `claude/ci-engine-free-checks`, record the actual run result, then merge if green. Integration may want to add the CI commands to SETUP.md. A self-hosted Unreal runner is a separate later task.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.
