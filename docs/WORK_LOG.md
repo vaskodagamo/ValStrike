@@ -169,6 +169,27 @@ Module SHA256: `1275645b01008fffbfa1c13a5467ba7a3d519004dff7517a5f9123ead8d38537
 
 **Next action:** The user frees disk space, installs Xcode 26.1.1 with the Metal Toolchain and Unreal 5.8.4, and runs `gh auth login`. Then set `UE_ROOT` for this Mac, run `doctor`, build the Editor target and run the smoke suites. In parallel, the account owner completes Epic–GitHub source access (SRV-01).
 
+## 2026-11-03 Second Mac toolchain verified; fresh-checkout unity build fixed
+
+**Toolchain installed on the M3 Mac:** Xcode 26.1.1 (17B100) from the Apple-signed `Xcode_26.1.1_Apple_silicon.xip` (`pkgutil` reported signed Apple Software; `codesign --verify --deep --strict` passed; `spctl` accepted, source Apple System). The user selected it, accepted the license and completed first launch. Metal Toolchain 17B54 was downloaded; `xcrun --sdk macosx metal --version` reports 32023.830. Unreal 5.8.4 (CL 58902052, compatible CL 55116800) was installed by the launcher at `/Users/lukasmac/Desktop/EPIC GAMES/UE_5.8`, which is not iCloud-synced. `ue.py doctor` passed every item. `UE_ROOT` was not written to the user's shell profile; commands pass `--engine` explicitly.
+
+**Defect found and fixed (`54ec5f9`):** the first Editor build of a clean checkout of `10ad832` failed. With no modified files, Unreal's adaptive unity build compiles every ValStrike `.cpp` in one `Module.ValStrike.cpp`, and anonymous-namespace names collided: `Smoke` in `VSCombatSmoke.cpp`/`VSRiflePresentationTest.cpp`, the local `Smoke` in `VSUISmoke.cpp` (`-Wshadow`), and `Ink`/`Muted` in `VSHUD.cpp`/`SVSSessionMenu.cpp`. Checkouts where those files were in the git working set compiled them outside the unity blob, which hid the errors. Renamed the clashing names in the file with the fewest uses; no behavior change. The fix was committed before building so the verification build used the full unity blob. That build passed in 13 s and wrote the helper build receipt.
+
+**Tests at `54ec5f9`, development Editor, loopback, null RHI:**
+
+| Suite | Result | Evidence |
+| --- | --- | --- |
+| Round rules (standalone clang) | 31/31 cases, 973 checks | `Saved/Tests/RoundRules/20261103T202328Z_7f3846/result.json` |
+| Movement | 45/45 | `Saved/Tests/Movement/20261103T202600Z_708126/result.json` |
+| Combat | 55/55 | `Saved/Tests/Combat/20261103T202724Z_2fe4b5/result.json` |
+| Match | 43/43 | `Saved/Tests/Match/20261103T202848Z_05f676/result.json` |
+
+**Failed attempts retained:** The first movement (`20261103T202330Z_4e67a7`), combat (`20261103T202410Z_3ba4a1`) and match (`20261103T202452Z_4abbdf`) runs on this Mac failed. Their servers did not reach "listening" within the runners' fixed 40-second limit. Logs show first-launch costs: about 20 s before the combat server's log opened, a first-time Zen DDC service install, and the match server still loading engine plugins at 39 s. Reruns after warm-up passed unchanged. The fixed limit can fail a cold first run on slower machines.
+
+**Limits:** Development Editor processes only; no rendered UI/mouse-look suites, packaged build, LAN or second-machine session ran here. The engine-free CI cannot catch unity-only compile errors; a clean-checkout Unreal build (for example a self-hosted runner) would.
+
+**Next action:** Review and merge the unity-build fix. Consider making the runners' server-start limit configurable. Then run the rendered UI and mouse-look suites when someone can watch this Mac's screen.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.
