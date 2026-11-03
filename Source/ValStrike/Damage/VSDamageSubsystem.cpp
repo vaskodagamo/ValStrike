@@ -2,6 +2,7 @@
 
 #include "VSHitZoneSet.h"
 #include "../Combat/VSHealthComponent.h"
+#include "../Economy/VSEconomySubsystem.h"
 #include "../ValStrike.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
@@ -132,6 +133,12 @@ void UVSDamageSubsystem::PublishDamage(const FVSDamageEvent& Event)
     DamageDelegate.Broadcast(Event);
     if (Event.bKilled)
     {
+        // Economy asks combat to report the killer synchronously inside the damage path.
+        // It ignores team kills, duplicates and practice mode itself.
+        if (UVSEconomySubsystem* Economy = GetWorld()->GetSubsystem<UVSEconomySubsystem>())
+        {
+            Economy->ReportKill(Event.Instigator, Event.VictimController);
+        }
         KillDelegate.Broadcast(Event);
     }
 }

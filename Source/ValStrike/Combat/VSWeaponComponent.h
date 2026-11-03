@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "../Damage/VSDamageModel.h"
 #include "VSWeaponComponent.generated.h"
 
 class AVSCharacter;
@@ -40,8 +41,8 @@ public:
     const FVSRifleState& GetState() const { return State; }
     int32 GetMagazineCapacity() const { return MagazineCapacity; }
     float GetFireInterval() const { return FireInterval; }
-    float GetBodyDamage() const { return BodyDamage; }
-    float GetHeadDamage() const { return HeadDamage; }
+    // Row of the damage table (Damage/VSDamageModel) this weapon's hits use.
+    ValStrike::Damage::WeaponClass GetDamageClass() const { return DamageClass; }
     bool IsAutomatic() const { return bAutomatic; }
     const FString& GetDisplayName() const { return DisplayName; }
     virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
@@ -77,10 +78,8 @@ protected:
     float ReloadDuration = 2.0f;
     UPROPERTY(EditDefaultsOnly, Category = "Weapon", meta = (ClampMin = "1.0"))
     float Range = 10000.0f;
-    UPROPERTY(EditDefaultsOnly, Category = "Weapon", meta = (ClampMin = "0.0"))
-    float BodyDamage = 30.0f;
-    UPROPERTY(EditDefaultsOnly, Category = "Weapon", meta = (ClampMin = "0.0"))
-    float HeadDamage = 100.0f;
+    // Damage per hit zone comes from the shared table in Damage/VSDamageModel.cpp.
+    ValStrike::Damage::WeaponClass DamageClass = ValStrike::Damage::WeaponClass::Rifle;
 
 private:
     AVSCharacter* Character() const;

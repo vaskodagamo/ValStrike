@@ -134,7 +134,8 @@ private:
         const auto Snapshot = [&]() { return StateDetail(Driver, Target); };
         const auto Aim = [&](bool bHead)
         {
-            return (Target->GetActorLocation() + FVector(0, 0, bHead ? 72 : 0) - Driver->GetPawnViewLocation()).GetSafeNormal();
+            // Body shots aim at the chest (upper-torso zone, full weapon damage); head at the head zone.
+            return (Target->GetActorLocation() + FVector(0, 0, bHead ? 72 : 40) - Driver->GetPawnViewLocation()).GetSafeNormal();
         };
         if (!bReady)
         {

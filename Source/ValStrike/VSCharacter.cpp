@@ -5,11 +5,10 @@
 #include "Combat/VSPistolComponent.h"
 #include "Combat/VSRifleComponent.h"
 #include "Combat/VSWeaponLoadoutComponent.h"
+#include "Damage/VSHitZoneSet.h"
 #include "Combat/VSCombatSmoke.h"
 #include "Presentation/VSPistolPresentationComponent.h"
 #include "Presentation/VSRiflePresentationComponent.h"
-#include "Components/BoxComponent.h"
-#include "Components/SphereComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
@@ -43,18 +42,11 @@ AVSCharacter::AVSCharacter()
     Loadout = CreateDefaultSubobject<UVSWeaponLoadoutComponent>(TEXT("Loadout"));
     RiflePresentation = CreateDefaultSubobject<UVSRiflePresentationComponent>(TEXT("RiflePresentation"));
     PistolPresentation = CreateDefaultSubobject<UVSPistolPresentationComponent>(TEXT("PistolPresentation"));
-    BodyHitRegion = CreateDefaultSubobject<UBoxComponent>(TEXT("BodyHitRegion"));
-    HeadHitRegion = CreateDefaultSubobject<USphereComponent>(TEXT("HeadHitRegion"));
-    for (UShapeComponent* Region : {static_cast<UShapeComponent*>(BodyHitRegion), static_cast<UShapeComponent*>(HeadHitRegion)})
-    {
-        Region->SetupAttachment(GetCapsuleComponent());
-        Region->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
-        Region->SetCollisionResponseToAllChannels(ECR_Ignore);
-        Region->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
-        Region->SetGenerateOverlapEvents(false);
-        Region->SetCanEverAffectNavigation(false);
-    }
-    HeadHitRegion->SetSphereRadius(16.0f);
+    // 13 query-only zones (head, torso, arms, legs, feet) block the weapons' Visibility
+    // traces. They are built at BeginPlay, follow crouch and switch off on death.
+    HitZones = CreateDefaultSubobject<UVSHitZoneSet>(TEXT("HitZones"));
+    HitZones->SetupAttachment(GetCapsuleComponent());
+    HitZones->SetTraceMode(EVSHitZoneTraceMode::Authoritative);
     bUseControllerRotationYaw = true;
     bUseControllerRotationPitch = false;
     bUseControllerRotationRoll = false;
@@ -417,14 +409,13 @@ void AVSCharacter::UpdatePrototypeVisuals()
     HeadVisual->SetRelativeLocation(FVector(0.0f, 0.0f, Height - 16.0f));
     HeadVisual->SetRelativeScale3D(FVector(0.32f));
     FirstPersonCamera->SetRelativeLocation(FVector(0.0f, 0.0f, Height * 0.5f - 24.0f));
-    BodyHitRegion->SetBoxExtent(FVector(25.0f, 20.0f, BodyHeight * 0.5f));
-    BodyHitRegion->SetRelativeLocation(FVector(0.0f, 0.0f, -16.0f));
-    HeadHitRegion->SetRelativeLocation(FVector(0.0f, 0.0f, Height * 0.5f - 16.0f));
+    // Same frame as the capsule change, so a shot right after a crouch sees the new zones.
+    HitZones->RefreshLayout();
 }
 
 bool AVSCharacter::IsHeadHit(const UPrimitiveComponent* Component) const
 {
-    return Component == HeadHitRegion;
+    return HitZones->ResolveZone(Component) == ValStrike::Damage::HitZone::Head;
 }
 
 FVector AVSCharacter::GetPawnViewLocation() const
@@ -435,8 +426,6 @@ FVector AVSCharacter::GetPawnViewLocation() const
 
 void AVSCharacter::HandleHealthChanged()
 {
-    const bool bAlive = Health->IsAlive();
-    BodyHitRegion->SetCollisionEnabled(bAlive ? ECollisionEnabled::QueryOnly : ECollisionEnabled::NoCollision);
-    HeadHitRegion->SetCollisionEnabled(bAlive ? ECollisionEnabled::QueryOnly : ECollisionEnabled::NoCollision);
+    // The hit zones observe the same health delegate and disable themselves on death.
     OnRep_MatchGates();
 }

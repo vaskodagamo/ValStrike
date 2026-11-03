@@ -20,6 +20,11 @@ void AVSDamageSmokeDirector::GetLifetimeReplicatedProps(TArray<FLifetimeProperty
 #include "../VSDamageSubsystem.h"
 #include "../VSHitZoneSet.h"
 #include "../../Combat/VSHealthComponent.h"
+#include "../../Combat/VSWeaponComponent.h"
+#include "../../Combat/VSWeaponLoadoutComponent.h"
+#include "../../Economy/VSEconomyRules.h"
+#include "../../Economy/VSEconomySubsystem.h"
+#include "../../Economy/VSEconomyWallet.h"
 #include "../../Match/VSMatchGameMode.h"
 #include "../../Match/VSMatchGameState.h"
 #include "../../Match/VSMatchPlayerController.h"
@@ -70,6 +75,7 @@ struct FVSCapturedDamage
     FString Instigator;
     FString Victim;
     VSD::HitZone Zone = VSD::HitZone::None;
+    VSD::WeaponClass Weapon = VSD::WeaponClass::Rifle;
     float Applied = 0.0f;
     bool bKilled = false;
     bool bLethal = false;
@@ -312,6 +318,7 @@ private:
         Captured.Instigator = Event.Instigator && Event.Instigator->PlayerState ? Event.Instigator->PlayerState->GetPlayerName() : FString();
         Captured.Victim = Event.Victim && Event.Victim->GetPlayerState() ? Event.Victim->GetPlayerState()->GetPlayerName() : FString();
         Captured.Zone = Event.Zone;
+        Captured.Weapon = Event.Weapon;
         Captured.Applied = Event.AppliedDamage;
         Captured.bKilled = Event.bKilled;
         Captured.bLethal = Event.bLethalRule;
@@ -359,18 +366,10 @@ private:
         return Probes;
     }
 
-    static FCollisionQueryParams ProbeParams(AVSCharacter* Target, const UVSHitZoneSet* Zones, AActor* Other, bool bIgnoreLegacy)
+    // Same query as the weapon trace: complex off, only the shooter ignored.
+    static FCollisionQueryParams ProbeParams(AActor* Shooter)
     {
-        FCollisionQueryParams Params(SCENE_QUERY_STAT(VSDamageSmokeProbe), false, Other);
-        if (bIgnoreLegacy)
-        {
-            TInlineComponentArray<UPrimitiveComponent*> Primitives(Target);
-            for (UPrimitiveComponent* Primitive : Primitives)
-            {
-                if (Zones->FindShapeIndex(Primitive) == INDEX_NONE) { Params.AddIgnoredComponent(Primitive); }
-            }
-        }
-        return Params;
+        return FCollisionQueryParams(SCENE_QUERY_STAT(VSDamageSmokeProbe), false, Shooter);
     }
 
     // Returns the first zone shape along the probe, INDEX_NONE for no zone.
@@ -403,7 +402,7 @@ private:
         const UVSHitZoneSet* Zones = UVSHitZoneSet::FindOn(Target);
         const TArray<FVSDamageProbe> Probes = BuildProbes(Zones);
         if (Probes.Num() != static_cast<int32>(VSD::VolumeCount) + 6) { Detail = TEXT("probe construction failed"); return false; }
-        const FCollisionQueryParams Params = ProbeParams(Target, Zones, Other, true);
+        const FCollisionQueryParams Params = ProbeParams(Other);
         TArray<FString> Failures;
         TSet<int32> Zoned;
         for (const FVSDamageProbe& Probe : Probes)
@@ -424,6 +423,51 @@ private:
         return Failures.IsEmpty() && Zoned.Num() == static_cast<int32>(VSD::ZoneCount) - 1;
     }
 
+    // Real client fire at the observer, one zone per step. Boxes are aimed at the
+    // centre of the face toward the shooter, so the first surface the ray meets is
+    // that zone even when the ray descends (the foot).
+    struct FVSFireTarget
+    {
+        const char* Shape;
+        VSD::HitZone Zone;
+        float Applied;
+        float HealthAfter;
+        const TCHAR* CheckName;
+    };
+    static const FVSFireTarget& FireTarget(int32 Step)
+    {
+        static const FVSFireTarget Targets[] = {
+            {"Thigh_L", VSD::HitZone::Thigh, 24.0f, 76.0f, TEXT("real_fire_thigh")},
+            {"UpperArm_R", VSD::HitZone::UpperArm, 24.0f, 52.0f, TEXT("real_fire_upper_arm")},
+            {"Foot_L", VSD::HitZone::Foot, 17.0f, 35.0f, TEXT("real_fire_foot")},
+            {"Head", VSD::HitZone::Head, 35.0f, 0.0f, TEXT("real_fire_lethal_headshot")},
+        };
+        return Targets[FMath::Clamp(Step, 0, 3)];
+    }
+
+    static FVector ZoneAimPoint(const AVSCharacter* Target, const char* ShapeName, const FVector& From)
+    {
+        const UVSHitZoneSet* Zones = UVSHitZoneSet::FindOn(Target);
+        const int32 Index = VSDamageSmokeShapeByName(Zones, ShapeName);
+        const UCapsuleComponent* Capsule = Zones ? Cast<UCapsuleComponent>(Zones->GetAttachParent()) : nullptr;
+        if (Index == INDEX_NONE || !Capsule) { return Target ? Target->GetActorLocation() : FVector::ZeroVector; }
+        const FTransform Frame = Capsule->GetComponentTransform();
+        const VSD::ZoneVolume& Volume = Zones->GetLayout().Volumes[Index];
+        FVector Local(Volume.Center[0], Volume.Center[1], Volume.Center[2]);
+        if (Volume.Shape == VSD::ZoneShape::Box)
+        {
+            const FVector LocalFrom = Frame.InverseTransformPosition(From);
+            Local.X += LocalFrom.X >= 0.0 ? Volume.HalfExtent[0] : -Volume.HalfExtent[0];
+        }
+        return Frame.TransformPosition(Local);
+    }
+
+    static int32 WalletIncome(UVSEconomySubsystem* Economy, const AController* Controller)
+    {
+        const AVSEconomyWallet* Wallet = Economy ? Economy->FindWallet(Controller) : nullptr;
+        return Wallet ? Wallet->GetView().RoundIncome : -1;
+    }
+
     void Server(UWorld* World, AVSMatchGameMode* Mode, AVSDamageSmokeDirector* Director)
     {
         const double Now = World->GetTimeSeconds();
@@ -433,6 +477,7 @@ private:
         AVSMatchPlayerController* Observer = Named(World, VSDamageObserverName);
         UVSDamageSubsystem* Damage = UVSDamageSubsystem::Get(World);
         UVSMatchStatsSubsystem* Stats = UVSMatchStatsSubsystem::Get(World);
+        UVSEconomySubsystem* Economy = World->GetSubsystem<UVSEconomySubsystem>();
         if (!Driver || !Observer || !Mode->IsMapReady() || !Damage || !Stats) { return; }
         if (!BoundDamage.IsValid())
         {
@@ -449,20 +494,34 @@ private:
         case 0:
         {
             if (S.CurrentPhase != VSDR::Phase::Preparation || !DriverPawn || !ObserverPawn || !Board || Board->GetRows().Num() != 2) { return; }
-            int32 Pawns = 0, WithZones = 0;
+            int32 Pawns = 0, WithZones = 0, Blocking = 0;
+            TArray<FString> Blockers;
             for (TActorIterator<AVSCharacter> It(World); It; ++It)
             {
                 ++Pawns;
                 const UVSHitZoneSet* Zones = UVSHitZoneSet::FindOn(*It);
                 TInlineComponentArray<UVSHitZoneSet*> Sets(*It);
-                WithZones += Zones && Sets.Num() == 1 && Zones->GetShapeCount() == static_cast<int32>(VSD::VolumeCount) &&
-                    Zones->GetTraceMode() == EVSHitZoneTraceMode::Shadow && Zones->GetTraceChannel() == ECC_Visibility ? 1 : 0;
+                WithZones += Zones && Sets.Num() == 1 && Zones == It->GetHitZones() && Zones->GetFName() == TEXT("HitZones") &&
+                    Zones->GetShapeCount() == static_cast<int32>(VSD::VolumeCount) &&
+                    Zones->GetTraceMode() == EVSHitZoneTraceMode::Authoritative && Zones->GetTraceChannel() == ECC_Visibility ? 1 : 0;
+                TInlineComponentArray<UPrimitiveComponent*> Primitives(*It);
+                for (const UPrimitiveComponent* Primitive : Primitives)
+                {
+                    const bool bZone = Zones && Zones->FindShapeIndex(Primitive) != INDEX_NONE;
+                    if (!bZone && Primitive->IsCollisionEnabled() && Primitive->GetCollisionResponseToChannel(ECC_Visibility) != ECR_Ignore)
+                    {
+                        ++Blocking;
+                        Blockers.Add(Primitive->GetName());
+                    }
+                }
             }
             Check(TEXT("zones_on_every_pawn"), Pawns == 2 && WithZones == 2,
-                FString::Printf(TEXT("pawns=%d withOneShadowZoneSetOnVisibility=%d"), Pawns, WithZones));
+                FString::Printf(TEXT("pawns=%d withCharacterHitZonesAuthoritativeOnVisibility=%d"), Pawns, WithZones));
+            Check(TEXT("legacy_regions_removed"), Blocking == 0,
+                FString::Printf(TEXT("non-zone primitives answering Visibility traces: %d %s"), Blocking, *FString::Join(Blockers, TEXT(","))));
             FString Detail;
-            const bool bProfile = VSDamageSmokeCollisionMatches(UVSHitZoneSet::FindOn(DriverPawn), ECR_Overlap, ECollisionEnabled::QueryOnly, Detail) &&
-                VSDamageSmokeCollisionMatches(UVSHitZoneSet::FindOn(ObserverPawn), ECR_Overlap, ECollisionEnabled::QueryOnly, Detail);
+            const bool bProfile = VSDamageSmokeCollisionMatches(UVSHitZoneSet::FindOn(DriverPawn), ECR_Block, ECollisionEnabled::QueryOnly, Detail) &&
+                VSDamageSmokeCollisionMatches(UVSHitZoneSet::FindOn(ObserverPawn), ECR_Block, ECollisionEnabled::QueryOnly, Detail);
             Check(TEXT("zones_collision_profile"), bProfile, Detail);
             const bool bLayout = VSDamageSmokeLayoutMatches(UVSHitZoneSet::FindOn(DriverPawn), 88.0, Detail) &&
                 VSDamageSmokeLayoutMatches(UVSHitZoneSet::FindOn(ObserverPawn), 88.0, Detail);
@@ -494,9 +553,7 @@ private:
         case 1:
             if (S.CurrentPhase == VSDR::Phase::Active && DriverPawn && ObserverPawn)
             {
-                const FVector Center = Mode->GetSiteCenter();
-                const bool bPlaced = Place(Driver, Center + FVector(-100.0, 0.0, 0.0), 0.0f) && Place(Observer, Center + FVector(200.0, 0.0, 0.0), 180.0f);
-                if (!bPlaced) { Finish(TEXT("placement_failed")); return; }
+                if (!PlaceBoth(Mode, Driver, Observer)) { Finish(TEXT("placement_failed")); return; }
                 Stage(Director, 2, Now);
             }
             return;
@@ -511,8 +568,8 @@ private:
                 const UVSHitZoneSet* Zones = UVSHitZoneSet::FindOn(DriverPawn);
                 FString Detail;
                 Check(TEXT("zones_crouched_layout"), VSDamageSmokeLayoutMatches(Zones, 56.0, Detail), Detail + TEXT("; driven by real client crouch input"));
-                const bool bTraces = RunProbes(World, DriverPawn, ObserverPawn, false, Detail);
-                Check(TEXT("crouched_trace_zones"), bTraces, Detail);
+                const bool bTraces = RunProbes(World, DriverPawn, ObserverPawn, true, Detail);
+                Check(TEXT("crouched_trace_zones"), bTraces, Detail + TEXT("; weapon-style single Visibility trace"));
                 Stage(Director, 4, Now);
             }
             else if (Time > 8.0)
@@ -542,7 +599,20 @@ private:
             return;
         }
         case 6:
-            if (S.CurrentPhase == VSDR::Phase::Active && DriverPawn && ObserverPawn) { RoundOneDamage(World, Damage, Stats, DriverPawn, ObserverPawn); Stage(Director, 7, Now); }
+            if (S.CurrentPhase == VSDR::Phase::Active && DriverPawn && ObserverPawn)
+            {
+                FString Detail;
+                Check(TEXT("weapon_trace_zones"), RunProbes(World, ObserverPawn, DriverPawn, true, Detail),
+                    Detail + TEXT("; LineTraceSingleByChannel(Visibility) ignoring only the shooter, like the weapon"));
+                StepEvents = DamageEvents.Num();
+                Stage(Director, 70, Now);
+            }
+            return;
+        case 70:
+        case 71:
+        case 72:
+        case 73:
+            RealFireStep(Director, Now, Time, Stats, Economy, Driver, DriverPawn, ObserverPawn);
             return;
         case 7:
             if (S.CurrentPhase == VSDR::Phase::Resolved && S.CompletedRounds == 1 && !Names.Contains(TEXT("stats_life_state")))
@@ -553,7 +623,7 @@ private:
                 Check(TEXT("stats_life_state"), DriverRow && ObserverRow && DriverRow->Life == EVSScoreboardLife::Alive &&
                     ObserverRow->Life == EVSScoreboardLife::Dead && DriverState && S.RoundWinner == static_cast<VSDR::Team>(DriverState->TeamId) &&
                     S.Reason == VSDR::WinReason::Elimination,
-                    FString::Printf(TEXT("round 1 elimination by attributed headshot; %s; %s"), *Describe(DriverRow), *Describe(ObserverRow)));
+                    FString::Printf(TEXT("round 1 elimination by a real rifle headshot; %s; %s"), *Describe(DriverRow), *Describe(ObserverRow)));
             }
             if (S.CurrentPhase == VSDR::Phase::Preparation && S.RoundId != RoundOne && DriverPawn && ObserverPawn)
             {
@@ -568,34 +638,56 @@ private:
                 const bool bLayout = VSDamageSmokeLayoutMatches(UVSHitZoneSet::FindOn(DriverPawn), 88.0, Detail) &&
                     VSDamageSmokeLayoutMatches(UVSHitZoneSet::FindOn(ObserverPawn), 88.0, Detail);
                 FString Profile;
-                const bool bEnabled = VSDamageSmokeCollisionMatches(UVSHitZoneSet::FindOn(ObserverPawn), ECR_Overlap, ECollisionEnabled::QueryOnly, Profile);
+                const bool bEnabled = VSDamageSmokeCollisionMatches(UVSHitZoneSet::FindOn(ObserverPawn), ECR_Block, ECollisionEnabled::QueryOnly, Profile);
                 Check(TEXT("fresh_pawn_zones"), bFresh && bLayout && bEnabled,
                     FString::Printf(TEXT("fresh=%d %s; previously dead observer's new pawn: %s"), bFresh ? 1 : 0, *Detail, *Profile));
-                Check(TEXT("stats_persist_across_rounds"), RowIs(DriverRow, 1, 0, 1, 100) && RowIs(ObserverRow, 0, 1, 0, 24) && bRowsAlive,
+                Check(TEXT("stats_persist_across_rounds"), RowIs(DriverRow, 1, 0, 1, 100) && RowIs(ObserverRow, 0, 1, 0, 0) && bRowsAlive,
                     FString::Printf(TEXT("rows alive %.3f s after fresh pawns were seen; %s; %s"), Now - FreshSeenAt,
                         *Describe(DriverRow), *Describe(ObserverRow)));
                 Stage(Director, 8, Now);
             }
             return;
         case 8:
-            if (S.CurrentPhase == VSDR::Phase::Active && DriverPawn && DriverPawn->GetHealthComponent()->IsAlive())
+            if (S.CurrentPhase == VSDR::Phase::Active && DriverPawn && ObserverPawn)
             {
-                // No shooter: the existing health entry point, as today's rifle path uses it.
-                if (DriverPawn->GetHealthComponent()->ApplyPointDamage(1000.0f) > 0.0f) { Stage(Director, 9, Now); }
+                if (!PlaceBoth(Mode, Driver, Observer)) { Finish(TEXT("placement_failed")); return; }
+                StepEvents = DamageEvents.Num();
+                ObserverIncome = WalletIncome(Economy, Observer);
+                Stage(Director, 9, Now);
             }
             return;
         case 9:
+        {
+            // Observer equips the pistol (key 2) and fires one real shot at the driver's head.
+            const FVSCapturedDamage* Shot = DamageEvents.Num() > StepEvents ? &DamageEvents[StepEvents] : nullptr;
+            if (Shot && !Names.Contains(TEXT("real_fire_pistol_headshot")))
+            {
+                const int32 Income = WalletIncome(Economy, Observer);
+                const int32 Reward = Economy ? Economy->GetModel().GetTuning().KillReward : -1;
+                Check(TEXT("real_fire_pistol_headshot"), DamageEvents.Num() == StepEvents + 1 && Shot->Instigator == VSDamageObserverName &&
+                    Shot->Victim == VSDamageDriverName && Shot->Weapon == VSD::WeaponClass::Pistol && Shot->Zone == VSD::HitZone::Head &&
+                    Shot->bLethal && Shot->bKilled && Shot->Applied == 100.0f && KillEvents == 2 && LastKiller == VSDamageObserverName &&
+                    DriverPawn && !DriverPawn->GetHealthComponent()->IsAlive() && Income == ObserverIncome + Reward,
+                    FString::Printf(TEXT("pistol (key 2) head: weapon=%hs zone=%hs applied=%.1f lethalRule=%d killed=%d killEvents=%d economyIncome %d -> %d (+%d)"),
+                        VSD::WeaponName(Shot->Weapon), VSD::ZoneName(Shot->Zone), Shot->Applied, Shot->bLethal ? 1 : 0, Shot->bKilled ? 1 : 0,
+                        KillEvents, ObserverIncome, Income, Reward));
+            }
+            if (!Shot && Time > 10.0)
+            {
+                Check(TEXT("real_fire_pistol_headshot"), false, TEXT("no damage event from the observer's pistol shot"));
+                Stage(Director, 10, Now);
+                return;
+            }
             if ((S.CurrentPhase == VSDR::Phase::Resolved || S.CurrentPhase == VSDR::Phase::Preparation) && S.CompletedRounds == 2)
             {
                 const FVSScoreboardRow* DriverRow = RowFor(Board, VSDamageDriverName);
                 const FVSScoreboardRow* ObserverRow = RowFor(Board, VSDamageObserverName);
-                Check(TEXT("unattributed_death_counted"), RowIs(DriverRow, 1, 1, 1, 100) && RowIs(ObserverRow, 0, 1, 0, 24) &&
-                    S.Scores[0] == 1 && S.Scores[1] == 1,
-                    FString::Printf(TEXT("health-delegate death without hook; score=%d:%d; %s; %s"), S.Scores[0], S.Scores[1],
-                        *Describe(DriverRow), *Describe(ObserverRow)));
+                Check(TEXT("stats_final"), RowIs(DriverRow, 1, 1, 1, 100) && RowIs(ObserverRow, 1, 1, 1, 100) && S.Scores[0] == 1 && S.Scores[1] == 1,
+                    FString::Printf(TEXT("score=%d:%d; %s; %s"), S.Scores[0], S.Scores[1], *Describe(DriverRow), *Describe(ObserverRow)));
                 Stage(Director, 10, Now);
             }
             return;
+        }
         case 10:
             if (Time > 4.0) { Finish(); }
             return;
@@ -604,96 +696,93 @@ private:
         }
     }
 
-    void RoundOneDamage(UWorld* World, UVSDamageSubsystem* Damage, UVSMatchStatsSubsystem* Stats, AVSCharacter* DriverPawn, AVSCharacter* ObserverPawn)
+    bool PlaceBoth(AVSMatchGameMode* Mode, AVSMatchPlayerController* Driver, AVSMatchPlayerController* Observer)
     {
-        FString Detail;
-        Check(TEXT("shadow_trace_zones"), RunProbes(World, ObserverPawn, DriverPawn, false, Detail),
-            Detail + TEXT("; LineTraceMultiByChannel(Visibility), legacy regions ignored"));
-        UVSHitZoneSet* ObserverZones = UVSHitZoneSet::FindOn(ObserverPawn);
-        ObserverZones->SetTraceMode(EVSHitZoneTraceMode::Authoritative);
-        const bool bBlockProfile = VSDamageSmokeCollisionMatches(ObserverZones, ECR_Block, ECollisionEnabled::QueryOnly, Detail);
-        const bool bBlockTraces = RunProbes(World, ObserverPawn, DriverPawn, true, Detail);
-        ObserverZones->SetTraceMode(EVSHitZoneTraceMode::Shadow);
-        Check(TEXT("authoritative_trace_zones"), bBlockProfile && bBlockTraces,
-            Detail + TEXT("; Phase 2 mode: LineTraceSingleByChannel(Visibility) blocks on zones; restored to Shadow"));
+        const FVector Center = Mode->GetSiteCenter();
+        return Place(Driver, Center + FVector(-100.0, 0.0, 0.0), 0.0f) && Place(Observer, Center + FVector(200.0, 0.0, 0.0), 180.0f);
+    }
 
-        // The live rifle trace (single, Visibility, ignoring the shooter) still hits the legacy regions.
-        const TArray<FVSDamageProbe> Probes = BuildProbes(ObserverZones);
-        const FCollisionQueryParams RifleParams(SCENE_QUERY_STAT(VSDamageSmokeRifle), false, DriverPawn);
-        FHitResult HeadHit, ChestHit;
-        const bool bHead = World->LineTraceSingleByChannel(HeadHit, Probes[0].Start, Probes[0].End, ECC_Visibility, RifleParams);
-        const bool bChest = World->LineTraceSingleByChannel(ChestHit, Probes[1].Start, Probes[1].End, ECC_Visibility, RifleParams);
-        Check(TEXT("rifle_path_unchanged"), bHead && bChest && HeadHit.GetActor() == ObserverPawn && ObserverPawn->IsHeadHit(HeadHit.GetComponent()) &&
-            ObserverZones->FindShapeIndex(HeadHit.GetComponent()) == INDEX_NONE && ChestHit.GetActor() == ObserverPawn &&
-            !ObserverPawn->IsHeadHit(ChestHit.GetComponent()) && ObserverZones->FindShapeIndex(ChestHit.GetComponent()) == INDEX_NONE,
-            FString::Printf(TEXT("single-hit traces hit %s and %s (legacy regions), not zone shapes"),
-                HeadHit.GetComponent() ? *HeadHit.GetComponent()->GetName() : TEXT("none"),
-                ChestHit.GetComponent() ? *ChestHit.GetComponent()->GetName() : TEXT("none")));
+    void RealFireStep(AVSDamageSmokeDirector* Director, double Now, double Time, UVSMatchStatsSubsystem* Stats,
+        UVSEconomySubsystem* Economy, AVSMatchPlayerController* Driver, AVSCharacter* DriverPawn, AVSCharacter* ObserverPawn)
+    {
+        const int32 Step = Director->Stage - 70;
+        const FVSFireTarget& Target = FireTarget(Step);
+        const FVSCapturedDamage* Shot = DamageEvents.Num() > StepEvents ? &DamageEvents[StepEvents] : nullptr;
+        if (!Shot && Time <= 6.0) { return; }
+        UVSWeaponComponent* Rifle = DriverPawn ? DriverPawn->GetWeapon(EVSWeaponSlot::Rifle) : nullptr;
+        const float Health = ObserverPawn ? ObserverPawn->GetHealthComponent()->GetHealth() : -1.0f;
+        if (!Shot)
+        {
+            Check(Target.CheckName, false, FString::Printf(TEXT("no damage event within 6 s; rifle shots=%u rejected direction=%u origin=%u"),
+                Rifle ? Rifle->GetState().ShotsFired : 0, Rifle ? Rifle->DevelopmentRejections(TEXT("direction")) : 0,
+                Rifle ? Rifle->DevelopmentRejections(TEXT("origin")) : 0));
+        }
+        else
+        {
+            const bool bKill = Step == 3;
+            Check(Target.CheckName, DamageEvents.Num() == StepEvents + 1 && Shot->Instigator == VSDamageDriverName &&
+                Shot->Victim == VSDamageObserverName && Shot->Weapon == VSD::WeaponClass::Rifle && Shot->Zone == Target.Zone &&
+                Shot->Applied == Target.Applied && Health == Target.HealthAfter && Shot->bKilled == bKill && Shot->bLethal == bKill,
+                FString::Printf(TEXT("aimed %hs: event %s->%s %hs %hs applied=%.1f health=%.1f killed=%d lethalRule=%d rifleShots=%u"),
+                    Target.Shape, *Shot->Instigator, *Shot->Victim, VSD::WeaponName(Shot->Weapon), VSD::ZoneName(Shot->Zone), Shot->Applied,
+                    Health, Shot->bKilled ? 1 : 0, Shot->bLethal ? 1 : 0, Rifle ? Rifle->GetState().ShotsFired : 0));
+        }
+        StepEvents = DamageEvents.Num();
+        if (Step < 3)
+        {
+            // The killer's income right before the lethal shot, for the economy check.
+            if (Step == 2) { DriverIncome = WalletIncome(Economy, Driver); }
+            Stage(Director, Director->Stage + 1, Now);
+            return;
+        }
+        AfterRoundOneKill(Stats, Economy, Driver, DriverPawn, ObserverPawn);
+        Stage(Director, 7, Now);
+    }
 
-        const float Distance = static_cast<float>(FVector::Dist(DriverPawn->GetActorLocation(), ObserverPawn->GetActorLocation()));
-        const UVSHitZoneSet* DriverZones = UVSHitZoneSet::FindOn(DriverPawn);
-        const int32 EventsBefore = DamageEvents.Num();
-        FVSWeaponHit Thigh;
-        Thigh.Shooter = ObserverPawn;
-        Thigh.Victim = DriverPawn;
-        Thigh.HitComponent = DriverZones->GetShape(VSDamageSmokeShapeByName(DriverZones, "Thigh_L"));
-        Thigh.Weapon = VSD::WeaponClass::Rifle;
-        Thigh.DistanceCm = Distance;
-        const float ThighApplied = Damage->ApplyWeaponHit(Thigh);
-        const FVSCapturedDamage* First = DamageEvents.Num() == EventsBefore + 1 ? &DamageEvents.Last() : nullptr;
-        Check(TEXT("hook_zone_damage"), ThighApplied == 24.0f && DriverPawn->GetHealthComponent()->GetHealth() == 76.0f && First &&
-            First->Zone == VSD::HitZone::Thigh && First->Applied == 24.0f && !First->bKilled && First->Instigator == VSDamageObserverName &&
-            First->Victim == VSDamageDriverName && KillEvents == 0,
-            FString::Printf(TEXT("rifle thigh at %.0f cm: applied=%.1f health=%.1f event=%s"), Distance, ThighApplied,
-                DriverPawn->GetHealthComponent()->GetHealth(), First ? *FString::Printf(TEXT("%s->%s %hs"), *First->Instigator, *First->Victim, VSD::ZoneName(First->Zone)) : TEXT("missing")));
-
-        FVSWeaponHit Head;
-        Head.Shooter = DriverPawn;
-        Head.Victim = ObserverPawn;
-        Head.HitComponent = ObserverZones->GetShape(0);
-        Head.Weapon = VSD::WeaponClass::Rifle;
-        Head.DistanceCm = Distance;
-        const float HeadApplied = Damage->ApplyWeaponHit(Head);
-        const FVSCapturedDamage* Second = DamageEvents.Num() == EventsBefore + 2 ? &DamageEvents.Last() : nullptr;
-        Check(TEXT("hook_lethal_headshot"), HeadApplied == 100.0f && !ObserverPawn->GetHealthComponent()->IsAlive() && Second &&
-            Second->Zone == VSD::HitZone::Head && Second->bKilled && Second->bLethal && Second->Applied == 100.0f &&
-            Second->Instigator == VSDamageDriverName,
-            FString::Printf(TEXT("rifle head: applied=%.1f observerHealth=%.1f lethalRule=%d killed=%d"), HeadApplied,
-                ObserverPawn->GetHealthComponent()->GetHealth(), Second && Second->bLethal ? 1 : 0, Second && Second->bKilled ? 1 : 0));
+    void AfterRoundOneKill(UVSMatchStatsSubsystem* Stats, UVSEconomySubsystem* Economy, AVSMatchPlayerController* Driver,
+        AVSCharacter* DriverPawn, AVSCharacter* ObserverPawn)
+    {
         Check(TEXT("kill_event_once"), KillEvents == 1 && LastKiller == VSDamageDriverName,
             FString::Printf(TEXT("OnKill broadcasts=%d killer=%s"), KillEvents, *LastKiller));
+        const int32 Income = WalletIncome(Economy, Driver);
+        const int32 Reward = Economy ? Economy->GetModel().GetTuning().KillReward : -1;
+        Check(TEXT("economy_kill_reward"), Economy && Economy->IsEconomyActive() && Reward > 0 && Income == DriverIncome + Reward,
+            FString::Printf(TEXT("killer round income %d -> %d, kill reward %d (UVSEconomySubsystem::ReportKill from the damage path)"),
+                DriverIncome, Income, Reward));
 
-        FVSWeaponHit Dead = Head;
-        FVSWeaponHit Foreign = Thigh;
-        Foreign.HitComponent = ObserverZones->GetShape(1); // a shape of another pawn
-        FVSWeaponHit BadWeapon = Thigh;
+        UVSHitZoneSet* ObserverZones = UVSHitZoneSet::FindOn(ObserverPawn);
+        const UVSHitZoneSet* DriverZones = UVSHitZoneSet::FindOn(DriverPawn);
+        UVSDamageSubsystem* Damage = BoundDamage.Get();
+        FVSWeaponHit Dead;
+        Dead.Shooter = DriverPawn;
+        Dead.Victim = ObserverPawn;
+        Dead.HitComponent = ObserverZones ? ObserverZones->GetShape(0) : nullptr;
+        FVSWeaponHit Foreign;
+        Foreign.Shooter = ObserverPawn;
+        Foreign.Victim = DriverPawn;
+        Foreign.HitComponent = ObserverZones ? ObserverZones->GetShape(1) : nullptr; // another pawn's shape
+        FVSWeaponHit BadWeapon = Foreign;
+        BadWeapon.HitComponent = DriverZones ? DriverZones->GetShape(1) : nullptr;
         BadWeapon.Weapon = VSD::WeaponClass::Count;
-        FVSWeaponHit Legacy = Thigh;
-        Legacy.HitComponent = nullptr;
-        TInlineComponentArray<UShapeComponent*> DriverShapes(DriverPawn);
-        for (UShapeComponent* Shape : DriverShapes)
-        {
-            // The driver's own legacy region: owned by the victim but not a zone.
-            if (DriverZones->FindShapeIndex(Shape) == INDEX_NONE && !Shape->IsA<UCapsuleComponent>()) { Legacy.HitComponent = Shape; break; }
-        }
-        FVSWeaponHit Missing = Thigh;
+        FVSWeaponHit NonZone = Foreign;
+        NonZone.HitComponent = DriverPawn ? DriverPawn->GetCapsuleComponent() : nullptr; // owned by the victim, not a zone
+        FVSWeaponHit Missing = Foreign;
         Missing.HitComponent = nullptr;
-        const float Health = DriverPawn->GetHealthComponent()->GetHealth();
+        const float Health = DriverPawn ? DriverPawn->GetHealthComponent()->GetHealth() : -1.0f;
         const int32 EventsAfter = DamageEvents.Num();
-        const float Rejected = Damage->ApplyWeaponHit(Dead) + Damage->ApplyWeaponHit(Foreign) + Damage->ApplyWeaponHit(BadWeapon) +
-            Damage->ApplyWeaponHit(Legacy) + Damage->ApplyWeaponHit(Missing);
-        Check(TEXT("hook_rejects_invalid"), Legacy.HitComponent && Rejected == 0.0f && DamageEvents.Num() == EventsAfter &&
+        const float Rejected = Damage ? Damage->ApplyWeaponHit(Dead) + Damage->ApplyWeaponHit(Foreign) + Damage->ApplyWeaponHit(BadWeapon) +
+            Damage->ApplyWeaponHit(NonZone) + Damage->ApplyWeaponHit(Missing) : -1.0f;
+        Check(TEXT("hook_rejects_invalid"), Rejected == 0.0f && DamageEvents.Num() == EventsAfter && DriverPawn &&
             DriverPawn->GetHealthComponent()->GetHealth() == Health,
-            FString::Printf(TEXT("dead victim, another pawn's shape, invalid weapon class, non-zone component (%s) and null component all applied 0 without events"),
-                Legacy.HitComponent ? *Legacy.HitComponent->GetName() : TEXT("missing")));
+            TEXT("dead victim, another pawn's shape, invalid weapon class, the victim's capsule and a null component all applied 0 without events"));
 
         FString Profile;
-        Check(TEXT("dead_zones_disabled"), VSDamageSmokeCollisionMatches(ObserverZones, ECR_Overlap, ECollisionEnabled::NoCollision, Profile), Profile);
+        Check(TEXT("dead_zones_disabled"), VSDamageSmokeCollisionMatches(ObserverZones, ECR_Block, ECollisionEnabled::NoCollision, Profile), Profile);
 
         const AVSScoreboardState* Board = Stats->GetState();
         const FVSScoreboardRow* DriverRow = RowFor(Board, VSDamageDriverName);
         const FVSScoreboardRow* ObserverRow = RowFor(Board, VSDamageObserverName);
-        Check(TEXT("stats_kill_attributed"), RowIs(DriverRow, 1, 0, 1, 100) && RowIs(ObserverRow, 0, 1, 0, 24),
+        Check(TEXT("stats_kill_attributed"), RowIs(DriverRow, 1, 0, 1, 100) && RowIs(ObserverRow, 0, 1, 0, 0),
             FString::Printf(TEXT("%s; %s"), *Describe(DriverRow), *Describe(ObserverRow)));
     }
 
@@ -732,7 +821,8 @@ private:
             int32 Pawns = 0;
             for (TActorIterator<AVSCharacter> It(World); It; ++It) { ++Pawns; }
             Check(TEXT("client_zones_present"), bOwn && bOther && Pawns == 2 && !Other->HasAuthority() &&
-                Other->GetLocalRole() == ROLE_SimulatedProxy && Own->GetLocalRole() == ROLE_AutonomousProxy,
+                Other->GetLocalRole() == ROLE_SimulatedProxy && Own->GetLocalRole() == ROLE_AutonomousProxy &&
+                Own->GetHitZones() == UVSHitZoneSet::FindOn(Own) && Other->GetHitZones() == UVSHitZoneSet::FindOn(Other),
                 FString::Printf(TEXT("autonomous: %s | simulated: %s"), *OwnDetail, *OtherDetail));
             RoundOneOwn = Own->GetName();
             RoundOneOther = Other->GetName();
@@ -780,10 +870,41 @@ private:
         }
         if (!bDriver && StageValue >= 5) { SetDrawZones(false); }
 
+        // Real fire: the driver aims at one observer zone per step and taps the left mouse button.
+        if (bDriver && StageValue >= 70 && StageValue <= 73 && Own && Other)
+        {
+            const FVector Eye = Own->GetPawnViewLocation();
+            const FVector AimPoint = ZoneAimPoint(Other, FireTarget(StageValue - 70).Shape, Eye);
+            PC->SetControlRotation((AimPoint - Eye).Rotation());
+            if (Time > 0.6 && FiredStage != StageValue)
+            {
+                Key(PC, EKeys::LeftMouseButton, true, bFireHeld);
+                FiredStage = StageValue;
+                FireReleaseAt = World->GetTimeSeconds() + 0.03;
+            }
+        }
+        // Round two: the observer switches to the pistol and shoots the driver's head once.
+        if (!bDriver && StageValue == 9 && Own && Other && Own->GetLoadoutComponent())
+        {
+            if (Time > 0.3 && !bEquipSent) { Key(PC, EKeys::Two, true, bEquipHeld); bEquipSent = true; }
+            else if (bEquipHeld) { Key(PC, EKeys::Two, false, bEquipHeld); }
+            const FVector Eye = Own->GetPawnViewLocation();
+            PC->SetControlRotation((ZoneAimPoint(Other, "Head", Eye) - Eye).Rotation());
+            const FVSLoadoutState& Loadout = Own->GetLoadoutComponent()->GetState();
+            if (Time > 1.0 && Loadout.Equipped == EVSWeaponSlot::Pistol && !Loadout.bEquipping && FiredStage != StageValue)
+            {
+                Key(PC, EKeys::LeftMouseButton, true, bFireHeld);
+                FiredStage = StageValue;
+                FireReleaseAt = World->GetTimeSeconds() + 0.03;
+            }
+        }
+        // One rifle shot per tap: release before the 0.12 s automatic repeat.
+        if (bFireHeld && World->GetTimeSeconds() >= FireReleaseAt) { Key(PC, EKeys::LeftMouseButton, false, bFireHeld); }
+
         // After the attributed round-one kill: replicated stats and the Tab board.
         const FVSScoreboardRow* DriverRow = RowFor(Board, VSDamageDriverName);
         const FVSScoreboardRow* ObserverRow = RowFor(Board, VSDamageObserverName);
-        if (StageValue >= 7 && RowIs(DriverRow, 1, 0, 1, 100) && RowIs(ObserverRow, 0, 1, 0, 24))
+        if (StageValue >= 7 && StageValue < 70 && RowIs(DriverRow, 1, 0, 1, 100) && RowIs(ObserverRow, 0, 1, 0, 0))
         {
             Check(TEXT("stats_replicated_kill"), ObserverRow->Life == EVSScoreboardLife::Dead || StageValue >= 8,
                 FString::Printf(TEXT("%s; %s"), *Describe(DriverRow), *Describe(ObserverRow)));
@@ -791,7 +912,7 @@ private:
         }
         if (BoardStep > 0 && Presenter) { BoardSequence(World, PC, Presenter, GS); }
 
-        if (StageValue >= 8 && Own && Other && !RoundOneOwn.IsEmpty() && !Names.Contains(TEXT("client_fresh_pawn_zones")))
+        if (StageValue >= 8 && StageValue < 70 && Own && Other && !RoundOneOwn.IsEmpty() && !Names.Contains(TEXT("client_fresh_pawn_zones")))
         {
             FString OwnDetail, OtherDetail;
             const bool bFresh = Own->GetName() != RoundOneOwn && Other->GetName() != RoundOneOther;
@@ -809,7 +930,7 @@ private:
             }
         }
 
-        if (StageValue >= 10 && RowIs(DriverRow, 1, 1, 1, 100) && RowIs(ObserverRow, 0, 1, 0, 24) &&
+        if (StageValue >= 10 && StageValue < 70 && RowIs(DriverRow, 1, 1, 1, 100) && RowIs(ObserverRow, 1, 1, 1, 100) &&
             GS->Match.ScoreOne == 1 && GS->Match.ScoreTwo == 1 && BoardStep >= 99)
         {
             Check(TEXT("stats_replicated_final"), true, FString::Printf(TEXT("%s; %s"), *Describe(DriverRow), *Describe(ObserverRow)));
@@ -867,7 +988,7 @@ private:
                     FocusNow == FocusBefore.Pin() && (!FocusNow.IsValid() || FocusNow != Widget);
                 const bool bContent = Model.bHasMatch && Model.Teams.Num() == 2 && DriverLine && ObserverLine &&
                     DriverLine->Kills == 1 && DriverLine->HeadshotKills == 1 && DriverLine->Deaths == 0 && DriverLine->DamageDealt == 100 &&
-                    ObserverLine->Deaths == 1 && ObserverLine->DamageDealt == 24 && DriverLine->PingMs >= 0 && ObserverLine->PingMs >= 0 &&
+                    ObserverLine->Deaths == 1 && ObserverLine->DamageDealt == 0 && DriverLine->PingMs >= 0 && ObserverLine->PingMs >= 0 &&
                     DriverLine->Life == EVSScoreboardLife::Alive && (ObserverLine->Life == EVSScoreboardLife::Dead || GS->Match.Phase == static_cast<uint8>(VSDR::Phase::Preparation));
                 Check(TEXT("scoreboard_tab_shows"), bShown && bContent,
                     FString::Printf(TEXT("Tab held: visible=%d hitTestInvisible=%d focusable=%d focusUnchanged=%d (%s); driver K%d D%d HS%d DMG%d ping%d %s; observer K%d D%d DMG%d ping%d %s; status '%s'"),
@@ -959,8 +1080,9 @@ private:
     TWeakObjectPtr<UVSDamageSubsystem> BoundDamage;
     TWeakObjectPtr<AVSCharacter> RoundOneDriver, RoundOneObserver;
     FString RoundOneOwn, RoundOneOther;
-    int32 SeenStage = -1;
-    double SeenStageAt = 0.0, FreshSeenAt = -1.0;
+    int32 SeenStage = -1, FiredStage = -1, StepEvents = 0, DriverIncome = -1, ObserverIncome = -1;
+    double SeenStageAt = 0.0, FreshSeenAt = -1.0, FireReleaseAt = 0.0;
+    bool bFireHeld = false, bEquipHeld = false, bEquipSent = false;
     TWeakPtr<SWidget> FocusBefore, FocusMenu;
     uint64 RoundOne = 0;
     int32 KillEvents = 0, BoardStep = 0;

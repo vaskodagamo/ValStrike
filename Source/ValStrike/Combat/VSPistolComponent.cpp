@@ -11,6 +11,6 @@ UVSPistolComponent::UVSPistolComponent()
     FireInterval = 0.2f;
     ReloadDuration = 1.6f;
     Range = 8000.0f;
-    BodyDamage = 20.0f;
-    HeadDamage = 60.0f;
+    // Pistol row of the zone table: 20 upper torso, lethal head (was 20 body / 60 head).
+    DamageClass = ValStrike::Damage::WeaponClass::Pistol;
 }

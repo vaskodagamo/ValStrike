@@ -6,14 +6,13 @@
 #include "VSCharacter.generated.h"
 
 class UCameraComponent;
-class UBoxComponent;
-class USphereComponent;
 class UPrimitiveComponent;
 class UVSRifleComponent;
 class UVSPistolComponent;
 class UVSWeaponComponent;
 class UVSWeaponLoadoutComponent;
 class UVSHealthComponent;
+class UVSHitZoneSet;
 class UVSRiflePresentationComponent;
 class UVSPistolPresentationComponent;
 class UVSWeaponPresentationComponent;
@@ -55,6 +54,8 @@ public:
     bool CanMatchMove() const;
     bool CanMatchCombat() const;
     void SetMatchGates(bool bMove, bool bCombat);
+    // Hidden locational hit zones; the server's weapon traces resolve damage against them.
+    UVSHitZoneSet* GetHitZones() const { return HitZones; }
     bool IsHeadHit(const UPrimitiveComponent* Component) const;
     virtual FVector GetPawnViewLocation() const override;
     virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
@@ -107,10 +108,7 @@ private:
     TObjectPtr<UVSHealthComponent> Health;
 
     UPROPERTY(VisibleAnywhere, Category = "Combat")
-    TObjectPtr<UBoxComponent> BodyHitRegion;
-
-    UPROPERTY(VisibleAnywhere, Category = "Combat")
-    TObjectPtr<USphereComponent> HeadHitRegion;
+    TObjectPtr<UVSHitZoneSet> HitZones;
 
     UPROPERTY(VisibleAnywhere, Category = "View")
     TObjectPtr<UCameraComponent> FirstPersonCamera;

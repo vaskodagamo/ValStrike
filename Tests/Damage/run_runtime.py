@@ -40,12 +40,12 @@ CLIENT_CHECKS = (
 )
 REQUIRED_CHECKS = {
     "server": (
-        "zones_on_every_pawn", "zones_collision_profile", "zones_standing_layout", "stats_actor_spawned",
-        "hook_respects_preparation_gate", "zones_crouched_layout", "crouched_trace_zones", "zones_restand_layout",
-        "shadow_trace_zones", "authoritative_trace_zones", "rifle_path_unchanged", "hook_zone_damage",
-        "hook_lethal_headshot", "kill_event_once", "hook_rejects_invalid", "dead_zones_disabled",
-        "stats_kill_attributed", "stats_life_state", "fresh_pawn_zones", "stats_persist_across_rounds",
-        "unattributed_death_counted",
+        "zones_on_every_pawn", "legacy_regions_removed", "zones_collision_profile", "zones_standing_layout",
+        "stats_actor_spawned", "hook_respects_preparation_gate", "zones_crouched_layout", "crouched_trace_zones",
+        "zones_restand_layout", "weapon_trace_zones", "real_fire_thigh", "real_fire_upper_arm", "real_fire_foot",
+        "real_fire_lethal_headshot", "kill_event_once", "economy_kill_reward", "hook_rejects_invalid",
+        "dead_zones_disabled", "stats_kill_attributed", "stats_life_state", "fresh_pawn_zones",
+        "stats_persist_across_rounds", "real_fire_pistol_headshot", "stats_final",
     ),
     "driver": CLIENT_CHECKS,
     "observer": CLIENT_CHECKS + ("client_debug_draw",),
