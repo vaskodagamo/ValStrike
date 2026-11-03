@@ -4,6 +4,9 @@
 #include "GameFramework/HUD.h"
 #include "VSHUD.generated.h"
 
+struct FVSMatchHUDData;
+struct FVSRoundHUDPresentation;
+
 UCLASS()
 class VALSTRIKE_API AVSHUD : public AHUD
 {
@@ -15,4 +18,10 @@ public:
 private:
     void DrawLabel(const FString& Text, float X, float Y, float Height, const FLinearColor& Color,
         bool bCentered = false);
+    float LabelWidth(const FString& Text, float Height) const;
+    void DrawBoundedLabel(const FString& Text, float X, float Y, float Height, float Width,
+        const FLinearColor& Color, bool bCentered = false);
+    void DrawWrappedLabel(const FString& Text, float X, float Y, float Height, float Width,
+        const FLinearColor& Color, bool bCentered = false);
+    void DrawMatchHUD(const FVSMatchHUDData& Data, const FVSRoundHUDPresentation& View, float Scale);
 };
