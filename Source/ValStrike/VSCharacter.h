@@ -6,6 +6,11 @@
 #include "VSCharacter.generated.h"
 
 class UCameraComponent;
+class UBoxComponent;
+class USphereComponent;
+class UPrimitiveComponent;
+class UVSRifleComponent;
+class UVSHealthComponent;
 class UEnhancedInputLocalPlayerSubsystem;
 class UInputAction;
 class UInputMappingContext;
@@ -24,6 +29,10 @@ public:
     FVSPlayerHUDData GetHUDData() const;
     // Release held combat input when a menu takes focus; gameplay stays server-owned.
     void StopCombatInput();
+    UVSRifleComponent* GetRifleComponent() const { return Rifle; }
+    UVSHealthComponent* GetHealthComponent() const { return Health; }
+    bool IsHeadHit(const UPrimitiveComponent* Component) const;
+    virtual FVector GetPawnViewLocation() const override;
 
     virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
     virtual void OnStartCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust) override;
@@ -35,6 +44,10 @@ protected:
 
 private:
     void CreateInputMappings();
+    void BeginFire();
+    void BeginReload();
+    void HandleHealthChanged();
+    void BeginJump();
     void Move(const FInputActionValue& Value);
     void LookYaw(const FInputActionValue& Value);
     void LookPitch(const FInputActionValue& Value);
@@ -43,6 +56,18 @@ private:
     void BeginWalk();
     void EndWalk();
     void UpdatePrototypeVisuals();
+
+    UPROPERTY(VisibleAnywhere, Category = "Combat")
+    TObjectPtr<UVSRifleComponent> Rifle;
+
+    UPROPERTY(VisibleAnywhere, Category = "Combat")
+    TObjectPtr<UVSHealthComponent> Health;
+
+    UPROPERTY(VisibleAnywhere, Category = "Combat")
+    TObjectPtr<UBoxComponent> BodyHitRegion;
+
+    UPROPERTY(VisibleAnywhere, Category = "Combat")
+    TObjectPtr<USphereComponent> HeadHitRegion;
 
     UPROPERTY(VisibleAnywhere, Category = "View")
     TObjectPtr<UCameraComponent> FirstPersonCamera;
@@ -79,6 +104,12 @@ private:
 
     UPROPERTY(Transient)
     TObjectPtr<UInputAction> WalkAction;
+
+    UPROPERTY(Transient)
+    TObjectPtr<UInputAction> FireAction;
+
+    UPROPERTY(Transient)
+    TObjectPtr<UInputAction> ReloadAction;
 
     TWeakObjectPtr<UEnhancedInputLocalPlayerSubsystem> InputSubsystem;
     bool bWalkHeld = false;
