@@ -1,0 +1,30 @@
+{
+  "name": "ValStrike R01 Kestrel — stylized rifle concept palette",
+  "date_europe_berlin": "2026-11-03",
+  "color_space": "sRGB",
+  "status": "Original game asset concept, not final gameplay appearance",
+  "colors": [
+    {
+      "role": "Graphite receiver and structure",
+      "hex": "#28343B"
+    },
+    {
+      "role": "Muted teal handguard and stock panels",
+      "hex": "#416F70"
+    },
+    {
+      "role": "Restrained cream receiver inset",
+      "hex": "#C8B89E"
+    },
+    {
+      "role": "Tiny amber graphic accents",
+      "hex": "#D39B58"
+    }
+  ],
+  "constraints": [
+    "Clean, broad, stylized matte planes and deliberate chamfers",
+    "Graphite and teal dominant; cream subordinate; amber sparse",
+    "No photographic scans, photorealistic grime, or third-party textures",
+    "Concept image swatches approximate; JSON hex values authoritative"
+  ]
+}
