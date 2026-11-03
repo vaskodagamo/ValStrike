@@ -92,6 +92,17 @@ Engine-free checks run on GitHub-hosted runners so parallel branches are verifie
 | ID | Task | Status | Completion condition |
 | --- | --- | --- | --- |
 | CI-01 | Run engine-free checks on every PR and push to main | In progress | `.github/workflows/checks.yml` merged to main; an observed GitHub Actions run passes the Python suites, standalone C++ rules/presentation tests (normal and sanitizer, g++ and clang++), `git diff --check` and LFS checks |
+## Server and hosting path
+
+Proposed on 2026-11-03 in [decision 0002](decisions/0002-server-hosting.md): one disposable server process per match, grown in stages. SRV-01/02 unblock the existing SET-03 packaged-server gate; they do not replace it.
+
+| ID | Task | Status | Depends on | Completion condition |
+| --- | --- | --- | --- | --- |
+| SRV-01 | Obtain Unreal source access | Blocked | Account owner links Epic and GitHub and accepts the EpicGames organization invitation | `EpicGames/UnrealEngine` is reachable from the project account; the exact 5.8.4 source reference and commit are recorded in SETUP.md |
+| SRV-02 | Establish a Linux server build environment | Queued | SRV-01 | A recorded Linux CI runner or VM (official Epic image or pinned source build) packages `ValStrikeServer` for Linux from a recorded revision; exact commands, disk use and build time in SETUP.md |
+| SRV-03 | Add the provider-neutral server contract | Ready | SET-02 | Allowlisted startup parameters, lifecycle states with a logging `Local` provider, opt-in exit-when-done, pluggable `PreLogin` admission, startup version line and structured match result; existing smoke suites still pass; a server/client run shows a clean exit after match completion and after an empty timeout |
+| SRV-04 | Run several matches on one host | Queued | SET-03, SRV-03 | Two or more packaged Linux servers on one machine with separate UDP ports and their own clients complete concurrent matches; per-match CPU, memory and bandwidth measured at the recorded tick rate |
+| SRV-05 | Choose fleet orchestration and backend | Deferred | REL-03, NEXT-05 | Player demand, regions and budget agreed; orchestrator, matchmaking and identity choice recorded in a new decision |
 
 ## Follow-on work
 

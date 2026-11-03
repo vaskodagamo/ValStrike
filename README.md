@@ -14,6 +14,7 @@ An original desktop tactical FPS: deliberate movement and round-based combat ins
 | --- | --- |
 | [MVP plan](docs/MVP_PLAN.md) | Scope, architecture, milestones, and acceptance criteria |
 | [Engine decision](docs/decisions/0001-engine.md) | Recommendation, alternatives, AI workflow, and tradeoffs |
+| [Server hosting path](docs/decisions/0002-server-hosting.md) | Proposed dedicated-server stages toward many servers, and the server contract to build first |
 | [Setup](docs/SETUP.md) | Observed environment and first implementation steps |
 | [Backlog](docs/BACKLOG.md) | Ordered tasks, dependencies, and status |
 | [Work log](docs/WORK_LOG.md) | Work completed, verification, issues, and handoff |
