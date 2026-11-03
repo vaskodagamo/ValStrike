@@ -207,7 +207,7 @@ TSharedRef<SWidget> SVSSessionMenu::MakeSettingsPage()
         + SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 12)
         [
             SNew(STextBlock).Font(FCoreStyle::GetDefaultFontStyle("Regular", 13)).ColorAndOpacity(MenuMuted).AutoWrapText(true)
-            .Text(NSLOCTEXT("ValStrike", "SettingsHelp", "Sensitivity applies immediately. Saved on this computer only."))
+            .Text(NSLOCTEXT("ValStrike", "SettingsHelp", "Sensitivity applies at once. Saved on this computer only."))
         ]
         + SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 5)
         [

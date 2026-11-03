@@ -129,10 +129,17 @@ private:
             if (Age < 0.4) return;
             Screenshot(TEXT("menu"));
             Check(TEXT("menu_focuses_resume"), FocusedTag() == NAME_None && FocusedText() == TEXT("Resume  ·  Esc"), FocusedText());
+            Stage = 50;
+            Entered = Now;
+            break;
+        case 50:
+            // Let the session-page screenshot render before Settings opens.
+            if (Age < 0.4) return;
             SlateKey(EKeys::Tab);
             Check(TEXT("tab_reaches_settings_button"), IsFocused(TEXT("VS.Settings")), FocusedTag().ToString());
             SlateKey(EKeys::Enter);
-            Next(Now);
+            Stage = 6;
+            Entered = Now;
             break;
         case 6:
             if (Age < 0.3) return;
