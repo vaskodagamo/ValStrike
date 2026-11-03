@@ -300,7 +300,11 @@ void AVSHUD::DrawHUD()
     {
         const float AmmoX = Canvas->SizeX - Margin - 230.0f * Scale;
         DrawRect(Panel, AmmoX, PanelY, 230.0f * Scale, 90.0f * Scale);
-        DrawLabel(TEXT("AMMO"), AmmoX + 16.0f * Scale, PanelY + 11.0f * Scale, 13.0f * Scale, Muted);
+        // Equipped weapon name; muted with a status while its equip time runs.
+        const FString WeaponTitle = Data.WeaponName.IsEmpty() ? FString(TEXT("AMMO")) : Data.WeaponName;
+        DrawBoundedLabel(Data.bEquipping ? WeaponTitle + TEXT("  EQUIPPING") : WeaponTitle,
+            AmmoX + 16.0f * Scale, PanelY + 11.0f * Scale, 13.0f * Scale, 198.0f * Scale,
+            Data.bEquipping || Data.WeaponName.IsEmpty() ? Muted : Accent);
         DrawLabel(FString::FromInt(FMath::Max(0, Data.MagazineAmmo)), AmmoX + 16.0f * Scale,
             PanelY + 31.0f * Scale, 34.0f * Scale, Data.MagazineAmmo <= 0 ? Warning : Ink);
         DrawLabel(FString::Printf(TEXT("/ %d"), FMath::Max(0, Data.MagazineCapacity)),
@@ -327,9 +331,10 @@ void AVSHUD::DrawHUD()
     {
         const float HelpY = Canvas->SizeY - Margin - 48.0f * Scale;
         DrawRect(Panel, CenterX - 198.0f * Scale, HelpY, 396.0f * Scale, 48.0f * Scale);
-        DrawLabel(TEXT("WASD  MOVE    MOUSE  LOOK    SPACE  JUMP"), CenterX,
+        DrawLabel(Data.bHasWeapon ? TEXT("WASD  MOVE    SPACE  JUMP    SHIFT  WALK    CTRL  CROUCH")
+            : TEXT("WASD  MOVE    MOUSE  LOOK    SPACE  JUMP"), CenterX,
             HelpY + 8.0f * Scale, 12.0f * Scale, Muted, true);
-        DrawLabel(Data.bHasWeapon ? TEXT("SHIFT  WALK    CTRL  CROUCH    R  RELOAD") : TEXT("SHIFT  WALK    CTRL  CROUCH"),
+        DrawLabel(Data.bHasWeapon ? TEXT("R  RELOAD    1  RIFLE    2  PISTOL    Q  LAST WEAPON") : TEXT("SHIFT  WALK    CTRL  CROUCH"),
             CenterX, HelpY + 27.0f * Scale, 12.0f * Scale, Muted, true);
     }
 }

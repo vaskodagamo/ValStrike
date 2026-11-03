@@ -45,10 +45,15 @@ REQUIRED_SCREENSHOTS = {"server": (), "owner": CLIENT_SCREENSHOTS + ("menu",),
                         "observer": CLIENT_SCREENSHOTS}
 
 
+# 7851..7854: original rifle-presentation stream; 7891..7894: weapons stream,
+# which now owns Presentation/. Other parallel sessions use different ports.
+PORT_RANGES = ((7851, 7854), (7891, 7894))
+
+
 def presentation_port(value):
     parsed = ue.port(value)
-    if not 7851 <= parsed <= 7854:
-        raise argparse.ArgumentTypeError("Rifle presentation ports are reserved to 7851..7854")
+    if not any(low <= parsed <= high for low, high in PORT_RANGES):
+        raise argparse.ArgumentTypeError("Rifle presentation ports are reserved to 7851..7854 and 7891..7894")
     return parsed
 
 
@@ -129,15 +134,16 @@ def collect_screenshots(output, required_screenshots=None):
     return captures
 
 
-def launch_command(executable, project, output, role, port):
+def launch_command(executable, project, output, role, port, map_key="graybox"):
     if role not in ROLES:
         raise ValueError(f"Unknown presentation role: {role}")
     port = presentation_port(port)
-    destination = (f"{ue.MAP}?game={GAME_MODE}" if role == "server"
+    destination = (f"{ue.selected_map(map_key)}?game={GAME_MODE}" if role == "server"
                    else f"127.0.0.1:{port}?Name=VSPresentation{role.title()}")
     command = [str(executable), str(project), destination,
                "-server" if role == "server" else "-game", "-nosound",
                f"-VSRiflePresentationTest={role}", "-VSRiflePresentationStart=30",
+               f"-VSRiflePresentationMap={map_key}",
                f"-VSRiflePresentationOutput={output / (role + '.json')}",
                f"-abslog={output / (role + '.log')}", "-ExecCmds=t.MaxFPS 60"]
     if role == "server":
@@ -191,7 +197,9 @@ def evidence_metadata(root):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--engine", help="Unreal root; defaults to UE_ROOT")
-    parser.add_argument("--port", type=presentation_port, default=7851)
+    parser.add_argument("--port", type=presentation_port, default=7891)
+    parser.add_argument("--map", choices=tuple(ue.MAPS), default="graybox",
+                        help="site01 keeps the map's authored lighting; graybox runs the neutral/dim lighting study")
     parser.add_argument("--timeout", type=float, default=150)
     args = parser.parse_args(argv)
     if not math.isfinite(args.timeout) or args.timeout <= 40:
@@ -201,10 +209,10 @@ def main(argv=None):
     engine = ue.engine_path(args.engine)
     executable = ue.editor_binary(engine, ue.host_platform())
     project = ue.project_file(root)
-    ue.map_file(root)
+    ue.map_file(root, args.map)
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as probe:
         probe.bind(("127.0.0.1", args.port))
-    run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ") + "_" + uuid.uuid4().hex[:6]
+    run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ") + "_" + args.map + "_" + uuid.uuid4().hex[:6]
     output = root / "Saved/Tests/RiflePresentation" / run_id
     output.mkdir(parents=True)
     metadata = evidence_metadata(root)
@@ -222,7 +230,7 @@ def main(argv=None):
     handlers = {sig: signal.signal(sig, interrupted) for sig in (signal.SIGINT, signal.SIGTERM, signal.SIGHUP)}
 
     def launch(role):
-        command = launch_command(executable, project, output, role, args.port)
+        command = launch_command(executable, project, output, role, args.port, args.map)
         commands[role] = command
         stream = (output / f"{role}.stdout.log").open("w")
         streams.append(stream)
@@ -271,6 +279,9 @@ def main(argv=None):
     passed = not problem and bool(checks) and all(check["passed"] for check in checks)
     result = {**metadata, "passed": passed, "error": problem, "engine": str(engine),
               "engine_build": json.loads((engine / "Build/Build.version").read_text()),
+              "map": ue.selected_map(args.map),
+              "lighting": ("authored map lighting (no fixture override)" if args.map == "site01"
+                           else "fixture neutral 3.0/1.0 and dim 0.35/0.25 directional/sky intensities"),
               "conditions": "Local editor server and two rendered 1000x700 clients, no audio, loopback, no artificial latency/loss",
               "commands": commands, "checks": checks, "screenshots": captures, "reports": reports}
     (output / "result.json").write_text(json.dumps(result, indent=2) + "\n")

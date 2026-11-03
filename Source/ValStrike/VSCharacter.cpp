@@ -2,8 +2,12 @@
 
 #include "Camera/CameraComponent.h"
 #include "Combat/VSHealthComponent.h"
+#include "Combat/VSPistolComponent.h"
 #include "Combat/VSRifleComponent.h"
+#include "Combat/VSWeaponLoadoutComponent.h"
 #include "Combat/VSCombatSmoke.h"
+#include "Presentation/VSPistolPresentationComponent.h"
+#include "Presentation/VSRiflePresentationComponent.h"
 #include "Components/BoxComponent.h"
 #include "Components/SphereComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -23,6 +27,7 @@
 #include "InputModifiers.h"
 #include "Net/UnrealNetwork.h"
 #include "UObject/ConstructorHelpers.h"
+#include "VSPlayerController.h"
 #include "ValStrike.h"
 
 AVSCharacter::AVSCharacter()
@@ -34,6 +39,10 @@ AVSCharacter::AVSCharacter()
     GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Ignore);
     Health = CreateDefaultSubobject<UVSHealthComponent>(TEXT("Health"));
     Rifle = CreateDefaultSubobject<UVSRifleComponent>(TEXT("Rifle"));
+    Pistol = CreateDefaultSubobject<UVSPistolComponent>(TEXT("Pistol"));
+    Loadout = CreateDefaultSubobject<UVSWeaponLoadoutComponent>(TEXT("Loadout"));
+    RiflePresentation = CreateDefaultSubobject<UVSRiflePresentationComponent>(TEXT("RiflePresentation"));
+    PistolPresentation = CreateDefaultSubobject<UVSPistolPresentationComponent>(TEXT("PistolPresentation"));
     BodyHitRegion = CreateDefaultSubobject<UBoxComponent>(TEXT("BodyHitRegion"));
     HeadHitRegion = CreateDefaultSubobject<USphereComponent>(TEXT("HeadHitRegion"));
     for (UShapeComponent* Region : {static_cast<UShapeComponent*>(BodyHitRegion), static_cast<UShapeComponent*>(HeadHitRegion)})
@@ -105,17 +114,55 @@ FVSPlayerHUDData AVSCharacter::GetHUDData() const
     Data.Health = Health->GetHealth();
     Data.MaxHealth = Health->GetMaxHealth();
     Data.bAlive = Health->IsAlive();
-    Data.bHasWeapon = true;
-    Data.MagazineAmmo = Rifle->GetState().Magazine;
-    Data.MagazineCapacity = Rifle->GetMagazineCapacity();
-    Data.ReserveAmmo = Rifle->GetState().Reserve;
-    Data.bReloading = Rifle->GetState().bReloading;
+    // Ammo and reload fields describe the equipped weapon (the rifle by default).
+    if (const UVSWeaponComponent* Weapon = GetEquippedWeapon())
+    {
+        Data.bHasWeapon = true;
+        Data.MagazineAmmo = Weapon->GetState().Magazine;
+        Data.MagazineCapacity = Weapon->GetMagazineCapacity();
+        Data.ReserveAmmo = Weapon->GetState().Reserve;
+        Data.bReloading = Weapon->GetState().bReloading;
+        Data.WeaponName = Weapon->GetDisplayName();
+        Data.bEquipping = Loadout->IsEquipping();
+    }
     return Data;
+}
+
+UVSWeaponComponent* AVSCharacter::GetWeapon(EVSWeaponSlot Slot) const
+{
+    return Loadout ? Loadout->GetWeapon(Slot) : nullptr;
+}
+
+UVSWeaponComponent* AVSCharacter::GetEquippedWeapon() const
+{
+    return Loadout ? Loadout->GetEquippedWeapon() : nullptr;
+}
+
+EVSWeaponSlot AVSCharacter::GetEquippedWeaponSlot() const
+{
+    return Loadout ? Loadout->GetEquippedSlot() : EVSWeaponSlot::Rifle;
+}
+
+uint32 AVSCharacter::GetAcceptedShotCount(EVSWeaponSlot Slot) const
+{
+    const UVSWeaponComponent* Weapon = GetWeapon(Slot);
+    return Weapon ? Weapon->GetState().ShotsFired : 0;
+}
+
+UVSWeaponPresentationComponent* AVSCharacter::GetWeaponPresentation(EVSWeaponSlot Slot) const
+{
+    switch (Slot)
+    {
+    case EVSWeaponSlot::Rifle: return RiflePresentation;
+    case EVSWeaponSlot::Pistol: return PistolPresentation;
+    }
+    return nullptr;
 }
 
 void AVSCharacter::StopCombatInput()
 {
     Rifle->StopFire();
+    Pistol->StopFire();
 }
 
 bool AVSCharacter::CanMatchMove() const
@@ -145,6 +192,7 @@ void AVSCharacter::OnRep_MatchGates()
         // Also cancels an authoritative reload; opening a gate never resumes
         // previously held fire or a canceled reload.
         Rifle->OwnerDied();
+        Pistol->OwnerDied();
     }
     UCharacterMovementComponent* Movement = GetCharacterMovement();
     if (!CanMatchMove())
@@ -175,6 +223,18 @@ void AVSCharacter::BeginPlay()
     Health->OnLifeStateChanged.AddUObject(this, &AVSCharacter::HandleHealthChanged);
     UpdatePrototypeVisuals();
     HandleHealthChanged();
+    // Weapon visuals are cosmetic; a dedicated server never creates them.
+    if (GetNetMode() != NM_DedicatedServer)
+    {
+        if (!RiflePresentation->Initialize(this, FirstPersonCamera, GetMesh()))
+        {
+            UE_LOG(LogValStrike, Error, TEXT("Rifle presentation failed to initialize on %s; no rifle visual is shown."), *GetName());
+        }
+        if (!PistolPresentation->Initialize(this, FirstPersonCamera, GetMesh()))
+        {
+            UE_LOG(LogValStrike, Error, TEXT("Pistol presentation failed to initialize on %s; no pistol visual is shown."), *GetName());
+        }
+    }
     ValStrikeTests::StartCombatSmoke();
 }
 
@@ -213,6 +273,9 @@ void AVSCharacter::CreateInputMappings()
     WalkAction = MakeAction(TEXT("Walk"), EInputActionValueType::Boolean);
     FireAction = MakeAction(TEXT("Fire"), EInputActionValueType::Boolean);
     ReloadAction = MakeAction(TEXT("Reload"), EInputActionValueType::Boolean);
+    EquipRifleAction = MakeAction(TEXT("EquipRifle"), EInputActionValueType::Boolean);
+    EquipPistolAction = MakeAction(TEXT("EquipPistol"), EInputActionValueType::Boolean);
+    EquipLastAction = MakeAction(TEXT("EquipLast"), EInputActionValueType::Boolean);
 
     const auto MapMovementKey = [this](FKey Key, bool bNegate, bool bUseYAxis)
     {
@@ -239,6 +302,9 @@ void AVSCharacter::CreateInputMappings()
     MovementMapping->MapKey(WalkAction, EKeys::LeftShift);
     MovementMapping->MapKey(FireAction, EKeys::LeftMouseButton);
     MovementMapping->MapKey(ReloadAction, EKeys::R);
+    MovementMapping->MapKey(EquipRifleAction, EKeys::One);
+    MovementMapping->MapKey(EquipPistolAction, EKeys::Two);
+    MovementMapping->MapKey(EquipLastAction, EKeys::Q);
 }
 
 void AVSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -277,6 +343,9 @@ void AVSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
     Input->BindAction(FireAction, ETriggerEvent::Completed, this, &AVSCharacter::StopCombatInput);
     Input->BindAction(FireAction, ETriggerEvent::Canceled, this, &AVSCharacter::StopCombatInput);
     Input->BindAction(ReloadAction, ETriggerEvent::Started, this, &AVSCharacter::BeginReload);
+    Input->BindAction(EquipRifleAction, ETriggerEvent::Started, this, &AVSCharacter::EquipRifle);
+    Input->BindAction(EquipPistolAction, ETriggerEvent::Started, this, &AVSCharacter::EquipPistol);
+    Input->BindAction(EquipLastAction, ETriggerEvent::Started, this, &AVSCharacter::EquipLast);
 
     PlayerController->SetInputMode(FInputModeGameOnly());
     PlayerController->bShowMouseCursor = false;
@@ -299,16 +368,28 @@ void AVSCharacter::Move(const FInputActionValue& Value)
 
 void AVSCharacter::LookYaw(const FInputActionValue& Value)
 {
-    AddControllerYawInput(Value.Get<float>() * MouseSensitivity);
+    // The local player's saved setting; MouseSensitivity covers other controllers.
+    const AVSPlayerController* PC = Cast<AVSPlayerController>(Controller);
+    AddControllerYawInput(Value.Get<float>() * (PC ? PC->GetMouseSensitivity() : MouseSensitivity));
 }
 
 void AVSCharacter::LookPitch(const FInputActionValue& Value)
 {
-    AddControllerPitchInput(Value.Get<float>() * MouseSensitivity);
+    const AVSPlayerController* PC = Cast<AVSPlayerController>(Controller);
+    AddControllerPitchInput(Value.Get<float>() * (PC ? PC->GetMouseSensitivity() : MouseSensitivity));
 }
 
-void AVSCharacter::BeginFire() { if (CanMatchCombat()) { Rifle->StartFire(); } }
-void AVSCharacter::BeginReload() { if (CanMatchCombat()) { Rifle->Reload(); } }
+void AVSCharacter::BeginFire()
+{
+    if (UVSWeaponComponent* Weapon = GetEquippedWeapon(); Weapon && CanMatchCombat()) { Weapon->StartFire(); }
+}
+void AVSCharacter::BeginReload()
+{
+    if (UVSWeaponComponent* Weapon = GetEquippedWeapon(); Weapon && CanMatchCombat()) { Weapon->Reload(); }
+}
+void AVSCharacter::EquipRifle() { Loadout->RequestEquip(EVSEquipRequest::Rifle); }
+void AVSCharacter::EquipPistol() { Loadout->RequestEquip(EVSEquipRequest::Pistol); }
+void AVSCharacter::EquipLast() { Loadout->RequestEquip(EVSEquipRequest::Last); }
 void AVSCharacter::BeginJump() { if (CanMatchMove()) { Jump(); } }
 void AVSCharacter::BeginCrouch() { if (CanMatchMove()) { Crouch(); } }
 void AVSCharacter::EndCrouch() { if (CanMatchMove()) { UnCrouch(); } }

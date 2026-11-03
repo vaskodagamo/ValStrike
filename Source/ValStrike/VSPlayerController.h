@@ -28,6 +28,12 @@ public:
     void QuitSession();
     bool CanDisconnect() const;
     UVSSessionState* GetSessionState() const;
+    TSharedPtr<SVSSessionMenu> GetSessionMenu() const { return SessionMenu; }
+
+    // Client-local look sensitivity from this machine's settings; never replicated.
+    float GetMouseSensitivity() const;
+    void SetMouseSensitivity(float Value);
+    void SaveUserSettings();
 
     // Practice mode has no match data. The match controller overrides these hooks.
     virtual FVSMatchHUDData GetMatchHUDData() const;
@@ -39,4 +45,6 @@ private:
     void ApplyMenuFocus();
     TSharedPtr<SVSSessionMenu> SessionMenu;
     bool bSessionMenuOpen = false;
+    mutable TOptional<float> MouseSensitivity;
+    bool bUserSettingsDirty = false;
 };

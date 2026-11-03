@@ -26,3 +26,34 @@ Require `Result={Success}` for `ValStrike.UI.ServerAddress`. The existing engine
 Controls: Escape opens/resumes; Tab/Shift+Tab moves focus; Enter submits the address or activates a button; mouse buttons use standard Slate controls. Escape cancels an in-progress connection. Cancelling returns to a fresh local arena because Unreal may already have disconnected the previous server. A listen host's disconnect button says **End hosted session**. Opening a menu never pauses the world.
 
 Remaining integration gates include damage/death HUD transitions, respawn while a menu is open, a real second player's activity during the menu, server shutdown, and manual mouse use. This focused test proves connected HUD responses and the menu/combat input boundary; it is not a separate server-side combat-authority test. IPv6 is explicitly unsupported in this foundation. Settings, audio, round/score UI, packaged builds, cross-machine play and latency/loss remain separate gates.
+
+## Settings screen checks
+
+Escape → **Settings** (Tab to it or click it) opens a second page of the same native Slate menu:
+
+- **Mouse sensitivity**: slider (Left/Right step 0.01) plus a numeric field (Enter commits; a comma decimal is accepted). Range 0.02–1.00, default 0.12, stored with 0.001 precision. Out-of-range numbers clamp; non-numbers are rejected with an error and the previous value stays. A change applies at once to the local player's look (`AVSCharacter::LookYaw/LookPitch` read it from `AVSPlayerController`). It is client-local and never replicated.
+- **Window mode / resolution**: Fullscreen, Windowed Fullscreen or Windowed, plus a resolution (standard 16:9/16:10 sizes from 1280×720 that fit the work area, plus the current window size, for Windowed; the display's modes for Fullscreen; the desktop size for Windowed Fullscreen). Left/Right or the ‹ › arrows change the pending choice (clicking the value also advances it); nothing changes until **Apply display**, which uses `UGameUserSettings` (`SetFullscreenMode`, `SetScreenResolution`, `ConfirmVideoMode`, `ApplyResolutionSettings(false)`, `SaveSettings`).
+- **Persistence**: sensitivity lives in `[ValStrike.UserSettings] MouseSensitivity=` of this machine's `GameUserSettings.ini`, saved through `UGameUserSettings::SaveSettings` when the player leaves the page, closes the menu, quits or travels. Saving through the engine object also stores its settings version; Unreal deletes a version-less GameUserSettings file at startup. `Config/DefaultEngine.ini` is unchanged. Missing or malformed stored values fall back to 0.12.
+- Keyboard: Tab/Shift+Tab move focus (a fixed Windowed Fullscreen resolution is skipped), Left/Right change the focused slider/selector, Enter activates, Esc returns to the session page and a second Esc resumes.
+
+Unit tests (`ValStrike.UI.Settings`) cover clamp, parse, format round trip, file persistence through a temporary `FConfigFile`, default fallback, the character fallback default, the window-mode cycle and resolution list handling. They never touch the running process's GameUserSettings:
+
+```sh
+"$UE_ROOT/Engine/Binaries/Mac/UnrealEditor.app/Contents/MacOS/UnrealEditor" "$PWD/ValStrike.uproject" -nullrhi -nosound -unattended '-ExecCmds=Automation RunTests ValStrike.UI.Settings' '-TestExit=Automation Test Queue Empty' "-abslog=$PWD/Saved/Tests/UI/settings-automation.log"
+```
+
+The rendered runner starts two sequential game processes with an isolated `-UserDir` under `Saved/Tests/Settings/<run-id>/user`, so the checkout's own `Saved/Config` is never read or changed:
+
+```sh
+python3 Scripts/with_ue_slot.py -- python3 Tests/UI/test_settings.py --engine "$UE_ROOT"
+```
+
+1. **first** (`-windowed -ResX=960 -ResY=540`): checks the unset default (0.12; an injected look of 1000 MouseX/MouseY counts turns 8.4°), opens the menu with Escape and Settings with Tab+Enter, steps the slider with the arrow keys, types `5` (clamps to 1.000), `abc` (rejected with an error) and `0.36`, applies Windowed Fullscreen by keyboard, switches back to Windowed with a mouse click on the window-mode arrow, picks 1280×720 with the arrow keys and applies it, then uses the mouse for Back and Settings, returns with Esc twice and checks that the same injected look now turns 25.2° (ratio 3.0).
+2. The runner checks the saved `GameUserSettings.ini` on disk (sensitivity `0.360`, Windowed 1280×720, engine settings version).
+3. **restart** (no window arguments): the saved Windowed 1280×720 window and 0.36 sensitivity must be restored, the look must turn 25.2°, and the Settings page must show both.
+
+Look checks measure the rotation change across the injection over three frames. Physical mouse or trackpad input that reaches the game window during a run can still disturb them (one such run measured 14.6°/4.4° with camera and control disagreeing); leave the pointer alone while a rendered runner is active.
+
+Mouse clicks are synthesized through `FSlateApplication` at the widget's desktop-space centre, so they use real Slate hit-testing without moving the OS cursor. On macOS, Unreal's `FMacWindow::IsPointInWindow` rejects every point while the window is on an inactive Space, which is the case for a window launched behind another full-screen app. The runner therefore does its windowed mouse checks after the Windowed Fullscreen round trip, when macOS has activated the game, and logs `hit_testable` for every click.
+
+`--exclusive-fullscreen` also applies exclusive Fullscreen. On macOS Unreal captures the display (`CGDisplayCapture`) and may switch its display mode, so it is opt-in. Screenshots, logs, the saved ini and `result.json` are written under `Saved/Tests/Settings/<run-id>/`.

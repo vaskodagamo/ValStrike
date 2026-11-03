@@ -59,6 +59,9 @@ jobs:
       - name: Rifle presentation runner (Tests/Presentation)
         run: python3 -m unittest discover -s Tests/Presentation -p 'test_*.py' -v
 
+      - name: Server lifecycle runner (Tests/Server)
+        run: python3 -m unittest discover -s Tests/Server -p 'test_*.py' -v
+
   cpp:
     name: Standalone C++ tests (${{ matrix.compiler }})
     runs-on: ubuntu-latest
@@ -78,6 +81,12 @@ jobs:
 
       - name: Round rules with address/undefined-behavior sanitizers
         run: python3 Scripts/test_round_rules.py --compiler "${{ matrix.compiler }}" --sanitize
+
+      - name: Server contract
+        run: python3 Scripts/test_server_contract.py --compiler "${{ matrix.compiler }}"
+
+      - name: Server contract with address/undefined-behavior sanitizers
+        run: python3 Scripts/test_server_contract.py --compiler "${{ matrix.compiler }}" --sanitize
 
       - name: Rifle presentation state
         run: |
