@@ -18,7 +18,8 @@ An original desktop tactical FPS: deliberate movement and round-based combat ins
 | [Backlog](docs/BACKLOG.md) | Ordered tasks, dependencies, and status |
 | [Work log](docs/WORK_LOG.md) | Work completed, verification, issues, and handoff |
 | [Asset chat brief](docs/ASSET_BRIEF.md) | Separate environment asset batch and starting prompt |
-| [Parallel work](docs/PARALLEL_WORK.md) | Chat ownership, shared combat/HUD contract, and integration |
+| [Parallel work](docs/PARALLEL_WORK.md) | Chat history, shared combat/HUD contract, and integration |
+| [Current playtest assignments](docs/PLAYTEST_WORKSTREAMS.md) | Six coordinated follow-ups, current ownership and first Mac playtest gates |
 | [Weapon art direction](docs/WEAPON_ART_DIRECTION.md) | Pistol asset and revised rifle/pistol finishes |
 | [First tactical map](docs/MAP_BRIEF.md) | One-site layout, map ownership, spawn and objective metadata |
 | [Round rules foundation](docs/ROUND_RULES_BRIEF.md) | Isolated match/objective logic, tests and integration boundary |

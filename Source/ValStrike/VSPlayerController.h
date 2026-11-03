@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "VSMatchHUDData.h"
 #include "VSPlayerController.generated.h"
 
 class SVSSessionMenu;
@@ -27,6 +28,11 @@ public:
     void QuitSession();
     bool CanDisconnect() const;
     UVSSessionState* GetSessionState() const;
+
+    // Practice mode has no match data. The match controller overrides these hooks.
+    virtual FVSMatchHUDData GetMatchHUDData() const;
+    virtual void CancelObjectiveInput();
+    virtual void RequestMatchRematch();
 
 private:
     void CreateSessionMenu();

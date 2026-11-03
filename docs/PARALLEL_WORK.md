@@ -2,7 +2,11 @@
 
 Updated: 2026-11-03. The user requested parallel chats to accelerate the MVP. This document assigns independent deliverables; it does not waive milestone acceptance gates.
 
-## Workstreams
+## Current assignment
+
+The first batch below is historical. On 2026-11-03 the user explicitly authorized curating the existing project chats. Follow [PLAYTEST_WORKSTREAMS.md](PLAYTEST_WORKSTREAMS.md) for the active follow-ups, new checkouts and exclusive file ownership. PRs #4–#6 have now merged the weapon finishes, tactical map and rules foundation into main.
+
+## First-batch workstreams
 
 | Chat / stream | Owns | First deliverable |
 | --- | --- | --- |

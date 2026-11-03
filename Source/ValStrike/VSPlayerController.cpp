@@ -42,6 +42,14 @@ UVSSessionState* AVSPlayerController::GetSessionState() const
     return GetGameInstance() ? GetGameInstance()->GetSubsystem<UVSSessionState>() : nullptr;
 }
 
+FVSMatchHUDData AVSPlayerController::GetMatchHUDData() const
+{
+    return {};
+}
+
+void AVSPlayerController::CancelObjectiveInput() {}
+void AVSPlayerController::RequestMatchRematch() {}
+
 void AVSPlayerController::CreateSessionMenu()
 {
     if (SessionMenu || !IsLocalController() || !GetLocalPlayer() || !GetWorld()->GetGameViewport())
@@ -96,6 +104,7 @@ void AVSPlayerController::ClientRestart_Implementation(APawn* NewPawn)
     // ownership if a respawn arrives while the local menu is already open.
     if (bSessionMenuOpen)
     {
+        CancelObjectiveInput();
         if (AVSCharacter* Character = Cast<AVSCharacter>(NewPawn))
         {
             Character->StopCombatInput();
@@ -121,6 +130,7 @@ void AVSPlayerController::SetSessionMenuOpen(bool bOpen)
     }
     if (bOpen)
     {
+        CancelObjectiveInput();
         if (AVSCharacter* Character = Cast<AVSCharacter>(GetPawn()))
         {
             Character->StopCombatInput();
