@@ -4,6 +4,7 @@
 #include "Combat/VSHealthComponent.h"
 #include "Combat/VSRifleComponent.h"
 #include "Combat/VSCombatSmoke.h"
+#include "Presentation/VSRiflePresentationComponent.h"
 #include "Components/BoxComponent.h"
 #include "Components/SphereComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -34,6 +35,7 @@ AVSCharacter::AVSCharacter()
     GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Ignore);
     Health = CreateDefaultSubobject<UVSHealthComponent>(TEXT("Health"));
     Rifle = CreateDefaultSubobject<UVSRifleComponent>(TEXT("Rifle"));
+    RiflePresentation = CreateDefaultSubobject<UVSRiflePresentationComponent>(TEXT("RiflePresentation"));
     BodyHitRegion = CreateDefaultSubobject<UBoxComponent>(TEXT("BodyHitRegion"));
     HeadHitRegion = CreateDefaultSubobject<USphereComponent>(TEXT("HeadHitRegion"));
     for (UShapeComponent* Region : {static_cast<UShapeComponent*>(BodyHitRegion), static_cast<UShapeComponent*>(HeadHitRegion)})
@@ -175,6 +177,12 @@ void AVSCharacter::BeginPlay()
     Health->OnLifeStateChanged.AddUObject(this, &AVSCharacter::HandleHealthChanged);
     UpdatePrototypeVisuals();
     HandleHealthChanged();
+    // Weapon visuals are cosmetic; a dedicated server never creates them.
+    if (GetNetMode() != NM_DedicatedServer
+        && !RiflePresentation->Initialize(this, FirstPersonCamera, GetMesh()))
+    {
+        UE_LOG(LogValStrike, Error, TEXT("Rifle presentation failed to initialize on %s; no weapon visual is shown."), *GetName());
+    }
     ValStrikeTests::StartCombatSmoke();
 }
 

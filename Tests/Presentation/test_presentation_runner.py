@@ -79,9 +79,9 @@ class PresentationRunnerTests(unittest.TestCase):
                     runner.evaluate(self.reports, self.required)
 
     def test_ports_are_limited_to_assigned_presentation_range(self):
-        for value in (7851, "7852", 7853, 7854):
+        for value in (7851, "7852", 7853, 7854, 7891, "7892", 7893, 7894):
             self.assertEqual(runner.presentation_port(value), int(value))
-        for value in (7850, 7855, 7777, 0, 65536, "not-a-port"):
+        for value in (7850, 7855, 7890, 7895, 7777, 0, 65536, "not-a-port"):
             with self.subTest(value=value), self.assertRaises((ValueError, runner.argparse.ArgumentTypeError)):
                 runner.presentation_port(value)
 
@@ -103,6 +103,16 @@ class PresentationRunnerTests(unittest.TestCase):
         for role in runner.ROLES:
             self.assertIn(f"-VSRiflePresentationOutput={output / (role + '.json')}", commands[role])
             self.assertIn(f"-VSRiflePresentationTest={role}", commands[role])
+
+    def test_site01_map_selection_is_explicit_and_forwarded_to_every_role(self):
+        output = Path("/tmp/presentation")
+        commands = {role: runner.launch_command(Path("/tmp/UE"), Path("/tmp/Game.uproject"),
+                                                 output, role, 7891, "site01") for role in runner.ROLES}
+        self.assertIn(f"/Game/Maps/Site01/VS_Site01?game={runner.GAME_MODE}", commands["server"])
+        for role in runner.ROLES:
+            self.assertIn("-VSRiflePresentationMap=site01", commands[role])
+        with self.assertRaises(runner.ue.SetupError):
+            runner.launch_command(Path("/tmp/UE"), Path("/tmp/Game.uproject"), output, "server", 7891, "/Game/Other")
 
     def test_required_screenshots_are_hashed_and_missing_or_invalid_images_fail(self):
         required = {"server": (), "owner": ("neutral",), "observer": ("remote",)}

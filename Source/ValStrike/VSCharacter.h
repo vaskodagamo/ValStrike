@@ -11,6 +11,7 @@ class USphereComponent;
 class UPrimitiveComponent;
 class UVSRifleComponent;
 class UVSHealthComponent;
+class UVSRiflePresentationComponent;
 class UEnhancedInputLocalPlayerSubsystem;
 class UInputAction;
 class UInputMappingContext;
@@ -86,6 +87,10 @@ private:
 
     UPROPERTY(VisibleAnywhere, Category = "View")
     TObjectPtr<UCameraComponent> FirstPersonCamera;
+
+    // Cosmetic R01 views. Initialized only on non-dedicated instances.
+    UPROPERTY(VisibleAnywhere, Category = "Presentation")
+    TObjectPtr<UVSRiflePresentationComponent> RiflePresentation;
 
     UPROPERTY(VisibleAnywhere, Category = "Prototype")
     TObjectPtr<UStaticMeshComponent> BodyVisual;
