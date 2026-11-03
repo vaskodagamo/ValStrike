@@ -10,8 +10,14 @@ class UBoxComponent;
 class USphereComponent;
 class UPrimitiveComponent;
 class UVSRifleComponent;
+class UVSPistolComponent;
+class UVSWeaponComponent;
+class UVSWeaponLoadoutComponent;
 class UVSHealthComponent;
 class UVSRiflePresentationComponent;
+class UVSPistolPresentationComponent;
+class UVSWeaponPresentationComponent;
+enum class EVSWeaponSlot : uint8;
 class UEnhancedInputLocalPlayerSubsystem;
 class UInputAction;
 class UInputMappingContext;
@@ -31,6 +37,18 @@ public:
     // Release held combat input when a menu takes focus; gameplay stays server-owned.
     void StopCombatInput();
     UVSRifleComponent* GetRifleComponent() const { return Rifle; }
+    UVSPistolComponent* GetPistolComponent() const { return Pistol; }
+    UVSWeaponLoadoutComponent* GetLoadoutComponent() const { return Loadout; }
+    // Fixed loadout: every slot always has its weapon; null only for invalid slots.
+    UVSWeaponComponent* GetWeapon(EVSWeaponSlot Slot) const;
+    UVSWeaponComponent* GetEquippedWeapon() const;
+    EVSWeaponSlot GetEquippedWeaponSlot() const;
+    // Read-only server-accepted shots by one weapon (replicated). Each weapon's
+    // counter only advances while it is equipped; cosmetic consumers such as
+    // tracers can watch both counters independently.
+    uint32 GetAcceptedShotCount(EVSWeaponSlot Slot) const;
+    // Cosmetic weapon views (initialized only on non-dedicated instances).
+    UVSWeaponPresentationComponent* GetWeaponPresentation(EVSWeaponSlot Slot) const;
     UVSHealthComponent* GetHealthComponent() const { return Health; }
     // Practice defaults stay open. Match mode drives these gates on the server;
     // replicated gates also suppress local prediction/input while locked.
@@ -53,6 +71,9 @@ private:
     void CreateInputMappings();
     void BeginFire();
     void BeginReload();
+    void EquipRifle();
+    void EquipPistol();
+    void EquipLast();
     void HandleHealthChanged();
     void BeginJump();
     void Move(const FInputActionValue& Value);
@@ -77,6 +98,12 @@ private:
     TObjectPtr<UVSRifleComponent> Rifle;
 
     UPROPERTY(VisibleAnywhere, Category = "Combat")
+    TObjectPtr<UVSPistolComponent> Pistol;
+
+    UPROPERTY(VisibleAnywhere, Category = "Combat")
+    TObjectPtr<UVSWeaponLoadoutComponent> Loadout;
+
+    UPROPERTY(VisibleAnywhere, Category = "Combat")
     TObjectPtr<UVSHealthComponent> Health;
 
     UPROPERTY(VisibleAnywhere, Category = "Combat")
@@ -88,9 +115,12 @@ private:
     UPROPERTY(VisibleAnywhere, Category = "View")
     TObjectPtr<UCameraComponent> FirstPersonCamera;
 
-    // Cosmetic R01 views. Initialized only on non-dedicated instances.
+    // Cosmetic R01/P01 views. Initialized only on non-dedicated instances.
     UPROPERTY(VisibleAnywhere, Category = "Presentation")
     TObjectPtr<UVSRiflePresentationComponent> RiflePresentation;
+
+    UPROPERTY(VisibleAnywhere, Category = "Presentation")
+    TObjectPtr<UVSPistolPresentationComponent> PistolPresentation;
 
     UPROPERTY(VisibleAnywhere, Category = "Prototype")
     TObjectPtr<UStaticMeshComponent> BodyVisual;
@@ -130,6 +160,15 @@ private:
 
     UPROPERTY(Transient)
     TObjectPtr<UInputAction> ReloadAction;
+
+    UPROPERTY(Transient)
+    TObjectPtr<UInputAction> EquipRifleAction;
+
+    UPROPERTY(Transient)
+    TObjectPtr<UInputAction> EquipPistolAction;
+
+    UPROPERTY(Transient)
+    TObjectPtr<UInputAction> EquipLastAction;
 
     TWeakObjectPtr<UEnhancedInputLocalPlayerSubsystem> InputSubsystem;
     bool bWalkHeld = false;
