@@ -1,0 +1,567 @@
+{
+  "engine": "5.8.4-58902052+++UE5+Release-5.8",
+  "scene": "fresh unsaved editor world; no map package saved",
+  "native_front": "+Y",
+  "camera_location_cm": [
+    550.0,
+    1050.0,
+    650.0
+  ],
+  "camera_rotation": "<Struct 'Rotator' (0x47b7fdeb0) {pitch: -22.913132, yaw: -118.495639, roll: 0.000000}>",
+  "horizontal_fov_degrees": 42.0,
+  "resolution": [
+    1600,
+    1000
+  ],
+  "lighting": {
+    "key_directional_intensity": 3.0,
+    "captured_sky_intensity": 1.0,
+    "automatic_exposure": false,
+    "exposure_bias": 0.0
+  },
+  "placements": {
+    "SM_VS_Wall_400x300": [
+      -260.0,
+      -100.0,
+      0.0
+    ],
+    "SM_VS_Pillar_40x300": [
+      180.0,
+      -100.0,
+      0.0
+    ],
+    "SM_VS_Crate_100": [
+      -255.0,
+      145.0,
+      0.0
+    ],
+    "SM_VS_Cover_200x120": [
+      30.0,
+      145.0,
+      0.0
+    ],
+    "SM_VS_Vent_120x80": [
+      -60.0,
+      -85.0,
+      170.0
+    ]
+  },
+  "editor_collision_queries": {
+    "SM_VS_Wall_400x300": {
+      "assigned_component_profile": "BlockAll",
+      "component_collision_enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+      "trace_start_cm": [
+        -60.0,
+        -49.9999,
+        150.0
+      ],
+      "trace_end_cm": [
+        -60.0,
+        -170.0,
+        150.0
+      ],
+      "trace_channel": "Visibility",
+      "expected_blocking_hit": true,
+      "simple_blocking_hit": true,
+      "complex_blocking_hit": true,
+      "simple_front_face_probes": [
+        {
+          "position": "center",
+          "start_cm": [
+            -60.0,
+            -49.9999,
+            150.0
+          ],
+          "end_cm": [
+            -60.0,
+            -170.0,
+            150.0
+          ],
+          "blocking_hit": true,
+          "impact_point_cm": [
+            -60.0,
+            -100.0,
+            150.0
+          ],
+          "front_face_deviation_cm": 3e-05
+        },
+        {
+          "position": "lower_left",
+          "start_cm": [
+            -258.0,
+            -49.9999,
+            2.0
+          ],
+          "end_cm": [
+            -258.0,
+            -170.0,
+            2.0
+          ],
+          "blocking_hit": true,
+          "impact_point_cm": [
+            -258.0,
+            -100.0,
+            2.0
+          ],
+          "front_face_deviation_cm": 6e-05
+        },
+        {
+          "position": "lower_right",
+          "start_cm": [
+            138.0,
+            -49.9999,
+            2.0
+          ],
+          "end_cm": [
+            138.0,
+            -170.0,
+            2.0
+          ],
+          "blocking_hit": true,
+          "impact_point_cm": [
+            138.0,
+            -99.9999,
+            2.0
+          ],
+          "front_face_deviation_cm": 0.0
+        },
+        {
+          "position": "upper_left",
+          "start_cm": [
+            -258.0,
+            -49.9999,
+            298.0
+          ],
+          "end_cm": [
+            -258.0,
+            -170.0,
+            298.0
+          ],
+          "blocking_hit": true,
+          "impact_point_cm": [
+            -258.0,
+            -100.0,
+            298.0
+          ],
+          "front_face_deviation_cm": 6e-05
+        },
+        {
+          "position": "upper_right",
+          "start_cm": [
+            138.0,
+            -49.9999,
+            298.0
+          ],
+          "end_cm": [
+            138.0,
+            -170.0,
+            298.0
+          ],
+          "blocking_hit": true,
+          "impact_point_cm": [
+            138.0,
+            -99.9999,
+            298.0
+          ],
+          "front_face_deviation_cm": 0.0
+        }
+      ],
+      "front_face_y_world_cm": -99.9999,
+      "front_face_tolerance_cm": 0.2,
+      "corner_probe_inset_cm": 2.0
+    },
+    "SM_VS_Pillar_40x300": {
+      "assigned_component_profile": "BlockAll",
+      "component_collision_enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+      "trace_start_cm": [
+        200.0,
+        -50.0,
+        150.0
+      ],
+      "trace_end_cm": [
+        200.0,
+        -190.0,
+        150.0
+      ],
+      "trace_channel": "Visibility",
+      "expected_blocking_hit": true,
+      "simple_blocking_hit": true,
+      "complex_blocking_hit": true,
+      "simple_front_face_probes": [
+        {
+          "position": "center",
+          "start_cm": [
+            200.0,
+            -50.0,
+            150.0
+          ],
+          "end_cm": [
+            200.0,
+            -190.0,
+            150.0
+          ],
+          "blocking_hit": true,
+          "impact_point_cm": [
+            200.0,
+            -100.0,
+            150.0
+          ],
+          "front_face_deviation_cm": 0.0
+        },
+        {
+          "position": "lower_left",
+          "start_cm": [
+            182.0,
+            -50.0,
+            2.0
+          ],
+          "end_cm": [
+            182.0,
+            -190.0,
+            2.0
+          ],
+          "blocking_hit": true,
+          "impact_point_cm": [
+            182.0,
+            -100.0,
+            2.0
+          ],
+          "front_face_deviation_cm": 1e-05
+        },
+        {
+          "position": "lower_right",
+          "start_cm": [
+            218.0,
+            -50.0,
+            2.0
+          ],
+          "end_cm": [
+            218.0,
+            -190.0,
+            2.0
+          ],
+          "blocking_hit": true,
+          "impact_point_cm": [
+            218.0,
+            -100.0,
+            2.0
+          ],
+          "front_face_deviation_cm": 0.0
+        },
+        {
+          "position": "upper_left",
+          "start_cm": [
+            182.0,
+            -50.0,
+            298.0
+          ],
+          "end_cm": [
+            182.0,
+            -190.0,
+            298.0
+          ],
+          "blocking_hit": true,
+          "impact_point_cm": [
+            182.0,
+            -100.0,
+            298.0
+          ],
+          "front_face_deviation_cm": 1e-05
+        },
+        {
+          "position": "upper_right",
+          "start_cm": [
+            218.0,
+            -50.0,
+            298.0
+          ],
+          "end_cm": [
+            218.0,
+            -190.0,
+            298.0
+          ],
+          "blocking_hit": true,
+          "impact_point_cm": [
+            218.0,
+            -100.0,
+            298.0
+          ],
+          "front_face_deviation_cm": 0.0
+        }
+      ],
+      "front_face_y_world_cm": -100.0,
+      "front_face_tolerance_cm": 0.2,
+      "corner_probe_inset_cm": 2.0
+    },
+    "SM_VS_Crate_100": {
+      "assigned_component_profile": "BlockAll",
+      "component_collision_enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+      "trace_start_cm": [
+        -255.0,
+        245.0,
+        50.0
+      ],
+      "trace_end_cm": [
+        -255.0,
+        45.0,
+        50.0
+      ],
+      "trace_channel": "Visibility",
+      "expected_blocking_hit": true,
+      "simple_blocking_hit": true,
+      "complex_blocking_hit": true,
+      "simple_front_face_probes": [
+        {
+          "position": "center",
+          "start_cm": [
+            -255.0,
+            245.0,
+            50.0
+          ],
+          "end_cm": [
+            -255.0,
+            45.0,
+            50.0
+          ],
+          "blocking_hit": true,
+          "impact_point_cm": [
+            -255.0,
+            195.0,
+            50.0
+          ],
+          "front_face_deviation_cm": 1e-05
+        },
+        {
+          "position": "lower_left",
+          "start_cm": [
+            -303.0,
+            245.0,
+            2.0
+          ],
+          "end_cm": [
+            -303.0,
+            45.0,
+            2.0
+          ],
+          "blocking_hit": true,
+          "impact_point_cm": [
+            -303.0,
+            195.0,
+            2.0
+          ],
+          "front_face_deviation_cm": 1e-05
+        },
+        {
+          "position": "lower_right",
+          "start_cm": [
+            -207.0,
+            245.0,
+            2.0
+          ],
+          "end_cm": [
+            -207.0,
+            45.0,
+            2.0
+          ],
+          "blocking_hit": true,
+          "impact_point_cm": [
+            -207.0,
+            195.0,
+            2.0
+          ],
+          "front_face_deviation_cm": 0.0
+        },
+        {
+          "position": "upper_left",
+          "start_cm": [
+            -303.0,
+            245.0,
+            98.0
+          ],
+          "end_cm": [
+            -303.0,
+            45.0,
+            98.0
+          ],
+          "blocking_hit": true,
+          "impact_point_cm": [
+            -303.0,
+            195.0,
+            98.0
+          ],
+          "front_face_deviation_cm": 1e-05
+        },
+        {
+          "position": "upper_right",
+          "start_cm": [
+            -207.0,
+            245.0,
+            98.0
+          ],
+          "end_cm": [
+            -207.0,
+            45.0,
+            98.0
+          ],
+          "blocking_hit": true,
+          "impact_point_cm": [
+            -207.0,
+            195.0,
+            98.0
+          ],
+          "front_face_deviation_cm": 0.0
+        }
+      ],
+      "front_face_y_world_cm": 195.0,
+      "front_face_tolerance_cm": 0.2,
+      "corner_probe_inset_cm": 2.0
+    },
+    "SM_VS_Cover_200x120": {
+      "assigned_component_profile": "BlockAll",
+      "component_collision_enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+      "trace_start_cm": [
+        30.0,
+        245.0,
+        60.0
+      ],
+      "trace_end_cm": [
+        30.0,
+        45.0,
+        60.0
+      ],
+      "trace_channel": "Visibility",
+      "expected_blocking_hit": true,
+      "simple_blocking_hit": true,
+      "complex_blocking_hit": true,
+      "simple_front_face_probes": [
+        {
+          "position": "center",
+          "start_cm": [
+            30.0,
+            245.0,
+            60.0
+          ],
+          "end_cm": [
+            30.0,
+            45.0,
+            60.0
+          ],
+          "blocking_hit": true,
+          "impact_point_cm": [
+            30.0,
+            195.0,
+            60.0
+          ],
+          "front_face_deviation_cm": 2e-05
+        },
+        {
+          "position": "lower_left",
+          "start_cm": [
+            -68.0,
+            245.0,
+            2.0
+          ],
+          "end_cm": [
+            -68.0,
+            45.0,
+            2.0
+          ],
+          "blocking_hit": true,
+          "impact_point_cm": [
+            -68.0,
+            195.0,
+            2.0
+          ],
+          "front_face_deviation_cm": 3e-05
+        },
+        {
+          "position": "lower_right",
+          "start_cm": [
+            128.0,
+            245.0,
+            2.0
+          ],
+          "end_cm": [
+            128.0,
+            45.0,
+            2.0
+          ],
+          "blocking_hit": true,
+          "impact_point_cm": [
+            128.0,
+            195.0,
+            2.0
+          ],
+          "front_face_deviation_cm": 0.0
+        },
+        {
+          "position": "upper_left",
+          "start_cm": [
+            -68.0,
+            245.0,
+            118.0
+          ],
+          "end_cm": [
+            -68.0,
+            45.0,
+            118.0
+          ],
+          "blocking_hit": true,
+          "impact_point_cm": [
+            -68.0,
+            195.0,
+            118.0
+          ],
+          "front_face_deviation_cm": 3e-05
+        },
+        {
+          "position": "upper_right",
+          "start_cm": [
+            128.0,
+            245.0,
+            118.0
+          ],
+          "end_cm": [
+            128.0,
+            45.0,
+            118.0
+          ],
+          "blocking_hit": true,
+          "impact_point_cm": [
+            128.0,
+            195.0,
+            118.0
+          ],
+          "front_face_deviation_cm": 0.0
+        }
+      ],
+      "front_face_y_world_cm": 195.0,
+      "front_face_tolerance_cm": 0.2,
+      "corner_probe_inset_cm": 2.0
+    },
+    "SM_VS_Vent_120x80": {
+      "assigned_component_profile": "NoCollision",
+      "component_collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+      "trace_start_cm": [
+        -60.0,
+        -25.0,
+        210.0
+      ],
+      "trace_end_cm": [
+        -60.0,
+        -145.0,
+        210.0
+      ],
+      "trace_channel": "Visibility",
+      "expected_blocking_hit": false,
+      "simple_blocking_hit": false,
+      "complex_blocking_hit": false
+    }
+  },
+  "runtime_verified": false,
+  "gameplay_collision_verified": false,
+  "map_placement_verified": false,
+  "screenshot": "docs/assets/Previews/VS_Environment01_Unreal.png",
+  "capture_completed": true,
+  "elapsed_seconds": 5.17
+}

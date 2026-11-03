@@ -1,0 +1,35 @@
+{
+  "date_europe_berlin": "2026-11-03",
+  "status": "independent PLAY-01 prototype verified; full PLAY-01 human acceptance open",
+  "base_commit": "b2647a8",
+  "engine": "5.8.4-58902052",
+  "xcode": "26.1.1",
+  "editor_build": {
+    "passed": true,
+    "exit_code": 0,
+    "seconds": 22.35,
+    "command": "python3 Scripts/ue.py --engine /Users/webproduktion3/UE_5.8/UE_5.8 build --target Editor --platform Mac"
+  },
+  "layout_tests": {
+    "passed": 7,
+    "command": "python3 -m unittest discover -s Tests/Maps/Site01 -v"
+  },
+  "map_sha256": "6798356d8d029112a0dabfa3a5fa2789eebeb79b114959836070801bb989f3aa",
+  "inspection": {
+    "run_id": "a8930f9acfff4e4b9e819b42d8b36bf8",
+    "checks": 486,
+    "captures": 8,
+    "process_exit_code": 0,
+    "log": "Saved/Logs/Site01Inspection3.log"
+  },
+  "movement": {
+    "run_id": "b800475731ab40dbb738380444594470",
+    "traversals": 6,
+    "renderer": "NullRHI",
+    "process_exit_code": 0,
+    "log": "Saved/Logs/Site01Runtime7.log"
+  },
+  "human_playtest": false,
+  "multiplayer_verified": false,
+  "packaged_verified": false
+}
