@@ -203,3 +203,78 @@ The merged-head screenshots show the zones drawn alongside the new visible rifle
 ### Next action
 
 Integration reviews the PR. After the Weapons PR merges, run Phase 2 as planned above. Optionally add `Scripts/test_damage.py` (normal and `--sanitize`) and the `Tests/Damage` unittest to the engine-free CI workflow, which the server session owns.
+
+## 2026-11-04 Phase 2: weapon hits resolve through the hit zones
+
+### Request and scope
+
+The user said "go phase 2". Integration (the session that started this stream) confirmed:
+- this stream owns `VSCharacter.h/.cpp` and `Source/ValStrike/Combat/**` while Phase 2 runs;
+- pistol headshots are lethal too ("if head shot then instant dead");
+- Economy subscribes to `OnKill` from its own `Economy/` files, so this stream does not touch `Economy/**`.
+
+Branch `claude/damage-zones-phase2`, cut from main `b35fc69` after PR #22 merged.
+
+### Changes
+
+- **`AVSCharacter`:** `BodyHitRegion`/`HeadHitRegion` are removed. A default-subobject `UVSHitZoneSet HitZones` is attached to the capsule in `Authoritative` mode, so its zones block `ECC_Visibility`. `UpdatePrototypeVisuals()` calls `HitZones->RefreshLayout()`, so the zones follow crouch in the same frame. The zone set disables itself on death through the health delegate. `IsHeadHit()` now asks the zone set, and `GetHitZones()` was added.
+- **`UVSWeaponComponent::ServerRequestFire`:** the trace is unchanged (single, Visibility, shooter ignored, current server positions). A character hit now calls `UVSDamageSubsystem::ApplyWeaponHit({Shooter, Target, Hit.GetComponent(), DamageClass, Hit.Distance})`.
+  - The per-weapon `BodyDamage`/`HeadDamage` properties and getters are retired.
+  - Each weapon now names its row of the damage table through `DamageClass`: Rifle or Pistol.
+  - Pistol headshots go from 60 to lethal, by integration decision. Pistol body damage stays 20 at the upper torso.
+- **Hook API:** `OnDamage`/`OnKill`/`FVSDamageEvent` are unchanged. Kill rewards stay with Economy's own subscription; the damage path does not call `ReportKill`.
+- **Effects:** the fire path's public events and shot data are unchanged.
+- **Combat smoke:**
+  - Body shots aim at the chest (+40 cm). The capsule center is the lower torso, worth 27.
+  - The target client keeps yaw 0, as `Place()` sets it. The old per-tick yaw of 90° made the shot side-on, and a chest-height side shot meets the upper-arm zone (24) by design.
+- **Weapon smoke:** body shots aim at the chest (+40 cm). The rifle still does 30 and the pistol 20.
+- **Damage runtime smoke:** it now drives real client input.
+  - The driver aims at the observer's left thigh, right upper arm, left foot and head with the rifle. Boxes are aimed at the face toward the shooter.
+  - The observer switches to the pistol (key 2) and fires at the driver's head.
+  - New server checks: `legacy_regions_removed`, `weapon_trace_zones`, `real_fire_*`, `stats_final`. Every accepted shot logs `VSDAMAGE_SHOT` (server) and `VSDAMAGE_TAP` (client).
+
+### Verification
+
+**Policy:** on 2026-11-04 the user stopped per-session Unreal test runs: "every session running tests and compiling this is horrible waisting time and tokens". Integration runs one combined build and runtime pass for the batch. This stream compiles the Editor once on its final commit and runs only engine-free tests. Runtime verification of the final commit is **pending (integration batch)**.
+
+**Engine-free tests at the final source:**
+- `python3 Scripts/test_damage.py`, normal and `--sanitize`: damage 14/14 cases (1091 checks), stats 11/11 (112 checks).
+- `python3 -m unittest discover` in `Tests/Damage`, `Tests/Combat`, `Tests/Weapons`, `Tests/Match`, `Tests/Presentation`, `Tests/Economy`, `Tests/Playtest` and `Tests/` (`test_ue*.py`): all OK.
+- `git diff --check` is clean.
+
+**Runtime results from intermediate commits** (Development editor, loopback; kept as evidence, not final acceptance):
+
+| Run | Commit | Result | Notes |
+| --- | --- | --- | --- |
+| Damage smoke `Saved/Tests/DamageRuntime/20261103T224519Z_9950bf` | `cb138a7` | 45/47 | Every real-fire check passed. Rifle: thigh 24 (health 76), upper arm 24 (52), foot 17 (35), head lethal (35 applied). Pistol (key 2): head lethal (100 applied). Zones were Authoritative on every pawn, with no other primitive answering Visibility. The 2 failures were economy-income sampling (round-win credit in the same frame). Those checks are gone, now that Economy owns its `OnKill` subscription. |
+| Damage smoke `Saved/Tests/DamageRuntime/20261103T225816Z_ad3d12` | `6c0bf83` | fail | The real-fire thigh shot (1st) and head shot (4th) were accepted by the server but damaged nothing; the upper-arm and foot shots registered. The harness's dead-victim probe then hit the still-living observer. Cause not yet known. `3952d4b` adds `VSDAMAGE_SHOT`/`VSDAMAGE_TAP` logs for every shot, widens the step windows to 15 s for stalling rendered clients, and runs the dead-victim probes only after a real kill. |
+| Weapons practice `Saved/Tests/Weapons/20261103T230143Z_practice_ecad47` | `6c0bf83` | 74/74 | Includes pistol damage through the zones (body shots at the chest). |
+| Weapons match `Saved/Tests/Weapons/20261103T230237Z_match_3ef03a` | `6c0bf83` | 29/29 | Site01 match mode, rendered. |
+| Match `Saved/Tests/Match/20261103T230354Z_d65e43` | `6c0bf83` | 43/43 | |
+| Combat `Saved/Tests/Combat/20261103T230015Z_765278` | `6c0bf83` | 49/55 | The target was side-on (its client forced yaw 90), so the chest-height "body" shot hit the upper-arm zone (24). Fixed in `3952d4b` by keeping the target's placement yaw; not rerun. |
+
+Movement was interrupted before completing. Combat-look and the Economy network smoke were not run on Phase 2.
+
+**Pending integration batch:** build the Editor target, then run each command wrapped in `python3 Scripts/with_ue_slot.py --`.
+
+| Command | Expected |
+| --- | --- |
+| `python3 Tests/Damage/run_runtime.py --engine PATH` | PASS. Server 23, driver 11 and observer 12 checks. Real fire: thigh 24, upper arm 24, foot 17, head lethal; pistol head lethal; `stats_final` driver K1 D1 HS1 DMG100 and observer K1 D1 HS1 DMG100, score 1:1. On failure, the `VSDAMAGE_SHOT`/`VSDAMAGE_TAP` lines in server.log and driver.log show both sides of each shot. |
+| `python3 Scripts/test_combat.py --engine PATH` | PASS 55/55 (body shot at the chest from behind: health 70) |
+| `python3 Scripts/test_weapons.py --engine PATH --scenario practice` | PASS 74/74 |
+| `python3 Scripts/test_weapons.py --engine PATH --scenario match` | PASS 29/29 |
+| `python3 Scripts/test_match.py --engine PATH` | PASS 43/43 |
+| `python3 Scripts/test_movement.py --engine PATH` | PASS 45/45 |
+| `python3 Scripts/test_combat_look.py --engine PATH` | PASS 8/8 |
+| `python3 Scripts/test_economy.py --network --engine PATH` | PASS. Unaffected: its kills go through health directly, and the damage path no longer reports kills to Economy. |
+
+### Limitations
+
+- **No lag compensation.** Hit registration still uses current server positions (NEXT-02). A moving target can be missed by an aim made at an older client position.
+- **Prototype zone shapes.** The zones follow the prototype boxes, not a skeleton. A side-on shot at chest or stomach height hits the arm strips, because the prototype's side faces are arm by design.
+- **Economy rewards not verified here.** Economy's `OnKill` subscription is in its own pending change.
+- **Not covered:** packaged builds, LAN, 2v2 and real human aim.
+
+### Next action
+
+Integration runs the batch above. A failing damage-smoke real-fire step comes back here with its `VSDAMAGE_SHOT`/`VSDAMAGE_TAP` lines.
