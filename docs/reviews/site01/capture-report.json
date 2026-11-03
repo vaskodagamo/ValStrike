@@ -1,0 +1,170 @@
+{
+  "run_id": "f7b047dae5ce4ae6ab0dfcfd233b4708",
+  "engine": "5.8.4-58902052+++UE5+Release-5.8",
+  "passed": true,
+  "error": null,
+  "captures": [
+    {
+      "id": "09_transformer_proxy",
+      "location": [
+        -1000,
+        -1550,
+        154.15
+      ],
+      "target": [
+        800,
+        -750,
+        154.15
+      ],
+      "proxy": [
+        -750,
+        -1270,
+        0
+      ],
+      "caption": "Dark temporary proxy against Transformer west face.",
+      "file": "docs/reviews/site01/previews/09_transformer_proxy.png",
+      "resolution": [
+        1600,
+        1000
+      ],
+      "sha256": "569c216380f7e87eb92f9b6fe18acd6ec5ee62cb70aab2a7f97522f6d1769561",
+      "proxy_is_temporary": true
+    },
+    {
+      "id": "10_site_proxy",
+      "location": [
+        1550,
+        -900,
+        154.15
+      ],
+      "target": [
+        900,
+        100,
+        142.15
+      ],
+      "proxy": [
+        1480,
+        -425,
+        0
+      ],
+      "caption": "Dark temporary proxy immediately in front of stacked site crates.",
+      "file": "docs/reviews/site01/previews/10_site_proxy.png",
+      "resolution": [
+        1600,
+        1000
+      ],
+      "sha256": "ada58c7cf1b17a96ea33d9e9edaba001c323485956151cab05af1fe09caa228b",
+      "proxy_is_temporary": true
+    },
+    {
+      "id": "11_cover_standing",
+      "location": [
+        710,
+        320,
+        154.15
+      ],
+      "target": [
+        300,
+        320,
+        154.15
+      ],
+      "proxy": null,
+      "caption": "Standing eye over SiteWestCover (120 cm), facing relay facade.",
+      "file": "docs/reviews/site01/previews/11_cover_standing.png",
+      "resolution": [
+        1600,
+        1000
+      ],
+      "sha256": "4725230d2f9795c679c9a69f95455951b8b0a711e21d28c19f13ccac5c846c5a",
+      "proxy_is_temporary": false
+    },
+    {
+      "id": "12_cover_crouched",
+      "location": [
+        710,
+        320,
+        90.15
+      ],
+      "target": [
+        300,
+        320,
+        90.15
+      ],
+      "proxy": null,
+      "caption": "Same position and direction at crouched eye height.",
+      "file": "docs/reviews/site01/previews/12_cover_crouched.png",
+      "resolution": [
+        1600,
+        1000
+      ],
+      "sha256": "1799607121b3ed5b84a479288f90ed8ce1e142a8aa6af82719e58907ee1d31df",
+      "proxy_is_temporary": false
+    }
+  ],
+  "mode": "Native editor compositions; unsaved proxy and rifle placement; no gameplay",
+  "source_revision": "a520ff20fba6bb9a94d0fc6ae2c59acff3d94606",
+  "capture_script_sha256": "90ffc71ca90fabc571852d0c62ce3f9a201a5e73e159311789ffc62831f251ab",
+  "proxy": {
+    "final_character": false,
+    "body_dimensions_cm": [
+      50,
+      40,
+      144
+    ],
+    "head_diameter_cm": 32,
+    "total_height_cm": 176,
+    "base_color_linear_rgb": [
+      0.035,
+      0.045,
+      0.055
+    ],
+    "roughness": 0.8
+  },
+  "weapon": "Views09/10 only: accepted R01 body/magazine; camera-relative grip (32,16,-18) cm; no arms or runtime component",
+  "camera": {
+    "fov_degrees": 90,
+    "standing_eye_cm_above_capsule_bottom": 152,
+    "crouched_eye_cm_above_capsule_bottom": 88,
+    "observed_floor_gap_cm": 2.15,
+    "floor_gap_source": "docs/maps/site01/runtime-report.json; prior single-player traversal",
+    "postprocess_override": false,
+    "lighting_changed": false
+  },
+  "runtime_verified": false,
+  "multiplayer_verified": false,
+  "human_playtest": false,
+  "content_sha256_before": {
+    "Content/Art/Environment/Materials/M_VS_Accent.uasset": "d70023bbe81d28abfe6bcd0c2ad3087f7beea801e80fb638ad10c877decfaec5",
+    "Content/Art/Environment/Materials/M_VS_PaintedMetal.uasset": "348d58556d340ea90ad9e54b52656403b5806ffbca2bb139e4c266c9b94ecf1e",
+    "Content/Art/Environment/Materials/M_VS_Plaster.uasset": "6003f40e35ff1d31a5b5d254085d34fccb328206e04425006663c77adbc56eef",
+    "Content/Art/Environment/Materials/M_VS_Trim.uasset": "1dc7d995929e19750e6cbd3a25fa665f4a622e6c189e88045649e0d9601f519c",
+    "Content/Art/Environment/Meshes/SM_VS_Cover_200x120.uasset": "6880bc9086f892d929fcd8321c95a198e0d9d15b032d983bc9fdac3e5846630f",
+    "Content/Art/Environment/Meshes/SM_VS_Crate_100.uasset": "62cbe83050514dfee0ad818b3079b127519a80d2168659ef3054b647937d97a8",
+    "Content/Art/Environment/Meshes/SM_VS_Pillar_40x300.uasset": "c52a1f0eb11eaa1327b745231c61eb85b3b8f2451956699138b2fefbfc06015e",
+    "Content/Art/Environment/Meshes/SM_VS_Vent_120x80.uasset": "dbe16dfec2227b081d930eb5a94c3548282fa708c1bca0df4f5bc8ae8aea4e4e",
+    "Content/Art/Environment/Meshes/SM_VS_Wall_400x300.uasset": "9e2c7eff378cfd47a5c3504addb23e74ce5a72661c5deed125258098f9f62623",
+    "Content/Art/Weapons/Pistol01/Materials/M_VS_P01_Accent.uasset": "8b62ed0c7d3096df92f08ce9eb9ef0ed8e6c9a83bc38e197853ed4a55504218f",
+    "Content/Art/Weapons/Pistol01/Materials/M_VS_P01_Gunmetal.uasset": "a9327cd66e8bf0b8c710e89aebc4c2db15c54fa9f1f6c672bfc88bb5d6d1cb35",
+    "Content/Art/Weapons/Pistol01/Materials/M_VS_P01_Steel.uasset": "c050981dd4de378baa7b3ee9bc437544889ccd3d68c02b92d9c4861165d98e72",
+    "Content/Art/Weapons/Pistol01/Materials/M_VS_P01_Structure.uasset": "00be9313c949a6e925f71c9494fa76b48a0a8e2900aa9ddf851a3c292e20ba84",
+    "Content/Art/Weapons/Pistol01/Meshes/SM_VS_Pistol01_Body.uasset": "94fcf40debc4b01ea55aaafb9678a6885ec5c1fd13ef0fad29f350b702bf1941",
+    "Content/Art/Weapons/Pistol01/Meshes/SM_VS_Pistol01_Magazine.uasset": "569987f79b50120d6c9c6daf67f63b78b6220b1fd6e0a0a573889895214641f3",
+    "Content/Art/Weapons/Pistol01/Meshes/SM_VS_Pistol01_Slide.uasset": "73ef1a82a936f53078a701d365d8e21ca03e32f56803ec0752fd531d0d147d09",
+    "Content/Art/Weapons/Rifle01/Materials/M_VS_R01_Accent.uasset": "f5d67baaf6c8f943687a65687e319e4e9537f2187da8905e6340dc4740130a56",
+    "Content/Art/Weapons/Rifle01/Materials/M_VS_R01_Ceramic.uasset": "6c7bf7bcf0b79848e3b4999a79d3e0570ee76133a04b7f6cf9aa1df7d56eb32d",
+    "Content/Art/Weapons/Rifle01/Materials/M_VS_R01_Graphite.uasset": "ffe9e89a7c25f89eca992c105111d31942a7e24aa96b6cc7a213b4ba6e6ecdb6",
+    "Content/Art/Weapons/Rifle01/Materials/M_VS_R01_Teal.uasset": "d36815491135644d4b41503bc61387734359188b0f31baa9da783f115227b8af",
+    "Content/Art/Weapons/Rifle01/Meshes/SM_VS_Rifle01_Body.uasset": "559ebec2a5ad0882098c3487e2c1947a300628b2004bf34838e7c68cda40205b",
+    "Content/Art/Weapons/Rifle01/Meshes/SM_VS_Rifle01_Magazine.uasset": "07b9328195b8a7138b75e0b39259139feb365672b86d900094ea3caf4773c3fc",
+    "Content/Maps/Site01/Materials/M_Site01_Lane.uasset": "360943e0c139906cc545cc1f448456b438db13817abec0d1f87198970bb6787b",
+    "Content/Maps/Site01/Materials/M_Site01_Paving.uasset": "205ff8955163a5540830dbb6bd3238a014ae027821664f15814b119039c9d5a3",
+    "Content/Maps/Site01/Materials/M_Site01_Site.uasset": "8cd0af8ed8859d8b59449253c01b96d05489f3d585cab5c6454eacbc0a5692f7",
+    "Content/Maps/Site01/VS_Site01.umap": "6798356d8d029112a0dabfa3a5fa2789eebeb79b114959836070801bb989f3aa",
+    "Content/Maps/VS_Graybox.umap": "e2ead869f9b27bde3d17a317e271d7d7e0bebd5dcf2b7b13fc6bc3068000e149",
+    "Content/Materials/Bootstrap/M_Cover.uasset": "a61e9ed8b3268abd84bb2185aff64e6a73e65be6d7ddd8b0cd128cfde2142321",
+    "Content/Materials/Bootstrap/M_Floor.uasset": "1dd205bcec99ab9dcad67e246687813ebfc7c6d203dbf5816362aac96a78fe05",
+    "Content/Materials/Bootstrap/M_Spawn.uasset": "ad4b5dbbbe5c185116bf176c6390f4730a47fa13dec91e2777bd3cc4d16b0b8e",
+    "Content/Materials/Bootstrap/M_Wall.uasset": "80ca550de685608c8ae93b37adb110611c47f5382a765c15595a53c5bf5863a0"
+  },
+  "content_files_unchanged": true
+}
