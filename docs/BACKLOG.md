@@ -18,7 +18,9 @@ Updated: 2026-11-03. `Ready` means work can start; `Queued` means prerequisites 
 | SET-02 | Create C++ project and source control setup | Done | SET-01 | Test map runs; project compiles; generated outputs excluded; binary asset storage configured |
 | SET-03 | Prove packaged server/client connection | Queued | SET-02 | Source-engine server build path works; two client processes connect to packaged headless server; steps repeatable |
 | SET-05 | Prepare source-checkout Mac playtest tools | In progress | SET-02 | Real LFS assets verified in fresh checkout; pinned toolchain/build and selectable-map launch verified; LAN checklist and evidence collection ready |
-| SET-04 | Establish target-platform and performance baseline | Queued | SET-03 | Tester platforms chosen; actual target client/server builds launched; reference hardware, rendering settings, and tick configuration recorded |
+| SET-04 | Establish target-platform and performance baseline | In progress | SET-03 | Tester platforms chosen; actual target client/server builds launched; reference hardware, rendering settings, and tick configuration recorded |
+
+SET-04 partial (2026-11-04): server tick rate chosen at 60 Hz and measured against 30 Hz on the Editor binary; see WORK_LOG.md. Tester platforms, target builds and reference hardware remain open.
 
 ## M2 Networked gunplay
 

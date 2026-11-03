@@ -9,8 +9,9 @@ Scenarios, each with its own server process on loopback ports 7871-7874:
            clients play six timeout rounds; the server writes the result, closes both clients
            after the result grace and exits 0.
   joinkey  Private practice server with a join key: a client without the key and one with a
-           wrong key are refused, one with the right key joins, and the key never appears in
-           the server log. The server then exits after the empty timeout.
+           wrong key are refused, one with the right key joins, and no server-code log line
+           carries a key (the engine itself echoes the command line and join URLs). The
+           server then exits after the empty timeout.
 
 Build the Editor target first and wrap this whole runner with with_ue_slot.py. This is
 loopback development evidence, not packaged, Linux or fleet acceptance.
@@ -44,6 +45,7 @@ RESULT_GRACE_S = 2
 DRAIN_MS = 2000
 EVENT = re.compile(r"(VSSERVER_[A-Z_]+)(?: (.*))?$")
 FIELD = re.compile(r"(\w+)=(\S*)")
+ENGINE_ECHO = re.compile(r"LogInit: Command Line:|LogCsvProfiler: .*commandline=|LogNet: (Login|Join) request:")
 
 
 def server_port(value):
@@ -182,7 +184,11 @@ def evaluate_joinkey(log, process_exit, revision, host):
     check(checks, "wrong_keys_rejected", len(rejected) == 2 and all("Join key" in e["payload"] for e in rejected)
           and log.count("PreLogin failure: Join key missing or wrong") == 2,
           [e["payload"] for e in rejected] or "no join_key rejection")
-    check(checks, "key_never_logged", JOIN_KEY not in log and WRONG_KEY not in log, "neither key string in server.log")
+    # The engine echoes the command line and every join URL (LogInit/LogCsvProfiler/LogNet); server
+    # code must never add to that. Any other line carrying a key is a leak.
+    leaks = [line for line in log.splitlines() if (JOIN_KEY in line or WRONG_KEY in line)
+             and not ENGINE_ECHO.search(line)]
+    check(checks, "key_not_logged_by_server_code", not leaks, leaks or "keys appear only in engine command-line/join echoes")
     counts = [int(e["fields"].get("count", -1)) for e in events if e["kind"] == "VSSERVER_PLAYERS"]
     check(checks, "right_key_admitted", counts == [1, 0], counts)
     path_check(checks, events, [("starting", "ready", "listening"), ("ready", "allocated", "player_joined"),

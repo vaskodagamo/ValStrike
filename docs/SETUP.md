@@ -150,17 +150,24 @@ Every dedicated-server process (`-server`, including the Editor-binary developme
   | `-VSServerEmptyTimeout=<s>` | 1–86400 (default 60); requires `-VSServerExitWhenDone` |
   | `-VSServerResultGrace=<s>` | 0–3600 (default 15); requires `-VSServerExitWhenDone` |
   | `-VSServerProvider=local` | `local` only |
+  | `-VSServerJoinKey=<key>` | 8–64 letters, digits, `-` or `_`; private server |
 
   The server also refuses any map or game mode outside the launcher allowlist. Allowed maps are VS_Graybox and Site01; allowed modes are practice and match, and match requires Site01. Development builds also allow the rifle presentation test mode on the graybox.
 - **Lifecycle.** States run Starting → Ready → Allocated → InMatch → Ending → Exited. The `local` provider logs each transition as a `VSSERVER_STATE` line, and logs a `VSSERVER_HEALTH` line every 10 s with players, frame time and tick rate. Without `-VSServerExitWhenDone`, nothing changes from earlier behavior: the server runs until stopped. With it, the server closes after a completed match once the rematch grace passes or everyone leaves, or after it has stayed empty for the timeout. Clients get a return-to-menu message, and the process exits with code 0. A startup failure (invalid switch, map or mode, or an invalid Site01 match contract) always exits. Linux and Windows return its non-zero code; the Mac Editor binary returns 0 for any requested exit, so check the `VSSERVER_EXIT` line there.
-- **Admission.** `AVSGameMode::PreLogin` asks the server subsystem after the engine's checks. Joins are refused while the server is starting or ending; otherwise the development `open` admission accepts everyone, as before.
+- **Admission.** `AVSGameMode::PreLogin` asks the server subsystem after the engine's checks. Joins are refused while the server is starting or ending. Without a join key, the `open` admission accepts everyone, as before. With `-VSServerJoinKey`, every join must carry `?JoinKey=<key>` in its URL, compared in constant time; a missing or wrong key is refused with "Join key missing or wrong". Server code never logs or echoes the key. The engine does: the key is visible in the process list, in the server log's command-line echo and in the engine's `LogNet` login/join request lines. It keeps strangers off a private LAN server; it is not a secret, and a public service will need signed join tickets instead.
+- **Tick rate.** `Config/DefaultEngine.ini` sets `NetServerMaxTickRate=60`; the `VSSERVER_MAP` line reports the configured value. `t.MaxFPS` overrides this cap, so measure the server without that console command. Measured 2026-11-03 on the M3 Mac with an idle two-client Site01 match: 57.1–57.2 Hz at the 60 cap and 29.2 Hz at 30, average busy frame time 0.43–0.49 ms in both cases, maximum 1.3–1.7 ms (60) and 1.3–10.7 ms (30) after the first window. The idle cost of 60 Hz is not measurable here; revisit with four players and packaged Linux servers (SET-04, SRV-04).
 - **Version and results.** At startup the server logs a `VSSERVER_VERSION` line with the project version, Git revision, engine version and changelist, build configuration, target type and network version. `ValStrike.Build.cs` writes the revision into the untracked `Intermediate/VSBuildInfo/VSBuildInfo.h` header; a new commit triggers its regeneration on the next build. Uncommitted edits are not reflected in it. Each completed or abandoned match is logged as a single-line `VSSERVER_RESULT` JSON record and also saved to `Saved/ServerResults/<session>_match<n>.json`. The record holds per-round winners and reasons, scores, the result and team sizes, with no player names or addresses.
 
 Launcher flags map one-to-one onto the switches:
 
 ```sh
 python3 Scripts/ue.py server --map site01 --mode match --session-id lan-01 --exit-when-done --result-grace 15
+# Private LAN server; clients must pass the same key
+python3 Scripts/ue.py server --map site01 --mode match --join-key lan-Key-0001
+python3 Scripts/ue.py client --address 192.168.1.10:7777 --join-key lan-Key-0001
 ```
+
+The session menu does not have a key field yet; until the UI stream adds one, keyed servers are joined through the launcher.
 
 Runtime verification uses loopback ports 7871–7874. Build the Editor target first, then run:
 
@@ -168,9 +175,10 @@ Runtime verification uses loopback ports 7871–7874. Build the Editor target fi
 python3 Scripts/with_ue_slot.py -- python3 Scripts/test_server_lifecycle.py --engine "$UE_ROOT"
 ```
 
-The runner checks three scenarios, each with its own server:
+The runner checks four scenarios, each with its own server. The servers run without `t.MaxFPS`, and the match scenario checks the measured tick rate against the configured cap; `--net-tick-rate 30|60` overrides the cap for measurement runs.
 - **invalid:** an unknown switch fails startup.
 - **empty:** a practice server with one player slot admits one client, refuses a second as full and exits 0 after a measured 30 s empty timeout.
 - **match:** a Site01 match server with the development-only `-VSMatchFastTimings` switch runs six timeout rounds with two idle clients. It writes a 3–3 draw result, closes both clients after the 2 s grace and exits 0.
+- **joinkey:** a keyed practice server refuses a client without a key and one with a wrong key, admits one with the right key, exits after the empty timeout, and no server-code log line carries a key.
 
 Evidence goes to `Saved/Tests/ServerLifecycle/<run-id>/result.json`. It checks that the logged revision equals `HEAD`, so commit and rebuild before running it. These are Editor-binary processes on one Mac; they do not verify a packaged or Linux dedicated server (SRV-01/02, SET-03).
