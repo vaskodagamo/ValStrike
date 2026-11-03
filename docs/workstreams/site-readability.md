@@ -1,0 +1,17 @@
+# Site01 readability workstream
+
+## Task and ownership
+
+**PLAY-01 bounded readability slice — complete.** Completion condition: review the supplied map views, obtain only needed native player-eye contrast/cover evidence, deliver actionable issues and retained strengths with a first-playtest verdict, and prove production Content stayed unchanged. Full PLAY-01 human/multiplayer acceptance remains with integration.
+
+Assigned checkout: `/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/site-readability`, branch `codex/site-readability`, foundation `a520ff20fba6bb9a94d0fc6ae2c59acff3d94606`. Owned paths: `docs/reviews/site01/` and this record. No production asset, map, material, source, configuration, launcher or central-log edits.
+
+## 2026-11-03 — completed bounded review (Europe/Berlin)
+
+- Reused all eight explicitly supplied native map previews; checked each PNG hash and the saved map hash against their original inspection report. Inspected seven standing-eye views and used the overview only for context.
+- Captured four supplemental 1600 × 1000 native views: Transformer and site with a clearly identified temporary dark proxy and accepted R01 composition, plus standing/crouched SiteWestCover views. Used 90° FOV, production lighting/exposure defaults and source eye heights plus the prior measured floor gap. No final character or runtime presentation claim.
+- [Review and reproduction](../reviews/site01/REVIEW.md): visually suitable for a guided first Mac playtest; recommend one service-turn arrow/A and one approach-visible site A. Monitor dark silhouettes at the stacked crates in actual play. Preserve the stylized broad forms and readable cover edges.
+- Verification: pinned UE `5.8.4-58902052`, Mac arm64 Editor build **passed**, 37.86 s, selected Xcode **26.1.1**. Final native capture run `f7b047dae5ce4ae6ab0dfcfd233b4708` **passed**, editor exit **0**; `Saved/Logs/SiteReadabilityFinal.log`. [Capture report](../reviews/site01/capture-report.json) records exact camera/proxy metadata and all **31 Content file hashes unchanged**. Independently checked final PNG hashes/dimensions and script hash. Python syntax, report links and staged whitespace checks passed. No new gameplay code required tests.
+- Shared engine slot respected for every build/render; busy exit 75 deferred work. Initial capture attempt produced four images but stalled during report finalization and was stopped by terminating only its own editor PID 92855 (exit 1). Cached the script path for the later callback and added guaranteed shutdown handling; the final run replaced all initial images and completed cleanly. Final cover pair omits the cosmetic rifle to avoid interpreting a staged weapon/cover intersection as a runtime defect. No claim that the interrupted run passed.
+- Limitations: editor still compositions, temporary proxy, close distances, no human camera movement, hit/collision retest, final character, integrated weapon component, network test, performance run, packaged build or other-Mac display/LAN verification. Prior map traversal/collision results are linked and clearly distinguished from new evidence. Known engine startup automation-condition errors and absent non-Mac SDK diagnostics remain outside this review.
+- Next action: coordinator reviews this local commit and decides the two small navigation changes, then uses the integrated human Mac playtest for further evidence. No broad art pass or repeated static review requested. Publishing/merging remains central.

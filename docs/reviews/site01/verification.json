@@ -1,0 +1,17 @@
+{
+  "editor_target_build_exit_code": 0,
+  "editor_target_build_seconds": 37.86,
+  "capture_process_exit_code": 0,
+  "log_file": "Saved/Logs/SiteReadabilityFinal.log",
+  "log_sha256": "e6bc7b62aecfd6c766c1e0032ffe20e583c8cbec688b7492fec902ed627ec6cc",
+  "run_id": "f7b047dae5ce4ae6ab0dfcfd233b4708",
+  "log_excerpt": [
+    "LogInit: Engine Version: 5.8.4-58902052+++UE5+Release-5.8",
+    "LogInit: Compatible Engine Version: 5.8.0-55116800+++UE5+Release-5.8",
+    "[2026.11.03-17.05.15:858][  0]LogAutomationTest: Error: Condition failed",
+    "[2026.11.03-17.05.15:858][  0]LogAutomationTest: Error: Condition failed",
+    "[2026.11.03-17.05.35:878][ 53]LogPython: SITE_READABILITY_RESULT: True",
+    "[2026.11.03-17.05.38:327][ 55]LogExit: Exiting."
+  ],
+  "limitations": "Editor-only review; startup automation-condition errors retained; no gameplay acceptance."
+}

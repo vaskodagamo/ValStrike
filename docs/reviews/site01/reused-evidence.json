@@ -1,0 +1,137 @@
+{
+  "source_revision": "a520ff20fba6bb9a94d0fc6ae2c59acff3d94606",
+  "source_report": "docs/maps/site01/editor-report.json",
+  "source_run_id": "a8930f9acfff4e4b9e819b42d8b36bf8",
+  "map_sha256": "6798356d8d029112a0dabfa3a5fa2789eebeb79b114959836070801bb989f3aa",
+  "review_policy": "User explicitly authorized reuse of supplied native previews; these images are not newly captured by this review.",
+  "captures": [
+    {
+      "id": "01_attacker_exit",
+      "file": "docs/maps/site01/previews/01_attacker_exit.png",
+      "location": [
+        -2250,
+        650,
+        152
+      ],
+      "target": [
+        -1500,
+        1000,
+        152
+      ],
+      "horizontal_fov_degrees": 70,
+      "sha256": "86808e0f2d7d747d0748ec9cf9f1344f0d42bb0884977731601f1db839414f8b"
+    },
+    {
+      "id": "02_gallery_contact",
+      "file": "docs/maps/site01/previews/02_gallery_contact.png",
+      "location": [
+        -1050,
+        850,
+        152
+      ],
+      "target": [
+        800,
+        850,
+        152
+      ],
+      "horizontal_fov_degrees": 70,
+      "sha256": "817dae4ad574b721ad450c77243d15c1ffd723bc7d2eba346e5c1f71fbe53504"
+    },
+    {
+      "id": "03_transformer_contact",
+      "file": "docs/maps/site01/previews/03_transformer_contact.png",
+      "location": [
+        -1000,
+        -1550,
+        152
+      ],
+      "target": [
+        800,
+        -750,
+        152
+      ],
+      "horizontal_fov_degrees": 70,
+      "sha256": "debd62c5f65982eb8358a5356506ce7db37bec3bd805e5bea7fdd01b87e461e7"
+    },
+    {
+      "id": "04_site_a",
+      "file": "docs/maps/site01/previews/04_site_a.png",
+      "location": [
+        1550,
+        -900,
+        152
+      ],
+      "target": [
+        900,
+        100,
+        140
+      ],
+      "horizontal_fov_degrees": 70,
+      "sha256": "0983677598510a003b810d02af79a2fc654408f9935d9e1b36244225a4ac1f67"
+    },
+    {
+      "id": "05_service_flank",
+      "file": "docs/maps/site01/previews/05_service_flank.png",
+      "location": [
+        50,
+        1750,
+        152
+      ],
+      "target": [
+        1900,
+        1750,
+        152
+      ],
+      "horizontal_fov_degrees": 70,
+      "sha256": "6de02ad44417ad74ee2e278f093b6fa75c8383f3ad9efd8737b1739a4a7357fe"
+    },
+    {
+      "id": "06_defender_exit",
+      "file": "docs/maps/site01/previews/06_defender_exit.png",
+      "location": [
+        2200,
+        -650,
+        152
+      ],
+      "target": [
+        1300,
+        -850,
+        152
+      ],
+      "horizontal_fov_degrees": 70,
+      "sha256": "c93e21cfcd902dcf1707b34cc5ecc4e66704bceff43c66e9f78e0e75db669be4"
+    },
+    {
+      "id": "07_overview",
+      "file": "docs/maps/site01/previews/07_overview.png",
+      "location": [
+        4700,
+        -5300,
+        6600
+      ],
+      "target": [
+        0,
+        0,
+        0
+      ],
+      "horizontal_fov_degrees": 55,
+      "sha256": "834cc75c05e227b31d13cf0c07f91689727abe366c6bde5a11f426e9a92d286d"
+    },
+    {
+      "id": "08_transformer_exit",
+      "file": "docs/maps/site01/previews/08_transformer_exit.png",
+      "location": [
+        -150,
+        -1450,
+        152
+      ],
+      "target": [
+        1000,
+        -650,
+        152
+      ],
+      "horizontal_fov_degrees": 70,
+      "sha256": "f0201febc9a0c131db7f9ed09141cafd467f4e42fd2c6cec2a6230cb1920be95"
+    }
+  ]
+}
