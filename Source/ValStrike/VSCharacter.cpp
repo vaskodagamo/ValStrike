@@ -252,7 +252,7 @@ void AVSCharacter::LookYaw(const FInputActionValue& Value)
 
 void AVSCharacter::LookPitch(const FInputActionValue& Value)
 {
-    AddControllerPitchInput(-Value.Get<float>() * MouseSensitivity);
+    AddControllerPitchInput(Value.Get<float>() * MouseSensitivity);
 }
 
 void AVSCharacter::BeginFire() { Rifle->StartFire(); }
