@@ -1,0 +1,146 @@
+# Engine-free checks for every pull request and every push to main.
+#
+# Nothing here installs or launches Unreal, uses self-hosted runners or needs
+# secrets. Passing these jobs is not editor, packaged, dedicated-server or
+# network acceptance; those still go through Scripts/with_ue_slot.py on a Mac.
+# Run the same commands locally from the repository root; see docs/WORK_LOG.md.
+#
+# Third-party actions are pinned to full commit SHAs (tag in the comment).
+
+name: Checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.event.pull_request.number || github.ref }}
+  # Superseded PR pushes are cancelled; every commit on main is checked.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  python:
+    name: Python tests (no Unreal)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          lfs: false
+          persist-credentials: false
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.13"
+
+      - name: Launcher and engine-slot helpers (Tests/test_ue*.py)
+        run: python3 -m unittest discover -s Tests -p 'test_ue*.py' -v
+
+      - name: Site01 layout (Tests/Maps/Site01)
+        run: python3 -m unittest discover -s Tests/Maps/Site01 -p 'test_*.py' -v
+
+      - name: Playtest preflight and session runner (Tests/Playtest)
+        run: python3 -m unittest discover -s Tests/Playtest -p 'test_*.py' -v
+
+      - name: Combat evidence runners (Tests/Combat)
+        run: python3 -m unittest discover -s Tests/Combat -p 'test_*.py' -v
+
+      - name: Match runner contract (Tests/Match)
+        run: python3 -m unittest discover -s Tests/Match -p 'test_*.py' -v
+
+      - name: Rifle presentation runner (Tests/Presentation)
+        run: python3 -m unittest discover -s Tests/Presentation -p 'test_*.py' -v
+
+  cpp:
+    name: Standalone C++ tests (${{ matrix.compiler }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [g++, clang++]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          lfs: false
+          persist-credentials: false
+
+      - name: Round rules
+        run: python3 Scripts/test_round_rules.py --compiler "${{ matrix.compiler }}"
+
+      - name: Round rules with address/undefined-behavior sanitizers
+        run: python3 Scripts/test_round_rules.py --compiler "${{ matrix.compiler }}" --sanitize
+
+      - name: Rifle presentation state
+        run: |
+          mkdir -p Saved/Tests/Presentation
+          "${{ matrix.compiler }}" -std=c++17 -Wall -Wextra -Werror -pedantic \
+            Tests/Presentation/rifle_presentation_state_test.cpp \
+            -o Saved/Tests/Presentation/rifle_presentation_state_test
+          Saved/Tests/Presentation/rifle_presentation_state_test
+
+  repository:
+    name: Whitespace and Git LFS
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          lfs: false
+          fetch-depth: 0
+
+      - name: Select the comparison base
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PUSH_BEFORE: ${{ github.event.before }}
+        run: |
+          if [ "$EVENT_NAME" = pull_request ]; then base="$PR_BASE"; else base="$PUSH_BEFORE"; fi
+          if [ -z "$base" ] || ! git cat-file -e "$base^{commit}" 2>/dev/null; then
+            echo "Base '$base' is not available; comparing with the previous commit."
+            base=$(git rev-parse HEAD^)
+          fi
+          echo "Comparing $base..$(git rev-parse HEAD)"
+          echo "CHECK_BASE=$base" >> "$GITHUB_ENV"
+
+      - name: git diff --check against the base
+        run: git diff --check "$CHECK_BASE" HEAD
+
+      - name: LFS pointers are canonical (HEAD and every new commit)
+        run: |
+          git lfs version
+          git lfs fsck --pointers
+          git lfs fsck --pointers "$CHECK_BASE..HEAD"
+
+      - name: Content LFS objects resolve and match their pointers
+        # Downloads only Content/ (about 1 MB at e6be4e8); Art/Source objects
+        # are pointer-checked above but not fetched.
+        run: |
+          git lfs install --local
+          git lfs pull --include="Content/**"
+          python3 - <<'PY'
+          import importlib.util
+          from pathlib import Path
+          import sys
+
+          spec = importlib.util.spec_from_file_location("check_playtest", "Scripts/check_playtest.py")
+          check = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(check)
+          try:
+              for map_key in check.MAPS:
+                  result = check.validate_assets(Path.cwd(), map_key)
+                  print(f"{map_key}: {result['committed_native_count']} committed Content natives match "
+                        f"their LFS oid/size; {result['selected_dependency_count']} map dependencies "
+                        f"present at {result['checked_head']}")
+          except check.PreflightError as error:
+              print(f"LFS asset check failed: {error}", file=sys.stderr)
+              sys.exit(1)
+          PY
