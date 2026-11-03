@@ -90,11 +90,14 @@ Distance falloff is defined but **off** for both weapons. Rifle: full damage to 
 ### Phase 2 integration plan (after the Weapons PR merges)
 
 1. **`VSCharacter`:**
-   - Remove `BodyHitRegion`/`HeadHitRegion`. Add `UPROPERTY(VisibleAnywhere) TObjectPtr<UVSHitZoneSet> HitZones` created in the constructor and attached to the capsule, then call `HitZones->SetTraceMode(EVSHitZoneTraceMode::Authoritative)` in `BeginPlay`. The subsystem then skips auto-attach for this class.
+   - Remove `BodyHitRegion`/`HeadHitRegion`. Add `UPROPERTY(VisibleAnywhere) TObjectPtr<UVSHitZoneSet> HitZones`, created in the constructor, attached to the capsule and set to `EVSHitZoneTraceMode::Authoritative` there. The shapes are created at `BeginPlay` with that mode. The subsystem then skips auto-attach for this class.
    - Call `HitZones->RefreshLayout()` from `UpdatePrototypeVisuals()`, which runs on crouch and uncrouch, so a shot in the same frame as a crouch already sees the new layout.
    - Drop the region lines from `HandleHealthChanged()`; the zone set handles death itself.
    - Replace `IsHeadHit()` with `HitZones->ResolveZone(C) == HitZone::Head`, or remove it.
-2. **Rifle and pistol `ServerRequestFire`:** replace `ApplyPointDamage(IsHeadHit ? HeadDamage : BodyDamage)` with `UVSDamageSubsystem::Get(this)->ApplyWeaponHit({Pawn, Target, Hit.GetComponent(), WeaponClass::Rifle /*or Pistol*/, Hit.Distance})`. Retire the `BodyDamage`/`HeadDamage` properties, since the table is the single source.
+2. **Weapon fire path:** in the Weapons stream's branch (`a1d682d`), the single damage call is in `UVSWeaponComponent::ServerRequestFire` (`Combat/VSWeaponComponent.cpp`), shared by the rifle and pistol subclasses.
+   - Replace `ApplyPointDamage(Target->IsHeadHit(...) ? HeadDamage : BodyDamage)` with `UVSDamageSubsystem::Get(this)->ApplyWeaponHit({Pawn, Target, Hit.GetComponent(), DamageClass, static_cast<float>(Hit.Distance)})`.
+   - `DamageClass` is a `ValStrike::Damage::WeaponClass` set by each subclass: Rifle or Pistol.
+   - Retire the per-weapon `BodyDamage`/`HeadDamage` properties, since the table is the single source.
 3. **Combat smoke expectations:** body shots now depend on the zone. A shot at the capsule center lands in the lower torso (27, not 30). Aim body probes at the chest band (capsule-relative z ≈ +40 standing) or assert the zone-specific value.
 4. **Stats and scoreboard:** no change needed. Real kills reach the ledger and the scoreboard through `OnDamage`.
 5. **Verify:**
