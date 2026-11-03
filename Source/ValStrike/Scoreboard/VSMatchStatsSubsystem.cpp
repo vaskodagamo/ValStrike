@@ -92,6 +92,11 @@ void UVSMatchStatsSubsystem::Deinitialize()
         }
     }
     BoundPawns.Reset();
+    for (const TPair<int32, TWeakObjectPtr<AController>>& Pair : Controllers)
+    {
+        if (Pair.Value.IsValid()) { Pair.Value->GetOnNewPawnNotifier().RemoveAll(this); }
+    }
+    Controllers.Reset();
     Players.Reset();
     LifePawns.Reset();
     State = nullptr;
@@ -154,6 +159,8 @@ void UVSMatchStatsSubsystem::HandleLogout(AGameModeBase* GameMode, AController* 
     const int32 Key = FindKey(Exiting->PlayerState);
     if (Key != 0)
     {
+        Exiting->GetOnNewPawnNotifier().RemoveAll(this);
+        Controllers.Remove(Key);
         Players.Remove(Key);
         LifePawns.Remove(Key);
         Ledger.RemovePlayer(Key);
@@ -175,6 +182,22 @@ void UVSMatchStatsSubsystem::AddPlayer(APlayerController* Controller)
         return;
     }
     Players.Add(Key, Player);
+    Controllers.Add(Key, Controller);
+    Controller->GetOnNewPawnNotifier().AddUObject(this, &UVSMatchStatsSubsystem::HandleNewPawn, Key);
+}
+
+void UVSMatchStatsSubsystem::HandleNewPawn(APawn* NewPawn, int32 Key)
+{
+    if (!IsServerWorld() || !Players.Contains(Key))
+    {
+        return;
+    }
+    if (AVSCharacter* Pawn = Cast<AVSCharacter>(NewPawn))
+    {
+        BindPawn(Pawn);
+        SyncLife(Key, Pawn);
+    }
+    Publish();
 }
 
 void UVSMatchStatsSubsystem::HandleActorSpawned(AActor* Actor)

@@ -47,6 +47,8 @@ private:
     void HandleLogout(AGameModeBase* GameMode, AController* Exiting);
     void HandleActorSpawned(AActor* Actor);
     void HandleLifeStateChanged(TWeakObjectPtr<AVSCharacter> Pawn);
+    // Server possession notifier: a fresh round pawn shows as alive immediately.
+    void HandleNewPawn(APawn* NewPawn, int32 Key);
     void HandleDamage(const FVSDamageEvent& Event);
     void AddPlayer(APlayerController* Controller);
     void BindPawn(AVSCharacter* Pawn);
@@ -62,6 +64,7 @@ private:
     TObjectPtr<AVSScoreboardState> State;
 
     TMap<int32, TWeakObjectPtr<APlayerState>> Players;
+    TMap<int32, TWeakObjectPtr<AController>> Controllers;
     TMap<int32, TWeakObjectPtr<APawn>> LifePawns;
     TSet<TWeakObjectPtr<AVSCharacter>> BoundPawns;
     int32 NextKey = 0;

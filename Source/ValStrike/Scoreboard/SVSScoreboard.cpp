@@ -79,7 +79,8 @@ void SVSScoreboard::Construct(const FArguments& Args)
             return ReadableScale / FMath::Max(EngineScale, 0.01f);
         })
         [
-            SNew(SBox).HAlign(HAlign_Center).VAlign(VAlign_Top).Padding(FMargin(16.0f, 56.0f, 16.0f, 16.0f))
+            // Below the round HUD's score strip so team scores stay visible.
+            SNew(SBox).HAlign(HAlign_Center).VAlign(VAlign_Top).Padding(FMargin(16.0f, 112.0f, 16.0f, 16.0f))
             [
                 SNew(SBorder)
                 .BorderImage(FCoreStyle::Get().GetBrush("WhiteBrush"))

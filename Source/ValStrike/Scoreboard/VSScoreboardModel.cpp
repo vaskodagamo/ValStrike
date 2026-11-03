@@ -46,7 +46,9 @@ FVSScoreboardModel VSScoreboardModel::Build(const AVSScoreboardState* Stats, con
     if (Match)
     {
         const int32 Total = FVSMatchHUDData().TotalRounds;
-        const int32 Round = FMath::Clamp(Match->Match.CompletedRounds + 1, 1, Total);
+        // A resolved round is already counted as completed; name the round that just ended.
+        const bool bResolved = Match->Match.Phase == static_cast<uint8>(ValStrike::Rules::Phase::Resolved);
+        const int32 Round = FMath::Clamp(Match->Match.CompletedRounds + (bResolved ? 0 : 1), 1, Total);
         Model.Status = Match->Match.Phase == static_cast<uint8>(ValStrike::Rules::Phase::MatchComplete)
             ? FString::Printf(TEXT("%d / %d ROUNDS  ·  %s"), Match->Match.CompletedRounds, Total, VSScoreboardPhaseLabel(Match->Match.Phase))
             : FString::Printf(TEXT("ROUND %d / %d  ·  %s"), Round, Total, VSScoreboardPhaseLabel(Match->Match.Phase));

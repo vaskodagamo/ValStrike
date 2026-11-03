@@ -85,19 +85,23 @@ int32 VSDamageSmokeShapeByName(const UVSHitZoneSet* Zones, const char* Name)
     return INDEX_NONE;
 }
 
+// Simulated proxies shrink their capsule by CharacterMovement's NetProxyShrinkHalfHeight
+// (0.01 cm by default); the zones follow the actual capsule, so allow that much.
+constexpr double VSDamageSmokeTolerance = 0.05;
+
 bool VSDamageSmokeLayoutMatches(const UVSHitZoneSet* Zones, double HalfHeight, FString& Detail)
 {
     if (!Zones) { Detail = TEXT("missing zone set"); return false; }
     const VSD::Layout Expected = VSD::BuildLayout(HalfHeight);
     if (!Expected.Valid || Zones->GetShapeCount() != static_cast<int32>(VSD::VolumeCount) ||
-        !FMath::IsNearlyEqual(Zones->GetLayout().CapsuleHalfHeight, HalfHeight, 0.01))
+        !FMath::IsNearlyEqual(Zones->GetLayout().CapsuleHalfHeight, HalfHeight, VSDamageSmokeTolerance))
     {
         Detail = FString::Printf(TEXT("shapes=%d layoutHalfHeight=%.2f expected=%.2f"), Zones->GetShapeCount(),
             Zones->GetLayout().CapsuleHalfHeight, HalfHeight);
         return false;
     }
     const UCapsuleComponent* Capsule = Cast<UCapsuleComponent>(Zones->GetAttachParent());
-    if (!Capsule || !FMath::IsNearlyEqual(Capsule->GetUnscaledCapsuleHalfHeight(), static_cast<float>(HalfHeight), 0.01f))
+    if (!Capsule || !FMath::IsNearlyEqual(Capsule->GetUnscaledCapsuleHalfHeight(), static_cast<float>(HalfHeight), static_cast<float>(VSDamageSmokeTolerance)))
     {
         Detail = TEXT("zone set not attached to a capsule of the expected half-height");
         return false;
@@ -107,16 +111,17 @@ bool VSDamageSmokeLayoutMatches(const UVSHitZoneSet* Zones, double HalfHeight, F
         const VSD::ZoneVolume& Volume = Expected.Volumes[Index];
         const UShapeComponent* Shape = Zones->GetShape(Index);
         const FVector Center(Volume.Center[0], Volume.Center[1], Volume.Center[2]);
-        bool bOk = Shape && Shape->GetAttachParent() == Zones && Shape->GetRelativeLocation().Equals(Center, 0.01) &&
+        bool bOk = Shape && Shape->GetAttachParent() == Zones && Shape->GetRelativeLocation().Equals(Center, VSDamageSmokeTolerance) &&
             Zones->ResolveZone(Shape) == Volume.Zone;
         if (const UBoxComponent* Box = Cast<UBoxComponent>(Shape))
         {
             bOk &= Volume.Shape == VSD::ZoneShape::Box &&
-                Box->GetUnscaledBoxExtent().Equals(FVector(Volume.HalfExtent[0], Volume.HalfExtent[1], Volume.HalfExtent[2]), 0.01);
+                Box->GetUnscaledBoxExtent().Equals(FVector(Volume.HalfExtent[0], Volume.HalfExtent[1], Volume.HalfExtent[2]), VSDamageSmokeTolerance);
         }
         else if (const USphereComponent* Sphere = Cast<USphereComponent>(Shape))
         {
-            bOk &= Volume.Shape == VSD::ZoneShape::Sphere && FMath::IsNearlyEqual(Sphere->GetUnscaledSphereRadius(), static_cast<float>(Volume.Radius), 0.01f);
+            bOk &= Volume.Shape == VSD::ZoneShape::Sphere &&
+                FMath::IsNearlyEqual(Sphere->GetUnscaledSphereRadius(), static_cast<float>(Volume.Radius), static_cast<float>(VSDamageSmokeTolerance));
         }
         else
         {
@@ -131,8 +136,8 @@ bool VSDamageSmokeLayoutMatches(const UVSHitZoneSet* Zones, double HalfHeight, F
     const VSD::ZoneVolume& Head = Expected.Volumes[0];
     const VSD::ZoneVolume& Chest = Expected.Volumes[1];
     const VSD::ZoneVolume& Foot = Expected.Volumes[VSD::VolumeCount - 1];
-    Detail = FString::Printf(TEXT("halfHeight=%.0f shapes=13 head z=%.1f r=%.0f chestTop=%.1f footBottom=%.1f bodyHalf=25x20"),
-        HalfHeight, Head.Center[2], Head.Radius, Chest.Center[2] + Chest.HalfExtent[2], Foot.Center[2] - Foot.HalfExtent[2]);
+    Detail = FString::Printf(TEXT("capsuleHalfHeight=%.2f shapes=13 head z=%.1f r=%.0f chestTop=%.1f footBottom=%.1f bodyHalf=25x20"),
+        Zones->GetLayout().CapsuleHalfHeight, Head.Center[2], Head.Radius, Chest.Center[2] + Chest.HalfExtent[2], Foot.Center[2] - Foot.HalfExtent[2]);
     return true;
 }
 
@@ -490,13 +495,13 @@ private:
             if (S.CurrentPhase == VSDR::Phase::Active && DriverPawn && ObserverPawn)
             {
                 const FVector Center = Mode->GetSiteCenter();
-                const bool bPlaced = Place(Driver, Center + FVector(-100.0, 0.0, 0.0), 0.0f) && Place(Observer, Center + FVector(300.0, 0.0, 0.0), 180.0f);
+                const bool bPlaced = Place(Driver, Center + FVector(-100.0, 0.0, 0.0), 0.0f) && Place(Observer, Center + FVector(200.0, 0.0, 0.0), 180.0f);
                 if (!bPlaced) { Finish(TEXT("placement_failed")); return; }
                 Stage(Director, 2, Now);
             }
             return;
         case 2:
-            if (Time > 1.6) { Stage(Director, 3, Now); }
+            if (Time > 2.5) { Stage(Director, 3, Now); }
             return;
         case 3:
         {
@@ -518,7 +523,7 @@ private:
             return;
         }
         case 4:
-            if (Time > 1.6) { Stage(Director, 5, Now); }
+            if (Time > 2.5) { Stage(Director, 5, Now); }
             return;
         case 5:
         {
@@ -552,6 +557,12 @@ private:
             }
             if (S.CurrentPhase == VSDR::Phase::Preparation && S.RoundId != RoundOne && DriverPawn && ObserverPawn)
             {
+                if (FreshSeenAt < 0.0) { FreshSeenAt = Now; }
+                const FVSScoreboardRow* DriverRow = RowFor(Board, VSDamageDriverName);
+                const FVSScoreboardRow* ObserverRow = RowFor(Board, VSDamageObserverName);
+                const bool bRowsAlive = DriverRow && ObserverRow && DriverRow->Life == EVSScoreboardLife::Alive &&
+                    ObserverRow->Life == EVSScoreboardLife::Alive;
+                if (!bRowsAlive && Now - FreshSeenAt < 1.0) { return; }
                 const bool bFresh = DriverPawn != RoundOneDriver.Get() && ObserverPawn != RoundOneObserver.Get();
                 FString Detail;
                 const bool bLayout = VSDamageSmokeLayoutMatches(UVSHitZoneSet::FindOn(DriverPawn), 88.0, Detail) &&
@@ -560,11 +571,9 @@ private:
                 const bool bEnabled = VSDamageSmokeCollisionMatches(UVSHitZoneSet::FindOn(ObserverPawn), ECR_Overlap, ECollisionEnabled::QueryOnly, Profile);
                 Check(TEXT("fresh_pawn_zones"), bFresh && bLayout && bEnabled,
                     FString::Printf(TEXT("fresh=%d %s; previously dead observer's new pawn: %s"), bFresh ? 1 : 0, *Detail, *Profile));
-                const FVSScoreboardRow* DriverRow = RowFor(Board, VSDamageDriverName);
-                const FVSScoreboardRow* ObserverRow = RowFor(Board, VSDamageObserverName);
-                Check(TEXT("stats_persist_across_rounds"), RowIs(DriverRow, 1, 0, 1, 100) && RowIs(ObserverRow, 0, 1, 0, 24) &&
-                    DriverRow->Life == EVSScoreboardLife::Alive && ObserverRow->Life == EVSScoreboardLife::Alive,
-                    FString::Printf(TEXT("%s; %s"), *Describe(DriverRow), *Describe(ObserverRow)));
+                Check(TEXT("stats_persist_across_rounds"), RowIs(DriverRow, 1, 0, 1, 100) && RowIs(ObserverRow, 0, 1, 0, 24) && bRowsAlive,
+                    FString::Printf(TEXT("rows alive %.3f s after fresh pawns were seen; %s; %s"), Now - FreshSeenAt,
+                        *Describe(DriverRow), *Describe(ObserverRow)));
                 Stage(Director, 8, Now);
             }
             return;
@@ -702,7 +711,13 @@ private:
             bNameRequested = true;
         }
         if (!Director || PC->PlayerState->GetPlayerName() != Mine) { return; }
-        const double Time = GS->GetServerWorldTimeSeconds() - Director->StageAt;
+        // Local clock from when this client first saw the stage: immune to server-time estimate skew.
+        if (Director->Stage != SeenStage)
+        {
+            SeenStage = Director->Stage;
+            SeenStageAt = World->GetTimeSeconds();
+        }
+        const double Time = World->GetTimeSeconds() - SeenStageAt;
         UVSScoreboardSubsystem* Presenter = World->GetSubsystem<UVSScoreboardSubsystem>();
         const AVSScoreboardState* Board = Presenter ? Presenter->GetState() : nullptr;
         AVSCharacter* Own = PawnNamed(World, Mine);
@@ -719,8 +734,8 @@ private:
             Check(TEXT("client_zones_present"), bOwn && bOther && Pawns == 2 && !Other->HasAuthority() &&
                 Other->GetLocalRole() == ROLE_SimulatedProxy && Own->GetLocalRole() == ROLE_AutonomousProxy,
                 FString::Printf(TEXT("autonomous: %s | simulated: %s"), *OwnDetail, *OtherDetail));
-            RoundOneOwn = Own;
-            RoundOneOther = Other;
+            RoundOneOwn = Own->GetName();
+            RoundOneOther = Other->GetName();
         }
         if (StageValue >= 1 && Board)
         {
@@ -776,16 +791,21 @@ private:
         }
         if (BoardStep > 0 && Presenter) { BoardSequence(World, PC, Presenter, GS); }
 
-        if (StageValue >= 8 && Own && Other && RoundOneOwn.IsValid() && !Names.Contains(TEXT("client_fresh_pawn_zones")))
+        if (StageValue >= 8 && Own && Other && !RoundOneOwn.IsEmpty() && !Names.Contains(TEXT("client_fresh_pawn_zones")))
         {
             FString OwnDetail, OtherDetail;
-            const bool bFresh = Own != RoundOneOwn.Get() && Other != RoundOneOther.Get();
+            const bool bFresh = Own->GetName() != RoundOneOwn && Other->GetName() != RoundOneOther;
             const bool bLayout = VSDamageSmokeLayoutMatches(UVSHitZoneSet::FindOn(Own), 88.0, OwnDetail) &&
                 VSDamageSmokeLayoutMatches(UVSHitZoneSet::FindOn(Other), 88.0, OtherDetail);
             const UVSHitZoneSet* OtherZones = UVSHitZoneSet::FindOn(Other);
             if (bFresh && bLayout && OtherZones->AreZonesEnabled() && UVSHitZoneSet::FindOn(Own)->AreZonesEnabled())
             {
-                Check(TEXT("client_fresh_pawn_zones"), true, FString::Printf(TEXT("round 2 pawns %s / %s rebuilt zones: %s"), *Own->GetName(), *Other->GetName(), *OwnDetail));
+                Check(TEXT("client_fresh_pawn_zones"), true, FString::Printf(TEXT("round 2 pawns %s / %s (round 1: %s / %s) rebuilt zones: %s"),
+                    *Own->GetName(), *Other->GetName(), *RoundOneOwn, *RoundOneOther, *OwnDetail));
+            }
+            else if (World->GetTimeSeconds() - SeenStageAt > 5.0)
+            {
+                Check(TEXT("client_fresh_pawn_zones"), false, FString::Printf(TEXT("fresh=%d own: %s | other: %s"), bFresh ? 1 : 0, *OwnDetail, *OtherDetail));
             }
         }
 
@@ -937,7 +957,10 @@ private:
     TArray<FVSCapturedDamage> DamageEvents;
     FDelegateHandle Delegate;
     TWeakObjectPtr<UVSDamageSubsystem> BoundDamage;
-    TWeakObjectPtr<AVSCharacter> RoundOneDriver, RoundOneObserver, RoundOneOwn, RoundOneOther;
+    TWeakObjectPtr<AVSCharacter> RoundOneDriver, RoundOneObserver;
+    FString RoundOneOwn, RoundOneOther;
+    int32 SeenStage = -1;
+    double SeenStageAt = 0.0, FreshSeenAt = -1.0;
     TWeakPtr<SWidget> FocusBefore, FocusMenu;
     uint64 RoundOne = 0;
     int32 KillEvents = 0, BoardStep = 0;
