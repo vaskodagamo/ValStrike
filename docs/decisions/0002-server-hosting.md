@@ -4,6 +4,8 @@ Date: 2026-11-03
 
 Status: Proposed. The user asked on 2026-11-03 for a server path that can grow to many servers if the game succeeds. Nothing in this record is implemented or verified yet. It supplements [0001](0001-engine.md) and does not change the engine, the MVP scope or the deferred NEXT-05 public-service work.
 
+Update 2026-11-03: the user asked to start implementing the server codebase. The SRV-03 contract below is implemented in `Source/ValStrike/Server/` and verified with Editor-binary servers on one Mac; see SETUP.md and WORK_LOG.md. Stages 1–3 remain unimplemented, and the item 5 network-version gate still uses the engine default (see Implementation notes).
+
 ## Context
 
 - **Current server.** `Scripts/ue.py server` and `Tests/Playtest/run_session.py` start the Unreal *Editor* binary with `-server -nullrhi`. One process hosts one map/mode on one UDP port (default 7777). Clients join by a validated `host:port`. `AVSMatchGameMode` admits at most four players (`PreLogin`/`PostLogin`). When the server empties, the match clears and waits; the process keeps running. This is correct for development and LAN tests, but it is not a shippable server.
@@ -48,6 +50,13 @@ These small, provider-neutral pieces work at Stage 0. They make Stages 2–3 an 
 5. **Version identity.** The server logs its source revision, engine changelist and build configuration at startup. Mismatched clients are rejected by the engine's network version check rather than joining a divergent build.
 6. **Results out, no state in.** At match end the server writes a structured result (log line or JSON under `Saved/`). Stage 3 posts it to a backend instead. The game server has no database access.
 7. **Tick rate and health.** Choose and record `NetServerMaxTickRate` (`[/Script/OnlineSubsystemUtils.IpNetDriver]`) with SET-04. Periodically log server frame time and player count. Tick rate drives hosting cost and must be measured, not assumed.
+
+## Implementation notes (SRV-03, 2026-11-03)
+
+- Items 1–4 and 6 are implemented as described. Startup switches use a `-VSServer*` prefix, so a misspelled switch fails the launch instead of being silently ignored. Timers without `-VSServerExitWhenDone` are rejected for the same reason.
+- Item 5: the version line is logged, and the revision is captured at build time. Rejecting mismatched clients still relies on the engine's default network version. That covers the engine changelist, project name and `ProjectVersion`, not the Git revision. Binding the revision into the network version would also block LAN tests between Macs on slightly different commits. Decide that with the first packaged build (SET-03/REL-01).
+- Item 7: `VSSERVER_HEALTH` reports frame time and tick rate every 10 s. Choosing `NetServerMaxTickRate` remains part of SET-04.
+- The Mac Editor binary returns exit code 0 for every engine-requested exit. Non-zero failure codes take effect on Linux/Windows; on the Mac, runners read the `VSSERVER_EXIT` line.
 
 ## Alternatives considered
 

@@ -148,9 +148,25 @@ def command(args, engine, root, host):
             raise SetupError("Match requires --map site01 and its authored spawn/site markers.")
         log = root / "Saved/Logs" / f"VS_Server_{args.port}.log"
         return argv + [selected_map(key) + "?game=" + MODES[mode], "-server", "-nullrhi", "-nosound", "-unattended",
-                       f"-port={args.port}", f"-abslog={log}"]
+                       f"-port={args.port}", f"-abslog={log}"] + server_contract_switches(args)
     log = root / "Saved/Logs" / f"VS_Client_{os.getpid()}.log"
     return argv + [args.address, "-game", "-windowed", "-ResX=1280", "-ResY=720", f"-abslog={log}"]
+
+
+def server_contract_switches(args):
+    """Map launcher flags to the server's allowlisted -VSServer* switches (decision 0002, SRV-03)."""
+    switches = []
+    if args.session_id:
+        switches.append(f"-VSServerSession={args.session_id}")
+    if args.max_players is not None:
+        switches.append(f"-VSServerMaxPlayers={args.max_players}")
+    timers = [(args.empty_timeout, "-VSServerEmptyTimeout"), (args.result_grace, "-VSServerResultGrace")]
+    if not args.exit_when_done and any(value is not None for value, _switch in timers):
+        raise SetupError("--empty-timeout and --result-grace require --exit-when-done; without it the server never exits on its own.")
+    if args.exit_when_done:
+        switches.append("-VSServerExitWhenDone")
+        switches += [f"{switch}={value}" for value, switch in timers if value is not None]
+    return switches
 
 
 def probe(argv):
@@ -253,6 +269,20 @@ def address(value):
     return value
 
 
+def bounded(low, high, label):
+    def parse(value):
+        if not re.fullmatch(r"[0-9]{1,9}", value) or not low <= int(value) <= high:
+            raise argparse.ArgumentTypeError(f"{label} must be a whole number from {low} to {high}")
+        return int(value)
+    return parse
+
+
+def session_id(value):
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,63}", value):
+        raise argparse.ArgumentTypeError("session id must be 1-64 letters, digits, '-' or '_', starting with a letter or digit")
+    return value
+
+
 def parser():
     result = argparse.ArgumentParser(description=__doc__)
     result.add_argument("--engine", help="Unreal installation root or Engine directory; defaults to UE_ROOT")
@@ -270,6 +300,14 @@ def parser():
     server.add_argument("--port", type=port, default=7777)
     server.add_argument("--map", choices=tuple(MAPS), default="graybox")
     server.add_argument("--mode", choices=tuple(MODES), default="practice")
+    server.add_argument("--session-id", type=session_id, help="label for logs and results; default is generated")
+    server.add_argument("--max-players", type=bounded(1, 4, "max players"), help="1-4; default 4")
+    server.add_argument("--exit-when-done", action="store_true",
+                        help="exit after a completed match (no rematch) or after the server stays empty")
+    server.add_argument("--empty-timeout", type=bounded(1, 86400, "empty timeout"),
+                        help="seconds empty before exiting; default 60; requires --exit-when-done")
+    server.add_argument("--result-grace", type=bounded(0, 3600, "result grace"),
+                        help="seconds to allow a rematch after a completed match; default 15; requires --exit-when-done")
     client = actions.add_parser("client", help="editor development client; NOT a packaged client")
     client.add_argument("--address", type=address, default="127.0.0.1:7777")
     return result
