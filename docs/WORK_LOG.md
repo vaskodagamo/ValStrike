@@ -137,6 +137,20 @@ Module SHA256: `1275645b01008fffbfa1c13a5467ba7a3d519004dff7517a5f9123ead8d38537
 
 **Next action:** Merge the reviewed integration PR to main and synchronize the integration checkout; then integrate the separately owned map/rules/art work when ready and complete the remaining runtime gates. Keep source branches and their handoff history available.
 
+## 2026-11-03 Coordinated follow-ups for the Mac playtest
+
+**Request:** The user explicitly asked this chat to curate the other project chats so each performs useful work. The other Mac is Apple silicon with Unreal already installed; exact toolchain and real LAN acceptance remain to be checked.
+
+**State reviewed:** All six project chats were idle after their first deliverables. Combat/HUD were already integrated through PR #3. A fresh fetch found main at `5769631` after PRs #4–#6 merged the weapon finishes, Switchyard map and rules core. The prepared foundation includes that current history. Independent read-only reviews found no material blocker: 30 map/environment and 35 weapon LFS objects matched committed hashes/sizes; map/import/reopen evidence and previews matched delivered files. Normal and sanitizer rules reruns each passed 31 cases / 973 checks with matching source hashes. These remain independent foundations, not an implemented live match.
+
+**Prepared:** Added PLAYTEST_WORKSTREAMS.md with six bounded assignments, exclusive paths, fixed map/device/input contracts, port ranges and a shared heavy-Unreal slot. Reuse the existing chats in fresh checkouts for match runtime, round HUD, rifle presentation, Mac/LAN tooling, objective-device art and read-only Site01 readability QA. Match runtime is the critical path. The coordinator retains shared contracts, central records, publication and merges. Completion of a scoped review is useful work; no busywork is required to keep a chat artificially active.
+
+**Shared interface:** Added pawn-independent `FVSMatchHUDData` and virtual base-controller provider/cancel/rematch hooks. Practice defaults remain unavailable/no-op. Menu opening and restart with an open menu call the objective cancellation hook; the match-controller implementation is assigned to runtime. The UI consumes this contract and does not reimplement match rules. No actual round or objective functionality is claimed from this interface.
+
+**Verification:** Combined pinned Mac Editor build passed in 40.92 s, including rules and the new interface. Build log: `.parallel-worktrees/playtest-foundation/Saved/Tests/Coordination/foundation-build.log`. Five cross-worktree execution-slot tests, 21 existing launcher tests and seven map layout tests passed. Slot tests use real temporary Git worktrees and verify exclusion, cleanup, literal arguments and status propagation; no engine runs occur in those tests. Generated outputs are not shared between task checkouts. No new network/runtime acceptance is claimed for the neutral interface.
+
+**Next action:** Dispatch the six assignments with the exact committed common base, verify each chat acknowledges its new scope, and record active follow-ups. Review finished commits in dependency order, then rehearse local server/two-client match flow and prepare the user's first real two-Mac LAN test. Packaged/server-source access is a separate open gate.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.

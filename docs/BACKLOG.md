@@ -17,6 +17,7 @@ Updated: 2026-11-03. `Ready` means work can start; `Queued` means prerequisites 
 | SET-01 | Pin and prepare engine/toolchain | Done | PLAN-02 | Compatible release, full Xcode/SDK, disk capacity, and install locations recorded; toolchain launches |
 | SET-02 | Create C++ project and source control setup | Done | SET-01 | Test map runs; project compiles; generated outputs excluded; binary asset storage configured |
 | SET-03 | Prove packaged server/client connection | Queued | SET-02 | Source-engine server build path works; two client processes connect to packaged headless server; steps repeatable |
+| SET-05 | Prepare source-checkout Mac playtest tools | In progress | SET-02 | Real LFS assets verified in fresh checkout; pinned toolchain/build and selectable-map launch verified; LAN checklist and evidence collection ready |
 | SET-04 | Establish target-platform and performance baseline | Queued | SET-03 | Tester platforms chosen; actual target client/server builds launched; reference hardware, rendering settings, and tick configuration recorded |
 
 ## M2 Networked gunplay
@@ -28,7 +29,7 @@ Updated: 2026-11-03. `Ready` means work can start; `Queued` means prerequisites 
 | MOVE-03 | Validate movement under latency/loss | Queued | MOVE-02 | Measured RTT/jitter/loss and corrections recorded; no repeatable stuck or divergent movement on supported conditions |
 | GUN-01 | Add server-owned rifle state | Done | MOVE-02 | Cadence, ammo, reload, fire state and tuning data agree across server/clients |
 | GUN-02 | Add hits, health, death and development reset | Done | GUN-01 | Server validates traces/damage; cover blocks shots; dead players cannot act; server-only development reset restores players/ammo for repeated tests |
-| GUN-03 | Add immediate local feedback | Queued | GUN-02 | Recoil, crosshair, firing audio/effects, confirmed hits and death feedback work without duplicate effects |
+| GUN-03 | Add immediate local feedback | In progress | GUN-02 | Recoil, crosshair, firing audio/effects, confirmed hits and death feedback work without duplicate effects |
 | GUN-04 | Verify weapon authority and network behavior | Queued | GUN-03, MOVE-03 | Invalid/repeated requests rejected; rule tests pass; moving-target hit behavior measured and limitations documented |
 
 Movement evidence (2026-11-03): a three-process loopback smoke test passed 45 checks covering normal/slow/crouched speeds, replicated stance/body bounds, camera height, jump/landing, walls, stairs and cover. MOVE-01/02 remain in progress until the rendered checks are complete; MOVE-03 latency/loss and SET-03 packaging are still open. See WORK_LOG.md and the repeatable command in SETUP.md.
@@ -40,10 +41,10 @@ Integrated development foundation (2026-11-03): GUN-01/02 have server/two-client
 | ID | Task | Status | Depends on | Completion condition |
 | --- | --- | --- | --- | --- |
 | RULE-01 | Implement teams and round state | In progress | GUN-04 | Preparation, active, round-end, match-end states; deterministic contested-event resolution and one score award |
-| RULE-02 | Implement objective carry/drop/interact | Queued | RULE-01 | Plant/defuse eligibility and interruption validated; death/disconnect drop and recovery work |
-| RULE-03 | Complete win conditions and match flow | Queued | RULE-02 | Elimination, timeout, defuse and detonation pass; six rounds, side swap, draw/win and rematch work |
-| RULE-04 | Handle joins and disconnects | Queued | RULE-03 | Late joins wait safely; teams capped; underfilled rosters pause before the next round with score preserved; empty server clears abandoned match |
-| RULE-05 | Run round regression checks | Queued | RULE-04 | All rule paths tested; ten consecutive rounds reset cleanly; edge-case evidence recorded |
+| RULE-02 | Implement objective carry/drop/interact | In progress | RULE-01 | Plant/defuse eligibility and interruption validated; death/disconnect drop and recovery work |
+| RULE-03 | Complete win conditions and match flow | In progress | RULE-02 | Elimination, timeout, defuse and detonation pass; six rounds, side swap, draw/win and rematch work |
+| RULE-04 | Handle joins and disconnects | In progress | RULE-03 | Late joins wait safely; teams capped; underfilled rosters pause before the next round with score preserved; empty server clears abandoned match |
+| RULE-05 | Run round regression checks | In progress | RULE-04 | All rule paths tested; ten consecutive rounds reset cleanly; edge-case evidence recorded |
 
 Parallel foundation started on 2026-11-03: `codex/round-rules` owns a deterministic rules model and focused tests covering RULE-01 through RULE-05. Runtime actors, replication, physical objective placement and networked acceptance remain integration dependencies. See ROUND_RULES_BRIEF.md; starting isolated model work does not waive GUN-04 or any milestone gate.
 
@@ -70,9 +71,19 @@ Parallel map prototype: `codex/tactical-map` builds a separate Site01 map from t
 
 | ID | Task | Status | Completion condition |
 | --- | --- | --- | --- |
-| ART-03 | Create pistol and revise rifle/pistol finishes | In progress | Original pistol source/export/native assets; consistent cooler weapon palette; inspected actual studio/first-person previews; rifle geometry/socket contract retained; integration limits recorded |
+| ART-03 | Create pistol and revise rifle/pistol finishes | Done | Original pistol source/export/native assets; consistent cooler weapon palette; inspected actual studio/first-person previews; rifle geometry/socket contract retained; integration limits recorded |
+| ART-04 | Create an original objective device asset | In progress | Source/export/native mesh with fixed scale/pivot/material/socket contract, provenance and inspected previews; gameplay integration remains separate |
+
 
 The user explicitly requested pistol assets on 2026-11-03 after rifle asset commit `cac8151`. This art increment does not add pistol gameplay to the single-rifle MVP. See WEAPON_ART_DIRECTION.md.
+
+## Current coordinated follow-ups
+
+The user authorized curating all six existing project chats on 2026-11-03. PLAYTEST_WORKSTREAMS.md assigns match runtime, round HUD, rifle presentation, Mac/LAN tooling, a small objective-device asset and a bounded read-only Site01 readability review. Source branch foundations are now merged; this does not complete runtime match or real LAN acceptance.
+
+| ID | Task | Status | Completion condition |
+| --- | --- | --- | --- |
+| PLAY-05 | Review Site01 readability before first playtest | In progress | Actual viewpoint evidence and concise actionable findings; no unscheduled map edits or claim of human balance acceptance |
 
 ## Follow-on work
 
