@@ -37,3 +37,11 @@ Append-only ART-03 evidence. Dates use Europe/Berlin. Integration owns central d
 **Next action:** Commit/push only `codex/pistol-weapon-finish`; integration reviews and merges the scoped assets, then tests actual camera/hand fit and lighting with rifle gameplay. Pistol gameplay stays outside the current MVP.
 
 **Final handoff checks:** `ART03_FINAL_CHECKS_PASS` verified Python syntax, JSON parsing, every local Markdown/HTML reference, current palette/source/native hashes, fresh-process report equality, all ten PNG hashes/dimensions, identical per-weapon variant camera/light/assembly records, and unchanged native rifle mesh hashes. Capture run `2e984733e1da45a18be9d03e044d3ea3` completed in 60.912 seconds. Xcode recheck reports 26.1.1 / 17B100. Whitespace and ownership checks passed before staging.
+
+## 2026-11-03 — Local commit complete; public push requires direct approval
+
+**Local handoff:** Asset commit `136f4f23c1aa54695c4551e351aa1ded97ee5b10` contains the verified 59-file ART-03 batch. `git lfs fsck` passed; working tree was clean after commit. All art deliverables and validation are complete; remote delivery is not complete.
+
+**Push blocker:** Automatic approval review rejected the first combined commit/push request before execution because it treated the remote destination as unverified. The local commit was then created separately. Read-only GitHub connector checks verified `https://github.com/vaskodagamo/ValStrike.git` as the authenticated `vaskodagamo` user's own public repository with push/admin rights. A second direct `git push -u origin codex/pistol-weapon-finish` was rejected because connector metadata did not satisfy the reviewer's requirement for trusted user authorization to publish this asset/source payload publicly. Neither rejected command pushed anything. No workaround or alternate upload path was attempted.
+
+**Next action:** Obtain direct user approval for publishing this scoped branch to the existing public repository, then run the normal Git push and verify the remote branch hash. Local integration can inspect the asset commit meanwhile; no merge was performed.
