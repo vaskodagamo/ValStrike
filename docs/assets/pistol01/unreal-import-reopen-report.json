@@ -1,0 +1,259 @@
+{
+  "task": "ART-03",
+  "engine": "5.8.4-58902052+++UE5+Release-5.8",
+  "date_europe_berlin": "2026-11-03",
+  "mode": "fresh_process_reopen",
+  "palette_sha256": "4f85ac6d786ef6442304a68b5d654c3c16402d7d82a0ef31108edd1f3aac157f",
+  "variant": "crimson",
+  "units": "cm",
+  "forward": "+X",
+  "up": "+Z",
+  "gameplay_verified": false,
+  "animation_verified": false,
+  "materials": {
+    "M_VS_P01_Structure": {
+      "path": "/Game/Art/Weapons/Pistol01/Materials/M_VS_P01_Structure.M_VS_P01_Structure",
+      "role": "Structure",
+      "srgb_hex": "303944",
+      "linear_base_color": [
+        0.02955683507025242,
+        0.040915198624134064,
+        0.05780543014407158
+      ],
+      "roughness": 0.699999988079071,
+      "metallic": 0.0,
+      "emissive_connected": false
+    },
+    "M_VS_P01_Gunmetal": {
+      "path": "/Game/Art/Weapons/Pistol01/Materials/M_VS_P01_Gunmetal.M_VS_P01_Gunmetal",
+      "role": "Gunmetal",
+      "srgb_hex": "52647B",
+      "linear_base_color": [
+        0.08437620848417282,
+        0.12743768095970154,
+        0.19806931912899017
+      ],
+      "roughness": 0.47999998927116394,
+      "metallic": 0.15000000596046448,
+      "emissive_connected": false
+    },
+    "M_VS_P01_Steel": {
+      "path": "/Game/Art/Weapons/Pistol01/Materials/M_VS_P01_Steel.M_VS_P01_Steel",
+      "role": "Steel",
+      "srgb_hex": "8D9FB4",
+      "linear_base_color": [
+        0.26635560393333435,
+        0.34670406579971313,
+        0.4564110338687897
+      ],
+      "roughness": 0.41999998688697815,
+      "metallic": 0.25,
+      "emissive_connected": false
+    },
+    "M_VS_P01_Accent": {
+      "path": "/Game/Art/Weapons/Pistol01/Materials/M_VS_P01_Accent.M_VS_P01_Accent",
+      "role": "Accent",
+      "srgb_hex": "CF3D50",
+      "linear_base_color": [
+        0.6239603757858276,
+        0.04666508734226227,
+        0.0802198201417923
+      ],
+      "roughness": 0.5199999809265137,
+      "metallic": 0.0,
+      "emissive_connected": false
+    }
+  },
+  "assets": {
+    "SM_VS_Pistol01_Body": {
+      "asset": "/Game/Art/Weapons/Pistol01/Meshes/SM_VS_Pistol01_Body.SM_VS_Pistol01_Body",
+      "source_sha256": "f4811e5a5e4c8aa84f82846ff6f983b834f35163120515d744fea70a2439cfc0",
+      "bounds_min_cm": [
+        -7.22903,
+        -2.14,
+        -10.35081
+      ],
+      "bounds_max_cm": [
+        15.55632,
+        2.14,
+        2.9
+      ],
+      "size_cm": [
+        22.78535,
+        4.28,
+        13.25081
+      ],
+      "lod0_triangles": 1508,
+      "lod0_vertices": 3418,
+      "lods": 1,
+      "materials": [
+        "/Game/Art/Weapons/Pistol01/Materials/M_VS_P01_Structure.M_VS_P01_Structure",
+        "/Game/Art/Weapons/Pistol01/Materials/M_VS_P01_Steel.M_VS_P01_Steel",
+        "/Game/Art/Weapons/Pistol01/Materials/M_VS_P01_Gunmetal.M_VS_P01_Gunmetal",
+        "/Game/Art/Weapons/Pistol01/Materials/M_VS_P01_Accent.M_VS_P01_Accent"
+      ],
+      "uv_channels": 2,
+      "simple_collision_count": 0,
+      "convex_collision_count": 0,
+      "section_collision_enabled": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "collision_profile": "NoCollision",
+      "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+      "nanite_enabled": false,
+      "sockets": {
+        "Grip": {
+          "location_cm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "roll_pitch_yaw_degrees": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Slide": {
+          "location_cm": [
+            0.0,
+            0.0,
+            3.0
+          ],
+          "roll_pitch_yaw_degrees": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Magazine": {
+          "location_cm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "roll_pitch_yaw_degrees": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Muzzle": {
+          "location_cm": [
+            16.7,
+            0.0,
+            4.75
+          ],
+          "roll_pitch_yaw_degrees": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      }
+    },
+    "SM_VS_Pistol01_Slide": {
+      "asset": "/Game/Art/Weapons/Pistol01/Meshes/SM_VS_Pistol01_Slide.SM_VS_Pistol01_Slide",
+      "source_sha256": "7fdef3846858e5a405d517cff9764078b2d31c49d73518950ccf3d0a2314bd84",
+      "bounds_min_cm": [
+        -6.78045,
+        -2.15,
+        0.1
+      ],
+      "bounds_max_cm": [
+        16.7,
+        2.15,
+        4.475
+      ],
+      "size_cm": [
+        23.48045,
+        4.3,
+        4.375
+      ],
+      "lod0_triangles": 1604,
+      "lod0_vertices": 3576,
+      "lods": 1,
+      "materials": [
+        "/Game/Art/Weapons/Pistol01/Materials/M_VS_P01_Gunmetal.M_VS_P01_Gunmetal",
+        "/Game/Art/Weapons/Pistol01/Materials/M_VS_P01_Structure.M_VS_P01_Structure",
+        "/Game/Art/Weapons/Pistol01/Materials/M_VS_P01_Steel.M_VS_P01_Steel",
+        "/Game/Art/Weapons/Pistol01/Materials/M_VS_P01_Accent.M_VS_P01_Accent"
+      ],
+      "uv_channels": 2,
+      "simple_collision_count": 0,
+      "convex_collision_count": 0,
+      "section_collision_enabled": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "collision_profile": "NoCollision",
+      "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+      "nanite_enabled": false,
+      "sockets": {}
+    },
+    "SM_VS_Pistol01_Magazine": {
+      "asset": "/Game/Art/Weapons/Pistol01/Meshes/SM_VS_Pistol01_Magazine.SM_VS_Pistol01_Magazine",
+      "source_sha256": "f82a81f4ffcbe2df8730e715ac209ec08ae60c93d31a449700cd45c69956bd4c",
+      "bounds_min_cm": [
+        -6.62062,
+        -2.025,
+        -10.85
+      ],
+      "bounds_max_cm": [
+        0.46666,
+        2.025,
+        0.0
+      ],
+      "size_cm": [
+        7.08728,
+        4.05,
+        10.85
+      ],
+      "lod0_triangles": 184,
+      "lod0_vertices": 404,
+      "lods": 1,
+      "materials": [
+        "/Game/Art/Weapons/Pistol01/Materials/M_VS_P01_Gunmetal.M_VS_P01_Gunmetal",
+        "/Game/Art/Weapons/Pistol01/Materials/M_VS_P01_Structure.M_VS_P01_Structure",
+        "/Game/Art/Weapons/Pistol01/Materials/M_VS_P01_Accent.M_VS_P01_Accent"
+      ],
+      "uv_channels": 2,
+      "simple_collision_count": 0,
+      "convex_collision_count": 0,
+      "section_collision_enabled": [
+        false,
+        false,
+        false
+      ],
+      "collision_profile": "NoCollision",
+      "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+      "nanite_enabled": false,
+      "sockets": {}
+    }
+  }
+}

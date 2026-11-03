@@ -1,0 +1,160 @@
+{
+  "engine": "5.8.4-58902052+++UE5+Release-5.8",
+  "mode": "fresh_process_reopen",
+  "assets": {
+    "SM_VS_Rifle01_Body": {
+      "asset": "/Game/Art/Weapons/Rifle01/Meshes/SM_VS_Rifle01_Body.SM_VS_Rifle01_Body",
+      "source_sha256": "8995f229d274ab61d2ccda02df46ea648f418025c84fc24abd08e1c18da6c1cb",
+      "bounds_min_cm": [
+        -30.0,
+        -4.52,
+        -12.94506
+      ],
+      "bounds_max_cm": [
+        56.0,
+        4.52,
+        15.4
+      ],
+      "size_cm": [
+        86.0,
+        9.04,
+        28.34506
+      ],
+      "lod0_triangles": 3280,
+      "lod0_vertices": 7283,
+      "lods": 1,
+      "materials": [
+        "/Game/Art/Weapons/Rifle01/Materials/M_VS_R01_Graphite.M_VS_R01_Graphite",
+        "/Game/Art/Weapons/Rifle01/Materials/M_VS_R01_Teal.M_VS_R01_Teal",
+        "/Game/Art/Weapons/Rifle01/Materials/M_VS_R01_Accent.M_VS_R01_Accent",
+        "/Game/Art/Weapons/Rifle01/Materials/M_VS_R01_Ceramic.M_VS_R01_Ceramic"
+      ],
+      "uv_channels": 2,
+      "simple_collision_count": 0,
+      "convex_collision_count": 0,
+      "section_collision_enabled": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "collision_profile": "NoCollision",
+      "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+      "nanite_enabled": false,
+      "sockets": {
+        "Muzzle": {
+          "location_cm": [
+            56.0,
+            0.0,
+            8.2
+          ],
+          "roll_pitch_yaw_degrees": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Grip": {
+          "location_cm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "roll_pitch_yaw_degrees": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "SupportHand": {
+          "location_cm": [
+            31.0,
+            0.0,
+            2.4
+          ],
+          "roll_pitch_yaw_degrees": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "Magazine": {
+          "location_cm": [
+            14.0,
+            0.0,
+            2.0
+          ],
+          "roll_pitch_yaw_degrees": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      }
+    },
+    "SM_VS_Rifle01_Magazine": {
+      "asset": "/Game/Art/Weapons/Rifle01/Meshes/SM_VS_Rifle01_Magazine.SM_VS_Rifle01_Magazine",
+      "source_sha256": "1de8d9988fe9caa67384d8e097085fc2818cc314535386cf6532c59c5e0c242d",
+      "bounds_min_cm": [
+        -4.6,
+        -3.3,
+        -18.8
+      ],
+      "bounds_max_cm": [
+        9.05637,
+        3.3,
+        0.0
+      ],
+      "size_cm": [
+        13.65637,
+        6.6,
+        18.8
+      ],
+      "lod0_triangles": 488,
+      "lod0_vertices": 1086,
+      "lods": 1,
+      "materials": [
+        "/Game/Art/Weapons/Rifle01/Materials/M_VS_R01_Graphite.M_VS_R01_Graphite",
+        "/Game/Art/Weapons/Rifle01/Materials/M_VS_R01_Teal.M_VS_R01_Teal",
+        "/Game/Art/Weapons/Rifle01/Materials/M_VS_R01_Accent.M_VS_R01_Accent"
+      ],
+      "uv_channels": 2,
+      "simple_collision_count": 0,
+      "convex_collision_count": 0,
+      "section_collision_enabled": [
+        false,
+        false,
+        false
+      ],
+      "collision_profile": "NoCollision",
+      "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+      "nanite_enabled": false,
+      "sockets": {}
+    }
+  },
+  "forward_axis": "+X",
+  "up_axis": "+Z",
+  "units": "cm",
+  "gameplay_verified": false,
+  "animation_verified": false
+}

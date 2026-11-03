@@ -1,0 +1,485 @@
+{
+  "name": "P01 Shrike",
+  "author": "Codex, original fictional ValStrike weapon art",
+  "date_europe_berlin": "2026-11-03",
+  "tool": "Blender 5.2.2 LTS",
+  "external_inputs": [],
+  "units": "centimeters",
+  "forward": "+X",
+  "up": "+Z",
+  "palette": {
+    "M_VS_P01_Structure": {
+      "srgb_hex": "303944",
+      "roughness": 0.7,
+      "metallic": 0
+    },
+    "M_VS_P01_Gunmetal": {
+      "srgb_hex": "52647B",
+      "roughness": 0.48,
+      "metallic": 0.15
+    },
+    "M_VS_P01_Steel": {
+      "srgb_hex": "8D9FB4",
+      "roughness": 0.42,
+      "metallic": 0.25
+    },
+    "M_VS_P01_Accent": {
+      "srgb_hex": "CF3D50",
+      "roughness": 0.52,
+      "metallic": 0
+    }
+  },
+  "shared_palette_sha256": "4f85ac6d786ef6442304a68b5d654c3c16402d7d82a0ef31108edd1f3aac157f",
+  "assets": [
+    {
+      "name": "SM_VS_Pistol01_Body",
+      "file": "Exports/SM_VS_Pistol01_Body.fbx",
+      "pivot": "Grip attachment at local zero",
+      "bounds_min_cm": [
+        -7.22903299331665,
+        -2.1399998664855957,
+        -10.350813865661621
+      ],
+      "bounds_max_cm": [
+        15.556320190429688,
+        2.1399998664855957,
+        2.9000000953674316
+      ],
+      "dimensions_cm": [
+        22.785353183746338,
+        4.279999732971191,
+        13.250813961029053
+      ],
+      "vertices": 808,
+      "triangles": 1508,
+      "material_slots": [
+        "M_VS_P01_Structure",
+        "M_VS_P01_Steel",
+        "M_VS_P01_Gunmetal",
+        "M_VS_P01_Accent"
+      ],
+      "uv_channels": [
+        "UV0",
+        "UV1_Lightmap"
+      ],
+      "textures": [],
+      "collision": "none; presentation asset",
+      "source_closed_manifold_shells": true,
+      "source_signed_volume_cm3": 584.7156533206756,
+      "source_transforms_identity": true,
+      "uv_bounds_and_triangle_areas_passed": true,
+      "fbx_roundtrip": {
+        "passed": true,
+        "bounds_min_cm": [
+          -7.22903299331665,
+          -2.1399998664855957,
+          -10.350813865661621
+        ],
+        "bounds_max_cm": [
+          15.556320190429688,
+          2.140000104904175,
+          2.9000000953674316
+        ],
+        "dimensions_cm": [
+          22.785353183746338,
+          4.2799999713897705,
+          13.250813961029053
+        ],
+        "triangles": 1508,
+        "uv_channels": 2,
+        "collision_meshes": 0,
+        "material_constants": {
+          "M_VS_P01_Structure": {
+            "base_color_linear_rgba": [
+              0.02955683507025242,
+              0.040915198624134064,
+              0.05780543014407158,
+              1.0
+            ],
+            "roughness": 0.699999988079071,
+            "metallic": 0.0
+          },
+          "M_VS_P01_Steel": {
+            "base_color_linear_rgba": [
+              0.26635560393333435,
+              0.34670406579971313,
+              0.4564110338687897,
+              1.0
+            ],
+            "roughness": 0.41999998688697815,
+            "metallic": 0.25
+          },
+          "M_VS_P01_Gunmetal": {
+            "base_color_linear_rgba": [
+              0.08437620848417282,
+              0.12743768095970154,
+              0.19806931912899017,
+              1.0
+            ],
+            "roughness": 0.47999998927116394,
+            "metallic": 0.15000000596046448
+          },
+          "M_VS_P01_Accent": {
+            "base_color_linear_rgba": [
+              0.6239603757858276,
+              0.04666508734226227,
+              0.0802198201417923,
+              1.0
+            ],
+            "roughness": 0.5199999809265137,
+            "metallic": 0.0
+          }
+        }
+      }
+    },
+    {
+      "name": "SM_VS_Pistol01_Slide",
+      "file": "Exports/SM_VS_Pistol01_Slide.fbx",
+      "pivot": "Slide anchor; rest at body (0,0,3) cm",
+      "bounds_min_cm": [
+        -6.780452251434326,
+        -2.1499998569488525,
+        0.10000000149011612
+      ],
+      "bounds_max_cm": [
+        16.700000762939453,
+        2.1499998569488525,
+        4.474999904632568
+      ],
+      "dimensions_cm": [
+        23.48045301437378,
+        4.299999713897705,
+        4.374999903142452
+      ],
+      "vertices": 848,
+      "triangles": 1604,
+      "material_slots": [
+        "M_VS_P01_Gunmetal",
+        "M_VS_P01_Structure",
+        "M_VS_P01_Steel",
+        "M_VS_P01_Accent"
+      ],
+      "uv_channels": [
+        "UV0",
+        "UV1_Lightmap"
+      ],
+      "textures": [],
+      "collision": "none; presentation asset",
+      "source_closed_manifold_shells": true,
+      "source_signed_volume_cm3": 306.5864369436928,
+      "source_transforms_identity": true,
+      "uv_bounds_and_triangle_areas_passed": true,
+      "fbx_roundtrip": {
+        "passed": true,
+        "bounds_min_cm": [
+          -6.780452728271484,
+          -2.150001287460327,
+          0.10000000149011612
+        ],
+        "bounds_max_cm": [
+          16.700000762939453,
+          2.149998903274536,
+          4.474999904632568
+        ],
+        "dimensions_cm": [
+          23.480453491210938,
+          4.300000190734863,
+          4.374999903142452
+        ],
+        "triangles": 1604,
+        "uv_channels": 2,
+        "collision_meshes": 0,
+        "material_constants": {
+          "M_VS_P01_Gunmetal": {
+            "base_color_linear_rgba": [
+              0.08437620848417282,
+              0.12743768095970154,
+              0.19806931912899017,
+              1.0
+            ],
+            "roughness": 0.47999998927116394,
+            "metallic": 0.15000000596046448
+          },
+          "M_VS_P01_Structure": {
+            "base_color_linear_rgba": [
+              0.02955683507025242,
+              0.040915198624134064,
+              0.05780543014407158,
+              1.0
+            ],
+            "roughness": 0.699999988079071,
+            "metallic": 0.0
+          },
+          "M_VS_P01_Steel": {
+            "base_color_linear_rgba": [
+              0.26635560393333435,
+              0.34670406579971313,
+              0.4564110338687897,
+              1.0
+            ],
+            "roughness": 0.41999998688697815,
+            "metallic": 0.25
+          },
+          "M_VS_P01_Accent": {
+            "base_color_linear_rgba": [
+              0.6239603757858276,
+              0.04666508734226227,
+              0.0802198201417923,
+              1.0
+            ],
+            "roughness": 0.5199999809265137,
+            "metallic": 0.0
+          }
+        }
+      }
+    },
+    {
+      "name": "SM_VS_Pistol01_Magazine",
+      "file": "Exports/SM_VS_Pistol01_Magazine.fbx",
+      "pivot": "Insertion anchor; rest at body (0,0,0) cm",
+      "bounds_min_cm": [
+        -6.620617866516113,
+        -2.0250000953674316,
+        -10.850000381469727
+      ],
+      "bounds_max_cm": [
+        0.4666585922241211,
+        2.0250000953674316,
+        0.0
+      ],
+      "dimensions_cm": [
+        7.087276458740234,
+        4.050000190734863,
+        10.850000381469727
+      ],
+      "vertices": 100,
+      "triangles": 184,
+      "material_slots": [
+        "M_VS_P01_Gunmetal",
+        "M_VS_P01_Structure",
+        "M_VS_P01_Accent"
+      ],
+      "uv_channels": [
+        "UV0",
+        "UV1_Lightmap"
+      ],
+      "textures": [],
+      "collision": "none; presentation asset",
+      "source_closed_manifold_shells": true,
+      "source_signed_volume_cm3": 142.62502216983387,
+      "source_transforms_identity": true,
+      "uv_bounds_and_triangle_areas_passed": true,
+      "fbx_roundtrip": {
+        "passed": true,
+        "bounds_min_cm": [
+          -6.6206183433532715,
+          -2.0249998569488525,
+          -10.850000381469727
+        ],
+        "bounds_max_cm": [
+          0.4666587710380554,
+          2.025001049041748,
+          0.0
+        ],
+        "dimensions_cm": [
+          7.087277114391327,
+          4.050000905990601,
+          10.850000381469727
+        ],
+        "triangles": 184,
+        "uv_channels": 2,
+        "collision_meshes": 0,
+        "material_constants": {
+          "M_VS_P01_Gunmetal": {
+            "base_color_linear_rgba": [
+              0.08437620848417282,
+              0.12743768095970154,
+              0.19806931912899017,
+              1.0
+            ],
+            "roughness": 0.47999998927116394,
+            "metallic": 0.15000000596046448
+          },
+          "M_VS_P01_Structure": {
+            "base_color_linear_rgba": [
+              0.02955683507025242,
+              0.040915198624134064,
+              0.05780543014407158,
+              1.0
+            ],
+            "roughness": 0.699999988079071,
+            "metallic": 0.0
+          },
+          "M_VS_P01_Accent": {
+            "base_color_linear_rgba": [
+              0.6239603757858276,
+              0.04666508734226227,
+              0.0802198201417923,
+              1.0
+            ],
+            "roughness": 0.5199999809265137,
+            "metallic": 0.0
+          }
+        }
+      }
+    }
+  ],
+  "sockets": {
+    "Grip": {
+      "location_cm": [
+        0,
+        0,
+        0
+      ],
+      "rotation_degrees": [
+        0,
+        0,
+        0
+      ]
+    },
+    "Slide": {
+      "location_cm": [
+        0,
+        0,
+        3
+      ],
+      "rotation_degrees": [
+        0,
+        0,
+        0
+      ]
+    },
+    "Magazine": {
+      "location_cm": [
+        0,
+        0,
+        0
+      ],
+      "rotation_degrees": [
+        0,
+        0,
+        0
+      ]
+    },
+    "Muzzle": {
+      "location_cm": [
+        16.7,
+        0,
+        4.75
+      ],
+      "rotation_degrees": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "assembly": {
+    "SM_VS_Pistol01_Body": {
+      "location_cm": [
+        0,
+        0,
+        0
+      ],
+      "rotation_degrees": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "SM_VS_Pistol01_Slide": {
+      "location_cm": [
+        0,
+        0,
+        3
+      ],
+      "rotation_degrees": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "SM_VS_Pistol01_Magazine": {
+      "location_cm": [
+        0,
+        0,
+        0
+      ],
+      "rotation_degrees": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    }
+  },
+  "assembled_bounds_min_cm": [
+    -7.22903299331665,
+    -2.1499998569488525,
+    -10.850000381469727
+  ],
+  "assembled_bounds_max_cm": [
+    16.700000762939453,
+    2.1499998569488525,
+    7.474999904632568
+  ],
+  "assembled_dimensions_cm": [
+    23.929033756256104,
+    4.299999713897705,
+    18.325000286102295
+  ],
+  "total_triangles": 3296,
+  "fbx_export": {
+    "axis_forward": "-Y",
+    "axis_up": "Z",
+    "global_scale": 1,
+    "scene_scale_length": 0.01,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "apply_unit_scale": true,
+    "bake_space_transform": false
+  },
+  "limitations": [
+    "Static visual meshes only; no functional internals, rig, hands, animation, or gameplay.",
+    "Closed chamfered component shells intentionally overlap inside the silhouette.",
+    "No collision supplied; visual meshes must use NoCollision in Unreal.",
+    "UV channels are isolated face tiles; no texture-density/light-bake acceptance.",
+    "Blender previews are actual models, not native Unreal or gameplay captures."
+  ],
+  "saved_blend_reopen": {
+    "passed": true,
+    "canonical_geometry_transforms_material_constants": true
+  },
+  "finish_revision": {
+    "method": "saved-source material constants only; no geometry regeneration",
+    "geometry_before_sha256": {
+      "SM_VS_Pistol01_Body": "8a8c541551ebeb5e6259564c46159da681c404db39775af206cf13563b46275f",
+      "SM_VS_Pistol01_Slide": "3c7d3c5f073cd9285d0d157dab4b415aff06428788feecee421a365559af30fa",
+      "SM_VS_Pistol01_Magazine": "7f2abeecd3be1c3e7108a734c62e46a5a2e851210f29743bd84891c7e609c533"
+    },
+    "geometry_after_sha256": {
+      "SM_VS_Pistol01_Body": "8a8c541551ebeb5e6259564c46159da681c404db39775af206cf13563b46275f",
+      "SM_VS_Pistol01_Slide": "3c7d3c5f073cd9285d0d157dab4b415aff06428788feecee421a365559af30fa",
+      "SM_VS_Pistol01_Magazine": "7f2abeecd3be1c3e7108a734c62e46a5a2e851210f29743bd84891c7e609c533"
+    },
+    "geometry_saved_reopen_sha256": {
+      "SM_VS_Pistol01_Body": "8a8c541551ebeb5e6259564c46159da681c404db39775af206cf13563b46275f",
+      "SM_VS_Pistol01_Slide": "3c7d3c5f073cd9285d0d157dab4b415aff06428788feecee421a365559af30fa",
+      "SM_VS_Pistol01_Magazine": "7f2abeecd3be1c3e7108a734c62e46a5a2e851210f29743bd84891c7e609c533"
+    },
+    "geometry_uv_assignments_transforms_unchanged": true
+  }
+}
