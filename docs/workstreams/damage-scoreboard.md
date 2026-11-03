@@ -178,6 +178,17 @@ The fixes:
 - **Product fix:** the stats now publish from each controller's `OnNewPawn`, so a respawn shows as alive immediately.
 - The scoreboard now names the round that just ended during Resolved ("ROUND 1 / 6", not "ROUND 2 / 6") and sits below the round HUD strip.
 
+**Re-verified on current main:** main gained the Settings, Economy and Weapons PRs (#18–#20) after the base commit. I merged `origin/main` into this branch at `dcd29f4`; there were no conflicts and no overlap with owned paths. The merged head compiled clean in two unity blobs (`Module.ValStrike.1.cpp`/`.2.cpp`, 22 s, 0 warnings). Module SHA256 `7c46b80fab529f1c…`. All results are on the clean checkout:
+
+| Suite | Result | Evidence |
+| --- | --- | --- |
+| Damage runtime smoke | 44/44 (99 s, with main's 30 s buy phase) | `Saved/Tests/DamageRuntime/20261103T221820Z_66c156/result.json` |
+| Movement | 45/45 | `Saved/Tests/Movement/20261103T221959Z_5c9c84/result.json` |
+| Combat | 55/55 | `Saved/Tests/Combat/20261103T222113Z_6ff900/result.json` |
+| Match | 43/43 | `Saved/Tests/Match/20261103T222237Z_68f248/result.json` |
+
+The merged-head screenshots show the zones drawn alongside the new visible rifle, and the scoreboard clear of the new credits panel. Main's `UVSEconomySubsystem::ReportKill(AController* Killer, AController* Victim)` is the Economy side of the kill hook. Its bridge is one `OnKill` bind in Economy's `Initialize` (`ReportKill(Event.Instigator, Event.VictimController)`), left to the Economy owner or integration because this stream does not edit `Economy/`.
+
 ### Limitations
 
 - **Live gameplay is unchanged by design.** Real rifle kills count deaths only, with no kill credit and no zone damage, until Phase 2 routes fire through `ApplyWeaponHit`.
