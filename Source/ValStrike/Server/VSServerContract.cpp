@@ -55,11 +55,16 @@ std::string Shown(const std::string& Value)
     return Value.size() > 64 ? Result + "..." : Result;
 }
 
-enum Key { Session, ExitWhenDone, EmptyTimeout, ResultGrace, MaxPlayers, Provider, KeyCount };
+enum Key { Session, ExitWhenDone, EmptyTimeout, ResultGrace, MaxPlayers, Provider, JoinKey, KeyCount };
 const char* const KeyNames[KeyCount] = {
     "VSServerSession", "VSServerExitWhenDone", "VSServerEmptyTimeout",
-    "VSServerResultGrace", "VSServerMaxPlayers", "VSServerProvider",
+    "VSServerResultGrace", "VSServerMaxPlayers", "VSServerProvider", "VSServerJoinKey",
 };
+
+bool IsKeyCharacter(char C)
+{
+    return (C >= 'a' && C <= 'z') || (C >= 'A' && C <= 'Z') || (C >= '0' && C <= '9') || C == '-' || C == '_';
+}
 
 ParseResult Failed(const std::string& Error)
 {
@@ -81,6 +86,28 @@ bool IsValidSessionId(const std::string& Value)
     return true;
 }
 
+bool IsValidJoinKey(const std::string& Value)
+{
+    if (Value.size() < MinJoinKeyLength || Value.size() > MaxJoinKeyLength) { return false; }
+    for (const char C : Value) { if (!IsKeyCharacter(C)) { return false; } }
+    return true;
+}
+
+bool JoinKeyMatches(const std::string& Expected, const std::string& Supplied)
+{
+    if (Expected.empty()) { return false; }
+    // Compare every byte regardless of where the first difference is.
+    unsigned Difference = Expected.size() == Supplied.size() ? 0u : 1u;
+    const std::size_t Length = Expected.size();
+    for (std::size_t Index = 0; Index < Length; ++Index)
+    {
+        const unsigned char Left = static_cast<unsigned char>(Expected[Index]);
+        const unsigned char Right = static_cast<unsigned char>(Index < Supplied.size() ? Supplied[Index] : 0);
+        Difference |= static_cast<unsigned>(Left ^ Right);
+    }
+    return Difference == 0;
+}
+
 ParseResult ParseLaunchOptions(const std::vector<Switch>& Switches)
 {
     ParseResult Result;
@@ -97,7 +124,7 @@ ParseResult ParseLaunchOptions(const std::vector<Switch>& Switches)
         {
             return Failed("Unknown server switch -" + Shown(Item.Key) + "; allowed: -VSServerSession, "
                           "-VSServerExitWhenDone, -VSServerEmptyTimeout, -VSServerResultGrace, "
-                          "-VSServerMaxPlayers, -VSServerProvider");
+                          "-VSServerMaxPlayers, -VSServerProvider, -VSServerJoinKey");
         }
         const std::string Name = KeyNames[Found];
         if (Seen[Found]) { return Failed("Duplicate server switch -" + Name); }
@@ -136,6 +163,12 @@ ParseResult ParseLaunchOptions(const std::vector<Switch>& Switches)
             if (!EqualsNoCase(Item.Value, "local"))
             { return Failed("-VSServerProvider must be local; fleet providers are not implemented"); }
             Result.Options.Provider = "local";
+            break;
+        case JoinKey:
+            // The value is never echoed: a wrong key must not end up in a log.
+            if (!IsValidJoinKey(Item.Value))
+            { return Failed("-VSServerJoinKey must be 8-64 letters, digits, '-' or '_'"); }
+            Result.Options.JoinKey = Item.Value;
             break;
         default:
             return Failed("Unhandled server switch -" + Name);

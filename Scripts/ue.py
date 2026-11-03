@@ -150,7 +150,9 @@ def command(args, engine, root, host):
         return argv + [selected_map(key) + "?game=" + MODES[mode], "-server", "-nullrhi", "-nosound", "-unattended",
                        f"-port={args.port}", f"-abslog={log}"] + server_contract_switches(args)
     log = root / "Saved/Logs" / f"VS_Client_{os.getpid()}.log"
-    return argv + [args.address, "-game", "-windowed", "-ResX=1280", "-ResY=720", f"-abslog={log}"]
+    # The only URL option the helper ever adds; the address itself stays a validated host:port.
+    destination = args.address + (f"?JoinKey={args.join_key}" if args.join_key else "")
+    return argv + [destination, "-game", "-windowed", "-ResX=1280", "-ResY=720", f"-abslog={log}"]
 
 
 def server_contract_switches(args):
@@ -160,6 +162,8 @@ def server_contract_switches(args):
         switches.append(f"-VSServerSession={args.session_id}")
     if args.max_players is not None:
         switches.append(f"-VSServerMaxPlayers={args.max_players}")
+    if args.join_key:
+        switches.append(f"-VSServerJoinKey={args.join_key}")
     timers = [(args.empty_timeout, "-VSServerEmptyTimeout"), (args.result_grace, "-VSServerResultGrace")]
     if not args.exit_when_done and any(value is not None for value, _switch in timers):
         raise SetupError("--empty-timeout and --result-grace require --exit-when-done; without it the server never exits on its own.")
@@ -283,6 +287,12 @@ def session_id(value):
     return value
 
 
+def join_key(value):
+    if not re.fullmatch(r"[A-Za-z0-9_-]{8,64}", value):
+        raise argparse.ArgumentTypeError("join key must be 8-64 letters, digits, '-' or '_'")
+    return value
+
+
 def parser():
     result = argparse.ArgumentParser(description=__doc__)
     result.add_argument("--engine", help="Unreal installation root or Engine directory; defaults to UE_ROOT")
@@ -302,6 +312,7 @@ def parser():
     server.add_argument("--mode", choices=tuple(MODES), default="practice")
     server.add_argument("--session-id", type=session_id, help="label for logs and results; default is generated")
     server.add_argument("--max-players", type=bounded(1, 4, "max players"), help="1-4; default 4")
+    server.add_argument("--join-key", type=join_key, help="private server: clients must join with the same --join-key")
     server.add_argument("--exit-when-done", action="store_true",
                         help="exit after a completed match (no rematch) or after the server stays empty")
     server.add_argument("--empty-timeout", type=bounded(1, 86400, "empty timeout"),
@@ -310,6 +321,7 @@ def parser():
                         help="seconds to allow a rematch after a completed match; default 15; requires --exit-when-done")
     client = actions.add_parser("client", help="editor development client; NOT a packaged client")
     client.add_argument("--address", type=address, default="127.0.0.1:7777")
+    client.add_argument("--join-key", type=join_key, help="key the server was started with")
     return result
 
 

@@ -3,6 +3,7 @@
 #include "../Match/VSMatchGameMode.h"
 #include "../ValStrike.h"
 #include "Engine/GameInstance.h"
+#include "Engine/NetDriver.h"
 #include "Engine/World.h"
 #include "GameFramework/GameModeBase.h"
 #include "GameFramework/GameSession.h"
@@ -96,7 +97,6 @@ void UVSServerSubsystem::Initialize(FSubsystemCollectionBase& Collection)
     StartedAt = NowMs();
     HealthWindowStart = StartedAt;
     Provider = MakeUnique<FVSLocalServerProvider>();
-    Admission = MakeUnique<FVSOpenAdmission>();
 
     // Only -VSServer* switches are interpreted here; the parser rejects any that are not allowlisted.
     TArray<FString> Tokens;
@@ -112,6 +112,8 @@ void UVSServerSubsystem::Initialize(FSubsystemCollectionBase& Collection)
     }
     const VSServerApi::ParseResult Parsed = VSServerApi::ParseLaunchOptions(Input);
     if (Parsed.Ok) { Options = Parsed.Options; }
+    if (Options.JoinKey.empty()) { Admission = MakeUnique<FVSOpenAdmission>(); }
+    else { Admission = MakeUnique<FVSJoinKeyAdmission>(Options.JoinKey); }
     SessionId = Options.SessionId.empty()
         ? FString::Printf(TEXT("local-%s-%u"), *FDateTime::UtcNow().ToString(TEXT("%Y%m%dT%H%M%SZ")),
             FPlatformProcess::GetCurrentProcessId())
@@ -181,8 +183,10 @@ void UVSServerSubsystem::HandlePostLoadMap(UWorld* World)
         return;
     }
     if (GameMode->GameSession) { GameMode->GameSession->MaxPlayers = Options.MaxPlayers; }
-    UE_LOG(LogValStrike, Display, TEXT("VSSERVER_MAP map=%s mode=%s port=%d max_players=%d"),
-        *MapKey, *ModeKey, World->URL.Port, Options.MaxPlayers);
+    // The configured cap (SET-04). t.MaxFPS, when set, overrides it; health lines report the actual rate.
+    const int32 NetTickRate = World->GetNetDriver() ? World->GetNetDriver()->GetNetServerMaxTickRate() : 0;
+    UE_LOG(LogValStrike, Display, TEXT("VSSERVER_MAP map=%s mode=%s port=%d max_players=%d net_tick_rate=%d"),
+        *MapKey, *ModeKey, World->URL.Port, Options.MaxPlayers, NetTickRate);
     Apply(Lifecycle->MarkReady(NowMs()));
 }
 

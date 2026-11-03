@@ -110,6 +110,32 @@ void RejectsInvalidValues()
     CHECK(Rejects({Value("VSServerProvider", "local ")}));
 }
 
+void JoinKeyParsingAndComparison()
+{
+    const ParseResult Open = Parse({Flag("VSServerExitWhenDone")});
+    REQUIRE(Open.Ok);
+    CHECK(Open.Options.JoinKey.empty());
+    const ParseResult Keyed = Parse({Value("vsserverjoinkey", "lan-Key_01")});
+    REQUIRE(Keyed.Ok);
+    CHECK(Keyed.Options.JoinKey == "lan-Key_01");
+    for (const char* Key : {"short7_", "has space", "a?game=x", "key/with/slash", "k\xc3\xa9yyyyyyy", "",
+                            "01234567890123456789012345678901234567890123456789012345678901234"})
+    {
+        CHECK(Rejects({Value("VSServerJoinKey", Key)}));
+    }
+    const ParseResult Bad = Parse({Value("VSServerJoinKey", "secret?value")});
+    CHECK(!Bad.Ok && Bad.Error.find("secret") == std::string::npos);
+    CHECK(Rejects({Flag("VSServerJoinKey")}));
+    CHECK(IsValidJoinKey("12345678") && IsValidJoinKey(std::string(64, 'a')) && !IsValidJoinKey(std::string(65, 'a')));
+    CHECK(JoinKeyMatches("lan-Key_01", "lan-Key_01"));
+    CHECK(!JoinKeyMatches("lan-Key_01", "lan-Key_02"));
+    CHECK(!JoinKeyMatches("lan-Key_01", "lan-Key_0"));
+    CHECK(!JoinKeyMatches("lan-Key_01", "lan-Key_01x"));
+    CHECK(!JoinKeyMatches("lan-Key_01", ""));
+    CHECK(!JoinKeyMatches("lan-Key_01", "LAN-KEY_01"));
+    CHECK(!JoinKeyMatches("", "") && !JoinKeyMatches("", "anything"));
+}
+
 void TimersRequireExitWhenDone()
 {
     const ParseResult Timeout = Parse({Value("VSServerEmptyTimeout", "30")});
@@ -343,6 +369,7 @@ int main()
         {"accepts every allowlisted switch", AcceptsEveryAllowlistedSwitch},
         {"rejects unknown duplicate malformed switches", RejectsUnknownDuplicateAndMalformedSwitches},
         {"rejects invalid values", RejectsInvalidValues},
+        {"join key parsing and comparison", JoinKeyParsingAndComparison},
         {"timers require exit-when-done", TimersRequireExitWhenDone},
         {"map and mode allowlist", MapModeAllowlist},
         {"persistent server never exits on its own", PersistentServerNeverExitsOnItsOwn},
