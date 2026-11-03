@@ -60,7 +60,7 @@ public:
         case 0:
             if (!Pawn || !Pawn->InputComponent || !Session || Age < 2.0) return;
             Check(TEXT("initial_world_is_standalone"), PC->GetNetMode() == NM_Standalone);
-            Check(TEXT("baseline_combat_data_is_unavailable"), !Pawn->GetHUDData().bHasHealth && !Pawn->GetHUDData().bHasWeapon);
+            Check(TEXT("initial_combat_defaults_available"), CombatDefaults(Snapshot(TEXT("initial"), Pawn)));
             Check(TEXT("initial_menu_closed"), !PC->IsSessionMenuOpen());
             Check(TEXT("slate_initialized"), FSlateApplication::IsInitialized());
             Screenshot(TEXT("baseline"));
@@ -189,12 +189,23 @@ public:
             break;
         case 8:
             if (Age < 0.5) return;
+            Check(TEXT("connected_combat_defaults_replicated"), Pawn && !Pawn->HasAuthority()
+                && Pawn->GetLocalRole() == ROLE_AutonomousProxy && PC->GetNetMode() == NM_Client
+                && CombatDefaults(Snapshot(TEXT("connected_initial"), Pawn)));
+            Screenshot(TEXT("connected-hud"));
             Key(PC, EKeys::W, true);
+            Key(PC, EKeys::LeftMouseButton, true);
             Next(Now);
             break;
         case 9:
             if (Age < 0.45 || StageTicks < 12) return;
             CheckMovement(TEXT("connected_forward_input_moves"), Pawn, true);
+            {
+                const FVSPlayerHUDData Data = Snapshot(TEXT("connected_firing"), Pawn);
+                Check(TEXT("connected_fire_reduces_replicated_ammo"), Data.bHasWeapon && Data.bAlive
+                    && Data.MagazineAmmo >= 1 && Data.MagazineAmmo <= 28 && Data.ReserveAmmo == 90 && !Data.bReloading);
+                Check(TEXT("connected_fire_is_held_before_menu"), PC->IsInputKeyDown(EKeys::LeftMouseButton));
+            }
             Key(PC, EKeys::Escape, true);
             Next(Now);
             break;
@@ -203,14 +214,36 @@ public:
             Key(PC, EKeys::Escape, false);
             Check(TEXT("connected_escape_opens_menu"), PC->IsSessionMenuOpen());
             Check(TEXT("connected_menu_flushes_keys"), !PC->IsInputKeyDown(EKeys::W));
+            Check(TEXT("connected_menu_releases_held_fire"), !PC->IsInputKeyDown(EKeys::LeftMouseButton));
             Check(TEXT("connected_menu_does_not_pause"), !PC->GetWorld()->IsPaused());
             Screenshot(TEXT("connected-menu"));
             Key(PC, EKeys::W, true);
             WorldTime = PC->GetWorld()->GetTimeSeconds();
-            Next(Now);
+            Stage = 100;
+            Entered = Now;
+            StageTicks = 0;
+            break;
+        case 100:
+            // Let already-sent shots/replication settle before measuring that
+            // taking menu focus stopped the real weapon's held-fire timer.
+            if (Age < 0.35) return;
+            MenuAmmo = Snapshot(TEXT("menu_settled"), Pawn);
+            bMenuAmmoStable = MenuAmmo.bHasWeapon && MenuAmmo.MagazineAmmo > 0 && !MenuAmmo.bReloading;
+            MenuAmmoSamples = 0;
+            Stage = 11;
+            Entered = Now;
+            StageTicks = 0;
             break;
         case 11:
-            if (Age < 0.55 || StageTicks < 12) return;
+            {
+                const FVSPlayerHUDData Data = Pawn ? Pawn->GetHUDData() : FVSPlayerHUDData{};
+                bMenuAmmoStable &= Data.bHasWeapon && Data.bAlive && !Data.bReloading
+                    && Data.MagazineAmmo == MenuAmmo.MagazineAmmo && Data.ReserveAmmo == MenuAmmo.ReserveAmmo;
+                ++MenuAmmoSamples;
+            }
+            if (Age < 0.75 || StageTicks < 12) return;
+            Snapshot(TEXT("menu_end"), Pawn);
+            Check(TEXT("connected_menu_ammo_stays_stable"), bMenuAmmoStable && MenuAmmoSamples >= 12);
             CheckMovement(TEXT("connected_menu_blocks_forward"), Pawn, false);
             Check(TEXT("connected_world_advances_with_menu"), PC->GetWorld()->GetTimeSeconds() - WorldTime > 0.2f);
             if (FSlateApplication::IsInitialized()) SlateKey(EKeys::Escape);
@@ -224,8 +257,53 @@ public:
             if (Age < 0.45 || StageTicks < 12) return;
             CheckMovement(TEXT("connected_backward_moves_after_resume"), Pawn, true);
             Key(PC, EKeys::S, false);
+            BeforeReload = Snapshot(TEXT("reload_before"), Pawn);
+            Check(TEXT("connected_reload_input_ready"), BeforeReload.bHasWeapon && BeforeReload.bAlive
+                && !BeforeReload.bReloading && BeforeReload.MagazineAmmo > 0
+                && BeforeReload.MagazineAmmo < BeforeReload.MagazineCapacity && BeforeReload.ReserveAmmo > 0);
+            Key(PC, EKeys::LeftMouseButton, false);
+            Key(PC, EKeys::R, true);
+            Stage = 120;
+            Entered = Now;
+            break;
+        case 120:
+            if (Age < 0.12) return;
+            Key(PC, EKeys::R, false);
+            Stage = 121;
+            Entered = Now;
+            break;
+        case 121:
+            if ((!Pawn || !Pawn->GetHUDData().bReloading) && Age < 1.5) return;
+            {
+                const FVSPlayerHUDData Data = Snapshot(TEXT("reload_started"), Pawn);
+                Check(TEXT("connected_reload_started"), Data.bHasWeapon && Data.bReloading
+                    && Data.MagazineAmmo == BeforeReload.MagazineAmmo && Data.ReserveAmmo == BeforeReload.ReserveAmmo);
+            }
+            Screenshot(TEXT("connected-reloading"));
+            Stage = 122;
+            Entered = Now;
+            break;
+        case 122:
+            {
+                const FVSPlayerHUDData Data = Pawn ? Pawn->GetHUDData() : FVSPlayerHUDData{};
+                const int32 Transfer = FMath::Min(BeforeReload.MagazineCapacity - BeforeReload.MagazineAmmo, BeforeReload.ReserveAmmo);
+                const bool bComplete = Data.bHasWeapon && Data.bAlive && !Data.bReloading
+                    && Data.MagazineAmmo == BeforeReload.MagazineAmmo + Transfer
+                    && Data.ReserveAmmo == BeforeReload.ReserveAmmo - Transfer;
+                if (!bComplete && Age < 3.5) return;
+                Snapshot(TEXT("reload_completed"), Pawn);
+                Check(TEXT("connected_reload_completed"), bComplete && Transfer > 0);
+            }
+            Screenshot(TEXT("connected-reloaded"));
+            Stage = 123;
+            Entered = Now;
+            break;
+        case 123:
+            if (Age < 0.3) return; // Give the native screenshot a rendered frame before travel.
             PC->SetSessionMenuOpen(true);
-            Next(Now);
+            Stage = 13;
+            Entered = Now;
+            StageTicks = 0;
             PC->DisconnectFromServer();
             break;
         case 13:
@@ -290,6 +368,24 @@ public:
     }
 
 private:
+    static bool CombatDefaults(const FVSPlayerHUDData& Data)
+    {
+        return Data.bHasHealth && Data.bHasWeapon && Data.bAlive && Data.Health == 100.0f
+            && Data.MaxHealth == 100.0f && Data.MagazineAmmo == 30 && Data.MagazineCapacity == 30
+            && Data.ReserveAmmo == 90 && !Data.bReloading;
+    }
+
+    static FVSPlayerHUDData Snapshot(const TCHAR* Phase, const AVSCharacter* Pawn)
+    {
+        const FVSPlayerHUDData Data = Pawn ? Pawn->GetHUDData() : FVSPlayerHUDData{};
+        UE_LOG(LogValStrike, Display, TEXT("VSUI_HUD {\"phase\":\"%s\",\"has_health\":%s,\"health\":%.3f,\"max_health\":%.3f,\"alive\":%s,\"has_weapon\":%s,\"magazine\":%d,\"capacity\":%d,\"reserve\":%d,\"reloading\":%s,\"authority\":%s,\"net_mode\":%d}"),
+            Phase, Data.bHasHealth ? TEXT("true") : TEXT("false"), Data.Health, Data.MaxHealth,
+            Data.bAlive ? TEXT("true") : TEXT("false"), Data.bHasWeapon ? TEXT("true") : TEXT("false"),
+            Data.MagazineAmmo, Data.MagazineCapacity, Data.ReserveAmmo, Data.bReloading ? TEXT("true") : TEXT("false"),
+            Pawn && Pawn->HasAuthority() ? TEXT("true") : TEXT("false"), Pawn ? static_cast<int32>(Pawn->GetNetMode()) : -1);
+        return Data;
+    }
+
     void Screenshot(const TCHAR* Name) const
     {
         if (FParse::Param(FCommandLine::Get(), TEXT("nullrhi"))) return;
@@ -335,6 +431,8 @@ private:
         Key(PC, EKeys::W, false);
         Key(PC, EKeys::S, false);
         Key(PC, EKeys::Escape, false);
+        Key(PC, EKeys::LeftMouseButton, false);
+        Key(PC, EKeys::R, false);
         Focus.Reset();
         bFinished = true;
         UE_LOG(LogValStrike, Display, TEXT("VSUI_DONE checks=%d failures=%d"), Checks, Failures);
@@ -350,6 +448,10 @@ private:
     double Started = 0.0;
     double Entered = 0.0;
     float WorldTime = 0.0f;
+    FVSPlayerHUDData MenuAmmo;
+    FVSPlayerHUDData BeforeReload;
+    bool bMenuAmmoStable = false;
+    int32 MenuAmmoSamples = 0;
     FRotator Rotation;
     TWeakPtr<SWidget> Focus;
     TWeakObjectPtr<UWorld> BeforeCancelWorld;
