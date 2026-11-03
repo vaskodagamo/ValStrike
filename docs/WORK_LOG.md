@@ -280,6 +280,16 @@ The server logged no score mismatch and stayed up without the exit flag, as inte
 
 **Next action:** Run `python3 Tests/UI/test_session.py --rendered` when the screen is free, and mark SRV-03 Done if it passes. Merge PR #16, then review and merge this branch. SRV-01 (Epic source access) remains the blocker for the packaged Linux server. When it lands, verify non-zero exit codes on Linux and decide whether to bind the revision into the network version (SET-03/REL-01).
 
+## 2026-11-03 SRV-03 rendered UI acceptance
+
+**Task:** SRV-03, the last check from the previous entry. The user approved opening a test window.
+
+**Result:** `python3 Tests/UI/test_session.py --rendered` passed 72/72 (`Saved/Tests/UI/20261103T210714Z_fb4bf1/result.json`). It ran with a rendered driver and a null-RHI server on loopback, with no audio and no artificial latency/loss. The module was built at `c52b3b8`; HEAD `ffc7b47` adds only docs. The server log shows the persistent-server lifecycle without `-VSServerExitWhenDone`: Ready → Allocated on the menu-driven join, then Allocated → Ready (`server_empty`) after disconnect. The server process kept running until the runner stopped it. SRV-03's completion condition is met, so the backlog marks it Done.
+
+**Limits:** Unchanged from the previous entry. All evidence comes from the Editor binary on one Mac; packaged and Linux behavior and non-zero exit codes remain unverified.
+
+**Next action:** Merge PR #16, then publish and review `claude/srv-03-server-contract`. SRV-01 source access remains the server-path blocker.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.
