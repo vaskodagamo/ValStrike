@@ -1,0 +1,131 @@
+{
+  "passed": true,
+  "run_id": "b800475731ab40dbb738380444594470",
+  "engine": "5.8.4-58902052+++UE5+Release-5.8",
+  "evidence_kind": "single-player Play In Editor, real VSCharacter/CharacterMovement, scripted AddMovementInput",
+  "human_playtest": false,
+  "multiplayer_verified": false,
+  "packaged_verified": false,
+  "timing_basis": "observed world simulation seconds; waypoint tolerance 40 cm; initial test teleport excluded",
+  "map_sha256": "6798356d8d029112a0dabfa3a5fa2789eebeb79b114959836070801bb989f3aa",
+  "design_sha256": "79108f7b98dde15a0db9fe46cc701ce0a12b975740de54d5e91c90ab88e673a5",
+  "script_sha256": "e2bd1388253be87289bc7593f9bf624c34442ff07f0bf8e8457d0c7e92a3604b",
+  "wall_elapsed_seconds": 80.03,
+  "traversals": [
+    {
+      "route_id": "north_main",
+      "stance": "standing",
+      "passed": true,
+      "observed_sim_seconds": 10.198,
+      "observed_distance_cm": 4536.28,
+      "final_location_cm": [
+        1050.132,
+        39.819,
+        90.15
+      ],
+      "endpoint_error_cm": 39.82,
+      "capsule_half_height_cm": 88.0,
+      "center_z_range_cm": [
+        90.15,
+        90.15
+      ],
+      "samples": 1224
+    },
+    {
+      "route_id": "south_main",
+      "stance": "standing",
+      "passed": true,
+      "observed_sim_seconds": 12.193,
+      "observed_distance_cm": 5429.34,
+      "final_location_cm": [
+        1050.064,
+        -37.426,
+        90.15
+      ],
+      "endpoint_error_cm": 37.43,
+      "capsule_half_height_cm": 88.0,
+      "center_z_range_cm": [
+        90.15,
+        90.15
+      ],
+      "samples": 1461
+    },
+    {
+      "route_id": "north_flank",
+      "stance": "standing",
+      "passed": true,
+      "observed_sim_seconds": 17.648,
+      "observed_distance_cm": 7882.95,
+      "final_location_cm": [
+        1049.647,
+        37.976,
+        90.15
+      ],
+      "endpoint_error_cm": 37.98,
+      "capsule_half_height_cm": 88.0,
+      "center_z_range_cm": [
+        90.15,
+        90.15
+      ],
+      "samples": 2118
+    },
+    {
+      "route_id": "defender_north",
+      "stance": "standing",
+      "passed": true,
+      "observed_sim_seconds": 5.229,
+      "observed_distance_cm": 2300.15,
+      "final_location_cm": [
+        1049.765,
+        39.377,
+        90.15
+      ],
+      "endpoint_error_cm": 39.38,
+      "capsule_half_height_cm": 88.0,
+      "center_z_range_cm": [
+        90.15,
+        90.15
+      ],
+      "samples": 628
+    },
+    {
+      "route_id": "defender_south",
+      "stance": "standing",
+      "passed": true,
+      "observed_sim_seconds": 5.384,
+      "observed_distance_cm": 2369.32,
+      "final_location_cm": [
+        1049.548,
+        -38.738,
+        90.15
+      ],
+      "endpoint_error_cm": 38.74,
+      "capsule_half_height_cm": 88.0,
+      "center_z_range_cm": [
+        90.15,
+        90.15
+      ],
+      "samples": 646
+    },
+    {
+      "route_id": "north_main",
+      "stance": "crouched",
+      "passed": true,
+      "observed_sim_seconds": 25.132,
+      "observed_distance_cm": 4516.39,
+      "final_location_cm": [
+        1047.962,
+        38.826,
+        58.15
+      ],
+      "endpoint_error_cm": 38.88,
+      "capsule_half_height_cm": 56.0,
+      "center_z_range_cm": [
+        58.15,
+        58.15
+      ],
+      "samples": 3014
+    }
+  ],
+  "error": null
+}

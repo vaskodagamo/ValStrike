@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "map_asset": "/Game/Maps/Site01/VS_Site01",
+  "units": "cm",
+  "spawns": [
+    {
+      "id": "ATK_1",
+      "role": "attacker",
+      "actor_label": "VS_ATK_1",
+      "location_cm": [
+        -2250,
+        -250,
+        100
+      ],
+      "yaw_degrees": 90
+    },
+    {
+      "id": "ATK_2",
+      "role": "attacker",
+      "actor_label": "VS_ATK_2",
+      "location_cm": [
+        -2250,
+        250,
+        100
+      ],
+      "yaw_degrees": -90
+    },
+    {
+      "id": "DEF_1",
+      "role": "defender",
+      "actor_label": "VS_DEF_1",
+      "location_cm": [
+        2200,
+        -250,
+        100
+      ],
+      "yaw_degrees": -90
+    },
+    {
+      "id": "DEF_2",
+      "role": "defender",
+      "actor_label": "VS_DEF_2",
+      "location_cm": [
+        2200,
+        250,
+        100
+      ],
+      "yaw_degrees": 90
+    }
+  ],
+  "site": {
+    "id": "A",
+    "actor_label": "VS_Site_A",
+    "center_cm": [
+      1050,
+      0,
+      100
+    ],
+    "half_extents_cm": [
+      400,
+      500,
+      100
+    ]
+  },
+  "device_recovery": {
+    "actor_label": "VS_DeviceRecovery",
+    "location_cm": [
+      1050,
+      0,
+      20
+    ]
+  },
+  "playable_bounds": {
+    "center_cm": [
+      0,
+      0,
+      300
+    ],
+    "half_extents_cm": [
+      2550,
+      2050,
+      300
+    ]
+  },
+  "bounds_limitations": "Outer AABB includes solid buildings/screens/cover. Later recovery must also validate floor support and collision/reachability; bounds alone are insufficient.",
+  "integration_status": "Authored metadata only. Baseline GameMode ignores role tags. No objective gameplay implemented here."
+}
