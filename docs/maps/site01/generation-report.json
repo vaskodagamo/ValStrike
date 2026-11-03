@@ -1,0 +1,10 @@
+{
+  "engine": "5.8.4-58902052+++UE5+Release-5.8",
+  "map_asset": "/Game/Maps/Site01/VS_Site01",
+  "generated_actor_count": 77,
+  "saved_reopened_actor_count": 77,
+  "source_sha256": "1e146f9c266cf3beab1a6f2ec06efdff983d05c57f624ba86f3f8a57fd70b1f0",
+  "design_sha256": "79108f7b98dde15a0db9fe46cc701ce0a12b975740de54d5e91c90ab88e673a5",
+  "runtime_verified": false,
+  "status": "saved_and_reopened"
+}
