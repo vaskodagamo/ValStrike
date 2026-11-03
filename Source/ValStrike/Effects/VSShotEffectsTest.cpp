@@ -12,6 +12,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "Engine/DirectionalLight.h"
 #include "Engine/Engine.h"
+#include "Engine/GameViewportClient.h"
 #include "Engine/SkyLight.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
@@ -75,7 +76,7 @@ const FShotFxPlan ShotFxPlan[] = {
     {TEXT("rejoin"), 42.0, 43.0, FRotator(0, 175, 0), TEXT("rejoin")},
 };
 constexpr int32 ShotFxPlanCount = UE_ARRAY_COUNT(ShotFxPlan);
-constexpr double ShotFxWindowBefore = 0.1;
+constexpr double ShotFxWindowBefore = 0.5;
 constexpr double ShotFxWindowAfter = 1.4;
 constexpr double ShotFxBurstOpen = 22.9;
 constexpr double ShotFxBurstClose = 32.0;
@@ -170,6 +171,7 @@ private:
     static void Key(APlayerController* PC, FKey Name, bool bWanted, bool& bHeld)
     {
         if (bHeld == bWanted) { return; }
+        UE_LOG(LogValStrike, Log, TEXT("VSSHOTFX key %s %s"), *Name.ToString(), bWanted ? TEXT("down") : TEXT("up"));
         PC->InputKey(FInputKeyEventArgs::CreateSimulated(Name, bWanted ? IE_Pressed : IE_Released, bWanted ? 1 : 0));
         bHeld = bWanted;
     }
@@ -221,7 +223,7 @@ private:
     {
         const bool bSubsystem = World->GetSubsystem<UVSShotEffectsSubsystem>() != nullptr;
         int32 Actors = 0, Components = 0;
-        for (TActorIterator<AActor> It(World); It; ++It) { Actors += It->GetName().StartsWith(TEXT("VSShotEffects")) ? 1 : 0; }
+        for (TActorIterator<AActor> It(World); It; ++It) { Actors += It->ActorHasTag(UVSShotEffectsSubsystem::EffectsActorTag) ? 1 : 0; }
         for (TObjectIterator<UStaticMeshComponent> It; It; ++It)
         {
             if (It->GetWorld() == World && (It->GetName().StartsWith(TEXT("VSShotTracer")) || It->GetName().StartsWith(TEXT("VSImpactMark")))) { ++Components; }
@@ -236,7 +238,9 @@ private:
         if (bFinished || !World || !World->IsGameWorld() || !World->GetGameState()) { return; }
         const bool bServer = Role == TEXT("server");
         if ((bServer && World->GetNetMode() != NM_DedicatedServer) || (!bServer && World->GetNetMode() != NM_Client)) { return; }
-        const double Time = World->GetGameState()->GetServerWorldTimeSeconds() - Start;
+        const AVSShotEffectsTestGameState* Clock = Cast<AVSShotEffectsTestGameState>(World->GetGameState());
+        const double Time = (bServer || !Clock ? World->GetGameState()->GetServerWorldTimeSeconds() : Clock->EstimateServerSeconds()) - Start;
+        if (!bServer) { IsolateFromDesktopInput(World); }
         if (!bServer && NamedWorld.Get() != World)
         {
             if (APlayerController* PC = World->GetFirstPlayerController(); PC && PC->PlayerState)
@@ -258,7 +262,8 @@ private:
         AVSCharacter* Local = Role == TEXT("shooter") ? Shooter : Observer;
         APlayerController* PC = Local ? Cast<APlayerController>(Local->GetController()) : nullptr;
         // Respawn and rejoin legitimately remove a player for a moment.
-        const bool bTransition = (Time > 16.9 && Time < 19.6) || (Time > 34.9 && Time < 41.9);
+        // Each process estimates the server clock; allow a few hundred ms of skew.
+        const bool bTransition = (Time > 16.4 && Time < 19.6) || (Time > 34.4 && Time < 41.9);
         if (!Shooter || !Observer || (!bServer && (!PC || !Local->InputComponent)))
         {
             if (Time > 1 && !bTransition) { Finish(TEXT("players_not_ready")); }
@@ -267,6 +272,19 @@ private:
         if (bServer) { ServerTick(World, Time, Shooter, Observer); }
         else { ClientTick(World, Time, Shooter, Observer, PC); }
         if (!bFinished && Time >= ShotFxFinish) { Finish(); }
+    }
+
+    static void IsolateFromDesktopInput(UWorld* World)
+    {
+        // Rendered clients take window focus. Real keystrokes or mouse movement on
+        // this desktop must not fire, reload, move or turn the scripted players.
+        // Scripted keys use APlayerController::InputKey and bypass the viewport.
+        // Possession re-applies game input mode, so this runs every tick.
+        UGameViewportClient* Viewport = World->GetGameViewport();
+        if (!Viewport) { return; }
+        if (!Viewport->IgnoreInput()) { Viewport->SetIgnoreInput(true); }
+        if (Viewport->GetMouseCaptureMode() != EMouseCaptureMode::NoCapture) { Viewport->SetMouseCaptureMode(EMouseCaptureMode::NoCapture); }
+        if (Viewport->GetMouseLockMode() != EMouseLockMode::DoNotLock) { Viewport->SetMouseLockMode(EMouseLockMode::DoNotLock); }
     }
 
     void ServerTick(UWorld* World, double Time, AVSCharacter* Shooter, AVSCharacter* Observer)
@@ -316,11 +334,15 @@ private:
                 Result.ServerHitRole = RoleOf(Hit.GetActor(), Shooter, Observer);
             }
             else if (InBurst(Time)) { BurstServerShots += Delta; }
-            else { UnexpectedServerShots += Delta; }
+            else
+            {
+                UnexpectedServerShots += Delta;
+                UE_LOG(LogValStrike, Warning, TEXT("VSSHOTFX server unexpected accepted shot(s) at %.2f s: %u"), Time, Delta);
+            }
         }
 
         if (Once(2, Time, 10.0)) { Place(Observer, ShotFxTargetSpot, ShotFxTargetFacing); }
-        if (Once(3, Time, 12.0))
+        if (Once(3, Time, 12.3))
         {
             const float Health = Observer->GetHealthComponent()->GetHealth();
             Check(TEXT("player_damage"), FMath::IsNearlyEqual(Health, 70.0f), FString::Printf(TEXT("observer_health=%.1f"), Health));
@@ -438,9 +460,25 @@ private:
 
         if (Once(14, Time, 0.5))
         {
-            Check(TEXT("subsystem_present"), Fx->IsTickable() && !Fx->GetEffectsActor() && S.Effects == 0 && S.Baselines >= 2,
-                FString::Printf(TEXT("tickable=%d lazy_actor=%d effects=%u baselines=%u"), Fx->IsTickable(),
-                    Fx->GetEffectsActor() == nullptr, S.Effects, S.Baselines));
+            const UStaticMeshComponent* WarmTracer = Fx->GetTracerComponent(0);
+            const UStaticMeshComponent* WarmMark = Fx->GetMarkComponent(0);
+            Check(TEXT("subsystem_present"), Fx->IsTickable() && Fx->IsWarmedUp() && S.Effects == 0 && S.Baselines >= 2
+                && Fx->GetActiveTracerCount() == 0 && Fx->GetActiveMarkCount() == 0
+                && WarmTracer && !WarmTracer->IsVisible() && WarmMark && !WarmMark->IsVisible(),
+                FString::Printf(TEXT("tickable=%d warmed=%d effects=%u baselines=%u pools=%d/%d"), Fx->IsTickable(), Fx->IsWarmedUp(),
+                    S.Effects, S.Baselines, Fx->GetTracerPoolSize(), Fx->GetMarkPoolSize()));
+        }
+
+        const double RealNow = FPlatformTime::Seconds();
+        if (LastRealTick > 0.0 && FirstEffectRealTime > 0.0 && RealNow - FirstEffectRealTime < 1.5)
+        {
+            LongestFrameAfterFirstEffect = FMath::Max(LongestFrameAfterFirstEffect, RealNow - LastRealTick);
+        }
+        LastRealTick = RealNow;
+        if (FirstEffectRealTime > 0.0 && RealNow - FirstEffectRealTime >= 1.5 && First(16))
+        {
+            Check(TEXT("first_effect_no_stall"), LongestFrameAfterFirstEffect < 0.5,
+                FString::Printf(TEXT("longest_frame_s=%.3f (includes the screenshot capture)"), LongestFrameAfterFirstEffect));
         }
 
         // Attribute each new effect to the planned shot window it appeared in.
@@ -474,6 +512,7 @@ private:
                 }
                 if (First(15))
                 {
+                    FirstEffectRealTime = RealNow;
                     FString Detail;
                     const bool bTracerReady = ShaderReady(Fx->GetTracerMaterial(), World, Detail);
                     const bool bMarkReady = ShaderReady(Fx->GetMarkMaterial(), World, Detail);
@@ -490,7 +529,12 @@ private:
                 }
             }
             else if (InBurst(Time)) { BurstEffects += New; }
-            else { UnexpectedEffects += New; }
+            else
+            {
+                UnexpectedEffects += New;
+                UE_LOG(LogValStrike, Warning, TEXT("VSSHOTFX %s unexpected effect at %.2f s: represented=%u kind=%s"), *Role, Time,
+                    Record.RepresentedShots, ShotFxKind(Record.Impact));
+            }
         }
 
         // Single-shot results once each window closes.
@@ -637,8 +681,8 @@ private:
             FString::Printf(TEXT("effects=%d represented=%u tracer=%d visible=%d kind=%s hit=%s muzzle=%d expected_muzzle=%d muzzle_error=%.2f point=%s"),
                 Result.Effects, Record.RepresentedShots, Record.bTracer, Result.bTracerVisible, ShotFxKind(Record.Impact), *Result.HitRole,
                 Record.bMuzzleOrigin, Result.bExpectMuzzle, Result.bExpectMuzzle ? MuzzleError : -1.0, *ShotFxVec(Record.ImpactPoint)));
-        Shots.Add(FString::Printf(TEXT("{\"label\":\"%s\",\"effects\":%d,\"kind\":\"%s\",\"role\":\"%s\",\"point\":%s,\"start\":%s,\"end\":%s,\"muzzle\":%s}"),
-            Plan.Label, Result.Effects, ShotFxKind(Record.Impact), *Result.HitRole, *ShotFxVec(Record.ImpactPoint),
+        Shots.Add(FString::Printf(TEXT("{\"label\":\"%s\",\"effects\":%d,\"kind\":\"%s\",\"role\":\"%s\",\"point\":%s,\"eye\":%s,\"start\":%s,\"end\":%s,\"muzzle\":%s}"),
+            Plan.Label, Result.Effects, ShotFxKind(Record.Impact), *Result.HitRole, *ShotFxVec(Record.ImpactPoint), *ShotFxVec(Record.Eye),
             *ShotFxVec(Record.TracerStart), *ShotFxVec(Record.TracerEnd), Record.bMuzzleOrigin ? TEXT("true") : TEXT("false")));
     }
 
@@ -659,6 +703,7 @@ private:
     uint32 TrackedShots = 0, BurstServerShots = 0, UnexpectedServerShots = 0;
     uint32 FirstShooterId = 0, ObserverId = 0, TrackedShooterId = 0;
     int32 ObserverRejoins = 0;
+    double LastRealTick = 0.0, FirstEffectRealTime = 0.0, LongestFrameAfterFirstEffect = 0.0;
     bool bReady = false, bFinished = false, bFireHeld = false, bReloadHeld = false, bRejoinRequested = false;
 };
 
@@ -669,7 +714,11 @@ TUniquePtr<FVSShotEffectsSmoke> ShotEffectsSmoke;
 AVSShotEffectsTestGameMode::AVSShotEffectsTestGameMode()
 {
 #if !UE_BUILD_SHIPPING && !UE_BUILD_TEST
-    if (VSShotEffectsTestDetail::IsShotEffectsTest()) { DefaultPawnClass = AVSShotEffectsTestCharacter::StaticClass(); }
+    if (VSShotEffectsTestDetail::IsShotEffectsTest())
+    {
+        DefaultPawnClass = AVSShotEffectsTestCharacter::StaticClass();
+        GameStateClass = AVSShotEffectsTestGameState::StaticClass();
+    }
 #endif
 }
 
@@ -690,4 +739,17 @@ void AVSShotEffectsTestCharacter::BeginPlay()
     using namespace VSShotEffectsTestDetail;
     if (IsShotEffectsTest() && !ShotEffectsSmoke) { ShotEffectsSmoke = MakeUnique<FVSShotEffectsSmoke>(); }
 #endif
+}
+
+double AVSShotEffectsTestGameState::EstimateServerSeconds() const
+{
+    if (LastServerSeconds < 0.0) { return GetServerWorldTimeSeconds(); }
+    return LastServerSeconds + (FPlatformTime::Seconds() - LastReceiptRealSeconds);
+}
+
+void AVSShotEffectsTestGameState::OnRep_ReplicatedWorldTimeSecondsDouble()
+{
+    Super::OnRep_ReplicatedWorldTimeSecondsDouble();
+    LastServerSeconds = ReplicatedWorldTimeSecondsDouble;
+    LastReceiptRealSeconds = FPlatformTime::Seconds();
 }

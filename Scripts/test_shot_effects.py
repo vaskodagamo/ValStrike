@@ -46,8 +46,19 @@ REQUIRED_CHECKS = {
 CLIENT_SCREENSHOTS = ("tracer_neutral", "fade", "player", "tracer_dim", "muzzle", "marks_neutral", "marks_dim", "rejoin")
 REQUIRED_SCREENSHOTS = {"server": (), "shooter": CLIENT_SCREENSHOTS, "observer": CLIENT_SCREENSHOTS}
 # Cosmetic impact points must match the server's reference trace for stationary targets.
+# The shooter's own client knows its exact aim. Observers see a remote shooter's yaw only
+# through replicated actor rotation, which Unreal quantizes to 8 bits per axis by default
+# (1.40625 degree steps), so their bound grows with distance by half a step (+25% for
+# oblique surfaces). View pitch replicates at 16 bits and is negligible.
 IMPACT_TOLERANCE_CM = 5.0
+REMOTE_YAW_HALF_STEP_DEG = 360.0 / 256.0 / 2.0
 EXPECTED_ROLE = {"player": "observer"}
+
+
+def impact_tolerance(role, distance_cm):
+    if role == "shooter":
+        return IMPACT_TOLERANCE_CM
+    return IMPACT_TOLERANCE_CM + 1.25 * distance_cm * math.tan(math.radians(REMOTE_YAW_HALF_STEP_DEG))
 
 
 def effects_port(value):
@@ -111,14 +122,17 @@ def validate_report(role, report, required_checks=None):
     return checks
 
 
+def finite_vector(value):
+    return (isinstance(value, list) and len(value) == 3
+            and all(isinstance(item, (int, float)) and not isinstance(item, bool) and math.isfinite(item) for item in value))
+
+
 def shot_records(role, report):
     records = {}
     for item in report["shots"]:
         label = item.get("label") if isinstance(item, dict) else None
-        point = item.get("point") if isinstance(item, dict) else None
-        if (label not in SHOT_LABELS or label in records or not isinstance(point, list) or len(point) != 3
-                or not all(isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
-                           for value in point)):
+        if (label not in SHOT_LABELS or label in records or not finite_vector(item.get("point"))
+                or (role != "server" and not finite_vector(item.get("eye")))):
             raise RuntimeError(f"Invalid or duplicate shot record in {role} report: {item!r}")
         records[label] = item
     missing = set(SHOT_LABELS) - set(records)
@@ -136,12 +150,14 @@ def cross_check(reports, labels=SHOT_LABELS):
         for label in labels:
             reference, observed = server[label], client[label]
             distance = math.dist(reference["point"], observed["point"])
+            tolerance = impact_tolerance(role, math.dist(observed["eye"], observed["point"]))
             expected = EXPECTED_ROLE.get(label, "world")
             passed = (reference.get("hit") is True and reference.get("role") == expected
-                      and observed.get("role") == expected and distance <= IMPACT_TOLERANCE_CM)
+                      and observed.get("role") == expected and distance <= tolerance)
             checks.append({"check": f"{role}: impact_matches_server_{label}", "passed": passed,
-                           "detail": f"distance_cm={distance:.2f} server_role={reference.get('role')} "
-                                     f"client_role={observed.get('role')} kind={observed.get('kind')}"})
+                           "detail": f"distance_cm={distance:.2f} tolerance_cm={tolerance:.2f} "
+                                     f"server_role={reference.get('role')} client_role={observed.get('role')} "
+                                     f"kind={observed.get('kind')}"})
     return checks
 
 

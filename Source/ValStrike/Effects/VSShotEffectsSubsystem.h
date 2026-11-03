@@ -107,6 +107,7 @@ public:
     static constexpr int32 MaxTracers = 16;
     static constexpr int32 MaxMarks = 32;
     static const FName MuzzleSocket;
+    static const FName EffectsActorTag;
 
     virtual bool ShouldCreateSubsystem(UObject* Outer) const override;
     virtual bool IsTickable() const override;
@@ -118,6 +119,8 @@ public:
     const FVSShotEffectsStats& GetStats() const { return Stats; }
     const FVSShotEffectRecord& GetLastEffect() const { return LastEffect; }
     const AActor* GetEffectsActor() const { return EffectsActor; }
+    // True once both effect materials have been drawn once (invisibly) after world start.
+    bool IsWarmedUp() const { return bWarmedUp; }
     int32 GetTracerPoolSize() const { return Tracers.Num(); }
     int32 GetMarkPoolSize() const { return Marks.Num(); }
     int32 GetActiveTracerCount() const;
@@ -149,6 +152,9 @@ private:
     void SpawnShotEffect(const AVSCharacter& Shooter, const UActorComponent& Weapon, uint32 Represented, double Now);
     FVector TracerOrigin(const AVSCharacter& Shooter, bool bFirstPersonView, const FVector& Eye, const FRotator& Aim,
         bool& bOutMuzzle, const USceneComponent*& OutMuzzle) const;
+    void WarmUp();
+    void PlaceTracer(UStaticMeshComponent& Component, const FVector& Start, const FVector& End) const;
+    void PlaceMark(UStaticMeshComponent& Component, const FVector& Point, const FVector& Normal, double Diameter) const;
     int32 ShowTracer(const FVector& Start, const FVector& End, double Now);
     int32 ShowMark(const FHitResult& Hit, bool bCharacter, const FVector& ViewLocation, double Now);
     void UpdateEffects(double Now);
@@ -169,6 +175,8 @@ private:
     FVSShotEffectRecord LastEffect;
     float WorldMarkHold = 2.5f;
     float WorldMarkFade = 1.5f;
+    int32 WarmupFramesLeft = -1;
+    bool bWarmedUp = false;
     bool bDisabled = false;
     bool bWarnedMissingAssets = false;
 };

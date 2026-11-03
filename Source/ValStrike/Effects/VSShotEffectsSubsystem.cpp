@@ -25,6 +25,7 @@
 #endif
 
 const FName UVSShotEffectsSubsystem::MuzzleSocket(TEXT("Muzzle"));
+const FName UVSShotEffectsSubsystem::EffectsActorTag(TEXT("VSShotEffects"));
 
 namespace VSShotEffectsDetail
 {
@@ -152,8 +153,57 @@ void UVSShotEffectsSubsystem::Tick(float DeltaTime)
         return;
     }
     const double Now = GetWorld()->GetTimeSeconds();
+    if (!bWarmedUp) { WarmUp(); }
     UpdateEffects(Now);
     ObserveCharacters(Now);
+}
+
+void UVSShotEffectsSubsystem::WarmUp()
+{
+    // The first draw of a new material creates its GPU pipeline states, which
+    // stalled the first shot by about two seconds in an uncooked Mac client. Draw one
+    // tracer and one mark fully transparent in front of the camera for a few
+    // frames at world start instead. Skipped without a renderer.
+    if (!FApp::CanEverRender()) { bWarmedUp = true; return; }
+    const APlayerController* PC = GEngine ? GEngine->GetFirstLocalPlayerController(GetWorld()) : nullptr;
+    if (!PC || !PC->PlayerCameraManager) { return; } // Wait for a local view.
+    if (WarmupFramesLeft < 0)
+    {
+        if (!EnsureEffectsActor()) { bWarmedUp = true; return; }
+        if (Tracers.IsEmpty()) { Tracers.AddDefaulted_GetRef().Component = MakeEffectComponent(TEXT("VSShotTracer"), TracerMesh, TracerMaterial); }
+        if (Marks.IsEmpty()) { Marks.AddDefaulted_GetRef().Component = MakeEffectComponent(TEXT("VSImpactMark"), MarkMesh, MarkMaterial); }
+        WarmupFramesLeft = 3;
+    }
+    UStaticMeshComponent* Tracer = Tracers[0].bActive ? nullptr : Tracers[0].Component.Get();
+    UStaticMeshComponent* Mark = Marks[0].bActive ? nullptr : Marks[0].Component.Get();
+    if (WarmupFramesLeft-- > 0)
+    {
+        const FVector Camera = PC->PlayerCameraManager->GetCameraLocation();
+        const FRotator View = PC->PlayerCameraManager->GetCameraRotation();
+        const FVector Ahead = Camera + View.Vector() * 150.0;
+        const FVector Side = FRotationMatrix(View).GetUnitAxis(EAxis::Y) * 20.0;
+        if (Tracer)
+        {
+            PlaceTracer(*Tracer, Ahead - Side, Ahead + Side);
+            Tracer->SetCustomPrimitiveDataFloat(0, 0.0f); // Intensity 0: adds nothing.
+            Tracer->SetCustomPrimitiveDataFloat(1, 1.0f);
+            Tracer->SetVisibility(true);
+        }
+        if (Mark)
+        {
+            PlaceMark(*Mark, Ahead, -View.Vector(), 10.0);
+            Mark->SetCustomPrimitiveDataFloat(0, 0.0f); // Fade 0: fully transparent.
+            Mark->SetCustomPrimitiveDataFloat(1, 1.0f);
+            Marks[0].LastOpacity = Marks[0].LastHeat = -1.0f;
+            Mark->SetVisibility(true);
+        }
+        return;
+    }
+    // Real effects may already own slot 0; only hide idle warm-up components.
+    if (Tracer) { Tracer->SetVisibility(false); }
+    if (Mark) { Mark->SetVisibility(false); }
+    bWarmedUp = true;
+    UE_LOG(LogValStrike, Log, TEXT("Shot effects warmed up."));
 }
 
 void UVSShotEffectsSubsystem::ObserveCharacters(double Now)
@@ -288,6 +338,7 @@ bool UVSShotEffectsSubsystem::EnsureEffectsActor()
     AActor* Actor = World->SpawnActor<AActor>(AActor::StaticClass(), FTransform::Identity, Params);
     if (!Actor) { return false; }
     Actor->SetActorEnableCollision(false);
+    Actor->Tags.Add(UVSShotEffectsSubsystem::EffectsActorTag);
     USceneComponent* Root = NewObject<USceneComponent>(Actor, TEXT("Root"));
     Actor->SetRootComponent(Root);
     Actor->AddInstanceComponent(Root);
@@ -322,6 +373,32 @@ UStaticMeshComponent* UVSShotEffectsSubsystem::MakeEffectComponent(const TCHAR* 
     return Component;
 }
 
+void UVSShotEffectsSubsystem::PlaceTracer(UStaticMeshComponent& Component, const FVector& Start, const FVector& End) const
+{
+    // Stretch the engine cylinder along Start->End using its own bounds, so the
+    // placement holds whether its pivot is centered or at the base.
+    const FVector Axis = End - Start;
+    const double Length = FMath::Max(Axis.Size(), 1.0);
+    const FBoxSphereBounds Bounds = TracerMesh->GetBounds();
+    const double Height = FMath::Max(2.0 * Bounds.BoxExtent.Z, 1.0);
+    const double Radius = FMath::Max(Bounds.BoxExtent.X, 1.0);
+    const FVector Scale(VSShotEffectsDetail::TracerBaseRadius / Radius, VSShotEffectsDetail::TracerBaseRadius / Radius, Length / Height);
+    const FQuat Rotation = FRotationMatrix::MakeFromZ(Axis / Length).ToQuat();
+    const FVector Base(Bounds.Origin.X, Bounds.Origin.Y, Bounds.Origin.Z - Bounds.BoxExtent.Z);
+    Component.SetWorldTransform(FTransform(Rotation, Start - Rotation.RotateVector(Base * Scale), Scale));
+}
+
+void UVSShotEffectsSubsystem::PlaceMark(UStaticMeshComponent& Component, const FVector& Point, const FVector& Normal, double Diameter) const
+{
+    // The engine plane faces +Z; align that with the surface normal.
+    const FBoxSphereBounds Bounds = MarkMesh->GetBounds();
+    const double Half = FMath::Max(Bounds.BoxExtent.X, 1.0);
+    const FVector Scale(Diameter / (2.0 * Half), Diameter / (2.0 * Half), 1.0);
+    const FQuat Rotation = FRotationMatrix::MakeFromZ(Normal).ToQuat();
+    const FVector Location = Point + Normal * VSShotEffectsDetail::MarkSurfaceOffset - Rotation.RotateVector(Bounds.Origin * Scale);
+    Component.SetWorldTransform(FTransform(Rotation, Location, Scale));
+}
+
 int32 UVSShotEffectsSubsystem::ShowTracer(const FVector& Start, const FVector& End, double Now)
 {
     if (!EnsureEffectsActor()) { return INDEX_NONE; }
@@ -337,17 +414,7 @@ int32 UVSShotEffectsSubsystem::ShowTracer(const FVector& Start, const FVector& E
     UStaticMeshComponent* Component = Slot.Component;
     if (!IsValid(Component)) { return INDEX_NONE; }
 
-    // Stretch the engine cylinder along Start->End using its own bounds, so the
-    // placement holds whether its pivot is centered or at the base.
-    const FVector Axis = End - Start;
-    const double Length = Axis.Size();
-    const FBoxSphereBounds Bounds = TracerMesh->GetBounds();
-    const double Height = FMath::Max(2.0 * Bounds.BoxExtent.Z, 1.0);
-    const double Radius = FMath::Max(Bounds.BoxExtent.X, 1.0);
-    const FVector Scale(VSShotEffectsDetail::TracerBaseRadius / Radius, VSShotEffectsDetail::TracerBaseRadius / Radius, Length / Height);
-    const FQuat Rotation = FRotationMatrix::MakeFromZ(Axis / Length).ToQuat();
-    const FVector Base(Bounds.Origin.X, Bounds.Origin.Y, Bounds.Origin.Z - Bounds.BoxExtent.Z);
-    Component->SetWorldTransform(FTransform(Rotation, Start - Rotation.RotateVector(Base * Scale), Scale));
+    PlaceTracer(*Component, Start, End);
     Component->SetCustomPrimitiveDataFloat(0, 1.0f); // Intensity
     Component->SetCustomPrimitiveDataFloat(1, 1.0f); // Width
     Component->SetVisibility(true);
@@ -378,13 +445,7 @@ int32 UVSShotEffectsSubsystem::ShowMark(const FHitResult& Hit, bool bCharacter, 
     if (Normal.IsNearlyZero()) { Normal = -(Hit.TraceEnd - Hit.TraceStart).GetSafeNormal(); }
     // Slightly larger far away so distant marks stay readable on this client.
     const double Distance = FVector::Dist(ViewLocation, Hit.ImpactPoint);
-    const double Diameter = FMath::Clamp(Distance * 0.004, 7.0, 16.0) * (bCharacter ? 1.2 : 1.0);
-    const FBoxSphereBounds Bounds = MarkMesh->GetBounds();
-    const double Half = FMath::Max(Bounds.BoxExtent.X, 1.0);
-    const FVector Scale(Diameter / (2.0 * Half), Diameter / (2.0 * Half), 1.0);
-    const FQuat Rotation = FRotationMatrix::MakeFromZ(Normal).ToQuat();
-    const FVector Location = Hit.ImpactPoint + Normal * MarkSurfaceOffset - Rotation.RotateVector(Bounds.Origin * Scale);
-    Component->SetWorldTransform(FTransform(Rotation, Location, Scale));
+    PlaceMark(*Component, Hit.ImpactPoint, Normal, FMath::Clamp(Distance * 0.006, 9.0, 20.0) * (bCharacter ? 1.2 : 1.0));
     if (bCharacter && Hit.GetComponent())
     {
         // Follow the struck character; the engine detaches it if that pawn is destroyed.

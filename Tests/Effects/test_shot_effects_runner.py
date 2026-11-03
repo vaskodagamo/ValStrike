@@ -23,7 +23,7 @@ def server_shot(label, point, role="world", hit=True):
 
 def client_shot(label, point, role="world", kind="world"):
     return {"label": label, "effects": 1, "kind": kind, "role": role, "point": list(point),
-            "start": [0, 0, 0], "end": list(point), "muzzle": False}
+            "eye": [-1000.0, -1000.0, 154.0], "start": [0, 0, 0], "end": list(point), "muzzle": False}
 
 
 class ShotEffectsRunnerTests(unittest.TestCase):
@@ -90,10 +90,22 @@ class ShotEffectsRunnerTests(unittest.TestCase):
                     runner.evaluate(self.reports)
 
     def test_cosmetic_impact_must_match_server_reference(self):
-        self.reports["observer"]["shots"][0]["point"][0] += runner.IMPACT_TOLERANCE_CM + 0.5
+        self.reports["shooter"]["shots"][0]["point"][1] += runner.IMPACT_TOLERANCE_CM + 0.5
+        checks = {check["check"]: check for check in runner.evaluate(self.reports)}
+        self.assertFalse(checks["shooter: impact_matches_server_wall"]["passed"])
+        self.assertTrue(checks["observer: impact_matches_server_wall"]["passed"])
+
+    def test_observer_bound_follows_replicated_yaw_quantization(self):
+        # 950 cm from the eye: half a 1.40625 degree step is ~11.7 cm, x1.25 plus 5 cm.
+        bound = runner.impact_tolerance("observer", 950.0)
+        self.assertAlmostEqual(bound, 5.0 + 1.25 * 950.0 * 0.012272, places=1)
+        self.assertEqual(runner.impact_tolerance("shooter", 950.0), runner.IMPACT_TOLERANCE_CM)
+        self.reports["observer"]["shots"][0]["point"][1] += bound - 1.0
+        checks = {check["check"]: check for check in runner.evaluate(self.reports)}
+        self.assertTrue(checks["observer: impact_matches_server_wall"]["passed"])
+        self.reports["observer"]["shots"][0]["point"][1] += 2.0
         checks = {check["check"]: check for check in runner.evaluate(self.reports)}
         self.assertFalse(checks["observer: impact_matches_server_wall"]["passed"])
-        self.assertTrue(checks["shooter: impact_matches_server_wall"]["passed"])
 
     def test_player_shot_must_hit_the_observer_on_server_and_client(self):
         index = runner.SHOT_LABELS.index("player")
@@ -111,7 +123,8 @@ class ShotEffectsRunnerTests(unittest.TestCase):
                       original[:-1] + [{**original[-1], "point": [0, 0]}],
                       original[:-1] + [{**original[-1], "point": [0, float("nan"), 0]}],
                       original[:-1] + [{**original[-1], "point": [0, True, 0]}],
-                      original[:-1] + [{**original[-1], "label": "unknown"}]):
+                      original[:-1] + [{**original[-1], "label": "unknown"}],
+                      original[:-1] + [{key: value for key, value in original[-1].items() if key != "eye"}]):
             with self.subTest(shots=len(shots)):
                 self.reports["shooter"]["shots"] = shots
                 with self.assertRaises(RuntimeError):
