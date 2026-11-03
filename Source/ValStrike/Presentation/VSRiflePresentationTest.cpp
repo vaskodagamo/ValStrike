@@ -5,6 +5,7 @@
 #include "../VSPlayerController.h"
 #include "../Combat/VSRifleComponent.h"
 #include "../Combat/VSHealthComponent.h"
+#include "../Combat/VSTestServerClock.h"
 #include "../ValStrike.h"
 #include "Camera/CameraComponent.h"
 #include "Components/DirectionalLightComponent.h"
@@ -12,6 +13,7 @@
 #include "Components/SkyLightComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Engine/DirectionalLight.h"
+#include "Engine/GameViewportClient.h"
 #include "Engine/SkyLight.h"
 #include "Engine/StaticMesh.h"
 #include "Engine/World.h"
@@ -48,6 +50,10 @@ public:
         FParse::Value(FCommandLine::Get(), TEXT("VSRiflePresentationTest="), Role);
         FParse::Value(FCommandLine::Get(), TEXT("VSRiflePresentationOutput="), Output);
         FParse::Value(FCommandLine::Get(), TEXT("VSRiflePresentationStart="), Start);
+        FString Map;
+        // Site01 keeps its authored lighting and uses open floor on the site pad.
+        bSite01 = FParse::Value(FCommandLine::Get(), TEXT("VSRiflePresentationMap="), Map) && Map == TEXT("site01");
+        Base = bSite01 ? FVector(850, -150, 110) : FVector(-1000, -1000, 90);
         Delegate = FWorldDelegates::OnWorldPostActorTick.AddRaw(this, &FPresentationSmoke::Tick);
     }
     ~FPresentationSmoke() { FWorldDelegates::OnWorldPostActorTick.Remove(Delegate); }
@@ -81,6 +87,19 @@ private:
         PC->InputKey(FInputKeyEventArgs::CreateSimulated(Name, Wanted ? IE_Pressed : IE_Released, Wanted ? 1 : 0));
         Held = Wanted;
     }
+    // One-frame press: the release is processed in the next frame's input pass,
+    // before the automatic fire timer can tick, so a tap is exactly one request
+    // however long the frames are (e.g. a first-draw pipeline compile hitch).
+    void Tap(APlayerController* PC, FKey Name)
+    {
+        PC->InputKey(FInputKeyEventArgs::CreateSimulated(Name, IE_Pressed, 1));
+        PendingRelease.Add(Name);
+    }
+    void ReleaseTaps(APlayerController* PC)
+    {
+        for (const FKey& Name : PendingRelease) { PC->InputKey(FInputKeyEventArgs::CreateSimulated(Name, IE_Released, 0)); }
+        PendingRelease.Reset();
+    }
     static bool Place(AVSCharacter* Pawn, FVector Location, FRotator Rotation)
     {
         if (!Pawn) { return false; }
@@ -94,8 +113,9 @@ private:
         }
         Pawn->ForceNetUpdate(); return true;
     }
-    static void Lighting(UWorld* World, bool bDim)
+    void Lighting(UWorld* World, bool bDim) const
     {
+        if (bSite01) { return; } // Authored map lighting is the subject under review.
         for (TActorIterator<ADirectionalLight> It(World); It; ++It)
             It->GetLightComponent()->SetIntensity(bDim ? 0.35f : 3.0f);
         for (TActorIterator<ASkyLight> It(World); It; ++It)
@@ -106,7 +126,7 @@ private:
         if (bFinished || !World || !World->IsGameWorld() || !World->GetGameState()) { return; }
         const bool bServer = Role == TEXT("server");
         if ((bServer && World->GetNetMode() != NM_DedicatedServer) || (!bServer && World->GetNetMode() != NM_Client)) { return; }
-        const double Time = World->GetGameState()->GetServerWorldTimeSeconds() - Start;
+        const double Time = Clock.Now(World) - Start;
         if (!bServer && !bNamed)
         {
             if (APlayerController* PC = World->GetFirstPlayerController(); PC && PC->PlayerState)
@@ -132,14 +152,28 @@ private:
             if (Time > 1 && !(Time > 21 && Time < 25)) { Finish(TEXT("players_not_ready")); }
             return;
         }
+        if (!bServer && !bLookIsolated)
+        {
+            // Rendered test windows can take focus and receive real OS mouse or
+            // keyboard input (a click fires, motion turns the view). Scripted
+            // clients ignore viewport input; their keys go straight to the
+            // controller. Look input is ignored so aim checks see only code.
+            if (UGameViewportClient* Viewport = World->GetGameViewport()) { Viewport->SetIgnoreInput(true); }
+            PC->SetIgnoreLookInput(true);
+            bLookIsolated = true;
+        }
         if (!bReady)
         {
             bReady = true;
             if (bServer)
             {
-                const bool Placed = Place(Owner, FVector(-1000, -1000, 90), FRotator::ZeroRotator)
-                    && Place(Observer, FVector(-850, -1200, 90), FRotator(-10, 126.87, 0));
-                Check(TEXT("two_players"), Placed && Owner != Observer && !Owner->FindComponentByClass<UVSRiflePresentationComponent>(), TEXT("two possessed pawns; no server visual components"));
+                const bool Placed = Place(Owner, Base, FRotator::ZeroRotator)
+                    && Place(Observer, Base + FVector(150, -200, 0), FRotator(-10, 126.87, 0));
+                // The character owns a default presentation subobject; the
+                // dedicated server must leave it uninitialized with no visuals.
+                const UVSRiflePresentationComponent* ServerVisual = Owner->FindComponentByClass<UVSRiflePresentationComponent>();
+                Check(TEXT("two_players"), Placed && Owner != Observer && ServerVisual && !ServerVisual->IsInitialized()
+                    && !ServerVisual->GetFirstPersonBody() && !ServerVisual->GetWorldBody(), TEXT("two possessed pawns; no server visual components"));
                 if (!Placed) { Finish(TEXT("placement_failed")); return; }
                 FirstPawnId = Owner->GetUniqueID();
             }
@@ -147,23 +181,21 @@ private:
         UVSRiflePresentationComponent* Visual = nullptr;
         if (!bServer)
         {
+            // Production wiring: AVSCharacter initializes its own default
+            // subobject after BeginPlay. The fixture no longer attaches one.
             Visual = Owner->FindComponentByClass<UVSRiflePresentationComponent>();
-            if (!Visual)
-            {
-                Visual = NewObject<UVSRiflePresentationComponent>(Owner);
-                Owner->AddInstanceComponent(Visual);
-                Visual->RegisterComponent();
-                if (!Visual->Initialize(Owner, Owner->FindComponentByClass<UCameraComponent>(), Owner->GetMesh()))
-                { Finish(TEXT("visual_attachment_failed")); return; }
-                if (FirstPawnId == 0) { FirstPawnId = Owner->GetUniqueID(); }
-            }
+            if (!Visual || !Visual->IsInitialized()) { Finish(TEXT("visual_attachment_failed")); return; }
+            if (FirstPawnId == 0) { FirstPawnId = Owner->GetUniqueID(); }
         }
         const auto& Gun = Owner->GetRifleComponent()->GetState();
         const auto Details = [&]() { return FString::Printf(TEXT("shots=%u pulses=%u ammo=%d reload=%d alive=%d"),
             Gun.ShotsFired, Visual ? Visual->GetShotPulseCount() : 0, Gun.Magazine, Gun.bReloading, Owner->GetHUDData().bAlive); };
         if (Role == TEXT("owner"))
         {
-            Key(PC, EKeys::LeftMouseButton, (Time >= 3 && Time < 3.05) || (Time >= 10 && Time < 12.1) || (Time >= 16 && Time < 16.05), bFireHeld);
+            ReleaseTaps(PC);
+            if (Once(101, Time, 3)) { Tap(PC, EKeys::LeftMouseButton); }
+            if (Once(102, Time, 16)) { Tap(PC, EKeys::LeftMouseButton); }
+            Key(PC, EKeys::LeftMouseButton, Time >= 10 && Time < 12.1, bFireHeld);
             Key(PC, EKeys::R, (Time >= 5 && Time < 5.1) || (Time >= 18 && Time < 18.1), bReloadHeld);
             Key(PC, EKeys::Escape, Time >= 10.6 && Time < 10.7, bEscapeHeld);
             if (Once(100, Time, 12.2)) { PC->SetSessionMenuOpen(false); }
@@ -193,7 +225,11 @@ private:
                 Capture(TEXT("neutral"));
             }
             if (Once(1, Time, 1.2)) { Lighting(World, true); }
-            if (Once(2, Time, 2.0)) { Check(TEXT("dim_view"), Visual->IsInitialized(), Details()); Capture(TEXT("dim")); }
+            if (Once(2, Time, 2.0))
+            {
+                Check(TEXT("dim_view"), Visual->IsInitialized(), bSite01 ? TEXT("site01 authored lighting; no dim override") : *Details());
+                Capture(TEXT("dim"));
+            }
             if (Once(3, Time, 2.6)) { Lighting(World, false); }
             if (Gun.ShotsFired == 1 && Visual->IsFlashActive() && !bCapturedMuzzle)
             {
@@ -210,7 +246,8 @@ private:
             if (Once(4, Time, 4.2))
             {
                 Check(TEXT("accepted_shot_once"), Gun.ShotsFired == 1 && Visual->GetShotPulseCount() == 1 && bCapturedMuzzle, Details());
-                Check(TEXT("aim_unchanged"), PC->GetControlRotation().Equals(AimBefore, 0.001), Details());
+                Check(TEXT("aim_unchanged"), PC->GetControlRotation().Equals(AimBefore, 0.001),
+                    FString::Printf(TEXT("before=%s after=%s"), *AimBefore.ToCompactString(), *PC->GetControlRotation().ToCompactString()));
             }
             if (Once(5, Time, 4.7)) { Check(TEXT("duplicate_snapshot_quiet"), Visual->GetShotPulseCount() == 1 && !Visual->IsFlashActive(), Details()); }
             if (Once(6, Time, 5.8))
@@ -258,7 +295,7 @@ private:
             Controller->UnPossess();
             Owner->Destroy();
             World->GetAuthGameMode()->RestartPlayer(Controller);
-            if (!Place(Cast<AVSCharacter>(Controller->GetPawn()), FVector(-1000, -1000, 90), FRotator::ZeroRotator))
+            if (!Place(Cast<AVSCharacter>(Controller->GetPawn()), Base, FRotator::ZeroRotator))
             { Finish(TEXT("respawn_placement_failed")); return; }
         }
         if (Once(16, Time, 24.5)) { Check(TEXT("new_pawn"), Owner->GetUniqueID() != FirstPawnId && Owner->GetHUDData().bAlive && Gun.ShotsFired == 0
@@ -266,6 +303,10 @@ private:
         if (Time >= 26) { Finish(); }
     }
     FString Role, Output;
+    FVSTestServerClock Clock;
+    TArray<FKey> PendingRelease;
+    FVector Base = FVector::ZeroVector;
+    bool bSite01 = false;
     float Start = 30;
     FDelegateHandle Delegate;
     TArray<FString> Checks;
@@ -274,7 +315,7 @@ private:
     FRotator AimBefore;
     uint32 MenuShots = 0, MenuPulses = 0;
     bool bNamed = false, bReady = false, bFinished = false, bFireHeld = false, bReloadHeld = false, bEscapeHeld = false;
-    bool bCapturedMuzzle = false, bDiedDuringReload = false;
+    bool bCapturedMuzzle = false, bDiedDuringReload = false, bLookIsolated = false;
 };
 TUniquePtr<FPresentationSmoke> PresentationSmoke;
 }

@@ -14,4 +14,7 @@ struct FVSPlayerHUDData
     int32 ReserveAmmo = 0;
     bool bReloading = false;
     bool bAlive = false;
+    // Additive: equipped weapon identity. Ammo/reload fields above describe it.
+    FString WeaponName;
+    bool bEquipping = false;
 };
