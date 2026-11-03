@@ -1,0 +1,34 @@
+{
+  "name": "ValStrike Environment 01 — stylized concept palette",
+  "date": "2026-11-03",
+  "color_space": "sRGB",
+  "status": "Exploratory art direction, not a final production palette",
+  "materials": [
+    {
+      "name": "M_VS_Plaster",
+      "role": "Broad warm architectural planes",
+      "hex": "#C8B89E"
+    },
+    {
+      "name": "M_VS_PaintedMetal",
+      "role": "Muted blue-green painted structure and props",
+      "hex": "#416F70"
+    },
+    {
+      "name": "M_VS_Trim",
+      "role": "Dark structural edges and recesses",
+      "hex": "#303C41"
+    },
+    {
+      "name": "M_VS_Accent",
+      "role": "Sparse sand-orange graphic detail",
+      "hex": "#D39B58"
+    }
+  ],
+  "constraints": [
+    "Original stylized graphics with broad shapes, simplified matte materials and readable bevels",
+    "No photographic scans or photorealistic grime",
+    "No texture maps are created by this concept deliverable",
+    "Concept image swatches are approximate painted representations; JSON hex values are authoritative"
+  ]
+}

@@ -1,0 +1,353 @@
+{
+  "author": "Codex, original procedural geometry for ValStrike",
+  "date_europe_berlin": "2026-11-03",
+  "tool": "Blender 5.2.2 LTS",
+  "source": "build_environment_kit.py and editable VS_Environment_Kit.blend",
+  "external_inputs": [],
+  "units": "centimeters",
+  "up": "+Z",
+  "front": "-Y",
+  "fbx_export": {
+    "axis_forward": "-Y",
+    "axis_up": "Z",
+    "global_scale": 1,
+    "scene_scale_length": 0.01,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "apply_unit_scale": true,
+    "bake_space_transform": false
+  },
+  "palette_srgb_hex": {
+    "M_VS_Plaster": "C8B89E",
+    "M_VS_PaintedMetal": "416F70",
+    "M_VS_Trim": "303C41",
+    "M_VS_Accent": "D39B58"
+  },
+  "assets": [
+    {
+      "name": "SM_VS_Wall_400x300",
+      "file": "Exports/SM_VS_Wall_400x300.fbx",
+      "bounds_min_cm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds_max_cm": [
+        400.0,
+        20.0,
+        300.0
+      ],
+      "dimensions_cm": [
+        400.0,
+        20.0,
+        300.0
+      ],
+      "pivot": "base corner (minimum X/Y/Z)",
+      "vertices": 120,
+      "triangles": 220,
+      "material_slots": [
+        "M_VS_Plaster",
+        "M_VS_PaintedMetal",
+        "M_VS_Trim"
+      ],
+      "uv_channels": [
+        "UV0",
+        "UV1_Lightmap"
+      ],
+      "uv_layout": "Each convex pre-triangulation face in separate grid tile with 10% cell gutters",
+      "textures": [],
+      "collision": "one full-bounds UCX convex box",
+      "source_closed_manifold_shells": true,
+      "source_signed_volume_cm3": 2200209.1793839084,
+      "source_transforms_identity": true,
+      "fbx_roundtrip": {
+        "passed": true,
+        "dimensions_cm": [
+          399.9999999275221,
+          20.00006032584497,
+          300.0
+        ],
+        "bounds_min_cm": [
+          7.247791700137896e-08,
+          -6.03258449700661e-05,
+          0.0
+        ],
+        "bounds_max_cm": [
+          400.0,
+          20.0,
+          300.0
+        ],
+        "triangles": 220,
+        "material_slots": [
+          "M_VS_Plaster",
+          "M_VS_PaintedMetal",
+          "M_VS_Trim"
+        ],
+        "uv_channels": 2,
+        "collision_meshes": 1
+      }
+    },
+    {
+      "name": "SM_VS_Pillar_40x300",
+      "file": "Exports/SM_VS_Pillar_40x300.fbx",
+      "bounds_min_cm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds_max_cm": [
+        40.0,
+        40.0,
+        300.0
+      ],
+      "dimensions_cm": [
+        40.0,
+        40.0,
+        300.0
+      ],
+      "pivot": "base corner (minimum X/Y/Z)",
+      "vertices": 120,
+      "triangles": 220,
+      "material_slots": [
+        "M_VS_Plaster",
+        "M_VS_Trim",
+        "M_VS_PaintedMetal",
+        "M_VS_Accent"
+      ],
+      "uv_channels": [
+        "UV0",
+        "UV1_Lightmap"
+      ],
+      "uv_layout": "Each convex pre-triangulation face in separate grid tile with 10% cell gutters",
+      "textures": [],
+      "collision": "one full-bounds UCX convex box",
+      "source_closed_manifold_shells": true,
+      "source_signed_volume_cm3": 399373.3579356629,
+      "source_transforms_identity": true,
+      "fbx_roundtrip": {
+        "passed": true,
+        "dimensions_cm": [
+          40.00000747839873,
+          40.00000588883631,
+          300.0
+        ],
+        "bounds_min_cm": [
+          1.5099580252808664e-07,
+          -5.888836312806234e-06,
+          0.0
+        ],
+        "bounds_max_cm": [
+          40.00000762939453,
+          40.0,
+          300.0
+        ],
+        "triangles": 220,
+        "material_slots": [
+          "M_VS_Plaster",
+          "M_VS_Trim",
+          "M_VS_PaintedMetal",
+          "M_VS_Accent"
+        ],
+        "uv_channels": 2,
+        "collision_meshes": 1
+      }
+    },
+    {
+      "name": "SM_VS_Crate_100",
+      "file": "Exports/SM_VS_Crate_100.fbx",
+      "bounds_min_cm": [
+        -50.0,
+        -50.0,
+        0.0
+      ],
+      "bounds_max_cm": [
+        50.0,
+        50.0,
+        100.0
+      ],
+      "dimensions_cm": [
+        100.0,
+        100.0,
+        100.0
+      ],
+      "pivot": "bottom center",
+      "vertices": 264,
+      "triangles": 484,
+      "material_slots": [
+        "M_VS_PaintedMetal",
+        "M_VS_Trim",
+        "M_VS_Plaster",
+        "M_VS_Accent"
+      ],
+      "uv_channels": [
+        "UV0",
+        "UV1_Lightmap"
+      ],
+      "uv_layout": "Each convex pre-triangulation face in separate grid tile with 10% cell gutters",
+      "textures": [],
+      "collision": "one full-bounds UCX convex box",
+      "source_closed_manifold_shells": true,
+      "source_signed_volume_cm3": 983714.7787300085,
+      "source_transforms_identity": true,
+      "fbx_roundtrip": {
+        "passed": true,
+        "dimensions_cm": [
+          100.00001525878906,
+          100.00001525878906,
+          100.0
+        ],
+        "bounds_min_cm": [
+          -50.00000762939453,
+          -50.00000762939453,
+          0.0
+        ],
+        "bounds_max_cm": [
+          50.00000762939453,
+          50.00000762939453,
+          100.0
+        ],
+        "triangles": 484,
+        "material_slots": [
+          "M_VS_PaintedMetal",
+          "M_VS_Trim",
+          "M_VS_Plaster",
+          "M_VS_Accent"
+        ],
+        "uv_channels": 2,
+        "collision_meshes": 1
+      }
+    },
+    {
+      "name": "SM_VS_Cover_200x120",
+      "file": "Exports/SM_VS_Cover_200x120.fbx",
+      "bounds_min_cm": [
+        -100.0,
+        -50.0,
+        0.0
+      ],
+      "bounds_max_cm": [
+        100.0,
+        50.0,
+        120.0
+      ],
+      "dimensions_cm": [
+        200.0,
+        100.0,
+        120.0
+      ],
+      "pivot": "bottom center",
+      "vertices": 144,
+      "triangles": 264,
+      "material_slots": [
+        "M_VS_Trim",
+        "M_VS_Plaster",
+        "M_VS_PaintedMetal",
+        "M_VS_Accent"
+      ],
+      "uv_channels": [
+        "UV0",
+        "UV1_Lightmap"
+      ],
+      "uv_layout": "Each convex pre-triangulation face in separate grid tile with 10% cell gutters",
+      "textures": [],
+      "collision": "one full-bounds UCX convex box",
+      "source_closed_manifold_shells": true,
+      "source_signed_volume_cm3": 2347238.9795291307,
+      "source_transforms_identity": true,
+      "fbx_roundtrip": {
+        "passed": true,
+        "dimensions_cm": [
+          200.00001525878906,
+          100.00003051757812,
+          120.0
+        ],
+        "bounds_min_cm": [
+          -100.00000762939453,
+          -50.00001525878906,
+          0.0
+        ],
+        "bounds_max_cm": [
+          100.00000762939453,
+          50.00001525878906,
+          120.0
+        ],
+        "triangles": 264,
+        "material_slots": [
+          "M_VS_Trim",
+          "M_VS_Plaster",
+          "M_VS_PaintedMetal",
+          "M_VS_Accent"
+        ],
+        "uv_channels": 2,
+        "collision_meshes": 1
+      }
+    },
+    {
+      "name": "SM_VS_Vent_120x80",
+      "file": "Exports/SM_VS_Vent_120x80.fbx",
+      "bounds_min_cm": [
+        -60.0,
+        -10.0,
+        0.0
+      ],
+      "bounds_max_cm": [
+        60.0,
+        10.0,
+        80.0
+      ],
+      "dimensions_cm": [
+        120.0,
+        20.0,
+        80.0
+      ],
+      "pivot": "bottom center",
+      "vertices": 240,
+      "triangles": 440,
+      "material_slots": [
+        "M_VS_PaintedMetal",
+        "M_VS_Trim"
+      ],
+      "uv_channels": [
+        "UV0",
+        "UV1_Lightmap"
+      ],
+      "uv_layout": "Each convex pre-triangulation face in separate grid tile with 10% cell gutters",
+      "textures": [],
+      "collision": "none; decorative",
+      "source_closed_manifold_shells": true,
+      "source_signed_volume_cm3": 113011.35700618343,
+      "source_transforms_identity": true,
+      "fbx_roundtrip": {
+        "passed": true,
+        "dimensions_cm": [
+          120.0,
+          20.000017166137695,
+          80.0
+        ],
+        "bounds_min_cm": [
+          -60.0,
+          -10.000008583068848,
+          0.0
+        ],
+        "bounds_max_cm": [
+          60.0,
+          10.000008583068848,
+          80.0
+        ],
+        "triangles": 440,
+        "material_slots": [
+          "M_VS_PaintedMetal",
+          "M_VS_Trim"
+        ],
+        "uv_channels": 2,
+        "collision_meshes": 0
+      }
+    }
+  ],
+  "limitations": [
+    "Blender source/export verification only; Unreal import verification is separate.",
+    "Disconnected overlapping closed bevelled shells are intentional hard-surface construction.",
+    "One conservative full-envelope convex collision per solid piece; bevel recesses are not collision cuts.",
+    "UV channels are valid isolated face tiles, not art-directed texture layouts; no textures used.",
+    "No gameplay placement, movement, sightline, packaged-build, or performance acceptance."
+  ]
+}
