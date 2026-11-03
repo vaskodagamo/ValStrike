@@ -108,7 +108,9 @@ Record meaningful work sessions here in chronological order. Use Europe/Berlin d
 
 **Verification/limits:** Reviewed the environment branch delta from its merge base: it adds only environment assets, sources and scoped asset documentation. The new branch will include those assets without replacing the current project code or regression map. This kickoff changes coordination documents only and makes no new gameplay, map-completion or test-pass claim. Existing packaged-server and network acceptance gates remain open.
 
-**Next action:** Start both chats in their assigned checkouts, record their references, then review and integrate completed work with the existing combat/UI streams.
+**Started:** Created tactical-map chat `01a1a208-0727-72e3-8082-407a1fd80bc4` on `codex/tactical-map` and round-rules chat `01a1a208-8ed9-7651-8753-525b2b158f24` on `codex/round-rules`. Both reported active work and explicitly acknowledged checkout isolation. The rules branch begins at `fc3e857`; the map branch adds the completed environment kit in task-local merge `b2647a8`. Both checkouts were clean at kickoff. Git LFS status required metadata access outside the read-only sandbox and succeeded with authorized escalation.
+
+**Next action:** Review and integrate completed deliverables with combat/UI, then verify the actual server/client match loop. Each stream maintains its own log; integration owns central status and merge decisions.
 
 ## Entry template
 

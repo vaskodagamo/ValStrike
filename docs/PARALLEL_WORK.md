@@ -63,3 +63,8 @@ The UI may add a custom player controller and wire only its class in the existin
 Both new chats started from shared-contract commit `b245939` on 2026-11-03. They are local project chats operating in the explicitly assigned Git worktrees; their app-level project directory may still show the main ValStrike folder.
 
 - Create pistol and upgrade weapon colors: chat `01a1a1fa-ad9c-7c53-b206-86797861fb26`, branch `codex/pistol-weapon-finish`, checkout `.asset-worktrees/pistol-weapon-finish`. Started from the current integration branch with completed rifle commit `cac8151` merged into this task branch only.
+
+- Build the first tactical map: chat `01a1a208-0727-72e3-8082-407a1fd80bc4`, branch `codex/tactical-map`, checkout `.parallel-worktrees/tactical-map`. Integration brief base `fc3e857` plus completed environment kit merged in task-local commit `b2647a8`.
+- Implement round and objective rules: chat `01a1a208-8ed9-7651-8753-525b2b158f24`, branch `codex/round-rules`, checkout `.parallel-worktrees/round-rules`, starting from `fc3e857`.
+
+The map and rules chats started on 2026-11-03 and acknowledged their assigned checkouts. They are local project chats; all edits must use those explicit checkout paths even if the app displays the parent project directory.
