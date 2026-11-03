@@ -308,7 +308,7 @@ TSharedRef<SWidget> SVSSessionMenu::MakeSelector(FName Tag, TSharedPtr<SButton>&
     const auto Arrow = [Tag, Cycle, Enabled](int32 Direction, const TCHAR* Glyph) {
         return SNew(SButton).Tag(FName(*FString::Printf(TEXT("%s.%s"), *Tag.ToString(), Direction < 0 ? TEXT("Previous") : TEXT("Next"))))
             .IsFocusable(false).HAlign(HAlign_Center).ContentPadding(FMargin(14, 7))
-            .IsEnabled_Lambda(Enabled)
+            .IsEnabled_Lambda(TFunction<bool()>(Enabled))
             .OnClicked_Lambda([Cycle, Direction]() { Cycle(Direction); return FReply::Handled(); })
             [ Label(FText::FromString(Glyph), 17) ];
     };
@@ -317,10 +317,10 @@ TSharedRef<SWidget> SVSSessionMenu::MakeSelector(FName Tag, TSharedPtr<SButton>&
         + SHorizontalBox::Slot().FillWidth(1).Padding(6, 0)
         [
             SAssignNew(OutValueButton, SButton).Tag(Tag).HAlign(HAlign_Center).VAlign(VAlign_Center).ContentPadding(FMargin(12, 8))
-            .IsEnabled_Lambda(Enabled)
+            .IsEnabled_Lambda(TFunction<bool()>(Enabled))
             .OnClicked_Lambda([Cycle]() { Cycle(1); return FReply::Handled(); })
             [
-                SNew(STextBlock).Font(FCoreStyle::GetDefaultFontStyle("Regular", 15)).Text_Lambda(Value)
+                SNew(STextBlock).Font(FCoreStyle::GetDefaultFontStyle("Regular", 15)).Text_Lambda(TFunction<FText()>(Value))
             ]
         ]
         + SHorizontalBox::Slot().AutoWidth() [ Arrow(1, TEXT("›")) ];
