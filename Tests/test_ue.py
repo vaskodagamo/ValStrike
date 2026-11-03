@@ -26,11 +26,17 @@ class UnrealHelperTests(unittest.TestCase):
         self.make(self.engine / "Binaries/Mac/UnrealEditor.app/Contents/MacOS/UnrealEditor")
         self.make(self.engine / "Build/BatchFiles/Mac/Build.sh")
         self.make(self.root / "Scripts/create_graybox.py")
+        for material in ("M_Floor", "M_Wall", "M_Cover", "M_Spawn"):
+            self.make(self.root / f"Content/Materials/Bootstrap/{material}.uasset")
 
     @staticmethod
     def make(path, text="fixture"):
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(text)
+        if path.suffix in (".umap", ".uasset") and text == "fixture":
+            # Test-only package signature. These bytes are never loaded by Unreal.
+            path.write_bytes(b"\xc1\x83\x2a\x9e" + b"fixture" * 20)
+        else:
+            path.write_text(text)
 
     def run_cli(self, args):
         with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()), patch.object(ue, "host_platform", return_value="Mac"):
@@ -80,12 +86,77 @@ class UnrealHelperTests(unittest.TestCase):
 
     def test_runtime_log_directory_is_created_only_for_real_launch(self):
         self.make(self.root / "Content/Maps/VS_Graybox.umap")
-        with patch.object(ue.subprocess, "run", return_value=ue.subprocess.CompletedProcess([], 0)) as run:
+        original_check = ue.playtest_check
+        def checked(name, *args):
+            return {} if name == "validate_assets" else original_check(name, *args)
+        with patch.object(ue, "playtest_check", side_effect=checked), \
+             patch.object(ue.subprocess, "run", return_value=ue.subprocess.CompletedProcess([], 0)) as run:
             self.assertEqual(self.run_cli(["--dry-run", "server"]), 0)
             run.assert_not_called()
             self.assertFalse((self.root / "Saved/Logs").exists())
             self.assertEqual(self.run_cli(["server"]), 0)
             self.assertTrue((self.root / "Saved/Logs").is_dir())
+
+    def site_assets(self):
+        self.make(self.root / "Content/Maps/Site01/VS_Site01.umap")
+        for name in ("Paving", "Lane", "Site"):
+            self.make(self.root / f"Content/Maps/Site01/Materials/M_Site01_{name}.uasset")
+        for name in ("Plaster", "PaintedMetal", "Trim", "Accent"):
+            self.make(self.root / f"Content/Art/Environment/Materials/M_VS_{name}.uasset")
+        for name in ("Wall_400x300", "Pillar_40x300", "Cover_200x120", "Crate_100", "Vent_120x80"):
+            self.make(self.root / f"Content/Art/Environment/Meshes/SM_VS_{name}.uasset")
+
+    def test_allowlisted_server_modes_and_map_selection_do_not_change_editor_map(self):
+        self.site_assets()
+        for mode, cls in (("practice", "VSGameMode"), ("match", "VSMatchGameMode")):
+            args = ue.parser().parse_args(["server", "--map", "site01", "--mode", mode])
+            argv = ue.command(args, self.engine, self.root, "Mac")
+            self.assertEqual(argv[2], "/Game/Maps/Site01/VS_Site01?game=/Script/ValStrike." + cls)
+        editor = ue.command(ue.parser().parse_args(["editor", "--map", "site01"]), self.engine, self.root, "Mac")
+        self.assertEqual(editor[2], "/Game/Maps/Site01/VS_Site01")
+        self.make(self.root / "Content/Maps/VS_Graybox.umap")
+        default = ue.command(ue.parser().parse_args(["server"]), self.engine, self.root, "Mac")
+        self.assertEqual(default[2], "/Game/Maps/VS_Graybox?game=/Script/ValStrike.VSGameMode")
+        with self.assertRaisesRegex(ue.SetupError, "requires --map site01"):
+            ue.command(ue.parser().parse_args(["server", "--mode", "match"]), self.engine, self.root, "Mac")
+
+    def test_map_and_mode_reject_untrusted_urls_and_console_options(self):
+        for option, value in (("--map", "/Game/Other"), ("--map", "site01?listen"),
+                              ("--mode", "/Script/Other.Mode"), ("--mode", "match?Exec=Quit")):
+            with self.subTest(option=option, value=value), redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
+                ue.parser().parse_args(["server", option, value])
+
+    def test_unhydrated_map_and_missing_dependency_fail_before_launch(self):
+        self.make(self.root / "Content/Maps/VS_Graybox.umap", "version https://git-lfs.github.com/spec/v1\noid sha256:" + "0"*64 + "\nsize 99\n")
+        with patch.object(ue.subprocess, "run") as run:
+            self.assertEqual(self.run_cli(["--dry-run", "server"]), 1)
+            run.assert_not_called()
+        self.make(self.root / "Content/Maps/VS_Graybox.umap")
+        (self.root / "Content/Materials/Bootstrap/M_Floor.uasset").unlink()
+        with patch.object(ue.subprocess, "run") as run:
+            self.assertEqual(self.run_cli(["--dry-run", "server"]), 1)
+            run.assert_not_called()
+
+    def test_match_dry_run_does_not_probe_or_create_output(self):
+        self.site_assets()
+        with patch.object(ue.subprocess, "run") as run:
+            self.assertEqual(self.run_cli(["--dry-run", "server", "--map", "site01", "--mode", "match"]), 0)
+            run.assert_not_called()
+        self.assertFalse((self.root / "Saved").exists())
+
+    def test_missing_compiled_match_class_prevents_server_launch(self):
+        self.site_assets()
+        calls = []
+        def check(name, *args):
+            calls.append(name)
+            if name == "probe_native":
+                raise ue.SetupError("Compiled /Script/ValStrike.VSMatchGameMode is unavailable; integrate and rebuild.")
+            return {}
+        with patch.object(ue, "playtest_check", side_effect=check), patch.object(ue.subprocess, "run") as run:
+            self.assertEqual(self.run_cli(["server", "--map", "site01", "--mode", "match"]), 1)
+            run.assert_not_called()
+        self.assertIn("validate_assets", calls)
+        self.assertIn("probe_native", calls)
 
     def test_map_generation_requires_output_even_if_process_exits_zero(self):
         with patch.object(ue.subprocess, "run", return_value=ue.subprocess.CompletedProcess([], 0)):
@@ -138,10 +209,30 @@ class UnrealHelperTests(unittest.TestCase):
             run.assert_not_called()
 
     def test_build_failure_status_is_preserved(self):
-        with patch.object(ue.subprocess, "run", return_value=ue.subprocess.CompletedProcess([], 7)) as run:
+        with patch.object(ue, "check_xcode"), patch.object(ue, "playtest_check", return_value={}) as check, \
+             patch.object(ue.subprocess, "run", return_value=ue.subprocess.CompletedProcess([], 7)) as run:
             self.assertEqual(self.run_cli(["build"]), 7)
             self.assertIsInstance(run.call_args.args[0], list)
             self.assertNotIn("shell", run.call_args.kwargs)
+            self.assertEqual([call.args[0] for call in check.call_args_list], ["build_inputs"])
+
+    def test_editor_build_records_only_successful_compilation_and_unchanged_inputs(self):
+        snapshot = {"source_fingerprint": "before"}
+        with patch.object(ue, "check_xcode"), \
+             patch.object(ue, "playtest_check", side_effect=[snapshot, {"inputs": snapshot}]) as check, \
+             patch.object(ue.subprocess, "run", return_value=ue.subprocess.CompletedProcess([], 0)):
+            self.assertEqual(self.run_cli(["build"]), 0)
+            self.assertEqual(check.call_args_list[1].args, ("record_editor_build", self.root, self.engine, snapshot))
+        with patch.object(ue, "check_xcode"), \
+             patch.object(ue, "playtest_check", side_effect=[snapshot, ue.SetupError("Source changed during build")]), \
+             patch.object(ue.subprocess, "run", return_value=ue.subprocess.CompletedProcess([], 0)):
+            self.assertEqual(self.run_cli(["build"]), 1)
+
+    def test_wrong_xcode_prevents_real_build(self):
+        with patch.object(ue, "check_xcode", side_effect=ue.SetupError("wrong Xcode")), \
+             patch.object(ue.subprocess, "run") as run:
+            self.assertEqual(self.run_cli(["build"]), 1)
+            run.assert_not_called()
 
     def test_cross_host_build_and_installed_server_build_are_rejected(self):
         with patch.object(ue.subprocess, "run") as run:
@@ -157,9 +248,13 @@ class UnrealHelperTests(unittest.TestCase):
             run.assert_not_called()
 
     def test_client_rejects_travel_options_and_invalid_ports(self):
-        for value in ("127.0.0.1:7777?listen", "-game", "-option:7777", "localhost:0", "localhost:65536"):
+        for value in ("127.0.0.1:7777?listen", "-game", "-option:7777", "localhost:0", "localhost:65536",
+                      "999.1.2.3:7777", "127..1:7777", "host..local:7777", "host.-bad:7777",
+                      "0.0.0.0:7777", "255.255.255.255:7777", "224.0.0.1:7777"):
             with self.subTest(address=value), self.assertRaises(ue.argparse.ArgumentTypeError):
                 ue.address(value)
+        for value in ("127.0.0.1:7777", "192.168.1.42:7777", "localhost:7777", "host-mac.local:7861"):
+            self.assertEqual(ue.address(value), value)
 
     def test_xcode_rejects_command_line_tools_and_wrong_version(self):
         with patch.object(ue, "probe", return_value="/Library/Developer/CommandLineTools"):

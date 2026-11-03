@@ -1,0 +1,460 @@
+{
+  "date": "2026-11-03",
+  "timezone": "Europe/Berlin",
+  "task": "SET-05",
+  "tested_source_commit": "cb891e62558ccfc51075bc239863a7b238401692",
+  "published_integrated_commit": null,
+  "source_checkout": "/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/mac-playtest",
+  "independent_checkout": "/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/mac-playtest/Saved/Playtest/clean-checkout",
+  "toolchain": {
+    "architecture": "arm64",
+    "macos_sdk_version": "26.1",
+    "toolchain": "Xcode 26.1.1; Metal compiler runs",
+    "git_lfs": "git-lfs/3.8.1 (GitHub; darwin arm64; go 1.27.3)",
+    "engine": "/Users/webproduktion3/UE_5.8/UE_5.8/Engine"
+  },
+  "engine_version": "5.8.4-58902052+++UE5+Release-5.8",
+  "unit_tests": {
+    "helper": 28,
+    "preflight": 24,
+    "session": 12,
+    "passed": 64,
+    "failed": 0,
+    "scope": "Python fixtures and ordinary temporary child processes; no gameplay acceptance"
+  },
+  "retrieval": {
+    "passed": true,
+    "source_clone": "/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/mac-playtest",
+    "lfs_remote": "https://github.com/vaskodagamo/ValStrike.git",
+    "initial_generated_directories_absent": {
+      "Binaries": true,
+      "Intermediate": true,
+      "Saved": true,
+      "DerivedDataCache": true
+    },
+    "initial_pointer_check_error": "Unresolved Git LFS pointer: Content/Maps/Site01/VS_Site01.umap. Run git lfs install --local and git lfs pull.",
+    "lfs_file_count": 70
+  },
+  "native_content": {
+    "count": 31,
+    "hashes_match_head_lfs": true,
+    "checked_head": "cb891e62558ccfc51075bc239863a7b238401692"
+  },
+  "fresh_editor_build": {
+    "exit_code": 0,
+    "reported_seconds": 30.7,
+    "actions": 21,
+    "receipt": "Saved/Playtest/clean-checkout/Saved/Playtest/editor-build.json"
+  },
+  "native_loading": {
+    "passed": true,
+    "identity": {
+      "module_sha256": "8d19d95fa33e03cf90c18d9c0bc494c8fccfc6ef709642a66d71ce639e89881a",
+      "module_file": "Binaries/Mac/libUnrealEditor-ValStrike.dylib",
+      "module_manifest_sha256": "50b542fa843ca98d8b746b63937daf8868a1f280167eaa0479a5aa1bdfa64597",
+      "map_sha256": "6798356d8d029112a0dabfa3a5fa2789eebeb79b114959836070801bb989f3aa",
+      "probe_script_sha256": "c20e4f9fc8c9e6304c7b558ef9a8e9ec6154f4ad59ed788675d1005590a97bbb",
+      "project_sha256": "45db7ee4f14e41fefd089e84baca1dfbd6b7b68861a3406e80380114d34b9dfe",
+      "source_fingerprint": "08bbae682fa8e10486d8780de6b1a474ed8b41801857d3a031fa5dfa9ce02a62",
+      "engine_root": "/Users/webproduktion3/UE_5.8/UE_5.8/Engine",
+      "engine_build_version_sha256": "80a6af0f427f373b43a1c373082acf2b3de07305d215a67c27f18272e6dff24f"
+    },
+    "engine_version": "5.8.4-58902052+++UE5+Release-5.8",
+    "game_mode_class": "/Script/ValStrike.VSGameMode",
+    "loaded_world": "/Game/Maps/Site01/VS_Site01.VS_Site01",
+    "dependencies": [
+      "/Engine/BasicShapes/Cube",
+      "/Engine/EngineMaterials/T_Default_Material_Grid_M",
+      "/Engine/EngineMaterials/T_Default_Material_Grid_N",
+      "/Engine/EngineMaterials/WorldGridMaterial",
+      "/Engine/Functions/Engine_MaterialFunctions01/Opacity/CameraDepthFade",
+      "/Game/Art/Environment/Materials/M_VS_Accent",
+      "/Game/Art/Environment/Materials/M_VS_PaintedMetal",
+      "/Game/Art/Environment/Materials/M_VS_Plaster",
+      "/Game/Art/Environment/Materials/M_VS_Trim",
+      "/Game/Art/Environment/Meshes/SM_VS_Cover_200x120",
+      "/Game/Art/Environment/Meshes/SM_VS_Crate_100",
+      "/Game/Art/Environment/Meshes/SM_VS_Pillar_40x300",
+      "/Game/Art/Environment/Meshes/SM_VS_Vent_120x80",
+      "/Game/Art/Environment/Meshes/SM_VS_Wall_400x300",
+      "/Game/Maps/Site01/Materials/M_Site01_Lane",
+      "/Game/Maps/Site01/Materials/M_Site01_Paving",
+      "/Game/Maps/Site01/Materials/M_Site01_Site",
+      "/Game/Maps/Site01/VS_Site01"
+    ],
+    "scope": "compiled-class reflection and hard on-disk package loads; no gameplay, soft dynamic references, multiplayer or LAN acceptance",
+    "checkout_at_probe": {
+      "head": "a520ff20fba6bb9a94d0fc6ae2c59acff3d94606",
+      "branch": "codex/mac-playtest",
+      "dirty": true
+    }
+  },
+  "site01_session": {
+    "run_id": "20261103T171016Z_b163bcfe",
+    "status": "completed",
+    "passed": true,
+    "checkout": {
+      "head": "cb891e62558ccfc51075bc239863a7b238401692",
+      "branch": "HEAD",
+      "dirty": false,
+      "changes": []
+    },
+    "commands": {
+      "server": [
+        "/Users/webproduktion3/UE_5.8/UE_5.8/Engine/Binaries/Mac/UnrealEditor.app/Contents/MacOS/UnrealEditor",
+        "/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/mac-playtest/Saved/Playtest/clean-checkout/ValStrike.uproject",
+        "/Game/Maps/Site01/VS_Site01?game=/Script/ValStrike.VSGameMode",
+        "-server",
+        "-nullrhi",
+        "-nosound",
+        "-unattended",
+        "-port=7861",
+        "-abslog=/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/mac-playtest/Saved/Playtest/clean-checkout/Saved/Playtest/20261103T171016Z_b163bcfe/server.log",
+        "-DisablePlugins=AndroidFileServer"
+      ],
+      "client1": [
+        "/Users/webproduktion3/UE_5.8/UE_5.8/Engine/Binaries/Mac/UnrealEditor.app/Contents/MacOS/UnrealEditor",
+        "/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/mac-playtest/Saved/Playtest/clean-checkout/ValStrike.uproject",
+        "127.0.0.1:7861",
+        "-game",
+        "-windowed",
+        "-ResX=1280",
+        "-ResY=720",
+        "-abslog=/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/mac-playtest/Saved/Playtest/clean-checkout/Saved/Playtest/20261103T171016Z_b163bcfe/client1.log",
+        "-DisablePlugins=AndroidFileServer",
+        "-nullrhi",
+        "-nosound",
+        "-unattended"
+      ],
+      "client2": [
+        "/Users/webproduktion3/UE_5.8/UE_5.8/Engine/Binaries/Mac/UnrealEditor.app/Contents/MacOS/UnrealEditor",
+        "/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/mac-playtest/Saved/Playtest/clean-checkout/ValStrike.uproject",
+        "127.0.0.1:7861",
+        "-game",
+        "-windowed",
+        "-ResX=1280",
+        "-ResY=720",
+        "-abslog=/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/mac-playtest/Saved/Playtest/clean-checkout/Saved/Playtest/20261103T171016Z_b163bcfe/client2.log",
+        "-DisablePlugins=AndroidFileServer",
+        "-nullrhi",
+        "-nosound",
+        "-unattended"
+      ]
+    },
+    "native_identity": {
+      "module_sha256": "c943a85fc0a24c61e3fd616c324889b03849f16f9390c810179f992192e6f34e",
+      "module_file": "Binaries/Mac/libUnrealEditor-ValStrike.dylib",
+      "module_manifest_sha256": "50b542fa843ca98d8b746b63937daf8868a1f280167eaa0479a5aa1bdfa64597",
+      "map_sha256": "6798356d8d029112a0dabfa3a5fa2789eebeb79b114959836070801bb989f3aa",
+      "probe_script_sha256": "c20e4f9fc8c9e6304c7b558ef9a8e9ec6154f4ad59ed788675d1005590a97bbb",
+      "project_sha256": "45db7ee4f14e41fefd089e84baca1dfbd6b7b68861a3406e80380114d34b9dfe",
+      "source_fingerprint": "08bbae682fa8e10486d8780de6b1a474ed8b41801857d3a031fa5dfa9ce02a62",
+      "engine_root": "/Users/webproduktion3/UE_5.8/UE_5.8/Engine",
+      "engine_build_version_sha256": "80a6af0f427f373b43a1c373082acf2b3de07305d215a67c27f18272e6dff24f"
+    },
+    "duration_seconds_after_connection": 25.0,
+    "wall_seconds": 42.455,
+    "pids": {
+      "server": 99373,
+      "client1": 99439,
+      "client2": 99440
+    },
+    "exit_codes_after_owned_cleanup": {
+      "server": 0,
+      "client1": 0,
+      "client2": 0
+    },
+    "evidence": {
+      "clients": {
+        "client1": {
+          "welcomed_for_expected_map": true,
+          "map_load_completed_after_welcome": true,
+          "failures": []
+        },
+        "client2": {
+          "welcomed_for_expected_map": true,
+          "map_load_completed_after_welcome": true,
+          "failures": []
+        }
+      },
+      "connection_checks_passed": true,
+      "server": {
+        "listening": true,
+        "map_load_complete": true,
+        "expected_game_mode": true,
+        "join_success_count": 2,
+        "failures": []
+      }
+    },
+    "headless_clients": true,
+    "scope": "development Editor connection/map-travel evidence only"
+  },
+  "cleanup": {
+    "run_id": "20261103T171016Z_b163bcfe",
+    "pids": {
+      "server": 99373,
+      "client1": 99439,
+      "client2": 99440
+    },
+    "owned_process_groups_absent": {
+      "server": true,
+      "client1": true,
+      "client2": true
+    }
+  },
+  "limitations": {
+    "two_machine_lan_verified": false,
+    "human_playtest": false,
+    "match_runtime_available_in_tested_base": false,
+    "packaged_verified": false,
+    "replication_correctness_verified": false,
+    "windows_linux_verified": false
+  },
+  "raw_artifacts": [
+    {
+      "path": "Saved/Playtest/baseline-build.log",
+      "size_bytes": 3456,
+      "sha256": "a1df21794d0c43dfc8f78393e743f6d1eed03c0e3558f83ed51173d0b5e464c8"
+    },
+    {
+      "path": "Saved/Playtest/receipt-build.log",
+      "size_bytes": 1711,
+      "sha256": "23e70cf1083733b53dde8845f50e141fdd4d4d3acd004cad498014b2079d17ed"
+    },
+    {
+      "path": "Saved/Playtest/native-practice-preflight.json",
+      "size_bytes": 11797,
+      "sha256": "6f1d5fd55ba7d9d50c661a22726ca389547e7aed60031dad34dd7f85ed3836d7"
+    },
+    {
+      "path": "Saved/Playtest/clean-checkout-retrieval.json",
+      "size_bytes": 19071,
+      "sha256": "2466cd97fe4dfa44e0b938172f884d653fa5ff3d3658be24a0a2365105af1a31"
+    },
+    {
+      "path": "Saved/Playtest/clean-checkout-build.log",
+      "size_bytes": 3642,
+      "sha256": "a4ea1be3b479469605d1bb49cbfbff27beceb7f661ab58a65b6b3830629673cb"
+    },
+    {
+      "path": "Saved/Playtest/clean-checkout-session.log",
+      "size_bytes": 824,
+      "sha256": "2547b50af9cf39267fb38e495af140dd26d146de6c634d9f330d456d51034cd9"
+    },
+    {
+      "path": "Saved/Playtest/clean-checkout/Saved/Playtest/clone-preflight.json",
+      "size_bytes": 7620,
+      "sha256": "a64c5df588d648cc469dc70d7294fe1d71e68f8ed8356210d71b8424058e9265"
+    },
+    {
+      "path": "Saved/Playtest/clean-checkout/Saved/Playtest/editor-build.json",
+      "size_bytes": 5835,
+      "sha256": "38c83ae14996c9768084cf5e65c66e7ce91bef44617e48ada622ee9dc2decfc4"
+    },
+    {
+      "path": "Saved/Playtest/clean-checkout/Saved/Playtest/20261103T171016Z_b163bcfe/client1.log",
+      "size_bytes": 173655,
+      "sha256": "450b5940f61498760241bb7adb0c8a5a28f044a6af37cb57c4437800e5967f1c"
+    },
+    {
+      "path": "Saved/Playtest/clean-checkout/Saved/Playtest/20261103T171016Z_b163bcfe/client2.log",
+      "size_bytes": 173847,
+      "sha256": "7c75bcd69d8c9bab735ca748fdd8849f98a9d8f889eb351aecbe6c345befd4f1"
+    },
+    {
+      "path": "Saved/Playtest/clean-checkout/Saved/Playtest/20261103T171016Z_b163bcfe/server.stdout.log",
+      "size_bytes": 1555,
+      "sha256": "6b3a9deba617b9834016b5fefdbc9a5bd0b0f8f1eea2a13788d7c27c653005cf"
+    },
+    {
+      "path": "Saved/Playtest/clean-checkout/Saved/Playtest/20261103T171016Z_b163bcfe/client1.stdout.log",
+      "size_bytes": 1567,
+      "sha256": "d8fdaa7ef05080709cc1f0a9ececa3688ec1f6a787bf30b552e0484d98c9a6ee"
+    },
+    {
+      "path": "Saved/Playtest/clean-checkout/Saved/Playtest/20261103T171016Z_b163bcfe/client2.stdout.log",
+      "size_bytes": 1696,
+      "sha256": "afe8693696e91d18d54ca5b710d45eae8f22924e0206b8d737e381f14f62e572"
+    },
+    {
+      "path": "Saved/Playtest/clean-checkout/Saved/Playtest/20261103T171016Z_b163bcfe/server.log",
+      "size_bytes": 177984,
+      "sha256": "6ffc8c1cad33578c392bea8f8e8f295bcd3b296ab910fe3d2ec21cdf4999177d"
+    },
+    {
+      "path": "Saved/Playtest/clean-checkout/Saved/Playtest/20261103T171016Z_b163bcfe/result.json",
+      "size_bytes": 15413,
+      "sha256": "895d0cba30b9e170303e0d2b9c5b91b4f02b31b41b411e74d47a848453391784"
+    },
+    {
+      "path": "Saved/Playtest/clean-checkout-match-probe.log",
+      "size_bytes": 690,
+      "sha256": "80018a4218fd70631a4aa39b9e5b9302136d2e594f2ea15e0b728dc42e506339"
+    },
+    {
+      "path": "Saved/Playtest/clean-checkout/Saved/Playtest/native/2bcb60533be94373929ff957ac2b5243/result.json",
+      "size_bytes": 2728,
+      "sha256": "77e28f141ca2a78513f8e8537b325d4cfc2de56ed8abe73b66fb4fc26fcf8177"
+    },
+    {
+      "path": "Saved/Playtest/clean-checkout/Saved/Playtest/native/2bcb60533be94373929ff957ac2b5243/Unreal.log",
+      "size_bytes": 222580,
+      "sha256": "b8352ef0a0ff2637c971e206d27c5bba6f5420aafabc8745529791c6d345afe7"
+    },
+    {
+      "path": "Saved/Playtest/clean-checkout/Saved/Playtest/20261103T171919Z_f9d33643/result.json",
+      "size_bytes": 15398,
+      "sha256": "126e4e52471ecbb196688d82fe75018af2becda3dc49a38cc998fdda9b238615"
+    },
+    {
+      "path": "Saved/Playtest/clean-checkout/Saved/Playtest/20261103T171919Z_f9d33643/client1.log",
+      "size_bytes": 172721,
+      "sha256": "250451f1aff982e8425aa60005a76a97b528cadcef634558d797b30879371814"
+    },
+    {
+      "path": "Saved/Playtest/clean-checkout/Saved/Playtest/20261103T171919Z_f9d33643/client2.log",
+      "size_bytes": 172718,
+      "sha256": "96dfec5046c042e6d6f760ce09d76e492ceff79b8421248321d9281e19e242aa"
+    },
+    {
+      "path": "Saved/Playtest/clean-checkout/Saved/Playtest/20261103T171919Z_f9d33643/server.stdout.log",
+      "size_bytes": 1553,
+      "sha256": "a53f388cd51bd887aede585054c1bf9c7bd0ba9b81c9473c3cb91f6f6e44e8e1"
+    },
+    {
+      "path": "Saved/Playtest/clean-checkout/Saved/Playtest/20261103T171919Z_f9d33643/client1.stdout.log",
+      "size_bytes": 1509,
+      "sha256": "d1fd0802854d7020319caab565927b0824ecd0f85e254f5a4627bf884f65d051"
+    },
+    {
+      "path": "Saved/Playtest/clean-checkout/Saved/Playtest/20261103T171919Z_f9d33643/client2.stdout.log",
+      "size_bytes": 1565,
+      "sha256": "8e9d7ea05ab16d2a8de9672747d7154adb20aa3a97e3704409b595e4648d33d3"
+    },
+    {
+      "path": "Saved/Playtest/clean-checkout/Saved/Playtest/20261103T171919Z_f9d33643/server.log",
+      "size_bytes": 176397,
+      "sha256": "16283d5222dc6d8dcede940e30c1512f0a495c27dda2d42ba8a8f9a5fcc9b1f9"
+    },
+    {
+      "path": "Saved/Playtest/clean-checkout-graybox-retry.log",
+      "size_bytes": 821,
+      "sha256": "20d8901a3b58eba42ffaa997d992d1245fb642caed0dc5354ebdfecb09eedaf9"
+    }
+  ],
+  "match_guard": {
+    "expected_rejection_verified": true,
+    "helper_exit_code": 1,
+    "reflected_class": "/Script/ValStrike.VSMatchGameMode",
+    "native_probe_passed": false,
+    "server_run_line_absent": true,
+    "server_log_absent": true,
+    "result": "Saved/Playtest/clean-checkout/Saved/Playtest/native/2bcb60533be94373929ff957ac2b5243/result.json",
+    "reason": "Compiled VSMatchGameMode is unavailable; no fallback server started."
+  },
+  "graybox_default_session": {
+    "run_id": "20261103T171919Z_f9d33643",
+    "status": "completed",
+    "passed": true,
+    "checkout": {
+      "head": "cb891e62558ccfc51075bc239863a7b238401692",
+      "branch": "HEAD",
+      "dirty": false,
+      "changes": []
+    },
+    "commands": {
+      "server": [
+        "/Users/webproduktion3/UE_5.8/UE_5.8/Engine/Binaries/Mac/UnrealEditor.app/Contents/MacOS/UnrealEditor",
+        "/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/mac-playtest/Saved/Playtest/clean-checkout/ValStrike.uproject",
+        "/Game/Maps/VS_Graybox?game=/Script/ValStrike.VSGameMode",
+        "-server",
+        "-nullrhi",
+        "-nosound",
+        "-unattended",
+        "-port=7863",
+        "-abslog=/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/mac-playtest/Saved/Playtest/clean-checkout/Saved/Playtest/20261103T171919Z_f9d33643/server.log",
+        "-DisablePlugins=AndroidFileServer"
+      ],
+      "client1": [
+        "/Users/webproduktion3/UE_5.8/UE_5.8/Engine/Binaries/Mac/UnrealEditor.app/Contents/MacOS/UnrealEditor",
+        "/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/mac-playtest/Saved/Playtest/clean-checkout/ValStrike.uproject",
+        "127.0.0.1:7863",
+        "-game",
+        "-windowed",
+        "-ResX=1280",
+        "-ResY=720",
+        "-abslog=/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/mac-playtest/Saved/Playtest/clean-checkout/Saved/Playtest/20261103T171919Z_f9d33643/client1.log",
+        "-DisablePlugins=AndroidFileServer",
+        "-nullrhi",
+        "-nosound",
+        "-unattended"
+      ],
+      "client2": [
+        "/Users/webproduktion3/UE_5.8/UE_5.8/Engine/Binaries/Mac/UnrealEditor.app/Contents/MacOS/UnrealEditor",
+        "/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/mac-playtest/Saved/Playtest/clean-checkout/ValStrike.uproject",
+        "127.0.0.1:7863",
+        "-game",
+        "-windowed",
+        "-ResX=1280",
+        "-ResY=720",
+        "-abslog=/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/mac-playtest/Saved/Playtest/clean-checkout/Saved/Playtest/20261103T171919Z_f9d33643/client2.log",
+        "-DisablePlugins=AndroidFileServer",
+        "-nullrhi",
+        "-nosound",
+        "-unattended"
+      ]
+    },
+    "native_identity": {
+      "module_sha256": "c943a85fc0a24c61e3fd616c324889b03849f16f9390c810179f992192e6f34e",
+      "module_file": "Binaries/Mac/libUnrealEditor-ValStrike.dylib",
+      "module_manifest_sha256": "50b542fa843ca98d8b746b63937daf8868a1f280167eaa0479a5aa1bdfa64597",
+      "map_sha256": "e2ead869f9b27bde3d17a317e271d7d7e0bebd5dcf2b7b13fc6bc3068000e149",
+      "probe_script_sha256": "c20e4f9fc8c9e6304c7b558ef9a8e9ec6154f4ad59ed788675d1005590a97bbb",
+      "project_sha256": "45db7ee4f14e41fefd089e84baca1dfbd6b7b68861a3406e80380114d34b9dfe",
+      "source_fingerprint": "08bbae682fa8e10486d8780de6b1a474ed8b41801857d3a031fa5dfa9ce02a62",
+      "engine_root": "/Users/webproduktion3/UE_5.8/UE_5.8/Engine",
+      "engine_build_version_sha256": "80a6af0f427f373b43a1c373082acf2b3de07305d215a67c27f18272e6dff24f"
+    },
+    "duration_seconds_after_connection": 5.0,
+    "wall_seconds": 21.043,
+    "pids": {
+      "server": 4990,
+      "client1": 5046,
+      "client2": 5047
+    },
+    "exit_codes_after_owned_cleanup": {
+      "server": 0,
+      "client1": 0,
+      "client2": 0
+    },
+    "evidence": {
+      "clients": {
+        "client1": {
+          "welcomed_for_expected_map": true,
+          "map_load_completed_after_welcome": true,
+          "failures": []
+        },
+        "client2": {
+          "welcomed_for_expected_map": true,
+          "map_load_completed_after_welcome": true,
+          "failures": []
+        }
+      },
+      "connection_checks_passed": true,
+      "server": {
+        "listening": true,
+        "map_load_complete": true,
+        "expected_game_mode": true,
+        "join_success_count": 2,
+        "failures": []
+      }
+    },
+    "headless_clients": true,
+    "scope": "development Editor connection/map-travel evidence only",
+    "owned_process_groups_absent": {
+      "server": true,
+      "client1": true,
+      "client2": true
+    }
+  }
+}
