@@ -81,6 +81,22 @@ These are editor processes. They do not cook/package the game and do not satisfy
 
 Controls: WASD, mouse look, Space jump, Left Ctrl crouch, Left Shift slow walk. Slow walk currently scales analog acceleration as well as speed; feel and camera behavior need runtime testing. The graybox is a movement test arena, not the final objective map. No weapons or round rules are implemented yet.
 
+## Repeatable development movement test
+
+After building the Editor target, run:
+
+```sh
+python3 Scripts/test_movement.py --engine "/Users/webproduktion3/UE_5.8/UE_5.8"
+```
+
+This launches a loopback server and two separate editor clients on UDP port 7789, runs simulated key input through the normal player controller, collects server/owner/observer state, and closes the processes. It uses null rendering and no audio. Results, exact commands, engine build, source hashes, and per-process logs are saved under `Saved/Tests/Movement/<run-id>/`; `result.json` must report `passed: true`. Exit zero is reserved for a completed passing run. Use `--port` to select a free local port.
+
+The development-only `VSMovementSmoke` flag enables the harness. Normal launches do not enable it, and Shipping/Test builds exclude its behavior. The server positions players for each test section; movement during each section uses the existing input and CharacterMovement paths. Checks cover network roles, spawn separation, run/walk/crouch speeds, crouch capsule/body/camera state, jump/landing, boundary collision, stairs, and cover. The runner deliberately fails if evidence is missing or malformed.
+
+Verified on 2026-11-03: 45/45 checks passed on the local M4 Mac. See the latest work-log entry for the run identifier and measurements.
+
+This does not verify rendered remote-player appearance, mouse feel, focus changes, all collision corners, artificial latency/loss, packaged builds, or cross-machine play. Keep those acceptance checks separate.
+
 ## Checks without Unreal
 
 ```sh

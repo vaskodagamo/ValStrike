@@ -50,6 +50,20 @@ Record meaningful work sessions here in chronological order. Use Europe/Berlin d
 
 **Next action:** Complete the two-client movement checklist and source-access check, then prove packaged client/server builds. The separate asset chat can start with concepts and a small original environment kit using docs/ASSET_BRIEF.md; it owns separate asset folders and its own log.
 
+## 2026-11-03 Repeatable three-process movement verification
+
+**Tasks:** MOVE-01, MOVE-02 verification; SET-03 source-access check.
+
+**Changed:** Added an opt-in development movement harness and `Scripts/test_movement.py`. It launches a loopback editor server and separate driver/observer clients, sends simulated keys through PlayerController/Enhanced Input, and checks authoritative and replicated state. Test-only server positioning isolates floor, boundary, stair and cover sections. Normal launches do not enable the harness; Shipping/Test configurations compile out its behavior. Results preserve exact commands, engine Build.version, source hashes and dirty-checkout status. The runner closes its processes and treats missing/malformed evidence as failure.
+
+**Verification:** Editor build passed in 7.90 seconds; 21 existing launcher-helper tests passed. The first runtime attempt failed because the online platform nickname replaced the URL's test name. Corrected the harness to request names through Unreal's existing SetName/ServerChangeName path after login; gameplay code was unchanged. The next three-process run passed all 45 checks on this M4 Mac with UE 5.8.4, null rendering, no audio, loopback UDP 7789 and no artificial latency/loss. Evidence: `Saved/Tests/Movement/20261103T145256Z_c3d9dc/result.json` plus role logs. It tested the working tree based on d076442; source hashes identify the tested C++ files.
+
+**Measured results:** Server/owner speeds were 450 cm/s normal, 202.5 slow walk and 180 crouched. The observer saw 450/203/180 cm/s (replication quantization). Capsule half-height changed 88 to 56 cm; remote values 87.99/55.99 reflect proxy shrinking. Body-foot error was at most 0.01 cm in sampled stance windows, and the owner camera matched its standing/crouched height. Jump peak was about 90 cm. The server stopped the pawn at X=1915.899 against the east boundary and X=-634.101 against cover. All three processes recorded grounded samples on the 80 cm platform, and the same player ID was authoritative on the server, autonomous on the owner and simulated on the observer.
+
+**Limits:** This is a scripted development smoke test, not rendered visual acceptance, packaged-build proof, a performance benchmark or a network-emulation test. Mouse feel, body visibility, focus changes, diagonal/opposing inputs, every stair/corner direction and latency/loss remain to be checked. MOVE-01/02 stay in progress rather than claiming their full gates. Source access for the existing GitHub account still returned 404, so packaged dedicated-server proof remains pending. No rifle, damage or round rules have been implemented.
+
+**Next action:** Finish the brief rendered movement checklist, then implement GUN-01 server-owned rifle state and GUN-02 authoritative damage/death. Keep the stylized environment asset work independent until integration. Resolve Epic source access for SET-03 in parallel.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.

@@ -31,6 +31,8 @@ Updated: 2026-11-03. `Ready` means work can start; `Queued` means prerequisites 
 | GUN-03 | Add immediate local feedback | Queued | GUN-02 | Recoil, crosshair, firing audio/effects, confirmed hits and death feedback work without duplicate effects |
 | GUN-04 | Verify weapon authority and network behavior | Queued | GUN-03, MOVE-03 | Invalid/repeated requests rejected; rule tests pass; moving-target hit behavior measured and limitations documented |
 
+Movement evidence (2026-11-03): a three-process loopback smoke test passed 45 checks covering normal/slow/crouched speeds, replicated stance/body bounds, camera height, jump/landing, walls, stairs and cover. MOVE-01/02 remain in progress until the rendered checks are complete; MOVE-03 latency/loss and SET-03 packaging are still open. See WORK_LOG.md and the repeatable command in SETUP.md.
+
 ## M3 Complete round loop
 
 | ID | Task | Status | Depends on | Completion condition |
