@@ -24,6 +24,8 @@ Run affected existing checks once on the combined build: movement LAN and `typic
 
 ## Phase B — Build a visible map section from ready structures
 
+Publication update: ART-25 is frozen locally at source `31b74bd` / readiness `3089486` / handoff `0c70b2f`. Automatic approval review rejected its public source push and a direct user approval request is pending. Local native work may proceed from reviewed frozen inputs; do not push a branch containing that payload or publish its derivatives before approval. This is not permission to bypass the artist's publication hold.
+
 Reserve this same native owner for [ART-25](../art/ART-25-courtyard-structure.md)'s first frozen, reviewed W01/W08/W09 subset. Preflight placement independently while phase A is underway, but do not import mutable/unaccepted source. If ART-25 is not ready, publish phase A and stop with that exact trigger; the producer resumes this same owner. Do not wait for all remaining world objects or first-person hands.
 
 Use the approved IndustrialV2 anchor and existing props to dress a coherent courtyard/service facade plus approach route. Stage ready pieces rather than waiting for all six remaining object types. Preserve original routes, spawns, objective/device/recovery markers, cover heights and collision. Native decorative replacements must not introduce doorway-blocking collision. Keep existing geometry/contracts where needed and avoid regenerating the whole map.

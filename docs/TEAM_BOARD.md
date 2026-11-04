@@ -1,5 +1,16 @@
 # Team board
 
+## Full knife authorized — 2026-11-04
+
+User's direct request in Direktor explicitly expands the source-only knife task to the [complete knife feature](tasks/KNIFE-01-full-feature.md). Completion requires key 3/Q, gloved first-person K01 and remote attacks, slash/stab, authoritative damage/cancellation, audio/HUD/kill feed and real server/client evidence. Existing request byte 2 means Last, so Knife uses an explicit separate request mapping. No new Meshy jobs.
+
+- **ART-24 frozen:** source `b637948`, handoff `5e53cb4`, #102, clean stopped owner verified. Producer inspected actual final/reimport reverse and overhead contact views; the specific buried-support defect is corrected. General deformation/camera/native gates remain.
+- **ART-26 dispatched at High:** same hands owner replaces ART-24, new branch `codex/art26-knife-first-person` in its existing checkout, exclusive derived FPArms03 KnifePilot source/docs. [Brief](tasks/art/ART-26-knife-first-person.md): natural K01 contact/framing and equip/idle/locomotion/slash/stab with shared impact timing. Zero credits.
+- **KNIFE-01 gameplay phase A active:** ART-25 finished and went idle, so the producer released its slot to existing GPT-04. Lead confirmed actual start on `claude/knife-01-gameplay` in `gpt-04-switch-prediction`, base `5407272`. Exact engineering brief in the live gameplay board. Shared phase-B hooks remain serialized behind native freeze/release; no contributor build.
+- **ART-27 / INT-ART-03 queued:** [third-person source](tasks/art/ART-27-knife-third-person.md) retains the existing character owner; [full native acceptance](tasks/integration/INT-ART-03-knife.md) retains the sole integrator after current Site01 work and reviewed handoffs. Neither is dispatched yet.
+
+Active contributor slots are **ART-26, KNIFE-01 gameplay and INT-ART-02**. ART-25 is frozen locally; automatic approval review blocked its 52-file public source push, with user approval pending in the artist chat. Producer reviewed actual wall/parapet comparisons and the backed-facade source assembly; native work may continue locally, without publishing that payload or derivatives before approval. Next available source capacity admits ART-27. New R02/P02 import/refit is retained as an explicit later native task and does not require completed first-person hands. The user need not repeat these priorities.
+
 ## Current map priority — 2026-11-04, 16:42 Europe/Berlin
 
 Direct user priority verified in Direktor: remaining world objects and visibly building the first map. The following supersedes the earlier cycle state. **GPF-04 #97 is now frozen/merged** at `100245d`; engineering reviewed its bounded test-timing correction. No movement gameplay changed; the teleport-settlement explanation and D3 closure still require actual runtime acceptance.

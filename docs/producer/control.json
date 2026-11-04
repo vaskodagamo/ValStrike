@@ -4,7 +4,7 @@
   "producer_title": "Direktor (2)",
   "producer_checkout": "/Users/webproduktion3/.codex/worktrees/10a1/ValStrike",
   "source_checkout": "/Users/webproduktion3/Documents/ValStrike",
-  "milestone": "Site01 art-integrated playtest: reviewed character and props, movement/shooting/round smoke, real server/two-client evidence, screenshots and other-Mac instructions.",
+  "milestone": "Site01 playable art slice: courtyard/service-facade and approach, reviewed native character/props and weapons, complete knife with first-person hands/attacks/slot 3 and authoritative multiplayer acceptance; exact other-Mac instructions. User retains merges.",
   "timezone": "Europe/Berlin",
   "cadence_minutes": 30,
   "days": "every day while the local Mac and app are available",
@@ -56,14 +56,14 @@
       "pr": 81
     },
     {
-      "task": "ART-24",
+      "task": "ART-26",
       "title": "Art \u2014 Meshy first-person hands",
       "thread_id": "01a1a6cf-0f10-73d0-8c33-29cb863d7b33",
       "worktree": ".parallel-worktrees/art22-fparms03",
-      "branch": "codex/art24-fparms03-pistol-contact",
-      "brief": "docs/tasks/art/ART-24-fparms03-pistol-contact.md",
-      "handoff": "docs/workstreams/art24-fparms03-pistol-contact.md",
-      "state": "active; High; owner acknowledged new branch and pose-only correction first",
+      "branch": "codex/art26-knife-first-person",
+      "brief": "docs/tasks/art/ART-26-knife-first-person.md",
+      "handoff": "docs/workstreams/art26-knife-first-person.md",
+      "state": "dispatched at High after ART-24 clean stop; knife first-person grip and actions",
       "credit_cap": 0,
       "previous_assignments": [
         {
@@ -95,9 +95,23 @@
           "actual_credits": 30,
           "frozen_head": "b1795991bed5cf2abaaabe8fcef79bfa5f9e5a4a",
           "pr": 92
+        },
+        {
+          "task": "ART-24",
+          "title": "Art \u2014 Meshy first-person hands",
+          "thread_id": "01a1a6cf-0f10-73d0-8c33-29cb863d7b33",
+          "worktree": ".parallel-worktrees/art22-fparms03",
+          "branch": "codex/art24-fparms03-pistol-contact",
+          "brief": "docs/tasks/art/ART-24-fparms03-pistol-contact.md",
+          "handoff": "docs/workstreams/art24-fparms03-pistol-contact.md",
+          "state": "frozen; stationary P02 contact reviewed; general deformation/native pending",
+          "credit_cap": 0,
+          "prepared_head": "9dcd04f",
+          "source_commit": "b6379482d11e6624782fb52839d324dc98665d6b",
+          "frozen_head": "5e53cb4",
+          "pr": 102
         }
-      ],
-      "prepared_head": "9dcd04f"
+      ]
     },
     {
       "task": "ART-20",
@@ -148,7 +162,7 @@
       "handoff": "docs/workstreams/art25-courtyard-structure.md",
       "prepared_head": "4f57d74",
       "credit_cap": 0,
-      "state": "active; High; owner confirmed original-FBX inspection and assembly recipe",
+      "state": "idle; source frozen; public publication blocked by automatic approval review, user approval pending",
       "previous_assignments": [
         {
           "task": "ART-16",
@@ -160,7 +174,10 @@
           "state": "idle; frozen source merged and pilot native integrated in #93",
           "pr": 63
         }
-      ]
+      ],
+      "source_commit": "31b74bdf33ed39cec92ebd762acca8aa2a39ae36",
+      "readiness_commit": "30894868e55923f7f1f9810c8fcf16077407d7cc",
+      "frozen_head": "0c70b2f"
     }
   ],
   "claude": {
@@ -207,11 +224,36 @@
       "branch": "claude/int-art-02-site01-followups",
       "worktree": ".parallel-worktrees/int-art-01-meshy-playtest",
       "brief": "docs/tasks/integration/INT-ART-02-site01-followups.md",
-      "state": "active; authorized prompt delivered; owner switched to INT-ART-02 branch",
+      "state": "phase A verified/published #103 at 39eb01a; phase B local map acceptance running; no public ART-25 payload until approval",
       "phase_a": "ART-23 pistol plus combined GPF-02/03/04 acceptance",
-      "phase_b": "first coherent Site01 courtyard/service facade and approach, gated on frozen reviewed ART-25 subset"
+      "phase_b": "first coherent Site01 courtyard/service facade and approach, gated on frozen reviewed ART-25 subset",
+      "phase_a_head": "39eb01a4257304c5e90509d46568f00346d127c7",
+      "phase_a_candidate": "61fc9721aaf93bbb6ab4ddb841c8982e53bdb1fb"
     }
   },
   "automation_id": "valstrike-studio-producer",
-  "next_integration_trigger": "INT-ART-02 phase A active; ART-25 first frozen reviewed subset releases phase B under same native owner. ART-24 and later weapon replacement are separate source-fit/native work."
+  "next_integration_trigger": "Read INT-ART-02 phase-B handoff and pending ART-25 public-publication approval. Native phase-A source is frozen at #103/39eb01a: notify gameplay lead to release KNIFE-01 phase B once rendered run is inactive. Admit ART-27 at next contributor vacancy; no new writer/build.",
+  "knife_feature": {
+    "task": "KNIFE-01",
+    "brief": "docs/tasks/KNIFE-01-full-feature.md",
+    "authorized": "2026-11-04 direct user message in Direktor verified",
+    "state": "full gameplay/art/native pipeline authorized; actual dispatch tracked separately",
+    "gameplay": "phase A active: existing GPT-04, gpt-04-switch-prediction, claude/knife-01-gameplay from 5407272; lead confirmed actual start. Phase B release follows native source freeze notification.",
+    "first_person": "ART-26 active; owner acknowledged frozen ART-24 baseline 5e53cb4 and new knife action work",
+    "third_person": "ART-27 queued, existing character owner, no worktree or worker launched",
+    "native": "INT-ART-03 queued behind current INT-ART-02 and reviewed source/gameplay freezes",
+    "credit_cap": 0,
+    "gameplay_owner": {
+      "ui_session": "local_e7f5a62b-3f49-42e2-854a-1dcddd518154",
+      "worktree": ".parallel-worktrees/gpt-04-switch-prediction",
+      "branch": "claude/knife-01-gameplay",
+      "brief": "docs/tasks/gameplay/KNIFE-01-gameplay.md",
+      "base": "5407272"
+    }
+  },
+  "weapon_replacement_queue": {
+    "state": "authorized follow-up retained from direct user question in gameplay chat; separate bounded native import/refit task pending admission",
+    "scope": "R02 #89 and P02 #81 in first/third person; not gated on completion of first-person hands, but actual grip/camera/native fit required",
+    "owner": "existing sole native integrator after coherent current candidate; no new writer"
+  }
 }
