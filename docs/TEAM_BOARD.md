@@ -1,5 +1,15 @@
 # Team board
 
+## Recurring producer active — 2026-11-04
+
+**Direktor (2)** is the sole producer/art lead. [Operating policy](PRODUCER.md), [live checkpoint](producer/STATUS.md) and [worker registry](producer/control.json) supersede historical status below. The user retains scope/art decisions and all merges. Automation `valstrike-studio-producer` resumes the same chat every 30 minutes, every day while the local Mac/app are available. Target three active contributors after existing assignments finish; no independent new batches from either provider.
+
+- **TEAM-02:** this producer owns `codex/producer-workflow` in `/Users/webproduktion3/.codex/worktrees/10a1/ValStrike`, exact paths in [brief](tasks/TEAM-02-producer.md). Coordination/budget implementation ready; no gameplay/native edits or UE runs.
+- **Claude:** subscription CLI probe passed. Explicitly authorized prompts were delivered to the existing gameplay lead and INT-ART-01 desktop chats; both started handling them. The engineering lead acknowledged sole-producer ownership in its live sub-board. Existing worktrees remain with their owners.
+- **Engineering/integration:** INT-06 rerun evidence is in #82; the lead queued GPF-04 for movement corrections and retains already-running GPF-02/03. The native character/four-prop owner resumes preparation, then uses the heavy slot after the recorded QA release. Read the live sub-board before reserving; do not equate PR #78's merged preflight with native completion.
+- **Art:** ART-17/19/20 continue source-preservation corrections/rig work. ART-18 correction #81 is merged; source export evidence is not runtime acceptance. ART-15/16 stay frozen. Earlier 30-credit job caps remain separate from the new **300-credit/day** pool, centrally reserved before dispatch.
+- **ART-21:** former producer Direktor completed only the bounded source-preservation skill task in `.parallel-worktrees/art21-meshy-preservation`; exact three paths and handoff in [ART-21](tasks/art/ART-21-meshy-source-preservation.md), merged #80. No central/asset ownership was delegated back. Reviewed skill and reference are installed byte-identically for Codex and Claude. Matched original/source/export appearance is now required; damaged cleanup stays held.
+
 ## Producer handoff — 2026-11-04
 
 User explicitly authorized “Direktor (2)” to message “Direktor” to finish/checkpoint this dispatch and transfer producer ownership; the authorization was verified in that chat's user reply. After this checkpoint, **Direktor (2)** (`01a1a67c-4861-7e62-a15e-505444092624`), checkout `/Users/webproduktion3/.codex/worktrees/10a1/ValStrike`, owns producer/art-lead coordination and central TEAM_BOARD/WORK_LOG updates. This outgoing Direktor stops further dispatch and central writes after publication. Every existing worker/worktree is preserved; user retains merges. [Checkpoint handoff](teams/PRODUCER_HANDOFF_2026-11-04.md).
@@ -89,11 +99,11 @@ Updated 2026-11-04 (Europe/Berlin). Coordinator-owned. Operating rules: [TEAM_WO
 | Responsibility | Current owner | Authority |
 | --- | --- | --- |
 | Game director | User | Scope, art direction, priorities, PR merges |
-| Coordinator + art lead | This Codex coordinating chat | Central policy/board, art assignments and review, cross-team contracts |
-| Engineering lead | User-started Claude session (reserved, not launched here) | Delegate engineering tasks and INT-01 through `docs/teams/GAMEPLAY_BOARD.md`; preserve art ownership |
+| Coordinator + art lead | Direktor (2), `01a1a67c-4861-7e62-a15e-505444092624` | Sole producer; central policy/board/log, bounded assignments, discipline review and integration queue |
+| Engineering lead | Existing Claude “Team gameplay worktree” | Engineering review/sub-board; preserve current owners and queue new dispatch through producer |
 | Coding contributors | Assigned by Claude gameplay lead | Isolated task worktrees, exact source paths, lightweight validation |
-| Asset contributors | Four Codex sessions: ART-05 through ART-08 | Separate source-asset groups; native import deferred to integration |
-| Integration / QA | Slot reserved for Claude lead to assign one INT-01 owner | One combined build/runtime batch; no worker build loops |
+| Asset contributors | Registered ART-17/18/19/20 Codex chats | Exact source ownership in task briefs; current state in producer checkpoint |
+| Integration / QA | Existing Claude INT-01 QA and INT-ART-01 native owner, serialized | One heavy job at a time; explicit slot handoff and combined affected checks |
 
 ## Prepared worktree slots
 
