@@ -96,7 +96,7 @@ Task: GPF-03, branch `claude/gpf-03-spectate-scenario` from `origin/main` `30997
   - `teammate_start` needs a `start` from that viewer, on that teammate, in that round.
   - `stop_on_round_reset` needs a stop in a later round. A missing one is `fail`, not `not_reached`.
   - The stage enemy counts as an enemy target.
-  
+
   The only dead players in the stage are the viewer and the enemy, and both are rejected as targets. Without the stage line, the earlier behavior is kept (`not_reached`). A reset stop now means any round id that differs from the start round, which is valid after a rematch.
 
 ### Completion handoff
