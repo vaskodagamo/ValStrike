@@ -77,7 +77,7 @@ No shared file, build file, config, other stream's file or central document is c
 
 ## 2026-11-04 — GPT-08: tracers and impacts follow the recoil/spread direction (verification pending)
 
-**Status:** implementation ready; compile and runtime verification pending (integration). Stacked on GPT-02 (PR #35, base `a64dfa5`); merges after #35.
+**Status:** implementation ready; compile and runtime verification pending (integration). Built on GPT-02 (PR #35, base `a64dfa5`). #35 is merged; the branch now includes `origin/main`, so this is a normal PR to main.
 
 **Change (Effects only; Combat, Presentation, runners and Content untouched):**
 - The cosmetic trace, and so the tracer end and impact mark, now uses a per-effect direction, recorded as `FVSShotEffectRecord::DirectionSource`. Base aim is still the default.
@@ -92,10 +92,10 @@ No shared file, build file, config, other stream's file or central document is c
 - `git diff --check` clean.
 
 **Deferred to integration:**
-- Combined build including #35 (verification pending).
+- Combined build on current main (verification pending).
 - `Scripts/test_shot_effects.py`: baseline 73/73. Its shots are first-shot-accurate, so the predicted direction equals aim at send. No expectation change is expected.
 - Sustained-fire visual check: the local tracers should fan out with the spread pattern. Observers on a dedicated server still see base-aim tracers.
 
 **Remaining limit / follow-up for the lead:** a remote observer cannot show spread without a replicated shot direction or impact. None exists today, and none was added, per the brief. Showing spread there would need a Combat-owned replicated field, for example the last shot's seed index or its impact point.
 
-**Next action:** gameplay lead reviews; integration builds after #35 and runs the shot-effects suite.
+**Next action:** gameplay lead reviews; integration builds and runs the shot-effects suite.
