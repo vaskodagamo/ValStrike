@@ -374,10 +374,10 @@ private:
                 Check(TEXT("rifle_models"), ModelsShow(Driver, EVSWeaponSlot::Rifle, Views), Views);
                 const UVSWeaponPresentationComponent* PistolView = Driver->GetWeaponPresentation(EVSWeaponSlot::Pistol);
                 Check(TEXT("pistol_assets"), PistolView && PistolView->GetFirstPersonBody()
-                    && PistolView->GetFirstPersonBody()->GetStaticMesh()->GetName() == TEXT("SM_VS_Pistol01_Body")
-                    && PistolView->GetFirstPersonSlide() && PistolView->GetFirstPersonSlide()->GetStaticMesh()->GetName() == TEXT("SM_VS_Pistol01_Slide")
+                    && PistolView->GetFirstPersonBody()->GetStaticMesh()->GetName() == TEXT("SM_VS_Pistol02_Body")
+                    && PistolView->GetFirstPersonSlide() && PistolView->GetFirstPersonSlide()->GetStaticMesh()->GetName() == TEXT("SM_VS_Pistol02_Slide")
                     && PistolView->GetFirstPersonSlide()->GetAttachSocketName() == TEXT("Slide")
-                    && PistolView->GetFirstPersonMagazine()->GetStaticMesh()->GetName() == TEXT("SM_VS_Pistol01_Magazine")
+                    && PistolView->GetFirstPersonMagazine()->GetStaticMesh()->GetName() == TEXT("SM_VS_Pistol02_Magazine")
                     && PistolView->GetFirstPersonMagazine()->GetAttachSocketName() == TEXT("Magazine")
                     && PistolView->GetFirstPersonFlash()->GetAttachSocketName() == TEXT("Muzzle"), ViewDetail(PistolView));
                 Check(TEXT("no_collision"), NoCollision(Driver->GetWeaponPresentation(EVSWeaponSlot::Rifle)) && NoCollision(PistolView),
