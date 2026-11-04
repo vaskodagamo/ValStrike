@@ -504,6 +504,14 @@ The gameplay/integration idle slots were checked clean at their original heads b
 
 **Capacity/verification:** ART-26 replaces ART-24; finished ART-25 frees the third slot for KNIFE-01 alongside INT-ART-02. ART-25 public publication was rejected by automatic approval review and awaits the user approval already requested in its chat; source and permitted native map work stay local. No fourth contributor or build loop. Native phase A #103 records combined movement/session/spectate/pistol success; phase B map acceptance is running, so no public/native completion claim for the new structures. This producer change used source inspection and documentation checks only. No Meshy charge, Unreal run or native knife completion claim. The user's R02/P02 replacement question was also read directly in gameplay and retained as a separate native follow-up, independent of completed first-person hands.
 
+## 2026-11-04 — Verified facade checkpoint and full knife contributor admission
+
+INT-ART-02 phase B finished locally on candidate `c7386b6`, final evidence/handoff `7436d57`: six W01/W08/W09 facade/roof visuals, original route and actor contracts retained, directional-light warning removed. Owner reports Site01 486/486, match 46/46 and rendered weapons 29/29; reused phase-A binary for the map-only change. Producer reviewed actual eye-level/close/overhead/roof comparison sheets, accepting this first pilot section with unfinished surrounding facade and tan recess backing explicit. No close-wall player walk-up, two-Mac or packaged claim. Source/derivatives remain local under the existing ART-25 automatic-review public-upload hold; specific user approval is pending.
+
+The stopped native owner released capacity. Producer dispatched ART-27 at High to the existing idle character owner in new `art27-knife-third-person`, prepared `c8bb630` from merged main `a22b9bf`; only derived UrbanEntry KnifePilot source/evidence, zero paid jobs. Gameplay phase A froze at #105/`1fa433e`; phase B release was delivered to the same Claude lead/worker and its live board confirms active on `claude/knife-01-phase-b`. ART-26 continues correcting actual first-person grip. Three contributors total, INT-ART-03 queued. Engineering closed D3 from existing valid native evidence with an explicit recurrence caveat, without further QA.
+
+User merged #101–104. Producer updated the existing same-thread 30-minute automation to retain verified full knife, Site01 world and R02/P02 native priorities. This checkpoint uses documentation/JSON inspection only; no new tests, UE work, Meshy charge, extra scheduler or user merge by producer. [Current state](producer/STATUS.md).
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.
