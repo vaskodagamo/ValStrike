@@ -26,6 +26,7 @@
 #include "UnrealClient.h"
 #include "Widgets/Input/SEditableTextBox.h"
 #include "Widgets/Input/SSlider.h"
+#include "Widgets/Layout/SScrollBox.h"
 #include "Widgets/SWindow.h"
 #include "Widgets/Text/STextBlock.h"
 
@@ -150,6 +151,12 @@ private:
             Check(TEXT("settings_focuses_slider"), IsFocused(TEXT("VS.SensitivitySlider")), FocusedTag().ToString());
             Check(TEXT("settings_show_default_sensitivity"), SliderValue() == VSUserSettings::DefaultMouseSensitivity && ValueText() == TEXT("0.120"),
                 FString::Printf(TEXT("slider=%.4f text=%s"), SliderValue(), *ValueText()));
+            {
+                // At 960x540 the whole page must fit; a scrolling page clips Apply/Back.
+                const TSharedPtr<SWidget> Scroll = Menu ? FindType(Menu.ToSharedRef(), TEXT("SScrollBox")) : nullptr;
+                const float Overflow = Scroll ? StaticCastSharedPtr<SScrollBox>(Scroll)->GetScrollOffsetOfEnd() : -1.0f;
+                Check(TEXT("settings_fit_without_scrolling"), Overflow == 0.0f, FString::Printf(TEXT("overflow=%.1f"), Overflow));
+            }
             Check(TEXT("settings_show_current_window"), Menu->GetPendingWindowMode() == EWindowMode::Windowed && Menu->GetPendingResolution() == SettingsInitialWindow,
                 FString::Printf(TEXT("mode=%d pending=%s options=%s"), int32(Menu->GetPendingWindowMode()), *Menu->GetPendingResolution().ToString(), *Options()));
             Next(Now);
@@ -567,6 +574,15 @@ private:
         FChildren* Children = Root->GetChildren();
         for (int32 Index = 0; Children && Index < Children->Num(); ++Index)
             if (TSharedPtr<SWidget> Found = FindTagged(Children->GetChildAt(Index), Tag)) return Found;
+        return nullptr;
+    }
+
+    static TSharedPtr<SWidget> FindType(const TSharedRef<SWidget>& Root, FName Type)
+    {
+        if (Root->GetType() == Type) return Root;
+        FChildren* Children = Root->GetChildren();
+        for (int32 Index = 0; Children && Index < Children->Num(); ++Index)
+            if (TSharedPtr<SWidget> Found = FindType(Children->GetChildAt(Index), Type)) return Found;
         return nullptr;
     }
 

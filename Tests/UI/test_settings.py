@@ -30,7 +30,8 @@ from test_movement import stop
 FIRST_CHECKS = (
     "fresh_settings_have_no_sensitivity", "unset_volume_uses_default", "unset_sensitivity_uses_default", "initial_window_is_windowed_960x540",
     "default_sensitivity_turns_expected_degrees", "escape_opens_menu", "menu_focuses_resume",
-    "tab_reaches_settings_button", "enter_opens_settings", "settings_focuses_slider", "settings_show_default_sensitivity", "settings_show_current_window",
+    "tab_reaches_settings_button", "enter_opens_settings", "settings_focuses_slider", "settings_show_default_sensitivity",
+    "settings_fit_without_scrolling", "settings_show_current_window",
     "slider_right_arrow_applies_immediately", "slider_left_arrow_steps_back", "tab_reaches_sensitivity_value",
     "typed_value_clamps_to_maximum", "invalid_text_rejected_with_error", "typed_value_applies_immediately",
     "sensitivity_in_game_user_settings", "tab_reaches_volume_slider", "volume_left_arrow_applies_immediately",

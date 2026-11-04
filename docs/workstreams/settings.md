@@ -95,3 +95,34 @@ PR #19 was merged into main at 2026-11-03 23:01 (merge `f1e3779`) while these ru
 - Changing volume and then leaving the world without closing the Settings page (e.g. a disconnect while the page is open) keeps the value in memory but does not write it to disk until the next settings save. The controller's own save only tracks sensitivity, and that file is GPT-01's.
 
 **Next action/owner:** Claude gameplay lead reviews, INT-01 schedules the checks above in the next batch, and the user merges.
+
+## 2026-11-04 — GPF-01: INT-02-D1, the window-mode arrow click no longer changes the mode
+
+**Branch/base:** `claude/gpf-01-settings-window-mode` from `origin/main` `3d092bb` (contains `5b13856`). Brief `docs/tasks/gameplay/GPF-01-settings-window-mode.md`. Tier V1.
+
+**Finding (read from INT-02 evidence, no engine run here):**
+
+- At 960×540, GPT-06's volume row pushed the Settings page past the window. In `screenshots/first/settings-pending-windowed-fullscreen.png` (run `20261104T092738Z_083123`), the menu's scroll box shows a scrollbar, Apply/Back are cut off at the bottom and the key hint is off-screen. My GPT-06 estimate (about 70 px added, 18 px recovered) was wrong: the help line also wrapped to two lines. The overflow is about 41 px. This is a GPT-06 regression of the "readable at 960×540" requirement, whatever the click mechanism turns out to be.
+- At the moment of the failed click, the page has just been laid out in an overflowing scroll box and then resized to 2560×1440. That is the only layout state on this path that differs from pre-GPT-06 runs. The synthesized click lands on the `›` arrow (`first.log:1457`, the screenshot confirms the position, `hit_testable=true`). `CycleWindowMode` never runs, because the status line still reads "Applied: …" instead of "Press Apply display to switch." So the button never got a full press and release.
+- Ruled out:
+  - the selector's handlers (unchanged since PR #19);
+  - the new step-16 keys. The mode is Windowed Fullscreen when `left_selects_windowed_fullscreen` passes, and this step does not touch mouse capture: slider arrows go through `SSlider::OnNavigation`, not the mouse.
+  - the other merged batch PRs, which add no Slate widgets or input-mode changes (`git diff 90849f5 5b13856 -- Source`).
+- I could not prove from engine source exactly why the click is lost after an overflow. **Attribution is still pending QA's bisect** of `90849f5` against `b5b8523`.
+
+**Fix (settings section only):**
+
+- `SVSSessionMenu.cpp`: Window mode and Resolution put their labels beside the selector (120 px column) instead of above it, which saves about 44 px. The help line is shortened to fit one line ("Sliders apply at once. Saved on this computer only."), saving about 20 px. The selector arrows' horizontal padding goes from 14 to 10 so "Desktop · 2560 × 1440" still fits the narrower value button. The estimated margin is now about 20 px at 960×540. Nothing changes in behaviour, tags, Tab order or handlers.
+- `VSSettingsSmoke.cpp` + `Tests/UI/test_settings.py`: new required check `settings_fit_without_scrolling`, which needs the menu's `SScrollBox::GetScrollOffsetOfEnd() == 0` when Settings first opens at 960×540. That turns the layout overflow into a direct failure instead of a downstream click symptom. No existing expectation was loosened.
+- `Tests/UI/README.md`: first-run description.
+
+**Checks actually run:** `python3 -m unittest discover -s Tests/UI -p 'test_settings_runner.py'` 6/6 OK, smoke check names cross-checked against the runner's required list, `git diff --check` clean.
+
+**Deferred to integration:**
+
+- Rerun rendered `Tests/UI/test_settings.py`. It must pass `settings_fit_without_scrolling` and `arrow_selects_windowed` plus the cascade.
+- Rerun native `ValStrike.UI.Settings`.
+- Rerun `Tests/UI/test_session.py`. The session page is untouched, but the brief asks for it when the layout changes.
+- Compile: the C++ change is layout plus one smoke check.
+
+**Remaining risk:** if the rerun still shows `arrow_selects_windowed FAIL` with `settings_fit_without_scrolling PASS`, the overflow was not the cause. The next suspect is then the Windowed Fullscreen transition itself (hover or capture after the window resize), compared against QA's `90849f5` run. Return it to this owner with that log.
