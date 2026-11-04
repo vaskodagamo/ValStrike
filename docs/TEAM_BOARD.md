@@ -1,5 +1,20 @@
 # Team board
 
+## R02 / P02 Meshy weapon replacement kickoff — 2026-11-04
+
+User reports the current gun is too big beside the character and explicitly requests new rifle/pistol chats, using **Meshy AI** for the new models. User approved **60 credits total**: exactly 30 per weapon, one textured image-to-3D task each, no paid retries/extra stages. Coordinator owns this dispatch on `codex/weapon-v2-dispatch`, based on merged main `b8183db` (PR #62). [Weapon V2 shared brief](tasks/art/WEAPON_V2_BRIEF.md) records reference direction, scale targets, exact proposed job options, official pricing and the approval.
+
+| Task | New owner / worktree | Exclusive source + docs | Result / allowance |
+| --- | --- | --- | --- |
+| [ART-17 R02 rifle](tasks/art/ART-17-rifle02.md) | Codex “Art — Meshy R02 rifle” (`01a1a6c3-9f0b-76b3-aabd-ccfed653040f`), High; `.parallel-worktrees/art17-rifle02`, `codex/art17-rifle02` | `Art/Source/Weapons/Rifle02/`, `docs/assets/rifle02/`, `docs/workstreams/art17-rifle02.md` | Meshy draft → artist cleanup → real character-scale/hand-fit previews and socket recipe; **30 credits** |
+| [ART-18 P02 pistol](tasks/art/ART-18-pistol02.md) | Codex “Art — Meshy P02 pistol” (`01a1a6c3-ae6d-7bc3-b164-ee3e417314ec`), High; `.parallel-worktrees/art18-pistol02`, `codex/art18-pistol02` | `Art/Source/Weapons/Pistol02/`, `docs/assets/pistol02/`, `docs/workstreams/art18-pistol02.md` | Meshy draft → artist cleanup → real character-scale/hand-fit previews and socket recipe; **30 credits** |
+
+Dispatched both chats at High reasoning, configured model unchanged, from clean prepared HEAD `e0071ce295c78cfdfa453af86b83596dc4cfa2ec`. Each received its own worktree, exact 30-credit allowance, resumable-job requirement and source-only scope. No coordinator Meshy submission or model completion claim.
+
+Initial R02 length target 72–78 cm; P02 20–22 cm, with slimmer grips/receiver/slide proportions inspected against the frozen 170 cm character at scale 1. Existing R01 is 86 cm long; P01 23.929 cm. This is a redesign request, not proof the source dimensions alone caused the reported appearance. Artists also document import/socket/camera risks for native review. New files only: R01/P01, character sources/poses, existing gameplay/native assets and other checkouts remain read-only. No new engine slot, contributor build, repeated test suite or humanoid auto-rig.
+
+ART-15 was notified to finish its existing R01 pilot handoff as a temporary baseline without restarting pose work or scaling the character. ART-16 and INT-ART-01 continue their existing batch. New weapon source readiness does **not** automatically extend INT-ART-01's native Content/code ownership; replacement import is a later explicitly scoped handoff to the single integration owner after source review. User retains PR merges.
+
 ## Meshy first-playtest kickoff — 2026-11-04
 
 User authorized new art chats plus a prompt for a new Claude integration chat. Initial kickoff main was `ee25083` (including PR #57); main advanced to `5e9048f` with #58–61 during dispatch. Coordinator owns this kickoff on `codex/meshy-playtest-dispatch`; the following assignments supersede the completed ART-12/13 source ownership for the new pass. Original worker checkouts stay frozen/read-only. No structures/stair repair or new paid generation is launched.

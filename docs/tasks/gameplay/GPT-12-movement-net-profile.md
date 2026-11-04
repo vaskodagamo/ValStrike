@@ -1,0 +1,22 @@
+# Task GPT-12: the movement runner accepts `--net-profile` and records correction evidence (MOVE-03 enabler)
+
+- Status: In progress
+- Backlog ID: MOVE-03 ("Measured RTT/jitter/loss and corrections recorded; no repeatable stuck or divergent movement on supported conditions"). `docs/playtest/net-emulation.md` says "No ValStrike runner uses these flags yet". This task closes that gap for movement.
+- Owner/session and provider: Claude session "GPT-12 movement net profile"
+- Branch and base: `claude/gpt-12-movement-net-profile` from `origin/main` `b342ca9`
+- Worktree: `/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/gpt-12-movement-net-profile`
+- Owns:
+  - `Scripts/test_movement.py`
+  - its runner unit test (find it, or create `Tests/Movement/test_movement_runner.py` following the pattern in `Tests/Match/test_match_runner.py`)
+  - append to `docs/playtest/net-emulation.md` (a new "Runner adoption" section)
+  - a new `docs/workstreams/movement-net-profile.md`
+- Read-only: `Scripts/ue.py` (reuse its `--net-profile`/`--pkt-*` arguments and their composition. Import the existing helper; don't duplicate it. If ue.py needs a change, stop and ask), every other runner, all Source, Content and maps.
+- Result:
+  - `test_movement.py --net-profile {lan,good,typical,poor}` plus the `--pkt-*` overrides pass the same emulation to the server and every client.
+  - The run is **invalid** (exit nonzero, clear message) unless each process log has the `LogNet: PktLag/PktLagVariance/PktLoss set to …` lines with the requested values.
+  - The JSON summary adds a `net` block: the profile and values, plus per-client observed RTT if the logs or existing smoke output expose it, and a count of server movement corrections. Use the existing character-movement correction log lines; if none appear without a source change, record `corrections: "unavailable"` and say so rather than adding source.
+  - Pass/fail checks under a profile stay the same as `lan`. Do not loosen any tolerance. If a check is inherently latency-sensitive, list it in the handoff.
+  - Runner unit tests cover argument parsing, the composed argv and the invalid-run detection, with no engine.
+- Validation tier: V1. Contributor checks: the runner unit tests and `python3 -m py_compile`; `git diff --check`. No Unreal.
+- Integration-owned checks (a later INT batch): `test_movement.py` with `lan` (45/45 baseline) and then each of `good`/`typical`/`poor`, with the correction counts recorded.
+- Engine slot: none. Publication: push and open a PR; the user merges.

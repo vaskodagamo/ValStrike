@@ -37,6 +37,32 @@ struct VALSTRIKE_API FVSScoreboardRow
 };
 
 /**
+ * One replicated kill feed line, written by the server when the stats ledger
+ * resolves a death. Kind and Weapon carry ValStrike::KillFeed enum values.
+ */
+USTRUCT()
+struct VALSTRIKE_API FVSKillFeedEntry
+{
+    GENERATED_BODY()
+
+    // Monotonic for the server session; clients draw each sequence once.
+    UPROPERTY() int32 Sequence = 0;
+    // Server world time of the death (AGameStateBase::GetServerWorldTimeSeconds).
+    UPROPERTY() double ServerTimeSeconds = 0.0;
+    // Scoreboard player keys; 0 when the killer is not a tracked player.
+    UPROPERTY() int32 KillerKey = 0;
+    UPROPERTY() int32 VictimKey = 0;
+    // Name snapshots, so a line survives the player leaving.
+    UPROPERTY() FString KillerName;
+    UPROPERTY() FString VictimName;
+    UPROPERTY() uint8 KillerTeam = 0;
+    UPROPERTY() uint8 VictimTeam = 0;
+    UPROPERTY() uint8 Kind = 0;
+    UPROPERTY() uint8 Weapon = 0;
+    UPROPERTY() bool bHeadshot = false;
+};
+
+/**
  * Server-authoritative per-player match statistics, replicated to every client.
  * Spawned by UVSMatchStatsSubsystem on the server; clients only read it.
  */
@@ -59,6 +85,11 @@ public:
     // Authority only. Replaces the rows when they differ; returns true on change.
     bool ServerPublish(const TArray<FVSScoreboardRow>& NewRows);
 
+    // Newest last, at most ValStrike::KillFeed::MaxEntries lines.
+    const TArray<FVSKillFeedEntry>& GetKillFeed() const { return KillFeed; }
+    // Authority only. Replaces the feed when its sequences differ; returns true on change.
+    bool ServerPublishKillFeed(const TArray<FVSKillFeedEntry>& NewFeed);
+
 private:
     UFUNCTION()
     void OnRep_Rows();
@@ -68,4 +99,8 @@ private:
 
     UPROPERTY(Replicated)
     int32 Revision = 0;
+
+    // Bounded ring; the HUD reads it every frame, so no RepNotify is needed.
+    UPROPERTY(Replicated)
+    TArray<FVSKillFeedEntry> KillFeed;
 };

@@ -19,6 +19,7 @@
 namespace
 {
 namespace VSStats = ValStrike::Stats;
+namespace VSFeed = ValStrike::KillFeed;
 
 uint8 VSMatchStatsTeamOf(const APlayerState* Player)
 {
@@ -290,7 +291,74 @@ void UVSMatchStatsSubsystem::HandleDamage(const FVSDamageEvent& Event)
             AttackerState ? *AttackerState->GetPlayerName() : TEXT("?"),
             *Event.Victim->GetPlayerState()->GetPlayerName(), Report.Headshot ? 1 : 0);
     }
+    AppendKillFeed(Event, AttackerState, Report.Attacker, VictimKey, Outcome);
     Publish();
+}
+
+void UVSMatchStatsSubsystem::AppendKillFeed(const FVSDamageEvent& Event, const APlayerState* Attacker,
+    int32 AttackerKey, int32 VictimKey, VSStats::HitOutcome Outcome)
+{
+    VSFeed::Kind FeedKind = VSFeed::Kind::World;
+    // Only an outcome that resolved this life's death: exactly one entry per death.
+    if (!VSFeed::KindFromOutcome(Outcome, FeedKind))
+    {
+        return;
+    }
+    // A kill landing before the 0.25 s poll saw the new round must not be cleared by it.
+    ObserveFeedRound();
+    const APlayerState* Victim = Event.Victim ? Event.Victim->GetPlayerState() : nullptr;
+    FVSKillFeedEntry Entry;
+    Entry.KillerKey = FeedKind == VSFeed::Kind::World ? 0 : AttackerKey;
+    Entry.VictimKey = VictimKey;
+    // An untracked source (a bot) keeps its name; no source at all leaves it empty.
+    Entry.KillerName = Attacker ? Attacker->GetPlayerName() : FString();
+    Entry.VictimName = Victim ? Victim->GetPlayerName() : FString();
+    Entry.KillerTeam = VSMatchStatsTeamOf(Attacker);
+    Entry.VictimTeam = VSMatchStatsTeamOf(Victim);
+    Entry.Kind = static_cast<uint8>(FeedKind);
+    Entry.Weapon = static_cast<uint8>(Event.Weapon == ValStrike::Damage::WeaponClass::Pistol ? VSFeed::Weapon::Pistol
+        : Event.Weapon == ValStrike::Damage::WeaponClass::Rifle ? VSFeed::Weapon::Rifle : VSFeed::Weapon::Unknown);
+    Entry.bHeadshot = Event.IsHeadshot();
+    const AGameStateBase* GameState = GetWorld() ? GetWorld()->GetGameState() : nullptr;
+    const double Now = GameState ? GameState->GetServerWorldTimeSeconds() : (GetWorld() ? GetWorld()->GetTimeSeconds() : 0.0);
+    const VSFeed::Seq Sequence = KillFeed.Append(Now, Entry);
+    UE_LOG(LogValStrike, Log, TEXT("VSFEED seq=%u kind=%u killer=%s victim=%s weapon=%u headshot=%d"),
+        Sequence, static_cast<uint32>(Entry.Kind), *Entry.KillerName, *Entry.VictimName,
+        static_cast<uint32>(Entry.Weapon), Entry.bHeadshot ? 1 : 0);
+    PublishKillFeed();
+}
+
+bool UVSMatchStatsSubsystem::ObserveFeedRound()
+{
+    const AVSMatchGameState* GameState = GetWorld() ? GetWorld()->GetGameState<AVSMatchGameState>() : nullptr;
+    if (!GameState || GameState->Match.RoundId == LastFeedRoundId)
+    {
+        return false;
+    }
+    LastFeedRoundId = GameState->Match.RoundId;
+    if (KillFeed.Clear())
+    {
+        UE_LOG(LogValStrike, Log, TEXT("VSFEED round %llu: feed cleared"), static_cast<unsigned long long>(LastFeedRoundId));
+        PublishKillFeed();
+    }
+    return true;
+}
+
+void UVSMatchStatsSubsystem::PublishKillFeed()
+{
+    if (!State)
+    {
+        return;
+    }
+    TArray<FVSKillFeedEntry> Lines;
+    Lines.Reserve(static_cast<int32>(KillFeed.Items().size()));
+    for (const VSFeed::Ring<FVSKillFeedEntry>::Item& Item : KillFeed.Items())
+    {
+        FVSKillFeedEntry& Line = Lines.Add_GetRef(Item.Data);
+        Line.Sequence = static_cast<int32>(Item.Number);
+        Line.ServerTimeSeconds = Item.TimeSeconds;
+    }
+    State->ServerPublishKillFeed(Lines);
 }
 
 void UVSMatchStatsSubsystem::ObserveMatchReset()
@@ -327,6 +395,7 @@ void UVSMatchStatsSubsystem::Sync()
         }
     }
     ObserveMatchReset();
+    ObserveFeedRound();
     Publish();
 }
 
