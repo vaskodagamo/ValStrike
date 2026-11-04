@@ -1,5 +1,17 @@
 # Team board
 
+## ART-13 — Extracted Meshy character (2026-11-04)
+
+Dispatched and acknowledged active: “Art — Third-person player model”, High reasoning, new worktree prepared at `6afa573`. Actual source cleanup is in progress; no model/native acceptance claim.
+
+User requested the other artist start on the extracted character. [ART-13](tasks/art/ART-13-meshy-character.md) assigns the idle “Art — Third-person player model” chat at High reasoning to a new `.parallel-worktrees/meshy-character` / `codex/meshy-character` worktree. Exclusive source `Art/Source/Characters/UrbanEntry01/`, asset docs `docs/assets/urban-entry01/` and its handoff. MSH-C01's ten extracted files match the original ZIP by SHA-256. Work covers actual model/rig/material cleanup and six supplied animations; no resumption of rejected procedural ART-07, no native Content/gameplay edits or Unreal slot. Source review precedes centralized character integration. Coordinator owns this assignment, intake metadata and register on `codex/meshy-world-dispatch`.
+
+## Meshy world production dispatch — 2026-11-04
+
+Dispatch confirmed: both existing chats are active at High reasoning, using their new worktrees at `b6e4a5f`. Character package MSH-C01 downloaded through Meshy UI with FBX, UE5 Mannequin, rigged character on, separate files, with skin, 60 FPS; original ZIP saved locally under `meshy_ai_assets/characters/UrbanEntry/`. Inventory/settings in `docs/assets/meshy-character-intake.json`; six clips plus base character and three textures present. Skeleton/deformation/native verification remains pending. No character worker or vault gameplay authorized by this download.
+
+Ten uploaded world-object packages (50 original files) are inventoried in `docs/assets/meshy-site01-intake.json`; exact inputs and hashes are recorded. Coordinator owns inventory, registry and this board on `codex/meshy-world-dispatch`. ART-11 reassigns the idle “Art — Site01 navigation signs” chat to five structure packages in new `.parallel-worktrees/meshy-structure`, branch `codex/meshy-structure`. ART-12 reassigns idle “Art — Tactical HUD icons” to five props/surface packages in new `.parallel-worktrees/meshy-props-surfaces`, branch `codex/meshy-props-surfaces`. Both use High reasoning and exact source/docs ownership in [ART-11](tasks/art/ART-11-meshy-structure.md) and [ART-12](tasks/art/ART-12-meshy-props-surfaces.md). Previous worktrees remain frozen and untouched. Source cleanup/preview/export only; no Unreal slot or native edits. One native Site01 integration assignment follows reviewed source handoffs. Character export is being inspected by the coordinator; no character replacement worker starts yet.
+
 ## ART-10 — Meshy intake for existing Site01 (2026-11-04)
 
 The user authorized an upload inbox and subsequent artist cleanup/integration of generated world objects, character and animations into the existing first tactical map. Coordinator owns [ART-10](tasks/art/ART-10-meshy-intake.md), branch `codex/meshy-asset-intake`, root checkout, base `8226442`: `meshy_ai_assets/` scaffold/registry plus coordinator docs. Folder setup is implementation ready, V0; production tasks await actual uploads and inventory. Originals stay local and read-only to workers; selected assets are copied to assigned worktrees and versioned through the production source pipeline. No worker/native map ownership is reassigned now. Site01 is the map target; one native/map owner and a reserved engine slot will be assigned after source review. Do not resume rejected procedural character work.
