@@ -1,0 +1,23 @@
+[
+  {
+    "commit": "afa582abb823897248b666c10fef77464d167fdc",
+    "path": "Art/Source/Characters/FPArms02/FPArms02.blend",
+    "local": "Art/Source/Characters/FPArms03/Reference/Frozen/FPArms02.blend",
+    "sha256": "58c2a5c425352a101006be23cefc884edbe8e4e4b7a7dccdcd6fd5af28319cdc",
+    "bytes": 95964855
+  },
+  {
+    "commit": "afa582abb823897248b666c10fef77464d167fdc",
+    "path": "Art/Source/Characters/FPArms02/Reference/RightHand_Dorsal.png",
+    "local": "Art/Source/Characters/FPArms03/Reference/Frozen/FPArms02_reference.png",
+    "sha256": "f6ba857881ef912e7a5c7a51b8183659f95b6a2b8bbce47f2af279042b685b28",
+    "bytes": 1810402
+  },
+  {
+    "commit": "f3e55dad5588fd50066b0980c0a446f87486621e",
+    "path": "docs/assets/urban-entry01/Previews/02_material_after.png",
+    "local": "Art/Source/Characters/FPArms03/Reference/Frozen/UrbanEntry_skin_reference.png",
+    "sha256": "32024e79330a99709b5fb4b47f562db254d767a07f7a10dcc6dbb83625eea8c7",
+    "bytes": 502324
+  }
+]
