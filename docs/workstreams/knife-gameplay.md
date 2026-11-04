@@ -145,3 +145,113 @@ These all advance the action epoch and clear the timers, so a delayed impact can
   - The candidate probe aims at the capsule axis at eye height. A target whose zones leave a gap on that line is a miss (`Probe::Missed`), never a free hit. Tune in runtime if needed.
   - The owner's `LocalStart` is cosmetic and can precede a server rejection.
 - **Next owner:** gameplay lead review, then the phase B release and INT-ART-03.
+
+## Phase B (2026-11-04)
+
+- **Branch:** `claude/knife-01-phase-b`, from `claude/knife-01-gameplay` (`1fa433e`, PR #105) with `origin/main` `a22b9bf` merged in (includes INT-ART-02 #103).
+- **Implementation commit:** `d53eaa4`. The PR head adds this handoff section on top of it.
+- **Merge order:** the phase B PR builds on #105, which should merge first.
+- **Status:** implementation ready; **verification pending: INT-ART-03**.
+
+### Changes
+
+- **`VSCharacter.h/.cpp`:** input, component and slot hunks only. The diff is additions only: 45 lines added, none removed, so the #93/#103 presentation hunks (character presentation, P01 `hand_r` attachment, pistol hold) are byte for byte unchanged.
+  - `UVSKnifeComponent` is created as `Knife` (`GetKnifeComponent()`).
+  - Key **3** maps to `EquipKnife`, which calls `RequestEquip(EVSEquipRequest::Knife)`, request byte 3.
+  - While `IsKnifeEquipped()`, LMB slashes and returns before any firearm path. RMB is a new `Secondary` action that stabs. `GetEquippedWeapon()` is null with the knife, so reload and fire never reach a firearm.
+  - `GetMovementWeaponKind()` maps Knife to `WeaponKind::Knife`.
+  - `OnRep_MatchGates` with combat closed (phase or death) also calls `Knife->CancelActions()`, which acts on the server only.
+  - `GetHUDData()` with the knife: `WeaponName = "KNIFE"`, `bEquipping`, and `bHasWeapon` stays false, so there is no ammo.
+- **`VSHUD.cpp`:**
+  - With the knife, a label panel shows "KNIFE" (or "KNIFE  EQUIPPING") and "LMB SLASH  RMB STAB", with no ammo, magazine or reload.
+  - The help line reads "1 RIFLE  2 PISTOL  3 KNIFE  Q LAST WEAPON".
+  - The reticle stays at its static gap: no firearm is equipped, so `ReticleGap` returns `StaticGap`.
+  - The firearm panel, kill feed, hit markers and damage indicators are untouched.
+- **`VSPlayerController.*`:** no change needed. The death text already adds "Knife" through `WeaponName`. The server never sets the headshot flag for the knife (`FVSDamageEvent::IsHeadshot`), and the hit-marker path has no weapon branch.
+- **`Combat/VSKnifeComponent.*`:** development hook only. `DevelopmentRequestAttack(kind, 0)` takes the next local sequence, and `DevelopmentLastSequence()` exists for the replay check.
+- **Economy:** audited again, no change.
+
+### Event API for native (`Presentation/VSKnifePresentationEvents.h`, frozen)
+
+A native presentation component owns one `FVSKnifePresentationEvents`. It calls `Bind(AVSCharacter*)`, then `Tick()` once per frame, and handles `OnCue()`, which delivers an `FVSKnifeCueEvent`. Every cue is cosmetic.
+
+| Cue | When | Fields |
+| --- | --- | --- |
+| `Equip` | The knife slot became equipped in this machine's view: the owner's prediction, server state elsewhere. | `Duration` = equip time (0.40 s); `bLocal` on the owner |
+| `Holster` | The knife slot was left (switch or reset). Stop knife animations. | none |
+| `Slash` / `Stab` | An attack started. On the owner (`bLocal`) this is its own press, which the server may still reject; on remote views the server accepted it. | `Duration` = seconds to the impact marker (0.15 / 0.30); `Recovery` = seconds to the next attack (0.55 / 0.90) |
+| `Impact` | The server resolved an impact. | `Result`: `Miss`, `Wall` or `Player` |
+| `Cancel` | Pending impacts were cancelled (switch, death, reset or closed phase). Stop the attack before its impact. | none |
+
+- Late joins and relevancy returns get `Equip` on the next `Tick` and never replay old attacks.
+- The weapons smoke exercises this API on both clients (`knife_presentation_cues`).
+
+### Weapons smoke (`practice`), new checks only
+
+The knife segment runs from 13.0 to 24.4 s, after the unchanged firearm timeline. The firearm `Finish()` now happens at the end of the knife segment.
+
+- **Common, on all three roles (10):**
+  - `knife_equipped`
+  - `knife_slash_hit_once`
+  - `knife_out_of_range`
+  - `knife_wall`
+  - `knife_cancel_switch`
+  - `knife_equip_last`
+  - `knife_cancel_phase`
+  - `knife_cancel_reset`
+  - `knife_stab_hit`
+  - `knife_cancel_death`
+- **Server only (+5):**
+  - `knife_reject_equip`
+  - `knife_reject_cooldown`
+  - `knife_reject_invalid`
+  - `knife_reject_replay`
+  - `knife_reject_holstered`
+- **Client only (+2):**
+  - `knife_hides_firearms`
+  - `knife_presentation_cues`
+
+**Expected practice totals:**
+
+| Role | Before | New | Total |
+| --- | --- | --- | --- |
+| Server | 24 | 15 | 39 |
+| Driver | 25 | 12 | 37 |
+| Observer | 25 | 12 | 37 |
+
+Visual and match scenarios are unchanged.
+
+**Scenario (server-placed):**
+
+1. The target stands 100 cm in front of the driver. Key 3 equips the knife; a raw attack during the equip is rejected.
+2. A slash takes the target 100 to 60, with no firearm shot. A raw slash 0.1 s later is rejected as cooldown; a raw kind 7 attack and a replayed sequence are also rejected.
+3. The target moves to 300 cm: the slash misses.
+4. The target returns behind a server-spawned slab: wall contact, no damage.
+5. Each of these happens on the server tick that sees a pending stab, and the stab never lands:
+   - a switch to the rifle;
+   - a closed combat gate;
+   - `DevelopmentReset`.
+6. A raw attack with the rifle equipped is rejected as holstered. Q from the rifle returns to the knife.
+7. A stab kills the target.
+8. A final stab is cancelled by the driver's own death.
+
+- **Runner:** `Scripts/test_weapons.py` gains the `KNIFE_*` tuples. `Tests/Weapons/test_weapons_runner.py` asserts the firearm tuple sizes are unchanged (16, 25, 24), adds the knife names and keeps them out of the visual and match scenarios.
+
+### Checks actually run
+
+- `python3 -m unittest Tests/Weapons/test_weapons_runner.py`: 10 tests OK, including "every required name exists in the native harness".
+- `clang++ -std=c++17 -Wall -Wextra -Werror -pedantic -Wshadow` on the knife rules test (with `VSDamageModel.cpp`, 60/60) and the weapon loadout rules test (78/78). This was a post-merge sanity check; phase B changed no rules headers.
+- `git diff --check`: clean.
+- No Unreal build and no runtime.
+
+### Deferred to INT-ART-03 (verification pending)
+
+- Combined Editor build: UHT for the new `Knife` subobject and actions. The new header compiles only through `VSWeaponSmoke.cpp`.
+- `Scripts/test_weapons.py --scenario practice`, expecting server 39, driver 37 and observer 37 checks. Also `visual` and `match` (unchanged) and `Scripts/test_combat.py`.
+- Then native binding of `FVSKnifePresentationEvents` and full rendered acceptance.
+
+### Risks
+
+- The engine C++ is uncompiled.
+- The smoke's lifecycle steps depend on the server seeing each stab accepted before its 0.15 s/0.30 s impact. They trigger on that state, not on time, but a frame longer than the impact delay would turn a cancel check into a hit.
+- The slab is server-only collision; clients never see it.
