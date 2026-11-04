@@ -1,11 +1,17 @@
 ---
 name: valstrike-meshy
-description: Generate, resume, rig or animate assigned ValStrike art assets through the official Meshy CLI, then hand off editable source for artist cleanup and centralized Unreal integration. Use for programmatic Meshy work in this project.
+description: Generate, resume, rig or animate assigned ValStrike art through the official Meshy CLI, or prepare existing Meshy models while preserving their geometry, textures and shading. Use for Meshy generation, cleanup and source handoff in this project.
 ---
 
 # ValStrike Meshy workflow
 
 Run from the assigned ValStrike worktree. Read `docs/TEAM_WORKFLOW.md`, the current task brief and relevant approved art reference. The task must identify asset ID, exclusive source/docs paths, desired dimensions, outputs, allowed stages and credit allowance. Existing authorization carries forward. If a paid scope or allowance is missing, prepare inputs and a costed proposal first; resolve only that missing information before submission. This skill does not assign workers or own `Content/`.
+
+## Preserve the supplied asset
+
+For local cleanup, repair or export of an existing Meshy model, start with [source preservation](references/source-preservation.md). No account check or new service call is needed for local work. The untouched textured model is the visual baseline. Keep its geometry, UVs, custom normals and material response by default; first correct only demonstrated scale, orientation, pivot, path or import defects.
+
+Do not treat decimation, smoothing, rebaking, recoloring or reconstruction as a standard cleanup pass. Required part separation, rigging and fitting stay within the assignment, with local changes and a preserved master. An optimization target never justifies a visibly worse replacement. Require matched original/candidate/export comparisons before source acceptance; passing topology or export counts is not visual approval. Keep a damaged candidate on hold and recover from the preserved source.
 
 ## Tool and account
 
