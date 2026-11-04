@@ -1,0 +1,246 @@
+{
+  "task": "ART-27",
+  "scope": "Frozen source/export/preview/evidence artifacts; readiness and handoff added in subsequent documentation commit",
+  "files": [
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/KnifePilot/Exports/A_UE01_Knife_Equip.fbx",
+      "bytes": 538764,
+      "sha256": "063ba7ea2d2d796c6792f8500343b359a8eac8a4b345c49e4a7a36d2680d35e1"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/KnifePilot/Exports/A_UE01_Knife_Hold.fbx",
+      "bytes": 637772,
+      "sha256": "34fe48863b586774af0c5086690c5f70d99d2b70f6e2ac549280d1bb0e48e80d"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/KnifePilot/Exports/A_UE01_Knife_Run.fbx",
+      "bytes": 577500,
+      "sha256": "5c6862b8468f4a2488a44c03f2862670608ac94d17db8322e4bb27524e845329"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/KnifePilot/Exports/A_UE01_Knife_Slash.fbx",
+      "bytes": 549356,
+      "sha256": "2ee9cea21b2304e817ffcd0d244d68173178dac0e1f7d42916a908e5761fca2e"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/KnifePilot/Exports/A_UE01_Knife_Stab.fbx",
+      "bytes": 634428,
+      "sha256": "04e89b9a59339f0bfd99d4dc2b0142a4e537a19799824d723890f976c38d14d1"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/KnifePilot/Exports/A_UE01_Knife_Walk.fbx",
+      "bytes": 673260,
+      "sha256": "4f2fae6eafb9430a36d85706bafb2d2d71b968680e3c96e7749b5cd5b8b11e27"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/KnifePilot/README.md",
+      "bytes": 6071,
+      "sha256": "0ed8157610c2bbd58665e1de04e24f50b6064797138acffaa82f6dd1785b29de"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/KnifePilot/UrbanEntry01_KnifePilot.blend",
+      "bytes": 27542804,
+      "sha256": "c26731ce2ed4d28fa1b4c00f2e7cd32140ae9e6d9a3384bc0cf4e0b353abbf8a"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/KnifePilot/prepare_knife_motion.py",
+      "bytes": 10658,
+      "sha256": "95a20385be7075a66be31d37c5213877943d6fbae6b2b17fcda0b3510755d1b8"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/KnifePilot/review_knife_motion.py",
+      "bytes": 12827,
+      "sha256": "15c26a014a6c6a3621b987823b3a53cefc6089ef8fcd4300400aeb94aa2a3076"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/equip_01.png",
+      "bytes": 486062,
+      "sha256": "6195d3e225f65ec3963b0e926ca828c10ecd071709861183733f2d072d4054e3"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/equip_11.png",
+      "bytes": 485534,
+      "sha256": "69b8d2d2273b666ce308ec1bba83131c29f325b9c5a0e490155db6bba5c48b29"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/equip_25.png",
+      "bytes": 486002,
+      "sha256": "3ffee9ef9f52c390e7af633dd0c99ba6db268b436f3ff49823e9f9d02f3c57cf"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/hold_5m.png",
+      "bytes": 2026360,
+      "sha256": "45bce61e8953068cdd45bc6c08fa32ce51561c263576f9cc9d795af4a951bf46"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/hold_body.png",
+      "bytes": 823042,
+      "sha256": "e484575d61604a880a09f79fbe97c2578d171bc1b51298cb449e769f91dbe4e7"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/hold_candidate_matched.png",
+      "bytes": 1038244,
+      "sha256": "79c0e8b148b2e25a61da76e3ccace82d7cbb3093f00bf1b50cfc3d9530a41c7d"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/hold_contact.png",
+      "bytes": 1037697,
+      "sha256": "8d42a25e2d64660fd13f84145767bde5c07e4180d991d6823fc5bf2cbe490dc3"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/hold_contact_reverse.png",
+      "bytes": 853684,
+      "sha256": "3a053f72c352724dac6c6d7f9e4ab85bf62686e896fc80649889f98c8c857a00"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/hold_original_matched.png",
+      "bytes": 1038177,
+      "sha256": "66030c0f3ba692510388b53315ee823fa5cbae113697aff7653e5f23ae9bd01e"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/hold_reimport_matched.png",
+      "bytes": 1038368,
+      "sha256": "11a65fe9da7bc5121d2fafde5a951e20bc50a0fcc524ae5d4175e97b4066728f"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/hold_reimport_reverse.png",
+      "bytes": 834547,
+      "sha256": "53b2ef45cc5ce6be81fcfc7d0d8b228e9d4e7528c81646ed6d1344d8c0139f61"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/motion_overview.png",
+      "bytes": 1351312,
+      "sha256": "ae7fe160945b14185ae8ac168d4afc852b02c96bc0eb49463b0ddbe51f4c5bf1"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/run_01.png",
+      "bytes": 483176,
+      "sha256": "21485a3cc8faf6b1d14279ffb87075098cc6c26fd17ca2448901804c6434e954"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/run_10.png",
+      "bytes": 486415,
+      "sha256": "0bcb4ca3ccbc16ab2f4da046c7f8dde48d461a917aa36bbf0cc8c0e115204f04"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/run_20.png",
+      "bytes": 476238,
+      "sha256": "5e1a9f87822232859bc4ec0bed76df97f2c85a93f4cc0425f87e4efe952635a3"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/run_30.png",
+      "bytes": 482583,
+      "sha256": "6664419e0cc0b416861a1b5b1cf953d197853fe9c7aa52332caee23c85134bc4"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/slash_05.png",
+      "bytes": 485458,
+      "sha256": "4defa8ed0bb7bcb8c13516c25db5dcf3f8926ca6ebc843c82e754b50d6d2d06b"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/slash_10.png",
+      "bytes": 484017,
+      "sha256": "b75077044598c3e8e3003ccac98f613196e80d8d070b43c925bd23f50fe81dfc"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/slash_16.png",
+      "bytes": 485341,
+      "sha256": "d0975b519ebc09e5806e2ba11dd943787edbabf7d4b5b11e441b9e8bb2eb709c"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/slash_25.png",
+      "bytes": 487205,
+      "sha256": "84e6c65b5433a3356d5ac5c488187496273f637a571e13155ddc114dc91fa9d9"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/slash_34.png",
+      "bytes": 486292,
+      "sha256": "b8a5c66a2c6d8d80778475b44434e974ce6b499f4fa27586546a1201c4a80fe3"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/slash_5m.png",
+      "bytes": 2027280,
+      "sha256": "33af73d73909d162bd1e81805d2d9792f533121c8f7121391362230250e44dfe"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/slash_side_10.png",
+      "bytes": 933113,
+      "sha256": "328d41b13925bd012f6fcf00291d3a7d70a808076903098ba7ef309f14856e7b"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/slash_side_16.png",
+      "bytes": 925194,
+      "sha256": "c93814bc5f1d0955563e985bafbf1d9321bcc03910ab57b0e2e0de1854e52369"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/stab_09.png",
+      "bytes": 485718,
+      "sha256": "f30de634d84264be32bfdb9d3348092cfc083a936da9a2074716c791eee2d910"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/stab_19.png",
+      "bytes": 486716,
+      "sha256": "1e5d76e8b533cbe3398c9d97c40c73e24a0388317ccdc445de613c88ed6231be"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/stab_36.png",
+      "bytes": 485743,
+      "sha256": "da1ce2b7d22425ab822189df8a8a24b8a67fed6f0fae3558cc3c13bc9990153b"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/stab_55.png",
+      "bytes": 486292,
+      "sha256": "2a980da0d8c57108ff0934c49425c2fda388c8c43effad2fa0d8518043a6bb10"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/stab_5m.png",
+      "bytes": 2025170,
+      "sha256": "7ff549a3b1ae74159f30d80f2ceaf3beeda4bcf57b6918c934172678e9953e6a"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/stab_side_19.png",
+      "bytes": 930434,
+      "sha256": "92d5e589d7a087be79cbe048361454f9c9f0076406190db745c941e50224da76"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/walk_01.png",
+      "bytes": 483914,
+      "sha256": "fef0d1a9d76e06b7852d323e05af3cc1f50e738ea35a466e427cba03c74b9470"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/walk_16.png",
+      "bytes": 487510,
+      "sha256": "e63484b360656409323318074f07c26fbf470d5dd6fab197f0ff3cded16b8319"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/walk_32.png",
+      "bytes": 480494,
+      "sha256": "afce6ea27b277f53d4f011414e663c2646967bc366cbf4baff870f627cc8c900"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/Previews/walk_47.png",
+      "bytes": 483219,
+      "sha256": "afec98b84f558884441a8bbcf37f477e932ec11470046ad081b50cdfda2e16c8"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/README.md",
+      "bytes": 5469,
+      "sha256": "7227ea3bf4ca36c601d0298864c129c8adddecd76a13c3e292aef5d2657bd0f5"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/animation-contract.json",
+      "bytes": 3224,
+      "sha256": "2b1e61472a65b5b4a06612cbdbb552d0d054e577665c659b0d6ccd05bb6a62bc"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/source-references.json",
+      "bytes": 877,
+      "sha256": "938ff8c6c951cd2c25d5ccbcbd17e7890a1b6e32e18587e111461b74ed4c349a"
+    },
+    {
+      "path": "docs/assets/urban-entry01/knife-pilot/source-validation.json",
+      "bytes": 17208,
+      "sha256": "c0acf4887861211fe5573241282092bf5da27e86afea70f7872bdea8830531c3"
+    }
+  ]
+}
