@@ -14,13 +14,13 @@ User / game director — priorities, creative decisions, final merge
     └── Integration / QA owner — combined build, runtime checks, defects, release evidence
 ```
 
-These are responsibilities, not a requirement for seven running chats. Initially the coordinator also acts as both leads; use one coding worker, one art worker and one integration worker as needed. Add workers only when disjoint, useful tasks exist. QA planning can happen while contributors work; heavy verification waits for a coherent batch. Do not spawn reviewers recursively or keep sessions busy with invented work.
+These are responsibilities, not a requirement for seven running chats. The user assigned Codex to art and Claude to gameplay on 2026-11-04. This Codex coordinator acts as art lead; the user-started Claude session acts as engineering lead and assigns one integration/QA owner. Use only as many contributors as useful independent tasks justify. Add workers only when disjoint, useful tasks exist. QA planning can happen while contributors work; heavy verification waits for a coherent batch. Do not spawn reviewers recursively or keep sessions busy with invented work.
 
 The user decides scope and merges PRs. Leads resolve routine implementation choices within that scope. Contributors hand off to their lead; the coordinator sends a reviewed batch to integration. Integration returns failures to the existing owner with reproduction/evidence. It does not independently rewrite a contributor's branch. The coordinator can implement a shared integration fix on its own branch with explicit ownership.
 
 ## Assign before starting
 
-The coordinator is the sole writer of [TEAM_BOARD.md](TEAM_BOARD.md). A task brief based on [TASK_TEMPLATE.md](TASK_TEMPLATE.md) must identify:
+The coordinator is the sole writer of [TEAM_BOARD.md](TEAM_BOARD.md). The explicitly delegated Claude engineering lead owns its sub-board at `docs/teams/GAMEPLAY_BOARD.md` and may assign isolated engineering workers within the reserved department boundaries. This delegation does not grant art/native Content or central-document ownership. A task brief based on [TASK_TEMPLATE.md](TASK_TEMPLATE.md) must identify:
 
 - One result and a clear stopping condition; existing backlog ID where applicable.
 - One named owner/session, provider, branch, absolute worktree path and base commit.

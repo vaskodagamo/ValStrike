@@ -8,7 +8,7 @@ Current ownership and verification queue live in [TEAM_BOARD.md](TEAM_BOARD.md),
 
 | ID | Task | Status | Completion condition |
 | --- | --- | --- | --- |
-| TEAM-01 | Establish provider-neutral hierarchy and isolated contributor workspaces | Implementation ready | Shared rules and Claude entry point, worktree slots, proportional validation and central integration queue prepared, checked and published for user merge |
+| TEAM-01 | Establish provider-neutral hierarchy and isolated contributor workspaces | Done | Shared rules and Claude entry point, worktree slots, proportional validation and central integration queue prepared, checked and published for user merge |
 | INT-01 | Verify the combined current-main gameplay batch | Ready | One selected revision built and affected checks executed centrally; failures assigned, evidence and limits recorded |
 
 ## Planning
@@ -84,6 +84,8 @@ Parallel map prototype: `codex/tactical-map` builds a separate Site01 map from t
 | --- | --- | --- | --- |
 | ART-03 | Create pistol and revise rifle/pistol finishes | Done | Original pistol source/export/native assets; consistent cooler weapon palette; inspected actual studio/first-person previews; rifle geometry/socket contract retained; integration limits recorded |
 | ART-04 | Create an original objective device asset | In progress | Source/export/native mesh with fixed scale/pivot/material/socket contract, provenance and inspected previews; gameplay integration remains separate |
+| ART-05 | First-person arms and gloves: source-ready rigged asset | In progress | Original editable source, FBX, rifle/pistol hold poses, concise source checks/previews; native import and runtime wiring remain separate |
+| ART-06 | Site01 service-turn and approach-A signs | In progress | Two original source/export signs and safe additive placement recipe for R1/R2; native map changes and in-game visibility remain separate |
 
 
 The user explicitly requested pistol assets on 2026-11-03 after rifle asset commit `cac8151`. This art increment does not add pistol gameplay to the single-rifle MVP. See WEAPON_ART_DIRECTION.md.
