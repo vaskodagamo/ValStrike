@@ -369,6 +369,16 @@ The gameplay/integration idle slots were checked clean at their original heads b
 
 **Next action:** Use the selected front view and consistent supplemental views to obtain a 3D draft, then commission/follow an explicit artist brief for anatomical/topology/material cleanup, rigging and deformation review before central Unreal integration. Old prototype models remain unapproved; do not automatically resume procedural modeling from the old briefs.
 
+## 2026-11-04 — ART-09 isolated modular image references
+
+**Request/result:** The user requested more modular walls, boxes, roofs, doors, garage entrances, corners and ground pieces for image-to-3D conversion. Produced sixteen individual single-view PNGs on white, sharing the approved first-person environment palette. Includes separate doorway/door and garage frame/shutter, wall/corner modules, roof deck/parapets, concrete/drain/asphalt tiles, two crates and stairs. Saved in `Art/References/Environment/ModularIndustrialV1/` with the copied anchor, exact prompts, nominal centimeter dimensions, assembly/cleanup guide and SHA-256 manifest.
+
+**Ownership/publication:** Coordinator-owned ART-09 on `codex/modular-environment-references`, based on main `887d349`. No other worktree or asset owner was modified. Self-contained delivery does not depend on pending broader environment-reference PR #47. User retains merges.
+
+**Checks actually run:** Visual inspection of all sixteen outputs; seventeen PNGs including anchor decoded/verified, hashes and JSON checked, local pack/task links resolved; twenty-file ZIP passed integrity check (24.4 MiB), followed by Git whitespace/LFS checks for publication. Delivery archive: ignored `Artifacts/ModularIndustrialV1-ReferencePack.zip`. No new tests or Unreal work.
+
+**Limits/next action:** Concept images do not guarantee dimensional or seam compatibility. Guide records wall/corner and parapet trim discrepancies and requires normalized profiles, planar mating faces, real scale/pivots, optional paint and door clearance during mesh cleanup. These are not PBR/seamless texture maps or production models. User can generate each asset separately; art cleanup and central native integration follow as separately assigned work. No new worker or paid service was launched.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.
