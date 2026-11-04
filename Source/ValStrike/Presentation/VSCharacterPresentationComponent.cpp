@@ -9,7 +9,10 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Engine/SkeletalMesh.h"
 
-const FName UVSCharacterPresentationComponent::RifleGripSocket(TEXT("R01_Pilot_Grip"));
+const FName UVSCharacterPresentationComponent::RifleGripBone(TEXT("hand_r"));
+// grip_derivation in docs/assets/meshy-pilot-integration/character-import-report.json.
+const FTransform UVSCharacterPresentationComponent::RifleGripOffset(
+    FQuat(-0.814922, 0.579475, 0.00887, 0.00564).GetNormalized(), FVector(4.1008, -13.5549, -6.1893));
 
 namespace
 {

@@ -35,8 +35,11 @@ public:
     bool Initialize(USkeletalMeshComponent* Body, TArrayView<UPrimitiveComponent* const> PrototypeVisuals);
     bool IsNativeCharacterActive() const { return bActive; }
 
-    // R01 world-model socket on hand_r, created by the native import script.
-    static const FName RifleGripSocket;
+    // R01 world model on hand_r. The offset is ART-15's hold reference converted
+    // to the native skeleton (measured: FBX import negates Y). UE 5.8 Python cannot
+    // author a named socket, so it lives here; see character-import-report.json.
+    static const FName RifleGripBone;
+    static const FTransform RifleGripOffset;
 
 protected:
     virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* TickFunction) override;

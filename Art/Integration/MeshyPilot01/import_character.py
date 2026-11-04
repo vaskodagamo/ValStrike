@@ -156,6 +156,7 @@ def import_character(files, material):
     save(mesh, MESH)
     skeleton = mesh.get_editor_property("skeleton")
     require(skeleton, "Imported mesh has no skeleton")
+    save(skeleton, "skeleton")  # Separate package created by the FBX importer.
     clips = {}
     for role, name in CLIP_ROLES.items():
         anim = import_task(ROOT / files[role]["path"], ANIMS, name, fbx_options(skeleton), unreal.FbxFactory())
@@ -236,7 +237,12 @@ def component_pose(mesh, anim, bone, frame):
     return pose, [str(n) for n in chain]
 
 
-def add_socket(mesh, record, hold):
+def derive_grip(mesh, record, hold):
+    """Rifle world-model offset relative to the native hand_r bone (no asset edit).
+
+    UE 5.8 Python cannot name a SkeletalMeshSocket (read-only property), so the
+    runtime attaches the world rifle to hand_r with this offset, kept in C++.
+    """
     socket_record = record["idle_and_weapon_socket"]
     hand, chain = component_pose(mesh, hold, "hand_r", 0)
     native_hand = xyz(hand.translation)
@@ -248,18 +254,14 @@ def add_socket(mesh, record, hold):
             basis = flip_y
             break
     evidence = {"native_hand_r_cm": native_hand, "source_hand_r_cm": source_hand, "bone_chain": chain}
-    require(basis is not None, f"Native hand_r matches neither basis; socket held: {evidence}")
+    require(basis is not None, f"Native hand_r matches neither basis; grip held: {evidence}")
     rifle = matrix_to_transform(reflect(socket_record["hold_rifle_component_matrix"], basis))
     local = unreal.MathLibrary.compose_transforms(rifle, unreal.MathLibrary.invert_transform(hand))
-    socket = unreal.SkeletalMeshSocket(outer=mesh)
-    socket.set_editor_property("socket_name", SOCKET)
-    socket.set_editor_property("bone_name", "hand_r")
-    socket.set_editor_property("relative_location", local.translation)
-    socket.set_editor_property("relative_rotation", local.rotation.rotator())
-    socket.set_editor_property("relative_scale", unreal.Vector(1, 1, 1))
-    mesh.add_socket(socket, False)
-    save(mesh, MESH)
-    evidence.update({"basis": "y_negated" if basis else "identity",
+    rot = local.rotation.rotator()
+    quat = local.rotation
+    evidence.update({"hand_r_offset_location_cm": [round(v, 4) for v in xyz(local.translation)],
+                     "hand_r_offset_rotator_roll_pitch_yaw": [round(rot.roll, 4), round(rot.pitch, 4), round(rot.yaw, 4)],
+                     "hand_r_offset_quat_xyzw": [round(quat.x, 6), round(quat.y, 6), round(quat.z, 6), round(quat.w, 6)],"basis": "y_negated" if basis else "identity",
                      "rifle_component_cm": xyz(rifle.translation),
                      "rifle_component_rotator": [round(v, 3) for v in (rifle.rotation.rotator().roll,
                                                  rifle.rotation.rotator().pitch, rifle.rotation.rotator().yaw)]})
@@ -273,6 +275,12 @@ def inspect(record):
     low = xyz(bounds.origin - bounds.box_extent)
     high = xyz(bounds.origin + bounds.box_extent)
     socket = mesh.find_socket(SOCKET)
+    probe = unreal.SkeletalMeshComponent()
+    probe.set_skeletal_mesh_asset(mesh)
+    space = unreal.load_asset(f"{ANIMS}/{BLEND_SPACE}")
+    samples = [] if space is None else [
+        [s.get_editor_property("animation").get_name(), xyz(s.get_editor_property("sample_value"))[0]]
+        for s in space.get_editor_property("sample_data")]
     clips = {}
     for name in CLIP_ROLES.values():
         anim = unreal.load_asset(f"{ANIMS}/{name}")
@@ -291,6 +299,8 @@ def inspect(record):
                                                socket.get_editor_property("relative_rotation").yaw)]},
         "clips": clips,
         "blend_space": unreal.EditorAssetLibrary.does_asset_exist(f"{ANIMS}/{BLEND_SPACE}"),
+        "blend_space_samples": samples,
+        "bone_count": probe.get_num_bones(), "root_bone": str(probe.get_bone_name(0)),
         "source_commit": record["source_commit"],
     }
 
@@ -313,16 +323,25 @@ def main():
         report["blend_space_creation"] = make_blend_space(
             skeleton, clips["static_rifle_idle"], clips["forward_in_place_rifle_walk"])
         try:
-            report["socket_derivation"] = add_socket(mesh, record, clips["static_rifle_idle"])
-        except Exception as error:  # Socket held; character and clips still usable.
-            report["socket_derivation"] = {"held": str(error)}
+            report["grip_derivation"] = derive_grip(mesh, record, clips["static_rifle_idle"])
+        except Exception as error:  # Grip held; character and clips still usable.
+            report["grip_derivation"] = {"held": str(error)}
+        require(unreal.EditorAssetLibrary.save_directory(BASE, True, True), "Saving the character folder failed")
     report["assets"] = inspect(record)
+    if inspect_only:  # Deterministic derivation from the saved assets.
+        try:
+            report["grip_derivation"] = derive_grip(unreal.load_asset(f"{BASE}/{MESH}"), record,
+                                                    unreal.load_asset(f"{ANIMS}/{CLIP_ROLES['static_rifle_idle']}"))
+        except Exception as error:
+            report["grip_derivation"] = {"held": str(error)}
     REPORTS.mkdir(parents=True, exist_ok=True)
     target = REPORTS / ("character-reopen-report.json" if inspect_only else "character-import-report.json")
+    target.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     if inspect_only:
         prior = json.loads((REPORTS / "character-import-report.json").read_text())
-        require(report["assets"] == prior["assets"], "Saved assets differ from import-time evidence")
-    target.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+        # Keys added after the import run (bones, samples) are reopen-only evidence.
+        diffs = [k for k, v in prior["assets"].items() if report["assets"].get(k) != v]
+        require(not diffs, f"Saved assets differ from import-time evidence: {diffs}")
     unreal.log(f"VALSTRIKE_MESHY_CHARACTER_IMPORT_SUCCESS: {target}")
 
 
@@ -331,4 +350,6 @@ if __name__ == "__main__":
         main()
     except Exception as error:
         unreal.log_error(f"VALSTRIKE_MESHY_CHARACTER_IMPORT_FAILED: {error}\n{traceback.format_exc()}")
-        raise
+    finally:
+        # Bounded slot use: always close this one-shot editor process.
+        unreal.SystemLibrary.quit_editor()

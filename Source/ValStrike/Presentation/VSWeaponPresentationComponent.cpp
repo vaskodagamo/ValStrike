@@ -103,7 +103,7 @@ bool UVSWeaponPresentationComponent::Initialize(AVSCharacter* Pawn, USceneCompon
     FirstPersonMagazine = MakeVisual(TEXT("FirstPersonMagazine"), MagazineAsset, FirstPersonBody, TEXT("Magazine"), true);
     FirstPersonFlash = MakeVisual(TEXT("FirstPersonFlash"), FlashAsset, FirstPersonBody, TEXT("Muzzle"), true);
     const bool bUseWorldSocket = !WorldSocket.IsNone() && WorldAnchor->DoesSocketExist(WorldSocket);
-    ActiveWorldGrip = bUseWorldSocket ? FTransform::Identity : WorldGrip;
+    ActiveWorldGrip = bUseWorldSocket ? WorldSocketOffset : WorldGrip;
     WorldBody = MakeVisual(TEXT("WorldBody"), BodyAsset, WorldAnchor, bUseWorldSocket ? WorldSocket : NAME_None, false);
     WorldMagazine = MakeVisual(TEXT("WorldMagazine"), MagazineAsset, WorldBody, TEXT("Magazine"), false);
     WorldFlash = MakeVisual(TEXT("WorldFlash"), FlashAsset, WorldBody, TEXT("Muzzle"), false);
