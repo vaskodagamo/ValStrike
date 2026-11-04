@@ -1,0 +1,825 @@
+{
+  "date_europe_berlin": "2026-11-04",
+  "blender": "5.2.2 LTS",
+  "inputs_verified": [
+    {
+      "file": "Meshy_AI_Animation_Crouch_Walk_Left_with_Gun_withSkin.fbx",
+      "sha256": "006cba62103eaacda1812f59a440317274a9c60103d666d9b712c8563d3e31c2"
+    },
+    {
+      "file": "Meshy_AI_Animation_Running_withSkin.fbx",
+      "sha256": "fcc5880b91c9db89d1d0ec74cd467b1fb566e84e13f107fd3f011b8bdaf5d6e2"
+    },
+    {
+      "file": "Meshy_AI_Animation_Vault_with_Rifle_withSkin.fbx",
+      "sha256": "a8612260622ab77b1c27e4618e5612661a8ee379e14396321ffde78d570a2077"
+    },
+    {
+      "file": "Meshy_AI_Animation_Walk_Backward_While_Shooting_withSkin.fbx",
+      "sha256": "40e2d0e044c0815bdacdba92702e458b85ab868f23d008dcb62429b9f6b6919e"
+    },
+    {
+      "file": "Meshy_AI_Animation_Walk_Backward_with_Gun_withSkin.fbx",
+      "sha256": "8c1cd0b7d6c3e888e4b48c464115b077f18f47688e649eac242bc27f51fbef36"
+    },
+    {
+      "file": "Meshy_AI_Animation_Walking_withSkin.fbx",
+      "sha256": "cd7ba78068801a74c207b0216d86c227aeb6a7e94d9639911d71956f3faa2648"
+    },
+    {
+      "file": "Meshy_AI_Character_output.fbx",
+      "sha256": "8b49f8e8ef7ce36600bde9edd53f3dbcaa0d39aa3f164392105f32dc095e83ee"
+    },
+    {
+      "file": "Meshy_AI_texture_0.png",
+      "sha256": "70555f5060a8dccdb67936ac48b827888c629e8fe8f013b6ffa53a55fb85e50a"
+    },
+    {
+      "file": "Meshy_AI_texture_0_metallic.png",
+      "sha256": "ab0af3e46fc01f463a4432429efce8e068393e56c27b32c63cd4cf837374ed91"
+    },
+    {
+      "file": "Meshy_AI_texture_0_roughness.png",
+      "sha256": "5c4ca64d278d86c9dbea3c7c7b1acb03a96eb50194b0264d8d05b53773647dbf"
+    }
+  ],
+  "changes": [
+    "Consolidate identical clip rigs onto one mesh and skeleton",
+    "Normalize uniform 100x object scale and rotate common frame to geometric +X forward",
+    "Relink supplied texture bytes to portable paths; explicit sRGB/data color spaces; omit unused normal-map node"
+  ],
+  "preserved": [
+    "Original geometry/UVs/custom normals",
+    "66 bone names/hierarchy and bind relationships",
+    "Original normalized skin weights (max 4)",
+    "Original animation trajectories and timing"
+  ],
+  "clips": {
+    "Walking": {
+      "input_frame_range": [
+        1,
+        63
+      ],
+      "fps": 60.0,
+      "duration_seconds": 1.0333333333333334,
+      "bone_rest_compatible": true,
+      "source_object_channels": [],
+      "max_normalization_joint_error_cm": 7.738877574412669e-05,
+      "max_sampled_mesh_error_cm": 7.641306161502888e-05
+    },
+    "Running": {
+      "input_frame_range": [
+        1,
+        39
+      ],
+      "fps": 60.0,
+      "duration_seconds": 0.6333333333333333,
+      "bone_rest_compatible": true,
+      "source_object_channels": [],
+      "max_normalization_joint_error_cm": 7.976731745272249e-05,
+      "max_sampled_mesh_error_cm": 8.543240007004222e-05
+    },
+    "Crouch_Walk_Left_with_Gun": {
+      "input_frame_range": [
+        1,
+        77
+      ],
+      "fps": 60.0,
+      "duration_seconds": 1.2666666666666666,
+      "bone_rest_compatible": true,
+      "source_object_channels": [],
+      "max_normalization_joint_error_cm": 8.287643807373211e-05,
+      "max_sampled_mesh_error_cm": 7.396972438684585e-05
+    },
+    "Vault_with_Rifle": {
+      "input_frame_range": [
+        1,
+        49
+      ],
+      "fps": 60.0,
+      "duration_seconds": 0.8,
+      "bone_rest_compatible": true,
+      "source_object_channels": [],
+      "max_normalization_joint_error_cm": 0.00012706793238490504,
+      "max_sampled_mesh_error_cm": 0.00011865424416197188
+    },
+    "Walk_Backward_While_Shooting": {
+      "input_frame_range": [
+        1,
+        77
+      ],
+      "fps": 60.0,
+      "duration_seconds": 1.2666666666666666,
+      "bone_rest_compatible": true,
+      "source_object_channels": [],
+      "max_normalization_joint_error_cm": 9.10746489434305e-05,
+      "max_sampled_mesh_error_cm": 9.194213043565687e-05
+    },
+    "Walk_Backward_with_Gun": {
+      "input_frame_range": [
+        1,
+        61
+      ],
+      "fps": 60.0,
+      "duration_seconds": 1.0,
+      "bone_rest_compatible": true,
+      "source_object_channels": [],
+      "max_normalization_joint_error_cm": 9.095473493626682e-05,
+      "max_sampled_mesh_error_cm": 9.5367431640625e-05
+    }
+  },
+  "mesh": {
+    "vertices": 39934,
+    "triangles": 30970,
+    "material_slots": 1,
+    "uv_layers": [
+      "UVMap"
+    ],
+    "custom_normals": true
+  },
+  "bones": [
+    {
+      "name": "pelvis",
+      "parent": null,
+      "head_cm": [
+        0.17564208805561066,
+        1.0097780227661133,
+        101.16526794433594
+      ]
+    },
+    {
+      "name": "spine_01",
+      "parent": "pelvis",
+      "head_cm": [
+        -3.118108034133911,
+        0.3320320248603821,
+        112.04521942138672
+      ]
+    },
+    {
+      "name": "spine_02",
+      "parent": "spine_01",
+      "head_cm": [
+        -4.3163862228393555,
+        0.34791940450668335,
+        122.92522430419922
+      ]
+    },
+    {
+      "name": "spine_03",
+      "parent": "spine_02",
+      "head_cm": [
+        -4.316385269165039,
+        1.5527184009552002,
+        133.80516052246094
+      ]
+    },
+    {
+      "name": "neck_01",
+      "parent": "spine_03",
+      "head_cm": [
+        -4.316385746002197,
+        2.3242204189300537,
+        141.77735900878906
+      ]
+    },
+    {
+      "name": "head",
+      "parent": "neck_01",
+      "head_cm": [
+        -4.021361827850342,
+        0.3320262134075165,
+        149.8441162109375
+      ]
+    },
+    {
+      "name": "head_end",
+      "parent": "head",
+      "head_cm": [
+        -2.4606659412384033,
+        0.04987332597374916,
+        169.07456970214844
+      ]
+    },
+    {
+      "name": "headfront",
+      "parent": "head",
+      "head_cm": [
+        5.37731409072876,
+        0.3320269286632538,
+        149.8441162109375
+      ]
+    },
+    {
+      "name": "clavicle_l",
+      "parent": "spine_03",
+      "head_cm": [
+        -4.883570194244385,
+        4.025794506072998,
+        141.77734375
+      ]
+    },
+    {
+      "name": "upperarm_l",
+      "parent": "clavicle_l",
+      "head_cm": [
+        -5.73995304107666,
+        18.011260986328125,
+        135.4785614013672
+      ]
+    },
+    {
+      "name": "lowerarm_l",
+      "parent": "upperarm_l",
+      "head_cm": [
+        -7.271320819854736,
+        27.09827423095703,
+        113.9149398803711
+      ]
+    },
+    {
+      "name": "hand_l",
+      "parent": "lowerarm_l",
+      "head_cm": [
+        -3.4819319248199463,
+        36.09807586669922,
+        93.5469741821289
+      ]
+    },
+    {
+      "name": "thumb_01_l",
+      "parent": "hand_l",
+      "head_cm": [
+        -0.9960751533508301,
+        36.191429138183594,
+        88.65232849121094
+      ]
+    },
+    {
+      "name": "thumb_02_l",
+      "parent": "thumb_01_l",
+      "head_cm": [
+        0.44488680362701416,
+        35.23080062866211,
+        87.69170379638672
+      ]
+    },
+    {
+      "name": "thumb_03_l",
+      "parent": "thumb_02_l",
+      "head_cm": [
+        1.4953171014785767,
+        34.36409378051758,
+        86.32579803466797
+      ]
+    },
+    {
+      "name": "thumb_03_l_end",
+      "parent": "thumb_03_l",
+      "head_cm": [
+        2.303811550140381,
+        33.555606842041016,
+        84.70880889892578
+      ]
+    },
+    {
+      "name": "pinky_01_l",
+      "parent": "hand_l",
+      "head_cm": [
+        -3.6523287296295166,
+        41.50392532348633,
+        82.6757583618164
+      ]
+    },
+    {
+      "name": "pinky_02_l",
+      "parent": "pinky_01_l",
+      "head_cm": [
+        -3.6523303985595703,
+        41.50392532348633,
+        81.2958984375
+      ]
+    },
+    {
+      "name": "pinky_03_l",
+      "parent": "pinky_02_l",
+      "head_cm": [
+        -3.6835262775421143,
+        41.47273635864258,
+        79.92593383789062
+      ]
+    },
+    {
+      "name": "pinky_03_l_end",
+      "parent": "pinky_03_l",
+      "head_cm": [
+        -4.099558353424072,
+        41.056697845458984,
+        78.67781829833984
+      ]
+    },
+    {
+      "name": "ring_01_l",
+      "parent": "hand_l",
+      "head_cm": [
+        -1.6601406335830688,
+        40.83987808227539,
+        81.34764099121094
+      ]
+    },
+    {
+      "name": "ring_02_l",
+      "parent": "ring_01_l",
+      "head_cm": [
+        -1.6601407527923584,
+        40.48796463012695,
+        79.94001770019531
+      ]
+    },
+    {
+      "name": "ring_03_l",
+      "parent": "ring_02_l",
+      "head_cm": [
+        -1.7095446586608887,
+        40.12640380859375,
+        78.54317474365234
+      ]
+    },
+    {
+      "name": "ring_03_l_end",
+      "parent": "ring_03_l",
+      "head_cm": [
+        -2.1470158100128174,
+        39.68893814086914,
+        77.23074340820312
+      ]
+    },
+    {
+      "name": "index_01_l",
+      "parent": "hand_l",
+      "head_cm": [
+        1.6601749658584595,
+        38.183616638183594,
+        83.33984375
+      ]
+    },
+    {
+      "name": "index_02_l",
+      "parent": "index_01_l",
+      "head_cm": [
+        2.110952138900757,
+        38.1836051940918,
+        81.5367431640625
+      ]
+    },
+    {
+      "name": "index_03_l",
+      "parent": "index_02_l",
+      "head_cm": [
+        2.32423734664917,
+        37.7457160949707,
+        79.80778503417969
+      ]
+    },
+    {
+      "name": "index_03_l_end",
+      "parent": "index_03_l",
+      "head_cm": [
+        2.324237585067749,
+        36.91453170776367,
+        78.14541625976562
+      ]
+    },
+    {
+      "name": "middle_01_l",
+      "parent": "hand_l",
+      "head_cm": [
+        0.33205193281173706,
+        39.511749267578125,
+        82.6757583618164
+      ]
+    },
+    {
+      "name": "middle_02_l",
+      "parent": "middle_01_l",
+      "head_cm": [
+        0.3320535123348236,
+        39.511749267578125,
+        80.62064361572266
+      ]
+    },
+    {
+      "name": "middle_03_l",
+      "parent": "middle_02_l",
+      "head_cm": [
+        0.33205315470695496,
+        39.158504486083984,
+        78.64894104003906
+      ]
+    },
+    {
+      "name": "middle_03_l_end",
+      "parent": "middle_03_l",
+      "head_cm": [
+        0.33205273747444153,
+        38.23942947387695,
+        76.81079864501953
+      ]
+    },
+    {
+      "name": "clavicle_r",
+      "parent": "spine_03",
+      "head_cm": [
+        -5.25529670715332,
+        -3.3092641830444336,
+        141.77735900878906
+      ]
+    },
+    {
+      "name": "upperarm_r",
+      "parent": "clavicle_r",
+      "head_cm": [
+        -5.793344020843506,
+        -17.57853889465332,
+        134.92691040039062
+      ]
+    },
+    {
+      "name": "lowerarm_r",
+      "parent": "upperarm_r",
+      "head_cm": [
+        -7.354555130004883,
+        -26.236507415771484,
+        114.39764404296875
+      ]
+    },
+    {
+      "name": "hand_r",
+      "parent": "lowerarm_r",
+      "head_cm": [
+        -3.488159656524658,
+        -35.41919708251953,
+        94.09906768798828
+      ]
+    },
+    {
+      "name": "thumb_01_r",
+      "parent": "hand_r",
+      "head_cm": [
+        -0.9960713982582092,
+        -35.52735137939453,
+        88.65235137939453
+      ]
+    },
+    {
+      "name": "thumb_02_r",
+      "parent": "thumb_01_r",
+      "head_cm": [
+        0.31582438945770264,
+        -34.65275955200195,
+        87.77777099609375
+      ]
+    },
+    {
+      "name": "thumb_03_r",
+      "parent": "thumb_02_r",
+      "head_cm": [
+        1.3504890203475952,
+        -33.844844818115234,
+        86.61546325683594
+      ]
+    },
+    {
+      "name": "thumb_03_r_end",
+      "parent": "thumb_03_r",
+      "head_cm": [
+        2.0865752696990967,
+        -33.108760833740234,
+        85.14329528808594
+      ]
+    },
+    {
+      "name": "pinky_01_r",
+      "parent": "hand_r",
+      "head_cm": [
+        -3.6523265838623047,
+        -40.83985137939453,
+        82.6758041381836
+      ]
+    },
+    {
+      "name": "pinky_02_r",
+      "parent": "pinky_01_r",
+      "head_cm": [
+        -3.652322769165039,
+        -40.83984375,
+        81.29592895507812
+      ]
+    },
+    {
+      "name": "pinky_03_r",
+      "parent": "pinky_02_r",
+      "head_cm": [
+        -3.683523178100586,
+        -40.80864715576172,
+        79.92596435546875
+      ]
+    },
+    {
+      "name": "pinky_03_r_end",
+      "parent": "pinky_03_r",
+      "head_cm": [
+        -4.099571704864502,
+        -40.392608642578125,
+        78.67781829833984
+      ]
+    },
+    {
+      "name": "ring_01_r",
+      "parent": "hand_r",
+      "head_cm": [
+        -1.6601407527923584,
+        -40.17579650878906,
+        81.34767150878906
+      ]
+    },
+    {
+      "name": "ring_02_r",
+      "parent": "ring_01_r",
+      "head_cm": [
+        -1.6601406335830688,
+        -39.82387161254883,
+        79.94002532958984
+      ]
+    },
+    {
+      "name": "ring_03_r",
+      "parent": "ring_02_r",
+      "head_cm": [
+        -1.709547758102417,
+        -39.46231460571289,
+        78.54319763183594
+      ]
+    },
+    {
+      "name": "ring_03_r_end",
+      "parent": "ring_03_r",
+      "head_cm": [
+        -2.147019147872925,
+        -39.02484893798828,
+        77.23076629638672
+      ]
+    },
+    {
+      "name": "index_01_r",
+      "parent": "hand_r",
+      "head_cm": [
+        1.6601746082305908,
+        -37.51953125,
+        83.3398666381836
+      ]
+    },
+    {
+      "name": "index_02_r",
+      "parent": "index_01_r",
+      "head_cm": [
+        2.058605432510376,
+        -37.51952362060547,
+        81.74613952636719
+      ]
+    },
+    {
+      "name": "index_03_r",
+      "parent": "index_02_r",
+      "head_cm": [
+        2.3242359161376953,
+        -37.2746696472168,
+        80.19388580322266
+      ]
+    },
+    {
+      "name": "index_03_r_end",
+      "parent": "index_03_r",
+      "head_cm": [
+        2.3242366313934326,
+        -36.53999328613281,
+        78.72454833984375
+      ]
+    },
+    {
+      "name": "middle_01_r",
+      "parent": "hand_r",
+      "head_cm": [
+        0.33204883337020874,
+        -38.84767150878906,
+        82.67579650878906
+      ]
+    },
+    {
+      "name": "middle_02_r",
+      "parent": "middle_01_r",
+      "head_cm": [
+        0.332048237323761,
+        -38.84766387939453,
+        80.62066650390625
+      ]
+    },
+    {
+      "name": "middle_03_r",
+      "parent": "middle_02_r",
+      "head_cm": [
+        0.3320479393005371,
+        -38.49440383911133,
+        78.64896392822266
+      ]
+    },
+    {
+      "name": "middle_03_r_end",
+      "parent": "middle_03_r",
+      "head_cm": [
+        0.33204779028892517,
+        -37.57533264160156,
+        76.8108139038086
+      ]
+    },
+    {
+      "name": "thigh_l",
+      "parent": "pelvis",
+      "head_cm": [
+        -1.2703289985656738,
+        9.54955005645752,
+        87.85745239257812
+      ]
+    },
+    {
+      "name": "calf_l",
+      "parent": "thigh_l",
+      "head_cm": [
+        -0.8578052520751953,
+        11.377652168273926,
+        51.198368072509766
+      ]
+    },
+    {
+      "name": "foot_l",
+      "parent": "calf_l",
+      "head_cm": [
+        -3.4025349617004395,
+        13.413411140441895,
+        14.554671287536621
+      ]
+    },
+    {
+      "name": "ball_l",
+      "parent": "foot_l",
+      "head_cm": [
+        6.370711326599121,
+        14.140809059143066,
+        3.571586847305298
+      ]
+    },
+    {
+      "name": "ball_l_end",
+      "parent": "ball_l",
+      "head_cm": [
+        8.30077838897705,
+        15.437004089355469,
+        3.615861177444458
+      ]
+    },
+    {
+      "name": "thigh_r",
+      "parent": "pelvis",
+      "head_cm": [
+        -1.2728112936019897,
+        -8.881772994995117,
+        87.9342269897461
+      ]
+    },
+    {
+      "name": "calf_r",
+      "parent": "thigh_r",
+      "head_cm": [
+        -0.8320779204368591,
+        -10.693010330200195,
+        51.56881332397461
+      ]
+    },
+    {
+      "name": "foot_r",
+      "parent": "calf_r",
+      "head_cm": [
+        -3.42738676071167,
+        -12.769240379333496,
+        14.196545600891113
+      ]
+    },
+    {
+      "name": "ball_r",
+      "parent": "foot_r",
+      "head_cm": [
+        9.628910064697266,
+        -14.277338027954102,
+        2.9882636070251465
+      ]
+    },
+    {
+      "name": "ball_r_end",
+      "parent": "ball_r",
+      "head_cm": [
+        9.628905296325684,
+        -15.471915245056152,
+        3.6141107082366943
+      ]
+    }
+  ],
+  "armature_matrix": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "mesh_matrix": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "exports": [
+    {
+      "file": "A_UE01_Crouch_Walk_Left_with_Gun.fbx",
+      "bytes": 747356,
+      "sha256": "3b67b7b35af1e0c7e4a8677c42356212cac60b6eebbb03ddd4bc2a507943df58"
+    },
+    {
+      "file": "A_UE01_Running.fbx",
+      "bytes": 589868,
+      "sha256": "51c0c983127da69909c646644f216c5c82a7cfe35fb467a7060487276dd2a69a"
+    },
+    {
+      "file": "A_UE01_Vault_with_Rifle.fbx",
+      "bytes": 630428,
+      "sha256": "f7641246271e58ddab4039bfe6385146640c96bfa6331d78de7e6e01bce10cd7"
+    },
+    {
+      "file": "A_UE01_Walk_Backward_While_Shooting.fbx",
+      "bytes": 758332,
+      "sha256": "eff51c3272b7b8a871fe3c7df9f653ded14fc6583875e5791631b771476e030d"
+    },
+    {
+      "file": "A_UE01_Walk_Backward_with_Gun.fbx",
+      "bytes": 678076,
+      "sha256": "c582aa0487778d77aa3fca27a9d685685ac63e6db0fb8628acf8d9d41b3cd29e"
+    },
+    {
+      "file": "A_UE01_Walking.fbx",
+      "bytes": 694780,
+      "sha256": "33b4d330058fbc579c108bfc8b7a33062f67b4462227dba727d69fcd479c1807"
+    },
+    {
+      "file": "SK_VS_UrbanEntry01.fbx",
+      "bytes": 2179436,
+      "sha256": "cf6930297e3579704be638829b8043934d1cab6a45fc15c4e8df0ff04cc6e782"
+    }
+  ]
+}

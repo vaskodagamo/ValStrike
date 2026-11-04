@@ -1,0 +1,503 @@
+{
+  "schema_version": 1,
+  "task_id": "ART-15",
+  "status": "partial",
+  "date_europe_berlin": "2026-11-04",
+  "approval_scope": "Delegated pilot art approval only; native/runtime and final production verification pending.",
+  "source_commit": "45deb700a96b2aad3084808b1c7809d4589fdbd7",
+  "prepared_head": "51d19eee81cfe03e0637730c45e20d1236ce5bae",
+  "safe_to_integrate": [
+    "Unchanged SK_VS_UrbanEntry01 with the three allowlisted textures.",
+    "Two new Pilot animation-only FBXs: static R01 idle/hold and forward in-place rifle walk.",
+    "Optional unchanged unarmed Walking FBX as presentation fallback."
+  ],
+  "included_files": [
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Exports/SK_VS_UrbanEntry01.fbx",
+      "sha256": "cf6930297e3579704be638829b8043934d1cab6a45fc15c4e8df0ff04cc6e782",
+      "bytes": 2179436,
+      "role": "skeletal_mesh"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Exports/Pilot/A_UE01_Pilot_RifleHold.fbx",
+      "sha256": "216e9e3c6dd01cbae4cba6e719567311cd2ed424309945e86ef23b4e39b30fe4",
+      "bytes": 608684,
+      "role": "static_rifle_idle"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Exports/Pilot/A_UE01_Pilot_Walk_RifleHold.fbx",
+      "sha256": "5a36f2cbca211eb29821826fa0eac4b31069dbc0f281800edf6053e1c0e439df",
+      "bytes": 672508,
+      "role": "forward_in_place_rifle_walk"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Exports/A_UE01_Walking.fbx",
+      "sha256": "33b4d330058fbc579c108bfc8b7a33062f67b4462227dba727d69fcd479c1807",
+      "bytes": 694780,
+      "role": "optional_unarmed_forward_walk"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Textures/T_UE01_BaseColor.png",
+      "sha256": "70555f5060a8dccdb67936ac48b827888c629e8fe8f013b6ffa53a55fb85e50a",
+      "bytes": 17077891,
+      "role": "texture_BaseColor"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Textures/T_UE01_Metallic.png",
+      "sha256": "ab0af3e46fc01f463a4432429efce8e068393e56c27b32c63cd4cf837374ed91",
+      "bytes": 1494124,
+      "role": "texture_Metallic"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Textures/T_UE01_Roughness.png",
+      "sha256": "5c4ca64d278d86c9dbea3c7c7b1acb03a96eb50194b0264d8d05b53773647dbf",
+      "bytes": 2589732,
+      "role": "texture_Roughness"
+    }
+  ],
+  "clips": [
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Exports/A_UE01_Walking.fbx",
+      "sha256": "33b4d330058fbc579c108bfc8b7a33062f67b4462227dba727d69fcd479c1807",
+      "bytes": 694780,
+      "role": "preserved_supplied_clip",
+      "name": "Walking",
+      "verdict": "included_optional",
+      "reason": "Unarmed forward in-place fallback; unchanged ART-13 evidence.",
+      "frame_range": [
+        1,
+        63
+      ],
+      "fps": 60,
+      "root": "pelvis; no ground root",
+      "in_place": true,
+      "pelvis_end_delta_cm": [
+        6.556510925292969e-07,
+        1.5497207641601562e-06,
+        0.0
+      ],
+      "root_motion_allowed": false
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Exports/A_UE01_Running.fbx",
+      "sha256": "51c0c983127da69909c646644f216c5c82a7cfe35fb467a7060487276dd2a69a",
+      "bytes": 589868,
+      "role": "preserved_supplied_clip",
+      "name": "Running",
+      "verdict": "held",
+      "reason": "Unarmed running and deep cloth compression; not needed by this limited walk pilot; no sprint mechanic.",
+      "frame_range": [
+        1,
+        39
+      ],
+      "fps": 60,
+      "root": "pelvis; no ground root",
+      "in_place": true,
+      "pelvis_end_delta_cm": [
+        1.3113021850585938e-06,
+        1.6689300537109375e-06,
+        7.62939453125e-06
+      ],
+      "root_motion_allowed": false
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Exports/A_UE01_Crouch_Walk_Left_with_Gun.fbx",
+      "sha256": "3b67b7b35af1e0c7e4a8677c42356212cac60b6eebbb03ddd4bc2a507943df58",
+      "bytes": 747356,
+      "role": "preserved_supplied_clip",
+      "name": "Crouch_Walk_Left_with_Gun",
+      "verdict": "held",
+      "reason": "Traveling crouch; original unfitted hands and foot drift; no crouch-specific pilot approval.",
+      "frame_range": [
+        1,
+        77
+      ],
+      "fps": 60,
+      "root": "pelvis; no ground root",
+      "in_place": false,
+      "pelvis_end_delta_cm": [
+        0.025039076805114746,
+        105.42420196533203,
+        -0.107757568359375
+      ],
+      "root_motion_allowed": false
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Exports/A_UE01_Vault_with_Rifle.fbx",
+      "sha256": "f7641246271e58ddab4039bfe6385146640c96bfa6331d78de7e6e01bce10cd7",
+      "bytes": 630428,
+      "role": "preserved_supplied_clip",
+      "name": "Vault_with_Rifle",
+      "verdict": "excluded",
+      "reason": "Vault mechanic excluded; traveling one-shot without verified obstacle/weapon contact.",
+      "frame_range": [
+        1,
+        49
+      ],
+      "fps": 60,
+      "root": "pelvis; no ground root",
+      "in_place": false,
+      "pelvis_end_delta_cm": [
+        220.30776977539062,
+        0.3297945261001587,
+        -0.6582412719726562
+      ],
+      "root_motion_allowed": false
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Exports/A_UE01_Walk_Backward_While_Shooting.fbx",
+      "sha256": "eff51c3272b7b8a871fe3c7df9f653ded14fc6583875e5791631b771476e030d",
+      "bytes": 758332,
+      "role": "preserved_supplied_clip",
+      "name": "Walk_Backward_While_Shooting",
+      "verdict": "held",
+      "reason": "Original traveling/recoil sequence has notable foot slip and loop mismatch; only frame 1 was used to derive the new static hold.",
+      "frame_range": [
+        1,
+        77
+      ],
+      "fps": 60,
+      "root": "pelvis; no ground root",
+      "in_place": false,
+      "pelvis_end_delta_cm": [
+        -87.52584838867188,
+        0.29846060276031494,
+        0.0772552490234375
+      ],
+      "root_motion_allowed": false
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Exports/A_UE01_Walk_Backward_with_Gun.fbx",
+      "sha256": "c582aa0487778d77aa3fca27a9d685685ac63e6db0fb8628acf8d9d41b3cd29e",
+      "bytes": 678076,
+      "role": "preserved_supplied_clip",
+      "name": "Walk_Backward_with_Gun",
+      "verdict": "held",
+      "reason": "Traveling clip with unfitted hands, foot drift and small seam; not converted or imported for this pilot.",
+      "frame_range": [
+        1,
+        61
+      ],
+      "fps": 60,
+      "root": "pelvis; no ground root",
+      "in_place": false,
+      "pelvis_end_delta_cm": [
+        -95.6703109741211,
+        7.152557373046875e-06,
+        3.0517578125e-05
+      ],
+      "root_motion_allowed": false
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Exports/Pilot/A_UE01_Pilot_RifleHold.fbx",
+      "sha256": "216e9e3c6dd01cbae4cba6e719567311cd2ed424309945e86ef23b4e39b30fe4",
+      "bytes": 608684,
+      "role": "derived_pilot_clip",
+      "name": "A_UE01_Pilot_RifleHold",
+      "verdict": "included",
+      "reason": "Temporary static R01 hold",
+      "frame_range": [
+        1,
+        61
+      ],
+      "fps": 60,
+      "root": "pelvis; no ground root",
+      "in_place": true,
+      "pelvis_end_delta_cm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "root_motion_allowed": false
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Exports/Pilot/A_UE01_Pilot_Walk_RifleHold.fbx",
+      "sha256": "5a36f2cbca211eb29821826fa0eac4b31069dbc0f281800edf6053e1c0e439df",
+      "bytes": 672508,
+      "role": "derived_pilot_clip",
+      "name": "A_UE01_Pilot_Walk_RifleHold",
+      "verdict": "included",
+      "reason": "Original in-place Walking pelvis/legs with fixed fitted R01 torso; forward gait only.",
+      "frame_range": [
+        1,
+        63
+      ],
+      "fps": 60,
+      "root": "pelvis; no ground root",
+      "in_place": true,
+      "pelvis_end_delta_cm": [
+        6.556510925292969e-07,
+        1.5497207641601562e-06,
+        0.0
+      ],
+      "root_motion_allowed": false
+    }
+  ],
+  "root_and_in_place_convention": {
+    "units": "centimeters",
+    "forward": "+X in source",
+    "up": "+Z",
+    "left_side": "+Y source; inspect native FBX handedness",
+    "sole_root": "pelvis",
+    "bone_count": 66,
+    "root_motion": false,
+    "displacement_owner": "Existing server-authoritative CharacterMovement",
+    "preserve": "Existing pelvis vertical bob and small in-place horizontal sway; no renamed bones, new ground root, rerig or animation-driven displacement.",
+    "traveling_clips_converted": false
+  },
+  "idle_and_weapon_socket": {
+    "parent": "hand_r",
+    "space": "Blender pose-bone HEAD matrix, centimeters; column-vector matrices",
+    "bone_local_matrix": [
+      [
+        0.32825934886932373,
+        0.9445542693138123,
+        -0.007920592091977596,
+        4.100887775421143
+      ],
+      [
+        0.9443542957305908,
+        -0.32835328578948975,
+        -0.019470829516649246,
+        13.554956436157227
+      ],
+      [
+        -0.020991826429963112,
+        -0.0010880755726248026,
+        -0.9997790455818176,
+        -6.189258575439453
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "hold_rifle_component_matrix": [
+      [
+        0.9902680516242981,
+        -0.13917303085327148,
+        0.0,
+        25.34122657775879
+      ],
+      [
+        0.13917303085327148,
+        0.9902680516242981,
+        0.0,
+        -16.508159637451172
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        139.56800842285156
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "scale": [
+      1,
+      1,
+      1
+    ],
+    "translation_cm": [
+      4.100887298583984,
+      13.554956436157227,
+      -6.189273834228516
+    ],
+    "quaternion_wxyz": [
+      0.005639462731778622,
+      0.8149219751358032,
+      0.5794754028320312,
+      -0.008869660086929798
+    ],
+    "hold_hand_r_component_matrix": [
+      [
+        0.19360844790935516,
+        0.9808617830276489,
+        -0.020636245608329773,
+        11.123998641967773
+      ],
+      [
+        0.9810470342636108,
+        -0.1937289834022522,
+        -0.003999292850494385,
+        -17.930089950561523
+      ],
+      [
+        -0.007920265197753906,
+        -0.01947075128555298,
+        -0.9997791051864624,
+        133.67652893066406
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "support_hand_reference_in_rifle_cm": {
+      "hand_l": [
+        18.390470504760742,
+        8.222640991210938,
+        1.841605544090271
+      ],
+      "index_01_l": [
+        24.331594467163086,
+        -1.535889983177185,
+        3.9512689113616943
+      ],
+      "middle_01_l": [
+        23.515413284301758,
+        -2.6257920265197754,
+        2.497030258178711
+      ],
+      "ring_01_l": [
+        22.09589385986328,
+        -4.434646129608154,
+        1.0105345249176025
+      ],
+      "thumb_01_l": [
+        20.97372055053711,
+        3.7467854022979736,
+        3.6961581707000732
+      ]
+    },
+    "right_hand_reference_in_rifle_cm": {
+      "hand_r": [
+        -14.276762962341309,
+        0.5705615878105164,
+        -5.8914971351623535
+      ],
+      "index_01_r": [
+        -2.701620578765869,
+        -2.2346887588500977,
+        -3.695164442062378
+      ],
+      "middle_01_r": [
+        -2.4436404705047607,
+        -3.4767885208129883,
+        -5.231236457824707
+      ],
+      "ring_01_r": [
+        -1.703481674194336,
+        -4.687930107116699,
+        -7.572575569152832
+      ],
+      "thumb_01_r": [
+        -8.399415969848633,
+        0.11105722188949585,
+        -4.826358318328857
+      ]
+    },
+    "recipe_path": "docs/assets/urban-entry01/PILOT.md",
+    "native_socket_name_suggestion": "R01_Pilot_Grip",
+    "native_conversion": "Verify source-to-native component basis C and native hand_r pose H at hold frame 1; native local socket = inverse(H) * C * source_rifle_component_matrix * inverse(C), using correct native transform multiplication. Do not copy Blender quaternion directly as an Unreal FRotator.",
+    "magazine_body_local_translation_cm": [
+      14,
+      0,
+      2
+    ],
+    "support_hand": "Use authored pose. Rear handguard contact; do not force generic SupportHand=(31,0,2.4). Minor finger overlap and loose shoulder seat remain pilot-only.",
+    "pistol": "Not fitted/approved. Do not reuse rifle two-hand hold/socket as a pistol fit. Preserve first-person behavior; retain existing remote P01 only if native inspection passes, otherwise unarmed/reference-pose fallback with remote pistol omitted and limitation recorded. Never show R01 during P01 equip.",
+    "weapon_scale_review": "User finds current gun too large beside the character. Existing R01 is a temporary baseline only: full assembled envelope 86 x 9.04 x 32.2 cm at scale 1 beside a 170 cm character (length 50.6% of body height). Grip profile spans roughly -10 to 0.8 cm in X, 4.8 cm in Y, -13 to +3 cm in Z. Its bulky receiver/handguard and wide grip are not final visual approval. Do not rescale hands/character to compensate. ART-17/18 own separate replacement weapon source; native replacement requires a separate scheduled integration."
+  },
+  "camera_distance_findings": {
+    "source_only": true,
+    "setup": {
+      "resolution": [
+        1920,
+        1080
+      ],
+      "horizontal_fov_degrees": 90,
+      "distance_cm": [
+        500,
+        1000
+      ],
+      "renderer": "Blender Cycles; source studio only, no runtime claim",
+      "target_cm": [
+        10,
+        0,
+        85
+      ]
+    },
+    "five_meters": "Armed silhouette, shoulder asymmetry and gray shirt readable; no gross elbow/wrist collapse in changed gait samples.",
+    "ten_meters": "Broad armed silhouette readable; face/fingers small and crimson insufficient for team identity.",
+    "close_view": "Soft generated face/hair, compressed cloth folds, minor finger/foregrip overlap and stiff hold remain; not first-person/hero quality.",
+    "evidence": [
+      "docs/assets/urban-entry01/Previews/Pilot/hold_pbr.png",
+      "docs/assets/urban-entry01/Previews/Pilot/hold_hands.png",
+      "docs/assets/urban-entry01/Previews/Pilot/hold_support.png",
+      "docs/assets/urban-entry01/Previews/Pilot/distance_5m.png",
+      "docs/assets/urban-entry01/Previews/Pilot/distance_10m.png",
+      "docs/assets/urban-entry01/Previews/Pilot/walk_01.png",
+      "docs/assets/urban-entry01/Previews/Pilot/walk_16.png",
+      "docs/assets/urban-entry01/Previews/Pilot/walk_32.png",
+      "docs/assets/urban-entry01/Previews/Pilot/walk_47.png",
+      "docs/assets/urban-entry01/Previews/Pilot/walk_63.png"
+    ]
+  },
+  "held_clips_and_defects": [
+    {
+      "name": "Running",
+      "verdict": "held",
+      "reason": "Unarmed running and deep cloth compression; not needed by this limited walk pilot; no sprint mechanic."
+    },
+    {
+      "name": "Crouch_Walk_Left_with_Gun",
+      "verdict": "held",
+      "reason": "Traveling crouch; original unfitted hands and foot drift; no crouch-specific pilot approval."
+    },
+    {
+      "name": "Vault_with_Rifle",
+      "verdict": "excluded",
+      "reason": "Vault mechanic excluded; traveling one-shot without verified obstacle/weapon contact."
+    },
+    {
+      "name": "Walk_Backward_While_Shooting",
+      "verdict": "held",
+      "reason": "Original traveling/recoil sequence has notable foot slip and loop mismatch; only frame 1 was used to derive the new static hold."
+    },
+    {
+      "name": "Walk_Backward_with_Gun",
+      "verdict": "held",
+      "reason": "Traveling clip with unfitted hands, foot drift and small seam; not converted or imported for this pilot."
+    },
+    {
+      "name": "missing_coverage",
+      "reason": "No crouch idle, direction-specific backward/strafe gait, aim offsets, fire/reload/recoil, jump/fall/land, death or objective animation. Forward gait as directional fallback requires explicit native limitation."
+    },
+    {
+      "name": "native_acceptance",
+      "reason": "Scale/axes/materials/socket, capsule/hit-zone alignment, foot sliding/speed blend, team readability, weapon switching and actual remote multiplayer remain unverified."
+    },
+    {
+      "name": "production_topology",
+      "reason": "Reuse ART-13 residual nonmanifold seam diagnostic and deformation debt; no structural repair/retopology approval."
+    },
+    {
+      "name": "R01_visual_proportions",
+      "reason": "User finds current gun too large beside the character. Existing R01 is a temporary baseline only: full assembled envelope 86 x 9.04 x 32.2 cm at scale 1 beside a 170 cm character (length 50.6% of body height). Grip profile spans roughly -10 to 0.8 cm in X, 4.8 cm in Y, -13 to +3 cm in Z. Its bulky receiver/handguard and wide grip are not final visual approval. Do not rescale hands/character to compensate. ART-17/18 own separate replacement weapon source; native replacement requires a separate scheduled integration."
+    }
+  ],
+  "checks": {
+    "report": "docs/assets/urban-entry01/pilot-source-validation.json",
+    "new_export_roundtrip": "Two changed animation-only FBXs onto actual existing character export; rest/parents/names/FPS/ranges and start/middle/end joints/vertices passed.",
+    "new_source_reopen": "Original rig, vertices, weights, original action fingerprints, texture reload and fixed hand/rifle relation passed.",
+    "reuse": "ART-13 normalization and six original export checks; originals compared by SHA-256, not rerendered/resampled.",
+    "unreal_runs": 0,
+    "paid_meshy_stages": 0
+  },
+  "provenance": {
+    "character": "User Meshy MSH-C01; intake manifest retained; no new generation or license claim.",
+    "weapon": "Existing project R01 original source; unchanged read-only fit reference.",
+    "pilot_pose": "Derived locally from supplied shooting frame 1 plus neutral stance; Walking supplies original pelvis/legs. See PILOT.md for bounded pose edits."
+  },
+  "int_art_01_next_action": "Accept source_commit plus this readiness record and final frozen handoff ancestry. Import only included_files into assigned native paths after INT-04 slot release; use its UE slot. Root motion off. Reconstruct/verify R01 socket from exact reference, inspect native gait/fallbacks, preserve first-person/capsule/hit-zone/authority, then run the assigned actual server/two-client acceptance. Do not claim full pilot or production acceptance from this source review."
+}

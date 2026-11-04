@@ -1,0 +1,385 @@
+{
+  "source_reopened": true,
+  "texture_files": [
+    {
+      "file": "//Textures/T_UE01_BaseColor.png",
+      "size": [
+        4096,
+        4096
+      ],
+      "space": "sRGB"
+    },
+    {
+      "file": "//Textures/T_UE01_Metallic.png",
+      "size": [
+        4096,
+        4096
+      ],
+      "space": "Non-Color"
+    },
+    {
+      "file": "//Textures/T_UE01_Roughness.png",
+      "size": [
+        4096,
+        4096
+      ],
+      "space": "Non-Color"
+    }
+  ],
+  "clips": {
+    "Walking": {
+      "frame_range": [
+        1,
+        63
+      ],
+      "fps": 60,
+      "duration_seconds": 1.0333333333333334,
+      "pelvis_start_cm": [
+        0.24632671475410461,
+        0.4682004451751709,
+        103.48043060302734
+      ],
+      "pelvis_end_delta_cm": [
+        6.556510925292969e-07,
+        1.5497207641601562e-06,
+        0.0
+      ],
+      "pelvis_range_cm": [
+        [
+          -0.829057514667511,
+          3.9394688606262207
+        ],
+        [
+          -0.49182772636413574,
+          5.106481552124023
+        ],
+        [
+          97.23665618896484,
+          104.13697814941406
+        ]
+      ],
+      "first_last_max_joint_difference_pelvis_relative_cm": 8.894387156907649e-05,
+      "first_last_max_joint_angle_degrees": 0.0,
+      "toe_height_range_cm": {
+        "ball_l": [
+          4.9914727210998535,
+          22.382781982421875
+        ],
+        "ball_r": [
+          4.464400291442871,
+          19.936113357543945
+        ]
+      },
+      "ground_root_bone": false
+    },
+    "Running": {
+      "frame_range": [
+        1,
+        39
+      ],
+      "fps": 60,
+      "duration_seconds": 0.6333333333333333,
+      "pelvis_start_cm": [
+        0.3226281404495239,
+        0.2739681005477905,
+        96.55814361572266
+      ],
+      "pelvis_end_delta_cm": [
+        1.3113021850585938e-06,
+        1.6689300537109375e-06,
+        7.62939453125e-06
+      ],
+      "pelvis_range_cm": [
+        [
+          -4.631111145019531,
+          2.674220323562622
+        ],
+        [
+          -0.3634147644042969,
+          1.9062671661376953
+        ],
+        [
+          94.85919952392578,
+          101.76526641845703
+        ]
+      ],
+      "first_last_max_joint_difference_pelvis_relative_cm": 7.641454939380094e-05,
+      "first_last_max_joint_angle_degrees": 0.0,
+      "toe_height_range_cm": {
+        "ball_l": [
+          4.533238887786865,
+          83.61075592041016
+        ],
+        "ball_r": [
+          4.003734588623047,
+          74.72586059570312
+        ]
+      },
+      "ground_root_bone": false
+    },
+    "Crouch_Walk_Left_with_Gun": {
+      "frame_range": [
+        1,
+        77
+      ],
+      "fps": 60,
+      "duration_seconds": 1.2666666666666666,
+      "pelvis_start_cm": [
+        -0.35645151138305664,
+        -9.048418998718262,
+        84.53791809082031
+      ],
+      "pelvis_end_delta_cm": [
+        0.025039076805114746,
+        105.42420196533203,
+        -0.107757568359375
+      ],
+      "pelvis_range_cm": [
+        [
+          -0.4351094961166382,
+          2.953638792037964
+        ],
+        [
+          -9.048418998718262,
+          96.37578582763672
+        ],
+        [
+          79.18125915527344,
+          85.499267578125
+        ]
+      ],
+      "first_last_max_joint_difference_pelvis_relative_cm": 0.7329746602106806,
+      "first_last_max_joint_angle_degrees": 1.3329322272606157,
+      "toe_height_range_cm": {
+        "ball_l": [
+          5.8450703620910645,
+          11.859186172485352
+        ],
+        "ball_r": [
+          4.958938121795654,
+          13.441291809082031
+        ]
+      },
+      "ground_root_bone": false
+    },
+    "Vault_with_Rifle": {
+      "frame_range": [
+        1,
+        49
+      ],
+      "fps": 60,
+      "duration_seconds": 0.8,
+      "pelvis_start_cm": [
+        -0.6529624462127686,
+        0.5726915001869202,
+        94.6758041381836
+      ],
+      "pelvis_end_delta_cm": [
+        220.30776977539062,
+        0.3297945261001587,
+        -0.6582412719726562
+      ],
+      "pelvis_range_cm": [
+        [
+          -0.6529624462127686,
+          219.65480041503906
+        ],
+        [
+          -1.6187396049499512,
+          4.149813175201416
+        ],
+        [
+          88.54424285888672,
+          125.79216003417969
+        ]
+      ],
+      "first_last_max_joint_difference_pelvis_relative_cm": 3.532855234473943,
+      "first_last_max_joint_angle_degrees": 6.272377865781564,
+      "toe_height_range_cm": {
+        "ball_l": [
+          4.282421588897705,
+          77.63758087158203
+        ],
+        "ball_r": [
+          4.966371059417725,
+          74.94695281982422
+        ]
+      },
+      "ground_root_bone": false
+    },
+    "Walk_Backward_While_Shooting": {
+      "frame_range": [
+        1,
+        77
+      ],
+      "fps": 60,
+      "duration_seconds": 1.2666666666666666,
+      "pelvis_start_cm": [
+        -7.165584564208984,
+        -0.48206329345703125,
+        94.59725952148438
+      ],
+      "pelvis_end_delta_cm": [
+        -87.52584838867188,
+        0.29846060276031494,
+        0.0772552490234375
+      ],
+      "pelvis_range_cm": [
+        [
+          -94.69143676757812,
+          -7.165584564208984
+        ],
+        [
+          -1.6708745956420898,
+          2.3921940326690674
+        ],
+        [
+          94.59725952148438,
+          97.98068237304688
+        ]
+      ],
+      "first_last_max_joint_difference_pelvis_relative_cm": 2.6851915051546245,
+      "first_last_max_joint_angle_degrees": 5.108099124106137,
+      "toe_height_range_cm": {
+        "ball_l": [
+          4.634201526641846,
+          18.101425170898438
+        ],
+        "ball_r": [
+          5.612076282501221,
+          8.526869773864746
+        ]
+      },
+      "ground_root_bone": false
+    },
+    "Walk_Backward_with_Gun": {
+      "frame_range": [
+        1,
+        61
+      ],
+      "fps": 60,
+      "duration_seconds": 1.0,
+      "pelvis_start_cm": [
+        2.9349300861358643,
+        -5.676268577575684,
+        88.99403381347656
+      ],
+      "pelvis_end_delta_cm": [
+        -95.6703109741211,
+        7.152557373046875e-06,
+        3.0517578125e-05
+      ],
+      "pelvis_range_cm": [
+        [
+          -92.73538208007812,
+          2.9349300861358643
+        ],
+        [
+          -5.999157905578613,
+          -2.4135334491729736
+        ],
+        [
+          83.99690246582031,
+          88.99406433105469
+        ]
+      ],
+      "first_last_max_joint_difference_pelvis_relative_cm": 0.4892580801854572,
+      "first_last_max_joint_angle_degrees": 0.7230721601504347,
+      "toe_height_range_cm": {
+        "ball_l": [
+          3.902881145477295,
+          10.045882225036621
+        ],
+        "ball_r": [
+          4.138711452484131,
+          11.679144859313965
+        ]
+      },
+      "ground_root_bone": false
+    }
+  },
+  "roundtrip": {
+    "character": {
+      "triangles": 30970,
+      "vertices": 39934,
+      "bone_count": 66,
+      "max_bind_origin_error_cm": 3.8740187779921067e-05,
+      "uv_layers": [
+        "UVMap"
+      ]
+    },
+    "Walking": {
+      "animation_only": true,
+      "skeleton_rest_max_difference": 3.0517578125e-05,
+      "frame_range": [
+        1,
+        63
+      ],
+      "fps": 60,
+      "max_sampled_joint_error_cm": 9.83452796647036e-05,
+      "max_sampled_mesh_error_cm": 0.00010007674882770466
+    },
+    "Running": {
+      "animation_only": true,
+      "skeleton_rest_max_difference": 3.0517578125e-05,
+      "frame_range": [
+        1,
+        39
+      ],
+      "fps": 60,
+      "max_sampled_joint_error_cm": 0.0001285480814190252,
+      "max_sampled_mesh_error_cm": 0.0001657967667549189
+    },
+    "Crouch_Walk_Left_with_Gun": {
+      "animation_only": true,
+      "skeleton_rest_max_difference": 3.0517578125e-05,
+      "frame_range": [
+        1,
+        77
+      ],
+      "fps": 60,
+      "max_sampled_joint_error_cm": 9.013105278557327e-05,
+      "max_sampled_mesh_error_cm": 0.00011304963312330203
+    },
+    "Vault_with_Rifle": {
+      "animation_only": true,
+      "skeleton_rest_max_difference": 3.0517578125e-05,
+      "frame_range": [
+        1,
+        49
+      ],
+      "fps": 60,
+      "max_sampled_joint_error_cm": 0.000247955322265625,
+      "max_sampled_mesh_error_cm": 0.0002567563318855232
+    },
+    "Walk_Backward_While_Shooting": {
+      "animation_only": true,
+      "skeleton_rest_max_difference": 3.0517578125e-05,
+      "frame_range": [
+        1,
+        77
+      ],
+      "fps": 60,
+      "max_sampled_joint_error_cm": 0.0001111020346009117,
+      "max_sampled_mesh_error_cm": 0.00012997989683075577
+    },
+    "Walk_Backward_with_Gun": {
+      "animation_only": true,
+      "skeleton_rest_max_difference": 3.0517578125e-05,
+      "frame_range": [
+        1,
+        61
+      ],
+      "fps": 60,
+      "max_sampled_joint_error_cm": 0.00011923598944158771,
+      "max_sampled_mesh_error_cm": 0.0001303851025444992
+    }
+  },
+  "topology": {
+    "raw_boundary_edges": 38042,
+    "degenerate_faces": 0,
+    "diagnostic_weld_boundary_edges": 35,
+    "diagnostic_weld_nonmanifold_edges": 60,
+    "diagnostic_only": "Coordinate weld on a disposable copy; delivered topology unchanged"
+  }
+}
