@@ -1,0 +1,95 @@
+{
+  "selected_concept": "A_UrbanEntry",
+  "user_selected": true,
+  "production_mesh_approved": false,
+  "generator": "built-in image_gen",
+  "files": [
+    {
+      "path": "Concepts/A_UrbanEntry.png",
+      "bytes": 1876106,
+      "sha256": "655a7c6f3432085479c78b79f6b9d678ff0d1bb0c21d708c3fbfc8dbd70613be",
+      "width": 1024,
+      "height": 1536,
+      "mode": "RGB"
+    },
+    {
+      "path": "Concepts/B_FieldOperative.png",
+      "bytes": 1822093,
+      "sha256": "1c13ac8e8fea1aec10323b3cb361090058b03684239de07e05f46f57caf53639",
+      "width": 1024,
+      "height": 1536,
+      "mode": "RGB"
+    },
+    {
+      "path": "Concepts/C_ReconOperator.png",
+      "bytes": 1821498,
+      "sha256": "8e1b8facde9004a47874035a29542c4ab93c2524820369e4cd472673bbc3bb94",
+      "width": 1024,
+      "height": 1536,
+      "mode": "RGB"
+    },
+    {
+      "path": "FirstPerson/01_RifleComposition.png",
+      "bytes": 2089516,
+      "sha256": "15cd28ca6ad0bc5679d4abceb64f661cb03ce2076b01831579e767bd4bf49f11",
+      "width": 1672,
+      "height": 941,
+      "mode": "RGB"
+    },
+    {
+      "path": "Gloves/01_DorsalPalm.png",
+      "bytes": 1936934,
+      "sha256": "48c57747b816591b00da54672fff95178bd47b80ba3825c89aa00cb767068a41",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGB"
+    },
+    {
+      "path": "README.md",
+      "bytes": 4949,
+      "sha256": "2413231c6032a2600b8dd5444da9c9bb5836871124745668078680668eac00e1"
+    },
+    {
+      "path": "Turnaround/01_Front.png",
+      "bytes": 1667492,
+      "sha256": "e33dbf3cbeaef60b5f91c83469576691fb55cb42f74024909cc79cbe434c8c0e",
+      "width": 1024,
+      "height": 1536,
+      "mode": "RGB"
+    },
+    {
+      "path": "Turnaround/02_Back.png",
+      "bytes": 1815568,
+      "sha256": "da93181e8fc4c68a229b8879535904092c7f1e29180ec3848143c866129750d2",
+      "width": 1024,
+      "height": 1536,
+      "mode": "RGB"
+    },
+    {
+      "path": "Turnaround/03_Left.png",
+      "bytes": 1560834,
+      "sha256": "f2f825317f938717e74ab8688ef5caec8cb048a0e30f8ed13b9b1438a3966a8b",
+      "width": 1024,
+      "height": 1536,
+      "mode": "RGB"
+    },
+    {
+      "path": "Turnaround/04_Right.png",
+      "bytes": 1403843,
+      "sha256": "42d0ca750a6fad99cecbc04240f0d7aec1185e32322d771c3193ef7ff5b05205",
+      "width": 1024,
+      "height": 1536,
+      "mode": "RGB"
+    },
+    {
+      "path": "concept-prompts.json",
+      "bytes": 10405,
+      "sha256": "431550a2b1ceb45e2836c6d36009f688049990f26b74f705c08bf40cdc120588"
+    },
+    {
+      "path": "reference-prompts.json",
+      "bytes": 13324,
+      "sha256": "2fabd383fbd3f4897dfab3b02c96b05fadee50cf0ece7c4031e7621b362e59d5"
+    }
+  ]
+}

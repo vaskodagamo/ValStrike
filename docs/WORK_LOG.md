@@ -359,6 +359,16 @@ The gameplay/integration idle slots were checked clean at their original heads b
 
 **Dispatched:** “Art — Third-person player model” (`01a1a5ba-709c-7dd3-bc9e-d70ee4f951bc`) and “Art — Tactical HUD icons” (`01a1a5ba-7e9f-7c41-9b0f-38db0ea9a923`) were created with explicit `thinking: high`; model was omitted to preserve the configured default. Both have separate worktrees starting at `d46a27c0c9a1a61b2d52bd76b797529a0e9dbbfb`. Existing art and gameplay worktrees were not changed.
 
+## 2026-11-04 — Selected Urban Entry concept and reference package
+
+**Request and selection:** The user rejected the blocky FPArms01/Player01 visual quality and requested image concepts/references for a third-party 3D draft and artist finishing workflow. Both source sessions received a stop-and-preserve direction. Generated three original character directions with built-in image_gen; the user explicitly selected “A — Urban entry: cropped jacket, single shoulder plate.”
+
+**Delivered:** `Art/References/Characters/OperatorV2/` contains the three concepts, four separate selected-character views, glove dorsal/palm detail and a first-person rifle composition. The existing R01 studio image was a reference for the illustration; the native rifle asset was not changed. The first rear-view draft incorrectly showed knuckles from the back; a targeted image edit corrected palm visibility. The rejected draft remains for history and is excluded from the delivery archive. Full prompts, provenance, file hashes and artist notes are saved. ZIP: ignored `Artifacts/OperatorV2-ReferencePack.zip`.
+
+**Checks and limits:** Inspected generated images; checked nine delivery PNGs, JSON, local links and ZIP integrity. No new tests or Unreal build. The selected concept is approved as direction, not as a production mesh. Generated multi-view anatomy/seams/projection still require artist reconciliation; the FPS image is illustrative, not an engine screenshot. No third-party model service, paid credits, native import, rig or animation was executed.
+
+**Next action:** Use the selected front view and consistent supplemental views to obtain a 3D draft, then commission/follow an explicit artist brief for anatomical/topology/material cleanup, rigging and deformation review before central Unreal integration. Old prototype models remain unapproved; do not automatically resume procedural modeling from the old briefs.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.
