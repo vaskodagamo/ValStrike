@@ -1,12 +1,12 @@
-# P02 native import and socket recipe — verification pending
+# P02 corrected source import and socket recipe — verification pending
 
-Only a later assigned integration owner imports these sources. P02 is a new contract; do not overwrite P01 or reuse its numeric attachment offsets.
+Corrected full-detail authoring/reference source: 461,412 triangles. Runtime LOD budgeting/optimization is deferred. Only a later assigned integration owner imports these sources. P02 is a new contract; do not overwrite P01 or reuse its numeric attachment offsets.
 
 ## Units, assets and assembly
 
-Source scene: centimeters (`scale_length=0.01`), +X forward, +Z up. FBX exporter: forward `-Y`, up `Z`, global scale 1, apply unit scale, `FBX_SCALE_UNITS`, no animation. Blender round-trip preserves the centimeter envelope. In Unreal use import scale **1**, unit/scene conversion, no additional compensating actor scale; inspect the imported bounds against **20.959 × 3.346 × 13.806 cm** before wiring. Axis/handedness conversion still needs native confirmation.
+Source scene: centimeters (`scale_length=0.01`), +X forward, +Z up. FBX exporter: forward `-Y`, up `Z`, global scale 1, apply unit scale, `FBX_SCALE_UNITS`, no animation. Blender round-trip preserves the centimeter envelope. In Unreal use import scale **1**, unit/scene conversion, no additional compensating actor scale; inspect the imported bounds against **21.000 × 3.352 × 13.833 cm** before wiring. Axis/handedness conversion still needs native confirmation.
 
-Import Body, Slide and Magazine FBXs separately as static visual meshes, Combine Meshes off, auto collision off. Set NoCollision and disable overlap generation. No physics/gameplay geometry is supplied. Use authored normals/tangents if the importer supports them. No Nanite or lightmap policy is prescribed by this source task.
+Import Body, Slide and Magazine FBXs separately as static visual meshes, Combine Meshes off, auto collision off. Set NoCollision and disable overlap generation. No physics/gameplay geometry is supplied. Import the authored normals and tangents; do not silently recompute them. Custom normals are essential to preserving the original surface. The Blender FBX round-trip sampled-normal check passed, but native shading must still be inspected. No Nanite or lightmap policy is prescribed by this source task.
 
 **All three mesh origins are the shared Grip datum**, with identity translation/rotation/scale at rest. Parent slide and magazine directly to the weapon root at identity. Their mesh origins are not relocated to the named anchors. If attaching a part to its named socket instead, apply the negative socket translation to the mesh child: Slide `(0,0,-3.9)`, Magazine `(2.5,0,1.0)` cm, zero rotation and unit scale. Applying both socket position and identity mesh placement would double-offset it.
 
@@ -29,8 +29,8 @@ The frozen support wrist is 23.089 cm from Grip. Fingers intersect the lower gua
 
 ## Materials
 
-Two slots: `P02_Gunmetal_Charcoal_PBR` and `P02_CutInterior`. Use returned base-color as sRGB; roughness, metallic and normal as data. Source finish multiplies metallic by 0.5, clamps roughness to at least 0.52 and uses generated tangent-normal strength 0.18. Interior base color linear RGBA `(0.035,0.045,0.060,1)`, roughness 0.7. Recreate these authored operations natively; FBX does not guarantee transfer of Blender shader math. Check normal-map green-channel convention in Unreal, without changing preserved originals. Base color/normal are 4K; data texture resolution is provider-selected. No new shared palette asset is included.
+Two slots: `P02_Original_Meshy_PBR` and `P02_CutInterior`. Original Meshy PBR is preserved. Use returned base-color as sRGB; roughness, metallic and normal as data. Use the original metallic/roughness maps directly and normal strength **1.0**. The former metallic 0.5 multiplier, roughness floor 0.52 and normal strength 0.18 are removed. Interior base color linear RGBA `(0.035,0.045,0.060,1)`, roughness 0.7. FBX cannot guarantee native material graph conversion; recreate the source channels and inspect under comparable lighting. Check normal-map green-channel convention in Unreal without changing preserved originals. Base color/normal are 4K; metallic/roughness are 2K. No new shared palette asset is included.
 
 ## Next acceptance
 
-Art lead reviews residual generated surface waviness. Integration checks exact imported bounds, default and first-person socket/camera placement, correct material channels, slide separation/caps and magazine visibility through motion. Animation owner authors a suitable pistol-specific right-finger/support-hand pose. Native/runtime, packaged and network verification remain deferred.
+Art lead/user reviews the corrected source against the untouched Meshy comparison. Set a runtime LOD budget before any later topology reduction, and retain this full-detail source for visual comparison and rebaking if needed. Integration checks exact imported bounds, default and first-person socket/camera placement, correct material channels, slide separation/caps and magazine visibility through motion. Animation owner authors a suitable pistol-specific right-finger/support-hand pose. Native/runtime, packaged and network verification remain deferred.

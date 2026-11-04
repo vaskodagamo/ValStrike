@@ -1,0 +1,22 @@
+{
+  "comparison": "corrected separated high-detail source versus untouched Meshy original",
+  "camera_lighting_resolution_identical": true,
+  "resolution": [
+    1100,
+    780
+  ],
+  "rgb_mean_absolute_difference_0_255": 0.02098989898989899,
+  "fraction_pixels_with_any_channel_difference_above_8": 0.0007261072261072261,
+  "notes": [
+    "Image measurement only, not a runtime or topology acceptance test.",
+    "Cut caps, concealed magazine stem and render sampling can cause small differences.",
+    "Rejected previous export remains in P02_rejected_ae5cf6e.png for comparison."
+  ],
+  "additional_meshy_credits": 0,
+  "final_fbx_reimport": {
+    "same_camera_lighting_scale": true,
+    "material_setup": "Source PBR rebound to imported material slots for an identical comparison; not an automatic FBX/Unreal material-conversion check.",
+    "rgb_mean_absolute_difference_0_255": 0.02136868686868687,
+    "fraction_pixels_with_any_channel_difference_above_8": 0.0007261072261072261
+  }
+}
