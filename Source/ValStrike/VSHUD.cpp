@@ -10,6 +10,11 @@
 #include "Combat/VSWeaponComponent.h"
 #include "Combat/VSWeaponLoadoutComponent.h"
 #include "Feedback/VSHitFeedbackView.h"
+#include "GameFramework/GameStateBase.h"
+#include "GameFramework/PlayerState.h"
+#include "Scoreboard/VSKillFeedModel.h"
+#include "Scoreboard/VSScoreboardState.h"
+#include "Scoreboard/VSScoreboardSubsystem.h"
 #include "UI/Round/VSRoundHUDPresentation.h"
 #include "UI/Round/VSRoundHUDPreview.h"
 
@@ -216,6 +221,109 @@ void AVSHUD::DrawMatchHUD(const FVSMatchHUDData& Data, const FVSRoundHUDPresenta
     }
 }
 
+void AVSHUD::DrawKillFeed(float Scale)
+{
+    namespace VSFeed = ValStrike::KillFeed;
+    const UWorld* World = GetWorld();
+    const UVSScoreboardSubsystem* Scoreboard = World ? World->GetSubsystem<UVSScoreboardSubsystem>() : nullptr;
+    const AVSScoreboardState* State = Scoreboard ? Scoreboard->GetState() : nullptr;
+    const AGameStateBase* GameState = World ? World->GetGameState() : nullptr;
+    if (!State || !GameState || State->GetKillFeed().IsEmpty())
+    {
+        return;
+    }
+    const TArray<FVSKillFeedEntry>& Feed = State->GetKillFeed();
+    std::vector<VSFeed::Stamp> Stamps;
+    Stamps.reserve(static_cast<std::size_t>(Feed.Num()));
+    for (const FVSKillFeedEntry& Entry : Feed)
+    {
+        Stamps.push_back({static_cast<VSFeed::Seq>(FMath::Max(0, Entry.Sequence)), Entry.ServerTimeSeconds});
+    }
+    // Expiry uses the replicated server clock, so late joiners skip old lines.
+    const std::vector<VSFeed::Visible> Rows = VSFeed::Select(Stamps, GameState->GetServerWorldTimeSeconds());
+    if (Rows.empty())
+    {
+        return;
+    }
+    const FVSScoreboardRow* LocalRow = PlayerOwner ? State->FindRow(PlayerOwner->PlayerState) : nullptr;
+    const int32 LocalKey = LocalRow ? LocalRow->PlayerKey : 0;
+
+    const auto TeamColor = [](uint8 Team) { return Team == 1 ? Accent : Team == 2 ? TeamTwo : Ink; };
+    const FLinearColor LocalPanel(0.11f, 0.17f, 0.21f, 0.94f);
+    const float Margin = 24.0f * Scale;
+    const float Right = Canvas->SizeX - Margin;
+    const float Top = Margin + 42.0f * Scale; // Below the 34 px ESC MENU box.
+    const float RowHeight = 24.0f * Scale;
+    const float RowStep = RowHeight + 3.0f * Scale;
+    const float TextHeight = FMath::Max(12.0f, 13.0f * Scale);
+    const float TextY = (RowHeight - TextHeight) * 0.5f;
+    const float Pad = 10.0f * Scale;
+    const float Gap = 8.0f * Scale;
+    const float MaxName = 110.0f * Scale;
+
+    // Rows come newest first; draw the newest at the bottom so older lines sit above it.
+    for (int32 Slot = 0; Slot < static_cast<int32>(Rows.size()); ++Slot)
+    {
+        const VSFeed::Visible& Row = Rows[Rows.size() - 1 - static_cast<std::size_t>(Slot)];
+        const FVSKillFeedEntry& Entry = Feed[static_cast<int32>(Row.Index)];
+        const VSFeed::Kind FeedKind = static_cast<VSFeed::Kind>(Entry.Kind);
+        const bool bHasKiller = (FeedKind == VSFeed::Kind::Kill || FeedKind == VSFeed::Kind::TeamKill ||
+            FeedKind == VSFeed::Kind::World) && !Entry.KillerName.IsEmpty();
+        // Text labels in place of icons (art can supply a weapon icon slot later).
+        FString Middle = UTF8_TO_TCHAR(VSFeed::KindLabel(FeedKind));
+        if (FeedKind == VSFeed::Kind::World && bHasKiller)
+        {
+            Middle.Reset(); // An untracked source such as a bot still reads as a kill.
+        }
+        if (FeedKind != VSFeed::Kind::SelfKill && (FeedKind != VSFeed::Kind::World || bHasKiller))
+        {
+            const FString WeaponText = UTF8_TO_TCHAR(VSFeed::WeaponLabel(static_cast<VSFeed::Weapon>(Entry.Weapon)));
+            Middle = Middle.IsEmpty() ? WeaponText : WeaponText.IsEmpty() ? Middle : Middle + TEXT(" ") + WeaponText;
+            if (Entry.bHeadshot)
+            {
+                Middle += Middle.IsEmpty() ? TEXT("HS") : TEXT(" HS");
+            }
+        }
+        const FString Victim = Entry.VictimName.IsEmpty() ? FString(TEXT("?")) : Entry.VictimName;
+        const float KillerWidth = bHasKiller ? FMath::Min(LabelWidth(Entry.KillerName, TextHeight), MaxName) : 0.0f;
+        const float MiddleWidth = Middle.IsEmpty() ? 0.0f : LabelWidth(Middle, TextHeight);
+        const float VictimWidth = FMath::Min(LabelWidth(Victim, TextHeight), MaxName);
+        const float Width = Pad * 2.0f + KillerWidth + (bHasKiller ? Gap : 0.0f) + MiddleWidth +
+            (Middle.IsEmpty() ? 0.0f : Gap) + VictimWidth;
+        const float X = Right - Width;
+        const float Y = Top + RowStep * static_cast<float>(Slot);
+        const float Alpha = Row.Alpha;
+
+        const bool bLocal = VSFeed::InvolvesPlayer(Entry.KillerKey, Entry.VictimKey, LocalKey);
+        DrawRect(WithAlpha(bLocal ? LocalPanel : Panel, Alpha), X, Y, Width, RowHeight);
+        if (bLocal)
+        {
+            // Own kills and deaths: brighter panel with an outline.
+            const FLinearColor Edge = WithAlpha(Ink, Alpha * 0.9f);
+            const float Line = FMath::Max(1.0f, 1.5f * Scale);
+            DrawRect(Edge, X, Y, Width, Line);
+            DrawRect(Edge, X, Y + RowHeight - Line, Width, Line);
+            DrawRect(Edge, X, Y, 3.0f * Scale, RowHeight);
+            DrawRect(Edge, X + Width - Line, Y, Line, RowHeight);
+        }
+        float Cursor = X + Pad;
+        if (bHasKiller)
+        {
+            DrawBoundedLabel(Entry.KillerName, Cursor, Y + TextY, TextHeight, MaxName,
+                WithAlpha(TeamColor(Entry.KillerTeam), Alpha));
+            Cursor += KillerWidth + Gap;
+        }
+        if (!Middle.IsEmpty())
+        {
+            const FLinearColor MiddleColor = FeedKind == VSFeed::Kind::TeamKill ? Warning
+                : Entry.bHeadshot ? Headshot : Muted;
+            DrawLabel(Middle, Cursor, Y + TextY, TextHeight, WithAlpha(MiddleColor, Alpha));
+            Cursor += MiddleWidth + Gap;
+        }
+        DrawBoundedLabel(Victim, Cursor, Y + TextY, TextHeight, MaxName, WithAlpha(TeamColor(Entry.VictimTeam), Alpha));
+    }
+}
+
 void AVSHUD::DrawHitMarker(const FVSHitFeedbackView& Feedback, float CenterX, float CenterY, float Scale)
 {
     using VSHitFeedback::MarkerKind;
@@ -344,6 +452,8 @@ void AVSHUD::DrawHUD()
     // Read the controller snapshot before considering pawn lifetime: late joins,
     // spectators and result screens still need the match HUD without a pawn.
     DrawMatchHUD(MatchData, MatchView, Scale);
+    // Before the pawn check: spectators and dead players still follow the feed.
+    DrawKillFeed(Scale);
 
     const AVSCharacter* Character = Cast<AVSCharacter>(PlayerOwner->GetPawn());
     if (!Character)

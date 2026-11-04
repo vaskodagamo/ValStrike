@@ -2,6 +2,8 @@
 
 #include "CoreMinimal.h"
 #include "Subsystems/WorldSubsystem.h"
+#include "VSKillFeedModel.h"
+#include "VSScoreboardState.h"
 #include "VSStatsLedger.h"
 #include "VSMatchStatsSubsystem.generated.h"
 
@@ -22,6 +24,9 @@ struct FVSDamageEvent;
  * - Kills, headshot kills, assists and damage dealt come from
  *   UVSDamageSubsystem::OnDamage (shooter attribution).
  * - A new match (rematch or a match cleared by the rules) resets the counters.
+ * - Each death the ledger resolves from a damage event (kill, team kill, self
+ *   kill or unknown source) appends exactly one kill feed entry; a new round
+ *   clears the feed.
  * Results are mirrored into a replicated AVSScoreboardState for clients.
  */
 UCLASS()
@@ -55,10 +60,16 @@ private:
     // Starts a new ledger life when this player's pawn changed (fresh round pawn).
     void SyncLife(int32 Key, APawn* Pawn);
     void ObserveMatchReset();
+    // Clears the kill feed when the replicated round id changed; true when it did.
+    bool ObserveFeedRound();
+    void AppendKillFeed(const FVSDamageEvent& Event, const APlayerState* Attacker, int32 AttackerKey,
+        int32 VictimKey, ValStrike::Stats::HitOutcome Outcome);
+    void PublishKillFeed();
     void Sync();
     void Publish();
 
     ValStrike::Stats::Ledger Ledger;
+    ValStrike::KillFeed::Ring<FVSKillFeedEntry> KillFeed;
 
     UPROPERTY(Transient)
     TObjectPtr<AVSScoreboardState> State;
@@ -70,6 +81,7 @@ private:
     int32 NextKey = 0;
     uint8 LastPhase = 0;
     int32 LastCompletedRounds = 0;
+    uint64 LastFeedRoundId = 0;
     FDelegateHandle PostLoginHandle;
     FDelegateHandle LogoutHandle;
     FDelegateHandle SpawnHandle;
