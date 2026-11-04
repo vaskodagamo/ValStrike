@@ -5,7 +5,6 @@
 #include "VSCharacterPresentationComponent.generated.h"
 
 class UAnimSequence;
-class UBlendSpace1D;
 class UPrimitiveComponent;
 class USkeletalMesh;
 class USkeletalMeshComponent;
@@ -46,10 +45,8 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, Category = "Character Presentation")
     TSoftObjectPtr<USkeletalMesh> MeshAsset;
-    // Preferred: 1D blend space, hold at 0 and rifle walk at WalkClipSpeed.
-    UPROPERTY(EditDefaultsOnly, Category = "Character Presentation")
-    TSoftObjectPtr<UBlendSpace1D> LocomotionAsset;
-    // Fallback when the blend space is missing: switch between the two clips.
+    // Hold while still, forward rifle walk while moving (a direct switch; a
+    // Python-authored blend space left the body in its bind pose at runtime).
     UPROPERTY(EditDefaultsOnly, Category = "Character Presentation")
     TSoftObjectPtr<UAnimSequence> HoldAsset;
     UPROPERTY(EditDefaultsOnly, Category = "Character Presentation")
@@ -65,7 +62,6 @@ private:
     void PlayLocomotion(bool bMoving, float PlayRate);
 
     TWeakObjectPtr<USkeletalMeshComponent> Body;
-    UPROPERTY(Transient) TObjectPtr<UBlendSpace1D> Locomotion;
     UPROPERTY(Transient) TObjectPtr<UAnimSequence> Hold;
     UPROPERTY(Transient) TObjectPtr<UAnimSequence> Walk;
     bool bActive = false;

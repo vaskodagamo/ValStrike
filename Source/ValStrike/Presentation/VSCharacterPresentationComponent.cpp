@@ -3,8 +3,6 @@
 #include "../VSCharacter.h"
 #include "../Combat/VSHealthComponent.h"
 #include "Animation/AnimSequence.h"
-#include "Animation/AnimSingleNodeInstance.h"
-#include "Animation/BlendSpace1D.h"
 #include "Components/PrimitiveComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Engine/SkeletalMesh.h"
@@ -25,7 +23,6 @@ UVSCharacterPresentationComponent::UVSCharacterPresentationComponent()
     PrimaryComponentTick.bStartWithTickEnabled = false;
     SetIsReplicatedByDefault(false);
     MeshAsset = TSoftObjectPtr<USkeletalMesh>(FSoftObjectPath(FString::Printf(TEXT("%s/SK_VS_UrbanEntry01.SK_VS_UrbanEntry01"), CharacterRoot)));
-    LocomotionAsset = TSoftObjectPtr<UBlendSpace1D>(FSoftObjectPath(FString::Printf(TEXT("%s/Animations/BS_UE01_Pilot_Locomotion.BS_UE01_Pilot_Locomotion"), CharacterRoot)));
     HoldAsset = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(FString::Printf(TEXT("%s/Animations/A_UE01_Pilot_RifleHold.A_UE01_Pilot_RifleHold"), CharacterRoot)));
     WalkAsset = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(FString::Printf(TEXT("%s/Animations/A_UE01_Pilot_Walk_RifleHold.A_UE01_Pilot_Walk_RifleHold"), CharacterRoot)));
 }
@@ -36,7 +33,6 @@ bool UVSCharacterPresentationComponent::Initialize(USkeletalMeshComponent* InBod
     SetComponentTickEnabled(false);
     if (!InBody || InBody->GetOwner() != GetOwner() || GetOwner()->GetNetMode() == NM_DedicatedServer) { return false; }
     USkeletalMesh* Mesh = MeshAsset.LoadSynchronous();
-    Locomotion = LocomotionAsset.LoadSynchronous();
     Hold = HoldAsset.LoadSynchronous();
     Walk = WalkAsset.LoadSynchronous();
     // The hold is the minimum usable pose; without it keep the prototype rather
@@ -57,14 +53,7 @@ bool UVSCharacterPresentationComponent::Initialize(USkeletalMeshComponent* InBod
     bActive = true;
     bWalkPlaying = false;
     bShown = true;
-    if (Locomotion)
-    {
-        InBody->PlayAnimation(Locomotion, true);
-    }
-    else
-    {
-        InBody->PlayAnimation(Hold, true);
-    }
+    InBody->PlayAnimation(Hold, true);
     SetComponentTickEnabled(true);
     return true;
 }
@@ -99,14 +88,5 @@ void UVSCharacterPresentationComponent::TickComponent(float DeltaTime, ELevelTic
     // Simulated proxies receive this velocity through CharacterMovement replication.
     const float Speed = Pawn->GetVelocity().Size2D();
     const float PlayRate = Speed > WalkClipSpeed ? FMath::Min(Speed / WalkClipSpeed, MaxWalkPlayRate) : 1.0f;
-    if (Locomotion)
-    {
-        if (UAnimSingleNodeInstance* Instance = Mesh->GetSingleNodeInstance())
-        {
-            Instance->SetBlendSpacePosition(FVector(FMath::Min(Speed, WalkClipSpeed), 0.0f, 0.0f));
-            Instance->SetPlayRate(PlayRate);
-        }
-        return;
-    }
     PlayLocomotion(Speed > 20.0f, PlayRate);
 }

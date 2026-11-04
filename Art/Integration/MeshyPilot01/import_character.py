@@ -2,8 +2,10 @@
 
 Imports only the readiness allowlist: SK_VS_UrbanEntry01 with its three textures,
 the static R01 hold, the forward in-place rifle walk and the optional unarmed walk.
-Creates one material, an optional 1D locomotion blend space (hold -> walk) and the
-R01_Pilot_Grip socket on hand_r. Root motion stays off. No map is opened or saved.
+Creates one material and records the R01 grip offset on hand_r (used by C++).
+Root motion stays off. No map is opened or saved. A Python-authored blend space
+was tried on 2026-11-04 and left the runtime body in its bind pose, so the runtime
+switches the hold/walk clips directly and none is created here.
 
 The source-to-native basis C is measured, not assumed: the native hand_r component
 transform at hold frame 1 is compared with the source record under both C=identity
@@ -31,9 +33,7 @@ BASE = "/Game/Art/Characters/UrbanEntry01"
 ANIMS = f"{BASE}/Animations"
 MESH = "SK_VS_UrbanEntry01"
 MATERIAL = "M_VS_UrbanEntry01"
-BLEND_SPACE = "BS_UE01_Pilot_Locomotion"
 SOCKET = "R01_Pilot_Grip"
-WALK_CLIP_SPEED = 145.0  # cm/s, stance-foot speed of the walk, see PREFLIGHT.md
 CLIP_ROLES = {"static_rifle_idle": "A_UE01_Pilot_RifleHold",
               "forward_in_place_rifle_walk": "A_UE01_Pilot_Walk_RifleHold",
               "optional_unarmed_forward_walk": "A_UE01_Walking"}
@@ -167,36 +167,6 @@ def import_character(files, material):
     return mesh, skeleton, clips
 
 
-def make_blend_space(skeleton, hold, walk):
-    """Best effort: the runtime falls back to switching clips when this is absent."""
-    try:
-        factory = unreal.BlendSpaceFactory1D()
-        factory.set_editor_property("target_skeleton", skeleton)
-        space = unreal.AssetToolsHelpers.get_asset_tools().create_asset(BLEND_SPACE, ANIMS, unreal.BlendSpace1D, factory)
-        require(space, "create_asset returned None")
-        parameter = unreal.BlendParameter()
-        parameter.set_editor_property("display_name", "Speed")
-        parameter.set_editor_property("min", 0.0)
-        parameter.set_editor_property("max", WALK_CLIP_SPEED)
-        parameter.set_editor_property("grid_num", 4)
-        parameters = list(space.get_editor_property("blend_parameters"))
-        parameters[0] = parameter
-        space.set_editor_property("blend_parameters", parameters)
-        samples = []
-        for anim, value in ((hold, 0.0), (walk, WALK_CLIP_SPEED)):
-            sample = unreal.BlendSample()
-            sample.set_editor_property("animation", anim)
-            sample.set_editor_property("sample_value", unreal.Vector(value, 0, 0))
-            samples.append(sample)
-        space.set_editor_property("sample_data", samples)
-        save(space, BLEND_SPACE)
-        return {"created": True, "asset": space.get_path_name()}
-    except Exception as error:  # Editor API differences: record and fall back.
-        if unreal.EditorAssetLibrary.does_asset_exist(f"{ANIMS}/{BLEND_SPACE}"):
-            unreal.EditorAssetLibrary.delete_asset(f"{ANIMS}/{BLEND_SPACE}")
-        return {"created": False, "reason": str(error), "runtime_fallback": "hold/walk clip switch"}
-
-
 def matrix_to_transform(matrix):
     """4x4 column-vector matrix (rotation + translation, unit scale) -> unreal.Transform."""
     r = [row[:3] for row in matrix[:3]]
@@ -277,10 +247,6 @@ def inspect(record):
     socket = mesh.find_socket(SOCKET)
     probe = unreal.SkeletalMeshComponent()
     probe.set_skeletal_mesh_asset(mesh)
-    space = unreal.load_asset(f"{ANIMS}/{BLEND_SPACE}")
-    samples = [] if space is None else [
-        [s.get_editor_property("animation").get_name(), xyz(s.get_editor_property("sample_value"))[0]]
-        for s in space.get_editor_property("sample_data")]
     clips = {}
     for name in CLIP_ROLES.values():
         anim = unreal.load_asset(f"{ANIMS}/{name}")
@@ -298,8 +264,6 @@ def inspect(record):
                                                socket.get_editor_property("relative_rotation").pitch,
                                                socket.get_editor_property("relative_rotation").yaw)]},
         "clips": clips,
-        "blend_space": unreal.EditorAssetLibrary.does_asset_exist(f"{ANIMS}/{BLEND_SPACE}"),
-        "blend_space_samples": samples,
         "bone_count": probe.get_num_bones(), "root_bone": str(probe.get_bone_name(0)),
         "source_commit": record["source_commit"],
     }
@@ -319,9 +283,7 @@ def main():
                 f"{BASE} already has assets; inspect, do not overwrite")
         unreal.SystemLibrary.execute_console_command(None, "Interchange.FeatureFlags.Import.FBX 0")
         material = make_material(import_textures(files))
-        mesh, skeleton, clips = import_character(files, material)
-        report["blend_space_creation"] = make_blend_space(
-            skeleton, clips["static_rifle_idle"], clips["forward_in_place_rifle_walk"])
+        mesh, _skeleton, clips = import_character(files, material)
         try:
             report["grip_derivation"] = derive_grip(mesh, record, clips["static_rifle_idle"])
         except Exception as error:  # Grip held; character and clips still usable.
