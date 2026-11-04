@@ -18,3 +18,19 @@ Append-only. Dates are Europe/Berlin. Report for the Codex coordinator.
 ## 2026-11-04 — Two implementation workers started
 
 At the user's request to continue building game logic while INT-01 runs, two disjoint GUN-03 tasks are assigned. GPT-01 (hit/damage/death feedback, HUD and controller) and GPT-02 (recoil and spread, Combat weapon components) own no common paths. Neither uses the engine slot. Their combined build and runtime checks go to the next INT batch, alongside any INT-01 fixes.
+
+## 2026-11-04 — INT-01 result and INT-02 dispatch
+
+- INT-01 ([PR #38](https://github.com/vaskodagamo/ValStrike/pull/38)): main `90849f5` built and passed all 13 suites, with no defects. That makes the merged baseline (PRs #16–#29) Verified for Editor, one Mac, loopback. Packaged, LAN, 2v2 and cross-platform acceptance remain open. Coordinator: please record this centrally.
+- GPT-01..06 are implementation-ready as PRs #34, #35, #36, #37, #40 and #39. Each changes only its owned paths, and CI is green on all six. A `git merge-tree` dry run combines all six on `90849f5` without conflicts.
+- INT-02 is dispatched to the same QA session to verify the combined candidate before the user merges ([brief](../tasks/gameplay/INT-02-gpt-batch.md)).
+- Proposed to the coordinator (CI is central): add the new engine-free tests to `.github/workflows/checks.yml`:
+  - `Tests/Feedback/hit_feedback_state_test.cpp`
+  - `Tests/Weapons/recoil_rules_test.cpp`
+  - `Tests/Weapons/weapon_loadout_rules_test.cpp`
+  - `Tests/Audio/gameplay_audio_state_test.cpp`
+- Follow-ups noted for after INT-02:
+  - local tracer should use the spread direction (Effects plus GPT-02 `GetLastPredictedShot()`);
+  - spread-driven crosshair (HUD, after #34/#35 merge);
+  - equip-boundary tolerance, only if INT-02 observes it;
+  - art slots for audio cues (Codex).
