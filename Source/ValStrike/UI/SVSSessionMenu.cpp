@@ -239,16 +239,20 @@ TSharedRef<SWidget> SVSSessionMenu::MakeSessionPage()
 TSharedRef<SWidget> SVSSessionMenu::MakeSettingsPage()
 {
     TSharedPtr<SButton> ApplyButton, BackButton;
+    // Each local player's menu is built after its world loads, and LoadMap
+    // resets the audio device's volume, so this applies the saved value per map.
+    MasterVolume = VSUserSettings::LoadMasterVolume();
+    VSUserSettings::ApplyMasterVolume(Controller.IsValid() ? Controller->GetWorld() : nullptr, MasterVolume);
     TSharedRef<SWidget> Page =
         SNew(SVerticalBox)
         + SVerticalBox::Slot().AutoHeight()
         [ Label(NSLOCTEXT("ValStrike", "MenuBrand", "V A L S T R I K E"), 13, Mint) ]
         + SVerticalBox::Slot().AutoHeight().Padding(0, 6, 0, 4)
         [ Label(NSLOCTEXT("ValStrike", "SettingsTitle", "SETTINGS"), 28) ]
-        + SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 12)
+        + SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 8)
         [
             SNew(STextBlock).Font(FCoreStyle::GetDefaultFontStyle("Regular", 13)).ColorAndOpacity(MenuMuted).AutoWrapText(true)
-            .Text(NSLOCTEXT("ValStrike", "SettingsHelp", "Sensitivity applies at once. Saved on this computer only."))
+            .Text(NSLOCTEXT("ValStrike", "SettingsHelp", "Sensitivity and volume apply at once. Saved on this computer only."))
         ]
         + SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 5)
         [
@@ -263,7 +267,7 @@ TSharedRef<SWidget> SVSSessionMenu::MakeSettingsPage()
                     FText::FromString(VSUserSettings::FormatMouseSensitivity(VSUserSettings::DefaultMouseSensitivity))), 12, MenuMuted)
             ]
         ]
-        + SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 12)
+        + SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 8)
         [
             SNew(SHorizontalBox)
             + SHorizontalBox::Slot().FillWidth(1).VAlign(VAlign_Center).Padding(0, 0, 12, 0)
@@ -294,8 +298,49 @@ TSharedRef<SWidget> SVSSessionMenu::MakeSettingsPage()
             ]
         ]
         + SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 5)
+        [
+            SNew(SHorizontalBox)
+            + SHorizontalBox::Slot().FillWidth(1)
+            [ Label(NSLOCTEXT("ValStrike", "VolumeLabel", "MASTER VOLUME"), 12, MenuMuted) ]
+            + SHorizontalBox::Slot().AutoWidth()
+            [
+                Label(FText::Format(NSLOCTEXT("ValStrike", "VolumeRange", "{0} – {1} %   ·   default {2}"),
+                    FText::FromString(VSUserSettings::FormatMasterVolume(VSUserSettings::MinMasterVolume)),
+                    FText::FromString(VSUserSettings::FormatMasterVolume(VSUserSettings::MaxMasterVolume)),
+                    FText::FromString(VSUserSettings::FormatMasterVolume(VSUserSettings::DefaultMasterVolume))), 12, MenuMuted)
+            ]
+        ]
+        + SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 8)
+        [
+            SNew(SHorizontalBox)
+            + SHorizontalBox::Slot().FillWidth(1).VAlign(VAlign_Center).Padding(0, 0, 12, 0)
+            [
+                SAssignNew(VolumeSlider, SSlider).Tag(FName(TEXT("VS.VolumeSlider")))
+                .MinValue(VSUserSettings::MinMasterVolume).MaxValue(VSUserSettings::MaxMasterVolume)
+                .StepSize(VSUserSettings::MasterVolumeStep)
+                .RequiresControllerLock(false)
+                .SliderHandleColor_Lambda([this]() { return VolumeSlider && VolumeSlider->HasKeyboardFocus() ? FLinearColor::White : Mint; })
+                .SliderBarColor_Lambda([this]() { return VolumeSlider && VolumeSlider->HasKeyboardFocus() ? Mint : MenuMuted; })
+                .Value_Lambda([this]() { return float(MasterVolume); })
+                .OnValueChanged_Lambda([this](float Value) { SetMasterVolume(VSUserSettings::ClampMasterVolume(Value)); })
+            ]
+            + SHorizontalBox::Slot().AutoWidth()
+            [
+                SAssignNew(VolumeInput, SEditableTextBox).Tag(FName(TEXT("VS.VolumeValue")))
+                .Font(FCoreStyle::GetDefaultFontStyle("Regular", 17)).Padding(FMargin(10, 6))
+                .MinDesiredWidth(76).Justification(ETextJustify::Center)
+                .Text(FText::FromString(VSUserSettings::FormatMasterVolume(MasterVolume)))
+                .SelectAllTextWhenFocused(true).SelectAllTextOnCommit(true)
+                .ClearKeyboardFocusOnCommit(false)
+                .OnTextCommitted_Lambda([this](const FText&, ETextCommit::Type Commit) {
+                    if (Commit == ETextCommit::OnCleared) SyncVolumeText();
+                    else CommitVolumeText(true);
+                })
+            ]
+        ]
+        + SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 5)
         [ Label(NSLOCTEXT("ValStrike", "WindowModeLabel", "WINDOW MODE"), 12, MenuMuted) ]
-        + SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 10)
+        + SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 8)
         [
             MakeSelector(TEXT("VS.WindowMode"), ModeButton,
                 [this]() { return VSUserSettings::WindowModeText(PendingMode); },
@@ -341,9 +386,9 @@ TSharedRef<SWidget> SVSSessionMenu::MakeSettingsPage()
                 [ Label(NSLOCTEXT("ValStrike", "SettingsBack", "Back  ·  Esc"), 15) ]
             ]
         ]
-        + SVerticalBox::Slot().AutoHeight().Padding(0, 12, 0, 0)
+        + SVerticalBox::Slot().AutoHeight().Padding(0, 8, 0, 0)
         [ Label(NSLOCTEXT("ValStrike", "SettingsKeys", "Tab: navigate     Left/Right: change     Enter: select     Esc: back"), 12, MenuMuted) ];
-    SettingsNavigation = {SensitivitySlider, SensitivityInput, ModeButton, ResolutionButton, ApplyButton, BackButton};
+    SettingsNavigation = {SensitivitySlider, SensitivityInput, VolumeSlider, VolumeInput, ModeButton, ResolutionButton, ApplyButton, BackButton};
     return Page;
 }
 
@@ -430,6 +475,7 @@ void SVSSessionMenu::OpenSettings()
     RefreshResolutionOptions(Current.Resolution);
     SetSettingsStatus(FText::GetEmpty(), false);
     SyncSensitivityText();
+    SyncVolumeText();
     bSettingsOpen = true;
     Pages->SetActiveWidgetIndex(1);
     for (const TSharedPtr<SWidget>& Widget : SettingsNavigation)
@@ -447,11 +493,16 @@ void SVSSessionMenu::CloseSettings(bool bFocusSettingsButton)
     }
     // A typed value counts when the player leaves the page without pressing Enter.
     CommitSensitivityText(false);
+    CommitVolumeText(false);
     bSettingsOpen = false;
     Pages->SetActiveWidgetIndex(0);
     if (Controller.IsValid())
     {
         Controller->SaveUserSettings();
+    }
+    if (bVolumeDirty)
+    {
+        bVolumeDirty = !VSUserSettings::SaveUserSettings();
     }
     if (bFocusSettingsButton)
     {
@@ -513,6 +564,58 @@ void SVSSessionMenu::CommitSensitivityText(bool bReportErrors)
         SetSettingsStatus(FText::Format(NSLOCTEXT("ValStrike", "SensitivityInvalid", "Enter a number from {0} to {1}."),
             FText::FromString(VSUserSettings::FormatMouseSensitivity(VSUserSettings::MinMouseSensitivity)),
             FText::FromString(VSUserSettings::FormatMouseSensitivity(VSUserSettings::MaxMouseSensitivity))), true);
+    }
+}
+
+void SVSSessionMenu::SetMasterVolume(int32 Percent)
+{
+    const int32 Clamped = VSUserSettings::ClampMasterVolume(Percent);
+    if (Clamped != MasterVolume)
+    {
+        MasterVolume = Clamped;
+        VSUserSettings::ApplyMasterVolume(Controller.IsValid() ? Controller->GetWorld() : nullptr, MasterVolume);
+        // In memory now, so travel keeps it; written to disk when the page closes.
+        VSUserSettings::StoreMasterVolume(MasterVolume);
+        bVolumeDirty = true;
+    }
+    SyncVolumeText();
+}
+
+void SVSSessionMenu::SyncVolumeText()
+{
+    if (VolumeInput)
+    {
+        VolumeInput->SetText(FText::FromString(VSUserSettings::FormatMasterVolume(MasterVolume)));
+    }
+}
+
+void SVSSessionMenu::CommitVolumeText(bool bReportErrors)
+{
+    if (!VolumeInput)
+    {
+        return;
+    }
+    const FString Text = VolumeInput->GetText().ToString();
+    if (Text == VSUserSettings::FormatMasterVolume(MasterVolume))
+    {
+        return;
+    }
+    int32 Percent = MasterVolume;
+    if (VSUserSettings::ParseMasterVolume(Text, Percent))
+    {
+        SetMasterVolume(Percent);
+        if (bSettingsError)
+        {
+            SetSettingsStatus(FText::GetEmpty(), false);
+        }
+        return;
+    }
+    SyncVolumeText();
+    if (bReportErrors)
+    {
+        SetSettingsStatus(FText::Format(NSLOCTEXT("ValStrike", "VolumeInvalid", "Enter a volume from {0} to {1} %."),
+            FText::FromString(VSUserSettings::FormatMasterVolume(VSUserSettings::MinMasterVolume)),
+            FText::FromString(VSUserSettings::FormatMasterVolume(VSUserSettings::MaxMasterVolume))), true);
     }
 }
 

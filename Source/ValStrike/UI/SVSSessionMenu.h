@@ -22,8 +22,8 @@ public:
     virtual FReply OnPreviewKeyDown(const FGeometry& Geometry, const FKeyEvent& Event) override;
     TSharedRef<SWidget> InitialFocus() const;
 
-    // Local settings page. Sensitivity applies as it changes; leaving the page
-    // commits typed text and saves. Window mode changes wait for Apply.
+    // Local settings page. Sensitivity and volume apply as they change; leaving
+    // the page commits typed text and saves. Window mode changes wait for Apply.
     bool IsSettingsOpen() const { return bSettingsOpen; }
     void OpenSettings();
     void CloseSettings(bool bFocusSettingsButton);
@@ -32,6 +32,7 @@ public:
     const TArray<FIntPoint>& GetResolutionOptions() const { return ResolutionOptions; }
     const FText& GetSettingsStatus() const { return SettingsStatus; }
     bool HasSettingsError() const { return bSettingsError; }
+    int32 GetMasterVolume() const { return MasterVolume; }
 
 private:
     TSharedRef<SWidget> MakeSessionPage();
@@ -47,6 +48,9 @@ private:
     void SetSensitivity(float Value);
     void SyncSensitivityText();
     void CommitSensitivityText(bool bReportErrors);
+    void SetMasterVolume(int32 Percent);
+    void SyncVolumeText();
+    void CommitVolumeText(bool bReportErrors);
     void CycleWindowMode(int32 Direction);
     void CycleResolution(int32 Direction);
     void RefreshResolutionOptions(FIntPoint Preferred);
@@ -63,12 +67,17 @@ private:
     TSharedPtr<SButton> SettingsButton;
     TSharedPtr<SSlider> SensitivitySlider;
     TSharedPtr<SEditableTextBox> SensitivityInput;
+    TSharedPtr<SSlider> VolumeSlider;
+    TSharedPtr<SEditableTextBox> VolumeInput;
     TSharedPtr<SButton> ModeButton;
     TSharedPtr<SButton> ResolutionButton;
     TArray<TSharedPtr<SWidget>> Navigation;
     TArray<TSharedPtr<SWidget>> SettingsNavigation;
 
     bool bSettingsOpen = false;
+    // Client-local; the menu owns it because the player controller does not.
+    int32 MasterVolume = 100;
+    bool bVolumeDirty = false;
     EWindowMode::Type PendingMode = EWindowMode::Windowed;
     TArray<FIntPoint> ResolutionOptions;
     int32 ResolutionIndex = INDEX_NONE;

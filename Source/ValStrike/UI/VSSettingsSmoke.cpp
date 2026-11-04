@@ -37,6 +37,7 @@ namespace
 constexpr float SettingsLookCounts = 1000.0f;
 constexpr float SettingsDegreesPerSensitivity = 70.0f;
 constexpr float SettingsChosenSensitivity = 0.36f;
+constexpr int32 SettingsChosenVolume = 95;
 const FIntPoint SettingsChosenWindow(1280, 720);
 const FIntPoint SettingsInitialWindow(960, 540);
 
@@ -97,6 +98,8 @@ private:
                 const FConfigFile* File = GConfig ? GConfig->FindConfigFile(GGameUserSettingsIni) : nullptr;
                 FString Stored;
                 Check(TEXT("fresh_settings_have_no_sensitivity"), File && !File->GetString(VSUserSettings::ConfigSection, VSUserSettings::MouseSensitivityKey, Stored), Stored);
+                Check(TEXT("unset_volume_uses_default"), File && !File->GetString(VSUserSettings::ConfigSection, VSUserSettings::MasterVolumeKey, Stored)
+                    && Menu->GetMasterVolume() == VSUserSettings::DefaultMasterVolume, FString::Printf(TEXT("stored=%s volume=%d"), *Stored, Menu->GetMasterVolume()));
             }
             Check(TEXT("unset_sensitivity_uses_default"), FMath::IsNearlyEqual(PC->GetMouseSensitivity(), VSUserSettings::DefaultMouseSensitivity),
                 FString::Printf(TEXT("%.4f"), PC->GetMouseSensitivity()));
@@ -214,6 +217,13 @@ private:
             break;
         case 16:
             if (Age < 0.2) return;
+            Check(TEXT("tab_reaches_volume_slider"), IsFocused(TEXT("VS.VolumeSlider")), FocusedTag().ToString());
+            SlateKey(EKeys::Left);
+            Check(TEXT("volume_left_arrow_applies_immediately"), Menu->GetMasterVolume() == SettingsChosenVolume && VolumeText() == TEXT("95")
+                && StoredVolume() == TEXT("95"), FString::Printf(TEXT("volume=%d text=%s stored=%s"), Menu->GetMasterVolume(), *VolumeText(), *StoredVolume()));
+            SlateKey(EKeys::Tab);
+            Check(TEXT("tab_reaches_volume_value"), IsFocused(TEXT("VS.VolumeValue")), FocusedTag().ToString());
+            SlateKey(EKeys::Tab);
             Check(TEXT("tab_reaches_window_mode"), IsFocused(TEXT("VS.WindowMode")), FocusedTag().ToString());
             SlateKey(EKeys::Left);
             Next(Now);
@@ -392,6 +402,7 @@ private:
             if (!PC->GetPawn() || !PC->GetPawn()->InputComponent || !Menu || Age < 2.0) return;
             Check(TEXT("restart_loads_saved_sensitivity"), PC->GetMouseSensitivity() == SettingsChosenSensitivity,
                 FString::Printf(TEXT("%.4f"), PC->GetMouseSensitivity()));
+            Check(TEXT("restart_loads_saved_volume"), Menu->GetMasterVolume() == SettingsChosenVolume, FString::Printf(TEXT("%d"), Menu->GetMasterVolume()));
             {
                 const VSUserSettings::FWindowState Window = LogWindow(TEXT("restart"), PC);
                 Check(TEXT("restart_restores_windowed_1280x720"), Window.Mode == EWindowMode::Windowed && Window.Resolution == SettingsChosenWindow, Describe(Window));
@@ -421,7 +432,7 @@ private:
             if (Age < 0.3) return;
             Check(TEXT("restart_enter_opens_settings"), Menu->IsSettingsOpen());
             Check(TEXT("restart_settings_show_saved_values"), SliderValue() == SettingsChosenSensitivity && ValueText() == TEXT("0.360")
-                && Menu->GetPendingWindowMode() == EWindowMode::Windowed && Menu->GetPendingResolution() == SettingsChosenWindow,
+                && VolumeText() == TEXT("95") && Menu->GetPendingWindowMode() == EWindowMode::Windowed && Menu->GetPendingResolution() == SettingsChosenWindow,
                 FString::Printf(TEXT("slider=%.4f text=%s mode=%d pending=%s"), SliderValue(), *ValueText(),
                     int32(Menu->GetPendingWindowMode()), *Menu->GetPendingResolution().ToString()));
             Next(Now);
@@ -534,6 +545,14 @@ private:
         return Stored;
     }
 
+    static FString StoredVolume()
+    {
+        FString Stored;
+        if (const FConfigFile* File = GConfig ? GConfig->FindConfigFile(GGameUserSettingsIni) : nullptr)
+            File->GetString(VSUserSettings::ConfigSection, VSUserSettings::MasterVolumeKey, Stored);
+        return Stored;
+    }
+
     FString Options() const
     {
         TArray<FString> Items;
@@ -565,6 +584,12 @@ private:
     FString ValueText() const
     {
         const TSharedPtr<SWidget> Widget = Tagged(TEXT("VS.SensitivityValue"));
+        return Widget ? StaticCastSharedPtr<SEditableTextBox>(Widget)->GetText().ToString() : FString();
+    }
+
+    FString VolumeText() const
+    {
+        const TSharedPtr<SWidget> Widget = Tagged(TEXT("VS.VolumeValue"));
         return Widget ? StaticCastSharedPtr<SEditableTextBox>(Widget)->GetText().ToString() : FString();
     }
 

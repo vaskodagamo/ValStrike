@@ -117,6 +117,75 @@ bool FVSUserSettingsTest::RunTest(const FString& Parameters)
     }
     IFileManager::Get().Delete(*Path);
 
+    // Master volume: whole percent, 5 % steps, clamped; malformed stored text keeps the default.
+    TestEqual(TEXT("Volume below range clamps to 0"), ClampMasterVolume(-20.0), MinMasterVolume);
+    TestEqual(TEXT("Volume above range clamps to 100"), ClampMasterVolume(250.0), MaxMasterVolume);
+    TestEqual(TEXT("Volume snaps down to 5 %"), ClampMasterVolume(42.0), 40);
+    TestEqual(TEXT("Volume snaps up to 5 %"), ClampMasterVolume(43.0), 45);
+    TestEqual(TEXT("Volume NaN falls back to default"), ClampMasterVolume(std::numeric_limits<double>::quiet_NaN()), DefaultMasterVolume);
+    TestEqual(TEXT("Volume infinity falls back to default"), ClampMasterVolume(std::numeric_limits<double>::infinity()), DefaultMasterVolume);
+    TestTrue(TEXT("Volume default lies inside the range"), MinMasterVolume <= DefaultMasterVolume && DefaultMasterVolume <= MaxMasterVolume
+        && DefaultMasterVolume % MasterVolumeStep == 0);
+    struct FVolume
+    {
+        const TCHAR* Text;
+        int32 Expected;
+    };
+    const FVolume AcceptedVolume[] = {
+        {TEXT("80"), 80}, {TEXT("  75  "), 75}, {TEXT("50%"), 50}, {TEXT(" 65 % "), 65}, {TEXT("0"), 0}, {TEXT("100"), 100},
+        {TEXT("+5"), 5}, {TEXT("-10"), 0}, {TEXT("250"), 100}, {TEXT("42"), 40}, {TEXT("56.9"), 55}, {TEXT("2,4"), 0},
+    };
+    for (const FVolume& Example : AcceptedVolume)
+    {
+        int32 Percent = -1;
+        TestTrue(FString::Printf(TEXT("Accept volume '%s'"), Example.Text), ParseMasterVolume(Example.Text, Percent));
+        TestEqual(FString::Printf(TEXT("Volume of '%s'"), Example.Text), Percent, Example.Expected);
+    }
+    const TCHAR* RejectedVolume[] = {
+        TEXT(""), TEXT("  "), TEXT("%"), TEXT("loud"), TEXT("50%%"), TEXT("%50"), TEXT("5 0"), TEXT("1e2"), TEXT("nan"), TEXT("0x40"),
+    };
+    for (const TCHAR* Text : RejectedVolume)
+    {
+        int32 Percent = 35;
+        TestFalse(FString::Printf(TEXT("Reject volume '%s'"), Text), ParseMasterVolume(Text, Percent));
+        TestEqual(FString::Printf(TEXT("Rejected volume '%s' leaves value"), Text), Percent, 35);
+    }
+    TestEqual(TEXT("Default volume text"), FormatMasterVolume(DefaultMasterVolume), FString(TEXT("100")));
+    TestEqual(TEXT("Volume formatting clamps and snaps"), FormatMasterVolume(103), FString(TEXT("100")));
+    for (int32 Percent = MinMasterVolume; Percent <= MaxMasterVolume; Percent += MasterVolumeStep)
+    {
+        int32 Parsed = -1;
+        if (!ParseMasterVolume(FormatMasterVolume(Percent), Parsed) || Parsed != Percent)
+        {
+            AddError(FString::Printf(TEXT("Volume round trip changed %d to %d"), Percent, Parsed));
+            break;
+        }
+    }
+    TestEqual(TEXT("Silent gain"), MasterVolumeGain(0), 0.0f);
+    TestEqual(TEXT("Half gain"), MasterVolumeGain(50), 0.5f);
+    TestEqual(TEXT("Full gain"), MasterVolumeGain(100), 1.0f);
+    TestEqual(TEXT("Unset volume keeps the default"), ReadMasterVolume(Empty), DefaultMasterVolume);
+    const FVolume StoredVolume[] = {
+        {TEXT(""), DefaultMasterVolume}, {TEXT("quiet"), DefaultMasterVolume}, {TEXT("inf"), DefaultMasterVolume},
+        {TEXT("0.5.5"), DefaultMasterVolume}, {TEXT("400"), 100}, {TEXT("-1"), 0}, {TEXT("0"), 0}, {TEXT("35"), 35},
+    };
+    for (const FVolume& Example : StoredVolume)
+    {
+        FConfigFile File;
+        File.SetString(ConfigSection, MasterVolumeKey, Example.Text);
+        TestEqual(FString::Printf(TEXT("Stored volume '%s'"), Example.Text), ReadMasterVolume(File), Example.Expected);
+    }
+    {
+        FConfigFile File;
+        WriteMouseSensitivity(File, 0.36f);
+        WriteMasterVolume(File, 63);
+        FString Raw;
+        TestTrue(TEXT("Volume stored in the settings section"), File.GetString(ConfigSection, MasterVolumeKey, Raw) && Raw == TEXT("65"));
+        TestEqual(TEXT("Volume reads back"), ReadMasterVolume(File), 65);
+        TestEqual(TEXT("Volume write keeps sensitivity"), ReadMouseSensitivity(File), 0.36f);
+    }
+    TestFalse(TEXT("No world, no volume change"), ApplyMasterVolume(nullptr, 50));
+
     // The character fallback and the settings default must not drift; the
     // mouse-look regression expects both to be 0.12.
     const FFloatProperty* Property = FindFProperty<FFloatProperty>(AVSCharacter::StaticClass(), TEXT("MouseSensitivity"));
