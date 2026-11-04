@@ -42,6 +42,8 @@ constexpr float MarkSurfaceOffset = 0.4f;    // cm along the hit normal; avoids 
 constexpr float WorldMarkHeatSeconds = 0.18f;
 constexpr float CharacterMarkHold = 0.12f;
 constexpr float CharacterMarkFade = 0.3f;
+// s; a prediction whose acceptance has not replicated by then is dropped.
+constexpr double PredictionHorizon = 1.0;
 // Camera-relative tracer origins when no visible mesh has a Muzzle socket.
 const FVector FirstPersonFallbackOffset(40.0, 12.0, -14.0);
 const FVector ObserverFallbackOffset(40.0, 16.0, -28.0);
@@ -224,10 +226,33 @@ void UVSShotEffectsSubsystem::ObserveCharacters(double Now)
         if (const UVSRifleComponent* Rifle = Pawn->GetRifleComponent())
         {
             FShotWatch& Watch = Watches.FindOrAdd(TWeakObjectPtr<const UActorComponent>(Rifle));
+            const bool bLocalShooter = Pawn->IsLocallyControlled();
+            if (bLocalShooter)
+            {
+                // Note before observing: a listen host accepts its own shot in the same frame.
+                const FVSShotSpread& Predicted = Rifle->GetLastPredictedShot();
+                Watch.Predicted.Expire(Now, VSShotEffectsDetail::PredictionHorizon);
+                Watch.Predicted.Note(Predicted.ShotId, Predicted.Direction, Now);
+            }
             const VSShotEffects::Decision Decision =
                 Watch.Counter.Observe(Rifle->GetState().ShotsFired, Now, Rifle->GetFireInterval());
             if (Decision.baseline) { ++Stats.Baselines; }
-            if (Decision.spawn) { SpawnShotEffect(*Pawn, *Rifle, Decision.shots, Now); }
+            if (Decision.spawn)
+            {
+                // Consume the predictions for every accepted shot, even if the server shot wins.
+                FVector PredictedDirection = FVector::ZeroVector;
+                const bool bPrediction = bLocalShooter && Watch.Predicted.Take(Decision.shots, PredictedDirection)
+                    && PredictedDirection.IsNormalized();
+                // Only a server keeps a resolved shot; on remote clients its id stays 0.
+                const FVSShotSpread& Server = Rifle->GetLastServerShot();
+                const bool bServer = Server.ShotId != 0 && Server.ShotId != Watch.LastServerShotId
+                    && Server.Direction.IsNormalized();
+                const VSShotEffects::DirectionSource Source = VSShotEffects::ChooseDirection(bLocalShooter, bPrediction, bServer);
+                if (bServer) { Watch.LastServerShotId = Server.ShotId; }
+                const FVector ShotDirection = Source == VSShotEffects::DirectionSource::Predicted ? PredictedDirection
+                    : Source == VSShotEffects::DirectionSource::Server ? Server.Direction : FVector::ZeroVector;
+                SpawnShotEffect(*Pawn, *Rifle, Decision.shots, Source, ShotDirection, Now);
+            }
         }
     }
     for (auto It = Watches.CreateIterator(); It; ++It)
@@ -258,7 +283,7 @@ FVector UVSShotEffectsSubsystem::TracerOrigin(const AVSCharacter& Shooter, bool 
 }
 
 void UVSShotEffectsSubsystem::SpawnShotEffect(const AVSCharacter& Shooter, const UActorComponent& Weapon,
-    uint32 Represented, double Now)
+    uint32 Represented, VSShotEffects::DirectionSource Source, const FVector& ShotDirection, double Now)
 {
     using namespace VSShotEffectsDetail;
     UWorld* World = GetWorld();
@@ -266,11 +291,14 @@ void UVSShotEffectsSubsystem::SpawnShotEffect(const AVSCharacter& Shooter, const
     const AActor* ViewTarget = LocalPC ? LocalPC->GetViewTarget() : nullptr;
     const bool bFirstPersonView = Shooter.IsLocallyControlled() && ViewTarget == &Shooter;
 
-    // Mirror the server trace: pawn view location, base aim (local: camera view;
-    // remote: replicated yaw and view pitch), weapon range, Visibility channel.
+    // Mirror the server trace: pawn view location, the shot's spread direction
+    // where known, else base aim (local: camera view; remote: replicated yaw and
+    // view pitch), weapon range, Visibility channel.
     const FVector Eye = Shooter.GetPawnViewLocation();
     const FRotator Aim = Shooter.GetBaseAimRotation();
-    const FVector Direction = Aim.Vector();
+    const FVector Direction = Source == VSShotEffects::DirectionSource::BaseAim ? Aim.Vector() : ShotDirection;
+    ++(Source == VSShotEffects::DirectionSource::Predicted ? Stats.PredictedDirections
+        : Source == VSShotEffects::DirectionSource::Server ? Stats.ServerDirections : Stats.BaseAimDirections);
     const FVector TraceEnd = Eye + Direction * WeaponRange(Weapon);
     FHitResult Hit;
     FCollisionQueryParams Query(SCENE_QUERY_STAT(VSShotEffectsTrace), false, &Shooter);
@@ -285,6 +313,7 @@ void UVSShotEffectsSubsystem::SpawnShotEffect(const AVSCharacter& Shooter, const
     Record.RepresentedShots = Represented;
     Record.Eye = Eye;
     Record.Direction = Direction;
+    Record.DirectionSource = Source;
     Record.Time = Now;
     Record.Impact = !bHit ? EVSShotImpactKind::None
         : bSelf ? EVSShotImpactKind::Self
