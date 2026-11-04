@@ -1,0 +1,418 @@
+{
+  "schema_version": 1,
+  "task_id": "ART-25",
+  "units": "cm",
+  "native_verified": false,
+  "material_context": "Neutral proxy for unchanged Site01 walls/floor, actual selected Meshy source pieces.",
+  "export_surface_checks": {
+    "MSH-W01": {
+      "polygon_indices_equal": true,
+      "max_uv_error": 0.0,
+      "min_corner_normal_dot": 0.9999997527488631,
+      "max_position_error_cm": 2.9802322387695312e-05
+    },
+    "MSH-W08": {
+      "polygon_indices_equal": true,
+      "max_uv_error": 0.0,
+      "min_corner_normal_dot": 0.9999997468166839,
+      "max_position_error_cm": 3.8743019104003906e-05
+    },
+    "MSH-W09": {
+      "polygon_indices_equal": true,
+      "max_uv_error": 0.0,
+      "min_corner_normal_dot": 0.9999998325888555,
+      "max_position_error_cm": 3.0221417546272278e-05
+    }
+  },
+  "placements": [
+    {
+      "label": "VS_ART25_WallWest",
+      "asset_id": "MSH-W01",
+      "source_local_pivot_m": [
+        0,
+        0,
+        0
+      ],
+      "native_expected_pivot_cm": [
+        400,
+        1510,
+        0
+      ],
+      "native_rotation_pitch_yaw_roll": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "expected_native_world_bounds_cm": {
+        "min": [
+          400.0,
+          1491.793300807476,
+          0.0
+        ],
+        "max": [
+          594.2425012588501,
+          1510.0,
+          300.0
+        ]
+      },
+      "collision": "NoCollision; retain all pre-existing Site01 blockers"
+    },
+    {
+      "label": "VS_ART25_DoorRecess",
+      "asset_id": "MSH-W08",
+      "source_local_pivot_m": [
+        1.952425012588501,
+        0,
+        0
+      ],
+      "native_expected_pivot_cm": [
+        595.2425012588501,
+        1510,
+        0
+      ],
+      "native_rotation_pitch_yaw_roll": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "expected_native_world_bounds_cm": {
+        "min": [
+          595.2425003051758,
+          1461.257199048996,
+          0.0
+        ],
+        "max": [
+          850.4554748535156,
+          1510.0000014901161,
+          300.0
+        ]
+      },
+      "collision": "NoCollision; retain all pre-existing Site01 blockers"
+    },
+    {
+      "label": "VS_ART25_WallEast",
+      "asset_id": "MSH-W01",
+      "source_local_pivot_m": [
+        4.514554758071899,
+        0,
+        0
+      ],
+      "native_expected_pivot_cm": [
+        851.4554758071899,
+        1510,
+        0
+      ],
+      "native_rotation_pitch_yaw_roll": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "expected_native_world_bounds_cm": {
+        "min": [
+          851.4554977416992,
+          1491.793300807476,
+          0.0
+        ],
+        "max": [
+          1045.6979751586914,
+          1510.0,
+          300.0
+        ]
+      },
+      "collision": "NoCollision; retain all pre-existing Site01 blockers"
+    },
+    {
+      "label": "VS_ART25_RoofParapet1",
+      "asset_id": "MSH-W09",
+      "source_local_pivot_m": [
+        0.2184898853302002,
+        0.1,
+        3.94
+      ],
+      "native_expected_pivot_cm": [
+        421.84898853302,
+        1500.0,
+        394.0
+      ],
+      "native_rotation_pitch_yaw_roll": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "expected_native_world_bounds_cm": {
+        "min": [
+          421.84898853302,
+          1462.6270002126694,
+          394.0000057220459
+        ],
+        "max": [
+          621.84898853302,
+          1499.9999998509884,
+          457.59100914001465
+        ]
+      },
+      "collision": "NoCollision; retain all pre-existing Site01 blockers"
+    },
+    {
+      "label": "VS_ART25_RoofParapet2",
+      "asset_id": "MSH-W09",
+      "source_local_pivot_m": [
+        2.2284898853302,
+        0.1,
+        3.94
+      ],
+      "native_expected_pivot_cm": [
+        622.84898853302,
+        1500.0,
+        394.0
+      ],
+      "native_rotation_pitch_yaw_roll": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "expected_native_world_bounds_cm": {
+        "min": [
+          622.8489875793457,
+          1462.6270002126694,
+          394.0000057220459
+        ],
+        "max": [
+          822.8489875793457,
+          1499.9999998509884,
+          457.59100914001465
+        ]
+      },
+      "collision": "NoCollision; retain all pre-existing Site01 blockers"
+    },
+    {
+      "label": "VS_ART25_RoofParapet3",
+      "asset_id": "MSH-W09",
+      "source_local_pivot_m": [
+        4.2384898853302,
+        0.1,
+        3.94
+      ],
+      "native_expected_pivot_cm": [
+        823.84898853302,
+        1500.0,
+        394.0
+      ],
+      "native_rotation_pitch_yaw_roll": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "expected_native_world_bounds_cm": {
+        "min": [
+          823.8490104675293,
+          1462.6270002126694,
+          394.0000057220459
+        ],
+        "max": [
+          1023.8490104675293,
+          1499.9999998509884,
+          457.59100914001465
+        ]
+      },
+      "collision": "NoCollision; retain all pre-existing Site01 blockers"
+    }
+  ],
+  "doorway_aperture_samples": {
+    "depth_cm": 24.371400475502014,
+    "widths": [
+      {
+        "height_cm": 25.0,
+        "width_cm": 134.5381498336792
+      },
+      {
+        "height_cm": 100.0,
+        "width_cm": 134.28698778152466
+      },
+      {
+        "height_cm": 152.0,
+        "width_cm": 134.0371608734131
+      },
+      {
+        "height_cm": 200.0,
+        "width_cm": 133.7970495223999
+      }
+    ],
+    "center_lintel_height_cm": 225.12328624725342,
+    "native_use": "Backed blind recess only; no new traversable opening."
+  },
+  "facade_width_cm": 645.69797706604,
+  "source_to_world": "Source assembly (U,V,Z) meters maps to native world cm (400+100U,1510-100V,100Z). Native pivot assumptions require measured import bounds; no negative actor scale.",
+  "mating_samples": [
+    {
+      "joint": "WallWest/DoorRecess",
+      "depth_cm": 3.0,
+      "height_cm": 25.0,
+      "gap_cm": null,
+      "interpretation": "Sampled side-profile gap; retained wall is backing. Not watertight structural mating."
+    },
+    {
+      "joint": "WallWest/DoorRecess",
+      "depth_cm": 3.0,
+      "height_cm": 100.0,
+      "gap_cm": null,
+      "interpretation": "Sampled side-profile gap; retained wall is backing. Not watertight structural mating."
+    },
+    {
+      "joint": "WallWest/DoorRecess",
+      "depth_cm": 3.0,
+      "height_cm": 152.0,
+      "gap_cm": null,
+      "interpretation": "Sampled side-profile gap; retained wall is backing. Not watertight structural mating."
+    },
+    {
+      "joint": "WallWest/DoorRecess",
+      "depth_cm": 3.0,
+      "height_cm": 250.0,
+      "gap_cm": null,
+      "interpretation": "Sampled side-profile gap; retained wall is backing. Not watertight structural mating."
+    },
+    {
+      "joint": "WallWest/DoorRecess",
+      "depth_cm": 3.0,
+      "height_cm": 290.0,
+      "gap_cm": 1.9024133682250977,
+      "interpretation": "Sampled side-profile gap; retained wall is backing. Not watertight structural mating."
+    },
+    {
+      "joint": "WallWest/DoorRecess",
+      "depth_cm": 8.0,
+      "height_cm": 25.0,
+      "gap_cm": 4.118525981903076,
+      "interpretation": "Sampled side-profile gap; retained wall is backing. Not watertight structural mating."
+    },
+    {
+      "joint": "WallWest/DoorRecess",
+      "depth_cm": 8.0,
+      "height_cm": 100.0,
+      "gap_cm": 4.626965522766113,
+      "interpretation": "Sampled side-profile gap; retained wall is backing. Not watertight structural mating."
+    },
+    {
+      "joint": "WallWest/DoorRecess",
+      "depth_cm": 8.0,
+      "height_cm": 152.0,
+      "gap_cm": 4.845845699310303,
+      "interpretation": "Sampled side-profile gap; retained wall is backing. Not watertight structural mating."
+    },
+    {
+      "joint": "WallWest/DoorRecess",
+      "depth_cm": 8.0,
+      "height_cm": 250.0,
+      "gap_cm": 4.2260050773620605,
+      "interpretation": "Sampled side-profile gap; retained wall is backing. Not watertight structural mating."
+    },
+    {
+      "joint": "WallWest/DoorRecess",
+      "depth_cm": 8.0,
+      "height_cm": 290.0,
+      "gap_cm": 1.8768072128295898,
+      "interpretation": "Sampled side-profile gap; retained wall is backing. Not watertight structural mating."
+    },
+    {
+      "joint": "DoorRecess/WallEast",
+      "depth_cm": 3.0,
+      "height_cm": 25.0,
+      "gap_cm": null,
+      "interpretation": "Sampled side-profile gap; retained wall is backing. Not watertight structural mating."
+    },
+    {
+      "joint": "DoorRecess/WallEast",
+      "depth_cm": 3.0,
+      "height_cm": 100.0,
+      "gap_cm": null,
+      "interpretation": "Sampled side-profile gap; retained wall is backing. Not watertight structural mating."
+    },
+    {
+      "joint": "DoorRecess/WallEast",
+      "depth_cm": 3.0,
+      "height_cm": 152.0,
+      "gap_cm": null,
+      "interpretation": "Sampled side-profile gap; retained wall is backing. Not watertight structural mating."
+    },
+    {
+      "joint": "DoorRecess/WallEast",
+      "depth_cm": 3.0,
+      "height_cm": 250.0,
+      "gap_cm": null,
+      "interpretation": "Sampled side-profile gap; retained wall is backing. Not watertight structural mating."
+    },
+    {
+      "joint": "DoorRecess/WallEast",
+      "depth_cm": 3.0,
+      "height_cm": 290.0,
+      "gap_cm": 2.6132583618164062,
+      "interpretation": "Sampled side-profile gap; retained wall is backing. Not watertight structural mating."
+    },
+    {
+      "joint": "DoorRecess/WallEast",
+      "depth_cm": 8.0,
+      "height_cm": 25.0,
+      "gap_cm": 3.978109359741211,
+      "interpretation": "Sampled side-profile gap; retained wall is backing. Not watertight structural mating."
+    },
+    {
+      "joint": "DoorRecess/WallEast",
+      "depth_cm": 8.0,
+      "height_cm": 100.0,
+      "gap_cm": 4.58064079284668,
+      "interpretation": "Sampled side-profile gap; retained wall is backing. Not watertight structural mating."
+    },
+    {
+      "joint": "DoorRecess/WallEast",
+      "depth_cm": 8.0,
+      "height_cm": 152.0,
+      "gap_cm": 4.700756072998047,
+      "interpretation": "Sampled side-profile gap; retained wall is backing. Not watertight structural mating."
+    },
+    {
+      "joint": "DoorRecess/WallEast",
+      "depth_cm": 8.0,
+      "height_cm": 250.0,
+      "gap_cm": 4.253673553466797,
+      "interpretation": "Sampled side-profile gap; retained wall is backing. Not watertight structural mating."
+    },
+    {
+      "joint": "DoorRecess/WallEast",
+      "depth_cm": 8.0,
+      "height_cm": 290.0,
+      "gap_cm": 2.364492416381836,
+      "interpretation": "Sampled side-profile gap; retained wall is backing. Not watertight structural mating."
+    }
+  ]
+}
