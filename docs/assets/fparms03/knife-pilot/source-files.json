@@ -1,0 +1,171 @@
+{
+  "task": "ART-26",
+  "frozen_inputs": "inputs.json",
+  "files": [
+    {
+      "path": "Art/Source/Characters/FPArms03/KnifePilot/KnifePilot.blend",
+      "bytes": 73645864,
+      "sha256": "033fae9aa39a7205ec01688ca31f6e4d9b8655d6a4b46db98c7d1921571278f4"
+    },
+    {
+      "path": "Art/Source/Characters/FPArms03/KnifePilot/Exports/A_FPArms03_KnifeEquip.fbx",
+      "bytes": 326332,
+      "sha256": "6926c8e12f1c3f41f853b2a7ebce95daa0058112a2cfc2e66b4ccd0d317c5beb"
+    },
+    {
+      "path": "Art/Source/Characters/FPArms03/KnifePilot/Exports/A_FPArms03_KnifeIdle.fbx",
+      "bytes": 372780,
+      "sha256": "64f04c8ab44ffc00a2659488d8f47bb7a76c5fc66c872aa6e0989c934c0ba16b"
+    },
+    {
+      "path": "Art/Source/Characters/FPArms03/KnifePilot/Exports/A_FPArms03_KnifeLocomotion.fbx",
+      "bytes": 362940,
+      "sha256": "4736a5b9a1515e3c51dc2f088ac60b7aa680cc18eec7971e9c5ad90115eef051"
+    },
+    {
+      "path": "Art/Source/Characters/FPArms03/KnifePilot/Exports/A_FPArms03_KnifeSlash.fbx",
+      "bytes": 328476,
+      "sha256": "ff047ca4054da02995c40730bab1c14a4a568f6f82edaf774cc5715a1955758a"
+    },
+    {
+      "path": "Art/Source/Characters/FPArms03/KnifePilot/Exports/A_FPArms03_KnifeStab.fbx",
+      "bytes": 379036,
+      "sha256": "c837619795ec89ba329c48dd8ae96acc59b9ff53588288c30e9bdb1d08d69584"
+    },
+    {
+      "path": "Art/Source/Characters/FPArms03/KnifePilot/Exports/SK_FPArms03_KnifePilot.fbx",
+      "bytes": 32239180,
+      "sha256": "74ee29cd09cd15d3c8dc0b7c1c821c55c5e1889f78220505ee0d3dd725402f1e"
+    },
+    {
+      "path": "docs/assets/fparms03/knife-pilot/Previews/source_equip_13_90fov.png",
+      "bytes": 870093,
+      "sha256": "5cc3e83a45930a583c151eb1f051c04cd3190a97fa319e17886e0d3af2669d30"
+    },
+    {
+      "path": "docs/assets/fparms03/knife-pilot/Previews/source_equip_25_90fov.png",
+      "bytes": 926769,
+      "sha256": "48d22fe9b3ac00fb656e9035681433f83220d7621c215c49598fee4ab1d22fa1"
+    },
+    {
+      "path": "docs/assets/fparms03/knife-pilot/Previews/source_idle_01_90fov.png",
+      "bytes": 926938,
+      "sha256": "53497c0f553bf28cfd1534c07fca19507732b5a3190e50534ee51832eb7b45f8"
+    },
+    {
+      "path": "docs/assets/fparms03/knife-pilot/Previews/source_idle_01_above.png",
+      "bytes": 927716,
+      "sha256": "de92378d8d92a7593f48872662973fd73404e03105294f4c74356c43910d810e"
+    },
+    {
+      "path": "docs/assets/fparms03/knife-pilot/Previews/source_idle_01_front.png",
+      "bytes": 997875,
+      "sha256": "934f6f9a31145ed7e2aabfa4e2a92fae688173e7e24b49af8a5c4c421eef2912"
+    },
+    {
+      "path": "docs/assets/fparms03/knife-pilot/Previews/source_idle_01_reverse.png",
+      "bytes": 996509,
+      "sha256": "93a2e0f2b0c95b5bd970d1b8c568ed661f13abcb620075c2d634a50995d3f738"
+    },
+    {
+      "path": "docs/assets/fparms03/knife-pilot/Previews/source_locomotion_13_90fov.png",
+      "bytes": 927593,
+      "sha256": "9fa780c7f16cd32752f4cd8c173a832cf74f32d02a67cb38291909b0248b32a9"
+    },
+    {
+      "path": "docs/assets/fparms03/knife-pilot/Previews/source_slash_05_90fov.png",
+      "bytes": 935618,
+      "sha256": "131b408889d70b8af9875996696e194628ae32ae7136171c0d8cb7add5b6c459"
+    },
+    {
+      "path": "docs/assets/fparms03/knife-pilot/Previews/source_slash_10_90fov.png",
+      "bytes": 944026,
+      "sha256": "a9ffe71a60ebe7ce5ddddf8cb6fedd689a931cd08af4291b205304116aa57ac3"
+    },
+    {
+      "path": "docs/assets/fparms03/knife-pilot/Previews/source_slash_34_90fov.png",
+      "bytes": 926967,
+      "sha256": "23216d9b1cc13aa7a2acd217fc54887d701a0113a0da06d3e962b8cda78db01b"
+    },
+    {
+      "path": "docs/assets/fparms03/knife-pilot/Previews/source_stab_10_90fov.png",
+      "bytes": 923183,
+      "sha256": "0c1e22d2f03a40c7ad0f1a2d8d908ad7fa322aeccd47a70d0e471fa8a3504aee"
+    },
+    {
+      "path": "docs/assets/fparms03/knife-pilot/Previews/source_stab_19_90fov.png",
+      "bytes": 905818,
+      "sha256": "3e416b54108cd87c68d1482d491ebb4d0c0215743e355cfe0568ca93a60e783a"
+    },
+    {
+      "path": "docs/assets/fparms03/knife-pilot/Previews/source_stab_55_90fov.png",
+      "bytes": 926776,
+      "sha256": "69d65db29856272a8e9e41b3e17d3d34289789dd5f8b70005514ef960cdde6aa"
+    },
+    {
+      "path": "docs/assets/fparms03/knife-pilot/Previews/export_equip_13_90fov.png",
+      "bytes": 870269,
+      "sha256": "6ad776166a53ee2be339c608eaf8b4a93f288a83fe6c8c065700fe4d2a26782c"
+    },
+    {
+      "path": "docs/assets/fparms03/knife-pilot/Previews/export_equip_25_90fov.png",
+      "bytes": 926819,
+      "sha256": "39d49a2b0e620b2473bebca0c94cd5cd16e4552a7fbadec05286c8fb1aa9633e"
+    },
+    {
+      "path": "docs/assets/fparms03/knife-pilot/Previews/export_idle_01_90fov.png",
+      "bytes": 926739,
+      "sha256": "9107f9dde3e092a0f0221bbc9b27eff08dea76a3f70717bf0708cdd9a555018a"
+    },
+    {
+      "path": "docs/assets/fparms03/knife-pilot/Previews/export_idle_01_above.png",
+      "bytes": 927744,
+      "sha256": "bc9dfb863f53712fe8dde1883c9f293a3e70f03c50e5d97a9a4db45ce9f65d27"
+    },
+    {
+      "path": "docs/assets/fparms03/knife-pilot/Previews/export_idle_01_front.png",
+      "bytes": 997926,
+      "sha256": "fb36c1f58076ed1f1a03a3d0cec73a3e3ce6f31d3ea6c86958f5644bd648501c"
+    },
+    {
+      "path": "docs/assets/fparms03/knife-pilot/Previews/export_idle_01_reverse.png",
+      "bytes": 996964,
+      "sha256": "1b1c8afdabca8df68b4d3595f13a1c43ca7897aa820fc26c4d25655514974b37"
+    },
+    {
+      "path": "docs/assets/fparms03/knife-pilot/Previews/export_locomotion_13_90fov.png",
+      "bytes": 927729,
+      "sha256": "46b283c852cd0fc1e835fe9bd4cd0db5cadaa1fce38ab4a77f7ac7e327ad1663"
+    },
+    {
+      "path": "docs/assets/fparms03/knife-pilot/Previews/export_slash_05_90fov.png",
+      "bytes": 934835,
+      "sha256": "ea7f42cf94eb50ddcafb08f4751f7161cbb18a39b60ce73a441f3689e92f2cb0"
+    },
+    {
+      "path": "docs/assets/fparms03/knife-pilot/Previews/export_slash_10_90fov.png",
+      "bytes": 944127,
+      "sha256": "f5f01255d3374988dd7638f7f68119dd5d5d4a47798de392fe1976b0aa723784"
+    },
+    {
+      "path": "docs/assets/fparms03/knife-pilot/Previews/export_slash_34_90fov.png",
+      "bytes": 926787,
+      "sha256": "2966852fda7f3a3b9284ba6df5a96633c50d482a4e5554d4f1f6d9c8a4a93095"
+    },
+    {
+      "path": "docs/assets/fparms03/knife-pilot/Previews/export_stab_10_90fov.png",
+      "bytes": 922806,
+      "sha256": "114e42c514a8b10ca1ff9aa0d6135c680d0cc6ad3fc745b14f4dbd8210558948"
+    },
+    {
+      "path": "docs/assets/fparms03/knife-pilot/Previews/export_stab_19_90fov.png",
+      "bytes": 905391,
+      "sha256": "a6b23cb98bd7c46f66b716e510cf377d2cb2d65a003c6d04960d2db2c5eaaf2f"
+    },
+    {
+      "path": "docs/assets/fparms03/knife-pilot/Previews/export_stab_55_90fov.png",
+      "bytes": 926840,
+      "sha256": "70142e2d213c340e2ae008d8d2182610cbaa7bc738b38d787f472b05a36b9936"
+    }
+  ]
+}
