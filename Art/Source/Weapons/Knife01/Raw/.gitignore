@@ -1,0 +1,3 @@
+# Local CLI journal and service URLs stay private; selected originals are manifested separately.
+*
+!.gitignore
