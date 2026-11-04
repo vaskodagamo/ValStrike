@@ -1,0 +1,56 @@
+{
+  "prepared_head": "fd7621cfdec54838254e3f7a7ac049a02129de07",
+  "inputs": [
+    {
+      "role": "character",
+      "source_commit": "45deb700a96b2aad3084808b1c7809d4589fdbd7",
+      "path": "Art/Source/Characters/UrbanEntry01/UrbanEntry01_Pilot.blend",
+      "sha256": "25bf7b8d18ec7ed1966dc1be2fa367e09d0df0666b7ca5feb3b72fc9710949ea",
+      "bytes": 4336302
+    },
+    {
+      "role": "character_fbx",
+      "source_commit": "45deb700a96b2aad3084808b1c7809d4589fdbd7",
+      "path": "Art/Source/Characters/UrbanEntry01/Exports/SK_VS_UrbanEntry01.fbx",
+      "sha256": "cf6930297e3579704be638829b8043934d1cab6a45fc15c4e8df0ff04cc6e782",
+      "bytes": 2179436
+    },
+    {
+      "role": "P01",
+      "source_commit": "6cc438576d3a0f4896292ab73094ce8c5650781c",
+      "path": "Art/Source/Weapons/Pistol01/Models/P01_Shrike.blend",
+      "sha256": "50396f3b2b637b080f1e836a5e0205901db3212128cf8763975804ec3587f0c9",
+      "bytes": 233959
+    },
+    {
+      "role": "P02",
+      "source_commit": "ccb08f06e22d23573697a1494a34436f901fa006",
+      "path": "Art/Source/Weapons/Pistol02/Models/P02_Kestrel.blend",
+      "sha256": "cc8736614bcf3ae29cd661413adc3179d142db470e687c68f6fc6eef8f728ed4",
+      "bytes": 41032959
+    },
+    {
+      "role": "character_texture",
+      "source_commit": "45deb700a96b2aad3084808b1c7809d4589fdbd7",
+      "path": "Art/Source/Characters/UrbanEntry01/Textures/T_UE01_Roughness.png",
+      "sha256": "5c4ca64d278d86c9dbea3c7c7b1acb03a96eb50194b0264d8d05b53773647dbf",
+      "bytes": 2589732
+    },
+    {
+      "role": "character_texture",
+      "source_commit": "45deb700a96b2aad3084808b1c7809d4589fdbd7",
+      "path": "Art/Source/Characters/UrbanEntry01/Textures/T_UE01_Metallic.png",
+      "sha256": "ab0af3e46fc01f463a4432429efce8e068393e56c27b32c63cd4cf837374ed91",
+      "bytes": 1494124
+    },
+    {
+      "role": "character_texture",
+      "source_commit": "45deb700a96b2aad3084808b1c7809d4589fdbd7",
+      "path": "Art/Source/Characters/UrbanEntry01/Textures/T_UE01_BaseColor.png",
+      "sha256": "70555f5060a8dccdb67936ac48b827888c629e8fe8f013b6ffa53a55fb85e50a",
+      "bytes": 17077891
+    }
+  ],
+  "service_calls": 0,
+  "credits": 0
+}

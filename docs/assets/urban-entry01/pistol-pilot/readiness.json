@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "task_id": "ART-23",
+  "status": "source_ready",
+  "source_commit": "887de0a05558169bb6f18717b579d13779449c43",
+  "date_europe_berlin": "2026-11-04",
+  "scope": "Stationary third-person pistol ready hold at pilot distance only; native/runtime pending.",
+  "included_files": [
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/PistolPilot/UrbanEntry01_PistolPilot.blend",
+      "sha256": "c969ac7b1c039e5e12ca5d200aee7f7011755afa2b46654bcd41cda7ac2267e3",
+      "bytes": 45304281
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/PistolPilot/Exports/A_UE01_Pilot_PistolHold.fbx",
+      "sha256": "85903b1e7cbcfb5054aefc23fbe617cadd9a480273be378e0fa81cda2bd509a1",
+      "bytes": 608716
+    }
+  ],
+  "preserved_source_reference": "docs/assets/urban-entry01/pistol-pilot/source-references.json",
+  "animation": {
+    "name": "A_UE01_Pilot_PistolHold",
+    "frames": [
+      1,
+      61
+    ],
+    "fps": 60,
+    "constant_pose": true,
+    "animation_only": true,
+    "bone_count": 66,
+    "root": "pelvis",
+    "root_motion": false,
+    "units": "centimeters",
+    "forward": "+X",
+    "up": "+Z"
+  },
+  "weapons": {
+    "P01": {
+      "source_fit": "pass",
+      "native": "pending",
+      "scope": "Stationary third-person pilot only",
+      "component_translation_cm": [
+        38,
+        -3,
+        137
+      ],
+      "component_rotation": "identity",
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "matrix_reference": "source-validation.json:weapons.P01",
+      "assembly": "Body datum at zero; Slide (0,0,3), Magazine identity.",
+      "limitations": "Angular compressed glove curls, small hollow in grip, shallow thumb/backstrap contact (exploratory proxy about 0.31 cm, not a reliable solid-inside test). Hero/first-person contact held."
+    },
+    "P02": {
+      "source_fit": "pass",
+      "native": "pending",
+      "scope": "Stationary third-person source-fit reference; runtime weapon optimization/replacement separate",
+      "component_translation_cm": [
+        38,
+        -3,
+        134
+      ],
+      "component_rotation": "identity",
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "matrix_reference": "source-validation.json:weapons.P02",
+      "assembly": "All three part meshes share Grip origin; assemble at identity, not marker offsets.",
+      "limitations": "Same glove/finger close-up limitations; existing 461412-triangle source is not runtime optimization approval."
+    }
+  },
+  "held": [
+    "First-person/hero hand quality",
+    "Crouch, locomotion, reload, equip, recoil, animated trigger pull and aim offsets",
+    "Any standalone native update before producer scheduling"
+  ],
+  "evidence": {
+    "review": "docs/assets/urban-entry01/pistol-pilot/README.md",
+    "preservation_and_reimport": "docs/assets/urban-entry01/pistol-pilot/source-validation.json",
+    "contact_observations": "docs/assets/urban-entry01/pistol-pilot/contact-diagnostics.json",
+    "matched_views": "Previews/{P01,P02}_{original_same_pose,candidate_right,reimport_right,reimport_left}.png",
+    "distance_views": "Previews/{P01,P02}_distance_5m.png; 1920x1080, 90-degree horizontal FOV, neutral source studio"
+  },
+  "native_instructions": [
+    "Producer queues a later native follow-up after current INT-ART-01 acceptance; do not mutate its active candidate.",
+    "Import only the new animation-only FBX onto the existing UrbanEntry skeleton; 60 FPS, pelvis root, root motion off.",
+    "Use stationary pistol action and matching weapon attachment together. Remove old floating pistol offsets; do not reuse rifle pose/socket.",
+    "Measure native hand_r component matrix H at frame 1 and verified source-to-native basis C. With supplied source weapon matrix W, local = inverse(H) * C * W * inverse(C), adapted to native transform order. Do not blindly copy Blender quaternion/Euler.",
+    "If Y reflection is verified, desired native component location is P01 (38,3,137) or P02 (38,3,134), identity rotation, scale 1. Preserve first-person behavior, weapon part contracts, authority and hit zones.",
+    "Verify imported/reopened materials, stationary remote two-hand fit, switching and visibility on actual clients. Existing movement/crouch fallbacks and other animation coverage are not solved here."
+  ],
+  "service_calls": 0,
+  "credits": 0,
+  "unreal_operations": 0
+}
