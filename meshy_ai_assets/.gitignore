@@ -1,0 +1,18 @@
+# Local original-download inbox. Track only these instructions and empty scaffolds.
+/*
+!/.gitignore
+!/AGENTS.md
+!/README.md
+!/ASSET_REGISTER.csv
+!/world_objects/
+!/characters/
+!/animations/
+!/unsorted/
+/world_objects/*
+!/world_objects/.gitkeep
+/characters/*
+!/characters/.gitkeep
+/animations/*
+!/animations/.gitkeep
+/unsorted/*
+!/unsorted/.gitkeep

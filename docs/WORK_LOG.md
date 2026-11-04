@@ -388,6 +388,16 @@ The gameplay/integration idle slots were checked clean at their original heads b
 
 **Limits/next action:** Concept images do not guarantee dimensional or seam compatibility. Guide records wall/corner and parapet trim discrepancies and requires normalized profiles, planar mating faces, real scale/pivots, optional paint and door clearance during mesh cleanup. These are not PBR/seamless texture maps or production models. User can generate each asset separately; art cleanup and central native integration follow as separately assigned work. No new worker or paid service was launched.
 
+## 2026-11-04 — ART-10 Meshy upload inbox and Site01 intake
+
+**Request/result:** Created `meshy_ai_assets/` in the coordinating checkout for user-generated world objects, character and animations. Four real upload folders (`world_objects`, `characters`, `animations`, `unsorted`), a local ignore policy, artist rules, empty coordinator-owned asset register and a concise upload/cleanup/integration guide. Root README and team board link the intake. ART-10 records scope/ownership on `codex/meshy-asset-intake`, base `8226442`.
+
+**Workflow:** Keep originals unchanged and local; they do not propagate via Git to other worktrees/Macs. After upload completion, coordinator inventories exact inputs/provenance/hashes and assigns bounded cleanup work in separate worktrees. Production source/native assets use the existing Git LFS workflow. A single assigned native/map owner integrates reviewed assets into existing `/Game/Maps/Site01/VS_Site01`, preserving gameplay/layout contracts and coordinating character runtime wiring with engineering.
+
+**Verification/limits:** Checked all four folders/placeholders, representative root/nested download ignore rules and scaffold exemptions, local links and empty CSV; whitespace review at publication. No new tests, Unreal process, source-model edit, worker dispatch or automatic folder watcher. Production intake awaits actual uploaded files; no imported/runtime-ready claim.
+
+**Next action:** User uploads original downloads and signals completion; coordinator inventories and assigns real asset batches before any artist starts. User retains PR merges.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.
