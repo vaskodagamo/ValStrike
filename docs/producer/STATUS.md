@@ -22,4 +22,6 @@
 
 Four focused spending-guard tests passed: idempotency/settlement, concurrent cap enforcement, unresolved jobs across Berlin midnight, and missing/reset/overrun refusal. Command: `python3 -m unittest discover -s Tests -p 'test_producer_budget.py' -v`. No full suite, build, Meshy generation or game runtime test was run for TEAM-02. Review/diff/link checks cover the policy files.
 
-Next: publish TEAM-02 for user merge; inspect final R02/hands/knife handoffs and real comparisons as they arrive; reconcile the recorded QA slot release with INT-ART-01. Keep GPF-04 queued until contributor capacity and shared paths permit a bounded dispatch. Each native owner records the exact candidate and actual results; user retains merges and other-Mac playtest acceptance.
+Publication: implementation `a57cbda`, [PR #88](https://github.com/vaskodagamo/ValStrike/pull/88), awaiting user merge.
+
+Next: inspect final R02/hands/knife handoffs and real comparisons as they arrive; reconcile the recorded QA slot release with INT-ART-01. Keep GPF-04 queued until contributor capacity and shared paths permit a bounded dispatch. Each native owner records the exact candidate and actual results; user retains merges and other-Mac playtest acceptance.

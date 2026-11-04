@@ -11,4 +11,4 @@
 
 ## Handoff
 
-Implementation ready. Automation `valstrike-studio-producer` is active in the same chat, every 30 minutes/every day. Four focused budget-boundary tests passed; subscription CLI probe and both authorized Claude UI handoffs succeeded. Exact schedule, first-cycle state and skill rollout are recorded in `docs/producer/STATUS.md` and the central work log. Publication is the remaining step. Asset generation, native import and runtime acceptance remain separate tasks.
+Implementation ready. Automation `valstrike-studio-producer` is active in the same chat, every 30 minutes/every day. Four focused budget-boundary tests passed; subscription CLI probe and both authorized Claude UI handoffs succeeded. Exact schedule, first-cycle state and skill rollout are recorded in `docs/producer/STATUS.md` and the central work log. Implementation commit `a57cbda`; published as [PR #88](https://github.com/vaskodagamo/ValStrike/pull/88) targeting main. This publication record follows that implementation commit. User merges. Asset generation, native import and runtime acceptance remain separate tasks.
