@@ -1,5 +1,12 @@
 # Team board
 
+## Current admission — 2026-11-04, 18:25 Europe/Berlin
+
+**INT-ART-04 active:** same native owner, new `claude/int-art-04-weapon-replacement` observed; R02/P02 replacement and one corrected combined candidate. Mac access restored. Existing facade published as #116 after direct ART-25 approval and merged #112; no repeated QA for publication.
+
+**Frozen inputs for next knife batch:** ART-26-C1 #115/`5b8b675` contact/framing source review accepted (general deformation/native gates remain); ART-27 #110 source reviewed/merged. KNIFE-01-M1 #114/`adb7374` removes the duplicated declaration/RPC reintroduced by #108's main merge; exact delta and green CI reviewed. All same owners, stopped. INT-ART-03 waits for INT-ART-04's shared presentation/engine release, not another source-art assignment. [Checkpoint](producer/STATUS.md). User retains merges.
+
+
 ## Current admission — 2026-11-04, 17:51 Europe/Berlin
 
 **Active: ART-26-C1 only**, existing hands artist at High, same draft #109/branch. Producer confirmed loose grip and windup crops in actual exports and returned the bounded correction. ART-27 #110 is frozen and source-reviewed for the third-person pilot; KNIFE-01 phase B #108 is engineering-reviewed/frozen with green CI, runtime pending.

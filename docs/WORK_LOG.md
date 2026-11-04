@@ -520,6 +520,14 @@ ART-26 draft #109 (`2b944b3` source, `38b9372` handoff) failed actual palm conta
 
 The completed gameplay/third-person assignments freed capacity. Producer prepared [INT-ART-04](tasks/integration/INT-ART-04-weapon-replacement.md) for R02/P02 native import/refit in first and third person, independent of first-person hands, preserving gameplay and the unpublished ART-25 branch. Delivery through the verified Claude UI route failed because the Mac is locked. One unlock request is pending; assignment is reserved, not running, with no CLI takeover. Next cycle delivers it only after checking the existing native owner. User merged #105–107; pending ART-25 publication approval was not repeated or bypassed. Documentation/JSON/diff inspection only for this producer batch.
 
+## 2026-11-04 — Merge regression repaired, approved facade published, weapons integration resumed
+
+Producer caught a real post-review change in #108's merge `fcf6a9c`: a duplicate knife dev-method declaration and second RPC call. Existing gameplay lead/GPT-04 received bounded KNIFE-01-M1 and froze #114/`adb7374`; producer inspected the three-line removal restoring the previously reviewed files. Shared CI green, no new test/build. Include this exact correction in the next native candidate.
+
+Direct user approval for ART-25's specific public source payload was verified in its registered chat. Artist published #112/`9b9d79e`, user-merged. Existing native owner received the clearance and published #116/`d71a23c`; tested map candidate remains `c7386b6` on its older base, no QA rerun for publication. Mac access restored; the prepared INT-ART-04 prompt was delivered through verified Claude UI and its new branch observed.
+
+ART-26-C1 finished #115 (source `25fc75b`, handoff `5b8b675`). Producer inspected actual exported top/reverse grip and full-action sheet, closing the specific loose-grip/framing return for source-pilot admission. General deformation/runtime budget/native gates remain. R02/P02 replacement is the sole active native assignment; INT-ART-03 follows its freeze with accepted #115/#110 and corrected #114. Zero new credits, producer tests or Unreal operations; user merges.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.
