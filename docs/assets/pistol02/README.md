@@ -1,6 +1,6 @@
 # P02 Kestrel — corrected high-detail source
 
-2026-11-04 (Europe/Berlin). User-requested quality correction to ART-18 / [PR #73](https://github.com/vaskodagamo/ValStrike/pull/73). **Corrected source for visual review; runtime optimization and native verification pending.** The previous 26,904-triangle export was rejected for degraded surface quality and is superseded.
+2026-11-04 (Europe/Berlin). User-requested quality correction to ART-18 / [correction PR #81](https://github.com/vaskodagamo/ValStrike/pull/81) (follow-up to merged #73). **Corrected source for visual review; runtime optimization and native verification pending.** The previous 26,904-triangle export was rejected for degraded surface quality and is superseded.
 
 ## What changed
 
