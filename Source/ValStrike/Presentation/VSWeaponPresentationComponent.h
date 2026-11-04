@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "../Combat/VSWeaponLoadoutComponent.h"
+#include "VSMuzzleFlashState.h"
 #include "VSRiflePresentationState.h"
 #include "VSWeaponPresentationComponent.generated.h"
 
@@ -38,7 +39,7 @@ public:
     float GetEquipBlend() const { return EquipBlend; }
     uint32 GetShotPulseCount() const { return ShotPulseCount; }
     uint32 GetReloadStartCount() const { return ReloadStartCount; }
-    bool IsFlashActive() const { return FlashRemaining > 0.0f; }
+    bool IsFlashActive() const { return MuzzleFlash.IsActive(); }
     bool IsReloadPoseActive() const { return bReloading; }
     // World-space Muzzle socket of the view this instance renders (first person
     // for the local viewer, world model otherwise). False while hidden.
@@ -83,6 +84,17 @@ protected:
     FVector ReloadMagazineOffset = FVector(-3.0f, 0.0f, -13.0f);
     UPROPERTY(EditDefaultsOnly, Category = "Weapon Presentation")
     float SlideKickDistance = 0.0f;
+    // Seconds the muzzle flash shows per accepted-shot pulse. The pulse frame always renders.
+    UPROPERTY(EditDefaultsOnly, Category = "Weapon Presentation")
+    float FlashDuration = 0.065f;
+    // Viewmodel kick at the moment of a pulse: cm back along the body's -X, and degrees of pitch up.
+    UPROPERTY(EditDefaultsOnly, Category = "Weapon Presentation")
+    float KickBack = 2.0f;
+    UPROPERTY(EditDefaultsOnly, Category = "Weapon Presentation")
+    float KickPitch = 1.8f;
+    // Kick fraction recovered per second (linear); 9 settles in about 110 ms.
+    UPROPERTY(EditDefaultsOnly, Category = "Weapon Presentation")
+    float KickRecovery = 9.0f;
     // Short prefix for created component names, e.g. R01.
     FString VisualPrefix = TEXT("Weapon");
 
@@ -103,7 +115,7 @@ private:
     UPROPERTY(Transient) TObjectPtr<UStaticMeshComponent> WorldFlash;
     TWeakObjectPtr<AVSCharacter> Character;
     VSRiflePresentation::State State;
-    float FlashRemaining = 0;
+    VSMuzzleFlash::State MuzzleFlash;
     float KickRemaining = 0;
     float ReloadAge = 0;
     float EquipAge = 0;

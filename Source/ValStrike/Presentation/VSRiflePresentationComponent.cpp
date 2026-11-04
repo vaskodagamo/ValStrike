@@ -15,6 +15,11 @@ UVSRiflePresentationComponent::UVSRiflePresentationComponent()
     RequiredSockets = {TEXT("Grip"), TEXT("Muzzle"), TEXT("SupportHand"), TEXT("Magazine")};
     FirstPersonGrip = FTransform(FRotator(-3, -2, 0), FVector(35, 17, -20));
     WorldGrip = FTransform(FRotator::ZeroRotator, FVector(35, 20, 112));
-    FlashScale = FVector(0.13f, 0.045f, 0.045f);
+    FlashScale = FVector(0.13f, 0.05f, 0.035f);
+    // GPT-09: about 40 ms of flash and a small rifle kick that settles in about 80 ms.
+    FlashDuration = 0.04f;
+    KickBack = 1.4f;
+    KickPitch = 1.1f;
+    KickRecovery = 12.0f;
     ReloadMagazineOffset = FVector(-3.0f, 0.0f, -13.0f);
 }
