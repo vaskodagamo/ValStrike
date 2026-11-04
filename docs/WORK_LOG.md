@@ -460,6 +460,14 @@ The gameplay/integration idle slots were checked clean at their original heads b
 
 **Final checkpoint / producer transfer:** Published this dispatch as PR #72, synchronized with main `e29963e` after #68–70 merged. Rechecked main and the existing Claude checkout: no new Meshy/UrbanEntry/FPArms/knife native assets yet. Added the GPT-15 shared-character-file boundary to the resume handoff. User-authorized producer transfer was verified directly in Direktor (2)'s user reply; `docs/teams/PRODUCER_HANDOFF_2026-11-04.md` records all four active art chats, separate 30-credit allocations, frozen prior handoffs and the outstanding external Claude resume action. Outgoing coordinator stops new workers/central writes after this final publication; incoming Direktor (2) owns follow-through and its separate automation setup. No automation or Claude run is claimed here.
 
+## 2026-11-04 — TEAM-02 recurring producer activated
+
+**Changed:** Direktor (2) accepted the single-producer handoff (#72), registered the existing Codex art and Claude owners, and activated same-chat automation `valstrike-studio-producer` every day/every 30 minutes. Policy now queues new cross-team dispatch through one producer, targets three contributors after the current batch, retains user merges and proportional centralized validation. Added an atomic 300-new-Meshy-credit/day admission ledger; earlier per-task allocations remain separate. Local ignored state must transfer with the producer.
+
+**Connection/first cycle:** Claude subscription CLI 2.1.317 passed a tools-disabled smoke command. Explicitly authorized coordination prompts were delivered to both existing Claude chats; gameplay acknowledged producer ownership and native integration resumed preparation behind the final INT-06 slot release. Existing art workers received source-preservation steering. R02 needs a follow-up PR because #76 merged before its correction; P02 correction #81 is merged, hands' old R02 fit remains provisional. ART-21 #80 was reviewed and its skill/reference installed byte-identically for Codex and Claude. See [producer checkpoint](producer/STATUS.md) for exact identities, hashes, active defects and next triggers.
+
+**Verification/limits:** Four focused budget-boundary tests passed; actual ledger reports 0/300 new credits committed. Automation creation/view/saved configuration confirmed ACTIVE and the requested interval/thread; no scheduled invocation has yet been observed. Claude smoke returned `CLAUDE_RUNNER_OK`, exit 0, no error. No new paid generation, Unreal build, import or runtime test was performed for this workflow. INT-06 movement D3 and native acceptance remain open in their owners' evidence. User merges the producer PR; the next scheduled cycle reconciles actual progress without idle logs or duplicate writers.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.

@@ -81,7 +81,7 @@ private:
         {
             AVSMatchPlayerController* PC = Cast<AVSMatchPlayerController>(It->Get());
             const AVSMatchPlayerState* PS = PC ? PC->GetPlayerState<AVSMatchPlayerState>() : nullptr;
-            if (PS && PS->TeamId == static_cast<uint8>(Team) && (IncludeLate || PS->GetPlayerName() != TEXT("VSMatchLate"))) { return PC; }
+            if (PS && PS->TeamId == static_cast<uint8>(Team) && (IncludeLate || (PS->GetPlayerName() != TEXT("VSMatchLate") && PS->GetPlayerName() != TEXT("VSMatchMate")))) { return PC; }
         }
         return nullptr;
     }
@@ -115,7 +115,7 @@ private:
         if (!PC || !PC->IsLocalController() || !PC->PlayerState) { return; }
         if (!NameRequested)
         {
-            PC->SetName(Role == TEXT("late") ? TEXT("VSMatchLate") : Role == TEXT("driver") ? TEXT("VSMatchDriver") : TEXT("VSMatchObserver"));
+            PC->SetName(Role == TEXT("late") ? TEXT("VSMatchLate") : Role == TEXT("mate") ? TEXT("VSMatchMate") : Role == TEXT("driver") ? TEXT("VSMatchDriver") : TEXT("VSMatchObserver"));
             NameRequested = true;
         }
         AVSMatchPlayerState* PS = PC->GetPlayerState<AVSMatchPlayerState>();
@@ -127,7 +127,7 @@ private:
         if (LastClientPhase != GS->Match.Phase)
         { LastClientPhase = GS->Match.Phase; ClientPhaseAt = GS->GetServerWorldTimeSeconds(); }
         const double PhaseTime = GS->GetServerWorldTimeSeconds() - ClientPhaseAt;
-        const bool Main = Role != TEXT("late");
+        const bool Main = Role != TEXT("late") && Role != TEXT("mate");
         AVSCharacter* Pawn = Cast<AVSCharacter>(PC->GetPawn());
         if (Main)
         {
@@ -203,7 +203,16 @@ private:
         { LateTravelRequested = true; PC->DisconnectFromServer(); }
         if (Director->Stage == 99 && Director->MatchIndex == 0 && Role == TEXT("driver") && Time > 0.8 && !RematchRequested)
         { PC->RequestMatchRematch(); RematchRequested = true; }
-        if (Main && Director->Stage == 100 && Phase == R::Phase::MatchComplete) { Finish(); }
+        // After the 43 checks: the driver requests one more rematch for the spectate stage (101), or not (102).
+        if (Main && Phase == R::Phase::MatchComplete && Director->Stage >= 100 && Director->Stage <= 102)
+        {
+            if (Role != TEXT("driver")) { Finish(); }
+            else if (Director->Stage == 102 || (Director->Stage == 101 && Time > 0.3))
+            {
+                if (Director->Stage == 101) { PC->RequestMatchRematch(); }
+                Finish();
+            }
+        }
     }
 
     void Server(UWorld* World, AVSMatchGameMode* Mode, AVSMatchSmokeState* Director)
@@ -285,6 +294,7 @@ private:
             Check(PrepInputCheck ? TEXT("preparation_input_lock") : TEXT("resolved_input_lock"), Locked,
                 TEXT("both clients sent W/jump/crouch/fire; server position, velocity and ammunition stayed fixed"));
         }
+        SpectateStage(World, S, Director, Now);
         if (S.CurrentPhase == R::Phase::Active && Director->Stage == 0 && (RoundCount != 1 || LateSeen))
         {
             const FVector Center = Mode->GetSiteCenter();
@@ -441,10 +451,73 @@ private:
                 Check(TEXT("fresh_pawn_reset"), AllResets && PawnNames.Num() == 24 && AllSpawns, FString::Printf(TEXT("unique primary pawns=%d"), PawnNames.Num()));
                 Check(TEXT("twelve_rounds"), RoundCount == 12 && Awards == 12 && S.Scores[0] == 6 && S.Scores[1] == 0 && LeaveRequested,
                     FString::Printf(TEXT("preparations=%d awards=%d final=%d:%d"), RoundCount, Awards, S.Scores[0], S.Scores[1]));
-                if (Director->Stage != 100) { Stage(Director, 100, Now); }
-                if (Now - Director->StageAt > 1.0) { Finish(); }
+                if (Director->Stage < 100)
+                {
+                    Stage(Director, 100, Now);
+                    UE_LOG(LogValStrike, Display, TEXT("VSMATCH_REQUEST_SPECTATE_JOIN"));
+                }
+                AVSMatchPlayerController* Mate = Named(World, TEXT("VSMatchMate"));
+                const AVSMatchPlayerState* MatePS = Mate ? Mate->GetPlayerState<AVSMatchPlayerState>() : nullptr;
+                const bool MateJoined = MatePS && MatePS->TeamId != 0 && S.FindPlayer(MatePS->ConnectionId);
+                if (Director->Stage == 100 && (MateJoined || Now - Director->StageAt > 45.0))
+                {
+                    SpectateRematch = MateJoined;
+                    if (!MateJoined) { UE_LOG(LogValStrike, Warning, TEXT("VSMATCH spectate stage skipped: auxiliary teammate did not join")); }
+                    Stage(Director, MateJoined ? 101 : 102, Now);
+                }
+                if (Director->Stage == 102 && Now - Director->StageAt > 1.0) { Finish(); }
             }
         }
+    }
+    // GPF-03, after every existing check: a third match round with the auxiliary mate. Its persistent
+    // teammate dies while the mate lives (death spectate start), then the enemy, so the next
+    // Preparation ends the spectate (stop on round reset). Real health deaths only.
+    void SpectateStage(UWorld* World, const R::Snapshot& S, AVSMatchSmokeState* Director, double Now)
+    {
+        if (!SpectateRematch) { return; }
+        if (Director->MatchIndex == 1 && S.CurrentPhase == R::Phase::Preparation && S.CompletedRounds == 0)
+        { Director->MatchIndex = 2; Director->ForceNetUpdate(); }
+        if (Director->MatchIndex != 2) { return; }
+        const double Time = Now - Director->StageAt;
+        AVSMatchPlayerController* Mate = Named(World, TEXT("VSMatchMate"));
+        const AVSMatchPlayerState* MatePS = Mate ? Mate->GetPlayerState<AVSMatchPlayerState>() : nullptr;
+        const R::Team MateTeam = MatePS ? static_cast<R::Team>(MatePS->TeamId) : R::Team::None;
+        AVSMatchPlayerController* Victim = MateTeam != R::Team::None ? TeamController(World, MateTeam) : nullptr;
+        AVSMatchPlayerController* Enemy = MateTeam != R::Team::None ?
+            TeamController(World, MateTeam == R::Team::One ? R::Team::Two : R::Team::One) : nullptr;
+        AVSCharacter* VictimPawn = Victim ? Cast<AVSCharacter>(Victim->GetPawn()) : nullptr;
+        AVSCharacter* EnemyPawn = Enemy ? Cast<AVSCharacter>(Enemy->GetPawn()) : nullptr;
+        if (S.CurrentPhase == R::Phase::Active && Director->Stage == 0)
+        {
+            if (!Mate || !Mate->GetPawn() || !VictimPawn || !EnemyPawn)
+            {
+                UE_LOG(LogValStrike, Warning, TEXT("VSMATCH spectate stage skipped: missing mate, teammate or enemy pawn"));
+                Stage(Director, 74, Now);
+                return;
+            }
+            const FVector Center = World->GetAuthGameMode<AVSMatchGameMode>()->GetSiteCenter();
+            Place(Victim, Center + FVector(-100,0,0));
+            Place(Mate, Center + FVector(100,0,0));
+            Place(Enemy, Center + FVector(600,0,0));
+            Stage(Director, 70, Now);
+        }
+        if (Director->Stage == 70 && S.CurrentPhase == R::Phase::Active && Time > 0.3 && VictimPawn && Mate)
+        {
+            UE_LOG(LogValStrike, Display, TEXT("VSSPECTATE_STAGE {\"viewer\":%llu,\"teammate\":%llu,\"enemy\":%llu,\"round\":%llu}"),
+                Victim->GetPlayerState<AVSMatchPlayerState>()->ConnectionId, MatePS->ConnectionId,
+                Enemy ? Enemy->GetPlayerState<AVSMatchPlayerState>()->ConnectionId : 0ull, S.RoundId);
+            VictimPawn->GetHealthComponent()->ApplyPointDamage(1000);
+            Stage(Director, 71, Now);
+        }
+        // Past ValStrike::Spectate::DelaySeconds (2 s) so the dead teammate's client is spectating.
+        if (Director->Stage == 71 && S.CurrentPhase == R::Phase::Active && Time > 3.5)
+        {
+            if (EnemyPawn) { EnemyPawn->GetHealthComponent()->ApplyPointDamage(1000); }
+            Stage(Director, 72, Now);
+        }
+        // The existing Preparation handler has just reset the stage to 0 for the next round.
+        if (Director->Stage == 0 && S.CurrentPhase == R::Phase::Preparation && S.CompletedRounds == 1) { Stage(Director, 73, Now); }
+        if ((Director->Stage == 73 && Time > 2.0) || (Director->Stage == 74 && Time > 1.0)) { Finish(); }
     }
     void BeforeTick(UWorld* World, ELevelTick Type, float Delta)
     {
@@ -500,7 +573,7 @@ private:
             if (AVSMatchGameMode* Mode = World->GetAuthGameMode<AVSMatchGameMode>()) { Server(World, Mode, Director); }
         }
         else { Client(World, GS, Director); }
-        if (World->GetTimeSeconds() > 220 && Role != TEXT("late")) { Finish(TEXT("native_scenario_timeout")); }
+        if (World->GetTimeSeconds() > 220 && Role != TEXT("late") && Role != TEXT("mate")) { Finish(TEXT("native_scenario_timeout")); }
     }
     FString Role, Output, LastPawn;
     TArray<FString> Checks;
@@ -510,7 +583,7 @@ private:
     FDelegateHandle Delegate, PreDelegate;
     bool Finished = false, NameRequested = false, EHeld = false, GHeld = false, FireHeld = false, RematchRequested = false;
     bool JoinRequested = false, LeaveRequested = false, LateSeen = false, FirstMatchComplete = false;
-    bool LateTravelRequested = false;
+    bool LateTravelRequested = false, SpectateRematch = false;
     bool MenuOpened = false, MenuClosed = false;
     bool WHeld = false, JumpHeld = false, CrouchHeld = false, ReloadHeld = false;
     int32 LastClientPhase = -1;
@@ -528,7 +601,7 @@ void StartMatchSmoke()
 {
     FString Role;
     if (!MatchSmoke && FParse::Value(FCommandLine::Get(), TEXT("VSMatchSmoke="), Role) &&
-        (Role == TEXT("server") || Role == TEXT("driver") || Role == TEXT("observer") || Role == TEXT("late")))
+        (Role == TEXT("server") || Role == TEXT("driver") || Role == TEXT("observer") || Role == TEXT("late") || Role == TEXT("mate")))
     { MatchSmoke = MakeUnique<FVSMatchSmoke>(Role); }
 }
 }

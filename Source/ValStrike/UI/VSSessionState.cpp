@@ -6,6 +6,7 @@
 #include "Engine/PendingNetGame.h"
 #include "Engine/World.h"
 #include "../VSPlayerController.h"
+#include "../ValStrike.h"
 
 void UVSSessionState::Initialize(FSubsystemCollectionBase& Collection)
 {
@@ -15,6 +16,7 @@ void UVSSessionState::Initialize(FSubsystemCollectionBase& Collection)
         NetworkFailureHandle = GEngine->OnNetworkFailure().AddUObject(this, &UVSSessionState::NetworkFailure);
         TravelFailureHandle = GEngine->OnTravelFailure().AddUObject(this, &UVSSessionState::TravelFailure);
     }
+    ConnectWatchHandle = FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateUObject(this, &UVSSessionState::WatchConnectAttempt));
 }
 
 void UVSSessionState::Deinitialize()
@@ -24,6 +26,7 @@ void UVSSessionState::Deinitialize()
         GEngine->OnNetworkFailure().Remove(NetworkFailureHandle);
         GEngine->OnTravelFailure().Remove(TravelFailureHandle);
     }
+    FTSTicker::RemoveTicker(ConnectWatchHandle);
     Super::Deinitialize();
 }
 
@@ -36,6 +39,7 @@ void UVSSessionState::SetStatus(const FText& Message, bool bIsError)
 void UVSSessionState::ShowFailure(const FText& Message)
 {
     bConnecting = false;
+    EndedAttemptTicks = 0;
     bOpenMenuOnArrival = true;
     SetStatus(Message, true);
     if (AVSPlayerController* PC = Cast<AVSPlayerController>(GetGameInstance()->GetFirstLocalPlayerController()))
@@ -98,4 +102,38 @@ void UVSSessionState::TravelFailure(UWorld* World, ETravelFailure::Type Type, co
     {
         ShowFailure(NSLOCTEXT("ValStrike", "TravelFailed", "The session could not be loaded. Check that your game files and build match the server, then try again."));
     }
+}
+
+bool UVSSessionState::WatchConnectAttempt(float DeltaTime)
+{
+    // Cancel and failure handlers clear bConnecting first, so this sees only an
+    // attempt the engine ended silently (for example a pending net game torn
+    // down through HandleDisconnect or CancelPending without a broadcast).
+    const UGameInstance* GameInstance = bConnecting ? GetGameInstance() : nullptr;
+    const FWorldContext* Context = GameInstance ? GameInstance->GetWorldContext() : nullptr;
+    if (!Context)
+    {
+        EndedAttemptTicks = 0;
+        return true;
+    }
+    const UWorld* World = Context->World();
+    const UNetDriver* Driver = World ? World->GetNetDriver() : nullptr;
+    // In flight: travel queued (ClientTravel sets TravelURL before Browse creates
+    // the pending net game), pending handshake, a map still loading, or arrival in
+    // the server's world before the new controller clears bConnecting.
+    const bool bInFlight = !World || Context->PendingNetGame || !Context->TravelURL.IsEmpty() || (Driver && Driver->ServerConnection);
+    if (bInFlight)
+    {
+        EndedAttemptTicks = 0;
+        return true;
+    }
+    // Require two consecutive ticks so no single-frame engine transition can
+    // be mistaken for an ended attempt.
+    if (++EndedAttemptTicks < 2)
+    {
+        return true;
+    }
+    UE_LOG(LogValStrike, Warning, TEXT("Connection attempt to %s ended without a network or travel failure; showing a connection error."), *Address);
+    ShowFailure(NSLOCTEXT("ValStrike", "ConnectEnded", "The connection attempt ended before it completed. Check the server address and port, then connect again."));
+    return true;
 }
