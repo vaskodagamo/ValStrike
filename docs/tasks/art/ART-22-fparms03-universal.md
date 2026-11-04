@@ -1,12 +1,12 @@
 # ART-22 — Universal gloved hands with bare forearms
 
 - Date/backlog: 2026-11-04 (Europe/Berlin), PLAY-02; direct user priority verified in Direktor's user message: “universal hands … naked but with gloves … hold knife, pistol and rifles … make with meshy what is necessary”.
-- Status: reserved for the existing hands owner after its ART-19 checkpoint. Never work both assignments concurrently.
+- Status: Ready. ART-19 is safely stopped: source `afa582a`, handoff `45cf24d`, PR #90. Never work both assignments concurrently.
 - Owner: Codex “Art — Meshy first-person hands”, thread `01a1a6cf-0f10-73d0-8c33-29cb863d7b33`, High; lead/producer Direktor (2).
 - Branch/worktree: `codex/art22-fparms03`, `/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/art22-fparms03`.
 - Base: merged main `159431d` plus this coordinator-prepared task brief; exact prepared HEAD supplied in dispatch. Read the current producer policy at `/Users/webproduktion3/.codex/worktrees/10a1/ValStrike/docs/PRODUCER.md` until #88 merges.
 - Exclusive writes: `Art/Source/Characters/FPArms03/`, `docs/assets/fparms03/`, `docs/workstreams/art22-fparms03.md`. This task brief and central board/log remain producer-owned.
-- Read-only: safely frozen ART-19 FPArms02 source/rig; UrbanEntry01 skin/scale; corrected R02/P02/K01 source revisions. Preserve FPArms01/02 and every other owner's checkout. Document exact source commits/hashes copied into FPArms03.
+- Read-only: safely frozen ART-19 FPArms02 source/rig (`afa582a`, handoff `45cf24d`); UrbanEntry01 skin/scale; corrected R02/P02/K01 source revisions. Preserve FPArms01/02 and every other owner's checkout. Document exact source commits/hashes copied into FPArms03.
 - Result: one reusable paired first-person rig with bare forearms and fitted full-finger tactical gloves, plus separate rifle, pistol and knife hold poses. No jacket sleeves. Source ready/held status must reflect actual appearance, deformation and weapon contact.
 - Validation: V1, real Blender source/pose/export inspection and existing targeted metadata checks only. No new test framework, contributor Unreal operation, build or native Content/code change. One future integration owner imports/wires and verifies runtime.
 - Publication: commit/push owned files, open PR to main, concise handoff and stop; user merges. No recursive workers, additional paid stages or independent next assignment.

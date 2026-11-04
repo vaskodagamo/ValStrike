@@ -2,7 +2,7 @@
 
 ## ART-22 universal bare-forearm hands — 2026-11-04
 
-Direct user priority verified in Direktor: one reusable bare-forearm/glove rig for rifle, pistol and knife. [ART-22 brief](tasks/art/ART-22-fparms03-universal.md) reserves the **existing hands chat** at High, new `.parallel-worktrees/art22-fparms03` / `codex/art22-fparms03`, exclusively `Art/Source/Characters/FPArms03/`, `docs/assets/fparms03/` and `docs/workstreams/art22-fparms03.md`. ART-19 must checkpoint/publish and stop first; FPArms02 remains preserved. No additional worker or native owner.
+Direct user priority verified in Direktor: one reusable bare-forearm/glove rig for rifle, pistol and knife. [ART-22 brief](tasks/art/ART-22-fparms03-universal.md) reserves the **existing hands chat** at High, new `.parallel-worktrees/art22-fparms03` / `codex/art22-fparms03`, exclusively `Art/Source/Characters/FPArms03/`, `docs/assets/fparms03/` and `docs/workstreams/art22-fparms03.md`. ART-19 checkpoint source `afa582a`, handoff `45cf24d` and PR #90 are frozen; its clean safe stop was verified. ART-22 was dispatched in the new worktree at `f3e55da`; FPArms02 remains preserved. No additional worker or native owner.
 
 Reuse inspection precedes any paid request. Reservation `ART-22-FPArms03-draft-1` holds **30 of today's 300 new credits**, optional one Meshy 7.1 standard textured/PBR 4K right hand + bare forearm; no retries/extras. No submission yet. Pair construction, compatible finger rig and weapon-specific poses are local artist work. Corrected P02 #81 and K01 #85 are frozen; R02 correction is still pending, so rifle fit remains provisional until its exact commit. Required real source/export/pose comparisons and centralized native verification remain separate.
 

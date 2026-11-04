@@ -51,23 +51,32 @@
       "prior_credit_cap": 30
     },
     {
-      "task": "ART-19",
+      "task": "ART-22",
       "title": "Art \u2014 Meshy first-person hands",
       "thread_id": "01a1a6cf-0f10-73d0-8c33-29cb863d7b33",
-      "worktree": ".parallel-worktrees/art19-fparms02",
-      "handoff": "docs/workstreams/art19-fparms02.md",
-      "prior_credit_cap": 30,
-      "next_assignment": {
-        "task": "ART-22",
-        "brief": "docs/tasks/art/ART-22-fparms03-universal.md",
-        "worktree": ".parallel-worktrees/art22-fparms03",
-        "branch": "codex/art22-fparms03",
-        "handoff": "docs/workstreams/art22-fparms03.md",
-        "state": "reserved; start only after ART-19 frozen checkpoint",
-        "reservation": "ART-22-FPArms03-draft-1",
-        "credit_cap": 30,
-        "prepared_head": "86549e74e5d2a83c4401a6ceb650e2c9c6d655cb"
-      }
+      "worktree": ".parallel-worktrees/art22-fparms03",
+      "handoff": "docs/workstreams/art22-fparms03.md",
+      "prior_credit_cap": 0,
+      "branch": "codex/art22-fparms03",
+      "brief": "docs/tasks/art/ART-22-fparms03-universal.md",
+      "prepared_head": "f3e55da",
+      "state": "dispatched; ART-19 safely stopped first",
+      "reservation": "ART-22-FPArms03-draft-1",
+      "credit_cap": 30,
+      "previous_assignments": [
+        {
+          "task": "ART-19",
+          "title": "Art \u2014 Meshy first-person hands",
+          "thread_id": "01a1a6cf-0f10-73d0-8c33-29cb863d7b33",
+          "worktree": ".parallel-worktrees/art19-fparms02",
+          "handoff": "docs/workstreams/art19-fparms02.md",
+          "prior_credit_cap": 30,
+          "state": "frozen; stopped",
+          "source_commit": "afa582abb823897248b666c10fef77464d167fdc",
+          "handoff_commit": "45cf24daa411d94bf07dcfd44f4da879c8240a9e",
+          "pr": 90
+        }
+      ]
     },
     {
       "task": "ART-20",
