@@ -1,5 +1,6 @@
 #include "VSWeaponComponent.h"
 
+#include "VSFireRequestRules.h"
 #include "VSHealthComponent.h"
 #include "VSWeaponLoadoutComponent.h"
 #include "../VSCharacter.h"
@@ -193,45 +194,62 @@ void UVSWeaponComponent::Reject(FName Reason)
 #endif
 }
 
+namespace
+{
+VSFireRequestRules::Vec3 ToFireRulesVec(const FVector& V) { return {V.X, V.Y, V.Z}; }
+
+VSFireRequestRules::Readiness FireRulesReadiness(const AVSCharacter* Pawn, const UVSWeaponComponent* Weapon)
+{
+    const UVSWeaponLoadoutComponent* Loadout = Pawn->GetLoadoutComponent();
+    switch (Loadout ? Loadout->GetReadiness(Weapon) : EVSWeaponReadiness::Ready)
+    {
+    case EVSWeaponReadiness::Holstered: return VSFireRequestRules::Readiness::Holstered;
+    case EVSWeaponReadiness::Equipping: return VSFireRequestRules::Readiness::Equipping;
+    default: return VSFireRequestRules::Readiness::Ready;
+    }
+}
+}
+
 void UVSWeaponComponent::ServerRequestFire_Implementation(uint32 ShotId, FVector Origin, FVector Direction)
 {
-    if (!HasValidOwner()) { Reject(TEXT("owner")); return; }
+    // Ordered checks, thresholds and reason names live in Combat/VSFireRequestRules.h.
     // Reliable ordered requests and a bounded positive serial delta prevent
-    // duplicates/replays, including wrap-around. Consume rejected IDs as well.
-    const uint32 Delta = ShotId - LastRequestId;
-    if (ShotId == 0 || Delta == 0 || Delta > 1024) { Reject(TEXT("sequence")); return; }
-    LastRequestId = ShotId;
+    // duplicates/replays, including wrap-around. Rejected IDs past the sequence
+    // check are consumed as well.
     AVSCharacter* Pawn = Character();
-    if (!Pawn->GetHealthComponent()->IsAlive()) { Reject(TEXT("dead")); return; }
-    // Only the equipped weapon may fire, and only after its equip time.
-    if (const UVSWeaponLoadoutComponent* Loadout = Pawn->GetLoadoutComponent())
-    {
-        const EVSWeaponReadiness Readiness = Loadout->GetReadiness(this);
-        if (Readiness == EVSWeaponReadiness::Holstered) { Reject(TEXT("holstered")); return; }
-        if (Readiness == EVSWeaponReadiness::Equipping) { Reject(TEXT("equip")); return; }
-    }
-    if (State.bReloading) { Reject(TEXT("reload")); return; }
-    if (State.Magazine <= 0) { Reject(TEXT("empty")); return; }
+    VSFireRequestRules::FireInput In;
+    In.bValidOwner = HasValidOwner();
+    In.ShotId = ShotId;
+    In.LastRequestId = LastRequestId;
+    In.Origin = ToFireRulesVec(Origin);
+    In.Direction = ToFireRulesVec(Direction);
     const double Now = GetWorld()->GetTimeSeconds();
-    // Absorb one 60Hz scheduling frame without granting sustained rate credit.
-    const double ArrivalTolerance = FMath::Min(0.02, static_cast<double>(FireInterval) * 0.2);
-    if (Now + ArrivalTolerance < NextServerFireTime) { Reject(TEXT("cadence")); return; }
-    if (Origin.ContainsNaN() || Direction.ContainsNaN()) { Reject(TEXT("nonfinite")); return; }
-    const FVector ServerOrigin = Pawn->GetPawnViewLocation();
-    if (FVector::DistSquared(Origin, ServerOrigin) > FMath::Square(100.0)) { Reject(TEXT("origin")); return; }
-    if (!FMath::IsNearlyEqual(Direction.SizeSquared(), 1.0, 0.01)
-        || FVector::DotProduct(Direction, Pawn->GetBaseAimRotation().Vector()) < 0.9396926)
+    FVector ServerOrigin = FVector::ZeroVector;
+    if (In.bValidOwner)
     {
-        Reject(TEXT("direction")); return;
+        ServerOrigin = Pawn->GetPawnViewLocation();
+        In.bAlive = Pawn->GetHealthComponent()->IsAlive();
+        In.WeaponReadiness = FireRulesReadiness(Pawn, this);
+        In.bReloading = State.bReloading;
+        In.Magazine = State.Magazine;
+        In.Now = Now;
+        In.NextServerFireTime = NextServerFireTime;
+        In.FireInterval = static_cast<double>(FireInterval);
+        In.ServerOrigin = ToFireRulesVec(ServerOrigin);
+        In.BaseAim = ToFireRulesVec(Pawn->GetBaseAimRotation().Vector());
     }
-
     // The live server gate processes expired deadlines before any ammo or hit
-    // effect. Replicated flags alone may still describe the previous phase.
-    if (!AVSMatchGameMode::AllowsCombat(Pawn) || !Pawn->CanMatchCombat())
+    // effect, so it runs only after every other check passed. Replicated flags
+    // alone may still describe the previous phase.
+    const VSFireRequestRules::FireVerdict Verdict = VSFireRequestRules::EvaluateFire(In,
+        [Pawn] { return AVSMatchGameMode::AllowsCombat(Pawn) && Pawn->CanMatchCombat(); });
+    if (Verdict.bConsumesShotId) { LastRequestId = ShotId; }
+    if (Verdict.Outcome != VSFireRequestRules::Result::Accept)
     {
-        Reject(TEXT("phase"));
+        Reject(VSFireRequestRules::ReasonName(Verdict.Outcome));
         return;
     }
+
     // Current-position hit registration: no client victim, damage or rewind.
     NextServerFireTime = FMath::Max(Now, NextServerFireTime) + FireInterval;
     --State.Magazine;
@@ -271,20 +289,26 @@ void UVSWeaponComponent::Reload()
 
 void UVSWeaponComponent::ServerRequestReload_Implementation()
 {
-    if (!HasValidOwner() || !Character()->GetHealthComponent()->IsAlive()) { return; }
     AVSCharacter* Pawn = Character();
-    if (!AVSMatchGameMode::AllowsCombat(Pawn) || !Pawn->CanMatchCombat())
+    VSFireRequestRules::ReloadInput In;
+    In.bValidOwner = HasValidOwner();
+    if (In.bValidOwner)
     {
-        Reject(TEXT("phase"));
+        In.bAlive = Pawn->GetHealthComponent()->IsAlive();
+        In.WeaponReadiness = FireRulesReadiness(Pawn, this);
+        In.bReloading = State.bReloading;
+        In.Magazine = State.Magazine;
+        In.MagazineCapacity = MagazineCapacity;
+        In.Reserve = State.Reserve;
+    }
+    const VSFireRequestRules::Result Verdict = VSFireRequestRules::EvaluateReload(In,
+        [Pawn] { return AVSMatchGameMode::AllowsCombat(Pawn) && Pawn->CanMatchCombat(); });
+    if (Verdict == VSFireRequestRules::Result::Ignored) { return; }
+    if (Verdict != VSFireRequestRules::Result::Accept)
+    {
+        Reject(VSFireRequestRules::ReasonName(Verdict));
         return;
     }
-    if (const UVSWeaponLoadoutComponent* Loadout = Pawn->GetLoadoutComponent())
-    {
-        const EVSWeaponReadiness Readiness = Loadout->GetReadiness(this);
-        if (Readiness == EVSWeaponReadiness::Holstered) { Reject(TEXT("holstered")); return; }
-        if (Readiness == EVSWeaponReadiness::Equipping) { Reject(TEXT("equip")); return; }
-    }
-    if (State.bReloading || State.Magazine >= MagazineCapacity || State.Reserve <= 0) { return; }
     State.bReloading = true;
     GetWorld()->GetTimerManager().SetTimer(ReloadTimer, this, &UVSWeaponComponent::FinishReload, ReloadDuration, false);
     Character()->ForceNetUpdate();
