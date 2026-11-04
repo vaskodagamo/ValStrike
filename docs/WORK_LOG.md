@@ -434,6 +434,8 @@ The gameplay/integration idle slots were checked clean at their original heads b
 
 **Acceptance:** First batch is the reviewed character/usable animation subset plus approved paving, two crates and wall-backed panel. Held structures/stairs and vault mechanics remain excluded. One integration owner imports/reopens, places, wires and checks a combined candidate with actual server/two-client rendered evidence, then supplies exact other-Mac source-checkout/playtest instructions. This kickoff does not claim assets are integrated or runtime verified. Assignment/docs inspection only here; no Unreal launch or new test suite.
 
+**Dispatch:** Created “Art — Character playtest prep” (`01a1a6b0-8aa8-7373-b8bb-bc5506f451d4`) at clean prepared head `51d19ee`, and “Art — Site01 props playtest prep” (`01a1a6b0-98fd-7f41-851e-1fd1c5fc2452`) at `09a2e4b`; both explicit High reasoning, configured model unchanged. Each received its actual worktree and exclusive scope. Claude checkout is prepared at `7157124` with the integration brief; user launches it with the supplied kickoff. Registry transfers only MSH-C01/W03/W04/W07/W10; held assets remain with their frozen source records. No native integration or new art completion is claimed at dispatch.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.
