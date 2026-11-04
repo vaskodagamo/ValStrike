@@ -19,3 +19,10 @@
 - Checks actually run: Node `22.21.1`, Meshy CLI `0.8.2`; official skill validator passed. CLI `make ... --dry-run` returned `ok: true`, `dry_run: true`, `requests_made: 0` and a 30-credit estimate for that specific text preview/refine plan. This was not an asset submission or a quote for all jobs. Authentication status reported `authenticated: false`, no profiles. No credits spent, tests added or Unreal work run.
 - Deferred: authenticated API generation/download, artist review, and any later native import/runtime acceptance.
 - Next owner: coordinator selects one new asset and a credit allowance; artist uses the skill in the assigned worktree. Do not regenerate already assigned uploads.
+
+## Connection follow-up — 2026-11-04 (Europe/Berlin)
+
+- User merged PR #55 and requested the missing configuration/API-key setup so agents can test the workflow. Same owner and owned paths; follow-up branch `codex/meshy-auth-setup`, based on merged main `ca2e2cbe5064f8beef3e7ef0204c664461f17dc6`.
+- Added exact first-connection commands, credential location, same-user session sharing, API-key environment behavior and a free connection-check prompt. Updated both locally installed skill copies.
+- User completed Meshy device sign-in. Fresh CLI commands returned `authenticated: true`, `verified: true`, `source: file`; the balance command succeeded. No credentials or account details are stored in the repository. This supersedes the earlier unauthenticated status.
+- Skill validator and whitespace review passed. No paid generation, new tests or Unreal work. Live asset generation/download remains unverified; a bounded artist pilot is the next step. User retains PR merges.
