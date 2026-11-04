@@ -1,0 +1,141 @@
+{
+  "schema_version": "meshy.cli/v1",
+  "command": "download",
+  "ok": true,
+  "result": {
+    "source": {
+      "kind": "api",
+      "resource": "image-to-3d",
+      "task_id": "01a1a6d2-0762-71ad-80d6-c8b4049d3e47",
+      "status": "SUCCEEDED"
+    },
+    "selection": {
+      "selected": [
+        "model.glb",
+        "model.fbx",
+        "thumbnail.primary",
+        "texture.0.base_color",
+        "texture.0.metallic",
+        "texture.0.roughness",
+        "texture.0.normal"
+      ],
+      "dependencies": []
+    },
+    "downloads": {
+      "state": "completed",
+      "files": [
+        {
+          "key": "model.glb",
+          "path": "/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/art19-fparms02/Art/Source/Characters/FPArms02/Original/model.glb",
+          "relative_path": "model.glb",
+          "bytes": 35920744,
+          "sha256": "1341db157b1b5d1fe9f491e00ad2c2e14b870f188c656fb42b0c44893756168e",
+          "content_type": "model/gltf-binary",
+          "format": "glb",
+          "container_format": null,
+          "extracted": null,
+          "status": "written",
+          "error": null,
+          "publish_method": "link",
+          "relinked": false
+        },
+        {
+          "key": "model.fbx",
+          "path": "/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/art19-fparms02/Art/Source/Characters/FPArms02/Original/model.fbx",
+          "relative_path": "model.fbx",
+          "bytes": 64709516,
+          "sha256": "9019e85b25ecc8f9e54ddf098fb309dea8dc45abbffd8c2d4e7449580192f174",
+          "content_type": "application/octet-stream",
+          "format": "fbx",
+          "container_format": null,
+          "extracted": null,
+          "status": "written",
+          "error": null,
+          "publish_method": "link",
+          "relinked": false
+        },
+        {
+          "key": "thumbnail.primary",
+          "path": "/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/art19-fparms02/Art/Source/Characters/FPArms02/Original/thumbnail.png",
+          "relative_path": "thumbnail.png",
+          "bytes": 76075,
+          "sha256": "8d296c32b792a76d085a81ab59019649711a3c72f15dffed1767bcdac4597e86",
+          "content_type": "image/png",
+          "format": "png",
+          "container_format": null,
+          "extracted": null,
+          "status": "written",
+          "error": null,
+          "publish_method": "link",
+          "relinked": false
+        },
+        {
+          "key": "texture.0.base_color",
+          "path": "/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/art19-fparms02/Art/Source/Characters/FPArms02/Original/texture_0_base_color.png",
+          "relative_path": "texture_0_base_color.png",
+          "bytes": 24461157,
+          "sha256": "58e8988b88003abc0e9d39e18aa4146006f6543c8a402106cd47fe4224a15016",
+          "content_type": "image/png",
+          "format": "png",
+          "container_format": null,
+          "extracted": null,
+          "status": "written",
+          "error": null,
+          "publish_method": "link",
+          "relinked": false
+        },
+        {
+          "key": "texture.0.metallic",
+          "path": "/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/art19-fparms02/Art/Source/Characters/FPArms02/Original/texture_0_metallic.png",
+          "relative_path": "texture_0_metallic.png",
+          "bytes": 49469,
+          "sha256": "73856e98fcea2a2c2b4ab78bc82265079a23ade5c492527ea2e211aa221c1661",
+          "content_type": "image/png",
+          "format": "png",
+          "container_format": null,
+          "extracted": null,
+          "status": "written",
+          "error": null,
+          "publish_method": "link",
+          "relinked": false
+        },
+        {
+          "key": "texture.0.roughness",
+          "path": "/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/art19-fparms02/Art/Source/Characters/FPArms02/Original/texture_0_roughness.png",
+          "relative_path": "texture_0_roughness.png",
+          "bytes": 1063361,
+          "sha256": "bdcd6cf885844b974b904481d452535a462073412f72e65b50617396ed7d935c",
+          "content_type": "image/png",
+          "format": "png",
+          "container_format": null,
+          "extracted": null,
+          "status": "written",
+          "error": null,
+          "publish_method": "link",
+          "relinked": false
+        },
+        {
+          "key": "texture.0.normal",
+          "path": "/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/art19-fparms02/Art/Source/Characters/FPArms02/Original/texture_0_normal.png",
+          "relative_path": "texture_0_normal.png",
+          "bytes": 19271817,
+          "sha256": "10365e9ed61d7b7b05c8563eeda5b767dff29ab22ebc36619226a96e6d153b7e",
+          "content_type": "image/png",
+          "format": "png",
+          "container_format": null,
+          "extracted": null,
+          "status": "written",
+          "error": null,
+          "publish_method": "link",
+          "relinked": false
+        }
+      ],
+      "metadata_path": null,
+      "material_links": null
+    },
+    "unknown_urls": [],
+    "saved_json": null
+  },
+  "error": null,
+  "warnings": []
+}

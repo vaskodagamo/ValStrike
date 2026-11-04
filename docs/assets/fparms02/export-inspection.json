@@ -1,0 +1,257 @@
+{
+  "blender": "5.2.2 LTS",
+  "units": "cm, +X forward, Z up; FBX converter -Y/Z matching project",
+  "fps": 30,
+  "source_reopened": true,
+  "source_meshes": {
+    "SK_FPArms02_R": {
+      "vertices": 281289,
+      "triangles": 529894,
+      "bounds_cm": [
+        [
+          1.3879897594451904,
+          41.83610534667969
+        ],
+        [
+          -17.616046905517578,
+          -6.087761878967285
+        ],
+        [
+          -4.498423099517822,
+          4.525649547576904
+        ]
+      ],
+      "boundary_edges": 31994,
+      "nonmanifold_edges": 31994,
+      "uv_layers": 1,
+      "vertex_color": [],
+      "weight_sum_max_error": 4.470348358154297e-08,
+      "unweighted": 0
+    },
+    "SK_FPArms02_L": {
+      "vertices": 281289,
+      "triangles": 529894,
+      "bounds_cm": [
+        [
+          1.3879897594451904,
+          41.83610534667969
+        ],
+        [
+          6.087761878967285,
+          17.616046905517578
+        ],
+        [
+          -4.498423099517822,
+          4.525649547576904
+        ]
+      ],
+      "boundary_edges": 31994,
+      "nonmanifold_edges": 31994,
+      "uv_layers": 1,
+      "vertex_color": [],
+      "weight_sum_max_error": 4.470348358154297e-08,
+      "unweighted": 0
+    }
+  },
+  "poses": {
+    "A_FPArms02_Grip": {
+      "frames": [
+        1,
+        15,
+        30
+      ],
+      "right_bounds_mid_cm": [
+        [
+          1.3879896402359009,
+          36.342689514160156
+        ],
+        [
+          -17.616044998168945,
+          -7.518094062805176
+        ],
+        [
+          -5.7980756759643555,
+          4.525649070739746
+        ]
+      ],
+      "edge_stretch_p99": 1.7276984637002608,
+      "edge_stretch_max": 29.57189765972296
+    },
+    "A_FPArms02_KnifePlaceholder": {
+      "frames": [
+        1,
+        15,
+        30
+      ],
+      "right_bounds_mid_cm": [
+        [
+          1.3879896402359009,
+          36.342689514160156
+        ],
+        [
+          -17.616044998168945,
+          -7.518093109130859
+        ],
+        [
+          -5.7980756759643555,
+          4.525649070739746
+        ]
+      ],
+      "edge_stretch_p99": 1.7276984637002608,
+      "edge_stretch_max": 29.57189765972296
+    },
+    "A_FPArms02_Open": {
+      "frames": [
+        1,
+        15,
+        30
+      ],
+      "right_bounds_mid_cm": [
+        [
+          1.3879896402359009,
+          41.83610534667969
+        ],
+        [
+          -17.616044998168945,
+          -6.087762832641602
+        ],
+        [
+          -4.498422622680664,
+          4.525649070739746
+        ]
+      ],
+      "edge_stretch_p99": 1.000095118498062,
+      "edge_stretch_max": 1.0002527563513788
+    },
+    "A_FPArms02_PistolHold": {
+      "frames": [
+        1,
+        15,
+        30
+      ],
+      "right_bounds_mid_cm": [
+        [
+          -33.612003326416016,
+          3.6928024291992188
+        ],
+        [
+          -7.425649166107178,
+          2.898073196411133
+        ],
+        [
+          -8.616046905517578,
+          1.4819040298461914
+        ]
+      ],
+      "edge_stretch_p99": 1.607415829291662,
+      "edge_stretch_max": 28.727917533774367
+    },
+    "A_FPArms02_RifleHold": {
+      "frames": [
+        1,
+        15,
+        30
+      ],
+      "right_bounds_mid_cm": [
+        [
+          -33.612003326416016,
+          3.6928024291992188
+        ],
+        [
+          -7.425649166107178,
+          2.898073196411133
+        ],
+        [
+          -8.616046905517578,
+          1.4819040298461914
+        ]
+      ],
+      "edge_stretch_p99": 1.607415829291662,
+      "edge_stretch_max": 28.727917533774367
+    },
+    "A_FPArms02_Wrist": {
+      "frames": [
+        1,
+        15,
+        30
+      ],
+      "right_bounds_mid_cm": [
+        [
+          1.3879896402359009,
+          40.3984375
+        ],
+        [
+          -19.2683162689209,
+          -7.421513557434082
+        ],
+        [
+          -4.498422622680664,
+          7.840727806091309
+        ]
+      ],
+      "edge_stretch_p99": 1.1230372421000485,
+      "edge_stretch_max": 2.6074883378990923
+    }
+  },
+  "fbx_roundtrip": {
+    "A_FPArms02_Grip.fbx": {
+      "bones": 39,
+      "parents_match": true,
+      "max_rest_head_error_cm": 2.1436468880642913e-05,
+      "sampled_pose_head_max_error_cm": 2.1622606691380802e-05
+    },
+    "A_FPArms02_KnifePlaceholder.fbx": {
+      "bones": 39,
+      "parents_match": true,
+      "max_rest_head_error_cm": 2.1436468880642913e-05,
+      "sampled_pose_head_max_error_cm": 2.1622606691380802e-05
+    },
+    "A_FPArms02_Open.fbx": {
+      "bones": 39,
+      "parents_match": true,
+      "max_rest_head_error_cm": 2.1436468880642913e-05,
+      "sampled_pose_head_max_error_cm": 2.1431164793247443e-05
+    },
+    "A_FPArms02_PistolHold.fbx": {
+      "bones": 39,
+      "parents_match": true,
+      "max_rest_head_error_cm": 2.1436468880642913e-05,
+      "sampled_pose_head_max_error_cm": 1.8853920543114182e-05
+    },
+    "A_FPArms02_RifleHold.fbx": {
+      "bones": 39,
+      "parents_match": true,
+      "max_rest_head_error_cm": 2.1436468880642913e-05,
+      "sampled_pose_head_max_error_cm": 2.019251949333158e-05
+    },
+    "A_FPArms02_Wrist.fbx": {
+      "bones": 39,
+      "parents_match": true,
+      "max_rest_head_error_cm": 2.1436468880642913e-05,
+      "sampled_pose_head_max_error_cm": 2.4542063202777426e-05
+    },
+    "SK_FPArms02.fbx": {
+      "bones": 39,
+      "parents_match": true,
+      "max_rest_head_error_cm": 1.3137382940149395e-05,
+      "meshes": {
+        "SK_FPArms02_R": {
+          "bounds_max_error_cm": 5.245208740234375e-06,
+          "uv_layers": 1,
+          "vertex_color": [],
+          "unweighted": 0
+        },
+        "SK_FPArms02_L": {
+          "bounds_max_error_cm": 5.245208740234375e-06,
+          "uv_layers": 1,
+          "vertex_color": [],
+          "unweighted": 0
+        }
+      }
+    }
+  },
+  "limitations": [
+    "Source inspections do not prove native material, skeleton, sockets, clipping or runtime correctness."
+  ],
+  "passed": true
+}

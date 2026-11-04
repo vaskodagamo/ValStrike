@@ -1,0 +1,184 @@
+{
+  "task": "ART-19",
+  "asset": "FPArms02",
+  "date_europe_berlin": "2026-11-04",
+  "status": "CHECKPOINTED_SOURCE_READY_FOR_REVIEW_WITH_HOLDS",
+  "checkpoint_reason": "Producer directed safe stop/publication before separate ART-22 bare-forearm assignment. No FPArms03 work started.",
+  "generation": {
+    "resource": "image-to-3d",
+    "task_id": "01a1a6d2-0762-71ad-80d6-c8b4049d3e47",
+    "status": "SUCCEEDED",
+    "credits_actual": 30,
+    "credits_allowance": 30,
+    "paid_tasks": 1,
+    "paid_retries": 0,
+    "extra_paid_stages": 0
+  },
+  "states": {
+    "generated": true,
+    "editable_source_and_rig_delivered": true,
+    "source_preservation_pass": true,
+    "fbx_serialization_pass": true,
+    "production_art_accepted": false,
+    "production_deformation_accepted": false,
+    "weapon_fit_accepted": false,
+    "native_imported": false,
+    "runtime_verified": false,
+    "merged_by_agent": false
+  },
+  "selected_source": {
+    "mesh": "Preserved GLB surface; paired locally, assigned length/basis normalization only",
+    "triangles_per_hand": 529894,
+    "vertices_per_hand": 281289,
+    "triangles_pair": 1059788,
+    "bones": 39,
+    "max_weights_per_vertex": 4,
+    "uvs_custom_normals_original_pbr_preserved": true,
+    "normalization_comparison": "Previews/14_original_uniform_proportions.png"
+  },
+  "included": [
+    "Editable FPArms02.blend with paired surface/rig and six bounded actions",
+    "One skeletal FBX; six animation-only FBXs at 30 fps, frames 1\u201330",
+    "Untouched original GLB/FBX/PBR maps, reference image/prompt and task record",
+    "Matched original/held-candidate/final-export views plus actual pose and 90-degree-FOV studies"
+  ],
+  "held": [
+    {
+      "item": "Reduced candidate",
+      "reason": "46k-triangle-per-hand reduction/relaxation/tint candidate visibly softens source detail; preserved separately, excluded from selected export."
+    },
+    {
+      "item": "Production deformation/topology",
+      "reason": "Generated UV-split dense triangulation, local web/joint compression and high local edge stretch. Bounded grip/wrist examples only; no extreme fist, reload/equip/slash or broad animation approval."
+    },
+    {
+      "item": "Runtime performance",
+      "reason": "Full pair has 1,059,788 triangles; no runtime budget, LOD, profiling or optimization acceptance."
+    },
+    {
+      "item": "R02 fit",
+      "reason": "PROVISIONAL earlier frozen R02 source at 627e074; ART-17 correction pending per producer. Recheck only changed grip/contact geometry after corrected revision is frozen."
+    },
+    {
+      "item": "P02 fit",
+      "reason": "Corrected PR #81 source rechecked; index is alongside/below guard, with reverse-view finger/support-hand intersections. Static fit study only, not gameplay animation."
+    },
+    {
+      "item": "Knife fit",
+      "reason": "Anatomical placeholder grip only; no frozen K01 geometry fit."
+    },
+    {
+      "item": "Bare forearms",
+      "reason": "FPArms02 retains assigned slate sleeves. New universal bare-forearm direction belongs to a separately assigned FPArms03 task."
+    },
+    {
+      "item": "Native/runtime",
+      "reason": "No Unreal import/build/launch or native ownership; coordinator must assign integration."
+    }
+  ],
+  "checks_actually_run": [
+    "Blender 5.2.2 source reopen and actual open/palm/grip/wrist/weapon rendering",
+    "Matched original/candidate/final FBX comparison and separate uniform-proportion comparison",
+    "Exact normalized original/source topology, UV, position and stored-custom-normal match",
+    "Actual skeletal and six animation FBX readbacks: scale, parent hierarchy, 39 bones, weights and sampled frames 1/15/30",
+    "Corrected P02 PR #81 contact-only rerender; preserved provisional R02 evidence",
+    "Original download hashes unchanged at checkpoint"
+  ],
+  "evidence": [
+    "preservation-comparison.json",
+    "export-inspection.json",
+    "source-inspection.json",
+    "weapon-fit.json",
+    "frozen-weapon-sources.json",
+    "material-inputs.json",
+    "preview.html"
+  ],
+  "next_owner": "Producer/art lead: review checkpoint; assign ART-22 separately. Later explicit integration owner for native/runtime work. User merges.",
+  "files": [
+    {
+      "file": "Art/Source/Characters/FPArms02/FPArms02.blend",
+      "bytes": 95964855,
+      "sha256": "58c2a5c425352a101006be23cefc884edbe8e4e4b7a7dccdcd6fd5af28319cdc"
+    },
+    {
+      "file": "Art/Source/Characters/FPArms02/Exports/A_FPArms02_Grip.fbx",
+      "bytes": 346124,
+      "sha256": "50227334dd2e248d11cf388df3f31b2ee9cda741a9d37765031ee154e2223736"
+    },
+    {
+      "file": "Art/Source/Characters/FPArms02/Exports/A_FPArms02_KnifePlaceholder.fbx",
+      "bytes": 346124,
+      "sha256": "3e4d72893479a8563cfcb405a9b23e87e23117d093cfc120d626897a4274b8e4"
+    },
+    {
+      "file": "Art/Source/Characters/FPArms02/Exports/A_FPArms02_Open.fbx",
+      "bytes": 346124,
+      "sha256": "9fd640ee29a7d5faed48c04fb9e9905785d89df911b360dc2b482b0b3f938c7c"
+    },
+    {
+      "file": "Art/Source/Characters/FPArms02/Exports/A_FPArms02_PistolHold.fbx",
+      "bytes": 346124,
+      "sha256": "4240f08b26ff0b46934bcf14e254e32fa5b97426e5bfd4cdd854a18e77f627ad"
+    },
+    {
+      "file": "Art/Source/Characters/FPArms02/Exports/A_FPArms02_RifleHold.fbx",
+      "bytes": 346124,
+      "sha256": "7470b503327e10b052fdb331dd2d9bafb4bdee48f1ba54eabbe39beaf6d8f02d"
+    },
+    {
+      "file": "Art/Source/Characters/FPArms02/Exports/A_FPArms02_Wrist.fbx",
+      "bytes": 346124,
+      "sha256": "0762a85319e9c8d568ed0e93e02cb47b1f8e067967e906e12a0e3c54f1212731"
+    },
+    {
+      "file": "Art/Source/Characters/FPArms02/Exports/SK_FPArms02.fbx",
+      "bytes": 43973660,
+      "sha256": "4236d75460e80b2177f5b02aaed2d9d51c52523dc1b2ca57246335eae6b81292"
+    },
+    {
+      "file": "Art/Source/Characters/FPArms02/Textures/T_FPArms02_GLTF_BaseColor.jpg",
+      "bytes": 11296513,
+      "sha256": "8837b5d0dd0b04f7481714f891fccc2fccf6d9a5596b4b50ca57ac2ec80b975c"
+    },
+    {
+      "file": "Art/Source/Characters/FPArms02/Textures/T_FPArms02_GLTF_MetallicRoughness.jpg",
+      "bytes": 1076207,
+      "sha256": "edfc38379776fc8876644eee7e665150fcc9d6f0994b81aa5ccdc2aece3bcdd7"
+    },
+    {
+      "file": "Art/Source/Characters/FPArms02/Textures/T_FPArms02_GLTF_Normal.jpg",
+      "bytes": 8185694,
+      "sha256": "467160346f5b047aac6d6ac5b1597c853396e74b0c58521cedbee25bfb4d485e"
+    },
+    {
+      "file": "Art/Source/Characters/FPArms02/Textures/T_FPArms02_base_color.png",
+      "bytes": 24461157,
+      "sha256": "58e8988b88003abc0e9d39e18aa4146006f6543c8a402106cd47fe4224a15016"
+    },
+    {
+      "file": "Art/Source/Characters/FPArms02/Textures/T_FPArms02_metallic.png",
+      "bytes": 49469,
+      "sha256": "73856e98fcea2a2c2b4ab78bc82265079a23ade5c492527ea2e211aa221c1661"
+    },
+    {
+      "file": "Art/Source/Characters/FPArms02/Textures/T_FPArms02_normal.png",
+      "bytes": 19271817,
+      "sha256": "10365e9ed61d7b7b05c8563eeda5b767dff29ab22ebc36619226a96e6d153b7e"
+    },
+    {
+      "file": "Art/Source/Characters/FPArms02/Textures/T_FPArms02_roughness.png",
+      "bytes": 1063361,
+      "sha256": "bdcd6cf885844b974b904481d452535a462073412f72e65b50617396ed7d935c"
+    },
+    {
+      "file": "Art/Source/Characters/FPArms02/Candidates/FPArms02_Reduced.blend",
+      "bytes": 4907683,
+      "sha256": "d5fe9439b308df60c84be5da59988bcc85108e2d96b665bc6b9b050a48795a07"
+    },
+    {
+      "file": "Art/Source/Characters/FPArms02/Reference/RightHand_Dorsal.png",
+      "bytes": 1810402,
+      "sha256": "f6ba857881ef912e7a5c7a51b8183659f95b6a2b8bbce47f2af279042b685b28"
+    }
+  ]
+}

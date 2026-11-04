@@ -1,0 +1,68 @@
+{
+  "asset": "FPArms02",
+  "date": "2026-11-04",
+  "operation_id": "art19-fparms02-single-draft-20261104",
+  "resource": "image-to-3d",
+  "status": "SUCCEEDED",
+  "allowance_credits": 30,
+  "estimated_credits": 30,
+  "actual_credits": 30,
+  "balance_before": 3195,
+  "cli": "meshy-cli 0.8.2; Node 22.21.1",
+  "reference": "Art/Source/Characters/FPArms02/Reference/RightHand_Dorsal.png",
+  "options": {
+    "model_type": "standard",
+    "ai_model": "meshy-7.1",
+    "geometry_resolution": "standard",
+    "should_texture": true,
+    "enable_pbr": true,
+    "texture_resolution": "4k",
+    "should_remesh": false,
+    "target_formats": [
+      "glb",
+      "fbx"
+    ]
+  },
+  "pricing_source": "https://docs.meshy.ai/en/api/pricing",
+  "extra_paid_stages_allowed": false,
+  "task_id": "01a1a6d2-0762-71ad-80d6-c8b4049d3e47",
+  "parent_task_id": null,
+  "reference_sha256": "f6ba857881ef912e7a5c7a51b8183659f95b6a2b8bbce47f2af279042b685b28",
+  "downloads": [
+    {
+      "file": "Art/Source/Characters/FPArms02/Original/model.fbx",
+      "bytes": 64709516,
+      "sha256": "9019e85b25ecc8f9e54ddf098fb309dea8dc45abbffd8c2d4e7449580192f174"
+    },
+    {
+      "file": "Art/Source/Characters/FPArms02/Original/texture_0_roughness.png",
+      "bytes": 1063361,
+      "sha256": "bdcd6cf885844b974b904481d452535a462073412f72e65b50617396ed7d935c"
+    },
+    {
+      "file": "Art/Source/Characters/FPArms02/Original/texture_0_metallic.png",
+      "bytes": 49469,
+      "sha256": "73856e98fcea2a2c2b4ab78bc82265079a23ade5c492527ea2e211aa221c1661"
+    },
+    {
+      "file": "Art/Source/Characters/FPArms02/Original/texture_0_base_color.png",
+      "bytes": 24461157,
+      "sha256": "58e8988b88003abc0e9d39e18aa4146006f6543c8a402106cd47fe4224a15016"
+    },
+    {
+      "file": "Art/Source/Characters/FPArms02/Original/thumbnail.png",
+      "bytes": 76075,
+      "sha256": "8d296c32b792a76d085a81ab59019649711a3c72f15dffed1767bcdac4597e86"
+    },
+    {
+      "file": "Art/Source/Characters/FPArms02/Original/texture_0_normal.png",
+      "bytes": 19271817,
+      "sha256": "10365e9ed61d7b7b05c8563eeda5b767dff29ab22ebc36619226a96e6d153b7e"
+    },
+    {
+      "file": "Art/Source/Characters/FPArms02/Original/model.glb",
+      "bytes": 35920744,
+      "sha256": "1341db157b1b5d1fe9f491e00ad2c2e14b870f188c656fb42b0c44893756168e"
+    }
+  ]
+}

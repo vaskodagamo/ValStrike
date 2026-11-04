@@ -1,0 +1,56 @@
+{
+  "original": {
+    "vertices": 281289,
+    "polygons": 529894,
+    "loop_vertex_sha256": "e64e64ce079a7af148a4dbbc79a9f63db4ccb0046869423c0d00a22cff9f1f36",
+    "uv_sha256": "235ce1c4c0e67685460e0b4b56696e2a3404ad49a3d59622a080c4614d6bfb99",
+    "custom_normals": true
+  },
+  "preserved_source": {
+    "vertices": 281289,
+    "polygons": 529894,
+    "loop_vertex_sha256": "e64e64ce079a7af148a4dbbc79a9f63db4ccb0046869423c0d00a22cff9f1f36",
+    "uv_sha256": "235ce1c4c0e67685460e0b4b56696e2a3404ad49a3d59622a080c4614d6bfb99",
+    "custom_normals": true
+  },
+  "max_position_error_cm": 0.0,
+  "max_transformed_custom_normal_error": 0.0,
+  "max_normal_storage_vs_theoretical_error": 0.00376164259424187,
+  "comparison_camera": {
+    "location_cm": [
+      22,
+      -13,
+      80
+    ],
+    "rotation_euler": [
+      0,
+      0,
+      0
+    ],
+    "orthographic_span_cm": 47,
+    "resolution": [
+      1000,
+      500
+    ]
+  },
+  "comparison_material": "Same original imported Meshy PBR node graph on all three meshes; no tint, roughness override or changed lighting.",
+  "candidate": {
+    "triangles": 46000,
+    "verdict": "HELD: reduction/smoothing/material-adjustment candidate is not the selected source; no production budget justifies destructive changes."
+  },
+  "nonuniform_fit_comparison": {
+    "uniform_original_hand_length_cm": 19.787346126184158,
+    "selected_hand_length_cm": 17.83610451842081,
+    "uniform_original_forearm_length_cm": 20.66076859726093,
+    "selected_forearm_length_cm": 22.612010205024273,
+    "reason": "Assigned fit to frozen UrbanEntry hand/forearm measurements; no finger scaling to fit a weapon.",
+    "evidence": [
+      "14_original_uniform_proportions.png",
+      "13_final_export_same_setup.png"
+    ],
+    "visual_acceptance": "Art review pending for the changed proportions."
+  },
+  "selected": "Preserved Meshy surface with paired local rig, original PBR, transformed supplied custom normals.",
+  "final_export_vertices": 281289,
+  "final_export_triangles": 529894
+}
