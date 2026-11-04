@@ -161,3 +161,45 @@ The lead assigned the runner to GPT-15 after GPT-12 (#70) merged. The branch mer
   - The runner unit tests: 23 OK.
   - `git diff --check`: clean.
   - No Unreal build.
+
+## 2026-11-04 — GPF-04 / INT-06-D3: in-motion corrections under `typical`
+
+- **Branch:** `claude/gpf-04-steady-corrections`, from `origin/main` `a1c2371`. The PR description has the exact head SHA.
+- **Verdict:** D3 is a harness artifact. The boundary run started while a teleport correction was still in flight. **No movement code changed.** `VSCharacterMovementComponent.*`, `VSCharacter.*` (including #93's presentation code) and `VSMovementRules.h` are untouched.
+- **Evidence:** QA run `team-integration/Saved/Tests/Movement/20261104T140018Z_14b888`, read only.
+  - **One desync episode.** All 10 server errors in motion fall in a single 0.22 s stretch at the start of the boundary run (server Time 34.042–34.265).
+    - The error grows 2.0 → 7.176 cm while accelerating, then stays at 7.176 cm.
+    - The driver applied one correction (6.105 cm at 34.162) and then a 0.000 cm confirmation at 34.265. After that it agreed with the server for the rest of the 4.4 s run at 387 cm/s.
+    - The "3 steady" errors are the same offset, logged again within one round trip, before the correction reached the client.
+  - **What the offset means.** 7.176 cm = 387 cm/s × 18.5 ms: one client frame of extra acceleration on the server.
+    - The server runs each `ServerMove` for `ClientTimeStamp − CurrentClientTimeStamp` (`FNetworkPredictionData_Server_Character::GetBaseServerMoveDeltaTime`, `CharacterMovementComponent.cpp:12636`).
+    - So an idle client frame that the server doesn't simulate on its own is run with the next move's acceleration. A time shift Δ at the start of acceleration ends as an offset of v_max × Δ.
+    - The engine ran this movement under a correction cycle: the 481 cm teleport correction at Time 33.804 reached the client at 14:01:07.562, and W followed about 100 ms later.
+    - The resulting mismatch is a one-time timing offset at the start of the run. It is not a disagreement about max speed: GetMaxSpeed was 387 on both sides.
+  - **Weight agrees everywhere else.** The same build under `typical` logged **zero** in-motion errors in:
+    - stairs (21–24 s) and cover (28–31 s): rifle 387 cm/s, accelerating from rest;
+    - the feel stage (33–41.7 s): pistol 432 cm/s, a switch, running jumps and crouch-jumps.
+  - **Cause.** #74 added the boundary teleport at 10.9 s with W pressed at 11.0 s. That 0.1 s gap is shorter than one round trip under `typical` (40 ± 10 ms each way). Every other stage leaves 1.0 s. `09347c2` has no boundary teleport, so its baseline shows 0.
+- **Fix (timing only, granted by the lead outside my owned paths):**
+  - `VSMovementSmoke.cpp`: the boundary placement moves from 10.9 s to **10.85 s**, and the boundary W window from 11.0–18.0 s to **11.8–18.0 s**.
+  - `Scripts/test_movement.py`: the wall window moves from 16.5–17.5 to **17.0–18.0**, and the no-pass-through window from 11.0–18.0 to **11.8–18.0**. Bounds are unchanged (x 1905–1920, median speed < 5, at least 5 samples).
+  - **Timing arithmetic:**
+    - (a) The placement at 10.85 s lies outside every sampled window: after `landed` 10.0–10.8 (and `jump` 8.0–9.5), and before the boundary window at 11.8. Clients see the teleport at ≥ 10.9 s.
+    - (b) Teleport to W is 0.95 s, close to the other stages' 1.0 s and well above one round trip (about 0.1 s). The QA run settled the correction in about 0.12 s.
+    - (c) The QA run reached the wall (x 1915.9) at 15.65 s with W at 11.0, so 4.65 s from W to the wall, latency included. With W at 11.8 it arrives at about 16.45 s, 0.55 s before the wall window opens. The stairs placement at 20.0 s is unaffected.
+    - Why not 10.0 s: it falls inside `landed`. Why not 9.6 s: it would also hide a failed landing (the teleport would put the pawn on the ground).
+- **Runner unit tests:**
+  - The synthetic timeline follows the new timing.
+  - New `test_boundary_run_timing`:
+    - landing samples stay at the jump spot;
+    - a driver still running at 17.0–17.5 fails `boundary blocks movement`;
+    - passing x 1920 fails it too.
+  - Fixed a test-entrypoint bug from my earlier follow-up: `if __name__ == "__main__"` sat mid-file, so `python3 Tests/Movement/test_movement_runner.py` ran only 13 tests. It now runs all 24.
+- **Checks run:**
+  - Runner unit tests: 24 OK, both as a script and via `unittest discover`.
+  - The rules test with `clang++` and `g++` (Apple clang) at `-Wall -Wextra -Wshadow -Werror -pedantic`: 61/61.
+  - `git diff --check`: clean.
+  - `git diff origin/main -- Source/ValStrike/VSCharacter.*`: empty.
+  - No Unreal build.
+- **Verification pending (integration):** Editor build, then `Scripts/test_movement.py` lan and `--net-profile typical`. Expect 69/69 and no server corrections with non-zero velocity or acceleration; only the zero-velocity `setup` teleports remain.
+- **Risk:** if integration still sees in-motion corrections under `typical` after this change, the harness explanation is wrong and **D3 reopens against the weight path** (`UVSCharacterMovementComponent::GetMaxSpeed` or replay). One QA sample per tree; a repeat run would make the result firm.

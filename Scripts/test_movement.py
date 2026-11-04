@@ -284,11 +284,11 @@ def evaluate(evidence):
               any(not i["grounded"] and i["vz"] > 50 for i in jump) and
               len(landed) >= 4 and all(i["grounded"] and abs(i["z"] - floor) < 5 for i in landed),
               {"jump_height_cm": height, "landing_samples": len(landed)})
-        wall = window(16.5, 17.5)
+        wall = window(17.0, 18.0)
         wall_x = median(wall, "x")
         check(f"{role}: boundary blocks movement", len(wall) >= 5 and
               wall_x is not None and 1905 <= wall_x <= 1920 and
-              all(i["x"] <= 1920 for i in window(11.0, 18.0)) and
+              all(i["x"] <= 1920 for i in window(11.8, 18.0)) and
               (median(wall, "speed") or 0) < 5,
               {"x": wall_x, "speed": median(wall, "speed")})
         stairs = window(21.0, 24.0)

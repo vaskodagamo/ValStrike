@@ -179,9 +179,11 @@ private:
                 Event(TEXT("setup"), Time, TEXT("initial"));
             }
         }
-        // Weapon weight slows the rifle run; start the boundary run where the old
-        // 450 cm/s tuning was at 11 s, so the driver still reaches the wall by 16.5 s.
-        if (bServer && Time >= 10.9 && !bBoundaryPlaced)
+        // Weapon weight slows the rifle run; start the boundary run at x=200 so the
+        // driver reaches the wall about 16.45 s. Place after the landing window
+        // (10.0-10.8) and about 1 s before W (11.8), so the teleport correction has
+        // settled before movement starts (INT-06-D3).
+        if (bServer && Time >= 10.85 && !bBoundaryPlaced)
         {
             bBoundaryPlaced = true;
             if (!Place(Driver, FVector(200.0, -1100.0, 90.0))) { Fail(Time, TEXT("boundary_placement_failed")); return; }
@@ -214,7 +216,7 @@ private:
             Key(PC, EKeys::Two, During(Time, {{32.5, 32.6}}), bPistol);
             // Ctrl before Space within a tick: both reach the same predicted move.
             Key(PC, EKeys::LeftControl, During(Time, {{5.5, 7.0}, {35.0, 36.2}, {38.6, 39.6}, {40.2, 41.7}}), bCrouch);
-            Key(PC, EKeys::W, During(Time, {{1.0, 2.5}, {3.0, 5.0}, {5.5, 7.0}, {11.0, 18.0}, {21.0, 24.0},
+            Key(PC, EKeys::W, During(Time, {{1.0, 2.5}, {3.0, 5.0}, {5.5, 7.0}, {11.8, 18.0}, {21.0, 24.0},
                 {28.0, 31.0}, {33.0, 34.6}, {36.6, 39.8}}), bForward);
             Key(PC, EKeys::SpaceBar, During(Time, {{8.0, 8.15}, {35.0, 35.15}, {37.2, 37.35}, {38.6, 38.75},
                 {40.7, 40.85}}), bJump);
