@@ -357,6 +357,8 @@ The gameplay/integration idle slots were checked clean at their original heads b
 
 **Baseline/verification:** PR #31 is merged on main `90849f5`; kickoff changes are documentation only. Check local links, whitespace and isolated worktree heads. Creation/initial progress are recorded after dispatch; no art completion claimed.
 
+**Dispatched:** “Art — Third-person player model” (`01a1a5ba-709c-7dd3-bc9e-d70ee4f951bc`) and “Art — Tactical HUD icons” (`01a1a5ba-7e9f-7c41-9b0f-38db0ea9a923`) were created with explicit `thinking: high`; model was omitted to preserve the configured default. Both have separate worktrees starting at `d46a27c0c9a1a61b2d52bd76b797529a0e9dbbfb`. Existing art and gameplay worktrees were not changed.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.

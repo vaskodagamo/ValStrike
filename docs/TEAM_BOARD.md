@@ -22,8 +22,8 @@ Paths below are relative to `/Users/webproduktion3/Documents/ValStrike`. The art
 | Gameplay lead | `codex/team-gameplay` | `.parallel-worktrees/team-gameplay` | Reserved for user-started Claude; kickoff below |
 | First-person arms | `codex/team-art` | `.parallel-worktrees/team-art` | ART-05 dispatched; exclusive active owner |
 | Site01 signs | `codex/art-site-signage` | `.parallel-worktrees/art-site-signage` | ART-06 dispatched; exclusive active owner |
-| Third-person player | `codex/art-player-model` | `.parallel-worktrees/art-player-model` | ART-07 reserved; High reasoning |
-| HUD icons | `codex/art-hud-icons` | `.parallel-worktrees/art-hud-icons` | ART-08 reserved; High reasoning |
+| Third-person player | `codex/art-player-model` | `.parallel-worktrees/art-player-model` | ART-07 dispatched; High reasoning |
+| HUD icons | `codex/art-hud-icons` | `.parallel-worktrees/art-hud-icons` | ART-08 dispatched; High reasoning |
 | Integration / QA | `codex/team-integration` | `.parallel-worktrees/team-integration` | Reserved for one Claude-assigned INT-01 owner; no run started here |
 
 The user selected Codex for art and Claude for gameplay on 2026-11-04. These assignments now govern the slots; branch prefixes do not define permissions. New Claude workers receive separate `claude/<task-id>` branches. [Claude lead kickoff](teams/CLAUDE_GAMEPLAY_KICKOFF.md).
@@ -36,8 +36,8 @@ The user selected Codex for art and Claude for gameplay on 2026-11-04. These ass
 | INT-01 | Verify the combined current-main gameplay batch and report actionable failures | Delegated to user-started Claude engineering lead; integration slot reserved | Integration report `docs/workstreams/integration-01.md`; source fixes require exact owner in gameplay sub-board | Ready for one QA assignment; V2; use the batch below |
 | ART-05 | First-person arms/gloves source-ready asset | Codex “Art — First-person arms and gloves” (`01a1a5af-02f5-7822-85ed-f2b741e45cf5`); team-art slot | Exact source/docs paths in [ART-05 brief](tasks/art/ART-05-first-person-arms.md) | Dispatched from `d4183ca`; V1 source only, no Unreal build |
 | ART-06 | Two Site01 signs and additive placement recipe | Codex “Art — Site01 navigation signs” (`01a1a5af-0f13-78f1-8aaa-1903c1392df7`); art-site-signage slot | Exact source/docs paths in [ART-06 brief](tasks/art/ART-06-site01-signage.md) | Dispatched from `d4183ca`; V1 source only, no Unreal build |
-| ART-07 | Third-person player model, source-ready | New Codex art-player-model session, High reasoning | Exact paths in [ART-07 brief](tasks/art/ART-07-player-model.md) | Ready for dispatch; V1 source only |
-| ART-08 | Eight tactical HUD icons | New Codex art-hud-icons session, High reasoning | Exact paths in [ART-08 brief](tasks/art/ART-08-hud-icons.md) | Ready for dispatch; V1 source only |
+| ART-07 | Third-person player model, source-ready | Codex “Art — Third-person player model” (`01a1a5ba-709c-7dd3-bc9e-d70ee4f951bc`), High reasoning | Exact paths in [ART-07 brief](tasks/art/ART-07-player-model.md) | Dispatched from `d46a27c`; V1 source only |
+| ART-08 | Eight tactical HUD icons | Codex “Art — Tactical HUD icons” (`01a1a5ba-7e9f-7c41-9b0f-38db0ea9a923`), High reasoning | Exact paths in [ART-08 brief](tasks/art/ART-08-hud-icons.md) | Dispatched from `d46a27c`; V1 source only |
 
 Claude owns only its delegated sub-board, task briefs under `docs/tasks/gameplay/` and `docs/workstreams/gameplay-lead.md`; Codex retains central docs/policy. Engineering can allocate task-scoped `Source/`, `Config/`, `Scripts/`, `Tests/` paths. All art/native Content/maps and art asset documentation are read-only to engineering. ART-05 through ART-08 own no gameplay or Content paths in this source-only batch. No workers are authorized to create more art chats.
 
