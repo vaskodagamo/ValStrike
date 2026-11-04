@@ -13,4 +13,6 @@ UVSPistolComponent::UVSPistolComponent()
     Range = 8000.0f;
     // Pistol row of the zone table: 20 upper torso, lethal head (was 20 body / 60 head).
     DamageClass = ValStrike::Damage::WeaponClass::Pistol;
+    // Per-shot kick with fast recovery; exact first shot (playtest proposal).
+    RecoilTuning = VSRecoilRules::PistolTuning();
 }
