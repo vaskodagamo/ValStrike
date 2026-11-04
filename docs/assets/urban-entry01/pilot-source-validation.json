@@ -1,0 +1,311 @@
+{
+  "task_id": "ART-15",
+  "blender": "5.2.2 LTS",
+  "original_source_unchanged": true,
+  "socket": {
+    "parent": "hand_r",
+    "space": "Blender pose-bone HEAD matrix, centimeters; column-vector matrices",
+    "bone_local_matrix": [
+      [
+        0.32825934886932373,
+        0.9445542693138123,
+        -0.007920592091977596,
+        4.100887775421143
+      ],
+      [
+        0.9443542957305908,
+        -0.32835328578948975,
+        -0.019470829516649246,
+        13.554956436157227
+      ],
+      [
+        -0.020991826429963112,
+        -0.0010880755726248026,
+        -0.9997790455818176,
+        -6.189258575439453
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "hold_rifle_component_matrix": [
+      [
+        0.9902680516242981,
+        -0.13917303085327148,
+        0.0,
+        25.34122657775879
+      ],
+      [
+        0.13917303085327148,
+        0.9902680516242981,
+        0.0,
+        -16.508159637451172
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        139.56800842285156
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "scale": [
+      1,
+      1,
+      1
+    ],
+    "translation_cm": [
+      4.100887298583984,
+      13.554956436157227,
+      -6.189273834228516
+    ],
+    "quaternion_wxyz": [
+      0.005639462731778622,
+      0.8149219751358032,
+      0.5794754028320312,
+      -0.008869660086929798
+    ],
+    "hold_hand_r_component_matrix": [
+      [
+        0.19360844790935516,
+        0.9808617830276489,
+        -0.020636245608329773,
+        11.123998641967773
+      ],
+      [
+        0.9810470342636108,
+        -0.1937289834022522,
+        -0.003999292850494385,
+        -17.930089950561523
+      ],
+      [
+        -0.007920265197753906,
+        -0.01947075128555298,
+        -0.9997791051864624,
+        133.67652893066406
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "support_hand_reference_in_rifle_cm": {
+      "hand_l": [
+        18.390470504760742,
+        8.222640991210938,
+        1.841605544090271
+      ],
+      "index_01_l": [
+        24.331594467163086,
+        -1.535889983177185,
+        3.9512689113616943
+      ],
+      "middle_01_l": [
+        23.515413284301758,
+        -2.6257920265197754,
+        2.497030258178711
+      ],
+      "ring_01_l": [
+        22.09589385986328,
+        -4.434646129608154,
+        1.0105345249176025
+      ],
+      "thumb_01_l": [
+        20.97372055053711,
+        3.7467854022979736,
+        3.6961581707000732
+      ]
+    },
+    "right_hand_reference_in_rifle_cm": {
+      "hand_r": [
+        -14.276762962341309,
+        0.5705615878105164,
+        -5.8914971351623535
+      ],
+      "index_01_r": [
+        -2.701620578765869,
+        -2.2346887588500977,
+        -3.695164442062378
+      ],
+      "middle_01_r": [
+        -2.4436404705047607,
+        -3.4767885208129883,
+        -5.231236457824707
+      ],
+      "ring_01_r": [
+        -1.703481674194336,
+        -4.687930107116699,
+        -7.572575569152832
+      ],
+      "thumb_01_r": [
+        -8.399415969848633,
+        0.11105722188949585,
+        -4.826358318328857
+      ]
+    }
+  },
+  "clips": {
+    "A_UE01_Pilot_RifleHold": {
+      "frame_range": [
+        1,
+        61
+      ],
+      "fps": 60,
+      "pelvis_end_delta_cm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max_loop_joint_difference_cm": 0.0,
+      "animation_only": true,
+      "rest_matrix_max_error": 3.0517578125e-05,
+      "sampled_joint_error_cm": 0.00012230849870209807,
+      "sampled_vertex_error_cm": 0.00013254357645486214,
+      "sampled_frames": [
+        1,
+        31,
+        61
+      ]
+    },
+    "A_UE01_Pilot_Walk_RifleHold": {
+      "frame_range": [
+        1,
+        63
+      ],
+      "fps": 60,
+      "pelvis_end_delta_cm": [
+        6.556510925292969e-07,
+        1.5497207641601562e-06,
+        0.0
+      ],
+      "max_loop_joint_difference_cm": 8.753176989762398e-05,
+      "animation_only": true,
+      "rest_matrix_max_error": 3.0517578125e-05,
+      "sampled_joint_error_cm": 0.00016518398998658927,
+      "sampled_vertex_error_cm": 0.00015712489834404392,
+      "sampled_frames": [
+        1,
+        32,
+        63
+      ]
+    }
+  },
+  "saved_pilot_reopened": true,
+  "unchanged_original_action_fingerprints": {
+    "A_UE01_Crouch_Walk_Left_with_Gun": "6a83f53f854ba769ee34cef8e3e8764d656d84814e50a9d1e95f79851f0c630e",
+    "A_UE01_Running": "7f89767090c5003fdd6932ed5ef3dce5e6dbe71d4730d82f7d6ca66349358ed0",
+    "A_UE01_Vault_with_Rifle": "bab07357b10e370a1e5d0ba927b4f1606bff71d92344b4b5505597463882a1e2",
+    "A_UE01_Walk_Backward_While_Shooting": "c93696f9240a9ecc023cfb0bdc6f023cf97f14e31e26c0ba95d75ad1d47d9ed7",
+    "A_UE01_Walk_Backward_with_Gun": "86d21a801af4c98a0bd33555c99adbb133466ee5bb0fbc33bac9d852f49dcfe9",
+    "A_UE01_Walking": "c9106d1356db3595bee5fea1deb7b5e17d1641520b11930a4e6a835e29e9f650",
+    "SmartRigArmature|rest|BaseLayer": "425a0b3ddff5af296f09596542aa2a499b9c37989efa7b423261a6df8730c3f5"
+  },
+  "saved_pilot_bind_mesh_weights_identical": true,
+  "texture_reload": [
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Textures/T_UE01_BaseColor.png",
+      "size": [
+        4096,
+        4096
+      ],
+      "space": "sRGB"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Textures/T_UE01_Metallic.png",
+      "size": [
+        4096,
+        4096
+      ],
+      "space": "Non-Color"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Textures/T_UE01_Roughness.png",
+      "size": [
+        4096,
+        4096
+      ],
+      "space": "Non-Color"
+    }
+  ],
+  "walk_lower_body_curves_identical": true,
+  "max_sampled_support_wrist_drift_relative_rifle_cm": 3.1064257426112605e-05,
+  "camera_distance_views": {
+    "resolution": [
+      1920,
+      1080
+    ],
+    "horizontal_fov_degrees": 90,
+    "distance_cm": [
+      500,
+      1000
+    ],
+    "renderer": "Blender Cycles; source studio only, no runtime claim",
+    "target_cm": [
+      10,
+      0,
+      85
+    ]
+  },
+  "unchanged_original_exports_and_textures": [
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Exports/A_UE01_Crouch_Walk_Left_with_Gun.fbx",
+      "sha256": "3b67b7b35af1e0c7e4a8677c42356212cac60b6eebbb03ddd4bc2a507943df58",
+      "bytes": 747356
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Exports/A_UE01_Running.fbx",
+      "sha256": "51c0c983127da69909c646644f216c5c82a7cfe35fb467a7060487276dd2a69a",
+      "bytes": 589868
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Exports/A_UE01_Vault_with_Rifle.fbx",
+      "sha256": "f7641246271e58ddab4039bfe6385146640c96bfa6331d78de7e6e01bce10cd7",
+      "bytes": 630428
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Exports/A_UE01_Walk_Backward_While_Shooting.fbx",
+      "sha256": "eff51c3272b7b8a871fe3c7df9f653ded14fc6583875e5791631b771476e030d",
+      "bytes": 758332
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Exports/A_UE01_Walk_Backward_with_Gun.fbx",
+      "sha256": "c582aa0487778d77aa3fca27a9d685685ac63e6db0fb8628acf8d9d41b3cd29e",
+      "bytes": 678076
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Exports/A_UE01_Walking.fbx",
+      "sha256": "33b4d330058fbc579c108bfc8b7a33062f67b4462227dba727d69fcd479c1807",
+      "bytes": 694780
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Exports/SK_VS_UrbanEntry01.fbx",
+      "sha256": "cf6930297e3579704be638829b8043934d1cab6a45fc15c4e8df0ff04cc6e782",
+      "bytes": 2179436
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Textures/T_UE01_BaseColor.png",
+      "sha256": "70555f5060a8dccdb67936ac48b827888c629e8fe8f013b6ffa53a55fb85e50a",
+      "bytes": 17077891
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Textures/T_UE01_Roughness.png",
+      "sha256": "5c4ca64d278d86c9dbea3c7c7b1acb03a96eb50194b0264d8d05b53773647dbf",
+      "bytes": 2589732
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Textures/T_UE01_Metallic.png",
+      "sha256": "ab0af3e46fc01f463a4432429efce8e068393e56c27b32c63cd4cf837374ed91",
+      "bytes": 1494124
+    }
+  ]
+}

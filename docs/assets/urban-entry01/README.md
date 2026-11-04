@@ -164,3 +164,11 @@ this delivery does not invent licensing evidence or claim a new license.
 All original inputs, the rejected ART-07 checkout and other contributors' files
 remain unchanged. No Unreal launch/import/build, engine-slot attempt, gameplay,
 map, Animation Blueprint or shared-skeleton edit occurred.
+
+## ART-15 pilot review — 2026-11-04
+
+The original ART-13 evidence above is retained. A bounded subset now has delegated
+pilot art approval in [PILOT.md](PILOT.md): unchanged character/textures, a new R01
+hold and in-place rifle walk, plus the original unarmed walk fallback. Exact frozen
+paths/hashes are in [pilot-readiness.json](pilot-readiness.json). Native/runtime
+and production acceptance remain pending; all other animation coverage stays held.

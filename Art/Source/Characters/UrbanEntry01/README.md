@@ -40,3 +40,13 @@ frames 1 through the original last frame. It deletes that temporary action after
 export. This keeps the animation-only bind skeleton consistent with the character
 without adding a frame, changing the six saved actions or duplicating mesh data.
 Blender reimport of these exports uses animation offset `0`, not its default `1`.
+
+## ART-15 pilot derivatives — 2026-11-04
+
+`UrbanEntry01_Pilot.blend` adds a fitted temporary rifle hold and an in-place
+rifle walk without changing this original source or its exports. Only
+`Exports/Pilot/` contains the new animation FBXs. See the
+[pilot subset and socket recipe](../../../../docs/assets/urban-entry01/PILOT.md)
+and [frozen readiness gate](../../../../docs/assets/urban-entry01/pilot-readiness.json).
+Use `prepare_pilot.py` then `review_pilot.py` for changed-only reproduction;
+do not rerun the full ART-13 pipeline to consume the pilot.
