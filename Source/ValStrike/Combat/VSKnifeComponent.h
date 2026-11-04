@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "VSKnifeCueRules.h"
 #include "VSKnifeRules.h"
 #include "VSKnifeComponent.generated.h"
 
@@ -42,6 +43,10 @@ struct FVSKnifeState
     UPROPERTY() EVSKnifeAttack LastImpactAttack = EVSKnifeAttack::Slash;
     // Lifecycle transitions that cancelled at least one pending impact.
     UPROPERTY() uint32 CancelCount = 0;
+    // Cue ordering: the attack index (1-based AttackCount) the latest impact
+    // resolved, and AttackCount when the latest cancellation happened.
+    UPROPERTY() uint32 ImpactAttackIndex = 0;
+    UPROPERTY() uint32 CancelAttackIndex = 0;
 };
 
 /** Cosmetic knife events for presentation and audio. */
@@ -102,6 +107,7 @@ private:
     void ResolveImpact(int32 Slot);
     void HandleLifeStateChanged();
     void ClearImpactTimers();
+    VSKnifeCueRules::Counters CueCounters() const;
 
     UFUNCTION(Server, Reliable)
     void ServerRequestKnifeAttack(uint8 Kind, uint32 Sequence);
@@ -118,8 +124,8 @@ private:
     uint32 LastRequestId = 0;                            // Server.
     uint32 NextLocalSequence = 0;                        // Owning client.
     double NextLocalAttackTime = 0.0;                    // Owning client clock.
-    FVSKnifeState SeenState;                             // Clients: last state turned into events.
-    bool bSeenState = false;
+    uint32 SlotAttackIndex[VSKnifeRules::MaxPending] = {}; // Server: attack index per pending slot.
+    VSKnifeCueRules::Watch CueWatch;                     // Clients: baseline and live cue order.
 #if !UE_BUILD_SHIPPING && !UE_BUILD_TEST
     TMap<FName, uint32> Rejections;
 #endif
