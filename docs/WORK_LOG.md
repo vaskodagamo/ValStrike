@@ -528,6 +528,18 @@ Direct user approval for ART-25's specific public source payload was verified in
 
 ART-26-C1 finished #115 (source `25fc75b`, handoff `5b8b675`). Producer inspected actual exported top/reverse grip and full-action sheet, closing the specific loose-grip/framing return for source-pilot admission. General deformation/runtime budget/native gates remain. R02/P02 replacement is the sole active native assignment; INT-ART-03 follows its freeze with accepted #115/#110 and corrected #114. Zero new credits, producer tests or Unreal operations; user merges.
 
+## 2026-11-04 — Reviewed native weapons and started full knife integration
+
+INT-ART-04/#118 delivered R02/P02 native replacement on runtime `c2ba852`, published `bd41b09`, now merged. Producer reviewed actual owner/remote fire/reload/switch comparisons and source-to-native measurements. One build, visual 13/13, Site01 29/29, shot effects 73/73; rifle 37/39 and practice 39/39 + 36/37 + 36/37 fail only stale R01/P01 name assertions, while all 39 knife-specific checks pass. No general performance, firearm-arms or full knife art claim.
+
+Producer assigned the exact assertion/hash-list correction to existing GPT-04 via authorized lead: WPN-02-CHECKS/#121 at `22b71bf`, frozen, inspected by engineering and producer; no new test/build. Existing native owner received INT-ART-03 with exact current source and presentation boundaries; actual branch `claude/int-art-03-knife` from `4997215` observed. Its one combined build waits for #121, then affected runtime/full visual knife acceptance; prior unaffected evidence reused.
+
+Real remote images also confirm R02 stock at cheek/no shoulder seat. ART-28 dispatched at High to existing character owner in a fresh `9cb17bc` worktree, only derived rifle hold/walk/run and hand/shoulder fit with unchanged geometry/rest/PBR. Zero credits/no Unreal; native application later, outside the active knife batch. Check worker stopped, leaving native knife and character fit active. Producer review/docs only; user merges.
+
+## 2026-11-04 — Native knife candidate passed affected checks; visual gate remains open
+
+Producer verified the existing native owner's clean candidate `1b572d0`: successful Editor build, practice 39/37/37 and rendered rifle presentation 39/39, including exact #121. Full knife captures are still being completed after a startup window-ID capture failure; no visual/audio/full-feature completion claim. ART-28 continues contact refinement. No new worker, producer test/build or paid job. Record the exit-75 self-retry as a process follow-up for after rendered acceptance stops; avoid input during captures. [Evidence paths and next trigger](producer/STATUS.md).
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.
