@@ -1,0 +1,604 @@
+{
+  "engine": "5.8.4-58902052+++UE5+Release-5.8",
+  "mode": "import_and_save",
+  "source_sha256": {
+    "Art/Source/Weapons/Rifle02/Exports/SM_VS_Rifle02_Body.fbx": "47578175da9d3f91d005783d6af421ce1fb1004e1a64fae3e583096a6957f644",
+    "Art/Source/Weapons/Rifle02/Exports/SM_VS_Rifle02_Magazine.fbx": "37dbfc4408174a29f6e2d7f7a9443efae8afccab8be115bab18bf76690d25b15",
+    "Art/Source/Weapons/Rifle02/Textures/GLB/T_R02_base_color.jpg": "fa03f448c2fb9bcfdb51d46b10e022634232fbfe3303fea8f5e2c338cc22a27c",
+    "Art/Source/Weapons/Rifle02/Textures/GLB/T_R02_orm.jpg": "e835e5fc65fc41e3b380c5064dc71237456d4cdbd0d34d8feff832fd5e2c2633",
+    "Art/Source/Weapons/Rifle02/Textures/GLB/T_R02_normal.jpg": "788a68c5ebc5f0d538e04bd65213950e88aae093973d605d92c367ed4d56b3aa",
+    "Art/Source/Weapons/Pistol02/Models/Exports/SM_VS_Pistol02_Body.fbx": "cb171655a43cf5b42758f99654b035fd7b52ac0e161c3560e96b79911a8c736c",
+    "Art/Source/Weapons/Pistol02/Models/Exports/SM_VS_Pistol02_Slide.fbx": "e8e07fc98121f323f3f683c369014bde6bc28a4a3ff4f683cb400aba3fa554f6",
+    "Art/Source/Weapons/Pistol02/Models/Exports/SM_VS_Pistol02_Magazine.fbx": "e10d419325fd868ae3afdd12f411df7a8e71fda85a0aeb8e4566ec60e5ca4b12",
+    "Art/Source/Weapons/Pistol02/Originals/texture_0_base_color.png": "32a7c4c4a9014d53c6b3be0a769a466a335d91d41364691136295db3dd3e39ad",
+    "Art/Source/Weapons/Pistol02/Originals/texture_0_roughness.png": "6a6164b2b65512de27b29f8045bdbbcb6158a6cd1b34961f790f21f89486c503",
+    "Art/Source/Weapons/Pistol02/Originals/texture_0_metallic.png": "c6b808aa319e02cdc0b76a4c75ea9f9e4dcd20b15c13aee4bc331f7718c11125",
+    "Art/Source/Weapons/Pistol02/Originals/texture_0_normal.png": "44e98e22f72fe7f22988a7a21dbd04551af1f22b0121e8a4cb0984adfab6292d"
+  },
+  "weapons": {
+    "R02": {
+      "parts": {
+        "Body": {
+          "asset": "/Game/Art/Weapons/Rifle02/Meshes/SM_VS_Rifle02_Body.SM_VS_Rifle02_Body",
+          "bounds_min_cm": [
+            -23.0,
+            -3.6256,
+            -11.2276
+          ],
+          "bounds_max_cm": [
+            52.0,
+            3.6256,
+            14.2276
+          ],
+          "expected_bounds_cm": {
+            "min": [
+              -23.0,
+              -3.6256,
+              -11.2276
+            ],
+            "max": [
+              52.0,
+              3.6256,
+              14.2276
+            ]
+          },
+          "bounds_match_source": true,
+          "lod_count": 1,
+          "lod0_triangles": 448486,
+          "source_triangles": 448486,
+          "lod0_vertices": 246642,
+          "uv_channels": 1,
+          "nanite_enabled": false,
+          "slots": {
+            "M_R02_Meshy_Gunmetal": "/Game/Art/Weapons/Rifle02/Materials/M_VS_R02_Original.M_VS_R02_Original",
+            "M_R02_SeamInterior": "/Game/Art/Weapons/Rifle02/Materials/M_VS_R02_Interior.M_VS_R02_Interior"
+          },
+          "collision": {
+            "simple": 0,
+            "convex": 0,
+            "sections": [
+              false,
+              false
+            ]
+          },
+          "sockets": {
+            "Grip": {
+              "location_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "roll_pitch_yaw": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Muzzle": {
+              "location_cm": [
+                52.0,
+                0.0,
+                7.05
+              ],
+              "roll_pitch_yaw": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "SupportHand": {
+              "location_cm": [
+                29.0,
+                0.0,
+                2.4
+              ],
+              "roll_pitch_yaw": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Magazine": {
+              "location_cm": [
+                15.0,
+                0.0,
+                -2.5
+              ],
+              "roll_pitch_yaw": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          }
+        },
+        "Magazine": {
+          "asset": "/Game/Art/Weapons/Rifle02/Meshes/SM_VS_Rifle02_Magazine.SM_VS_Rifle02_Magazine",
+          "bounds_min_cm": [
+            -3.9731,
+            -1.8299,
+            -5.2533
+          ],
+          "bounds_max_cm": [
+            4.0708,
+            1.8406,
+            0.0
+          ],
+          "expected_bounds_cm": {
+            "min": [
+              -3.9731,
+              -1.8299,
+              -5.2533
+            ],
+            "max": [
+              4.0708,
+              1.8406,
+              0.0
+            ]
+          },
+          "bounds_match_source": true,
+          "lod_count": 1,
+          "lod0_triangles": 11860,
+          "source_triangles": 11860,
+          "lod0_vertices": 6800,
+          "uv_channels": 1,
+          "nanite_enabled": false,
+          "slots": {
+            "M_R02_Meshy_Gunmetal": "/Game/Art/Weapons/Rifle02/Materials/M_VS_R02_Original.M_VS_R02_Original",
+            "M_R02_SeamInterior": "/Game/Art/Weapons/Rifle02/Materials/M_VS_R02_Interior.M_VS_R02_Interior"
+          },
+          "collision": {
+            "simple": 0,
+            "convex": 0,
+            "sections": [
+              false,
+              false
+            ]
+          },
+          "sockets": {}
+        }
+      },
+      "textures": {
+        "BaseColor": {
+          "asset": "/Game/Art/Weapons/Rifle02/Textures/T_VS_R02_BaseColor",
+          "srgb": true,
+          "compression": "<TextureCompressionSettings.TC_DEFAULT: 0>",
+          "flip_green_channel": false
+        },
+        "ORM": {
+          "asset": "/Game/Art/Weapons/Rifle02/Textures/T_VS_R02_ORM",
+          "srgb": false,
+          "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+          "flip_green_channel": false
+        },
+        "Normal": {
+          "asset": "/Game/Art/Weapons/Rifle02/Textures/T_VS_R02_Normal",
+          "srgb": false,
+          "compression": "<TextureCompressionSettings.TC_NORMALMAP: 1>",
+          "flip_green_channel": true
+        }
+      },
+      "assembled_dimensions_cm": [
+        75.0,
+        7.2512,
+        25.4552
+      ],
+      "assembled_matches_source": true,
+      "source_markers_not_applied_cm": {}
+    },
+    "P02": {
+      "parts": {
+        "Body": {
+          "asset": "/Game/Art/Weapons/Pistol02/Meshes/SM_VS_Pistol02_Body.SM_VS_Pistol02_Body",
+          "bounds_min_cm": [
+            -5.4669,
+            -1.6705,
+            -6.05
+          ],
+          "bounds_max_cm": [
+            15.1879,
+            1.6799,
+            3.9
+          ],
+          "expected_bounds_cm": {
+            "min": [
+              -5.4669,
+              -1.6705,
+              -6.05
+            ],
+            "max": [
+              15.1879,
+              1.6799,
+              3.9
+            ]
+          },
+          "bounds_match_source": true,
+          "lod_count": 1,
+          "lod0_triangles": 211980,
+          "source_triangles": 211980,
+          "lod0_vertices": 116903,
+          "uv_channels": 1,
+          "nanite_enabled": false,
+          "slots": {
+            "P02_Original_Meshy_PBR": "/Game/Art/Weapons/Pistol02/Materials/M_VS_P02_Original.M_VS_P02_Original",
+            "P02_CutInterior": "/Game/Art/Weapons/Pistol02/Materials/M_VS_P02_Interior.M_VS_P02_Interior"
+          },
+          "collision": {
+            "simple": 0,
+            "convex": 0,
+            "sections": [
+              false,
+              false
+            ]
+          },
+          "sockets": {
+            "Grip": {
+              "location_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "roll_pitch_yaw": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Muzzle": {
+              "location_cm": [
+                15.5,
+                0.0,
+                5.0
+              ],
+              "roll_pitch_yaw": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Slide": {
+              "location_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "roll_pitch_yaw": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "Magazine": {
+              "location_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "roll_pitch_yaw": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            }
+          }
+        },
+        "Slide": {
+          "asset": "/Game/Art/Weapons/Pistol02/Meshes/SM_VS_Pistol02_Slide.SM_VS_Pistol02_Slide",
+          "bounds_min_cm": [
+            -5.4934,
+            -1.6722,
+            3.9
+          ],
+          "bounds_max_cm": [
+            15.5066,
+            1.6776,
+            7.1298
+          ],
+          "expected_bounds_cm": {
+            "min": [
+              -5.4934,
+              -1.6722,
+              3.9
+            ],
+            "max": [
+              15.5066,
+              1.6776,
+              7.1298
+            ]
+          },
+          "bounds_match_source": true,
+          "lod_count": 1,
+          "lod0_triangles": 241968,
+          "source_triangles": 241968,
+          "lod0_vertices": 132615,
+          "uv_channels": 1,
+          "nanite_enabled": false,
+          "slots": {
+            "P02_Original_Meshy_PBR": "/Game/Art/Weapons/Pistol02/Materials/M_VS_P02_Original.M_VS_P02_Original",
+            "P02_CutInterior": "/Game/Art/Weapons/Pistol02/Materials/M_VS_P02_Interior.M_VS_P02_Interior"
+          },
+          "collision": {
+            "simple": 0,
+            "convex": 0,
+            "sections": [
+              false,
+              false
+            ]
+          },
+          "sockets": {}
+        },
+        "Magazine": {
+          "asset": "/Game/Art/Weapons/Pistol02/Meshes/SM_VS_Pistol02_Magazine.SM_VS_Pistol02_Magazine",
+          "bounds_min_cm": [
+            -4.64,
+            -1.4634,
+            -6.7029
+          ],
+          "bounds_max_cm": [
+            1.3333,
+            1.4715,
+            -1.0
+          ],
+          "expected_bounds_cm": {
+            "min": [
+              -4.64,
+              -1.4634,
+              -6.7029
+            ],
+            "max": [
+              1.3333,
+              1.4715,
+              -1.0
+            ]
+          },
+          "bounds_match_source": true,
+          "lod_count": 1,
+          "lod0_triangles": 7464,
+          "source_triangles": 7464,
+          "lod0_vertices": 4722,
+          "uv_channels": 1,
+          "nanite_enabled": false,
+          "slots": {
+            "P02_Original_Meshy_PBR": "/Game/Art/Weapons/Pistol02/Materials/M_VS_P02_Original.M_VS_P02_Original",
+            "P02_CutInterior": "/Game/Art/Weapons/Pistol02/Materials/M_VS_P02_Interior.M_VS_P02_Interior"
+          },
+          "collision": {
+            "simple": 0,
+            "convex": 0,
+            "sections": [
+              false,
+              false
+            ]
+          },
+          "sockets": {}
+        }
+      },
+      "textures": {
+        "BaseColor": {
+          "asset": "/Game/Art/Weapons/Pistol02/Textures/T_VS_P02_BaseColor",
+          "srgb": true,
+          "compression": "<TextureCompressionSettings.TC_DEFAULT: 0>",
+          "flip_green_channel": false
+        },
+        "Roughness": {
+          "asset": "/Game/Art/Weapons/Pistol02/Textures/T_VS_P02_Roughness",
+          "srgb": false,
+          "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+          "flip_green_channel": false
+        },
+        "Metallic": {
+          "asset": "/Game/Art/Weapons/Pistol02/Textures/T_VS_P02_Metallic",
+          "srgb": false,
+          "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+          "flip_green_channel": false
+        },
+        "Normal": {
+          "asset": "/Game/Art/Weapons/Pistol02/Textures/T_VS_P02_Normal",
+          "srgb": false,
+          "compression": "<TextureCompressionSettings.TC_NORMALMAP: 1>",
+          "flip_green_channel": true
+        }
+      },
+      "assembled_dimensions_cm": [
+        21.0,
+        3.3521,
+        13.8327
+      ],
+      "assembled_matches_source": true,
+      "source_markers_not_applied_cm": {
+        "Slide": [
+          0,
+          0,
+          3.9
+        ],
+        "Magazine": [
+          -2.5,
+          0,
+          -1.0
+        ]
+      }
+    }
+  },
+  "grips": {
+    "R02_on_rifle_hold": {
+      "native_hand_r_cm": [
+        11.124,
+        17.9301,
+        133.6765
+      ],
+      "source_hand_r_cm": [
+        11.124,
+        -17.9301,
+        133.6765
+      ],
+      "basis": "y_negated",
+      "weapon_component_cm": [
+        26.4513,
+        18.5647,
+        139.0774
+      ],
+      "weapon_component_roll_pitch_yaw": [
+        -0.0,
+        -0.0,
+        -0.0
+      ],
+      "hand_r_offset_location_cm": [
+        2.3021,
+        -15.0518,
+        -5.7134
+      ],
+      "hand_r_offset_roll_pitch_yaw": [
+        -179.7708,
+        -1.1825,
+        -78.8342
+      ],
+      "hand_r_offset_quat_xyzw": [
+        -0.772515,
+        0.63491,
+        0.009241,
+        0.005007
+      ],
+      "bone_positions_in_weapon_space": {
+        "hand_l": {
+          "native_weapon_cm": [
+            15.957,
+            -12.759,
+            2.332
+          ],
+          "source_fit_weapon_cm": [
+            15.957,
+            -12.759,
+            2.332
+          ],
+          "delta_cm": 0.0
+        },
+        "middle_01_l": {
+          "native_weapon_cm": [
+            22.542,
+            -2.729,
+            2.988
+          ],
+          "source_fit_weapon_cm": [
+            22.542,
+            -2.729,
+            2.988
+          ],
+          "delta_cm": 0.0
+        },
+        "hand_r": {
+          "native_weapon_cm": [
+            -15.327,
+            -0.635,
+            -5.401
+          ],
+          "source_fit_weapon_cm": [
+            -15.327,
+            -0.635,
+            -5.401
+          ],
+          "delta_cm": 0.0
+        },
+        "middle_01_r": {
+          "native_weapon_cm": [
+            -3.046,
+            1.726,
+            -4.741
+          ],
+          "source_fit_weapon_cm": [
+            -3.046,
+            1.726,
+            -4.741
+          ],
+          "delta_cm": 0.001
+        }
+      },
+      "hand_orientation_vs_r02_fit_max_abs": 1e-06,
+      "r01_support_reference_r01_space_cm": [
+        18.390470504760742,
+        8.222640991210938,
+        1.841605544090271
+      ]
+    },
+    "P02_on_pistol_hold": {
+      "native_hand_r_cm": [
+        25.0,
+        7.3,
+        132.0
+      ],
+      "source_hand_r_cm": [
+        25.0,
+        -7.3,
+        132.0
+      ],
+      "basis": "y_negated",
+      "weapon_component_cm": [
+        38.0,
+        3.0,
+        134.0
+      ],
+      "weapon_component_roll_pitch_yaw": [
+        -0.0,
+        -0.0,
+        0.0
+      ],
+      "hand_r_offset_location_cm": [
+        4.282,
+        -12.9586,
+        -2.2868
+      ],
+      "hand_r_offset_roll_pitch_yaw": [
+        -179.546,
+        -1.1157,
+        -90.0089
+      ],
+      "hand_r_offset_quat_xyzw": [
+        -0.70704,
+        0.707095,
+        0.009685,
+        0.004084
+      ],
+      "bone_positions_in_weapon_space": {
+        "hand_r": {
+          "native_weapon_cm": [
+            -13.0,
+            4.3,
+            -2.0
+          ],
+          "source_fit_weapon_cm": [
+            -13.0,
+            4.3,
+            -2.0
+          ],
+          "delta_cm": 0.0
+        },
+        "hand_l": {
+          "native_weapon_cm": [
+            -9.0,
+            -6.3,
+            -3.5
+          ],
+          "source_fit_weapon_cm": [
+            -9.0,
+            -6.3,
+            -3.5
+          ],
+          "delta_cm": 0.0
+        },
+        "index_01_r": {
+          "native_weapon_cm": [
+            -1.146,
+            3.148,
+            0.196
+          ],
+          "source_fit_weapon_cm": [
+            -1.146,
+            3.148,
+            0.196
+          ],
+          "delta_cm": 0.001
+        }
+      }
+    }
+  },
+  "unchanged_r01_p01_character_assets": true
+}
