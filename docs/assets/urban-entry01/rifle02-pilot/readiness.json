@@ -1,0 +1,80 @@
+{
+  "task": "ART-28",
+  "date": "2026-11-04",
+  "timezone": "Europe/Berlin",
+  "branch": "codex/art28-rifle02-character-fit",
+  "prepared_commit": "9cb17bc1f6c1e7cac8d928495b987e7d684002fb",
+  "source_commit": "7b307cfa93b28c797ed04284ea2c614d9d07a276",
+  "state": "Implementation ready; art-lead review and native/runtime verification pending",
+  "source_owner_result": "Pass for bounded third-person source handoff with disclosed contact and inherited glove limits",
+  "artifacts": [
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Rifle02Pilot/Exports/A_UE01_R02_Hold.fbx",
+      "bytes": 608716,
+      "sha256": "85ae71c43d7a9882c6f4f378b18849627b80718c9544a3c31263495aa269f856"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Rifle02Pilot/Exports/A_UE01_R02_Run.fbx",
+      "bytes": 577964,
+      "sha256": "788da7cfb7adf1a9b59b7c7becd973cda105f3de45004e23b54eba13e95cfc84"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Rifle02Pilot/Exports/A_UE01_R02_Walk.fbx",
+      "bytes": 673500,
+      "sha256": "f5147213b0474c3f40c9345011c81021c7e53be20b47f161d1cca31e19e44962"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Rifle02Pilot/UrbanEntry01_Rifle02Pilot.blend",
+      "bytes": 46354674,
+      "sha256": "6199d8f91d315e0c02b85d73fb332b999442af3bf2515d9b1814692d434037b8"
+    }
+  ],
+  "evidence": {
+    "assembly": "assembly-contract.json",
+    "actual_export_validation": "source-validation.json",
+    "frozen_inputs": "source-references.json",
+    "all_artifact_hashes": "artifact-manifest.json",
+    "visual_review": "README.md"
+  },
+  "clips": [
+    {
+      "name": "A_UE01_R02_Hold",
+      "frames": [
+        1,
+        61
+      ],
+      "fps": 60,
+      "root_motion": false
+    },
+    {
+      "name": "A_UE01_R02_Walk",
+      "frames": [
+        1,
+        63
+      ],
+      "fps": 60,
+      "root_motion": false
+    },
+    {
+      "name": "A_UE01_R02_Run",
+      "frames": [
+        1,
+        39
+      ],
+      "fps": 60,
+      "root_motion": false
+    }
+  ],
+  "preservation": "Original 66-bone rest/hierarchy, weights, geometry, UV/custom normals, PBR, prior actions and walk/run lower-body curves unchanged; character, weapon and bone scale 1",
+  "limits": [
+    "Nearest-normal contact diagnostics are sampled, not continuous or closed-volume penetration proof.",
+    "Up to 0.302 cm stock/clothing, 0.219 cm right-hand and 0.066 cm left-hand negative depth; curved chest contacts only part of flat pad.",
+    "Inherited angular glove pads, creases and small cavities remain; no hero-hand or first-person approval.",
+    "Ready/hip-fire pose; no ADS eye alignment. Native aim/reload/transition blending, locomotion rate, replication appearance and performance remain unverified."
+  ],
+  "new_meshy_jobs": 0,
+  "credits_consumed": 0,
+  "unreal_operations": 0,
+  "builds_run": 0,
+  "next_action": "Art lead reviews frozen source; later bounded native import/runtime task after INT-ART-03 updates clips and hand_r offset together. User merges. Artist freezes and stops."
+}
