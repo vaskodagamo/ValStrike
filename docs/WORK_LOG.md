@@ -512,6 +512,14 @@ The stopped native owner released capacity. Producer dispatched ART-27 at High t
 
 User merged #101–104. Producer updated the existing same-thread 30-minute automation to retain verified full knife, Site01 world and R02/P02 native priorities. This checkpoint uses documentation/JSON inspection only; no new tests, UE work, Meshy charge, extra scheduler or user merge by producer. [Current state](producer/STATUS.md).
 
+## 2026-11-04 — Knife source review returned real defects; R02/P02 native assignment prepared
+
+KNIFE-01 phase B froze in #108 (`22df932`, implementation `d53eaa4`), with engineering review and green shared CI; no Unreal/runtime verification. ART-27 froze in #110 (source `39c065c`, head `bca668a`). Producer inspected actual matched source/reimport, grip, motion and game-distance images: accepted for the bounded third-person pilot with inherited close-up and unverified native-blending limits.
+
+ART-26 draft #109 (`2b944b3` source, `38b9372` handoff) failed actual palm contact and windup framing. Producer confirmed the images and dispatched ART-26-C1 to the same High owner/branch/PR, exact pose/contact/FOV correction plus focused changed-export inspection. Owner acknowledged and began moving the palm/finger chain; no extra writer, paid generation, new tests or Unreal.
+
+The completed gameplay/third-person assignments freed capacity. Producer prepared [INT-ART-04](tasks/integration/INT-ART-04-weapon-replacement.md) for R02/P02 native import/refit in first and third person, independent of first-person hands, preserving gameplay and the unpublished ART-25 branch. Delivery through the verified Claude UI route failed because the Mac is locked. One unlock request is pending; assignment is reserved, not running, with no CLI takeover. Next cycle delivers it only after checking the existing native owner. User merged #105–107; pending ART-25 publication approval was not repeated or bypassed. Documentation/JSON/diff inspection only for this producer batch.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.

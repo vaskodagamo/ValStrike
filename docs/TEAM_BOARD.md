@@ -1,5 +1,12 @@
 # Team board
 
+## Current admission — 2026-11-04, 17:51 Europe/Berlin
+
+**Active: ART-26-C1 only**, existing hands artist at High, same draft #109/branch. Producer confirmed loose grip and windup crops in actual exports and returned the bounded correction. ART-27 #110 is frozen and source-reviewed for the third-person pilot; KNIFE-01 phase B #108 is engineering-reviewed/frozen with green CI, runtime pending.
+
+**Reserved, not running:** [INT-ART-04 R02/P02 replacement](tasks/integration/INT-ART-04-weapon-replacement.md), existing native owner and exact native/presentation paths. Claude UI dispatch is blocked by the locked Mac; one unlock request is pending. Preserve its local ART-25-containing facade branch and publication hold; start the new task from merged main after verified delivery. INT-ART-03 waits for corrected accepted first-person knife source and INT-ART-04's presentation/engine release. No additional worker is authorized merely because capacity is available. [Evidence and next trigger](producer/STATUS.md).
+
+
 ## Current admission — 2026-11-04, 17:25 Europe/Berlin
 
 INT-ART-02 finished and stopped: phase A #103 merged; phase B candidate `c7386b6` / evidence `7436d57` is locally verified and remains unpublished pending ART-25 public-payload approval. Producer inspected actual native facade/roof comparisons; pilot section accepted with tan-backed recess, incomplete surrounding building and no player close-wall capture documented. [Checkpoint](producer/STATUS.md).
