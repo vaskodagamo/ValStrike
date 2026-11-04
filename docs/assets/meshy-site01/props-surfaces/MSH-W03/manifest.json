@@ -1,0 +1,323 @@
+{
+  "asset_id": "MSH-W03",
+  "source_files": [
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Gray_Concrete_Tiles_20261104_texture_00f6de94/Meshy_AI_Gray_Concrete_Tiles_1104115851_texture.png",
+      "bytes": 17489649,
+      "sha256": "e79ee68087d541123842e84b682fc2b1e44e67aba6b39be41dd462a9008f9a64",
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Gray_Concrete_Tiles_20261104_texture_00f6de94/Meshy_AI_model.fbx",
+      "bytes": 18611628,
+      "sha256": "f1ec10384fcf954b70bd0c067b4722eae7fab58f3c7832fb358c2ff30f572af0"
+    },
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Gray_Concrete_Tiles_20261104_texture_00f6de94/Meshy_AI_texture_0_metallic.png",
+      "bytes": 116686,
+      "sha256": "45e137ae6251d7d7e56f4e80bf53152367e0f4b2b811add07d81b1c1809f2d3e",
+      "size": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Gray_Concrete_Tiles_20261104_texture_00f6de94/Meshy_AI_texture_0_normal.png",
+      "bytes": 15640365,
+      "sha256": "ca8d9f9f7e11c768489efe2546cc5e4332ea09bf818f2fc9dc94ad5dc94a4919",
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Gray_Concrete_Tiles_20261104_texture_00f6de94/Meshy_AI_texture_0_roughness.png",
+      "bytes": 1143619,
+      "sha256": "dc0f96d6aa8161c97d0f1c6584bca3216eeda6a084e25dcef2468f20754d876f",
+      "size": [
+        2048,
+        2048
+      ]
+    }
+  ],
+  "blender_version": "5.2.2 LTS",
+  "original_objects": [
+    {
+      "name": "Mesh_0",
+      "vertices": 3889,
+      "triangles": 7774,
+      "polygons": 7774,
+      "materials": [
+        "Material.001"
+      ],
+      "uv_layers": [
+        "UVMap"
+      ],
+      "bounds_min": [
+        -0.9498609900474548,
+        -0.9493849873542786,
+        -0.07963896542787552
+      ],
+      "bounds_max": [
+        0.9493579864501953,
+        0.949882984161377,
+        0.06351201236248016
+      ],
+      "dimensions": [
+        1.899219036102295,
+        1.8992679119110107,
+        0.14315098524093628
+      ],
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        -4.371138828673793e-08,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "edges": {
+        "boundary": 0,
+        "nonmanifold": 0,
+        "wire": 0
+      },
+      "degenerate_faces": 0
+    }
+  ],
+  "textures": [
+    {
+      "role": "basecolor",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W03/Textures/T_MSH_W03_basecolor.png",
+      "sha256": "e79ee68087d541123842e84b682fc2b1e44e67aba6b39be41dd462a9008f9a64",
+      "size": [
+        4096,
+        4096
+      ],
+      "color_space": "sRGB"
+    },
+    {
+      "role": "metallic",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W03/Textures/T_MSH_W03_metallic.png",
+      "sha256": "45e137ae6251d7d7e56f4e80bf53152367e0f4b2b811add07d81b1c1809f2d3e",
+      "size": [
+        2048,
+        2048
+      ],
+      "color_space": "Non-Color"
+    },
+    {
+      "role": "normal",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W03/Textures/T_MSH_W03_normal.png",
+      "sha256": "ca8d9f9f7e11c768489efe2546cc5e4332ea09bf818f2fc9dc94ad5dc94a4919",
+      "size": [
+        4096,
+        4096
+      ],
+      "color_space": "Non-Color"
+    },
+    {
+      "role": "roughness",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W03/Textures/T_MSH_W03_roughness.png",
+      "sha256": "dc0f96d6aa8161c97d0f1c6584bca3216eeda6a084e25dcef2468f20754d876f",
+      "size": [
+        2048,
+        2048
+      ],
+      "color_space": "Non-Color"
+    }
+  ],
+  "game_textures": [
+    {
+      "role": "basecolor",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W03/Textures/T_MSH_W03_Game_basecolor.png",
+      "sha256": "6b87701b93e2ba6b9723c7328b327dace2da44e6fe1227c6df8a37be7467c86a",
+      "size": [
+        2048,
+        2048
+      ],
+      "color_space": "sRGB"
+    },
+    {
+      "role": "roughness",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W03/Textures/T_MSH_W03_Game_roughness.png",
+      "sha256": "a0c55b74add64ffc6eca1b3313f588b05234973c36345ca22cf4541a86b841ef",
+      "size": [
+        2048,
+        2048
+      ],
+      "color_space": "Non-Color"
+    },
+    {
+      "role": "metallic",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W03/Textures/T_MSH_W03_Game_metallic.png",
+      "sha256": "45f06e569b4e3f6a6b93927b666795fcc39dd1c86e60dfcfab5ca8ee7a080f43",
+      "size": [
+        2048,
+        2048
+      ],
+      "color_space": "Non-Color"
+    },
+    {
+      "role": "normal",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W03/Textures/T_MSH_W03_Game_normal.png",
+      "sha256": "e09a4f5628ad56190dc082abc40e24ab7116b4177d9a4ca8ff6d000d32af4726",
+      "size": [
+        2048,
+        2048
+      ],
+      "color_space": "Non-Color"
+    }
+  ],
+  "cleanup": {
+    "dimensions_m": [
+      2,
+      2,
+      0.1
+    ],
+    "pivot": "top_corner",
+    "target_triangles": 500,
+    "edits": {
+      "leveled_plateau_vertices": 36,
+      "plateau_residual_limit_m": 0.0009
+    },
+    "shading": "custom corner normals transferred from normalized detail master",
+    "budget_note": "Target preserves silhouettes with high-to-low texture rebake; panel retains its already modest source density."
+  },
+  "cleaned_game": {
+    "name": "SM_VS_MSH_W03_ConcreteTile",
+    "vertices": 251,
+    "triangles": 498,
+    "polygons": 498,
+    "materials": [
+      "M_MSH_W03_Game"
+    ],
+    "uv_layers": [
+      "UV0_Game"
+    ],
+    "bounds_min": [
+      0.0,
+      0.0,
+      -0.10000000149011612
+    ],
+    "bounds_max": [
+      2.0,
+      2.0,
+      1.4901161415892261e-09
+    ],
+    "dimensions": [
+      2.0,
+      2.0,
+      0.10000000149011612
+    ],
+    "location": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rotation": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "scale": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "edges": {
+      "boundary": 0,
+      "nonmanifold": 0,
+      "wire": 0
+    },
+    "degenerate_faces": 0
+  },
+  "detail_master": {
+    "name": "SOURCE_VS_MSH_W03_ConcreteTile_DetailMaster",
+    "vertices": 3889,
+    "triangles": 7774,
+    "polygons": 7774,
+    "materials": [
+      "M_MSH_W03"
+    ],
+    "uv_layers": [
+      "UVMap"
+    ],
+    "bounds_min": [
+      0.0,
+      0.0,
+      -0.10000000149011612
+    ],
+    "bounds_max": [
+      2.0,
+      2.0,
+      7.450580430390374e-11
+    ],
+    "dimensions": [
+      2.0,
+      2.0,
+      0.10000000149011612
+    ],
+    "location": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rotation": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "scale": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "edges": {
+      "boundary": 0,
+      "nonmanifold": 0,
+      "wire": 0
+    },
+    "degenerate_faces": 0
+  },
+  "game_fbx": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W03/SM_VS_MSH_W03_ConcreteTile.fbx",
+  "fbx_sha256": "02791ed2a7af1879ab7663c6b8e2af870733ed2fc40e5da9d3e0b30759032439",
+  "blend": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W03/ConcreteTile.blend",
+  "normal_convention": "Supplied RGB retained, interpreted as tangent +Y/OpenGL in Blender. Vendor convention unlabelled; Unreal green-channel handling pending native inspection.",
+  "source_ready_not_native_verified": true,
+  "actual_identity": "Four-panel concrete paving tile",
+  "delivery_status": "Source ready for art review; native import/runtime pending",
+  "collision_intent": "No source collision mesh; preserve existing map collision; panel requires wall backing; stairs not exported for gameplay.",
+  "bake_settings": {
+    "resolution": [
+      2048,
+      2048
+    ],
+    "channels": [
+      "basecolor",
+      "roughness",
+      "metallic",
+      "normal"
+    ],
+    "color_scalar_pass": "EMIT",
+    "normal_pass": "TANGENT",
+    "normal_axes": [
+      "+X",
+      "+Y",
+      "+Z"
+    ],
+    "margin_px": 16,
+    "cage_extrusion_m": 0.012,
+    "max_ray_distance_m": 0.035
+  },
+  "blend_sha256": "4d164da04f6579ca0842bbe066214eaee43de4942480004b94a4495a5262bcf4"
+}

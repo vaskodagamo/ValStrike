@@ -1,0 +1,802 @@
+{
+  "blender": "5.2.2 LTS",
+  "scope": "Source reopen and Blender FBX round-trip only; no Unreal/runtime verification",
+  "assets": [
+    {
+      "asset_id": "MSH-W02",
+      "status": "Deferred: controlled retopology and rebake required",
+      "blend_sha256": "7dbc97733b5709dc28333b02bd35d268cd49344f79ea81593e80ff7d17254547",
+      "reopened_detail_source": {
+        "name": "SOURCE_VS_MSH_W02_SafetySteps_DetailOnly",
+        "vertices": 439896,
+        "triangles": 880472,
+        "polygons": 880472,
+        "materials": [
+          "M_MSH_W02"
+        ],
+        "uv_layers": [
+          "UVMap"
+        ],
+        "bounds_min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "bounds_max": [
+          2.0,
+          2.0,
+          1.0
+        ],
+        "dimensions": [
+          2.0,
+          2.0,
+          1.0
+        ],
+        "location": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "edges": {
+          "boundary": 0,
+          "nonmanifold": 0,
+          "wire": 0
+        },
+        "degenerate_faces": 0
+      },
+      "material_image_references": [
+        {
+          "image": "T_MSH_W02_basecolor.png",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W02/Textures/T_MSH_W02_basecolor.png",
+          "size": [
+            4096,
+            4096
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W02_metallic.png",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W02/Textures/T_MSH_W02_metallic.png",
+          "size": [
+            2048,
+            2048
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W02_normal.png",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W02/Textures/T_MSH_W02_normal.png",
+          "size": [
+            4096,
+            4096
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W02_roughness.png",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W02/Textures/T_MSH_W02_roughness.png",
+          "size": [
+            2048,
+            2048
+          ],
+          "source": "FILE"
+        }
+      ],
+      "fbx_reimport": null
+    },
+    {
+      "asset_id": "MSH-W03",
+      "blend_sha256": "4d164da04f6579ca0842bbe066214eaee43de4942480004b94a4495a5262bcf4",
+      "fbx_sha256": "02791ed2a7af1879ab7663c6b8e2af870733ed2fc40e5da9d3e0b30759032439",
+      "reopened_source": {
+        "name": "SM_VS_MSH_W03_ConcreteTile",
+        "vertices": 251,
+        "triangles": 498,
+        "polygons": 498,
+        "materials": [
+          "M_MSH_W03_Game"
+        ],
+        "uv_layers": [
+          "UV0_Game"
+        ],
+        "bounds_min": [
+          0.0,
+          0.0,
+          -0.10000000149011612
+        ],
+        "bounds_max": [
+          2.0,
+          2.0,
+          1.4901161415892261e-09
+        ],
+        "dimensions": [
+          2.0,
+          2.0,
+          0.10000000149011612
+        ],
+        "location": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "edges": {
+          "boundary": 0,
+          "nonmanifold": 0,
+          "wire": 0
+        },
+        "degenerate_faces": 0
+      },
+      "material_image_references": [
+        {
+          "image": "T_MSH_W03_Game_basecolor",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W03/Textures/T_MSH_W03_Game_basecolor.png",
+          "size": [
+            2048,
+            2048
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W03_Game_roughness",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W03/Textures/T_MSH_W03_Game_roughness.png",
+          "size": [
+            2048,
+            2048
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W03_Game_metallic",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W03/Textures/T_MSH_W03_Game_metallic.png",
+          "size": [
+            2048,
+            2048
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W03_Game_normal",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W03/Textures/T_MSH_W03_Game_normal.png",
+          "size": [
+            2048,
+            2048
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W03_basecolor.png",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W03/Textures/T_MSH_W03_basecolor.png",
+          "size": [
+            4096,
+            4096
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W03_metallic.png",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W03/Textures/T_MSH_W03_metallic.png",
+          "size": [
+            2048,
+            2048
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W03_normal.png",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W03/Textures/T_MSH_W03_normal.png",
+          "size": [
+            4096,
+            4096
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W03_roughness.png",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W03/Textures/T_MSH_W03_roughness.png",
+          "size": [
+            2048,
+            2048
+          ],
+          "source": "FILE"
+        }
+      ],
+      "fbx_reimport": {
+        "name": "SM_VS_MSH_W03_ConcreteTile",
+        "vertices": 251,
+        "triangles": 498,
+        "polygons": 498,
+        "materials": [
+          "M_MSH_W03_Game"
+        ],
+        "uv_layers": [
+          "UV0_Game"
+        ],
+        "bounds_min": [
+          1.2600892773662054e-07,
+          -1.7487298009655206e-07,
+          -0.10000000149011612
+        ],
+        "bounds_max": [
+          2.0,
+          1.999999761581421,
+          1.4901161415892261e-09
+        ],
+        "dimensions": [
+          1.9999998807907104,
+          1.9999998807907104,
+          0.10000000149011612
+        ],
+        "location": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          -1.5099580252808664e-07
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "edges": {
+          "boundary": 0,
+          "nonmanifold": 0,
+          "wire": 0
+        },
+        "degenerate_faces": 0
+      },
+      "bounds_tolerance_m": 1e-05
+    },
+    {
+      "asset_id": "MSH-W04",
+      "blend_sha256": "ff70b70d19d73019b8237f6480d1f9860f801d365258f858ba87c7dceb7fc523",
+      "fbx_sha256": "1d922aa8ff0a372e1fd4891496b08a8de768a21d2934b051835d6c90250c3fb2",
+      "reopened_source": {
+        "name": "SM_VS_MSH_W04_LongCargoCrate",
+        "vertices": 2896,
+        "triangles": 6000,
+        "polygons": 6000,
+        "materials": [
+          "M_MSH_W04_Game"
+        ],
+        "uv_layers": [
+          "UV0_Game"
+        ],
+        "bounds_min": [
+          -1.0,
+          -0.5,
+          0.0
+        ],
+        "bounds_max": [
+          1.0,
+          0.5,
+          1.0
+        ],
+        "dimensions": [
+          2.0,
+          1.0,
+          1.0
+        ],
+        "location": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "edges": {
+          "boundary": 0,
+          "nonmanifold": 0,
+          "wire": 0
+        },
+        "degenerate_faces": 0
+      },
+      "material_image_references": [
+        {
+          "image": "T_MSH_W04_Game_basecolor",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W04/Textures/T_MSH_W04_Game_basecolor.png",
+          "size": [
+            2048,
+            2048
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W04_Game_roughness",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W04/Textures/T_MSH_W04_Game_roughness.png",
+          "size": [
+            2048,
+            2048
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W04_Game_metallic",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W04/Textures/T_MSH_W04_Game_metallic.png",
+          "size": [
+            2048,
+            2048
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W04_Game_normal",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W04/Textures/T_MSH_W04_Game_normal.png",
+          "size": [
+            2048,
+            2048
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W04_basecolor.png",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W04/Textures/T_MSH_W04_basecolor.png",
+          "size": [
+            4096,
+            4096
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W04_metallic.png",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W04/Textures/T_MSH_W04_metallic.png",
+          "size": [
+            2048,
+            2048
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W04_normal.png",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W04/Textures/T_MSH_W04_normal.png",
+          "size": [
+            4096,
+            4096
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W04_roughness.png",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W04/Textures/T_MSH_W04_roughness.png",
+          "size": [
+            2048,
+            2048
+          ],
+          "source": "FILE"
+        }
+      ],
+      "fbx_reimport": {
+        "name": "SM_VS_MSH_W04_LongCargoCrate",
+        "vertices": 2896,
+        "triangles": 6000,
+        "polygons": 6000,
+        "materials": [
+          "M_MSH_W04_Game"
+        ],
+        "uv_layers": [
+          "UV0_Game"
+        ],
+        "bounds_min": [
+          -0.9999999403953552,
+          -0.49999985098838806,
+          0.0
+        ],
+        "bounds_max": [
+          0.9999999403953552,
+          0.5000001192092896,
+          1.0
+        ],
+        "dimensions": [
+          1.9999998807907104,
+          1.0,
+          1.0
+        ],
+        "location": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          -1.5099580252808664e-07
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "edges": {
+          "boundary": 0,
+          "nonmanifold": 0,
+          "wire": 0
+        },
+        "degenerate_faces": 0
+      },
+      "bounds_tolerance_m": 1e-05
+    },
+    {
+      "asset_id": "MSH-W07",
+      "blend_sha256": "fbc5b78177edbcecd6ff4b9f9ac315364a2c588577394db5991380bef1b21e31",
+      "fbx_sha256": "f7116fe363144c8adc9ef835ecdf1ffd567d095226c658705cc641dcfa3e7ea3",
+      "reopened_source": {
+        "name": "SM_VS_MSH_W07_InfillPanel",
+        "vertices": 2177,
+        "triangles": 3774,
+        "polygons": 3774,
+        "materials": [
+          "M_MSH_W07"
+        ],
+        "uv_layers": [
+          "UVMap"
+        ],
+        "bounds_min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "bounds_max": [
+          2.0,
+          0.20000000298023224,
+          3.0
+        ],
+        "dimensions": [
+          2.0,
+          0.20000000298023224,
+          3.0
+        ],
+        "location": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "edges": {
+          "boundary": 506,
+          "nonmanifold": 506,
+          "wire": 0
+        },
+        "degenerate_faces": 0
+      },
+      "material_image_references": [
+        {
+          "image": "T_MSH_W07_basecolor.png",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W07/Textures/T_MSH_W07_basecolor.png",
+          "size": [
+            4096,
+            4096
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W07_metallic.png",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W07/Textures/T_MSH_W07_metallic.png",
+          "size": [
+            2048,
+            2048
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W07_normal.png",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W07/Textures/T_MSH_W07_normal.png",
+          "size": [
+            4096,
+            4096
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W07_roughness.png",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W07/Textures/T_MSH_W07_roughness.png",
+          "size": [
+            2048,
+            2048
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W07_basecolor.png",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W07/Textures/T_MSH_W07_basecolor.png",
+          "size": [
+            4096,
+            4096
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W07_metallic.png",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W07/Textures/T_MSH_W07_metallic.png",
+          "size": [
+            2048,
+            2048
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W07_normal.png",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W07/Textures/T_MSH_W07_normal.png",
+          "size": [
+            4096,
+            4096
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W07_roughness.png",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W07/Textures/T_MSH_W07_roughness.png",
+          "size": [
+            2048,
+            2048
+          ],
+          "source": "FILE"
+        }
+      ],
+      "fbx_reimport": {
+        "name": "SM_VS_MSH_W07_InfillPanel",
+        "vertices": 2177,
+        "triangles": 3774,
+        "polygons": 3774,
+        "materials": [
+          "M_MSH_W07"
+        ],
+        "uv_layers": [
+          "UVMap"
+        ],
+        "bounds_min": [
+          2.7133287616720736e-08,
+          -2.82039849253124e-07,
+          0.0
+        ],
+        "bounds_max": [
+          2.0,
+          0.19999998807907104,
+          3.0
+        ],
+        "dimensions": [
+          2.0,
+          0.20000027120113373,
+          3.0
+        ],
+        "location": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          -1.5099580252808664e-07
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "edges": {
+          "boundary": 506,
+          "nonmanifold": 506,
+          "wire": 0
+        },
+        "degenerate_faces": 0
+      },
+      "bounds_tolerance_m": 1e-05
+    },
+    {
+      "asset_id": "MSH-W10",
+      "blend_sha256": "2844997695d41ade24c776c7196a9bf83b4b55f4b0a1fdd7bf70f23af9a79efd",
+      "fbx_sha256": "1353da49f8aed68eea1fd4ea987beaadb383edcbc15a07d80b99218aa852360d",
+      "reopened_source": {
+        "name": "SM_VS_MSH_W10_CargoCrate",
+        "vertices": 3002,
+        "triangles": 6000,
+        "polygons": 6000,
+        "materials": [
+          "M_MSH_W10_Game"
+        ],
+        "uv_layers": [
+          "UV0_Game"
+        ],
+        "bounds_min": [
+          -0.5,
+          -0.5,
+          0.0
+        ],
+        "bounds_max": [
+          0.5,
+          0.5,
+          1.0
+        ],
+        "dimensions": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "location": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "edges": {
+          "boundary": 0,
+          "nonmanifold": 0,
+          "wire": 0
+        },
+        "degenerate_faces": 0
+      },
+      "material_image_references": [
+        {
+          "image": "T_MSH_W10_Game_basecolor",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W10/Textures/T_MSH_W10_Game_basecolor.png",
+          "size": [
+            2048,
+            2048
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W10_Game_roughness",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W10/Textures/T_MSH_W10_Game_roughness.png",
+          "size": [
+            2048,
+            2048
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W10_Game_metallic",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W10/Textures/T_MSH_W10_Game_metallic.png",
+          "size": [
+            2048,
+            2048
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W10_Game_normal",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W10/Textures/T_MSH_W10_Game_normal.png",
+          "size": [
+            2048,
+            2048
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W10_basecolor.png",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W10/Textures/T_MSH_W10_basecolor.png",
+          "size": [
+            4096,
+            4096
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W10_metallic.png",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W10/Textures/T_MSH_W10_metallic.png",
+          "size": [
+            2048,
+            2048
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W10_normal.png",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W10/Textures/T_MSH_W10_normal.png",
+          "size": [
+            4096,
+            4096
+          ],
+          "source": "FILE"
+        },
+        {
+          "image": "T_MSH_W10_roughness.png",
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W10/Textures/T_MSH_W10_roughness.png",
+          "size": [
+            2048,
+            2048
+          ],
+          "source": "FILE"
+        }
+      ],
+      "fbx_reimport": {
+        "name": "SM_VS_MSH_W10_CargoCrate",
+        "vertices": 3002,
+        "triangles": 6000,
+        "polygons": 6000,
+        "materials": [
+          "M_MSH_W10_Game"
+        ],
+        "uv_layers": [
+          "UV0_Game"
+        ],
+        "bounds_min": [
+          -0.5000000596046448,
+          -0.4999999403953552,
+          0.0
+        ],
+        "bounds_max": [
+          0.5000000596046448,
+          0.5000000596046448,
+          1.0
+        ],
+        "dimensions": [
+          1.0000001192092896,
+          1.0,
+          1.0
+        ],
+        "location": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation": [
+          0.0,
+          0.0,
+          -1.5099580252808664e-07
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "edges": {
+          "boundary": 0,
+          "nonmanifold": 0,
+          "wire": 0
+        },
+        "degenerate_faces": 0
+      },
+      "bounds_tolerance_m": 1e-05
+    }
+  ]
+}

@@ -1,0 +1,512 @@
+{
+  "schema_version": 1,
+  "task_id": "ART-16",
+  "date": "2026-11-04",
+  "timezone": "Europe/Berlin",
+  "status": "ready",
+  "approval_scope": "Delegated pilot source art approval for the four listed IDs, not native/runtime or final production acceptance.",
+  "prepared_head": "09a2e4b8bf1beead613c69d3333e03af2803b761",
+  "source_commit": "f7a15a1245ccd97ca0e5e2bc0b0bb4d3f7862e6c",
+  "source_changed_in_art16": false,
+  "approved_asset_ids": [
+    "MSH-W03",
+    "MSH-W04",
+    "MSH-W07",
+    "MSH-W10"
+  ],
+  "assets": [
+    {
+      "asset_id": "MSH-W03",
+      "verdict": "ready",
+      "approval_scope": "bounded source art pilot; native/runtime verification pending",
+      "fbx": {
+        "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W03/SM_VS_MSH_W03_ConcreteTile.fbx",
+        "sha256": "02791ed2a7af1879ab7663c6b8e2af870733ed2fc40e5da9d3e0b30759032439",
+        "bytes": 57580
+      },
+      "editable_source": {
+        "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W03/ConcreteTile.blend",
+        "sha256": "4d164da04f6579ca0842bbe066214eaee43de4942480004b94a4495a5262bcf4",
+        "bytes": 18753360
+      },
+      "textures": [
+        {
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W03/Textures/T_MSH_W03_Game_basecolor.png",
+          "sha256": "6b87701b93e2ba6b9723c7328b327dace2da44e6fe1227c6df8a37be7467c86a",
+          "bytes": 3528271,
+          "role": "basecolor",
+          "dimensions_px": [
+            2048,
+            2048
+          ],
+          "srgb": true
+        },
+        {
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W03/Textures/T_MSH_W03_Game_roughness.png",
+          "sha256": "a0c55b74add64ffc6eca1b3313f588b05234973c36345ca22cf4541a86b841ef",
+          "bytes": 1100798,
+          "role": "roughness",
+          "dimensions_px": [
+            2048,
+            2048
+          ],
+          "srgb": false
+        },
+        {
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W03/Textures/T_MSH_W03_Game_metallic.png",
+          "sha256": "45f06e569b4e3f6a6b93927b666795fcc39dd1c86e60dfcfab5ca8ee7a080f43",
+          "bytes": 135360,
+          "role": "metallic",
+          "dimensions_px": [
+            2048,
+            2048
+          ],
+          "srgb": false
+        },
+        {
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W03/Textures/T_MSH_W03_Game_normal.png",
+          "sha256": "e09a4f5628ad56190dc082abc40e24ab7116b4177d9a4ca8ff6d000d32af4726",
+          "bytes": 3230324,
+          "role": "normal",
+          "dimensions_px": [
+            2048,
+            2048
+          ],
+          "srgb": false
+        }
+      ],
+      "dimensions_cm": [
+        200.0,
+        200.0,
+        10.0
+      ],
+      "local_bounds_cm": {
+        "min": [
+          0.0,
+          0.0,
+          -10.0
+        ],
+        "max": [
+          200.0,
+          200.0,
+          0.0
+        ]
+      },
+      "pivot": {
+        "kind": "top_corner",
+        "local_cm": [
+          0,
+          0,
+          0
+        ]
+      },
+      "orientation": {
+        "up": "+Z",
+        "long_or_span_axis": "+X",
+        "panel_front": null,
+        "fbx_export_forward": "-Y"
+      },
+      "triangles": 498,
+      "material_slots": 1,
+      "uv_channels": 1,
+      "normal_convention": {
+        "space": "tangent",
+        "source_axes": [
+          "+X",
+          "+Y",
+          "+Z"
+        ],
+        "convention": "OpenGL",
+        "certainty": "explicit game bake configuration",
+        "unreal_flip_green_channel": true,
+        "native_verification": "pending; W07 flip may change only after observed oblique-light comparison"
+      },
+      "new_visual_collision": "NoCollision",
+      "findings": [
+        "Cross seam and silhouette retained; 2x2 render has no gross gaps. Uneven seam motif repeats; pilot limited to four tiles.",
+        "Requires the bounded render-only floor/paving mask in the placement recipe; preserve collision top Z=0."
+      ],
+      "evidence": [
+        "docs/assets/meshy-site01/props-surfaces/Previews/ART12_RepresentativeComparison.png",
+        "docs/assets/meshy-site01/props-surfaces/Previews/MSH-W03_TilePatch_2x2.png"
+      ]
+    },
+    {
+      "asset_id": "MSH-W04",
+      "verdict": "ready",
+      "approval_scope": "bounded source art pilot; native/runtime verification pending",
+      "fbx": {
+        "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W04/SM_VS_MSH_W04_LongCargoCrate.fbx",
+        "sha256": "1d922aa8ff0a372e1fd4891496b08a8de768a21d2934b051835d6c90250c3fb2",
+        "bytes": 511516
+      },
+      "editable_source": {
+        "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W04/LongCargoCrate.blend",
+        "sha256": "ff70b70d19d73019b8237f6480d1f9860f801d365258f858ba87c7dceb7fc523",
+        "bytes": 34661912
+      },
+      "textures": [
+        {
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W04/Textures/T_MSH_W04_Game_basecolor.png",
+          "sha256": "098ba30a1a8f0aa041bb1e4fea52c8e8dc3c32d9b58093e1b96038f1aef492de",
+          "bytes": 3159752,
+          "role": "basecolor",
+          "dimensions_px": [
+            2048,
+            2048
+          ],
+          "srgb": true
+        },
+        {
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W04/Textures/T_MSH_W04_Game_roughness.png",
+          "sha256": "01a00c09ee61d9660cfe712bf9c8c101c858e2e95b6a22b6c0438f86d6696cbb",
+          "bytes": 1810748,
+          "role": "roughness",
+          "dimensions_px": [
+            2048,
+            2048
+          ],
+          "srgb": false
+        },
+        {
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W04/Textures/T_MSH_W04_Game_metallic.png",
+          "sha256": "70033e47ba66847456a344a5806da33811d701d65cfb7402d98559c0df083494",
+          "bytes": 379127,
+          "role": "metallic",
+          "dimensions_px": [
+            2048,
+            2048
+          ],
+          "srgb": false
+        },
+        {
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W04/Textures/T_MSH_W04_Game_normal.png",
+          "sha256": "fbc2b352f9549eada6ce05f955d38ec9730edd02db8ac2f770886af5f19d2095",
+          "bytes": 2455630,
+          "role": "normal",
+          "dimensions_px": [
+            2048,
+            2048
+          ],
+          "srgb": false
+        }
+      ],
+      "dimensions_cm": [
+        200.0,
+        100.0,
+        100.0
+      ],
+      "local_bounds_cm": {
+        "min": [
+          -100.0,
+          -50.0,
+          0.0
+        ],
+        "max": [
+          100.0,
+          50.0,
+          100.0
+        ]
+      },
+      "pivot": {
+        "kind": "base_center",
+        "local_cm": [
+          0,
+          0,
+          0
+        ]
+      },
+      "orientation": {
+        "up": "+Z",
+        "long_or_span_axis": "+X",
+        "panel_front": null,
+        "fbx_export_forward": "-Y"
+      },
+      "triangles": 6000,
+      "material_slots": 1,
+      "uv_channels": 1,
+      "normal_convention": {
+        "space": "tangent",
+        "source_axes": [
+          "+X",
+          "+Y",
+          "+Z"
+        ],
+        "convention": "OpenGL",
+        "certainty": "explicit game bake configuration",
+        "unreal_flip_green_channel": true,
+        "native_verification": "pending; W07 flip may change only after observed oblique-light comparison"
+      },
+      "new_visual_collision": "NoCollision",
+      "findings": [
+        "Two panels, handles and corner/safety colors retained. Mild rail waviness and softened fasteners accepted for pilot.",
+        "100 cm high: rooftop decorative use only in this recipe; does not replace 120 cm cover."
+      ],
+      "evidence": [
+        "docs/assets/meshy-site01/props-surfaces/Previews/ART12_RepresentativeComparison.png"
+      ]
+    },
+    {
+      "asset_id": "MSH-W07",
+      "verdict": "ready",
+      "approval_scope": "bounded source art pilot; native/runtime verification pending",
+      "fbx": {
+        "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W07/SM_VS_MSH_W07_InfillPanel.fbx",
+        "sha256": "f7116fe363144c8adc9ef835ecdf1ffd567d095226c658705cc641dcfa3e7ea3",
+        "bytes": 375084
+      },
+      "editable_source": {
+        "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W07/InfillPanel.blend",
+        "sha256": "fbc5b78177edbcecd6ff4b9f9ac315364a2c588577394db5991380bef1b21e31",
+        "bytes": 14412241
+      },
+      "textures": [
+        {
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W07/Textures/T_MSH_W07_basecolor.png",
+          "sha256": "963483dbb8f8ffb27e8b45879b7369a569beec64eef8154d360aa0feade2ce8a",
+          "bytes": 12396257,
+          "role": "basecolor",
+          "dimensions_px": [
+            4096,
+            4096
+          ],
+          "srgb": true
+        },
+        {
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W07/Textures/T_MSH_W07_metallic.png",
+          "sha256": "f9b5ec34f3ba4914479d88ba5a9489c25899967b773e4e0b7896427830de10ef",
+          "bytes": 871010,
+          "role": "metallic",
+          "dimensions_px": [
+            2048,
+            2048
+          ],
+          "srgb": false
+        },
+        {
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W07/Textures/T_MSH_W07_normal.png",
+          "sha256": "6a46d73b1f659723e749d118bff0b3789b758973581c4ee8f1b8faf6f1874cb6",
+          "bytes": 9737924,
+          "role": "normal",
+          "dimensions_px": [
+            4096,
+            4096
+          ],
+          "srgb": false
+        },
+        {
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W07/Textures/T_MSH_W07_roughness.png",
+          "sha256": "eba3085e7878b0582ae5a7a8ea9f98292d9ba51ec9e86ee5d8c9ca7e3526eeb3",
+          "bytes": 941396,
+          "role": "roughness",
+          "dimensions_px": [
+            2048,
+            2048
+          ],
+          "srgb": false
+        }
+      ],
+      "dimensions_cm": [
+        200.0,
+        20.0,
+        300.0
+      ],
+      "local_bounds_cm": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          200.0,
+          20.0,
+          300.0
+        ]
+      },
+      "pivot": {
+        "kind": "base_corner",
+        "local_cm": [
+          0,
+          0,
+          0
+        ]
+      },
+      "orientation": {
+        "up": "+Z",
+        "long_or_span_axis": "+X",
+        "panel_front": "-Y",
+        "fbx_export_forward": "-Y"
+      },
+      "triangles": 3774,
+      "material_slots": 1,
+      "uv_channels": 1,
+      "normal_convention": {
+        "space": "tangent",
+        "source_axes": [
+          "+X",
+          "+Y",
+          "+Z"
+        ],
+        "convention": "OpenGL",
+        "certainty": "source-preview assumption; vendor unlabelled",
+        "unreal_flip_green_channel": true,
+        "native_verification": "pending; W07 flip may change only after observed oblique-light comparison"
+      },
+      "new_visual_collision": "NoCollision",
+      "findings": [
+        "Frame, inset plates and red header retained. 506 boundary edges remain; wall-backed shell only, not a cabinet.",
+        "Vendor normal convention unlabelled; source assumed OpenGL. Native light-direction check must resolve green-channel setting."
+      ],
+      "evidence": [
+        "docs/assets/meshy-site01/props-surfaces/Previews/MSH-W07_Before.png",
+        "docs/assets/meshy-site01/props-surfaces/Previews/MSH-W07_After.png",
+        "docs/assets/meshy-site01/props-surfaces/Previews/MSH-W07_PanelBack.png"
+      ]
+    },
+    {
+      "asset_id": "MSH-W10",
+      "verdict": "ready",
+      "approval_scope": "bounded source art pilot; native/runtime verification pending",
+      "fbx": {
+        "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W10/SM_VS_MSH_W10_CargoCrate.fbx",
+        "sha256": "1353da49f8aed68eea1fd4ea987beaadb383edcbc15a07d80b99218aa852360d",
+        "bytes": 515564
+      },
+      "editable_source": {
+        "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W10/CargoCrate.blend",
+        "sha256": "2844997695d41ade24c776c7196a9bf83b4b55f4b0a1fdd7bf70f23af9a79efd",
+        "bytes": 38359384
+      },
+      "textures": [
+        {
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W10/Textures/T_MSH_W10_Game_basecolor.png",
+          "sha256": "2d90041374a4a2b43320116a33dc9a64fe0d84c5a1530dc737f63c89dedf8564",
+          "bytes": 3809932,
+          "role": "basecolor",
+          "dimensions_px": [
+            2048,
+            2048
+          ],
+          "srgb": true
+        },
+        {
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W10/Textures/T_MSH_W10_Game_roughness.png",
+          "sha256": "979336cb3aafaa6668a00834dca499e391c5fd17d332040b1650b210d1203a80",
+          "bytes": 2126137,
+          "role": "roughness",
+          "dimensions_px": [
+            2048,
+            2048
+          ],
+          "srgb": false
+        },
+        {
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W10/Textures/T_MSH_W10_Game_metallic.png",
+          "sha256": "ccadca880cf697121c8d14ccb866635ba12ebecb2c335601dbd713851034a95a",
+          "bytes": 1073070,
+          "role": "metallic",
+          "dimensions_px": [
+            2048,
+            2048
+          ],
+          "srgb": false
+        },
+        {
+          "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W10/Textures/T_MSH_W10_Game_normal.png",
+          "sha256": "f25f17bd6f1e0faaf4c89b7901d8c87599a14548763bf777114d1e69119dc9c3",
+          "bytes": 2959860,
+          "role": "normal",
+          "dimensions_px": [
+            2048,
+            2048
+          ],
+          "srgb": false
+        }
+      ],
+      "dimensions_cm": [
+        100.0,
+        100.0,
+        100.0
+      ],
+      "local_bounds_cm": {
+        "min": [
+          -50.0,
+          -50.0,
+          0.0
+        ],
+        "max": [
+          50.0,
+          50.0,
+          100.0
+        ]
+      },
+      "pivot": {
+        "kind": "base_center",
+        "local_cm": [
+          0,
+          0,
+          0
+        ]
+      },
+      "orientation": {
+        "up": "+Z",
+        "long_or_span_axis": "+X",
+        "panel_front": null,
+        "fbx_export_forward": "-Y"
+      },
+      "triangles": 6000,
+      "material_slots": 1,
+      "uv_channels": 1,
+      "normal_convention": {
+        "space": "tangent",
+        "source_axes": [
+          "+X",
+          "+Y",
+          "+Z"
+        ],
+        "convention": "OpenGL",
+        "certainty": "explicit game bake configuration",
+        "unreal_flip_green_channel": true,
+        "native_verification": "pending; W07 flip may change only after observed oblique-light comparison"
+      },
+      "new_visual_collision": "NoCollision",
+      "findings": [
+        "Frame, handles and X panels retained; softened fasteners and wavy highlights accepted for pilot.",
+        "Existing 100 cm crate visual replacements only; existing two-crate site stack stays 200 cm. Retain validated collision."
+      ],
+      "evidence": [
+        "docs/assets/meshy-site01/props-surfaces/Previews/MSH-W10_Before.png",
+        "docs/assets/meshy-site01/props-surfaces/Previews/MSH-W10_After.png",
+        "docs/assets/meshy-site01/props-surfaces/Previews/MSH-W10_CrateStack.png"
+      ]
+    }
+  ],
+  "excluded_assets": [
+    {
+      "asset_id": "MSH-W02",
+      "verdict": "hold",
+      "reason": "Historical detailed stair source only; no game FBX. No ART-16 changes or import approval."
+    },
+    {
+      "group": "ART-11 structures",
+      "verdict": "hold",
+      "reason": "Outside assigned pilot subset; no import approval or repair in ART-16."
+    }
+  ],
+  "placement_recipe_path": "docs/assets/meshy-site01/props-surfaces/pilot-placement.md",
+  "review_path": "docs/assets/meshy-site01/props-surfaces/pilot-review.md",
+  "reused_source_export_evidence": "docs/assets/meshy-site01/props-surfaces/source-export-checks.json",
+  "checks_performed": [
+    "Direct visual inspection of existing before/after, tile patch, crate stack and panel-back renders against Industrial V2 anchor.",
+    "24 selected blend/FBX/texture SHA-256 values matched ART-12 manifests and Git LFS OIDs.",
+    "Read-only Site01 design/builder/saved-inventory inspection; no native map claim."
+  ],
+  "remaining_native_checks": [
+    "INT-ART-01 imports only these exact file hashes, saves/reopens and verifies FBX unit/axis conversion, dimensions and pivots.",
+    "Verify material channels, sRGB/linear interpretation and green-channel response; resolve unlabelled W07 normal convention under oblique light.",
+    "Verify floor/paving mask removes overlap with tiles at Z=0 without changing collision or other graphics.",
+    "Inspect exact crate envelopes, retained collision, stack contact, wall backing/close-wall clipping and inaccessible rooftop decoration.",
+    "Preserve 120 cm cover, route geometry, spawn/site/recovery tags and transforms; check affected floor/support, routes and visibility.",
+    "Actual local server/two rendered clients: walk placements and record candidate/reopen/rendered evidence. Packaged, other-Mac and production acceptance remain separate."
+  ]
+}

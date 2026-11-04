@@ -1,0 +1,139 @@
+{
+  "asset_id": "MSH-W10",
+  "source_files": [
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Sci_Fi_Cargo_Crate_20261104_texture_2d8581da/Meshy_AI_Sci_Fi_Cargo_Crate_1104115851_texture.png",
+      "bytes": 20945329,
+      "sha256": "a6bbe974b85f0c4d16399afcf3654925b4eab7ec45690a68b8f0ef4a81a250d3",
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Sci_Fi_Cargo_Crate_20261104_texture_2d8581da/Meshy_AI_model.fbx",
+      "bytes": 35503036,
+      "sha256": "116e0b095ed332c903c9b0e24bc3497fa0197defaaa5c05237388840ecb48488"
+    },
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Sci_Fi_Cargo_Crate_20261104_texture_2d8581da/Meshy_AI_texture_0_metallic.png",
+      "bytes": 818161,
+      "sha256": "d39146b111170bb07f2e01ef3ae7c5f74e91a295cd85b3d0a6c82bf958a39451",
+      "size": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Sci_Fi_Cargo_Crate_20261104_texture_2d8581da/Meshy_AI_texture_0_normal.png",
+      "bytes": 17961130,
+      "sha256": "28109631037f68fc8a8be8e7332f3e366d839ddcdffe8fda9451e7ceb2daacb1",
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Sci_Fi_Cargo_Crate_20261104_texture_2d8581da/Meshy_AI_texture_0_roughness.png",
+      "bytes": 1711885,
+      "sha256": "a5a20c5913cd136a5a2ab1a2000056048fa38f9b71482ae32746b97f4c89aa5f",
+      "size": [
+        2048,
+        2048
+      ]
+    }
+  ],
+  "blender_version": "5.2.2 LTS",
+  "original_objects": [
+    {
+      "name": "Mesh_0",
+      "vertices": 173640,
+      "triangles": 347276,
+      "polygons": 347276,
+      "materials": [
+        "Material.001"
+      ],
+      "uv_layers": [
+        "UVMap"
+      ],
+      "bounds_min": [
+        -0.9517109990119934,
+        -0.8434470891952515,
+        -0.8822309970855713
+      ],
+      "bounds_max": [
+        0.9513429999351501,
+        0.8441129326820374,
+        0.8830380439758301
+      ],
+      "dimensions": [
+        1.9030539989471436,
+        1.6875600814819336,
+        1.7652690410614014
+      ],
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        -4.371138828673793e-08,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "edges": {
+        "boundary": 0,
+        "nonmanifold": 0,
+        "wire": 0
+      },
+      "degenerate_faces": 0
+    }
+  ],
+  "textures": [
+    {
+      "role": "basecolor",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W10/Textures/T_MSH_W10_basecolor.png",
+      "sha256": "a6bbe974b85f0c4d16399afcf3654925b4eab7ec45690a68b8f0ef4a81a250d3",
+      "size": [
+        4096,
+        4096
+      ],
+      "color_space": "sRGB"
+    },
+    {
+      "role": "metallic",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W10/Textures/T_MSH_W10_metallic.png",
+      "sha256": "d39146b111170bb07f2e01ef3ae7c5f74e91a295cd85b3d0a6c82bf958a39451",
+      "size": [
+        2048,
+        2048
+      ],
+      "color_space": "Non-Color"
+    },
+    {
+      "role": "normal",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W10/Textures/T_MSH_W10_normal.png",
+      "sha256": "28109631037f68fc8a8be8e7332f3e366d839ddcdffe8fda9451e7ceb2daacb1",
+      "size": [
+        4096,
+        4096
+      ],
+      "color_space": "Non-Color"
+    },
+    {
+      "role": "roughness",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W10/Textures/T_MSH_W10_roughness.png",
+      "sha256": "a5a20c5913cd136a5a2ab1a2000056048fa38f9b71482ae32746b97f4c89aa5f",
+      "size": [
+        2048,
+        2048
+      ],
+      "color_space": "Non-Color"
+    }
+  ]
+}
