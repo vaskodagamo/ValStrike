@@ -6,6 +6,9 @@
 #include "Engine/Font.h"
 #include "VSCharacter.h"
 #include "VSPlayerController.h"
+#include "Camera/PlayerCameraManager.h"
+#include "Combat/VSWeaponComponent.h"
+#include "Combat/VSWeaponLoadoutComponent.h"
 #include "Feedback/VSHitFeedbackView.h"
 #include "UI/Round/VSRoundHUDPresentation.h"
 #include "UI/Round/VSRoundHUDPreview.h"
@@ -268,6 +271,36 @@ void AVSHUD::DrawDamageIndicators(const FVSHitFeedbackView& Feedback, float Cent
     }
 }
 
+float AVSHUD::ReticleGap(const AVSCharacter& Character, float StaticGap, float Scale)
+{
+    const UVSWeaponComponent* Weapon = Character.GetEquippedWeapon();
+    const UVSWeaponLoadoutComponent* Loadout = Character.GetLoadoutComponent();
+    const bool bReady = Weapon && (!Loadout || Loadout->GetReadiness(Weapon) != EVSWeaponReadiness::Holstered);
+    const float SpreadDeg = bReady ? Weapon->GetCurrentSpreadDegrees() : 0.0f;
+    const float FovDeg = PlayerOwner && PlayerOwner->PlayerCameraManager
+        ? PlayerOwner->PlayerCameraManager->GetFOVAngle() : 0.0f;
+    if (!bReady || (!VSCrosshairRules::IsValidSpread(SpreadDeg) && !CrosshairGap.active))
+    {
+        // Nothing to show and nothing still closing: today's static reticle.
+        CrosshairGap.Reset();
+        return StaticGap;
+    }
+    // Presentation clock: same world time the client's spread recovers on.
+    const double Now = GetWorld() ? GetWorld()->GetTimeSeconds() : 0.0;
+    const double DeltaSeconds = CrosshairGap.active ? Now - CrosshairGapTime : 0.0;
+    CrosshairGapTime = Now;
+    const double MaxGap = 60.0 * Scale;
+    const double Target = VSCrosshairRules::TargetGapPx(SpreadDeg, FovDeg, Canvas->SizeX, StaticGap, MaxGap);
+    const double Gap = VSCrosshairRules::Step(CrosshairGap, Target, DeltaSeconds, StaticGap, MaxGap);
+    if (Gap == static_cast<double>(StaticGap) && Target == static_cast<double>(StaticGap))
+    {
+        // Fully recovered: hand back the exact static value, not a rounded copy.
+        CrosshairGap.Reset();
+        return StaticGap;
+    }
+    return static_cast<float>(Gap);
+}
+
 void AVSHUD::DrawHUD()
 {
     Super::DrawHUD();
@@ -315,6 +348,7 @@ void AVSHUD::DrawHUD()
     const AVSCharacter* Character = Cast<AVSCharacter>(PlayerOwner->GetPawn());
     if (!Character)
     {
+        CrosshairGap.Reset();
         return;
     }
     const FVSPlayerHUDData Data = Character->GetHUDData();
@@ -330,8 +364,11 @@ void AVSHUD::DrawHUD()
 
     if (!bDead && !MatchView.bSpectating && !MatchView.bShowResult)
     {
-        const float Gap = 4.0f * Scale;
-        const float Reach = 10.0f * Scale;
+        // Only the inner gap follows spread; the arm length stays 6 px, and the
+        // static gap yields exactly the static 4/10 px reticle.
+        const float StaticGap = 4.0f * Scale;
+        const float Gap = ReticleGap(*Character, StaticGap, Scale);
+        const float Reach = 10.0f * Scale + (Gap - StaticGap);
         const float Stroke = 2.0f * Scale;
         const auto ReticleLine = [this, Stroke](float X1, float Y1, float X2, float Y2)
         {
@@ -343,6 +380,10 @@ void AVSHUD::DrawHUD()
         ReticleLine(CenterX, CenterY - Reach, CenterX, CenterY - Gap);
         ReticleLine(CenterX, CenterY + Gap, CenterX, CenterY + Reach);
         DrawHitMarker(Feedback, CenterX, CenterY, Scale);
+    }
+    else
+    {
+        CrosshairGap.Reset();
     }
 
     const float PanelY = Canvas->SizeY - Margin - 90.0f * Scale;
