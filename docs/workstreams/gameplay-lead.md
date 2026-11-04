@@ -59,3 +59,9 @@ At the user's request to continue building game logic while INT-01 runs, two dis
 - The user merged #45, #48, #49, #50 and #52. Main `82d7a4c` contains every gameplay PR. INT-04 builds it and reruns the settings path only ([brief](../tasks/gameplay/INT-04-main-settings.md)).
 - New workers, with disjoint paths and no engine use: GPT-10, the spread-driven reticle ([brief](../tasks/gameplay/GPT-10-spread-crosshair.md)); GPT-11, GUN-04 fire-request rules ([brief](../tasks/gameplay/GPT-11-fire-request-rules.md)).
 - Still for the coordinator: put the engine-free tests in CI (Feedback, Weapons, Audio, Match spectate, Presentation muzzle flash); the join-key log decision; and a human playtest for HUD feedback, spectate, audio and volume.
+
+## 2026-11-04 — INT-04/05 results
+
+- INT-04 ([PR #61](https://github.com/vaskodagamo/ValStrike/pull/61)): main `ee25083`: build, settings 78/78 ×2, UI 4/4, session 72/72. D1 is closed for Editor on this Mac.
+- The user merged #58, #59 and #60. INT-05 ([PR #64](https://github.com/vaskodagamo/ValStrike/pull/64)) verified the same source as candidate `40d10a3`: everything passes, and no defect is attributed to GPT-10/11. Main `b8183db` has the same source.
+- Watch item: unscripted fire in rendered runners (INT-03, INT-05). Human playtest still needed: HUD feedback, spectate, audio and volume, and the crosshair gap while firing or moving.
