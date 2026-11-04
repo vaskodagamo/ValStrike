@@ -1,0 +1,21 @@
+{
+  "R02": {
+    "commit": "627e0745d7328a94fe408e190a6127f6723017d7",
+    "path": "Art/Source/Weapons/Rifle02/R02_Compact.blend",
+    "sha256": "822118770d33ac2ad9e12c0dc74fc39c48b7ba63f12f1687a3061fe80ee9f517",
+    "local_staging": "Art/Source/Characters/FPArms02/Reference/Frozen/R02.blend"
+  },
+  "P02": {
+    "commit": "b4ecd4823b05596b485f86a9e1af9885a36476bc",
+    "path": "Art/Source/Weapons/Pistol02/Models/P02_Kestrel.blend",
+    "sha256": "cc8736614bcf3ae29cd661413adc3179d142db470e687c68f6fc6eef8f728ed4",
+    "local_staging": "Art/Source/Characters/FPArms02/Reference/Frozen/P02.blend",
+    "merged_pr": 81
+  },
+  "P02_previous_interim": {
+    "commit": "627e0745d7328a94fe408e190a6127f6723017d7",
+    "path": "Art/Source/Weapons/Pistol02/Models/P02_Kestrel.blend",
+    "sha256": "bfca7b1f043708d95919060862977f0b2c0a87cd2f78fa13add4c8d10bfcca2b",
+    "local_staging": "Art/Source/Characters/FPArms02/Reference/Frozen/P02.blend"
+  }
+}

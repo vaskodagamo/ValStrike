@@ -1,0 +1,84 @@
+{
+  "baseline": "Original/model.glb imported through Blender glTF importer; this is the chosen visual master, not a claim that the original FBX looks identical.",
+  "materials": [
+    {
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "metallicFactor": 1.0,
+        "roughnessFactor": 1.0,
+        "baseColorTexture": {
+          "index": 0,
+          "texCoord": 0
+        },
+        "metallicRoughnessTexture": {
+          "index": 1,
+          "texCoord": 0
+        }
+      },
+      "normalTexture": {
+        "index": 2,
+        "texCoord": 0
+      },
+      "alphaMode": "OPAQUE",
+      "doubleSided": true
+    }
+  ],
+  "image_definitions": [
+    {
+      "mimeType": "image/jpeg",
+      "bufferView": 4
+    },
+    {
+      "mimeType": "image/jpeg",
+      "bufferView": 5
+    },
+    {
+      "mimeType": "image/jpeg",
+      "bufferView": 6
+    }
+  ],
+  "native_recipe": "Preserve original factors and channel wiring: glTF base color sRGB; normal linear OpenGL convention; packed metallic/roughness green=roughness, blue=metallic. Verify destination normal-Y convention in native editor. No arbitrary roughness floor, tint or normal-strength suppression. The exact GLB JPEG buffers are extracted losslessly into Textures/T_FPArms02_GLTF_*.jpg for matching source response; separately downloaded PNG maps are retained unchanged but were not substituted into the chosen GLB baseline.",
+  "texture_download_dimensions": {
+    "base_color": [
+      4096,
+      4096
+    ],
+    "normal": [
+      4096,
+      4096
+    ],
+    "metallic": [
+      2048,
+      2048
+    ],
+    "roughness": [
+      2048,
+      2048
+    ]
+  },
+  "exact_glb_image_bytes": [
+    {
+      "role": "BaseColor",
+      "file": "Art/Source/Characters/FPArms02/Textures/T_FPArms02_GLTF_BaseColor.jpg",
+      "sha256": "8837b5d0dd0b04f7481714f891fccc2fccf6d9a5596b4b50ca57ac2ec80b975c",
+      "bytes": 11296513
+    },
+    {
+      "role": "MetallicRoughness",
+      "file": "Art/Source/Characters/FPArms02/Textures/T_FPArms02_GLTF_MetallicRoughness.jpg",
+      "sha256": "edfc38379776fc8876644eee7e665150fcc9d6f0994b81aa5ccdc2aece3bcdd7",
+      "bytes": 1076207
+    },
+    {
+      "role": "Normal",
+      "file": "Art/Source/Characters/FPArms02/Textures/T_FPArms02_GLTF_Normal.jpg",
+      "sha256": "467160346f5b047aac6d6ac5b1597c853396e74b0c58521cedbee25bfb4d485e",
+      "bytes": 8185694
+    }
+  ]
+}
