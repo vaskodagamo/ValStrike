@@ -536,6 +536,10 @@ Producer assigned the exact assertion/hash-list correction to existing GPT-04 vi
 
 Real remote images also confirm R02 stock at cheek/no shoulder seat. ART-28 dispatched at High to existing character owner in a fresh `9cb17bc` worktree, only derived rifle hold/walk/run and hand/shoulder fit with unchanged geometry/rest/PBR. Zero credits/no Unreal; native application later, outside the active knife batch. Check worker stopped, leaving native knife and character fit active. Producer review/docs only; user merges.
 
+## 2026-11-04 — Native knife candidate passed affected checks; visual gate remains open
+
+Producer verified the existing native owner's clean candidate `1b572d0`: successful Editor build, practice 39/37/37 and rendered rifle presentation 39/39, including exact #121. Full knife captures are still being completed after a startup window-ID capture failure; no visual/audio/full-feature completion claim. ART-28 continues contact refinement. No new worker, producer test/build or paid job. Record the exit-75 self-retry as a process follow-up for after rendered acceptance stops; avoid input during captures. [Evidence paths and next trigger](producer/STATUS.md).
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.

@@ -256,7 +256,8 @@
       "head": "22b71bff1642da8ab1b1077bce25b79cd4ad0213",
       "pr": 121,
       "base": "49972150a3c2b88c469204b4d8a73cb57fc1ca4d",
-      "shared_ci": "All four existing CI checks passed on 22b71bff; no manual contributor rerun; affected native acceptance pending."
+      "shared_ci": "All four existing CI checks passed on 22b71bff; no manual contributor rerun; affected native acceptance pending.",
+      "native_confirmation": "Exact #121 combined at 794069a; candidate 1b572d0 passed affected practice and rifle presentation checks. PR #121 remains open; user merges."
     },
     "next_native_assignment": {
       "task": "INT-ART-03",
@@ -264,10 +265,21 @@
       "worktree": ".parallel-worktrees/int-art-01-meshy-playtest",
       "branch": "claude/int-art-03-knife",
       "brief": "docs/tasks/integration/INT-ART-03-knife.md",
-      "state": "active; exact full task delivered via existing Claude UI and new claude/int-art-03-knife branch observed; combine frozen WPN-02-CHECKS #121 before one build",
+      "state": "active; native assets imported/reopened, combined #121, one successful Editor build; clean candidate 1b572d0 passed practice and rendered rifle checks; full rendered knife capture/acceptance in progress, no frozen handoff yet",
       "base": "49972150a3c2b88c469204b4d8a73cb57fc1ca4d",
       "check_correction_head": "22b71bff1642da8ab1b1077bce25b79cd4ad0213",
-      "check_correction_pr": 121
+      "check_correction_pr": 121,
+      "candidate": "1b572d0783ba97337dd1cce2d376976ba1456980",
+      "verified_checks": {
+        "practice": "39/39 server, 37/37 driver, 37/37 observer; null RHI/no audio/one-Mac loopback",
+        "rifle_presentation": "39/39, rendered 1000x700 clients/no audio/one-Mac loopback"
+      },
+      "evidence_in_owner_checkout": [
+        "Saved/IntArt03/editor-build.log",
+        "Saved/Tests/Weapons/20261104T181051Z_practice_45689d/result.json",
+        "Saved/Tests/RiflePresentation/20261104T181202Z_graybox_4a9f48/result.json"
+      ],
+      "deferred_process_followup": "After rendered acceptance stops, remind same native owner: exit 75 queues the job; inspecting its own prior process/lock is not a release notification or permission to retry. Observed one self-retry after reopen; no UI input sent during current capture."
     },
     "previous_gameplay_checkpoint": {
       "task": "GPF-04",
@@ -328,7 +340,7 @@
     }
   },
   "automation_id": "valstrike-studio-producer",
-  "next_integration_trigger": "Read INT-ART-03 actual native/full knife handoff or actionable failure; ensure frozen WPN-02-CHECKS #121/22b71bf included before combined build. Review ART-28 source shoulder/hand/animation evidence when frozen; apply only in a later bounded native batch after INT-ART-03 releases shared paths. No new worker/build while these owners run.",
+  "next_integration_trigger": "Wait for frozen INT-ART-03 full visual handoff or actionable failure and ART-28 source handoff. Review actual images before full knife acceptance; deliver exit-75 operating reminder only after rendered run stops. No duplicate task, polling, build or new worker.",
   "knife_feature": {
     "task": "KNIFE-01",
     "brief": "docs/tasks/KNIFE-01-full-feature.md",
@@ -337,7 +349,7 @@
     "gameplay": "repaired gameplay compiled and all 39 knife-specific runtime checks passed on INT-ART-04 c2ba852; main includes exact M1 fix. Whole practice 39/39 server, 36/37 each client due old P01 assertion, addressed by #121; full knife presentation pending.",
     "first_person": "ART-26-C1 #115 source 25fc75b/head 5b8b675; producer accepted specific contact/framing corrections from actual exported contact/action views; general deformation/budget/native pending",
     "third_person": "ART-27 frozen #110 at bca668a; producer source review accepted for third-person pilot with inherited close-up limits",
-    "native": "INT-ART-03 active in same native owner/new branch from 4997215. Exact accepted merged source; #121 expectation correction frozen before build. Full hands/animations/remote/audio/runtime acceptance pending.",
+    "native": "INT-ART-03 candidate 1b572d0 compiled and passed practice/rifle suites. Full hands/action/remote visual and audio acceptance still pending; owner actively correcting capture-only window-ID failure.",
     "credit_cap": 0,
     "gameplay_owner": {
       "ui_session": "local_e7f5a62b-3f49-42e2-854a-1dcddd518154",
@@ -354,7 +366,7 @@
     "owner": "existing sole native integrator after coherent current candidate; no new writer"
   },
   "last_material_checkpoint": {
-    "at": "2026-11-04T18:54+01:00",
+    "at": "2026-11-04T19:17+01:00",
     "main_observed": "49972150a3c2b88c469204b4d8a73cb57fc1ca4d",
     "user_merged_prs": [
       113,
@@ -373,6 +385,7 @@
       "WPN-02-CHECKS #121/22b71bf; native runtime confirmation pending"
     ],
     "new_meshy_credits_this_cycle": 0,
-    "publication_authority": "Direct human ART-25 approval verified in registered artist chat; #112 and native #116 merged, exact-payload publication hold cleared."
+    "publication_authority": "Direct human ART-25 approval verified in registered artist chat; #112 and native #116 merged, exact-payload publication hold cleared.",
+    "native_partial_candidate": "1b572d0783ba97337dd1cce2d376976ba1456980"
   }
 }

@@ -2,6 +2,13 @@
 
 2026-11-04, Europe/Berlin. Owner: **Direktor (2)**. Read live sources before acting; this is a checkpoint, not a process monitor.
 
+## 2026-11-04, 19:17 Europe/Berlin — Knife native candidate passes affected suites; visual acceptance running
+
+- Existing native owner imported/reopened the real hands/K01/third-person actions, wired presentation and combined frozen #121 at `794069a`. Clean candidate `1b572d0783ba97337dd1cce2d376976ba1456980` passed one Editor build (zero warnings reported), practice **39/39 server, 37/37 driver, 37/37 observer**, and rendered rifle presentation **39/39**. Producer inspected the successful build log and both `passed: true` result files in the owner's `Saved/IntArt03/` and `Saved/Tests/` paths recorded in control.json. Practice is null RHI/no audio; rifle is rendered/no audio; both are local Editor loopback, not packaged or two-Mac evidence.
+- **Full visual acceptance is not finished.** Verified Claude UI shows the owner actively correcting a capture-only stale window-ID problem after startup and continuing the rendered knife pass. No frozen handoff/PR yet. Producer sent no input or duplicate assignment during rendered work. ART-28 is also actively refining buried glove pads; no frozen source or new acceptance claim. Other registered art owners are stopped/unassigned, and the live gameplay board confirms GPT-04 frozen. Two active contributors.
+- Main remains `4997215`; #120/#121/#122 remain open for the user. No new spend/build/tests from producer and no additional work admitted. Next trigger is the two existing owners' frozen handoff or actionable failure.
+- **Operating follow-up deferred until rendering stops:** native UI recorded an exit-75 build followed by a retry after inspecting its own completed reopen holder. That does not follow the queue rule. Remind the same owner that only release notification/new slot admission permits a retry; no lock-inspection retry loops. Keep this reminder off the computer input path while capture runs.
+
 ## 2026-11-04, 18:54 Europe/Berlin — R02/P02 delivered; full knife native batch started
 
 - **Delivered weapon replacement:** #118 merged, published head `bd41b09`, runtime `c2ba852`. R02/P02 imported/reopened with original PBR and measured sockets/grips; one Editor build, zero warnings. Producer reviewed actual first-person idle/fire/reload/switch and remote comparison sheets. Visual 13/13, Site01 match 29/29, shot effects 73/73. Rifle presentation 37/39 and practice 39/39 server, 36/37 each client failed only the old R01/P01 asset-name assertions. All 39 knife-specific checks passed on the repaired build. Published head incorporated later main's source/map changes; no claim that the older runtime candidate tested those later binaries/assets.
