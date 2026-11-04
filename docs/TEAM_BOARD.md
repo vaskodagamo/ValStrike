@@ -1,5 +1,9 @@
 # Team board
 
+## Current queue — 2026-11-04, 20:21 Europe/Berlin
+
+KNIFE-01-C1 #127 is merged; INT-ART-05 #128 is frozen with reviewed runtime rifle-fit/framing/remote-slash improvements. Full knife acceptance is still held. [KNIFE-01-C2](tasks/gameplay/KNIFE-01-C2-cancelled-cues-moving-attack.md) and [INT-ART-05-C1](tasks/integration/INT-ART-05-C1-remaining-acceptance.md) are **prepared, not delivered**: the Mac is locked. Preserve same gameplay/native owners; no replacement session or competing writer. Next unlocked cycle delivers the bounded correction/acceptance continuation. Audio also awaits the explicit output-change answer. [Exact evidence and remaining gates](producer/STATUS.md). User merges.
+
 ## Current admission — 2026-11-04, 19:50 Europe/Berlin
 
 **KNIFE-01-C1 dispatched:** same GPT-04 via the existing Claude lead, [exact cosmetic cue/observer-camera brief](tasks/gameplay/KNIFE-01-C1-remote-cues.md). Native #123 is merged, but missing first remote Start and missing observer view block full knife acceptance.
