@@ -1,0 +1,72 @@
+{
+  "task": "ART-24",
+  "date": "2026-11-04 Europe/Berlin",
+  "reviewer": "ART-24 source owner (Codex)",
+  "baseline_commit": "b1795991bed5cf2abaaabe8fcef79bfa5f9e5a4a",
+  "branch_base": "9dcd04fd4c7ca3073e9edad1500f9e6be03ecc8c",
+  "P02_commit": "ccb08f06e22d23573697a1494a34436f901fa006",
+  "source_sha256": "e0f156033051d7da9be013e5b64418f525bd88883fa95a4f28bae03c117b5556",
+  "pistol_action_fbx_sha256": "d79da87bdfdef807c7ac4b962ccfbe87b6300369d72c53d91e1e03790df8bdf3",
+  "skeletal_fbx_sha256": "11f78ce5bd7023475ef0c512c4bcd5724c0cee76297de6525b2ac950a4cfbaf0",
+  "credits": 0,
+  "paid_calls": 0,
+  "scope": "P02 pose/attachment only. No shared weights or rest/mesh/material changes.",
+  "stationary_source_review": {
+    "status": "pass for the observed buried-support contact defect; producer art review pending",
+    "evidence": [
+      "Previews/before_front.png",
+      "Previews/before_reverse.png",
+      "Previews/before_above.png",
+      "Previews/final_front.png",
+      "Previews/final_reverse.png",
+      "Previews/final_above.png",
+      "Previews/final_90fov.png",
+      "Previews/export_front.png",
+      "Previews/export_reverse.png",
+      "Previews/export_above.png",
+      "Previews/export_90fov.png"
+    ],
+    "findings": "Support fingertips/thumb are exposed around the grip and dominant fingers instead of buried in the pistol. Both thumbs are extended, index remains clearly outside the guard, slide/muzzle remain unobstructed in the examined static views. Lower curl and index spread reduce visible web collapse. Source and actual reimported FBX agree under matched lighting/cameras/original material binding.",
+    "camera_limit": "Existing 90-degree camera retained exactly; lower hands are cropped. Native composition remains pending.",
+    "contact_limit": "Static visual review plus sparse diagnostic only; no swept contact, animation transition or exhaustive hand-hand collision acceptance."
+  },
+  "preservation": {
+    "status": "pass",
+    "evidence": "export-inspection.json",
+    "unchanged": [
+      "Rest mesh positions/topology",
+      "UVs/custom corner normals",
+      "Skin weights",
+      "39 bone names/parents/rest transforms",
+      "Original PBR/maps",
+      "Five other actions",
+      "Skeletal FBX and other five FBX actions"
+    ]
+  },
+  "roundtrip": {
+    "status": "pass",
+    "evidence": "export-inspection.json",
+    "sampled_pose_head_error_cm": 1.7520115919946515e-05
+  },
+  "diagnostic": {
+    "evidence": "contact-diagnostic.json",
+    "method": "Every twentieth vertex, nearest surface and majority of three ray-parity directions against unchanged assembled P02. Threshold 0.05 cm; supplements visual views, not exhaustive contact proof.",
+    "inside_samples_above_threshold": 0
+  },
+  "deformation": {
+    "stationary_p99_edge_ratio_before": 2.2489360811214905,
+    "stationary_p99_edge_ratio_after": 1.5829874920915286,
+    "remaining_max_edge_ratio": 49.97065059169521,
+    "status": "General deformation remains held: isolated dense web/finger edge outliers persist. No broad animation acceptance."
+  },
+  "other_holds": "Rifle and knife unchanged and held; no new fit acceptance. No shared weights changed, so unchanged-pose hashes reused instead of rerendering unrelated holds.",
+  "deferred": [
+    "Producer art approval",
+    "Native skeleton/material/socket/camera acceptance",
+    "Dynamic deformation/contact",
+    "LOD/performance",
+    "Central runtime/network acceptance"
+  ],
+  "unreal_operations": 0,
+  "next_owner": "Producer/art lead reviews stationary P02 correction; separately assigned native owner handles integration when accepted."
+}

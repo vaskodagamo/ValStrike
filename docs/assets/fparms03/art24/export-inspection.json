@@ -1,0 +1,126 @@
+{
+  "blender": "5.2.2 LTS",
+  "units": "cm, +X forward, Z up; FBX converter -Y/Z matching project",
+  "fps": 30,
+  "source_reopened": true,
+  "source_meshes": {
+    "SK_FPArms03_R": {
+      "vertices": 209330,
+      "triangles": 390478,
+      "bounds_cm": [
+        [
+          1.3879897594451904,
+          41.83610534667969
+        ],
+        [
+          -18.498136520385742,
+          -5.238381385803223
+        ],
+        [
+          -4.220729827880859,
+          4.223621368408203
+        ]
+      ],
+      "boundary_edges": 27402,
+      "nonmanifold_edges": 27402,
+      "uv_layers": 1,
+      "vertex_color": [],
+      "weight_sum_max_error": 4.470348358154297e-08,
+      "unweighted": 0
+    },
+    "SK_FPArms03_L": {
+      "vertices": 209330,
+      "triangles": 390478,
+      "bounds_cm": [
+        [
+          1.3879897594451904,
+          41.83610534667969
+        ],
+        [
+          5.238381385803223,
+          18.498136520385742
+        ],
+        [
+          -4.220729827880859,
+          4.223621368408203
+        ]
+      ],
+      "boundary_edges": 27402,
+      "nonmanifold_edges": 27402,
+      "uv_layers": 1,
+      "vertex_color": [],
+      "weight_sum_max_error": 4.470348358154297e-08,
+      "unweighted": 0
+    }
+  },
+  "poses": {
+    "A_FPArms03_PistolHold": {
+      "frames": [
+        1,
+        15,
+        30
+      ],
+      "right_bounds_mid_cm": [
+        [
+          -32.41200256347656,
+          6.626640319824219
+        ],
+        [
+          -8.323620796203613,
+          0.2871818542480469
+        ],
+        [
+          -9.192317008972168,
+          2.682708501815796
+        ]
+      ],
+      "edge_stretch_p99": 1.5829874920915286,
+      "edge_stretch_max": 49.97065059169521
+    }
+  },
+  "fbx_roundtrip": {
+    "A_FPArms03_PistolHold.fbx": {
+      "bones": 39,
+      "parents_match": true,
+      "max_rest_head_error_cm": 2.1010954326916e-05,
+      "sampled_pose_head_max_error_cm": 1.7520115919946515e-05
+    },
+    "SK_FPArms03.fbx": {
+      "bones": 39,
+      "parents_match": true,
+      "max_rest_head_error_cm": 1.0806044289878459e-05,
+      "meshes": {
+        "SK_FPArms03_R": {
+          "bounds_max_error_cm": 5.7220458984375e-06,
+          "uv_layers": 1,
+          "vertex_color": [],
+          "unweighted": 0
+        },
+        "SK_FPArms03_L": {
+          "bounds_max_error_cm": 5.7220458984375e-06,
+          "uv_layers": 1,
+          "vertex_color": [],
+          "unweighted": 0
+        }
+      }
+    }
+  },
+  "limitations": [
+    "Source inspections do not prove native material, skeleton, sockets, clipping or runtime correctness."
+  ],
+  "art24_unchanged": {
+    "mesh_surface_uv_normals_weights": {
+      "SK_FPArms03_R": true,
+      "SK_FPArms03_L": true
+    },
+    "bone_rest_names_parents": true,
+    "other_actions": {
+      "A_FPArms03_Grip": true,
+      "A_FPArms03_KnifeHold": true,
+      "A_FPArms03_Open": true,
+      "A_FPArms03_RifleHold": true,
+      "A_FPArms03_Wrist": true
+    }
+  },
+  "passed": true
+}

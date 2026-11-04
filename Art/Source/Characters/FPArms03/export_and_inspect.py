@@ -7,6 +7,8 @@ from mathutils import Matrix,Vector
 ROOT=Path(__file__).resolve().parent;DOC=ROOT.parents[3]/'docs/assets/fparms03'
 CHECK_ONLY='--inspect-only' in sys.argv
 KNIFE_ONLY='--knife-only' in sys.argv
+PISTOL_ONLY='--pistol-only' in sys.argv
+ACTION_FILTER='A_FPArms03_PistolHold' if PISTOL_ONLY else 'A_FPArms03_KnifeHold' if KNIFE_ONLY else None
 bpy.ops.wm.open_mainfile(filepath=str(ROOT/'FPArms03.blend'))
 scene=bpy.context.scene;arm=bpy.data.objects['SKEL_FPArms03'];meshes=[bpy.data.objects['SK_FPArms03_'+s] for s in ['R','L']]
 def reset():
@@ -40,6 +42,28 @@ def export(path,action=None):
 reset();scene.frame_start=1;scene.frame_end=30
 rest={b.name:{'head':list(b.head_local),'parent':b.parent.name if b.parent else None} for b in arm.data.bones}
 report={'blender':bpy.app.version_string,'units':'cm, +X forward, Z up; FBX converter -Y/Z matching project','fps':30,'source_reopened':True,'source_meshes':{},'poses':{},'fbx_roundtrip':{},'limitations':['Source inspections do not prove native material, skeleton, sockets, clipping or runtime correctness.']}
+if PISTOL_ONLY:
+    import array,struct
+    def mesh_signature(o):
+        h=hashlib.sha256()
+        for collection,attribute,width,code in [(o.data.vertices,'co',3,'f'),(o.data.loops,'vertex_index',1,'i'),(o.data.uv_layers[0].data,'uv',2,'f'),(o.data.corner_normals,'vector',3,'f')]:
+            values=array.array(code,[0])*(len(collection)*width);collection.foreach_get(attribute,values);h.update(values.tobytes())
+        for v in o.data.vertices:
+            for g in v.groups:h.update(struct.pack('if',g.group,g.weight))
+        return h.hexdigest()
+    def rest_signature(a):return [{'name':b.name,'parent':b.parent.name if b.parent else None,'matrix':[list(row) for row in b.matrix_local]} for b in a.data.bones]
+    def action_signature(a):
+        return [(c.data_path,c.array_index,[(list(k.co),k.interpolation) for k in c.keyframe_points]) for layer in a.layers for strip in layer.strips for bag in strip.channelbags for c in bag.fcurves]
+    current_actions={a.name:action_signature(a) for a in bpy.data.actions if a.name.startswith('A_FPArms03_') and a.name!='A_FPArms03_PistolHold'}
+    names=['SKEL_FPArms03','SK_FPArms03_R','SK_FPArms03_L']
+    with bpy.data.libraries.load(str(ROOT/'Reference/Frozen/ART22_FPArms03.blend'),link=False) as (src,dst):
+        dst.objects=names[:];dst.actions=list(current_actions)
+    old=dict(zip(names,dst.objects))
+    report['art24_unchanged']={'mesh_surface_uv_normals_weights':{o.name:mesh_signature(o)==mesh_signature(old[o.name]) for o in meshes},'bone_rest_names_parents':rest_signature(arm)==rest_signature(old['SKEL_FPArms03']),'other_actions':{name:current_actions[name]==action_signature(a) for name,a in zip(current_actions,dst.actions)}}
+    assert all(report['art24_unchanged']['mesh_surface_uv_normals_weights'].values())
+    assert report['art24_unchanged']['bone_rest_names_parents'] and all(report['art24_unchanged']['other_actions'].values())
+    for o in dst.objects:bpy.data.objects.remove(o,do_unlink=True)
+    for a in dst.actions:bpy.data.actions.remove(a)
 source_bounds={}
 for mesh in meshes:
     bm=bmesh.new();bm.from_mesh(mesh.data)
@@ -47,7 +71,7 @@ for mesh in meshes:
     report['source_meshes'][mesh.name]={'vertices':len(mesh.data.vertices),'triangles':len(mesh.data.polygons),'bounds_cm':source_bounds[mesh.name],'boundary_edges':sum(e.is_boundary for e in bm.edges),'nonmanifold_edges':sum(not e.is_manifold for e in bm.edges),'uv_layers':len(mesh.data.uv_layers),'vertex_color':list(mesh.data.color_attributes.keys()),'weight_sum_max_error':max(abs(sum(g.weight for g in v.groups)-1) for v in mesh.data.vertices),'unweighted':sum(not v.groups for v in mesh.data.vertices)};bm.free()
     assert max(b-a for a,b in source_bounds[mesh.name])<45,'Centimeter conversion failed'
     assert report['source_meshes'][mesh.name]['unweighted']==0
-actions=[a for a in bpy.data.actions if a.name.startswith('A_FPArms03_') and (not KNIFE_ONLY or a.name=='A_FPArms03_KnifeHold')]
+actions=[a for a in bpy.data.actions if a.name.startswith('A_FPArms03_') and (not ACTION_FILTER or a.name==ACTION_FILTER)]
 # Source Action Editor switching must not inherit a previous hold translation.
 for a in actions:
     if not CHECK_ONLY and a.name in ['A_FPArms03_Open','A_FPArms03_Grip','A_FPArms03_Wrist']:
@@ -69,12 +93,12 @@ for a in actions:
     stretches.sort()
     report['poses'][a.name]={'frames':[1,15,30],'right_bounds_mid_cm':bounds(o,True),'edge_stretch_p99':stretches[int(len(stretches)*.99)],'edge_stretch_max':max(stretches)}
 if not CHECK_ONLY:
-    export(ROOT/'Exports/SK_FPArms03.fbx')
+    if not PISTOL_ONLY:export(ROOT/'Exports/SK_FPArms03.fbx')
     for a in actions:export(ROOT/'Exports'/(a.name+'.fbx'),a)
     reset();scene.frame_set(1);select([arm]+meshes);bpy.ops.wm.save_as_mainfile(filepath=str(ROOT/'FPArms03.blend'))
 # Reimport each actual export in a clean scene, at centimeter scene units.
 for path in sorted((ROOT/'Exports').glob('*.fbx')):
-    if KNIFE_ONLY and path.stem!='A_FPArms03_KnifeHold':continue
+    if ACTION_FILTER and path.stem!=ACTION_FILTER and not (PISTOL_ONLY and path.stem=='SK_FPArms03'):continue
     bpy.ops.wm.read_factory_settings(use_empty=True);scene=bpy.context.scene;scene.unit_settings.system='METRIC';scene.unit_settings.scale_length=.01
     bpy.ops.import_scene.fbx(filepath=str(path),anim_offset=0)
     arm=next(o for o in scene.objects if o.type=='ARMATURE')
@@ -101,5 +125,5 @@ for path in sorted((ROOT/'Exports').glob('*.fbx')):
 report['passed']=True
 if KNIFE_ONLY:
     previous=json.loads((DOC/'export-inspection.json').read_text());previous['poses'].update(report['poses']);previous['fbx_roundtrip'].update(report['fbx_roundtrip']);report=previous
-(DOC/'export-inspection.json').write_text(json.dumps(report,indent=2)+'\n')
+(DOC/('art24/export-inspection.json' if PISTOL_ONLY else 'export-inspection.json')).write_text(json.dumps(report,indent=2)+'\n')
 print('ART22_SOURCE_AND_FBX_INSPECTION_PASSED')

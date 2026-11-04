@@ -17,7 +17,7 @@
   {
     "path": "Art/Source/Characters/FPArms03/Exports/A_FPArms03_PistolHold.fbx",
     "bytes": 346124,
-    "sha256": "297e99316ac32a29ce931732da523718375412b7abcd5ba56ab5de3adffbb12b"
+    "sha256": "d79da87bdfdef807c7ac4b962ccfbe87b6300369d72c53d91e1e03790df8bdf3"
   },
   {
     "path": "Art/Source/Characters/FPArms03/Exports/A_FPArms03_RifleHold.fbx",
@@ -36,8 +36,8 @@
   },
   {
     "path": "Art/Source/Characters/FPArms03/FPArms03.blend",
-    "bytes": 76855650,
-    "sha256": "81824bad1b4f2c348efa3a91c1ece960c112c54559d0edd2b0babe0b7855cc61"
+    "bytes": 73544280,
+    "sha256": "e0f156033051d7da9be013e5b64418f525bd88883fa95a4f28bae03c117b5556"
   },
   {
     "path": "Art/Source/Characters/FPArms03/Original/MeshyDraft.blend",
@@ -81,8 +81,8 @@
   },
   {
     "path": "Art/Source/Characters/FPArms03/README.md",
-    "bytes": 4981,
-    "sha256": "8d2ae7f2cb038839dc30e938c6bd232138a92e1a7b177adb56ea2e509a09253e"
+    "bytes": 6703,
+    "sha256": "8444ab9e090c63de10d2fa0765a98bae841a712e255f3464f71e4625b1a022e1"
   },
   {
     "path": "Art/Source/Characters/FPArms03/Reference/RightHand_BareForearm.png",
@@ -136,8 +136,8 @@
   },
   {
     "path": "Art/Source/Characters/FPArms03/export_and_inspect.py",
-    "bytes": 7347,
-    "sha256": "0f3f9fb572542f04030e5ad66e390bec5b2746657aab2deaedadfd492ea22de6"
+    "bytes": 9636,
+    "sha256": "80d01635e165da31193d4f719771e275a847fd785e91ef417991d8c7082ef04c"
   },
   {
     "path": "Art/Source/Characters/FPArms03/fit_weapons.py",
@@ -163,5 +163,15 @@
     "path": "Art/Source/Characters/FPArms03/preview_source.py",
     "bytes": 2340,
     "sha256": "ce5a5fd78ad8738e8b51f1191a73d320079b49886cf3cf5ecbf6908f7ff134c7"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/correct_pistol_contact.py",
+    "bytes": 7816,
+    "sha256": "a2c5ae20ea2373edb33849544b4eddab87e5966ca285276a6300af3291d2b600"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/pistol-contact.json",
+    "bytes": 502,
+    "sha256": "33badb1a4027099ce59e20462c5f9250141c6cd9c26826b1dc0ab3cfa2245c31"
   }
 ]

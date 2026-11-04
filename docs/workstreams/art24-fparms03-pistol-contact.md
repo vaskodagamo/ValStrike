@@ -1,0 +1,13 @@
+# ART-24 — Stationary P02 contact correction
+
+## 2026-11-04 — Source handoff (Europe/Berlin)
+
+**Implementation ready; observed stationary support-contact defect corrected in source review; producer art approval/native verification pending.** Source commit `b6379482d11e6624782fb52839d324dc98665d6b`, [PR #102 to main](https://github.com/vaskodagamo/ValStrike/pull/102), branch `codex/art24-fparms03-pistol-contact`, existing hands worktree. Base `9dcd04fd4c7ca3073e9edad1500f9e6be03ecc8c`; ART-22 branch remains frozen at `b1795991bed5cf2abaaabe8fcef79bfa5f9e5a4a`. Historical handoff unchanged.
+
+Pose/attachment only: repositioned support around the dominant fingers, relaxed individual curls, extended thumbs, kept the trigger finger indexed outside the guard. Saved editable blend and updated PistolHold FBX/recipe. Exact comparisons confirm mesh positions/topology, UVs/custom normals, weights, 39-bone names/parents/rest transforms and five other actions unchanged; skeletal FBX and other exports unchanged. Original PBR/maps retained. P02 frozen at `ccb08f06e22d23573697a1494a34436f901fa006`, no weapon edit. **Zero credits and zero service calls.**
+
+Actually inspected matched before/source/actual-FBX views from both sides, above and the existing 90° camera. Support fingertips/thumb are exposed instead of buried in P02; slide/muzzle remain clear in those static views. Source/reimport appearance agrees with original material rebound. Focused Blender 5.2.2 round trip passed (sampled pose error ≤0.000018 cm); sparse three-ray contact diagnostic found no sampled points >0.05 cm inside P02. This supplements the images, not exhaustive hand-hand or swept-contact proof. Python syntax, diff/scope and LFS publication checks passed; 14 objects/86 MB uploaded. [Review and exact file hashes](../assets/fparms03/art24/review.json), [unchanged-data/export evidence](../assets/fparms03/art24/export-inspection.json), [full pose recipe](../assets/fparms03/art24/pose-recipe.json).
+
+Limits retained: dense local edge outliers remain (p99 decreased from 2.25 to 1.58, isolated maximum ~50), so no general deformation/animation pass. Rifle/knife are unchanged and held. Shared weights did not change; their unchanged-action evidence was reused. Existing 90° camera crops the lower hands; native composition, shaders, skeleton/sockets, animation transitions, LOD/performance and centralized runtime/network verification remain pending. No Unreal operation/build, native Content, new test framework, central files or other checkout changed; no workers spawned.
+
+Next owner: producer/art lead reviews this stationary correction and decides native batch admission. The user merges. Stop after this source/handoff publication.
