@@ -480,6 +480,14 @@ The gameplay/integration idle slots were checked clean at their original heads b
 
 **Native finding/next work:** Existing INT-ART-01 reports imported/reopened character and four props and continues actual server/client acceptance. Producer inspected its observer screenshot and confirmed the known floating remote pistol. Reserved [ART-23](tasks/art/ART-23-character-pistol-pose.md) for the idle former ART-15 owner: a new isolated source-only pistol pose and measured P01/P02 attachment handoff, zero credits, no native or gameplay overlap. ART-22, ART-23 and native integration are the three contributor slots; movement defect GPF-04 stays queued. This first scheduled producer cycle did no Unreal work or new tests; exact current state is in the producer checkpoint.
 
+## 2026-11-04 — Native pilot delivered; movement and hand-contact corrections dispatched
+
+**Delivered batch:** INT-ART-01 #93 merged (`2475185`, main `a1c2371`); [native evidence](assets/meshy-pilot-integration/README.md) records imported/reopened character/four props, Site01 486/486, server/two-client visual 13/13 and match 29/29, movement 69/69 and rifle presentation 39/39. Producer confirmed runtime paths match final verified integration after merge; no repeated build. Two-Mac, packaged, performance and remaining pose limitations stay explicit in the [playtest guide](playtest/meshy-pilot.md).
+
+**Review/dispatch:** ART-22 #92 preservation passes actual matched images, but reverse pistol contact fails; [ART-24](tasks/art/ART-24-fparms03-pistol-contact.md) returns the bounded local pose/weight correction to the same High-reasoning hands owner with zero credits. ART-23 #95 source `887de0a` / frozen handoff `9232dad` passes producer P01 stationary third-person pilot review, with close-up limitations. Native pistol remains pending. Claude lead received and acknowledged GPF-04 dispatch to its existing GPT-15 owner after native character writes stopped. No competing writer; only GPF-04 and ART-24 are admitted implementation contributors.
+
+**Next:** combine frozen GPF-04 and reviewed ART-23 with the pending GPF-02/03 affected acceptance in one controlled native/QA batch. First-person hand import remains excluded until contact/deformation clears. This coordination cycle used existing evidence, image inspection and diff checks; no new tests, Unreal job or Meshy charge. Ledger remains 30/300 new credits spent. User merges all PRs.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.

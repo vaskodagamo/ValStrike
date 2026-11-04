@@ -1,5 +1,17 @@
 # Team board
 
+## Current dispatch — 2026-11-04, 16:18 scheduled cycle (Europe/Berlin)
+
+This checkpoint supersedes the historical assignment states below. **INT-ART-01 #93 is merged and its native writer has stopped.** Local Editor verification covers character/four props, Site01 server/two-client presentation and the affected movement/rifle checks; [evidence](assets/meshy-pilot-integration/README.md) and [other-Mac guide](playtest/meshy-pilot.md). The runtime paths in merged main `a1c2371` match the verified final integration head `2475185`; no repeat build is needed for the intervening source-art/docs merges. Two-Mac, packaged and performance acceptance remain pending.
+
+| Current work | Owner / exclusive scope | State |
+| --- | --- | --- |
+| GPF-04 latency corrections | Existing GPT-15 via Claude gameplay lead; `gpt-15-movement-feel`, `claude/gpf-04-steady-corrections`; movement files and movement-weight sections only | Released, delivered and acknowledged active in the live gameplay board. Preserve #93 presentation; engine-free contributor checks only. |
+| [ART-24 P02 hand contact](tasks/art/ART-24-fparms03-pistol-contact.md) | Existing hands chat, High; reuse `art22-fparms03` on new `codex/art24-fparms03-pistol-contact`; FPArms03 source/docs only | Active; owner acknowledged new branch at `9dcd04f`, zero-credit local pose/weight repair. ART-22 #92 is merged; matched source/export preservation passes, pistol contact/deformation is held. |
+| ART-23 third-person pistol | Existing character artist, frozen `9232dad`, [PR #95](https://github.com/vaskodagamo/ValStrike/pull/95) | Idle/merged source ready. Producer inspected matched P01 original/candidate/reimport and 5 m views: stationary third-person pilot fit accepted with documented close-up limits. Native pistol remains unfixed until integration. |
+
+Two implementation contributors are admitted (GPF-04 and ART-24); all other registered art owners are idle. No new native job is dispatched. Next coherent candidate combines frozen GPF-04 with reviewed ART-23, plus the still-pending GPF-02/03 affected checks, under one integration owner. GPF-04 owns shared movement source until handoff; no parallel native character writer. FPArms03, R02/P02 replacement and knife native integration are excluded from that candidate. User retains merges; daily new Meshy spend remains 30/300.
+
 ## Character pistol-pose correction — 2026-11-04
 
 The producer inspected INT-ART-01's actual observer screenshot: the character renders, but its remote pistol floats below the unfitted hands. [ART-23](tasks/art/ART-23-character-pistol-pose.md) assigns the idle **Art — Character playtest prep** chat at High to a fresh `.parallel-worktrees/art23-character-pistol` / `codex/art23-character-pistol`, exclusively new `UrbanEntry01/PistolPilot/` source, `docs/assets/urban-entry01/pistol-pilot/` and its workstream handoff. Existing character source and INT-ART-01 stay read-only. Dispatched clean at `fd7621c`. Result: one local third-person pistol hold with P01/P02 fit recipes, **zero credits**, no new test/build. Active contributors remain three: ART-22, ART-23 and INT-ART-01. GPF-04 remains queued behind shared-character integration.

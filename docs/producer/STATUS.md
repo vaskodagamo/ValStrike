@@ -2,6 +2,23 @@
 
 2026-11-04, Europe/Berlin. Owner: **Direktor (2)**. Read live sources before acting; this is a checkpoint, not a process monitor.
 
+## Latest checkpoint — 16:18 scheduled cycle
+
+This section supersedes the earlier states retained below.
+
+- **Delivered native batch:** #93 merged, final head `247518542c7212e8391288ca316a5ea4e9dc031a`, runtime candidate `34e6e789fa58a28a3a53d22d589b46997e3a0aa6`. Character/four props imported, saved and reopened; Site01 486/486, visual weapons 13/13, Site01 match 29/29 with server + two rendered clients, movement 69/69 and rifle presentation 39/39. Producer read the actual owner report; no producer rerun. `git diff` confirms no Source/Content/Config/Scripts/Tests difference between final head and merged main `a1c2371`. [Evidence](../assets/meshy-pilot-integration/README.md), [other-Mac instructions](../playtest/meshy-pilot.md).
+- **Native limits:** remote pistol still floats; crouched visual remains standing, gait/directional coverage is limited, body hides on death. Two-Mac LAN, packaged, four-player, performance and human feel are pending. Native owner visibly finished and stopped its assignment; current user checkout assistance is not a new integration job.
+- **Gameplay resumed:** full GPF-04 prompt delivered through the authorized existing Claude lead. Lead acknowledged dispatch to the existing GPT-15 owner; live board records active and checkout is on `claude/gpf-04-steady-corrections` from `a1c2371`. Engine-free movement correction only, preserving native presentation. Old queue ordering superseded: combine GPF-04 acceptance with GPF-02/03 in one future candidate; no automatic QA launch.
+- **Art review:** ART-22 #92 merged, source `bcd377d`, frozen handoff `b179599`, owner idle/stopped. Producer inspected matched original/source/export glove close views: preservation passes. Actual reverse pistol image confirms buried support fingers/thumb, so native hand integration remains held. [ART-24](../tasks/art/ART-24-fparms03-pistol-contact.md) goes back to that same owner at High: local P02 pose/weight repair, zero credits, same isolated checkout/new branch, no native work. Owner acknowledged the new branch at `9dcd04f` and began a pose-only correction first.
+- **Third-person pistol source:** ART-23 merged and frozen at `9232dad` (source `887de0a`), [#95](https://github.com/vaskodagamo/ValStrike/pull/95), owner idle. Producer reviewed actual P01 original/candidate/FBX views and 5 m composition: accepted for stationary third-person pilot, with angular glove curls and small contact gaps documented. This does not claim the game is fixed or approve P02 native replacement.
+- **Capacity/budget:** R02, P02, K01 and props chats confirmed idle; ART-23 frozen. GPF-04 and ART-24 are the two admitted implementation contributors. Ledger checked: 30 new credits spent, 270 available; no new paid job, test or Unreal run in this cycle. Earlier task caps remain separate.
+
+Producer checkout fast-forwarded to user-merged main `9dcd04f`, including #94–96, before publication. ART-23 is merged source, still awaiting native application.
+
+**Next trigger:** frozen GPF-04 handoff plus reviewed/merged ART-23 #95. Prepare one native/QA assignment to apply the pistol animation and matching offset together, preserve gameplay authority/hit zones, then build once and run affected movement (LAN/typical), session, reachable-spectate match and pistol presentation checks. Use the slot wrapper; no contributor builds. Keep first-person hands out until ART-24 contact review passes. User retains merges and other-Mac playtest acceptance.
+
+## Prior checkpoints (historical)
+
 ## Operating state
 
 - Same-chat heartbeat **`valstrike-studio-producer` is ACTIVE**, every day/every 30 minutes. Creation, view and saved automation configuration confirmed the interval and target thread `01a1a67c-4861-7e62-a15e-505444092624`. Keep this worktree, the Mac and app available. First scheduled invocation observed 2026-11-04 at 15:48 Europe/Berlin; earlier cycles ran interactively.
