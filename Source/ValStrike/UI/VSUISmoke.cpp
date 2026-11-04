@@ -347,6 +347,16 @@ public:
             Check(TEXT("unreachable_address_starts_connection"), Session && Session->bConnecting);
             break;
         case 14:
+            if (Session && !Session->bConnecting && !Session->bError && Age >= 0.5)
+            {
+                // The attempt ended as a non-error, which only a player cancel does.
+                // The harness sends no input here, so report it now instead of
+                // waiting for the deadline.
+                UE_LOG(LogValStrike, Display, TEXT("VSUI unreachable attempt ended without an error: %s"), *Session->Status.ToString());
+                Check(TEXT("unreachable_attempt_reports_error"), false);
+                Finish(PC);
+                return;
+            }
             if (!Session || Session->bConnecting || !Session->bError || Age < 0.5) return;
             // The engine may signal failure before return-map travel. Wait for the
             // next controller as well so the error cannot disappear on arrival.

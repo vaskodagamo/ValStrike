@@ -1,0 +1,55 @@
+{
+  "material": "Material_0",
+  "status": "Original imported Meshy GLB graph preserved",
+  "base_color": "Textures/Embedded/Image_0.jpg; sRGB; RGB directly to Base Color",
+  "metallic": "Textures/Embedded/Image_1.jpg; Non-Color; Blue channel",
+  "roughness": "Textures/Embedded/Image_1.jpg; Non-Color; Green channel",
+  "normal": "Textures/Embedded/Image_2.jpg; Non-Color; tangent-space Normal Map",
+  "normal_strength": 1.0,
+  "shader_links": [
+    [
+      "Principled BSDF",
+      "BSDF",
+      "Material Output",
+      "Surface"
+    ],
+    [
+      "Image Texture",
+      "Color",
+      "Principled BSDF",
+      "Base Color"
+    ],
+    [
+      "Separate Color",
+      "Blue",
+      "Principled BSDF",
+      "Metallic"
+    ],
+    [
+      "Separate Color",
+      "Green",
+      "Principled BSDF",
+      "Roughness"
+    ],
+    [
+      "Image Texture.001",
+      "Color",
+      "Separate Color",
+      "Color"
+    ],
+    [
+      "Normal Map",
+      "Normal",
+      "Principled BSDF",
+      "Normal"
+    ],
+    [
+      "Image Texture.002",
+      "Color",
+      "Normal Map",
+      "Color"
+    ]
+  ],
+  "maps": "Packed in blend and byte-identical external copies extracted from original GLB; separate downloaded API PNGs retained as originals",
+  "unreal_note": "Reconstruct the GLB packed metallic/roughness channel routing; FBX does not preserve all Blender nodes. Inspect actual imported tangent/normal green convention before native acceptance. No material darkening or remap."
+}
