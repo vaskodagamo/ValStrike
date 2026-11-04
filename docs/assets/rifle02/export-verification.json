@@ -1,0 +1,135 @@
+{
+  "blender": "5.2.2 LTS",
+  "source_reopened": true,
+  "parts": {
+    "SM_VS_Rifle02_Body": {
+      "source_topology": {
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "boundary_details": []
+      },
+      "roundtrip": {
+        "triangles": 39614,
+        "max_bounds_error_cm": 1.6689300537109375e-06,
+        "uv_layers": [
+          "UVMap"
+        ],
+        "material_slots": 2,
+        "object_location_cm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "object_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "rotation_xyz_deg": [
+          0.0,
+          0.0,
+          -8.651422209050171e-06
+        ]
+      }
+    },
+    "SM_VS_Rifle02_Magazine": {
+      "source_topology": {
+        "boundary_edges": 0,
+        "nonmanifold_edges": 0,
+        "boundary_details": []
+      },
+      "roundtrip": {
+        "triangles": 1844,
+        "max_bounds_error_cm": 4.76837158203125e-07,
+        "uv_layers": [
+          "UVMap"
+        ],
+        "material_slots": 2,
+        "object_location_cm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "object_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "rotation_xyz_deg": [
+          0.0,
+          0.0,
+          -8.651422209050171e-06
+        ]
+      }
+    }
+  },
+  "packed_images": [
+    {
+      "name": "texture_0_base_color.png",
+      "size": [
+        4096,
+        4096
+      ],
+      "packed": true,
+      "colorspace": "sRGB"
+    },
+    {
+      "name": "texture_0_metallic.png",
+      "size": [
+        2048,
+        2048
+      ],
+      "packed": true,
+      "colorspace": "Non-Color"
+    },
+    {
+      "name": "texture_0_normal.png",
+      "size": [
+        4096,
+        4096
+      ],
+      "packed": true,
+      "colorspace": "Non-Color"
+    },
+    {
+      "name": "texture_0_roughness.png",
+      "size": [
+        2048,
+        2048
+      ],
+      "packed": true,
+      "colorspace": "Non-Color"
+    }
+  ],
+  "anchors_match_manifest": true,
+  "files": {
+    "R02_Compact.blend": {
+      "bytes": 87950755,
+      "sha256": "822118770d33ac2ad9e12c0dc74fc39c48b7ba63f12f1687a3061fe80ee9f517"
+    },
+    "Exports/SM_VS_Rifle02_Body.fbx": {
+      "bytes": 1470316,
+      "sha256": "9550dc3b7ee64c953c0ae09048535eb2495b81bbc935f23ac59361a3d99d8b1a"
+    },
+    "Exports/SM_VS_Rifle02_Magazine.fbx": {
+      "bytes": 83788,
+      "sha256": "d9bf951970a0cb571de3449dcef06394b9969625d370a38e255cc0e24e4b888c"
+    },
+    "Textures/texture_0_base_color.png": {
+      "bytes": 22267436,
+      "sha256": "3e7a2b2fa06deaa3c5b443e1a3483dd0edd17a7e85bb9e481a896a2ea376719f"
+    },
+    "Textures/texture_0_metallic.png": {
+      "bytes": 1663031,
+      "sha256": "fb26cdb874ed68613f2a75ade08a26d1117d08579d6803c10978ac97e381560b"
+    },
+    "Textures/texture_0_normal.png": {
+      "bytes": 18848780,
+      "sha256": "94aa9e57fd7eeef7da95cc2ccb9ca3064114bcbb6b6c22e2c260a81b37ad98b7"
+    },
+    "Textures/texture_0_roughness.png": {
+      "bytes": 1425845,
+      "sha256": "07ba8c338948afdfeb1390a1bc0a600a522408c762e4191ee0dee3f8a40e10f9"
+    }
+  }
+}
