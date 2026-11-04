@@ -59,3 +59,7 @@ No heavy slot is currently reserved by this board. All four Codex art sessions d
 The user explicitly requested High reasoning for the two additional ART-07/08 chats on 2026-11-04. Creation must set `thinking: high`; model remains the user-configured default. This request does not change or restart ART-05/06. Further art dispatches should use High unless the user specifies otherwise.
 
 Read-only inspection of the Claude gameplay sub-board found INT-01 assigned to its sole QA owner for main `90849f5`. Art workers must not launch Unreal or modify those active gameplay/integration worktrees.
+
+## Environment visual target — 2026-11-04
+
+The user selected the environment colors/material feel of the Operator V2 first-person composition. [Industrial V2 reference pack](../Art/References/Environment/IndustrialV2/README.md) provides six derived scene/asset sheets and the shared palette/construction brief. Use it for future environment-asset assignments. It does not replace Site01 layout/collision contracts or authorize new map work. Start with a representative wall/crate/paving sample and obtain visual review before mass-producing variants; no new worker is dispatched by this reference entry.

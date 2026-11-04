@@ -1,0 +1,75 @@
+{
+  "date": "2026-11-04",
+  "generator": "built-in image_gen",
+  "new_images": 6,
+  "approved_style_anchor_images": 1,
+  "native_assets_delivered": false,
+  "files": [
+    {
+      "path": "00_ApprovedStyleAnchor.png",
+      "bytes": 2089516,
+      "sha256": "15cd28ca6ad0bc5679d4abceb64f661cb03ce2076b01831579e767bd4bf49f11",
+      "width": 1672,
+      "height": 941,
+      "mode": "RGB"
+    },
+    {
+      "path": "AssetSheets/03_CratesAndCover.png",
+      "bytes": 1925617,
+      "sha256": "d41b61ceed1b3bc8034efee605073e4f55a6db2ce85a98731642d7770ec83dc6",
+      "width": 1672,
+      "height": 941,
+      "mode": "RGB"
+    },
+    {
+      "path": "AssetSheets/04_WallsAndDoors.png",
+      "bytes": 1886767,
+      "sha256": "ece8872cb247786c6c4b4df55b9ca66d33c54d88fead44500f15e9fa692ac19b",
+      "width": 1672,
+      "height": 941,
+      "mode": "RGB"
+    },
+    {
+      "path": "AssetSheets/05_GroundSurfaces.png",
+      "bytes": 2684462,
+      "sha256": "0cb4989fd20dc760af4f64896f2240fcec99ebea60e21790728d1e266b5532a9",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGB"
+    },
+    {
+      "path": "AssetSheets/06_UtilityProps.png",
+      "bytes": 1850369,
+      "sha256": "da62cd5c624ffef826fb0f680382b293b6ed97c9eb44d1d980143bd2b5ceea5a",
+      "width": 1672,
+      "height": 941,
+      "mode": "RGB"
+    },
+    {
+      "path": "README.md",
+      "bytes": 8750,
+      "sha256": "d2acfaf578ab8381ccc80b5cb95651bc57f7d6170023a7b40834f021885bc4fa"
+    },
+    {
+      "path": "Scenes/01_Courtyard.png",
+      "bytes": 2137557,
+      "sha256": "79f5a3dbc210ff445bdc0740c42f57ad7dc2157ca5cd022ded916ba8ed29d179",
+      "width": 1672,
+      "height": 941,
+      "mode": "RGB"
+    },
+    {
+      "path": "Scenes/02_ServiceLane.png",
+      "bytes": 2126755,
+      "sha256": "257fc58067b9cd1c638ed03231097ee13a8f396cd2c30e31a77a77845e4ed925",
+      "width": 1672,
+      "height": 941,
+      "mode": "RGB"
+    },
+    {
+      "path": "generation-prompts.json",
+      "bytes": 14127,
+      "sha256": "a79dd53fe2a2c2673394c62f0efcade280e4d7cc7d982c64e9dace2058d5c04f"
+    }
+  ]
+}
