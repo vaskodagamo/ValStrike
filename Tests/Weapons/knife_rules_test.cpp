@@ -1,12 +1,14 @@
 // Standalone checks for Combat/VSKnifeRules.h and the knife row of the damage model (no Unreal process).
 // clang++ -std=c++17 -Wall -Wextra -Werror -pedantic -Wshadow -ISource/ValStrike Tests/Weapons/knife_rules_test.cpp \
 //   Source/ValStrike/Damage/VSDamageModel.cpp -o Saved/Tests/Weapons/knife_rules_test && Saved/Tests/Weapons/knife_rules_test
+#include "Combat/VSKnifeCueRules.h"
 #include "Combat/VSKnifeRules.h"
 #include "Damage/VSDamageModel.h"
 
 #include <cmath>
 #include <cstdio>
 #include <cstring>
+#include <initializer_list>
 #include <limits>
 
 namespace
@@ -224,6 +226,47 @@ int main()
             "knife damage class name");
         Expect(static_cast<int>(D::WeaponClass::Rifle) == 0 && static_cast<int>(D::WeaponClass::Pistol) == 1
             && static_cast<int>(D::WeaponClass::Knife) == 2, "replicated weapon class values");
+    }
+    {
+        // KNIFE-01-C1: baseline versus live cue updates. A fresh pawn's replicated
+        // state is all defaults, so its first notification is already the first
+        // attack; it must play, while a late joiner's history must not.
+        namespace C = VSKnifeCueRules;
+        const auto Is = [](const C::Steps& Out, std::initializer_list<C::Step> Want)
+        {
+            if (Out.count != static_cast<int>(Want.size())) { return false; }
+            int Index = 0;
+            for (const C::Step& Each : Want)
+            {
+                const C::Step& Got = Out.items[static_cast<std::size_t>(Index++)];
+                if (Got.cue != Each.cue || Got.attack != Each.attack) { return false; }
+            }
+            return true;
+        };
+        C::Watch Fresh;
+        Fresh.Adopt(C::Counters{}); // Spawn: BeginPlay adopts the defaults.
+        Expect(Is(Fresh.Observe(C::Counters{1, 0, 0, 0, 0}), {{C::Cue::Start, 1}}), "first live slash after spawn starts");
+        Expect(Is(Fresh.Observe(C::Counters{1, 1, 0, 1, 0}), {{C::Cue::Impact, 1}}), "its impact follows");
+        Expect(Fresh.Observe(C::Counters{1, 1, 0, 1, 0}).count == 0, "an unchanged update plays nothing");
+
+        C::Watch Late;
+        Late.Adopt(C::Counters{5, 3, 1, 4, 5}); // Late join or relevancy return: history.
+        Expect(Late.IsBaselined() && Late.Observe(C::Counters{5, 3, 1, 4, 5}).count == 0, "historical attacks never replay");
+        Expect(Is(Late.Observe(C::Counters{6, 3, 1, 4, 5}), {{C::Cue::Start, 6}}), "the next live attack after a late join starts");
+
+        C::Watch Order;
+        Order.Adopt(C::Counters{1, 0, 0, 0, 0});
+        Expect(Is(Order.Observe(C::Counters{2, 1, 0, 1, 0}), {{C::Cue::Impact, 1}, {C::Cue::Start, 2}}),
+            "an older impact plays before a newer start in one update");
+        Expect(Is(Order.Observe(C::Counters{3, 2, 0, 3, 0}), {{C::Cue::Start, 3}, {C::Cue::Impact, 3}}),
+            "a start plays before its own impact in one update");
+        Expect(Is(Order.Observe(C::Counters{4, 2, 1, 3, 4}), {{C::Cue::Cancel, 4}}),
+            "a start already cancelled in the same update never presents");
+        Expect(Is(Order.Observe(C::Counters{5, 2, 2, 3, 4}), {{C::Cue::Cancel, 4}, {C::Cue::Start, 5}}),
+            "an older cancellation plays before a newer start");
+
+        C::Watch Unset;
+        Expect(Unset.Observe(C::Counters{2, 1, 0, 1, 0}).count == 0 && Unset.IsBaselined(), "an unbaselined watch adopts instead of replaying");
     }
     std::printf("%d/%d knife rule checks passed\n", Checks - Failures, Checks);
     return Failures == 0 ? 0 : 1;
