@@ -6,8 +6,10 @@ User reports the current gun is too big beside the character and explicitly requ
 
 | Task | New owner / worktree | Exclusive source + docs | Result / allowance |
 | --- | --- | --- | --- |
-| [ART-17 R02 rifle](tasks/art/ART-17-rifle02.md) | New Codex art chat, High; `.parallel-worktrees/art17-rifle02`, `codex/art17-rifle02` | `Art/Source/Weapons/Rifle02/`, `docs/assets/rifle02/`, `docs/workstreams/art17-rifle02.md` | Meshy draft → artist cleanup → real character-scale/hand-fit previews and socket recipe; **30 credits** |
-| [ART-18 P02 pistol](tasks/art/ART-18-pistol02.md) | New Codex art chat, High; `.parallel-worktrees/art18-pistol02`, `codex/art18-pistol02` | `Art/Source/Weapons/Pistol02/`, `docs/assets/pistol02/`, `docs/workstreams/art18-pistol02.md` | Meshy draft → artist cleanup → real character-scale/hand-fit previews and socket recipe; **30 credits** |
+| [ART-17 R02 rifle](tasks/art/ART-17-rifle02.md) | Codex “Art — Meshy R02 rifle” (`01a1a6c3-9f0b-76b3-aabd-ccfed653040f`), High; `.parallel-worktrees/art17-rifle02`, `codex/art17-rifle02` | `Art/Source/Weapons/Rifle02/`, `docs/assets/rifle02/`, `docs/workstreams/art17-rifle02.md` | Meshy draft → artist cleanup → real character-scale/hand-fit previews and socket recipe; **30 credits** |
+| [ART-18 P02 pistol](tasks/art/ART-18-pistol02.md) | Codex “Art — Meshy P02 pistol” (`01a1a6c3-ae6d-7bc3-b164-ee3e417314ec`), High; `.parallel-worktrees/art18-pistol02`, `codex/art18-pistol02` | `Art/Source/Weapons/Pistol02/`, `docs/assets/pistol02/`, `docs/workstreams/art18-pistol02.md` | Meshy draft → artist cleanup → real character-scale/hand-fit previews and socket recipe; **30 credits** |
+
+Dispatched both chats at High reasoning, configured model unchanged, from clean prepared HEAD `e0071ce295c78cfdfa453af86b83596dc4cfa2ec`. Each received its own worktree, exact 30-credit allowance, resumable-job requirement and source-only scope. No coordinator Meshy submission or model completion claim.
 
 Initial R02 length target 72–78 cm; P02 20–22 cm, with slimmer grips/receiver/slide proportions inspected against the frozen 170 cm character at scale 1. Existing R01 is 86 cm long; P01 23.929 cm. This is a redesign request, not proof the source dimensions alone caused the reported appearance. Artists also document import/socket/camera risks for native review. New files only: R01/P01, character sources/poses, existing gameplay/native assets and other checkouts remain read-only. No new engine slot, contributor build, repeated test suite or humanoid auto-rig.
 

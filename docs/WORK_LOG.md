@@ -446,6 +446,8 @@ The gameplay/integration idle slots were checked clean at their original heads b
 
 **Coordination/verification:** ART-15 received the scale feedback and direction to preserve its temporary R01 pilot, finish its existing handoff and avoid character scaling/extra pose polishing. Existing props/Claude native pilot continue; new weapon import needs a later explicit integration assignment. New art chats have no native Content/code/engine slot. Coordinator changes are brief/board/log only; source/native/runtime verification remains with the assigned future stages. User merges.
 
+**Dispatch:** Created “Art — Meshy R02 rifle” (`01a1a6c3-9f0b-76b3-aabd-ccfed653040f`) and “Art — Meshy P02 pistol” (`01a1a6c3-ae6d-7bc3-b164-ee3e417314ec`) at explicit High reasoning, configured model unchanged. Both clean isolated worktrees start at `e0071ce`; each received the user-approved 30-credit cap and the required imagegen → Meshy → cleanup workflow. Read-only originals and existing integration ownership remain preserved.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.
