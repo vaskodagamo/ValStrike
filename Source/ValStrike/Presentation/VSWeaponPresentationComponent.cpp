@@ -102,7 +102,9 @@ bool UVSWeaponPresentationComponent::Initialize(AVSCharacter* Pawn, USceneCompon
     FirstPersonBody = MakeVisual(TEXT("FirstPersonBody"), BodyAsset, FirstPersonAnchor, NAME_None, true);
     FirstPersonMagazine = MakeVisual(TEXT("FirstPersonMagazine"), MagazineAsset, FirstPersonBody, TEXT("Magazine"), true);
     FirstPersonFlash = MakeVisual(TEXT("FirstPersonFlash"), FlashAsset, FirstPersonBody, TEXT("Muzzle"), true);
-    WorldBody = MakeVisual(TEXT("WorldBody"), BodyAsset, WorldAnchor, NAME_None, false);
+    const bool bUseWorldSocket = !WorldSocket.IsNone() && WorldAnchor->DoesSocketExist(WorldSocket);
+    ActiveWorldGrip = bUseWorldSocket ? FTransform::Identity : WorldGrip;
+    WorldBody = MakeVisual(TEXT("WorldBody"), BodyAsset, WorldAnchor, bUseWorldSocket ? WorldSocket : NAME_None, false);
     WorldMagazine = MakeVisual(TEXT("WorldMagazine"), MagazineAsset, WorldBody, TEXT("Magazine"), false);
     WorldFlash = MakeVisual(TEXT("WorldFlash"), FlashAsset, WorldBody, TEXT("Muzzle"), false);
     if (SlideAsset)
@@ -209,7 +211,7 @@ void UVSWeaponPresentationComponent::ApplyPose()
     for (UStaticMeshComponent* Body : {FirstPersonBody.Get(), WorldBody.Get()})
     {
         const bool bFP = Body == FirstPersonBody;
-        FTransform Pose = bFP ? FirstPersonGrip : WorldGrip;
+        FTransform Pose = bFP ? FirstPersonGrip : ActiveWorldGrip;
         Pose.AddToTranslation(FVector(-KickBack * KickRemaining, 0, -3.0f * ReloadBlend - 14.0f * Lowered));
         Pose.SetRotation(Pose.GetRotation() * FRotator(KickPitch * KickRemaining - 12.0f * ReloadBlend - 30.0f * Lowered, 0, -8.0f * ReloadBlend).Quaternion());
         Body->SetRelativeTransform(Pose);
