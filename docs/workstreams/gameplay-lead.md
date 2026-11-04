@@ -34,3 +34,9 @@ At the user's request to continue building game logic while INT-01 runs, two dis
   - spread-driven crosshair (HUD, after #34/#35 merge);
   - equip-boundary tolerance, only if INT-02 observes it;
   - art slots for audio cues (Codex).
+
+## 2026-11-04 — Merges and board resync
+
+- The user merged #32 and #34–#40. PR #32 merged before the lead's later board commits, so this resync PR replays them onto main.
+- GPT-01..06 are merged with verification still pending. INT-02 tests the same six tips combined; its result now covers main's source for those PRs, but the main revision itself must be rechecked if any later change lands.
+- GPT-09 found that muzzle flash and body kick already exist in the base `VSWeaponPresentationComponent`. A shared-file exception for that file was approved, because GPT-04 had released it. GPT-07, GPT-08 and GPT-09 were told to merge current main before opening PRs.
