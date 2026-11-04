@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "asset": "K01",
+  "task": "ART-20",
+  "date_europe_berlin": "2026-11-04",
+  "files": [
+    {
+      "path": "Art/Source/Weapons/Knife01/.gitattributes",
+      "bytes": 42,
+      "sha256": "69ded8f0d75a2b0d2b2b67a157fe21ac5a602c2d4e2e042e6b59b03edc66a152"
+    },
+    {
+      "path": "Art/Source/Weapons/Knife01/Exports/SM_VS_Knife01.fbx",
+      "bytes": 685868,
+      "sha256": "4c5d41ad6960e1b35166198e12b4ef60afb93de14394a29e54e54eeea62a4ad0"
+    },
+    {
+      "path": "Art/Source/Weapons/Knife01/Knife01.blend",
+      "bytes": 20052785,
+      "sha256": "d92cdebe6ea49af6dc660f4e0199058e433ca7c9d6c8312dcc7b1559f81b2b9d"
+    },
+    {
+      "path": "Art/Source/Weapons/Knife01/Originals/K01_Meshy.fbx",
+      "bytes": 43707468,
+      "sha256": "844c019b5abf708c1ac5cf2456bdc31ff49f00f5cddacd22c072c4d4b21b1e6f"
+    },
+    {
+      "path": "Art/Source/Weapons/Knife01/Originals/K01_Meshy.glb",
+      "bytes": 21710764,
+      "sha256": "4716920e0b70c585b4c1727eaa4c674bdfb0be6e572f1649885401eb949284f9"
+    },
+    {
+      "path": "Art/Source/Weapons/Knife01/README.md",
+      "bytes": 2881,
+      "sha256": "4671084ea274cd7c2c365797cb14679f7e57d22ac5c5179e189d667bd68ffea8"
+    },
+    {
+      "path": "Art/Source/Weapons/Knife01/Reference/K01_reference.png",
+      "bytes": 1399542,
+      "sha256": "3fabb8ceaaac5782b88532e4033829888349c7a826d3f9c144aea5f4e8e23364"
+    },
+    {
+      "path": "Art/Source/Weapons/Knife01/Reference/prompt.txt",
+      "bytes": 1195,
+      "sha256": "744650e45ac2b18816a68705fda6e76adfb24628059af02bda7dddfdba3b4149"
+    },
+    {
+      "path": "Art/Source/Weapons/Knife01/Textures/texture_0_base_color.png",
+      "bytes": 21488536,
+      "sha256": "a1a027ee7bafb4ae9157735d8b286a4fee5e622da4fb5763d6c14cb3cf631f7a"
+    },
+    {
+      "path": "Art/Source/Weapons/Knife01/Textures/texture_0_metallic.png",
+      "bytes": 656884,
+      "sha256": "42d1a112804ce960e66cc519c518ea2f2fb48499c84772b6627ef928b6d26686"
+    },
+    {
+      "path": "Art/Source/Weapons/Knife01/Textures/texture_0_normal.png",
+      "bytes": 18322021,
+      "sha256": "192ff2411f0d1b82aed0d56c4a8022f87b2c564ebb0244c2d627da421a0cc795"
+    },
+    {
+      "path": "Art/Source/Weapons/Knife01/Textures/texture_0_roughness.png",
+      "bytes": 793011,
+      "sha256": "935ead7944b5fb7eafafe98f2c20f7a40816719644b257d6582525d422e6b5a6"
+    },
+    {
+      "path": "Art/Source/Weapons/Knife01/finalize_manifest.py",
+      "bytes": 2598,
+      "sha256": "80712bde48c0570e283d82f3105d9529ec1a3170bc2cd395019d4d1c8876c5e0"
+    },
+    {
+      "path": "Art/Source/Weapons/Knife01/inspect_draft.py",
+      "bytes": 968,
+      "sha256": "68b08dd513073ee44c087876f852ebabf43f859b43180e80d853a26055d36340"
+    },
+    {
+      "path": "Art/Source/Weapons/Knife01/inspect_hand.py",
+      "bytes": 1529,
+      "sha256": "adb8c74cac70cb13b600b0362ba6e7e423e3f593889566a6cf94251e08c28670"
+    },
+    {
+      "path": "Art/Source/Weapons/Knife01/materials.json",
+      "bytes": 1295,
+      "sha256": "b87715f93b6b0335bb6fa8ad06346d3632815dd320dd90acad38cb94f9c4d83b"
+    },
+    {
+      "path": "Art/Source/Weapons/Knife01/prepare_knife.py",
+      "bytes": 14952,
+      "sha256": "7a58cdb3c4f3bd5701afeb220ecffdda3703f46bf777b4b5d95e183aa4f2a7b1"
+    },
+    {
+      "path": "Art/Source/Weapons/Knife01/verify_and_fit.py",
+      "bytes": 6567,
+      "sha256": "ef655274211e308481457ec73fdf4c57dd3ffc2990eb1a7641aa26512b48b088"
+    },
+    {
+      "path": "docs/assets/knife01/Previews/Rejected/uneven_blade_correction.png",
+      "bytes": 861455,
+      "sha256": "ba8e1c7fe6b85bfb866c7c9d180bc9c8832de1961f68317e12f9b9c38835f822"
+    },
+    {
+      "path": "docs/assets/knife01/Previews/fit_character.png",
+      "bytes": 1122021,
+      "sha256": "43fb2ff2f50d742fe454fe79817886e3d71a8ba87a0f0ed41ce425fc0f3534e5"
+    },
+    {
+      "path": "docs/assets/knife01/Previews/fit_reverse.png",
+      "bytes": 1216014,
+      "sha256": "f6b2f8d655d9636be6ab9eb99cc0ad854162daba8bedefcbfe6177eac493bc6a"
+    },
+    {
+      "path": "docs/assets/knife01/Previews/fit_right_hand.png",
+      "bytes": 1339308,
+      "sha256": "1e736f082f0b29e1c8fdfe633effa06def8a6c80349316e52df0caf36bc57593"
+    },
+    {
+      "path": "docs/assets/knife01/Previews/fit_right_hand_pbr.png",
+      "bytes": 1426472,
+      "sha256": "0e83c5658b7d7f15dbfc2ef736f1a1dcd853ea9c66e8361fbfcef038903862a6"
+    },
+    {
+      "path": "docs/assets/knife01/Previews/meshy_thumbnail.png",
+      "bytes": 28941,
+      "sha256": "e62edf6d1e3d75ce0893c8701c936e55871ddbcda391b4c4ffc820ed48fd52c0"
+    },
+    {
+      "path": "docs/assets/knife01/Previews/neutral_reverse.png",
+      "bytes": 852147,
+      "sha256": "dc8b31ae30f93b2ce4424e361e5caa2acab644b5fef53977b417bd6bfa431f0f"
+    },
+    {
+      "path": "docs/assets/knife01/Previews/neutral_three_quarter.png",
+      "bytes": 860882,
+      "sha256": "16dd89d6352cec0753c1ea95383a47b31396b5b65f85be44bef1a67aa3768ed2"
+    }
+  ]
+}

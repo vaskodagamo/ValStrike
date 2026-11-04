@@ -1,0 +1,100 @@
+{
+  "blender": "5.2.2 LTS",
+  "raw": {
+    "vertices": 39556,
+    "triangles": 70640
+  },
+  "post_weld_vertices": 35322,
+  "source_vertices": 4674,
+  "source_triangles": 9324,
+  "material_slots": 4,
+  "uv_layers": [
+    "UVMap"
+  ],
+  "bounds_cm": [
+    [
+      -6.28000020980835,
+      -1.1995515823364258,
+      -2.119999885559082
+    ],
+    [
+      21.504854202270508,
+      1.1910970211029053,
+      2.4800000190734863
+    ]
+  ],
+  "dimensions_cm": [
+    27.784854888916016,
+    2.390648603439331,
+    4.599999904632568
+  ],
+  "object_location": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "object_rotation": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "object_scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "Grip": {
+    "location_cm": [
+      0,
+      0,
+      0
+    ],
+    "rotation_degrees": [
+      0,
+      0,
+      0
+    ],
+    "scale": [
+      1,
+      1,
+      1
+    ]
+  },
+  "Tip": {
+    "location_cm": [
+      21.504854202270508,
+      0.00029633971280418336,
+      1.3102866411209106
+    ],
+    "rotation_degrees": [
+      0,
+      0,
+      0
+    ],
+    "scale": [
+      1,
+      1,
+      1
+    ]
+  },
+  "topology": {
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "loose_vertices": 0,
+    "degenerate_faces": 0
+  },
+  "cleanup": [
+    "Normalize actual Meshy source to cm/+X and a grip-local origin",
+    "Weld generated seams and remove degenerate edges",
+    "Preserve and relax actual Meshy grip/UVs; local 32 percent reduction",
+    "Locally retopologize the uneven blade to the measured Meshy silhouette, with planar cheeks, crisp bevels and UVs",
+    "Local guard/pommel retopology follows generated envelope; preserve textured charcoal grip and original burgundy accent direction; satin steel blade",
+    "User rejected earlier uneven surface correction; this is the subsequent local artist revision"
+  ],
+  "fbx": {
+    "axis_forward": "-Y",
+    "axis_up": "Z",
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "bake_space_transform": false
+  }
+}

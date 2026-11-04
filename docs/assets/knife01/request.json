@@ -1,0 +1,11 @@
+{
+  "ai_model": "meshy-7.1",
+  "model_type": "standard",
+  "geometry_resolution": "standard",
+  "texture_resolution": "4k",
+  "should_texture": true,
+  "enable_pbr": true,
+  "should_remesh": false,
+  "image_enhancement": false,
+  "target_formats": ["glb", "fbx"]
+}

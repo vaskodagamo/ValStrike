@@ -1,0 +1,197 @@
+{
+  "asset": "K01",
+  "task": "ART-20",
+  "state": "source-ready for art review; dedicated hand posing, native and runtime pending",
+  "source": {
+    "path": "Art/Source/Weapons/Knife01/Knife01.blend",
+    "bytes": 20052785,
+    "sha256": "d92cdebe6ea49af6dc660f4e0199058e433ca7c9d6c8312dcc7b1559f81b2b9d"
+  },
+  "game_export": {
+    "path": "Art/Source/Weapons/Knife01/Exports/SM_VS_Knife01.fbx",
+    "bytes": 685868,
+    "sha256": "4c5d41ad6960e1b35166198e12b4ef60afb93de14394a29e54e54eeea62a4ad0"
+  },
+  "material_recipe": {
+    "path": "Art/Source/Weapons/Knife01/materials.json",
+    "bytes": 1295,
+    "sha256": "b87715f93b6b0335bb6fa8ad06346d3632815dd320dd90acad38cb94f9c4d83b"
+  },
+  "dimensions_cm": [
+    27.784854888916016,
+    2.390648603439331,
+    4.599999904632568
+  ],
+  "triangles": 9324,
+  "material_slots": 4,
+  "uv_layers": [
+    "UVMap"
+  ],
+  "units": "centimeters",
+  "forward": "+X along blade",
+  "up": "+Z",
+  "Grip": {
+    "location_cm": [
+      0,
+      0,
+      0
+    ],
+    "rotation_degrees": [
+      0,
+      0,
+      0
+    ],
+    "scale": [
+      1,
+      1,
+      1
+    ]
+  },
+  "Tip": {
+    "location_cm": [
+      21.504854202270508,
+      0.00029633971280418336,
+      1.3102866411209106
+    ],
+    "rotation_degrees": [
+      0,
+      0,
+      0
+    ],
+    "scale": [
+      1,
+      1,
+      1
+    ]
+  },
+  "frame_purpose": "visual presentation markers only; not authoritative melee volumes",
+  "suggested_hold": {
+    "character_source": "Art/Source/Characters/UrbanEntry01/UrbanEntry01_Pilot.blend",
+    "character_sha256": "25bf7b8d18ec7ed1966dc1be2fa367e09d0df0666b7ca5feb3b72fc9710949ea",
+    "character_mesh_scale": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "armature_scale": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "character_pose": "A_UE01_Pilot_RifleHold frame 1; unchanged",
+    "weapon_scale": [
+      1.0,
+      0.9999999403953552,
+      1.0
+    ],
+    "knife_component_matrix": [
+      [
+        0.06177494302392006,
+        0.0,
+        0.9980901479721069,
+        23.299999237060547
+      ],
+      [
+        0.4773351848125458,
+        -0.8782244920730591,
+        -0.02954377420246601,
+        -18.700000762939453
+      ],
+      [
+        0.8765472769737244,
+        0.4782485067844391,
+        -0.0542522668838501,
+        132.8000030517578
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "hand_r_head_local_matrix": [
+      [
+        0.47330552339553833,
+        -0.8653672933578491,
+        0.16468441486358643,
+        1.6089963912963867
+      ],
+      [
+        -0.04894813150167465,
+        0.16082574427127838,
+        0.9857683777809143,
+        12.109195709228516
+      ],
+      [
+        -0.8795372843742371,
+        -0.47463083267211914,
+        0.033761728554964066,
+        0.6281394362449646
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "handedness": "right-hand reference; no mirror applied",
+    "hold": "Blade exits index side of inherited curled rifle hand; reference only, no knife animation",
+    "hand_surface_intersection_pairs": 1330,
+    "intersecting_knife_faces_by_region": {
+      "grip": 933,
+      "guard": 0,
+      "blade": 0
+    },
+    "knuckle_index_to_pinky_cm": 6.299860709075365,
+    "native_socket_conversion": "Convert bone head matrix to UE import axes after inspecting actual imported skeleton; not raw UE Euler values."
+  },
+  "character_not_modified": true,
+  "checks": {
+    "saved_source_reopen": true,
+    "actual_fbx_roundtrip": {
+      "bounds_cm": [
+        [
+          -6.28000020980835,
+          -1.199550986289978,
+          -2.119999885559082
+        ],
+        [
+          21.504854202270508,
+          1.191097617149353,
+          2.4800000190734863
+        ]
+      ],
+      "max_bounds_error_cm": 5.960464477539062e-07,
+      "triangles": 9324,
+      "frames_max_matrix_error": {
+        "Grip": 1.5099580252808664e-07,
+        "Tip": 3.247143467888236e-06
+      },
+      "material_slots": 4,
+      "uv_layers": [
+        "UVMap"
+      ]
+    },
+    "topology": {
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "loose_vertices": 0,
+      "degenerate_faces": 0
+    },
+    "preview_review": "Both neutral sides and actual frozen-character reference views inspected in Blender output",
+    "unreal_operations": 0
+  },
+  "limitations": [
+    "Inherited rifle hand pose intersects grip and has extended index finger; dedicated hand pose required",
+    "No first-person FPArms02 attachment or attack animation acceptance",
+    "Constant-material blade/trim UV charts overlap; pack before future custom bake",
+    "Generated grip topology and normal response may need further art polish at first-person camera distances",
+    "Separate closed visual shells overlap internally; not manufacturing geometry",
+    "No native asset, gameplay equip, damage, melee networking, movement benefit or runtime verification"
+  ],
+  "next_owner": "Art lead reviews; hands/animation owner poses against frozen manifest; separately assigned integration owner imports and verifies native source in reserved UE slot",
+  "credits_consumed": 30,
+  "knife_combat_implemented": false
+}
