@@ -1,0 +1,804 @@
+{
+ "null_rhi_practice (pass/fail record)": {
+  "driver": {
+   "counts": {
+    "Equip(local)": 3,
+    "Slash(local)": 3,
+    "Impact": 4,
+    "Stab(local)": 5,
+    "Cancel": 4,
+    "Holster(local)": 2
+   },
+   "views": [
+    "first_person"
+   ],
+   "timeline": [
+    {
+     "t": "2026.11.04-18.11.44:327",
+     "pawn": "VSCharacter_0",
+     "cue": "Equip",
+     "local": true,
+     "result": 0,
+     "duration": 0.4,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.11.45:227",
+     "pawn": "VSCharacter_0",
+     "cue": "Slash",
+     "local": true,
+     "result": 0,
+     "duration": 0.15,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.11.45:410",
+     "pawn": "VSCharacter_0",
+     "cue": "Impact",
+     "local": false,
+     "result": 3,
+     "duration": 0.0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.11.46:627",
+     "pawn": "VSCharacter_0",
+     "cue": "Slash",
+     "local": true,
+     "result": 0,
+     "duration": 0.15,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.11.46:811",
+     "pawn": "VSCharacter_0",
+     "cue": "Impact",
+     "local": false,
+     "result": 1,
+     "duration": 0.0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.11.47:828",
+     "pawn": "VSCharacter_0",
+     "cue": "Slash",
+     "local": true,
+     "result": 0,
+     "duration": 0.15,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.11.48:011",
+     "pawn": "VSCharacter_0",
+     "cue": "Impact",
+     "local": false,
+     "result": 2,
+     "duration": 0.0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.11.48:829",
+     "pawn": "VSCharacter_0",
+     "cue": "Stab",
+     "local": true,
+     "result": 0,
+     "duration": 0.3,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.11.48:845",
+     "pawn": "VSCharacter_0",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "duration": 0.0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.11.48:846",
+     "pawn": "VSCharacter_0",
+     "cue": "Holster",
+     "local": true,
+     "result": 0,
+     "duration": 0.0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.11.49:829",
+     "pawn": "VSCharacter_0",
+     "cue": "Equip",
+     "local": true,
+     "result": 0,
+     "duration": 0.4,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.11.50:613",
+     "pawn": "VSCharacter_0",
+     "cue": "Stab",
+     "local": true,
+     "result": 0,
+     "duration": 0.3,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.11.50:629",
+     "pawn": "VSCharacter_0",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "duration": 0.0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.11.51:713",
+     "pawn": "VSCharacter_0",
+     "cue": "Stab",
+     "local": true,
+     "result": 0,
+     "duration": 0.3,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.11.51:746",
+     "pawn": "VSCharacter_0",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "duration": 0.0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.11.51:746",
+     "pawn": "VSCharacter_0",
+     "cue": "Holster",
+     "local": true,
+     "result": 0,
+     "duration": 0.0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.11.52:615",
+     "pawn": "VSCharacter_0",
+     "cue": "Equip",
+     "local": true,
+     "result": 0,
+     "duration": 0.4,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.11.53:415",
+     "pawn": "VSCharacter_0",
+     "cue": "Stab",
+     "local": true,
+     "result": 0,
+     "duration": 0.3,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.11.53:748",
+     "pawn": "VSCharacter_0",
+     "cue": "Impact",
+     "local": false,
+     "result": 3,
+     "duration": 0.0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.11.54:415",
+     "pawn": "VSCharacter_0",
+     "cue": "Stab",
+     "local": true,
+     "result": 0,
+     "duration": 0.3,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.11.54:431",
+     "pawn": "VSCharacter_0",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "duration": 0.0,
+     "view": "first_person"
+    }
+   ]
+  },
+  "observer": {
+   "counts": {
+    "Equip": 3,
+    "Impact": 4,
+    "Slash": 2,
+    "Stab": 5,
+    "Cancel": 4,
+    "Holster": 2
+   },
+   "views": [
+    "third_person"
+   ],
+   "timeline": [
+    {
+     "t": "2026.11.04-18.11.44:355",
+     "pawn": "VSCharacter_1",
+     "cue": "Equip",
+     "local": false,
+     "result": 0,
+     "duration": 0.4,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.11.45:406",
+     "pawn": "VSCharacter_1",
+     "cue": "Impact",
+     "local": false,
+     "result": 3,
+     "duration": 0.0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.11.46:657",
+     "pawn": "VSCharacter_1",
+     "cue": "Slash",
+     "local": false,
+     "result": 0,
+     "duration": 0.15,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.11.46:807",
+     "pawn": "VSCharacter_1",
+     "cue": "Impact",
+     "local": false,
+     "result": 1,
+     "duration": 0.0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.11.47:841",
+     "pawn": "VSCharacter_1",
+     "cue": "Slash",
+     "local": false,
+     "result": 0,
+     "duration": 0.15,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.11.48:008",
+     "pawn": "VSCharacter_1",
+     "cue": "Impact",
+     "local": false,
+     "result": 2,
+     "duration": 0.0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.11.48:858",
+     "pawn": "VSCharacter_1",
+     "cue": "Stab",
+     "local": false,
+     "result": 0,
+     "duration": 0.3,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.11.48:858",
+     "pawn": "VSCharacter_1",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "duration": 0.0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.11.48:859",
+     "pawn": "VSCharacter_1",
+     "cue": "Holster",
+     "local": false,
+     "result": 0,
+     "duration": 0.0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.11.49:860",
+     "pawn": "VSCharacter_1",
+     "cue": "Equip",
+     "local": false,
+     "result": 0,
+     "duration": 0.4,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.11.50:643",
+     "pawn": "VSCharacter_1",
+     "cue": "Stab",
+     "local": false,
+     "result": 0,
+     "duration": 0.3,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.11.50:643",
+     "pawn": "VSCharacter_1",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "duration": 0.0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.11.51:744",
+     "pawn": "VSCharacter_1",
+     "cue": "Stab",
+     "local": false,
+     "result": 0,
+     "duration": 0.3,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.11.51:744",
+     "pawn": "VSCharacter_1",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "duration": 0.0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.11.51:744",
+     "pawn": "VSCharacter_1",
+     "cue": "Holster",
+     "local": false,
+     "result": 0,
+     "duration": 0.0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.11.52:628",
+     "pawn": "VSCharacter_1",
+     "cue": "Equip",
+     "local": false,
+     "result": 0,
+     "duration": 0.4,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.11.53:445",
+     "pawn": "VSCharacter_1",
+     "cue": "Stab",
+     "local": false,
+     "result": 0,
+     "duration": 0.3,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.11.53:746",
+     "pawn": "VSCharacter_1",
+     "cue": "Impact",
+     "local": false,
+     "result": 3,
+     "duration": 0.0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.11.54:429",
+     "pawn": "VSCharacter_1",
+     "cue": "Stab",
+     "local": false,
+     "result": 0,
+     "duration": 0.3,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.11.54:429",
+     "pawn": "VSCharacter_1",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "duration": 0.0,
+     "view": "third_person"
+    }
+   ]
+  }
+ },
+ "rendered_capture (evidence only)": {
+  "driver": {
+   "counts": {
+    "Equip(local)": 3,
+    "Slash(local)": 3,
+    "Impact": 4,
+    "Stab(local)": 5,
+    "Cancel": 4,
+    "Holster(local)": 2
+   },
+   "views": [
+    "first_person"
+   ],
+   "timeline": [
+    {
+     "t": "2026.11.04-18.16.37:536",
+     "pawn": "VSCharacter_0",
+     "cue": "Equip",
+     "local": true,
+     "result": 0,
+     "duration": 0.4,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.16.38:442",
+     "pawn": "VSCharacter_0",
+     "cue": "Slash",
+     "local": true,
+     "result": 0,
+     "duration": 0.15,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.16.38:625",
+     "pawn": "VSCharacter_0",
+     "cue": "Impact",
+     "local": false,
+     "result": 3,
+     "duration": 0.0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.16.39:846",
+     "pawn": "VSCharacter_0",
+     "cue": "Slash",
+     "local": true,
+     "result": 0,
+     "duration": 0.15,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.16.40:052",
+     "pawn": "VSCharacter_0",
+     "cue": "Impact",
+     "local": false,
+     "result": 1,
+     "duration": 0.0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.16.41:061",
+     "pawn": "VSCharacter_0",
+     "cue": "Slash",
+     "local": true,
+     "result": 0,
+     "duration": 0.15,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.16.41:226",
+     "pawn": "VSCharacter_0",
+     "cue": "Impact",
+     "local": false,
+     "result": 2,
+     "duration": 0.0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.16.42:050",
+     "pawn": "VSCharacter_0",
+     "cue": "Stab",
+     "local": true,
+     "result": 0,
+     "duration": 0.3,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.16.42:072",
+     "pawn": "VSCharacter_0",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "duration": 0.0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.16.42:073",
+     "pawn": "VSCharacter_0",
+     "cue": "Holster",
+     "local": true,
+     "result": 0,
+     "duration": 0.0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.16.43:036",
+     "pawn": "VSCharacter_0",
+     "cue": "Equip",
+     "local": true,
+     "result": 0,
+     "duration": 0.4,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.16.43:829",
+     "pawn": "VSCharacter_0",
+     "cue": "Stab",
+     "local": true,
+     "result": 0,
+     "duration": 0.3,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.16.43:855",
+     "pawn": "VSCharacter_0",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "duration": 0.0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.16.44:944",
+     "pawn": "VSCharacter_0",
+     "cue": "Stab",
+     "local": true,
+     "result": 0,
+     "duration": 0.3,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.16.44:965",
+     "pawn": "VSCharacter_0",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "duration": 0.0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.16.44:966",
+     "pawn": "VSCharacter_0",
+     "cue": "Holster",
+     "local": true,
+     "result": 0,
+     "duration": 0.0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.16.45:843",
+     "pawn": "VSCharacter_0",
+     "cue": "Equip",
+     "local": true,
+     "result": 0,
+     "duration": 0.4,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.16.46:640",
+     "pawn": "VSCharacter_0",
+     "cue": "Stab",
+     "local": true,
+     "result": 0,
+     "duration": 0.3,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.16.46:975",
+     "pawn": "VSCharacter_0",
+     "cue": "Impact",
+     "local": false,
+     "result": 3,
+     "duration": 0.0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.16.47:638",
+     "pawn": "VSCharacter_0",
+     "cue": "Stab",
+     "local": true,
+     "result": 0,
+     "duration": 0.3,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-18.16.47:659",
+     "pawn": "VSCharacter_0",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "duration": 0.0,
+     "view": "first_person"
+    }
+   ]
+  },
+  "observer": {
+   "counts": {
+    "Equip": 3,
+    "Impact": 4,
+    "Slash": 2,
+    "Stab": 5,
+    "Cancel": 4,
+    "Holster": 2
+   },
+   "views": [
+    "third_person"
+   ],
+   "timeline": [
+    {
+     "t": "2026.11.04-18.16.37:561",
+     "pawn": "VSCharacter_1",
+     "cue": "Equip",
+     "local": false,
+     "result": 0,
+     "duration": 0.4,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.16.38:620",
+     "pawn": "VSCharacter_1",
+     "cue": "Impact",
+     "local": false,
+     "result": 3,
+     "duration": 0.0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.16.39:862",
+     "pawn": "VSCharacter_1",
+     "cue": "Slash",
+     "local": false,
+     "result": 0,
+     "duration": 0.15,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.16.40:047",
+     "pawn": "VSCharacter_1",
+     "cue": "Impact",
+     "local": false,
+     "result": 1,
+     "duration": 0.0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.16.41:082",
+     "pawn": "VSCharacter_1",
+     "cue": "Slash",
+     "local": false,
+     "result": 0,
+     "duration": 0.15,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.16.41:225",
+     "pawn": "VSCharacter_1",
+     "cue": "Impact",
+     "local": false,
+     "result": 2,
+     "duration": 0.0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.16.42:072",
+     "pawn": "VSCharacter_1",
+     "cue": "Stab",
+     "local": false,
+     "result": 0,
+     "duration": 0.3,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.16.42:072",
+     "pawn": "VSCharacter_1",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "duration": 0.0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.16.42:073",
+     "pawn": "VSCharacter_1",
+     "cue": "Holster",
+     "local": false,
+     "result": 0,
+     "duration": 0.0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.16.43:054",
+     "pawn": "VSCharacter_1",
+     "cue": "Equip",
+     "local": false,
+     "result": 0,
+     "duration": 0.4,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.16.43:846",
+     "pawn": "VSCharacter_1",
+     "cue": "Stab",
+     "local": false,
+     "result": 0,
+     "duration": 0.3,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.16.43:846",
+     "pawn": "VSCharacter_1",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "duration": 0.0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.16.44:963",
+     "pawn": "VSCharacter_1",
+     "cue": "Stab",
+     "local": false,
+     "result": 0,
+     "duration": 0.3,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.16.44:963",
+     "pawn": "VSCharacter_1",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "duration": 0.0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.16.44:963",
+     "pawn": "VSCharacter_1",
+     "cue": "Holster",
+     "local": false,
+     "result": 0,
+     "duration": 0.0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.16.45:866",
+     "pawn": "VSCharacter_1",
+     "cue": "Equip",
+     "local": false,
+     "result": 0,
+     "duration": 0.4,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.16.46:660",
+     "pawn": "VSCharacter_1",
+     "cue": "Stab",
+     "local": false,
+     "result": 0,
+     "duration": 0.3,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.16.46:965",
+     "pawn": "VSCharacter_1",
+     "cue": "Impact",
+     "local": false,
+     "result": 3,
+     "duration": 0.0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.16.47:658",
+     "pawn": "VSCharacter_1",
+     "cue": "Stab",
+     "local": false,
+     "result": 0,
+     "duration": 0.3,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-18.16.47:658",
+     "pawn": "VSCharacter_1",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "duration": 0.0,
+     "view": "third_person"
+    }
+   ]
+  }
+ }
+}

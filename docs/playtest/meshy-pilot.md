@@ -2,9 +2,9 @@
 
 2026-11-04 (Europe/Berlin), INT-ART-01. This build shows the Meshy **Urban Entry** character as every *other* player's third-person body and four approved Meshy props in Site01. It is a development Editor playtest, not a packaged game.
 
-**Tested revision (INT-ART-04, R02 rifle + P02 pistol):** `c2ba8522b22d3e46776c090c353d5356f4c5f6e2` on branch `claude/int-art-04-weapon-replacement`. It is main `caf7551` (knife #108–#110, ART-25 #112), plus the frozen KNIFE-01-M1 compile repair `adb7374` (PR #114), plus the new rifle and pistol in first and third person. Later commits on the branch only add documentation. Until that PR is merged, `main` has R01/P01 and does not compile because of the KNIFE-01-M1 duplicate. The Site01 facade and light fix are in the separate INT-ART-02B PR #116 and are not part of this revision. The earlier revisions `61fc972` (phase A pistol pose) and `34e6e78` (INT-ART-01 pilot) remain valid for what they tested.
+**Tested revision (INT-ART-03, full knife):** `1b572d0783ba97337dd1cce2d376976ba1456980` on branch `claude/int-art-03-knife`. It is main `4997215`, which already has R02/P02 #118, the Site01 facade #116, ART-26-C1 #115, ART-27 #110 and the KNIFE-01-M1 repair, plus the frozen WPN-02-CHECKS test-name correction `22b71bf` (PR #121), plus the native knife: gloved first-person hands and K01, and the remote knife body. Later commits on the branch only add scripts, evidence and documentation. Until this PR is merged, `main` has the knife gameplay with no knife art. Earlier revisions remain valid for what they tested: `c2ba852` (R02/P02), `61fc972` (pistol pose) and `34e6e78` (pilot).
 
-Evidence for everything below: [INT-ART-01 evidence](../assets/meshy-pilot-integration/README.md), [INT-ART-02 evidence](../assets/meshy-site01-followups/README.md) and [INT-ART-04 weapon evidence](../assets/weapon-replacement02/README.md).
+Evidence for everything below: [INT-ART-01 evidence](../assets/meshy-pilot-integration/README.md), [INT-ART-02 evidence](../assets/meshy-site01-followups/README.md), [INT-ART-04 weapon evidence](../assets/weapon-replacement02/README.md) and [INT-ART-03 knife evidence](../assets/knife-integration/README.md).
 
 ## 1. Prepare the other Mac
 
@@ -15,8 +15,8 @@ VS_CHECKOUT="$HOME/Documents/ValStrike-meshy-pilot"
 GIT_LFS_SKIP_SMUDGE=1 git clone https://github.com/vaskodagamo/ValStrike.git "$VS_CHECKOUT"
 cd "$VS_CHECKOUT"
 git lfs install --local
-git fetch origin claude/int-art-04-weapon-replacement
-GIT_LFS_SKIP_SMUDGE=1 git checkout --detach c2ba8522b22d3e46776c090c353d5356f4c5f6e2
+git fetch origin claude/int-art-03-knife
+GIT_LFS_SKIP_SMUDGE=1 git checkout --detach 1b572d0783ba97337dd1cce2d376976ba1456980
 git lfs pull origin
 git lfs fsck
 git rev-parse HEAD
@@ -81,7 +81,13 @@ Both Macs need the same commit and their own build. **This two-Mac LAN run has n
 - The other player: Urban Entry body, rifle shouldered in both hands, walking when moving; with the pistol (key 2), a two-handed pistol ready pose.
 - Site01 (INT-ART-02 phase B branch only, once published): a grey concrete wall/blind-recess/wall section on the north side of the service building along the north service route, with three roof parapets above it.
 - Site01: four light concrete tiles in the Gallery (around X 100, Y 950), a dark panel on the service-building wall facing the Gallery, a long crate on the service roof, and Meshy cube crates replacing the north crate and the two-high site crate stack. Walk against the replaced crates: collision is the original crate collision.
-- Your own view: the new R02 and P02 in first person, with no arms yet. R02 sits slightly nearer and more central than the old rifle. No body parts block the camera.
+- Your own view: the new R02 and P02 in first person, still without arms. With the knife (key 3), the gloved hands hold K01:
+  - it rises from below on equip;
+  - it idles, and bobs while moving;
+  - left click slashes across and right click stabs forward;
+  - Q or 1/2 switch back;
+  - while the knife is out the HUD shows `KNIFE / LMB SLASH RMB STAB` and no ammo.
+- The other player with the knife: K01 in the right hand with the ART-27 ready stance, walking or running. Slash and stab play on the upper body, also while moving.
 
 ## Known temporary limitations (pilot only)
 
@@ -90,7 +96,8 @@ Both Macs need the same commit and their own build. **This two-Mac LAN run has n
 - **Extended arms/rifle:** in the hold pose the forearms and rifle extend forward beyond the 25 cm-deep body hit box; shots at them miss.
 - **Death:** a dead player's body disappears (no death animation); it returns on respawn/round reset.
 - **Pistol (remote):** held two-handed in a stationary ready pose (INT-ART-02). While moving with the pistol the body keeps that pose and glides; there is no pistol walk. Glove/finger contact is pilot quality up close.
-- **New weapons (INT-ART-04):** R02 and P02 replace R01 and P01 at their source sizes. On the remote rifle, the stock reaches the cheek with no shoulder seat, and the fingers are not retuned for R02 (ART-17's open fit items). Each weapon is about 460K triangles with no LODs: pilot assets, not profiled. First person has no hands yet. In this revision, the development weapon checks `pistol_assets` and `attached_assets` still expect the old asset names and fail until their owners update them; gameplay is unaffected.
+- **New weapons (INT-ART-04):** R02 and P02 replace R01 and P01 at their source sizes. On the remote rifle, the stock reaches the cheek with no shoulder seat, and the fingers are not retuned for R02 (ART-17's open fit items). Each weapon is about 460K triangles with no LODs: pilot assets, not profiled. First person has hands only for the knife. The WPN-02 correction updates the old-name development checks in this revision.
+- **Knife (INT-ART-03):** the gloved first-person hands are large, and at slash impact the forearm crosses the crosshair (the source framing). The hand pair is about 781K triangles with no LODs and has not been profiled. Crouch keeps the standing pose. On another player, the first slash after equipping may not animate (a known gameplay-cue issue, reported). First-person clip switches are not blended.
 - **Character quality:** generated face/hair, cloth folds and finger contact are pilot quality, not close-up/hero quality.
 - **Lighting message:** Site01 shows an orange on-screen "multiple directional lights" development warning on the INT-ART-01 and phase A revisions; INT-ART-02 phase B removes it (same sun, no visual change).
 - Not verified: two-Mac LAN, packaged builds, Windows/Linux, four players, performance.

@@ -18,6 +18,7 @@ class UVSHitZoneSet;
 class UVSRiflePresentationComponent;
 class UVSPistolPresentationComponent;
 class UVSCharacterPresentationComponent;
+class UVSKnifePresentationComponent;
 class UVSWeaponPresentationComponent;
 enum class EVSWeaponSlot : uint8;
 class UEnhancedInputLocalPlayerSubsystem;
@@ -139,6 +140,10 @@ private:
     // Native third-person pilot body on GetMesh(); cosmetic, non-dedicated only.
     UPROPERTY(VisibleAnywhere, Category = "Presentation")
     TObjectPtr<UVSCharacterPresentationComponent> CharacterPresentation;
+
+    // Cosmetic K01 views: first-person gloved arms and the remote hand knife.
+    UPROPERTY(VisibleAnywhere, Category = "Presentation")
+    TObjectPtr<UVSKnifePresentationComponent> KnifePresentation;
 
     UPROPERTY(VisibleAnywhere, Category = "Prototype")
     TObjectPtr<UStaticMeshComponent> BodyVisual;

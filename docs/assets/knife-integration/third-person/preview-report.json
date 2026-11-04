@@ -1,0 +1,237 @@
+{
+ "engine": "5.8.4-58902052+++UE5+Release-5.8",
+ "map": "/Game/Maps/VS_Graybox",
+ "runtime": false,
+ "offset_on_hand_r": {
+  "location_cm": [
+   2.109,
+   -12.1092,
+   0.6281
+  ],
+  "quat_xyzw": [
+   -0.565402,
+   -0.404277,
+   0.316081,
+   -0.645735
+  ]
+ },
+ "poses": [
+  [
+   "hold",
+   "A_UE01_Knife_Hold",
+   0.0
+  ],
+  [
+   "equip_mid",
+   "A_UE01_Knife_Equip",
+   0.2
+  ],
+  [
+   "slash_impact",
+   "A_UE01_Knife_Slash",
+   0.15
+  ],
+  [
+   "slash_follow",
+   "A_UE01_Knife_Slash",
+   0.25
+  ],
+  [
+   "stab_impact",
+   "A_UE01_Knife_Stab",
+   0.3
+  ],
+  [
+   "walk",
+   "A_UE01_Knife_Walk",
+   0.25
+  ],
+  [
+   "run",
+   "A_UE01_Knife_Run",
+   0.2
+  ]
+ ],
+ "captures": [
+  {
+   "file": "hold_side.png",
+   "sha256": "06a793da739c1af91396d33483ff1cfddb8a51b74b8ba9f3c60f11588c7df39c"
+  },
+  {
+   "file": "hold_front.png",
+   "sha256": "9a65b61731906e237e2a675ca2744c72653b483a5cd74e4b02875e983abff2b8"
+  },
+  {
+   "file": "equip_mid_side.png",
+   "sha256": "5ffd70b686c7d13343c644ce6b81c2ca5b31b4b8b8fc58147e848dcd12973852"
+  },
+  {
+   "file": "equip_mid_front.png",
+   "sha256": "09dcc1d8765e5e862ecf866e5ab0394defb516eb8fe09e7d4ee7832072d77b61"
+  },
+  {
+   "file": "slash_impact_side.png",
+   "sha256": "870eb4e3b1dfcf56d8adb79af908db09b2e7c484b44f66a5a9f9d7bd2af0679f"
+  },
+  {
+   "file": "slash_impact_front.png",
+   "sha256": "a1cb7497153109337bf94ec991a1527f61aebb84d97a0e9b3a8250a985e12c6f"
+  },
+  {
+   "file": "slash_follow_side.png",
+   "sha256": "d1e8af09c6191571b3f13bef09455b23fc77ff0020310ba0865e4983cc386050"
+  },
+  {
+   "file": "slash_follow_front.png",
+   "sha256": "07b71fc16cd6e01b2d0e66209519c1a3c3289742fc4027cd3837a8b06534d669"
+  },
+  {
+   "file": "stab_impact_side.png",
+   "sha256": "98215ebbce34df7fe9a5e6357f7dbef8991844e5ab6725fdd6593917c519ed46"
+  },
+  {
+   "file": "stab_impact_front.png",
+   "sha256": "70698bef528b7d3af3d46b39e51ab946083ba7edba8719df07ef6a4a3ed26f84"
+  },
+  {
+   "file": "walk_side.png",
+   "sha256": "5b7f2f2aece7a59abf606156766ecb0518ba17e9ce22ba9facdd32e54196d281"
+  },
+  {
+   "file": "walk_front.png",
+   "sha256": "c31f6afad93332aff695c839ffbc95b83a4ccdf80d94a71d5cf8ed6100deffab"
+  },
+  {
+   "file": "run_side.png",
+   "sha256": "b959aa7be7dada8dcad70385d90558332a947c85360b3b33877fc944f2a5b391"
+  },
+  {
+   "file": "run_front.png",
+   "sha256": "a884b4ead968eac4b3fc1f9fd562d5dabee0e906f86101020e994787c70b1792"
+  }
+ ],
+ "diag": [
+  {
+   "pose": "hold",
+   "anim": "<Object '/Game/Art/Characters/UrbanEntry01/Animations/Knife/A_UE01_Knife_Hold.A_UE01_Knife_Hold' (0x9cb6bac4600) Class 'AnimSequence'>",
+   "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>",
+   "attached": true,
+   "hand_r": [
+    -1403.5,
+    -564.6,
+    104.1
+   ],
+   "knife": [
+    -1401.2,
+    -563.1,
+    92.1
+   ],
+   "knife_parent": "<Object '/Game/Maps/VS_Graybox.VS_Graybox:PersistentLevel.SkeletalMeshActor_0.SkeletalMeshComponent0' (0x9cb4d308c00) Class 'SkeletalMeshComponent'>"
+  },
+  {
+   "pose": "equip_mid",
+   "anim": "<Object '/Game/Art/Characters/UrbanEntry01/Animations/Knife/A_UE01_Knife_Equip.A_UE01_Knife_Equip' (0x9cb6baebe00) Class 'AnimSequence'>",
+   "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>",
+   "attached": true,
+   "hand_r": [
+    -1183.5,
+    -564.6,
+    104.1
+   ],
+   "knife": [
+    -1181.2,
+    -563.1,
+    92.1
+   ],
+   "knife_parent": "<Object '/Game/Maps/VS_Graybox.VS_Graybox:PersistentLevel.SkeletalMeshActor_1.SkeletalMeshComponent0' (0x9cb4d4c5000) Class 'SkeletalMeshComponent'>"
+  },
+  {
+   "pose": "slash_impact",
+   "anim": "<Object '/Game/Art/Characters/UrbanEntry01/Animations/Knife/A_UE01_Knife_Slash.A_UE01_Knife_Slash' (0x9cb6bae8c00) Class 'AnimSequence'>",
+   "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>",
+   "attached": true,
+   "hand_r": [
+    -963.5,
+    -564.6,
+    104.1
+   ],
+   "knife": [
+    -961.2,
+    -563.1,
+    92.1
+   ],
+   "knife_parent": "<Object '/Game/Maps/VS_Graybox.VS_Graybox:PersistentLevel.SkeletalMeshActor_2.SkeletalMeshComponent0' (0x9cb4d6e6400) Class 'SkeletalMeshComponent'>"
+  },
+  {
+   "pose": "slash_follow",
+   "anim": "<Object '/Game/Art/Characters/UrbanEntry01/Animations/Knife/A_UE01_Knife_Slash.A_UE01_Knife_Slash' (0x9cb6bae8c00) Class 'AnimSequence'>",
+   "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>",
+   "attached": true,
+   "hand_r": [
+    -743.5,
+    -564.6,
+    104.1
+   ],
+   "knife": [
+    -741.2,
+    -563.1,
+    92.1
+   ],
+   "knife_parent": "<Object '/Game/Maps/VS_Graybox.VS_Graybox:PersistentLevel.SkeletalMeshActor_3.SkeletalMeshComponent0' (0x9cb603e6400) Class 'SkeletalMeshComponent'>"
+  },
+  {
+   "pose": "stab_impact",
+   "anim": "<Object '/Game/Art/Characters/UrbanEntry01/Animations/Knife/A_UE01_Knife_Stab.A_UE01_Knife_Stab' (0x9cb7c6ff000) Class 'AnimSequence'>",
+   "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>",
+   "attached": true,
+   "hand_r": [
+    -523.5,
+    -564.6,
+    104.1
+   ],
+   "knife": [
+    -521.2,
+    -563.1,
+    92.1
+   ],
+   "knife_parent": "<Object '/Game/Maps/VS_Graybox.VS_Graybox:PersistentLevel.SkeletalMeshActor_4.SkeletalMeshComponent0' (0x9cb4d29b400) Class 'SkeletalMeshComponent'>"
+  },
+  {
+   "pose": "walk",
+   "anim": "<Object '/Game/Art/Characters/UrbanEntry01/Animations/Knife/A_UE01_Knife_Walk.A_UE01_Knife_Walk' (0x9cb7c706e00) Class 'AnimSequence'>",
+   "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>",
+   "attached": true,
+   "hand_r": [
+    -303.5,
+    -564.6,
+    104.1
+   ],
+   "knife": [
+    -301.2,
+    -563.1,
+    92.1
+   ],
+   "knife_parent": "<Object '/Game/Maps/VS_Graybox.VS_Graybox:PersistentLevel.SkeletalMeshActor_5.SkeletalMeshComponent0' (0x9cb18e12800) Class 'SkeletalMeshComponent'>"
+  },
+  {
+   "pose": "run",
+   "anim": "<Object '/Game/Art/Characters/UrbanEntry01/Animations/Knife/A_UE01_Knife_Run.A_UE01_Knife_Run' (0x9cb7c708c00) Class 'AnimSequence'>",
+   "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>",
+   "attached": true,
+   "hand_r": [
+    -83.5,
+    -564.6,
+    104.1
+   ],
+   "knife": [
+    -81.2,
+    -563.1,
+    92.1
+   ],
+   "knife_parent": "<Object '/Game/Maps/VS_Graybox.VS_Graybox:PersistentLevel.SkeletalMeshActor_6.SkeletalMeshComponent0' (0x9cb18e1b400) Class 'SkeletalMeshComponent'>"
+  }
+ ],
+ "map_unchanged": true,
+ "passed": true,
+ "error": null
+}
