@@ -1,6 +1,15 @@
 # ValStrike backlog
 
-Updated: 2026-11-03. `Ready` means work can start; `Queued` means prerequisites are incomplete; `In progress` means work has started; `Done` requires evidence; `Deferred` means outside this MVP. Use `Blocked` only with a named dependency and a next action.
+Updated: 2026-11-04. `Ready` means work can start; `Queued` means prerequisites are incomplete; `In progress` means work has started; `Done` requires evidence; `Deferred` means outside this MVP. Use `Blocked` only with a named dependency and a next action.
+
+## Team operating model
+
+Current ownership and verification queue live in [TEAM_BOARD.md](TEAM_BOARD.md), under [TEAM_WORKFLOW.md](TEAM_WORKFLOW.md). Historical stream assignments below do not grant active ownership. Implementation-ready, runtime-verified and merged are separate states; existing partial acceptance remains open.
+
+| ID | Task | Status | Completion condition |
+| --- | --- | --- | --- |
+| TEAM-01 | Establish provider-neutral hierarchy and isolated contributor workspaces | Implementation ready | Shared rules and Claude entry point, worktree slots, proportional validation and central integration queue prepared, checked and published for user merge |
+| INT-01 | Verify the combined current-main gameplay batch | Ready | One selected revision built and affected checks executed centrally; failures assigned, evidence and limits recorded |
 
 ## Planning
 

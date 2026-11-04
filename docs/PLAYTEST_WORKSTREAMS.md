@@ -1,5 +1,7 @@
 # Coordinated work toward the first Mac playtest
 
+> **Historical assignment (superseded 2026-11-04):** Current roles, ownership and verification rules are in [TEAM_WORKFLOW.md](TEAM_WORKFLOW.md) and [TEAM_BOARD.md](TEAM_BOARD.md). The assignments and per-stream build/test requirements below are retained as history. They do not authorize new work or independent Unreal builds. The user now retains PR merges.
+
 Updated: 2026-11-03 (Europe/Berlin). The user explicitly asked the integration chat to curate the existing project chats and keep them on useful work. This assignment supersedes the first-batch file ownership in PARALLEL_WORK.md. Do not create duplicate work or silently expand the single-rifle MVP.
 
 ## Common starting point and handoff
