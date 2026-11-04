@@ -211,7 +211,7 @@ private:
                     && FlashMaterial->GetPathName() == TEXT("/Game/Presentation/Rifle01/M_VSRifleFlash.M_VSRifleFlash")
                     && FlashMaterial->GetShadingModels().HasShadingModel(MSM_Unlit),
                     FlashMaterial ? FlashMaterial->GetPathName() : TEXT("missing"));
-                Check(TEXT("attached_assets"), FP && WP && FP->GetStaticMesh()->GetName() == TEXT("SM_VS_Rifle01_Body")
+                Check(TEXT("attached_assets"), FP && WP && FP->GetStaticMesh()->GetName() == TEXT("SM_VS_Rifle02_Body")
                     && Visual->GetFirstPersonMagazine()->GetAttachSocketName() == TEXT("Magazine")
                     && FP->DoesSocketExist(TEXT("Grip")) && FP->DoesSocketExist(TEXT("Muzzle")) && FP->DoesSocketExist(TEXT("SupportHand")), Details());
                 Check(TEXT("no_collision"), FP->GetCollisionEnabled() == ECollisionEnabled::NoCollision
