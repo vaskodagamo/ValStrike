@@ -19,7 +19,6 @@ public:
 
     void Construct(const FArguments& Args);
     virtual bool SupportsKeyboardFocus() const override { return true; }
-    virtual void Tick(const FGeometry& Geometry, const double CurrentTime, const float DeltaTime) override;
     virtual FReply OnPreviewKeyDown(const FGeometry& Geometry, const FKeyEvent& Event) override;
     TSharedRef<SWidget> InitialFocus() const;
 
