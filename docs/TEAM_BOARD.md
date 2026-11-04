@@ -1,5 +1,9 @@
 # Team board
 
+## Producer handoff — 2026-11-04
+
+User explicitly authorized “Direktor (2)” to message “Direktor” to finish/checkpoint this dispatch and transfer producer ownership; the authorization was verified in that chat's user reply. After this checkpoint, **Direktor (2)** (`01a1a67c-4861-7e62-a15e-505444092624`), checkout `/Users/webproduktion3/.codex/worktrees/10a1/ValStrike`, owns producer/art-lead coordination and central TEAM_BOARD/WORK_LOG updates. This outgoing Direktor stops further dispatch and central writes after publication. Every existing worker/worktree is preserved; user retains merges. [Checkpoint handoff](teams/PRODUCER_HANDOFF_2026-11-04.md).
+
 ## First-person hands / knife kickoff and native-status check — 2026-11-04
 
 User requested a hands/gloves/knife check and kickoff if missing. Read-only evidence: old ART-05 is the rejected procedural FPArms01 prototype, stopped and never native-integrated; the newer glove pair is an image reference only. No native FPArms/knife exists in inspected main or the INT-ART-01 checkout. Coordinator owns this update on `codex/hands-knife-dispatch`, main baseline `b342ca9`, carrying the earlier PR #68 assignment records so active weapon ownership remains visible.
