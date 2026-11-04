@@ -4,7 +4,7 @@
 
 **Branch/base:** `claude/gpt-03-net-emulation` from `90849f5`. Brief: `docs/tasks/gameplay/GPT-03-net-emulation.md` (on `claude/gameplay-team-kickoff`). Enabler for MOVE-03 and GUN-04. Validation tier V1 (tooling).
 
-- **Commit/PR:** branch `claude/gpt-03-net-emulation`; PR link recorded below once opened.
+- **Commit/PR:** `aaa0e2c` on `claude/gpt-03-net-emulation`; PR https://github.com/vaskodagamo/ValStrike/pull/36.
 - **Changed:**
   - `Scripts/ue.py`: `server` and `client` gain an optional "network emulation" group: `--net-profile {lan,good,typical,poor}`, `--pkt-lag 0-1000`, `--pkt-lag-variance 0-500`, `--pkt-loss 0-100`. Any of them appends `-PktLag=N -PktLagVariance=N -PktLoss=N` after the existing argv; explicit values override the profile. Variance above lag is rejected (`SetupError`); negatives, fractions and loss over 100 are rejected by the parser. No flag leaves argv byte-for-byte unchanged. Profiles are one-way per process (`NET_PROFILES`): lan 0/0/0, good 20/5/0, typical 40/10/1, poor 90/30/3.
   - `Tests/test_ue.py`: two cases — opt-in composition for both actions (default unchanged, profile suffix, override, explicit-only, variance-without-lag error) and out-of-range rejection.
