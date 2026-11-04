@@ -79,11 +79,11 @@ The rendered run covers the full first-person lifecycle, matched to the logged c
 | 292–293 | Stab: player hit, then recovery |
 | 297 | Driver dead: arms and knife hidden |
 
-The HUD shows `KNIFE / LMB SLASH RMB STAB` with no ammo while the knife is out, and the rifle ammo returns after switching. See the [sequence sheet](runtime/first_person_runtime_sequence.jpg) and single frames: [equip](runtime/fp_equip.jpg), [idle](runtime/fp_idle.jpg), [slash impact](runtime/fp_slash_impact.jpg), [wall](runtime/fp_slash_wall.jpg), [stab impact](runtime/fp_stab_impact.jpg), [switch to rifle](runtime/fp_switch_to_rifle.jpg), [dead](runtime/fp_dead_hidden.jpg).
+The HUD shows `KNIFE / LMB SLASH RMB STAB` with no ammo while the knife is out, and the rifle ammo returns after switching. See the [sequence sheet](runtime/first_person_runtime_sequence.png) and single frames: [equip](runtime/fp_equip.png), [idle](runtime/fp_idle.png), [slash impact](runtime/fp_slash_impact.png), [wall](runtime/fp_slash_wall.png), [stab impact](runtime/fp_stab_impact.png), [switch to rifle](runtime/fp_switch_to_rifle.png), [dead](runtime/fp_dead_hidden.png).
 
-**Third person:** the practice smoke fixes the observer's camera at `ObserverView`, so the [observer window never sees the driver](runtime/observer_view_during_knife.jpg). Remote cue binding is runtime-verified through the log above. The rendered remote view is **not** runtime-verified.
+**Third person:** the practice smoke fixes the observer's camera at `ObserverView`, so the [observer window never sees the driver](runtime/observer_view_during_knife.png). Remote cue binding is runtime-verified through the log above. The rendered remote view is **not** runtime-verified.
 
-The native assembly is shown instead in **editor** views: ART-27 poses on the native skeleton, with K01 at the measured runtime offset ([sheet](runtime/third_person_editor_sheet.jpg), [script](../../../Art/Integration/KnifePilot01/preview_third_person.py), [14 views and report](third-person/); the map was checked unchanged). They show:
+The native assembly is shown instead in **editor** views: ART-27 poses on the native skeleton, with K01 at the measured runtime offset ([sheet](runtime/third_person_editor_sheet.png), [script](../../../Art/Integration/KnifePilot01/preview_third_person.py), [14 views and report](third-person/); the map was checked unchanged). They show:
 - hold, equip, slash impact and follow-through, stab impact, walk and run;
 - the knife seated in the right hand and the guard hand on its own side.
 
