@@ -10,7 +10,14 @@ wall time is recorded so frames can be matched to the clients' LogVSKnifePresent
 cue lines.
 
   python3 Scripts/with_ue_slot.py -- \
-    python3 Art/Integration/KnifePilot01/capture_rendered_practice.py --engine PATH
+    python3 Art/Integration/KnifePilot01/capture_rendered_practice.py --engine PATH [--audio]
+
+INT-ART-05 additions:
+- `--audio` keeps client audio on (no -nosound) and records each client's own audio
+  output with record_app_audio.swift (ScreenCaptureKit app audio; no microphone).
+- `--runner movement` renders the existing movement smoke's roles instead
+  (Scripts/test_movement.launch_command, same -nullrhi swap) for a fixed duration,
+  as evidence of the third-person rifle hold/walk/run/crouch/airborne poses.
 """
 
 import argparse
@@ -23,8 +30,11 @@ import time
 
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "Scripts"))
+import test_movement as movement  # noqa: E402
 import test_weapons as weapons  # noqa: E402
 import ue  # noqa: E402
+
+RECORDER = Path(__file__).with_name("record_app_audio.swift")
 
 WINDOW_ID = r"""
 import CoreGraphics
@@ -71,17 +81,25 @@ def main():
     parser.add_argument("--engine")
     parser.add_argument("--port", type=int, default=7894)
     parser.add_argument("--seconds", type=float, default=110)
+    parser.add_argument("--runner", choices=("weapons", "movement"), default="weapons")
+    parser.add_argument("--audio", action="store_true")
+    parser.add_argument("--label", default="IntArt05")
     args = parser.parse_args()
     slot = weapons.require_engine_slot()
     engine = ue.engine_path(args.engine)
     executable, project = ue.editor_binary(engine, ue.host_platform()), ue.project_file(ue.ROOT)
-    output = ROOT / "Saved/IntArt03/rendered_practice" / time.strftime("%Y%m%dT%H%M%S")
+    output = ROOT / "Saved" / args.label / f"rendered_{args.runner}" / time.strftime("%Y%m%dT%H%M%S")
     output.mkdir(parents=True)
     processes, commands = {}, {}
     for role in ("server", "observer", "driver"):
-        command = weapons.launch_command(executable, project, output, role, args.port, "practice")
+        if args.runner == "weapons":
+            command = weapons.launch_command(executable, project, output, role, args.port, "practice")
+        else:
+            command = movement.launch_command(role, executable, project, args.port, output / f"{role}.log", [])
         if role != "server":
             command.remove("-nullrhi")
+            if args.audio:
+                command.remove("-nosound")
             command += ["-windowed", "-ResX=1000", "-ResY=700"]
         commands[role] = command
         stream = (output / f"{role}.stdout.log").open("w")
@@ -94,24 +112,38 @@ def main():
                 if time.monotonic() - began > 60:
                     raise RuntimeError("server did not listen")
                 time.sleep(0.2)
-    stop, frames, threads = threading.Event(), [], []
+    stop, frames, threads, recorders = threading.Event(), [], [], {}
     try:
+        if args.audio:
+            for role in ("observer", "driver"):
+                window_id(processes[role].pid, time.monotonic() + 90)  # the client is a GUI app once it has a window
+                recorders[role] = subprocess.Popen(["swift", str(RECORDER), str(processes[role].pid), str(args.seconds),
+                                                    str(output / f"{role}_audio.m4a")], stdout=subprocess.PIPE,
+                                                   stderr=subprocess.STDOUT, text=True)
         for role in ("observer", "driver"):
             thread = threading.Thread(target=grab, args=(role, processes[role].pid, output / "frames", stop, frames), daemon=True)
             thread.start()
             threads.append(thread)
         end = time.monotonic() + args.seconds
-        while time.monotonic() < end and not all((output / f"{r}.json").exists() for r in ("server", "observer", "driver")):
+        while time.monotonic() < end and not (args.runner == "weapons" and all(
+                (output / f"{r}.json").exists() for r in ("server", "observer", "driver"))):
             time.sleep(0.5)
     finally:
         stop.set()
         for thread in threads:
             thread.join(timeout=5)
+        audio = {}
+        for role, recorder in recorders.items():
+            try:
+                audio[role] = recorder.communicate(timeout=args.seconds + 60)[0].splitlines()
+            except subprocess.TimeoutExpired:
+                recorder.kill()
+                audio[role] = ["TIMEOUT"]
         weapons.stop_processes(list(processes.values()))
     reports = {r: json.loads((output / f"{r}.json").read_text()) if (output / f"{r}.json").exists() else None
                for r in ("server", "observer", "driver")}
-    summary = {"purpose": "INT-ART-03 rendered evidence capture only; pass/fail is the null-RHI practice run",
-               "commands": commands, "frames": frames,
+    summary = {"purpose": "Rendered evidence capture only; pass/fail is the official null-RHI runner",
+               "runner": args.runner, "commands": commands, "frames": frames, "audio_recorders": audio if args.audio else None,
                "smoke_reports_present": {r: v is not None for r, v in reports.items()}}
     (output / "capture.json").write_text(json.dumps(summary, indent=1) + "\n")
     print(f"VALSTRIKE_KNIFE_CAPTURE: {output} frames={len(frames)}")
