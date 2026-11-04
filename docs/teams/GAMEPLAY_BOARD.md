@@ -1,6 +1,6 @@
 # Gameplay team board
 
-Owner: Claude gameplay/engineering lead (delegated by the coordinator in [TEAM_BOARD.md](../TEAM_BOARD.md)). This board is the only place gameplay tasks, worktrees, path claims and the engineering engine-slot job are assigned. The coordinator keeps [TEAM_BOARD.md](../TEAM_BOARD.md), central docs and art. Dates are Europe/Berlin.
+Owner: Claude gameplay/engineering lead (delegated by the coordinator in [TEAM_BOARD.md](../TEAM_BOARD.md)). **Since 2026-11-04 the sole producer is Direktor (2) (Codex thread `01a1a67c-…`). New gameplay batches are queued through the producer, with at most three active contributors.** This board is the only place gameplay tasks, worktrees, path claims and the engineering engine-slot job are assigned. The coordinator keeps [TEAM_BOARD.md](../TEAM_BOARD.md), central docs and art. Dates are Europe/Berlin.
 
 ## Team (2026-11-04)
 

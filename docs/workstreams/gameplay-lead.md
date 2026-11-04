@@ -65,3 +65,32 @@ At the user's request to continue building game logic while INT-01 runs, two dis
 - INT-04 ([PR #61](https://github.com/vaskodagamo/ValStrike/pull/61)): main `ee25083`: build, settings 78/78 ×2, UI 4/4, session 72/72. D1 is closed for Editor on this Mac.
 - The user merged #58, #59 and #60. INT-05 ([PR #64](https://github.com/vaskodagamo/ValStrike/pull/64)) verified the same source as candidate `40d10a3`: everything passes, and no defect is attributed to GPT-10/11. Main `b8183db` has the same source.
 - Watch item: unscripted fire in rendered runners (INT-03, INT-05). Human playtest still needed: HUD feedback, spectate, audio and volume, and the crosshair gap while firing or moving.
+
+## 2026-11-04 — INT-06 record and handoff to the producer
+
+The user appointed Direktor (2) (Codex thread `01a1a67c-4861-7e62-a15e-505444092624`) as sole producer. The gameplay lead acknowledges this. From now on, new gameplay batches are queued through the producer. The lead keeps this board and these handoffs current, but does not write the master board or the central work log. The user merges.
+
+**INT-06 exact candidate.** Disposable `claude/integration-06` `a935f0c` = `origin/main` `09347c2` + `origin/claude/gpt-15-movement-feel` `085f09a`, `--no-ff`, no conflicts. Report: [PR #77](https://github.com/vaskodagamo/ValStrike/pull/77).
+
+| # | Suite | Result |
+| --- | --- | --- |
+| attempt 1 (`1b01540`, GPT-15 `c52385e`) | Editor build | FAIL: INT-06-D1, `-Wshadow` in `VSMovementRules.h:103` (GPT-15); fixed in `085f09a` |
+| 0 | Editor build | PASS, 0 warnings |
+| 1 | movement lan | PASS 69/69 (rifle 387, pistol 432 cm/s; jump about 138 cm; crouch-jump about 161 cm) |
+| 2 | movement `--net-profile typical` | PASS 69/69, valid (PktLag 40/10/1 in all three processes). Corrections: server 38, driver 12, observer 2; 28 are setup teleports; D3 below |
+| 3 | match | PASS 43/43; the 3 GPT-13 spectate checks were `not_reached` (driver and observer are on opposite teams) |
+| 4 | damage | PASS 46/46; GPT-14 `VSFEED` entries logged, cleared on round reset |
+| 5 | combat | PASS 55/55 |
+| 6 | weapons practice | PASS 74/74 |
+| 7 | session `--rendered` | run 1 FAIL 65/72 (INT-06-D2, not unscripted fire); rerun 72/72 for information only. D2 stays open |
+
+Open from INT-06:
+- **D2**: an unreachable connect can close without a failure broadcast, leaving the menu stuck "Connecting…". It predates recent work. GPF-02 has it (new session, `gpf-02-session-connect-failure`).
+- **D3**: 3 steady-state corrections of 7.2 cm at 387 cm/s under `typical`. QA's attribution run (movement `typical` on main without #74) holds the engine slot now.
+- **Spectate not reached**: GPF-03 (GPT-13 session, `claude/gpf-03-spectate-scenario`).
+
+User merges since: #69, #70, #71 and #74. Verified: Editor, one Mac, loopback, plus the `typical` emulation. Kill feed on screen, spectate and movement feel still need a human playtest.
+
+**Engine slot:** **not yet released.** The INT QA session holds it for the single D3 attribution run (`test_movement.py --net-profile typical`). After that run the slot is released and goes to the producer's queued INT-ART-01 (Meshy playtest integration). The slot then waits for GPF-02 and GPF-03 to be ready; their checks follow through the producer queue.
+
+**Active contributors after this batch:** QA (D3 run, then INT-ART-01 per producer), GPF-02, GPF-03. That is three; no new batch until the producer dispatches.
