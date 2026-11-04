@@ -1,0 +1,2605 @@
+{
+ "VS_Floor": {
+  "class": "StaticMeshActor",
+  "location": [
+   0.0,
+   0.0,
+   -50.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   52.0,
+   42.0,
+   1.0
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_BoundaryWest": {
+  "class": "StaticMeshActor",
+  "location": [
+   -2600.0,
+   0.0,
+   250.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   43.0,
+   5.0
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_BoundaryEast": {
+  "class": "StaticMeshActor",
+  "location": [
+   2600.0,
+   0.0,
+   250.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   43.0,
+   5.0
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_BoundaryNorth": {
+  "class": "StaticMeshActor",
+  "location": [
+   0.0,
+   2100.0,
+   250.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   52.0,
+   1.0,
+   5.0
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_BoundarySouth": {
+  "class": "StaticMeshActor",
+  "location": [
+   0.0,
+   -2100.0,
+   250.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   52.0,
+   1.0,
+   5.0
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_RelayHouse": {
+  "class": "StaticMeshActor",
+  "location": [
+   -500.0,
+   0.0,
+   210.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   15.6,
+   13.6,
+   4.2
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_AttackerScreen": {
+  "class": "StaticMeshActor",
+  "location": [
+   -1800.0,
+   0.0,
+   180.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   14.0,
+   3.6
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_DefenderScreen": {
+  "class": "StaticMeshActor",
+  "location": [
+   1800.0,
+   0.0,
+   180.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   12.0,
+   3.6
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_NorthService": {
+  "class": "StaticMeshActor",
+  "location": [
+   600.0,
+   1375.0,
+   190.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   19.6,
+   2.1,
+   3.8
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_SouthTransformer": {
+  "class": "StaticMeshActor",
+  "location": [
+   -500.0,
+   -1200.0,
+   130.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   4.0,
+   4.0,
+   2.6
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_NorthHalfCover": {
+  "class": "StaticMeshActor",
+  "location": [
+   -700.0,
+   1070.0,
+   0.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_SouthHalfCover": {
+  "class": "StaticMeshActor",
+  "location": [
+   150.0,
+   -1600.0,
+   0.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_SiteWestCover": {
+  "class": "StaticMeshActor",
+  "location": [
+   600.0,
+   320.0,
+   0.0
+  ],
+  "rotation": [
+   -0.0,
+   0.0,
+   90.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_SiteEastCrate": {
+  "class": "StaticMeshActor",
+  "location": [
+   1460.0,
+   -300.0,
+   0.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": true
+   }
+  ]
+ },
+ "VS_SiteEastCrateTop": {
+  "class": "StaticMeshActor",
+  "location": [
+   1460.0,
+   -300.0,
+   100.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": true
+   }
+  ]
+ },
+ "VS_NorthCrate": {
+  "class": "StaticMeshActor",
+  "location": [
+   1150.0,
+   950.0,
+   0.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": true
+   }
+  ]
+ },
+ "VS_SouthCrate": {
+  "class": "StaticMeshActor",
+  "location": [
+   -1450.0,
+   -1700.0,
+   0.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_RelayPanel_-1_0": {
+  "class": "StaticMeshActor",
+  "location": [
+   -900.0,
+   -700.0,
+   0.0
+  ],
+  "rotation": [
+   -0.0,
+   0.0,
+   180.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.4
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_RelayPanel_-1_1": {
+  "class": "StaticMeshActor",
+  "location": [
+   -500.0,
+   -700.0,
+   0.0
+  ],
+  "rotation": [
+   -0.0,
+   0.0,
+   180.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.4
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_RelayPanel_-1_2": {
+  "class": "StaticMeshActor",
+  "location": [
+   -100.0,
+   -700.0,
+   0.0
+  ],
+  "rotation": [
+   -0.0,
+   0.0,
+   180.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.4
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_RelayPanel_-1_3": {
+  "class": "StaticMeshActor",
+  "location": [
+   300.0,
+   -700.0,
+   0.0
+  ],
+  "rotation": [
+   -0.0,
+   0.0,
+   180.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.4
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_RelayEnd_-1_0": {
+  "class": "StaticMeshActor",
+  "location": [
+   -1300.0,
+   -675.0,
+   0.0
+  ],
+  "rotation": [
+   -0.0,
+   0.0,
+   90.0
+  ],
+  "scale": [
+   1.125,
+   1.0,
+   1.4
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_RelayEnd_-1_1": {
+  "class": "StaticMeshActor",
+  "location": [
+   -1300.0,
+   -225.0,
+   0.0
+  ],
+  "rotation": [
+   -0.0,
+   0.0,
+   90.0
+  ],
+  "scale": [
+   1.125,
+   1.0,
+   1.4
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_RelayEnd_-1_2": {
+  "class": "StaticMeshActor",
+  "location": [
+   -1300.0,
+   225.0,
+   0.0
+  ],
+  "rotation": [
+   -0.0,
+   0.0,
+   90.0
+  ],
+  "scale": [
+   1.125,
+   1.0,
+   1.4
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_ServicePanel_-1_0": {
+  "class": "StaticMeshActor",
+  "location": [
+   0.0,
+   1250.0,
+   0.0
+  ],
+  "rotation": [
+   -0.0,
+   0.0,
+   180.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.267
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_ServicePanel_-1_1": {
+  "class": "StaticMeshActor",
+  "location": [
+   400.0,
+   1250.0,
+   0.0
+  ],
+  "rotation": [
+   -0.0,
+   0.0,
+   180.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.267
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_ServicePanel_-1_2": {
+  "class": "StaticMeshActor",
+  "location": [
+   800.0,
+   1250.0,
+   0.0
+  ],
+  "rotation": [
+   -0.0,
+   0.0,
+   180.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.267
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_ServicePanel_-1_3": {
+  "class": "StaticMeshActor",
+  "location": [
+   1200.0,
+   1250.0,
+   0.0
+  ],
+  "rotation": [
+   -0.0,
+   0.0,
+   180.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.267
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_ServicePanel_-1_4": {
+  "class": "StaticMeshActor",
+  "location": [
+   1600.0,
+   1250.0,
+   0.0
+  ],
+  "rotation": [
+   -0.0,
+   0.0,
+   180.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.267
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_RelayPanel_1_0": {
+  "class": "StaticMeshActor",
+  "location": [
+   -1300.0,
+   700.0,
+   0.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.4
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_RelayPanel_1_1": {
+  "class": "StaticMeshActor",
+  "location": [
+   -900.0,
+   700.0,
+   0.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.4
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_RelayPanel_1_2": {
+  "class": "StaticMeshActor",
+  "location": [
+   -500.0,
+   700.0,
+   0.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.4
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_RelayPanel_1_3": {
+  "class": "StaticMeshActor",
+  "location": [
+   -100.0,
+   700.0,
+   0.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.4
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_RelayEnd_1_0": {
+  "class": "StaticMeshActor",
+  "location": [
+   300.0,
+   -225.0,
+   0.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   -90.0
+  ],
+  "scale": [
+   1.125,
+   1.0,
+   1.4
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_RelayEnd_1_1": {
+  "class": "StaticMeshActor",
+  "location": [
+   300.0,
+   225.0,
+   0.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   -90.0
+  ],
+  "scale": [
+   1.125,
+   1.0,
+   1.4
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_RelayEnd_1_2": {
+  "class": "StaticMeshActor",
+  "location": [
+   300.0,
+   675.0,
+   0.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   -90.0
+  ],
+  "scale": [
+   1.125,
+   1.0,
+   1.4
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_ServicePanel_1_0": {
+  "class": "StaticMeshActor",
+  "location": [
+   -400.0,
+   1500.0,
+   0.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.267
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_ServicePanel_1_1": {
+  "class": "StaticMeshActor",
+  "location": [
+   -0.0,
+   1500.0,
+   0.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.267
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_ServicePanel_1_2": {
+  "class": "StaticMeshActor",
+  "location": [
+   400.0,
+   1500.0,
+   0.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.267
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_ServicePanel_1_3": {
+  "class": "StaticMeshActor",
+  "location": [
+   800.0,
+   1500.0,
+   0.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.267
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_ServicePanel_1_4": {
+  "class": "StaticMeshActor",
+  "location": [
+   1200.0,
+   1500.0,
+   0.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.267
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_RelayPillar_-1280_-680": {
+  "class": "StaticMeshActor",
+  "location": [
+   -1300.0,
+   -660.0,
+   0.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.4
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_RelayPillar_-1280_680": {
+  "class": "StaticMeshActor",
+  "location": [
+   -1300.0,
+   700.0,
+   0.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.4
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_RelayPillar_280_-680": {
+  "class": "StaticMeshActor",
+  "location": [
+   260.0,
+   -660.0,
+   0.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.4
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_RelayPillar_280_680": {
+  "class": "StaticMeshActor",
+  "location": [
+   260.0,
+   700.0,
+   0.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.4
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "BlockAll",
+    "enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_RelayRoofBand": {
+  "class": "StaticMeshActor",
+  "location": [
+   -500.0,
+   0.0,
+   426.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   16.0,
+   14.0,
+   0.12
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_RelayRoofPlant": {
+  "class": "StaticMeshActor",
+  "location": [
+   -550.0,
+   0.0,
+   475.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   6.5,
+   6.5,
+   0.85
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_ServiceRoofBand": {
+  "class": "StaticMeshActor",
+  "location": [
+   600.0,
+   1375.0,
+   387.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   20.0,
+   2.5,
+   0.14
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_RelayVent": {
+  "class": "StaticMeshActor",
+  "location": [
+   310.0,
+   280.0,
+   215.0
+  ],
+  "rotation": [
+   -0.0,
+   0.0,
+   90.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_BoundaryCapX-2600": {
+  "class": "StaticMeshActor",
+  "location": [
+   -2600.0,
+   0.0,
+   505.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.1,
+   43.0,
+   0.1
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_BoundaryCapX2600": {
+  "class": "StaticMeshActor",
+  "location": [
+   2600.0,
+   0.0,
+   505.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.1,
+   43.0,
+   0.1
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_BoundaryCapY-2100": {
+  "class": "StaticMeshActor",
+  "location": [
+   0.0,
+   -2100.0,
+   505.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   52.0,
+   1.1,
+   0.1
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_BoundaryCapY2100": {
+  "class": "StaticMeshActor",
+  "location": [
+   0.0,
+   2100.0,
+   505.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   52.0,
+   1.1,
+   0.1
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_GalleryPaving": {
+  "class": "StaticMeshActor",
+  "location": [
+   0.0,
+   950.0,
+   0.35
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   30.0,
+   4.5,
+   0.005
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_SouthPaving": {
+  "class": "StaticMeshActor",
+  "location": [
+   -600.0,
+   -1650.0,
+   0.35
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   29.0,
+   4.0,
+   0.005
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_SitePad": {
+  "class": "StaticMeshActor",
+  "location": [
+   1050.0,
+   0.0,
+   0.5
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   8.0,
+   10.0,
+   0.006
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_SiteLineX650": {
+  "class": "StaticMeshActor",
+  "location": [
+   650.0,
+   0.0,
+   1.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   0.08,
+   10.0,
+   0.01
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_SiteLineX1450": {
+  "class": "StaticMeshActor",
+  "location": [
+   1450.0,
+   0.0,
+   1.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   0.08,
+   10.0,
+   0.01
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_SiteLineY-500": {
+  "class": "StaticMeshActor",
+  "location": [
+   1050.0,
+   -500.0,
+   1.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   8.0,
+   0.08,
+   0.01
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_SiteLineY500": {
+  "class": "StaticMeshActor",
+  "location": [
+   1050.0,
+   500.0,
+   1.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   8.0,
+   0.08,
+   0.01
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_ATK_1": {
+  "class": "PlayerStart",
+  "location": [
+   -2250.0,
+   -250.0,
+   100.0
+  ],
+  "rotation": [
+   -0.0,
+   0.0,
+   90.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tags": [
+   "VS_AttackerSpawn"
+  ],
+  "primitives": [
+   {
+    "name": "Arrow",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": true
+   },
+   {
+    "name": "CollisionCapsule",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": true
+   },
+   {
+    "name": "Sprite",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": true
+   },
+   {
+    "name": "Sprite2",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": false,
+    "hidden_in_game": true
+   }
+  ]
+ },
+ "VS_ATK_1Pad": {
+  "class": "StaticMeshActor",
+  "location": [
+   -2250.0,
+   -250.0,
+   0.5
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.4,
+   1.4,
+   0.005
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_ATK_2": {
+  "class": "PlayerStart",
+  "location": [
+   -2250.0,
+   250.0,
+   100.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   -90.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tags": [
+   "VS_AttackerSpawn"
+  ],
+  "primitives": [
+   {
+    "name": "Arrow",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": true
+   },
+   {
+    "name": "CollisionCapsule",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": true
+   },
+   {
+    "name": "Sprite",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": true
+   },
+   {
+    "name": "Sprite2",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": false,
+    "hidden_in_game": true
+   }
+  ]
+ },
+ "VS_ATK_2Pad": {
+  "class": "StaticMeshActor",
+  "location": [
+   -2250.0,
+   250.0,
+   0.5
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.4,
+   1.4,
+   0.005
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_DEF_1": {
+  "class": "PlayerStart",
+  "location": [
+   2200.0,
+   -250.0,
+   100.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   -90.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tags": [
+   "VS_DefenderSpawn"
+  ],
+  "primitives": [
+   {
+    "name": "Arrow",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": true
+   },
+   {
+    "name": "CollisionCapsule",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": true
+   },
+   {
+    "name": "Sprite",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": true
+   },
+   {
+    "name": "Sprite2",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": false,
+    "hidden_in_game": true
+   }
+  ]
+ },
+ "VS_DEF_1Pad": {
+  "class": "StaticMeshActor",
+  "location": [
+   2200.0,
+   -250.0,
+   0.5
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.4,
+   1.4,
+   0.005
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_DEF_2": {
+  "class": "PlayerStart",
+  "location": [
+   2200.0,
+   250.0,
+   100.0
+  ],
+  "rotation": [
+   -0.0,
+   0.0,
+   90.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tags": [
+   "VS_DefenderSpawn"
+  ],
+  "primitives": [
+   {
+    "name": "Arrow",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": true
+   },
+   {
+    "name": "CollisionCapsule",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": true
+   },
+   {
+    "name": "Sprite",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": true
+   },
+   {
+    "name": "Sprite2",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": false,
+    "hidden_in_game": true
+   }
+  ]
+ },
+ "VS_DEF_2Pad": {
+  "class": "StaticMeshActor",
+  "location": [
+   2200.0,
+   250.0,
+   0.5
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.4,
+   1.4,
+   0.005
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_Site_A": {
+  "class": "TriggerBox",
+  "location": [
+   1050.0,
+   0.0,
+   100.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tags": [
+   "VS_Site_A"
+  ],
+  "primitives": [
+   {
+    "name": "CollisionComp",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   },
+   {
+    "name": "Sprite",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_DeviceRecovery": {
+  "class": "TargetPoint",
+  "location": [
+   1050.0,
+   0.0,
+   20.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tags": [
+   "VS_DeviceRecovery"
+  ],
+  "primitives": [
+   {
+    "name": "Arrow",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": true
+   },
+   {
+    "name": "Sprite",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": true
+   }
+  ]
+ },
+ "VS_SiteSign": {
+  "class": "TextRenderActor",
+  "location": [
+   316.0,
+   -230.0,
+   210.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "NewTextRenderComponent",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   },
+   {
+    "name": "Sprite",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": true
+   }
+  ]
+ },
+ "VS_RelaySign": {
+  "class": "TextRenderActor",
+  "location": [
+   -500.0,
+   -711.0,
+   310.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   -90.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "NewTextRenderComponent",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   },
+   {
+    "name": "Sprite",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": true
+   }
+  ]
+ },
+ "VS_ServiceSign": {
+  "class": "TextRenderActor",
+  "location": [
+   600.0,
+   1240.0,
+   275.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   -90.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "NewTextRenderComponent",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   },
+   {
+    "name": "Sprite",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": true
+   }
+  ]
+ },
+ "VS_Sun": {
+  "class": "DirectionalLight",
+  "location": [
+   0.0,
+   0.0,
+   1500.0
+  ],
+  "rotation": [
+   -0.0,
+   -48.0,
+   -35.0
+  ],
+  "scale": [
+   2.5,
+   2.5,
+   2.5
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "ArrowComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": true
+   },
+   {
+    "name": "BillboardComponent_0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": true
+   }
+  ],
+  "light": {
+   "intensity": 3.0,
+   "cast_shadows": true,
+   "atmosphere_sun_light": true,
+   "forward_shading_priority": 0,
+   "mobility": "<ComponentMobility.MOVABLE: 2>",
+   "light_color_rgba": [
+    255,
+    255,
+    255,
+    255
+   ],
+   "rotation": [
+    -0.0,
+    -48.0,
+    -35.0
+   ]
+  }
+ },
+ "VS_StylizedFill": {
+  "class": "DirectionalLight",
+  "location": [
+   0.0,
+   0.0,
+   1400.0
+  ],
+  "rotation": [
+   -0.0,
+   -45.0,
+   145.0
+  ],
+  "scale": [
+   2.5,
+   2.5,
+   2.5
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "ArrowComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": true
+   },
+   {
+    "name": "BillboardComponent_0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": true
+   }
+  ],
+  "light": {
+   "intensity": 1.5,
+   "cast_shadows": false,
+   "atmosphere_sun_light": true,
+   "forward_shading_priority": 0,
+   "mobility": "<ComponentMobility.MOVABLE: 2>",
+   "light_color_rgba": [
+    255,
+    255,
+    255,
+    255
+   ],
+   "rotation": [
+    -0.0,
+    -45.0,
+    145.0
+   ]
+  }
+ },
+ "VS_Atmosphere": {
+  "class": "SkyAtmosphere",
+  "location": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "ArrowComponent",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": true
+   },
+   {
+    "name": "Sprite",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": true
+   }
+  ]
+ },
+ "VS_Sky": {
+  "class": "SkyLight",
+  "location": [
+   0.0,
+   0.0,
+   1200.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "BillboardComponent_0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": true
+   },
+   {
+    "name": "Sprite",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": true
+   }
+  ]
+ },
+ "VS_MSH_W03_Gallery_00": {
+  "class": "StaticMeshActor",
+  "location": [
+   -100.0,
+   950.0,
+   0.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_MSH_W03_Gallery_10": {
+  "class": "StaticMeshActor",
+  "location": [
+   100.0,
+   950.0,
+   0.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_MSH_W03_Gallery_01": {
+  "class": "StaticMeshActor",
+  "location": [
+   -100.0,
+   1150.0,
+   0.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_MSH_W03_Gallery_11": {
+  "class": "StaticMeshActor",
+  "location": [
+   100.0,
+   1150.0,
+   0.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_MSH_W04_ServiceRoof": {
+  "class": "StaticMeshActor",
+  "location": [
+   -200.0,
+   1375.0,
+   394.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_MSH_W07_ServiceInfill": {
+  "class": "StaticMeshActor",
+  "location": [
+   -100.0,
+   1230.5,
+   0.0
+  ],
+  "rotation": [
+   -0.0,
+   0.0,
+   180.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_MSH_W10_North": {
+  "class": "StaticMeshActor",
+  "location": [
+   1150.0,
+   950.0,
+   0.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_MSH_W10_SiteBase": {
+  "class": "StaticMeshActor",
+  "location": [
+   1460.0,
+   -300.0,
+   0.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ },
+ "VS_MSH_W10_SiteTop": {
+  "class": "StaticMeshActor",
+  "location": [
+   1460.0,
+   -300.0,
+   100.0
+  ],
+  "rotation": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "scale": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "tags": [],
+  "primitives": [
+   {
+    "name": "StaticMeshComponent0",
+    "profile": "NoCollision",
+    "enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+    "visible": true,
+    "hidden_in_game": false
+   }
+  ]
+ }
+}
