@@ -52,3 +52,10 @@ At the user's request to continue building game logic while INT-01 runs, two dis
 - The QA bisect, with no source edits, ran the rendered settings runner on two revisions. Base `90849f5` fails `arrow_selects_windowed mode=1` (`Saved/Tests/Settings/20261104T093620Z_3cdb74`), as does `b5b8523` (GPT-06, `…093857Z_a89177`). So D1 predates GPT-06: it lies in the original settings window-mode path (PR #19), whose rendered runner had not been run on this machine's 2560×1440 desktop.
 - PR #48 (GPF-01) fixes a real overflow that GPT-06 caused and adds a fit check. It does not claim to fix the click. GPF-01 stays open with GPT-06's session, now pointed at the click after the Windowed Fullscreen switch, and waits for INT-03's run of #48.
 - The user merged #42, #43, #44 and #46. INT-03 verifies main `887d349` plus #45 and #48 ([brief](../tasks/gameplay/INT-03-batch.md)).
+
+## 2026-11-04 — D1 root cause, all gameplay merged, INT-04, GPT-10/11
+
+- The GPF-01-diag job used 3 of its 3 cycles. Root cause of D1: Slate ignores capture requests while the app is not the active macOS app, so the harness's synthesized press never completes a click. This only shows on the two-monitor Mac, and players are not affected. The fix ([PR #52](https://github.com/vaskodagamo/ValStrike/pull/52), merged by the user) scopes `SetHandleDeviceInputWhenApplicationNotActive` to `Click()`. Its final code has not been compiled.
+- The user merged #45, #48, #49, #50 and #52. Main `82d7a4c` contains every gameplay PR. INT-04 builds it and reruns the settings path only ([brief](../tasks/gameplay/INT-04-main-settings.md)).
+- New workers, with disjoint paths and no engine use: GPT-10, the spread-driven reticle ([brief](../tasks/gameplay/GPT-10-spread-crosshair.md)); GPT-11, GUN-04 fire-request rules ([brief](../tasks/gameplay/GPT-11-fire-request-rules.md)).
+- Still for the coordinator: put the engine-free tests in CI (Feedback, Weapons, Audio, Match spectate, Presentation muzzle flash); the join-key log decision; and a human playtest for HUD feedback, spectate, audio and volume.

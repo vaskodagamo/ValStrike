@@ -1,0 +1,25 @@
+# Task GPT-11: GUN-04 fire-request validation as a pure, tested rule set
+
+- Status: In progress
+- Backlog ID: GUN-04 ("Invalid/repeated requests rejected; rule tests pass"). This task covers the rule-test part only. The network measurement belongs to MOVE-03/INT.
+- Owner/session and provider: Claude session "GPT-11 fire request rules"
+- Lead: Claude gameplay lead (`team-gameplay`)
+- Branch and exact base SHA: `claude/gpt-11-fire-request-rules` from `origin/main` `82d7a4c`
+- Absolute worktree path: `/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/gpt-11-fire-request-rules`
+- Owns:
+  - `Source/ValStrike/Combat/VSWeaponComponent.h/.cpp`, only the `ServerRequestFire_Implementation` validation and the reload-request validation, if present
+  - a new pure header `Source/ValStrike/Combat/VSFireRequestRules.h`
+  - a new `Tests/Weapons/fire_request_rules_test.cpp`
+  - a new `docs/workstreams/fire-request-rules.md`
+- Read-only: `Combat/VSRecoilRules.h`, `Combat/VSWeaponLoadout*`, `Combat/VSRifleComponent.*`/`VSPistolComponent.*`, `Match/**`, `VSCharacter.*`, `Scripts/test_weapons.py` and `Tests/Weapons/test_weapons_runner.py` (stop and ask if an expectation must change).
+- Result:
+  - Move today's ordered checks into one pure function, `VSFireRequestRules::Evaluate(const Input&) -> Verdict`: owner, sequence (zero, duplicate, and a delta over 1024 including wrap-around; the ID is consumed even on later rejections), dead, holstered, equip, reload, empty, cadence with the arrival tolerance `min(0.02, interval*0.2)`, nonfinite, origin over 100 cm, direction not unit or more than 20° from the base aim, and phase. The component gathers inputs with engine types and maps each verdict to the **same** `Reject(FName)` reason strings.
+  - Behavior-preserving: same order, same thresholds, same reason names, same sequence-consumption rule. If you find a real defect (for example a NaN that slips past a check), report it to the lead before changing behavior.
+  - An engine-free test with one case per verdict, plus boundaries: cadence exactly at the tolerance, the origin at exactly 100 cm, direction at exactly the 0.9396926 dot product, and wrap-around `ShotId = 1` after `0xFFFFFFFF`.
+  - Stop when committed, the PR is open and the handoff is written.
+- Out of scope: hit registration or rewind, rate tuning, new rejection reasons, anti-cheat claims, CI workflow edits (propose to the lead).
+- Validation tier: V2 (server authority)
+- Contributor checks: the new test with clang and g++ `-Wall -Wextra -Werror -pedantic`, built the same way as `Tests/Weapons/recoil_rules_test.cpp`; the existing Weapons tests still pass; `git diff --check`. No Unreal build or runtime.
+- Integration-owned checks: Editor build, `Scripts/test_weapons.py --scenario practice` (74/74), `Scripts/test_combat.py` (55/55); the rejection counters must match the baseline.
+- Engine slot: none.
+- Publication: owner pushes the branch and opens a PR; the user merges.
