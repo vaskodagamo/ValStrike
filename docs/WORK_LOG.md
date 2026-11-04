@@ -474,6 +474,12 @@ The gameplay/integration idle slots were checked clean at their original heads b
 
 **Scope/budget:** Reuse inspection first, then at most one standard Meshy 7.1 textured/PBR 4K right-hand/bare-forearm draft if necessary. Official matching price checked; 30 credits reserved centrally from the 300/day pool, 270 available, no task submitted yet. Artist owns the pair, compatible rig and distinct frozen weapon poses, matched source/export comparisons and honest held states. Native integration remains separate. See [ART-22](tasks/art/ART-22-fparms03-universal.md) and [producer checkpoint](producer/STATUS.md) for dispatch state. V0 brief/diff checks only; no new test or build. INT-06 release was confirmed in the live engineering board and delivered to the existing native integrator, which began its assigned candidate/import cycle. GPF-04 stays queued; no native success is claimed. ART-19 published frozen source `afa582a` / handoff `45cf24d` in #90 and its clean stop was verified; final ART-22 checkout `f3e55da` was then handed to the same artist at High. Dispatch records are published in #91. No writes to the handed-over worktree follow dispatch.
 
+## 2026-11-04 — Reviewed R02 restoration and assigned pistol-pose source correction
+
+**Delivered evidence:** R02 #89 `f209b664` passed producer comparison of actual original/source/FBX images for surface preservation; fit/native/performance acceptance stays pending. ART-22's one authorized Meshy draft succeeded for 30 credits; producer bound/settled the manifest task ID, leaving 270 in the new daily pool. No extra generation or repeated art checks.
+
+**Native finding/next work:** Existing INT-ART-01 reports imported/reopened character and four props and continues actual server/client acceptance. Producer inspected its observer screenshot and confirmed the known floating remote pistol. Reserved [ART-23](tasks/art/ART-23-character-pistol-pose.md) for the idle former ART-15 owner: a new isolated source-only pistol pose and measured P01/P02 attachment handoff, zero credits, no native or gameplay overlap. ART-22, ART-23 and native integration are the three contributor slots; movement defect GPF-04 stays queued. This first scheduled producer cycle did no Unreal work or new tests; exact current state is in the producer checkpoint.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.

@@ -40,7 +40,10 @@
       "thread_id": "01a1a6c3-9f0b-76b3-aabd-ccfed653040f",
       "worktree": ".parallel-worktrees/art17-rifle02",
       "handoff": "docs/workstreams/art17-rifle02.md",
-      "prior_credit_cap": 30
+      "prior_credit_cap": 30,
+      "state": "idle; producer surface-preservation review passed, fit/native pending",
+      "frozen_head": "f209b66472c11ffc53a8ab8c1113693c8c2de25f",
+      "pr": 89
     },
     {
       "task": "ART-18",
@@ -60,7 +63,7 @@
       "branch": "codex/art22-fparms03",
       "brief": "docs/tasks/art/ART-22-fparms03-universal.md",
       "prepared_head": "f3e55da",
-      "state": "dispatched; ART-19 safely stopped first",
+      "state": "active; generation complete, local rig/contact work",
       "reservation": "ART-22-FPArms03-draft-1",
       "credit_cap": 30,
       "previous_assignments": [
@@ -76,7 +79,9 @@
           "handoff_commit": "45cf24daa411d94bf07dcfd44f4da879c8240a9e",
           "pr": 90
         }
-      ]
+      ],
+      "meshy_task_id": "01a1a702-abc1-76dc-97f3-b5ad96d100e1",
+      "actual_credits": 30
     },
     {
       "task": "ART-20",
@@ -87,12 +92,30 @@
       "prior_credit_cap": 30
     },
     {
-      "task": "ART-15",
+      "task": "ART-23",
       "title": "Art \u2014 Character playtest prep",
       "thread_id": "01a1a6b0-8aa8-7373-b8bb-bc5506f451d4",
-      "worktree": ".parallel-worktrees/art15-character-pilot",
-      "handoff": "docs/workstreams/art15-character-pilot.md",
-      "prior_credit_cap": 0
+      "worktree": ".parallel-worktrees/art23-character-pistol",
+      "handoff": "docs/workstreams/art23-character-pistol.md",
+      "prior_credit_cap": 0,
+      "branch": "codex/art23-character-pistol",
+      "brief": "docs/tasks/art/ART-23-character-pistol-pose.md",
+      "state": "dispatched at High; source-only pistol hold, zero credits",
+      "credit_cap": 0,
+      "previous_assignments": [
+        {
+          "task": "ART-15",
+          "title": "Art \u2014 Character playtest prep",
+          "thread_id": "01a1a6b0-8aa8-7373-b8bb-bc5506f451d4",
+          "worktree": ".parallel-worktrees/art15-character-pilot",
+          "handoff": "docs/workstreams/art15-character-pilot.md",
+          "prior_credit_cap": 0,
+          "state": "frozen; stopped",
+          "head": "02f6bf221bcb9b24415c11b7b554faadfacd2ca8",
+          "pr": 65
+        }
+      ],
+      "prepared_head": "fd7621c"
     },
     {
       "task": "ART-16",
