@@ -1,0 +1,10 @@
+# INT-ART-02 — Pistol/QA batch, then first Site01 facade section
+
+## 2026-11-04 (Europe/Berlin) — Assignment acknowledged; phase A verified and published
+
+- Owner: the existing INT-ART-01 Claude native/integration session, per [the brief](../tasks/integration/INT-ART-02-site01-followups.md) assigned by producer Direktor (2). Worktree `.parallel-worktrees/int-art-01-meshy-playtest` (was clean); #93 branch `claude/int-art-01-meshy-playtest` preserved at `2475185`. New branch **`claude/int-art-02-site01-followups`** from main `5407272`, which already contains GPF-02 #84, GPF-03 #86, GPF-04 #97 (exact `100245d7`) and ART-23 #95 (`887de0a` / `9232dad`); nothing else combined.
+- Phase A candidate **`61fc9721aaf93bbb6ab4ddb841c8982e53bdb1fb`**: ART-23 pistol hold imported/reopened; P01 offset measured on native `hand_r` (Y-negated basis, (38, 3, 137) cm identity as predicted); pose and P01 attachment activate together. One combined build, 0 warnings.
+- Checks actually run: movement lan 69/69; movement `typical` 69/69 with valid emulation and **0 in-motion corrections** (all 26 server corrections are setup teleports); rendered session 72/72 ×3; match 46/46 with spectate reached via the fourth teammate client; Site01 weapons match 29/29 with screenshots of the remote two-hand pistol. [Evidence](../assets/meshy-site01-followups/README.md).
+- For the gameplay owner: D3 shows no in-motion corrections in this one valid `typical` run on #97; closure is the owner's/lead's call. GPF-02/03 checks passed as above.
+- Limits: stationary pistol pose only (glides when moving); ART-23 close-up glove limits; existing crouch/directional/death fallbacks unchanged. Not run: two-Mac LAN, packaged, four players.
+- Phase B status: ART-25 W01/W08/W09 source `31b74bd` and readiness `3089486` (handoff `0c70b2f`) are frozen in the `art25-courtyard-structure` checkout, but **not published**: its handoff records that publishing the payload to the public repository awaits direct user authorization. Phase B native work can proceed locally from those frozen commits; no branch containing ART-25 files is pushed until that authorization exists.
