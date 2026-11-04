@@ -63,7 +63,7 @@
       "branch": "codex/art26-knife-first-person",
       "brief": "docs/tasks/art/ART-26-knife-first-person.md",
       "handoff": "docs/workstreams/art26-knife-first-person.md",
-      "state": "ART-26-C1 active: same owner/branch/draft #109, acknowledged pose correction of handle-to-palm and finger closure; no native work",
+      "state": "frozen/stopped; ART-26-C1 contact/framing producer-reviewed and accepted for source pilot; general deformation/runtime budget/native pending",
       "credit_cap": 0,
       "previous_assignments": [
         {
@@ -112,9 +112,9 @@
           "pr": 102
         }
       ],
-      "source_commit": "2b944b314f9c20d8b64ee9892b1048302701992c",
-      "frozen_head": "38b93724bc59b4d690b2784e57903b737caaabdd",
-      "pr": 109
+      "source_commit": "25fc75b65fe981f2a35af8144070d7f59171c68a",
+      "frozen_head": "5b8b6758d333e8aa65f47dab5e47bf36b865371c",
+      "pr": 115
     },
     {
       "task": "ART-20",
@@ -186,7 +186,7 @@
       "handoff": "docs/workstreams/art25-courtyard-structure.md",
       "prepared_head": "4f57d74",
       "credit_cap": 0,
-      "state": "idle; source frozen; public publication blocked by automatic approval review, user approval pending",
+      "state": "idle; direct user approval verified; frozen source published and #112 merged",
       "previous_assignments": [
         {
           "task": "ART-16",
@@ -201,7 +201,8 @@
       ],
       "source_commit": "31b74bdf33ed39cec92ebd762acca8aa2a39ae36",
       "readiness_commit": "30894868e55923f7f1f9810c8fcf16077407d7cc",
-      "frozen_head": "0c70b2f"
+      "frozen_head": "9b9d79efb75d9db23d2857d6ee444a1d9c42840a",
+      "pr": 112
     }
   ],
   "claude": {
@@ -233,17 +234,19 @@
       "main": "a1c2371d36598b0636efd9fb42d9f8bda9060981"
     },
     "active_gameplay": {
-      "task": "KNIFE-01 phase B",
+      "task": "KNIFE-01-M1",
       "owner": "existing GPT-04 via Team gameplay worktree",
       "worktree": ".parallel-worktrees/gpt-04-switch-prediction",
-      "branch": "claude/knife-01-phase-b",
-      "state": "frozen/stopped; lead reviewed phase B #108, all four CI checks green; Unreal/native verification pending",
+      "branch": "claude/knife-01-m1-fix",
+      "state": "KNIFE-01-M1 frozen/stopped; #114 exact two-file reversal inspected, restored reviewed 22df932 content; all four CI checks green, native pending",
       "brief": "docs/tasks/gameplay/KNIFE-01-gameplay.md",
       "phase_a_head": "1fa433ee13a44460516add7b8e2be030d6173966",
       "phase_a_pr": 105,
-      "head": "22df932b4185e51fea87236fe1ebb6e0e31349c6",
-      "pr": 108,
-      "implementation_commit": "d53eaa4"
+      "head": "adb7374806d1f95e381046104bdc20e0d4295778",
+      "pr": 114,
+      "implementation_commit": "d53eaa4",
+      "base": "caf7551",
+      "prior_phase_b_head": "fcf6a9cf65265cbcda80423b927b11d263c166ef"
     },
     "next_native_assignment": {
       "task": "INT-ART-04",
@@ -251,9 +254,10 @@
       "worktree": ".parallel-worktrees/int-art-01-meshy-playtest",
       "branch": "claude/int-art-04-weapon-replacement",
       "brief": "docs/tasks/integration/INT-ART-04-weapon-replacement.md",
-      "state": "prepared/reserved, NOT dispatched: verified Claude UI route blocked by locked Mac; user unlock requested once. Preserve existing native owner; no CLI replacement.",
-      "base": "890155bc6d7093a197fb93918682dcf0065bb517",
-      "scope": "R02/P02 native import and first/third-person replacement with measured grips, original PBR, parts/sockets and affected presentation checks; no map/held ART-25 payload"
+      "state": "dispatched through verified Claude UI; actual new claude/int-art-04-weapon-replacement branch observed after #116 publication; combine exact #114 repair before build",
+      "base": "current merged main, record exact native candidate in owner handoff",
+      "scope": "R02/P02 native import and first/third-person replacement with measured grips, original PBR, parts/sockets and affected presentation checks; no map/held ART-25 payload",
+      "repair_head": "adb7374806d1f95e381046104bdc20e0d4295778"
     },
     "previous_gameplay_checkpoint": {
       "task": "GPF-04",
@@ -271,29 +275,30 @@
       "branch": "claude/int-art-02-site01-followups",
       "worktree": ".parallel-worktrees/int-art-01-meshy-playtest",
       "brief": "docs/tasks/integration/INT-ART-02-site01-followups.md",
-      "state": "finished and stopped; phase A #103 user-merged; phase B locally verified/frozen, publication held for direct user approval of ART-25 payload",
+      "state": "phase B published #116 after verified direct ART-25 approval/#112 merge; tested older candidate unchanged, no QA rerun for publication",
       "phase_a": "ART-23 pistol plus combined GPF-02/03/04 acceptance",
       "phase_b": "first coherent Site01 courtyard/service facade and approach, gated on frozen reviewed ART-25 subset",
       "phase_a_head": "39eb01a4257304c5e90509d46568f00346d127c7",
       "phase_a_candidate": "61fc9721aaf93bbb6ab4ddb841c8982e53bdb1fb",
       "phase_b_branch": "claude/int-art-02b-site01-courtyard",
       "phase_b_candidate": "c7386b6c054ca2ad4bc58ee8aec29a6020a37d4e",
-      "phase_b_head": "7436d57185ae614f3c95058f51e563a570a35abf",
+      "phase_b_head": "d71a23cfc576337d1047f1804c7507adb1049654",
       "phase_b_evidence": "docs/assets/meshy-site01-followups/README.md in integration checkout (local only)",
-      "producer_visual_review": "Actual native before/after eye-level, joint, overhead and roof sheets reviewed; first facade section accepted for pilot. Tan backing in blind recess and surrounding undecorated facade remain visible; no player walk-up/close-wall capture."
+      "producer_visual_review": "Actual native before/after eye-level, joint, overhead and roof sheets reviewed; first facade section accepted for pilot. Tan backing in blind recess and surrounding undecorated facade remain visible; no player walk-up/close-wall capture.",
+      "phase_b_pr": 116
     }
   },
   "automation_id": "valstrike-studio-producer",
-  "next_integration_trigger": "When Mac is unlocked, verify existing native owner idle and deliver prepared INT-ART-04 R02/P02 brief via Claude UI; no duplicate writer/CLI. Review ART-26-C1 corrected contact/FOV export evidence when frozen. INT-ART-03 full knife follows accepted ART-26 + frozen ART-27/#110 and gameplay #108, after INT-ART-04 releases presentation/engine ownership. Existing ART-25 publication approval remains pending; no bypass or repeated question.",
+  "next_integration_trigger": "Read INT-ART-04 handoff or actionable native defect. On its source/engine freeze, admit existing same native owner to INT-ART-03 using exact accepted ART-26-C1 #115/5b8b675, ART-27 #110/bca668a and KNIFE-01-M1 #114/adb7374 (or verified equivalent merged main). No additional hand correction assignment unless actual native evidence requires it. #116 is the published locally verified facade; user merges.",
   "knife_feature": {
     "task": "KNIFE-01",
     "brief": "docs/tasks/KNIFE-01-full-feature.md",
     "authorized": "2026-11-04 direct user message in Direktor verified",
     "state": "full gameplay/art/native pipeline authorized; actual dispatch tracked separately",
-    "gameplay": "phase B frozen #108 at 22df932, engineering reviewed and CI green; not native/runtime verified",
-    "first_person": "ART-26-C1 correction admitted for actual contact/framing defects in draft #109; same artist/PR, zero credits",
+    "gameplay": "merged #108 at fcf6a9c had duplicate dev declaration/RPC; KNIFE-01-M1 #114/adb7374 removes only those duplicates and restores reviewed content, frozen for native candidate",
+    "first_person": "ART-26-C1 #115 source 25fc75b/head 5b8b675; producer accepted specific contact/framing corrections from actual exported contact/action views; general deformation/budget/native pending",
     "third_person": "ART-27 frozen #110 at bca668a; producer source review accepted for third-person pilot with inherited close-up limits",
-    "native": "INT-ART-03 queued for accepted corrected ART-26, exact frozen gameplay/art and INT-ART-04 source/engine release",
+    "native": "INT-ART-03 queued after INT-ART-04 source/engine freeze; exact accepted source ART-26-C1 #115, ART-27 #110 and corrected gameplay #114 available",
     "credit_cap": 0,
     "gameplay_owner": {
       "ui_session": "local_e7f5a62b-3f49-42e2-854a-1dcddd518154",
@@ -305,28 +310,28 @@
     }
   },
   "weapon_replacement_queue": {
-    "state": "INT-ART-04 prepared with exact paths; dispatch to existing native owner pending Mac unlock, not running",
+    "state": "INT-ART-04 dispatched and new owner branch observed; no other native writer; exact repair before combined build",
     "scope": "R02 #89 and P02 #81 in first/third person; not gated on completion of first-person hands, but actual grip/camera/native fit required",
     "owner": "existing sole native integrator after coherent current candidate; no new writer"
   },
   "last_material_checkpoint": {
-    "at": "2026-11-04T17:51+01:00",
-    "main": "890155bc6d7093a197fb93918682dcf0065bb517",
+    "at": "2026-11-04T18:25+01:00",
+    "main_observed": "caf755182d330e241d8725ab4d9a3139e8915803",
     "user_merged_prs": [
-      105,
-      106,
-      107
+      108,
+      109,
+      110,
+      111,
+      112
     ],
     "active_contributors": [
-      "ART-26-C1"
-    ],
-    "reserved_not_running": [
-      "INT-ART-04, existing native owner; Mac unlock required for UI dispatch"
+      "INT-ART-04 existing native owner"
     ],
     "reviewed_frozen": [
-      "KNIFE-01 phase B #108, engineering review/green CI; runtime pending",
-      "ART-27 #110, bounded third-person source accepted; native blending pending"
+      "KNIFE-01-M1 #114/adb7374, exact corrective source diff",
+      "ART-26-C1 #115/5b8b675, source contact/framing accepted"
     ],
+    "publication_authority": "Direct human ART-25 reply Approve ART-25 publication verified in registered artist chat; #112 merged, previous exact-payload hold cleared; native #116 published",
     "new_meshy_credits_this_cycle": 0
   }
 }
