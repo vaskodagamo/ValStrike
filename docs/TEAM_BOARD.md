@@ -1,5 +1,18 @@
 # Team board
 
+## First-person hands / knife kickoff and native-status check — 2026-11-04
+
+User requested a hands/gloves/knife check and kickoff if missing. Read-only evidence: old ART-05 is the rejected procedural FPArms01 prototype, stopped and never native-integrated; the newer glove pair is an image reference only. No native FPArms/knife exists in inspected main or the INT-ART-01 checkout. Coordinator owns this update on `codex/hands-knife-dispatch`, main baseline `b342ca9`, carrying the earlier PR #68 assignment records so active weapon ownership remains visible.
+
+| Task | Owner / fresh worktree | Exclusive writes / state |
+| --- | --- | --- |
+| [ART-19 FPArms02](tasks/art/ART-19-fparms02.md) | New Codex hands art chat, High; `.parallel-worktrees/art19-fparms02`, `codex/art19-fparms02` | `Art/Source/Characters/FPArms02/`, `docs/assets/fparms02/`, `docs/workstreams/art19-fparms02.md`; Meshy single-hand draft → paired cleanup/finger rig → source/pose handoff |
+| [ART-20 K01 knife](tasks/art/ART-20-knife01.md) | New Codex knife art chat, High; `.parallel-worktrees/art20-knife01`, `codex/art20-knife01` | `Art/Source/Weapons/Knife01/`, `docs/assets/knife01/`, `docs/workstreams/art20-knife01.md`; Meshy draft → local cleanup/grip fit → source handoff |
+
+User approved **60 additional credits**, allocated **30 to ART-19 and 30 to ART-20**, one textured Meshy 7.1 standard image-to-3D job each, no extra paid stage/retry/purchase. This is separate from ART-17/18's 60-credit approval. Use built-in imagegen references, official resumable Meshy jobs, local artist finishing and no humanoid auto-rig for isolated hands. No new native/map/code owner or engine slot is created. Knife combat/equip logic is not part of the art task; source and native/gameplay readiness remain distinct.
+
+**Character/world integration:** source PR #65 (character pilot), #63 (four props) and #64 (INT-05 verification/release) are merged. Inspected main `b342ca9` and the current `claude/int-art-01-meshy-playtest` checkout still contain no new Meshy/UrbanEntry native assets. Its last handoff is preflight-only and cites now-cleared source/slot blockers. The existing Claude owner retains its exact paths and can resume using [INT-ART-01 cleared-gate handoff](tasks/integration/INT-ART-01-RESUME.md); no competing integrator is started. The handoff grants bounded native transform reconciliation for its reported Y-axis concern while preserving source and world-space map contracts. Live gameplay GPT-12/13/14 work remains source-only; recheck slot reservations at execution. The coordinator cannot resume the external Claude chat through Codex chat tools; user receives a one-line resume prompt.
+
 ## R02 / P02 Meshy weapon replacement kickoff — 2026-11-04
 
 User reports the current gun is too big beside the character and explicitly requests new rifle/pistol chats, using **Meshy AI** for the new models. User approved **60 credits total**: exactly 30 per weapon, one textured image-to-3D task each, no paid retries/extra stages. Coordinator owns this dispatch on `codex/weapon-v2-dispatch`, based on merged main `b8183db` (PR #62). [Weapon V2 shared brief](tasks/art/WEAPON_V2_BRIEF.md) records reference direction, scale targets, exact proposed job options, official pricing and the approval.

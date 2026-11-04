@@ -448,6 +448,14 @@ The gameplay/integration idle slots were checked clean at their original heads b
 
 **Dispatch:** Created “Art — Meshy R02 rifle” (`01a1a6c3-9f0b-76b3-aabd-ccfed653040f`) and “Art — Meshy P02 pistol” (`01a1a6c3-ae6d-7bc3-b164-ee3e417314ec`) at explicit High reasoning, configured model unchanged. Both clean isolated worktrees start at `e0071ce`; each received the user-approved 30-credit cap and the required imagegen → Meshy → cleanup workflow. Read-only originals and existing integration ownership remain preserved.
 
+## 2026-11-04 — Hands/gloves and knife kickoff; native integration audit
+
+**Findings:** User asked whether hands were Meshy-made/integrated and whether character/world changes were in game. Old ART-05 handoff confirms a stopped, user-rejected procedural FPArms01 source prototype; no native hand/knife assets exist. Found and inspected the newer generated glove pair image in the idle tooling checkout, not a mesh. Preserved an unchanged local reference copy with prompt/SHA-256 under ignored `Artifacts/FPArms02Reference/`; original files remain untouched. This pair is design reference only; the hands artist must generate a single-hand Meshy input.
+
+**Native status:** Main `b342ca9` has merged source/handoff PR #65 for the character and #63 for four props, plus completed INT-05 release PR #64. No Meshy/UrbanEntry native assets were found in main or the existing Claude integration checkout. That owner's latest workstream remains preflight-only, waiting on old source/slot gates. Prepared `INT-ART-01-RESUME.md` with cleared-gate evidence and bounded native handedness/placement reconciliation. Existing owner/checkout remains untouched; no parallel integrator or Unreal run. The user gets the resume prompt for the external Claude chat.
+
+**Assignments/budget:** ART-19 FPArms02 owns a fresh hands/forearms source folder and must finish anatomical topology, paired handedness and finger rig locally after Meshy. ART-20 owns a fresh K01 knife source folder and grip-fit recipe; knife combat is not silently added. User explicitly approved **60 additional credits**, 30 per task for one textured standard Meshy image job, separate from rifle/pistol funds; no paid retries/extra stages. Both use High reasoning, isolated worktrees, exact owned paths and no contributor builds/new suites/native imports. Paid drafts, source/pose readiness and native/gameplay acceptance are separate states.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.
