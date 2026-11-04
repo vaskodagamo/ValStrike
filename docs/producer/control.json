@@ -51,21 +51,20 @@
       "thread_id": "01a1a6c3-ae6d-7bc3-b164-ee3e417314ec",
       "worktree": ".parallel-worktrees/art18-pistol02",
       "handoff": "docs/workstreams/art18-pistol02.md",
-      "prior_credit_cap": 30
+      "prior_credit_cap": 30,
+      "state": "idle; corrected source merged; native pending",
+      "pr": 81
     },
     {
-      "task": "ART-22",
+      "task": "ART-24",
       "title": "Art \u2014 Meshy first-person hands",
       "thread_id": "01a1a6cf-0f10-73d0-8c33-29cb863d7b33",
       "worktree": ".parallel-worktrees/art22-fparms03",
-      "handoff": "docs/workstreams/art22-fparms03.md",
-      "prior_credit_cap": 0,
-      "branch": "codex/art22-fparms03",
-      "brief": "docs/tasks/art/ART-22-fparms03-universal.md",
-      "prepared_head": "f3e55da",
-      "state": "active; generation complete, local rig/contact work",
-      "reservation": "ART-22-FPArms03-draft-1",
-      "credit_cap": 30,
+      "branch": "codex/art24-fparms03-pistol-contact",
+      "brief": "docs/tasks/art/ART-24-fparms03-pistol-contact.md",
+      "handoff": "docs/workstreams/art24-fparms03-pistol-contact.md",
+      "state": "active; High; owner acknowledged new branch and pose-only correction first",
+      "credit_cap": 0,
       "previous_assignments": [
         {
           "task": "ART-19",
@@ -78,10 +77,27 @@
           "source_commit": "afa582abb823897248b666c10fef77464d167fdc",
           "handoff_commit": "45cf24daa411d94bf07dcfd44f4da879c8240a9e",
           "pr": 90
+        },
+        {
+          "task": "ART-22",
+          "title": "Art \u2014 Meshy first-person hands",
+          "thread_id": "01a1a6cf-0f10-73d0-8c33-29cb863d7b33",
+          "worktree": ".parallel-worktrees/art22-fparms03",
+          "handoff": "docs/workstreams/art22-fparms03.md",
+          "prior_credit_cap": 0,
+          "branch": "codex/art22-fparms03",
+          "brief": "docs/tasks/art/ART-22-fparms03-universal.md",
+          "prepared_head": "f3e55da",
+          "state": "frozen; merged; preservation reviewed, pistol contact/deformation held",
+          "reservation": "ART-22-FPArms03-draft-1",
+          "credit_cap": 30,
+          "meshy_task_id": "01a1a702-abc1-76dc-97f3-b5ad96d100e1",
+          "actual_credits": 30,
+          "frozen_head": "b1795991bed5cf2abaaabe8fcef79bfa5f9e5a4a",
+          "pr": 92
         }
       ],
-      "meshy_task_id": "01a1a702-abc1-76dc-97f3-b5ad96d100e1",
-      "actual_credits": 30
+      "prepared_head": "9dcd04f"
     },
     {
       "task": "ART-20",
@@ -89,7 +105,9 @@
       "thread_id": "01a1a6cf-270a-7e70-a435-a966fd3a5822",
       "worktree": ".parallel-worktrees/art20-knife01",
       "handoff": "docs/workstreams/art20-knife01.md",
-      "prior_credit_cap": 30
+      "prior_credit_cap": 30,
+      "state": "idle; preserved source merged; hand-fit/native pending",
+      "pr": 85
     },
     {
       "task": "ART-23",
@@ -100,7 +118,7 @@
       "prior_credit_cap": 0,
       "branch": "codex/art23-character-pistol",
       "brief": "docs/tasks/art/ART-23-character-pistol-pose.md",
-      "state": "dispatched at High; source-only pistol hold, zero credits",
+      "state": "idle; merged; stationary third-person source reviewed, native pending",
       "credit_cap": 0,
       "previous_assignments": [
         {
@@ -115,7 +133,10 @@
           "pr": 65
         }
       ],
-      "prepared_head": "fd7621c"
+      "prepared_head": "fd7621c",
+      "frozen_head": "9232dad8eedf555ff56bbcbca4d47f6ed0a64765",
+      "source_commit": "887de0a05558169bb6f18717b579d13779449c43",
+      "pr": 95
     },
     {
       "task": "ART-16",
@@ -123,7 +144,9 @@
       "thread_id": "01a1a6b0-98fd-7f41-851e-1fd1c5fc2452",
       "worktree": ".parallel-worktrees/art16-props-pilot",
       "handoff": "docs/workstreams/art16-props-pilot.md",
-      "prior_credit_cap": 0
+      "prior_credit_cap": 0,
+      "state": "idle; frozen source merged and pilot native integrated in #93",
+      "pr": 63
     }
   ],
   "claude": {
@@ -146,7 +169,23 @@
         "ui_session": "local_072e5c73-a9f2-45e7-93e8-8db464b2e484",
         "purpose": "resume existing native character/four-prop integration after engine-slot release"
       }
-    ]
+    ],
+    "native_checkpoint": {
+      "task": "INT-ART-01",
+      "head": "247518542c7212e8391288ca316a5ea4e9dc031a",
+      "pr": 93,
+      "state": "merged; native writer stopped; local Editor server/two-client verification complete, cross-Mac pending",
+      "main": "a1c2371d36598b0636efd9fb42d9f8bda9060981"
+    },
+    "active_gameplay": {
+      "task": "GPF-04",
+      "owner": "existing GPT-15 via Team gameplay worktree",
+      "worktree": ".parallel-worktrees/gpt-15-movement-feel",
+      "branch": "claude/gpf-04-steady-corrections",
+      "state": "dispatched and acknowledged in live gameplay board; engine-free source work",
+      "brief": "docs/tasks/gameplay/GPF-04-steady-corrections.md"
+    }
   },
-  "automation_id": "valstrike-studio-producer"
+  "automation_id": "valstrike-studio-producer",
+  "next_integration_trigger": "GPF-04 frozen source and reviewed ART-23 #95: producer assigns one combined candidate, native pistol wiring and affected movement/session/match/presentation checks. No automatic contributor build; ART-24 first-person hands excluded until accepted."
 }
