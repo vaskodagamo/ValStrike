@@ -405,7 +405,8 @@
       2
     ],
     "support_hand": "Use authored pose. Rear handguard contact; do not force generic SupportHand=(31,0,2.4). Minor finger overlap and loose shoulder seat remain pilot-only.",
-    "pistol": "Not fitted/approved. Do not reuse rifle two-hand hold/socket as a pistol fit. Preserve first-person behavior; retain existing remote P01 only if native inspection passes, otherwise unarmed/reference-pose fallback with remote pistol omitted and limitation recorded. Never show R01 during P01 equip."
+    "pistol": "Not fitted/approved. Do not reuse rifle two-hand hold/socket as a pistol fit. Preserve first-person behavior; retain existing remote P01 only if native inspection passes, otherwise unarmed/reference-pose fallback with remote pistol omitted and limitation recorded. Never show R01 during P01 equip.",
+    "weapon_scale_review": "User finds current gun too large beside the character. Existing R01 is a temporary baseline only: full assembled envelope 86 x 9.04 x 32.2 cm at scale 1 beside a 170 cm character (length 50.6% of body height). Grip profile spans roughly -10 to 0.8 cm in X, 4.8 cm in Y, -13 to +3 cm in Z. Its bulky receiver/handguard and wide grip are not final visual approval. Do not rescale hands/character to compensate. ART-17/18 own separate replacement weapon source; native replacement requires a separate scheduled integration."
   },
   "camera_distance_findings": {
     "source_only": true,
@@ -479,6 +480,10 @@
     {
       "name": "production_topology",
       "reason": "Reuse ART-13 residual nonmanifold seam diagnostic and deformation debt; no structural repair/retopology approval."
+    },
+    {
+      "name": "R01_visual_proportions",
+      "reason": "User finds current gun too large beside the character. Existing R01 is a temporary baseline only: full assembled envelope 86 x 9.04 x 32.2 cm at scale 1 beside a 170 cm character (length 50.6% of body height). Grip profile spans roughly -10 to 0.8 cm in X, 4.8 cm in Y, -13 to +3 cm in Z. Its bulky receiver/handguard and wide grip are not final visual approval. Do not rescale hands/character to compensate. ART-17/18 own separate replacement weapon source; native replacement requires a separate scheduled integration."
     }
   ],
   "checks": {

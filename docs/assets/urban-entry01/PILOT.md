@@ -156,3 +156,16 @@ weapon switching/visibility, crouch/directional fallbacks, death/respawn and rem
 server/client presentation. The 170 cm visual versus existing capsule/hit zones,
 foot slide, team readability and missing pistol/crouch coverage are explicit QA
 items. User merges; source pilot approval alone does not make the game playable.
+
+## Weapon-scale steering — 2026-11-04
+
+The user finds the current gun too large beside the character. Keep this R01 fit
+as a **temporary integration baseline only**, not final weapon art approval. The
+existing assembled rifle is 86 × 9.04 × 32.2 cm at scale 1; its length is 50.6% of
+the 170 cm character height. The pistol-grip profile spans approximately 10.8 cm
+fore/aft, 4.8 cm across and 16 cm vertically; its broad receiver/handguard and grip
+look bulky beside these hands. Rear support-hand contact and the loose stock seat
+are additional fit limits documented above. Do not change character/hand scale to
+compensate. The coordinator assigned separate Rifle02/Pistol02 artists (ART-17/18)
+for slimmer replacement meshes and new socket recipes; their native replacement
+will be integrated separately. No replacement weapon work belongs to ART-15.
