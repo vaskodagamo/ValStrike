@@ -4,7 +4,7 @@
 
 ## Operating state
 
-- Same-chat heartbeat **`valstrike-studio-producer` is ACTIVE**, every day/every 30 minutes. Creation, view and saved automation configuration confirmed the interval and target thread `01a1a67c-4861-7e62-a15e-505444092624`. Keep this worktree, the Mac and app available. No scheduled invocation has been observed yet; the first coordination cycle below ran interactively.
+- Same-chat heartbeat **`valstrike-studio-producer` is ACTIVE**, every day/every 30 minutes. Creation, view and saved automation configuration confirmed the interval and target thread `01a1a67c-4861-7e62-a15e-505444092624`. Keep this worktree, the Mac and app available. First scheduled invocation observed 2026-11-04 at 15:48 Europe/Berlin; earlier cycles ran interactively.
 - Outgoing producer handoff: `35e7abb`, merged #72. Direktor has no independent dispatch/central-write authority. Its bounded ART-21 skill follow-up finished at `fbec588`, merged #80.
 - New Meshy pool: **300 credits per Berlin day**, atomic local ledger initialized once. At this checkpoint: 0 newly committed/spent, 300 available. Prior ART-17/18/19/20 caps remain separate (30 each); actual earlier usage belongs to their manifests. Do not reset the ignored ledger or give every worker the whole daily pool.
 - Capacity: grandfather the current art/gameplay/native assignments, then admit no new contributor work until fewer than three contributors are active. Unknown external activity counts as occupied. No new paid job or Unreal action was run by this producer setup.
@@ -22,6 +22,27 @@
 
 Four focused spending-guard tests passed: idempotency/settlement, concurrent cap enforcement, unresolved jobs across Berlin midnight, and missing/reset/overrun refusal. Command: `python3 -m unittest discover -s Tests -p 'test_producer_budget.py' -v`. No full suite, build, Meshy generation or game runtime test was run for TEAM-02. Review/diff/link checks cover the policy files.
 
-Publication: implementation `a57cbda`, [PR #88](https://github.com/vaskodagamo/ValStrike/pull/88), awaiting user merge.
+Publication: implementation `a57cbda`, [PR #88](https://github.com/vaskodagamo/ValStrike/pull/88), merged by the user.
 
 Next: inspect final R02/hands/knife handoffs and real comparisons as they arrive; reconcile the recorded QA slot release with INT-ART-01. Keep GPF-04 queued until contributor capacity and shared paths permit a bounded dispatch. Each native owner records the exact candidate and actual results; user retains merges and other-Mac playtest acceptance.
+
+## Universal-hands priority update — 2026-11-04
+
+Direct user request verified in Direktor. ART-22/FPArms03 is reserved for the same hands chat after its ART-19 frozen checkpoint, with a separate worktree and exact source paths. Checkpoint instruction delivered; full dispatch waits for safe completion. Reuse good glove geometry first; optional single 30-credit draft reserved as `ART-22-FPArms03-draft-1`, not yet submitted. Daily new pool now has 30 reserved / 270 available. No paid Meshy operation by producer.
+
+K01 #85 and P02 #81 are merged/frozen. GPF-02/03 implementations are ready and their engine checks queued; the live gameplay board records INT-06 release. R02 correction, current hands and native integration are the continuing contributors. ART-22 replaces hands work after checkpoint; keep GPF-04 queued until capacity/shared paths clear.
+
+ART-22 worktree prepared clean at `86549e74e5d2a83c4401a6ceb650e2c9c6d655cb` (main `159431d` plus brief). ART-19 checkpoint `afa582a` is committed and uploading; wait for publication/safe stop before dispatch. Producer follow-up branch: `codex/universal-hands-dispatch`; #88 is now merged.
+
+INT-ART-01 received the explicit INT-06 release notice in its existing Claude chat and began reconciling the candidate for native work. Its one engine-slot job is now next; GPF-04 remains queued to protect the shared character source. No native result is claimed.
+
+ART-22 dispatch completed: ART-19 owner became idle with clean stopped checkout, frozen source `afa582a`, handoff `45cf24d`, PR #90. New worktree finalized at `f3e55da` and the full ART-22 prompt delivered at explicit High reasoning to the same chat. Producer made no further artist-checkout edits after handover. Registry now identifies ART-22 as current and retains ART-19 history. Dispatch PR [#91](https://github.com/vaskodagamo/ValStrike/pull/91); actual generation/reuse decision is pending the artist, reservation remains unsubmitted.
+
+## Scheduled cycle — 2026-11-04, 15:48 Europe/Berlin
+
+- R02 correction #89 (`f209b664`) is published and owner idle. Producer inspected the matched untouched/source/actual-FBX images: receiver/rail surface quality and material response are retained; local grip fitting is intentional. Surface-preservation gate passes; character contact, optimization and native acceptance remain pending. No rerender or extra test.
+- ART-22 job `01a1a702-abc1-76dc-97f3-b5ad96d100e1` is SUCCEEDED with 30 actual credits in the worker manifest. Central reservation bound and settled: 30 spent / 270 available. Owner is actively authoring the compatible rig and all three frozen weapon studies; no additional paid allowance.
+- Read-only Claude UI confirmed native character/four props imported and saved/reopened, Site01 placement contracts checked, and visual server/two-client checks run. Owner corrected the observed bind-pose/import defects; Site01 match acceptance continues. No duplicate native dispatch. The actual observer pistol image shows an unfitted floating pistol, so source-only ART-23 is reserved for the idle former ART-15 owner, using a new worktree and zero credits. Existing crouch/gait limits stay open.
+- Existing GPF-02/03 are merged; their new acceptance remains queued. No GPF-04 dispatch while native character integration owns the overlapping source. No idle worker is launched just to fill capacity.
+
+ART-23 prepared clean at `fd7621c` and full bounded assignment delivered at High to the existing idle character artist. New source writer owns only PistolPilot and its task docs; ART-15 remains frozen. Producer will wait for a frozen source handoff before assigning any native pistol change.
