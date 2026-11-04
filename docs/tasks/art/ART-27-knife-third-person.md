@@ -1,6 +1,6 @@
-# ART-27 — UrbanEntry K01 hold and attacks (queued)
+# ART-27 — UrbanEntry K01 hold and attacks
 
-Owner: existing character artist `01a1a6b0-8aa8-7373-b8bb-bc5506f451d4`, High, **not dispatched yet**. Producer creates/records a fresh `art27-knife-third-person` worktree when a contributor slot is free. ART-15/23 and native checkouts stay frozen/read-only. Exact future writes: `Art/Source/Characters/UrbanEntry01/KnifePilot/`, `docs/assets/urban-entry01/knife-pilot/`, `docs/workstreams/art27-knife-third-person.md`.
+Owner: existing character artist `01a1a6b0-8aa8-7373-b8bb-bc5506f451d4`, High. Admitted after INT-ART-02 finished and stopped, 2026-11-04 Europe/Berlin. Fresh worktree `/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/art27-knife-third-person`, branch `codex/art27-knife-third-person`, base merged main `a22b9bf328b4d400c5bd923c901de8113d1ab32e`. ART-15/23 and native checkouts stay frozen/read-only. Exact writes: `Art/Source/Characters/UrbanEntry01/KnifePilot/`, `docs/assets/urban-entry01/knife-pilot/`, `docs/workstreams/art27-knife-third-person.md`. The producer prepares this brief before ownership transfer; the artist does not edit central records or other briefs.
 
 Follow the [full knife contract](../KNIFE-01-full-feature.md). Zero paid jobs/credits, no Unreal/build or new test framework. Derive source from preserved UrbanEntry skeleton/mesh/materials and actual K01 #85; do not change base hierarchy/rest pose, weights or previous clips. Produce natural third-person hold/equip/locomotion and distinct slash/stab actions with root motion off, native `hand_r` assembly recipe and separate source/native basis explanation. Reuse the existing locomotion lower body where possible; no unrelated gait/crouch animation redesign.
 

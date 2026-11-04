@@ -1,5 +1,14 @@
 # Team board
 
+## Current admission — 2026-11-04, 17:25 Europe/Berlin
+
+INT-ART-02 finished and stopped: phase A #103 merged; phase B candidate `c7386b6` / evidence `7436d57` is locally verified and remains unpublished pending ART-25 public-payload approval. Producer inspected actual native facade/roof comparisons; pilot section accepted with tan-backed recess, incomplete surrounding building and no player close-wall capture documented. [Checkpoint](producer/STATUS.md).
+
+The three active contributors are **ART-26 first-person knife**, **ART-27 third-person knife** (High, fresh `art27-knife-third-person` at `c8bb630`, [brief](tasks/art/ART-27-knife-third-person.md)), and **KNIFE-01 gameplay phase B** (existing GPT-04, `claude/knife-01-phase-b`, lead confirmed active after explicit producer release). Gameplay phase A is frozen in #105 at `1fa433e`. Preserve #103 native presentation; no parallel native source writer/build.
+
+Next: review actual source/action handoffs and frozen phase-B gameplay for the sole INT-ART-03 integration batch. R02/P02 native replacement remains queued separately and does not require finished hands. Publication approval does not block ongoing knife work; user retains merges. Earlier sections below are historical checkpoints.
+
+
 ## Full knife authorized — 2026-11-04
 
 User's direct request in Direktor explicitly expands the source-only knife task to the [complete knife feature](tasks/KNIFE-01-full-feature.md). Completion requires key 3/Q, gloved first-person K01 and remote attacks, slash/stab, authoritative damage/cancellation, audio/HUD/kill feed and real server/client evidence. Existing request byte 2 means Last, so Knife uses an explicit separate request mapping. No new Meshy jobs.

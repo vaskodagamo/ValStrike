@@ -123,3 +123,12 @@ User merges since: #69, #70, #71 and #74. Verified: Editor, one Mac, loopback, p
 - Protocol trap recorded: request 2 = Last. Knife becomes slot 2 and request 3, with explicit encode/decode helpers replacing the `static_cast` at `VSWeaponLoadoutRules.h:44,113`.
 - Contract gaps proposed once to the producer: melee arc (slash 35°, stab 10° half-angle, tunable), the knife kill reward (keep the flat 200), flat damage by zone, attacks allowed airborne or crouched.
 - WPN-R02/P02 (the new rifle and pistol in game) stays queued with the producer as an explicit follow-up.
+
+## 2026-11-04 — GPF closure from INT-ART-02 evidence; KNIFE-01 phase B released
+
+- Reused the INT-ART-02 evidence read-only (candidate `61fc972` = main `5407272` with #84/#86/#97 + ART-23; no duplicate QA):
+  - movement `typical` 69/69, 0 in-motion corrections, 26 setup teleports, one valid run;
+  - session ×3, 72/72 each;
+  - match 46/46 with spectate reached.
+- **GPF-02, GPF-03 and GPF-04 are closed.** D3 is closed with a caveat: one clean run; reopen if it recurs.
+- KNIFE-01 phase B released to the same GPT-04 owner and worktree, on a new branch `claude/knife-01-phase-b` from frozen #105 plus current main. One main-targeted PR, then freeze for INT-ART-03.

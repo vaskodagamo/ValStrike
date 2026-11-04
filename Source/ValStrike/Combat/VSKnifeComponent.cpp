@@ -304,6 +304,7 @@ void UVSKnifeComponent::DevelopmentRequestAttack(uint8 RawKind, uint32 Sequence)
     {
         if (Sequence == 0 && ++NextLocalSequence == 0) { ++NextLocalSequence; }
         ServerRequestKnifeAttack(RawKind, Sequence == 0 ? NextLocalSequence : Sequence);
+        ServerRequestKnifeAttack(RawKind, Sequence);
     }
 }
 #endif

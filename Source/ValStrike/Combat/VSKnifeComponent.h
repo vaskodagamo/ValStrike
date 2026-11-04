@@ -87,6 +87,8 @@ public:
     // only). Sequence 0 takes the next local sequence; any other value is sent as is.
     void DevelopmentRequestAttack(uint8 RawKind, uint32 Sequence = 0);
     uint32 DevelopmentLastSequence() const { return NextLocalSequence; }
+    // Raw RPC with arbitrary bytes, bypassing local checks (weapon smoke only).
+    void DevelopmentRequestAttack(uint8 RawKind, uint32 Sequence);
     uint32 DevelopmentRejections(const FName Reason) const { return Rejections.FindRef(Reason); }
     uint32 DevelopmentPendingCount() const { return static_cast<uint32>(Actions.Count()); }
 #endif
