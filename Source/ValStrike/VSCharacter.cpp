@@ -7,6 +7,7 @@
 #include "Combat/VSWeaponLoadoutComponent.h"
 #include "Damage/VSHitZoneSet.h"
 #include "Combat/VSCombatSmoke.h"
+#include "Presentation/VSCharacterPresentationComponent.h"
 #include "Presentation/VSPistolPresentationComponent.h"
 #include "Presentation/VSRiflePresentationComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -44,6 +45,7 @@ AVSCharacter::AVSCharacter(const FObjectInitializer& ObjectInitializer)
     Loadout = CreateDefaultSubobject<UVSWeaponLoadoutComponent>(TEXT("Loadout"));
     RiflePresentation = CreateDefaultSubobject<UVSRiflePresentationComponent>(TEXT("RiflePresentation"));
     PistolPresentation = CreateDefaultSubobject<UVSPistolPresentationComponent>(TEXT("PistolPresentation"));
+    CharacterPresentation = CreateDefaultSubobject<UVSCharacterPresentationComponent>(TEXT("CharacterPresentation"));
     // 13 query-only zones (head, torso, arms, legs, feet) block the weapons' Visibility
     // traces. They are built at BeginPlay, follow crouch and switch off on death.
     HitZones = CreateDefaultSubobject<UVSHitZoneSet>(TEXT("HitZones"));
@@ -235,6 +237,15 @@ void AVSCharacter::BeginPlay()
     // Weapon visuals are cosmetic; a dedicated server never creates them.
     if (GetNetMode() != NM_DedicatedServer)
     {
+        // Native pilot body when its assets exist; otherwise the prototype stays.
+        // The remote rifle then sits in the fitted right hand. The pistol keeps
+        // its existing world offset (no fitted pistol pose for this pilot).
+        UPrimitiveComponent* const Prototype[] = {BodyVisual, HeadVisual};
+        if (CharacterPresentation->Initialize(GetMesh(), Prototype))
+        {
+            RiflePresentation->SetWorldAttachment(UVSCharacterPresentationComponent::RifleGripBone,
+                UVSCharacterPresentationComponent::RifleGripOffset);
+        }
         if (!RiflePresentation->Initialize(this, FirstPersonCamera, GetMesh()))
         {
             UE_LOG(LogValStrike, Error, TEXT("Rifle presentation failed to initialize on %s; no rifle visual is shown."), *GetName());

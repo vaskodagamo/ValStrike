@@ -16,6 +16,7 @@ class UVSHealthComponent;
 class UVSHitZoneSet;
 class UVSRiflePresentationComponent;
 class UVSPistolPresentationComponent;
+class UVSCharacterPresentationComponent;
 class UVSWeaponPresentationComponent;
 enum class EVSWeaponSlot : uint8;
 class UEnhancedInputLocalPlayerSubsystem;
@@ -126,6 +127,10 @@ private:
 
     UPROPERTY(VisibleAnywhere, Category = "Presentation")
     TObjectPtr<UVSPistolPresentationComponent> PistolPresentation;
+
+    // Native third-person pilot body on GetMesh(); cosmetic, non-dedicated only.
+    UPROPERTY(VisibleAnywhere, Category = "Presentation")
+    TObjectPtr<UVSCharacterPresentationComponent> CharacterPresentation;
 
     UPROPERTY(VisibleAnywhere, Category = "Prototype")
     TObjectPtr<UStaticMeshComponent> BodyVisual;

@@ -1,0 +1,350 @@
+{
+  "engine": "5.8.4-58902052+++UE5+Release-5.8",
+  "mode": "import_and_save",
+  "readiness_sha256": "650745a1510ea57f6dc494ebdae79b7afed179e7cdb7a2e654d2a68cce6b52f2",
+  "readiness_source_commit": "f7a15a1245ccd97ca0e5e2bc0b0bb4d3f7862e6c",
+  "assets": [
+    {
+      "asset_id": "MSH-W03",
+      "mesh": "/Game/Art/Environment/MeshySite01/PropsSurfaces/W03/SM_VS_MSH_W03_ConcreteTile.SM_VS_MSH_W03_ConcreteTile",
+      "source_fbx_sha256": "02791ed2a7af1879ab7663c6b8e2af870733ed2fc40e5da9d3e0b30759032439",
+      "bounds_min_cm": [
+        0.0,
+        -200.0,
+        -10.0
+      ],
+      "bounds_max_cm": [
+        200.0,
+        0.0,
+        0.0
+      ],
+      "size_cm": [
+        200.0,
+        200.0,
+        10.0
+      ],
+      "record_local_bounds_cm": {
+        "min": [
+          0.0,
+          0.0,
+          -10.0
+        ],
+        "max": [
+          200.0,
+          200.0,
+          0.0
+        ]
+      },
+      "native_frame_vs_record": "y_negated",
+      "lod0_triangles": 498,
+      "record_triangles": 498,
+      "uv_channels": 1,
+      "nanite_enabled": false,
+      "material": "/Game/Art/Environment/MeshySite01/PropsSurfaces/W03/M_VS_MSH_W03.M_VS_MSH_W03",
+      "textures": {
+        "basecolor": {
+          "asset": "/Game/Art/Environment/MeshySite01/PropsSurfaces/W03/Textures/T_MSH_W03_Game_basecolor",
+          "srgb": true,
+          "compression": "<TextureCompressionSettings.TC_DEFAULT: 0>",
+          "flip_green_channel": false,
+          "size_px": [
+            2048,
+            2048
+          ]
+        },
+        "roughness": {
+          "asset": "/Game/Art/Environment/MeshySite01/PropsSurfaces/W03/Textures/T_MSH_W03_Game_roughness",
+          "srgb": false,
+          "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+          "flip_green_channel": false,
+          "size_px": [
+            2048,
+            2048
+          ]
+        },
+        "metallic": {
+          "asset": "/Game/Art/Environment/MeshySite01/PropsSurfaces/W03/Textures/T_MSH_W03_Game_metallic",
+          "srgb": false,
+          "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+          "flip_green_channel": false,
+          "size_px": [
+            2048,
+            2048
+          ]
+        },
+        "normal": {
+          "asset": "/Game/Art/Environment/MeshySite01/PropsSurfaces/W03/Textures/T_MSH_W03_Game_normal",
+          "srgb": false,
+          "compression": "<TextureCompressionSettings.TC_NORMALMAP: 1>",
+          "flip_green_channel": true,
+          "size_px": [
+            2048,
+            2048
+          ]
+        }
+      },
+      "simple_collision_count": 0,
+      "convex_collision_count": 0,
+      "section_collision_enabled": [
+        false
+      ]
+    },
+    {
+      "asset_id": "MSH-W04",
+      "mesh": "/Game/Art/Environment/MeshySite01/PropsSurfaces/W04/SM_VS_MSH_W04_LongCargoCrate.SM_VS_MSH_W04_LongCargoCrate",
+      "source_fbx_sha256": "1d922aa8ff0a372e1fd4891496b08a8de768a21d2934b051835d6c90250c3fb2",
+      "bounds_min_cm": [
+        -100.0,
+        -50.0,
+        0.0
+      ],
+      "bounds_max_cm": [
+        100.0,
+        50.0,
+        100.0
+      ],
+      "size_cm": [
+        200.0,
+        100.0,
+        100.0
+      ],
+      "record_local_bounds_cm": {
+        "min": [
+          -100.0,
+          -50.0,
+          0.0
+        ],
+        "max": [
+          100.0,
+          50.0,
+          100.0
+        ]
+      },
+      "native_frame_vs_record": "matches_source_record",
+      "lod0_triangles": 6000,
+      "record_triangles": 6000,
+      "uv_channels": 1,
+      "nanite_enabled": false,
+      "material": "/Game/Art/Environment/MeshySite01/PropsSurfaces/W04/M_VS_MSH_W04.M_VS_MSH_W04",
+      "textures": {
+        "basecolor": {
+          "asset": "/Game/Art/Environment/MeshySite01/PropsSurfaces/W04/Textures/T_MSH_W04_Game_basecolor",
+          "srgb": true,
+          "compression": "<TextureCompressionSettings.TC_DEFAULT: 0>",
+          "flip_green_channel": false,
+          "size_px": [
+            2048,
+            2048
+          ]
+        },
+        "roughness": {
+          "asset": "/Game/Art/Environment/MeshySite01/PropsSurfaces/W04/Textures/T_MSH_W04_Game_roughness",
+          "srgb": false,
+          "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+          "flip_green_channel": false,
+          "size_px": [
+            2048,
+            2048
+          ]
+        },
+        "metallic": {
+          "asset": "/Game/Art/Environment/MeshySite01/PropsSurfaces/W04/Textures/T_MSH_W04_Game_metallic",
+          "srgb": false,
+          "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+          "flip_green_channel": false,
+          "size_px": [
+            2048,
+            2048
+          ]
+        },
+        "normal": {
+          "asset": "/Game/Art/Environment/MeshySite01/PropsSurfaces/W04/Textures/T_MSH_W04_Game_normal",
+          "srgb": false,
+          "compression": "<TextureCompressionSettings.TC_NORMALMAP: 1>",
+          "flip_green_channel": true,
+          "size_px": [
+            2048,
+            2048
+          ]
+        }
+      },
+      "simple_collision_count": 0,
+      "convex_collision_count": 0,
+      "section_collision_enabled": [
+        false
+      ]
+    },
+    {
+      "asset_id": "MSH-W07",
+      "mesh": "/Game/Art/Environment/MeshySite01/PropsSurfaces/W07/SM_VS_MSH_W07_InfillPanel.SM_VS_MSH_W07_InfillPanel",
+      "source_fbx_sha256": "f7116fe363144c8adc9ef835ecdf1ffd567d095226c658705cc641dcfa3e7ea3",
+      "bounds_min_cm": [
+        0.0,
+        -20.0,
+        0.0
+      ],
+      "bounds_max_cm": [
+        200.0,
+        0.0,
+        300.0
+      ],
+      "size_cm": [
+        200.0,
+        20.0,
+        300.0
+      ],
+      "record_local_bounds_cm": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          200.0,
+          20.0,
+          300.0
+        ]
+      },
+      "native_frame_vs_record": "y_negated",
+      "lod0_triangles": 3774,
+      "record_triangles": 3774,
+      "uv_channels": 1,
+      "nanite_enabled": false,
+      "material": "/Game/Art/Environment/MeshySite01/PropsSurfaces/W07/M_VS_MSH_W07.M_VS_MSH_W07",
+      "textures": {
+        "basecolor": {
+          "asset": "/Game/Art/Environment/MeshySite01/PropsSurfaces/W07/Textures/T_MSH_W07_basecolor",
+          "srgb": true,
+          "compression": "<TextureCompressionSettings.TC_DEFAULT: 0>",
+          "flip_green_channel": false,
+          "size_px": [
+            4096,
+            4096
+          ]
+        },
+        "metallic": {
+          "asset": "/Game/Art/Environment/MeshySite01/PropsSurfaces/W07/Textures/T_MSH_W07_metallic",
+          "srgb": false,
+          "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+          "flip_green_channel": false,
+          "size_px": [
+            2048,
+            2048
+          ]
+        },
+        "normal": {
+          "asset": "/Game/Art/Environment/MeshySite01/PropsSurfaces/W07/Textures/T_MSH_W07_normal",
+          "srgb": false,
+          "compression": "<TextureCompressionSettings.TC_NORMALMAP: 1>",
+          "flip_green_channel": true,
+          "size_px": [
+            4096,
+            4096
+          ]
+        },
+        "roughness": {
+          "asset": "/Game/Art/Environment/MeshySite01/PropsSurfaces/W07/Textures/T_MSH_W07_roughness",
+          "srgb": false,
+          "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+          "flip_green_channel": false,
+          "size_px": [
+            2048,
+            2048
+          ]
+        }
+      },
+      "simple_collision_count": 0,
+      "convex_collision_count": 0,
+      "section_collision_enabled": [
+        false
+      ]
+    },
+    {
+      "asset_id": "MSH-W10",
+      "mesh": "/Game/Art/Environment/MeshySite01/PropsSurfaces/W10/SM_VS_MSH_W10_CargoCrate.SM_VS_MSH_W10_CargoCrate",
+      "source_fbx_sha256": "1353da49f8aed68eea1fd4ea987beaadb383edcbc15a07d80b99218aa852360d",
+      "bounds_min_cm": [
+        -50.0,
+        -50.0,
+        0.0
+      ],
+      "bounds_max_cm": [
+        50.0,
+        50.0,
+        100.0
+      ],
+      "size_cm": [
+        100.0,
+        100.0,
+        100.0
+      ],
+      "record_local_bounds_cm": {
+        "min": [
+          -50.0,
+          -50.0,
+          0.0
+        ],
+        "max": [
+          50.0,
+          50.0,
+          100.0
+        ]
+      },
+      "native_frame_vs_record": "matches_source_record",
+      "lod0_triangles": 6000,
+      "record_triangles": 6000,
+      "uv_channels": 1,
+      "nanite_enabled": false,
+      "material": "/Game/Art/Environment/MeshySite01/PropsSurfaces/W10/M_VS_MSH_W10.M_VS_MSH_W10",
+      "textures": {
+        "basecolor": {
+          "asset": "/Game/Art/Environment/MeshySite01/PropsSurfaces/W10/Textures/T_MSH_W10_Game_basecolor",
+          "srgb": true,
+          "compression": "<TextureCompressionSettings.TC_DEFAULT: 0>",
+          "flip_green_channel": false,
+          "size_px": [
+            2048,
+            2048
+          ]
+        },
+        "roughness": {
+          "asset": "/Game/Art/Environment/MeshySite01/PropsSurfaces/W10/Textures/T_MSH_W10_Game_roughness",
+          "srgb": false,
+          "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+          "flip_green_channel": false,
+          "size_px": [
+            2048,
+            2048
+          ]
+        },
+        "metallic": {
+          "asset": "/Game/Art/Environment/MeshySite01/PropsSurfaces/W10/Textures/T_MSH_W10_Game_metallic",
+          "srgb": false,
+          "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+          "flip_green_channel": false,
+          "size_px": [
+            2048,
+            2048
+          ]
+        },
+        "normal": {
+          "asset": "/Game/Art/Environment/MeshySite01/PropsSurfaces/W10/Textures/T_MSH_W10_Game_normal",
+          "srgb": false,
+          "compression": "<TextureCompressionSettings.TC_NORMALMAP: 1>",
+          "flip_green_channel": true,
+          "size_px": [
+            2048,
+            2048
+          ]
+        }
+      },
+      "simple_collision_count": 0,
+      "convex_collision_count": 0,
+      "section_collision_enabled": [
+        false
+      ]
+    }
+  ],
+  "map_edited": false,
+  "runtime_verified": false
+}

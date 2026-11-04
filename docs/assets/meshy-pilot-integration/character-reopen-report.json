@@ -1,0 +1,101 @@
+{
+  "engine": "5.8.4-58902052+++UE5+Release-5.8",
+  "readiness_sha256": "9e75d54f6c755617e79992256676bc4308dc96c8c3583f57bb7bc46d04e8f40c",
+  "mode": "fresh_process_reopen",
+  "map_edited": false,
+  "runtime_verified": false,
+  "assets": {
+    "mesh": "/Game/Art/Characters/UrbanEntry01/SK_VS_UrbanEntry01.SK_VS_UrbanEntry01",
+    "skeleton": "/Game/Art/Characters/UrbanEntry01/SK_VS_UrbanEntry01_Skeleton.SK_VS_UrbanEntry01_Skeleton",
+    "bounds_min_cm": [
+      -15.1361,
+      -42.5425,
+      0.0
+    ],
+    "bounds_max_cm": [
+      15.1361,
+      42.5425,
+      170.0
+    ],
+    "material": "/Game/Art/Characters/UrbanEntry01/Materials/M_VS_UrbanEntry01.M_VS_UrbanEntry01",
+    "socket": null,
+    "clips": {
+      "A_UE01_Pilot_RifleHold": {
+        "length_s": 1.0,
+        "root_motion": false
+      },
+      "A_UE01_Pilot_Walk_RifleHold": {
+        "length_s": 1.0333,
+        "root_motion": false
+      },
+      "A_UE01_Walking": {
+        "length_s": 1.0333,
+        "root_motion": false
+      }
+    },
+    "blend_space": true,
+    "blend_space_samples": [
+      [
+        "A_UE01_Pilot_RifleHold",
+        0.0
+      ],
+      [
+        "A_UE01_Pilot_Walk_RifleHold",
+        145.0
+      ]
+    ],
+    "bone_count": 67,
+    "root_bone": "SKEL_UE01",
+    "source_commit": "45deb700a96b2aad3084808b1c7809d4589fdbd7"
+  },
+  "grip_derivation": {
+    "native_hand_r_cm": [
+      11.124,
+      17.9301,
+      133.6765
+    ],
+    "source_hand_r_cm": [
+      11.123998641967773,
+      -17.930089950561523,
+      133.67652893066406
+    ],
+    "bone_chain": [
+      "hand_r",
+      "lowerarm_r",
+      "upperarm_r",
+      "clavicle_r",
+      "spine_03",
+      "spine_02",
+      "spine_01",
+      "pelvis",
+      "SKEL_UE01"
+    ],
+    "hand_r_offset_location_cm": [
+      4.1008,
+      -13.5549,
+      -6.1893
+    ],
+    "hand_r_offset_rotator_roll_pitch_yaw": [
+      -179.9377,
+      -1.2028,
+      -70.8325
+    ],
+    "hand_r_offset_quat_xyzw": [
+      -0.814922,
+      0.579475,
+      0.00887,
+      0.00564
+    ],
+    "basis": "y_negated",
+    "rifle_component_cm": [
+      25.3412,
+      16.5082,
+      139.568
+    ],
+    "rifle_component_rotator": [
+      0.0,
+      0.0,
+      -8.0
+    ]
+  }
+}
