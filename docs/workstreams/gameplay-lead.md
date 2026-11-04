@@ -40,3 +40,15 @@ At the user's request to continue building game logic while INT-01 runs, two dis
 - The user merged #32 and #34–#40. PR #32 merged before the lead's later board commits, so this resync PR replays them onto main.
 - GPT-01..06 are merged with verification still pending. INT-02 tests the same six tips combined; its result now covers main's source for those PRs, but the main revision itself must be rechecked if any later change lands.
 - GPT-09 found that muzzle flash and body kick already exist in the base `VSWeaponPresentationComponent`. A shared-file exception for that file was approved, because GPT-04 had released it. GPT-07, GPT-08 and GPT-09 were told to merge current main before opening PRs.
+
+## 2026-11-04 — INT-02 result and triage
+
+- INT-02 ([PR #43](https://github.com/vaskodagamo/ValStrike/pull/43)) tested the six GPT tips combined, which is source-equivalent to main `5b13856`. Build and suites 1–9 pass, except the rendered settings runner: D1, 2/2 runs, window-mode arrow click. GPT-03 emulation and GPT-05 audio activation were seen in the logs. HUD feedback, predicted switching and audible cues still need a human playtest.
+- D1 goes to GPF-01 in the GPT-06 session. The QA session runs the settings runner on `90849f5` and `b5b8523` to confirm which change caused it.
+- GPT-07/08/09 are implementation-ready as PRs #46, #44 and #45. Each stays in its owned paths, and CI is green. These are the next integration batch, together with the GPF-01 fix.
+
+## 2026-11-04 — D1 attribution and INT-03
+
+- The QA bisect, with no source edits, ran the rendered settings runner on two revisions. Base `90849f5` fails `arrow_selects_windowed mode=1` (`Saved/Tests/Settings/20261104T093620Z_3cdb74`), as does `b5b8523` (GPT-06, `…093857Z_a89177`). So D1 predates GPT-06: it lies in the original settings window-mode path (PR #19), whose rendered runner had not been run on this machine's 2560×1440 desktop.
+- PR #48 (GPF-01) fixes a real overflow that GPT-06 caused and adds a fit check. It does not claim to fix the click. GPF-01 stays open with GPT-06's session, now pointed at the click after the Windowed Fullscreen switch, and waits for INT-03's run of #48.
+- The user merged #42, #43, #44 and #46. INT-03 verifies main `887d349` plus #45 and #48 ([brief](../tasks/gameplay/INT-03-batch.md)).

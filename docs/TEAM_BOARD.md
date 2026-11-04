@@ -64,6 +64,9 @@ The user explicitly requested High reasoning for the two additional ART-07/08 ch
 
 Read-only inspection of the Claude gameplay sub-board found INT-01 assigned to its sole QA owner for main `90849f5`. Art workers must not launch Unreal or modify those active gameplay/integration worktrees.
 
+## Environment visual target — 2026-11-04
+
+The user selected the environment colors/material feel of the Operator V2 first-person composition. [Industrial V2 reference pack](../Art/References/Environment/IndustrialV2/README.md) provides six derived scene/asset sheets and the shared palette/construction brief. Use it for future environment-asset assignments. It does not replace Site01 layout/collision contracts or authorize new map work. Start with a representative wall/crate/paving sample and obtain visual review before mass-producing variants; no new worker is dispatched by this reference entry.
 ## Character art reset — 2026-11-04
 
 The user rejected the procedural arms/gloves and third-person model as too blocky and simple. Both owners were told to preserve their work as unapproved prototypes and stop further modeling/import/animation pending a new brief. The user then selected **A — Urban Entry** from three generated concepts. References and artist/3D-tool handoff are in [Operator V2](../Art/References/Characters/OperatorV2/README.md). This approves the concept direction only; no replacement production mesh exists or is approved. The coordinator generated the references with the built-in image tool; no new Unreal work or third-party 3D generation was launched.

@@ -95,3 +95,63 @@ PR #19 was merged into main at 2026-11-03 23:01 (merge `f1e3779`) while these ru
 - Changing volume and then leaving the world without closing the Settings page (e.g. a disconnect while the page is open) keeps the value in memory but does not write it to disk until the next settings save. The controller's own save only tracks sensitivity, and that file is GPT-01's.
 
 **Next action/owner:** Claude gameplay lead reviews, INT-01 schedules the checks above in the next batch, and the user merges.
+
+## 2026-11-04 — GPF-01: INT-02-D1, the window-mode arrow click no longer changes the mode
+
+**Branch/base:** `claude/gpf-01-settings-window-mode` from `origin/main` `3d092bb` (contains `5b13856`). Brief `docs/tasks/gameplay/GPF-01-settings-window-mode.md`. Tier V1.
+
+**Finding (read from INT-02 evidence, no engine run here):**
+
+- At 960×540, GPT-06's volume row pushed the Settings page past the window. In `screenshots/first/settings-pending-windowed-fullscreen.png` (run `20261104T092738Z_083123`), the menu's scroll box shows a scrollbar, Apply/Back are cut off at the bottom and the key hint is off-screen. My GPT-06 estimate (about 70 px added, 18 px recovered) was wrong: the help line also wrapped to two lines. The overflow is about 41 px. This is a GPT-06 regression of the "readable at 960×540" requirement, whatever the click mechanism turns out to be.
+- At the moment of the failed click, the page has just been laid out in an overflowing scroll box and then resized to 2560×1440. That is the only layout state on this path that differs from pre-GPT-06 runs. The synthesized click lands on the `›` arrow (`first.log:1457`, the screenshot confirms the position, `hit_testable=true`). `CycleWindowMode` never runs, because the status line still reads "Applied: …" instead of "Press Apply display to switch." So the button never got a full press and release.
+- Ruled out:
+  - the selector's handlers (unchanged since PR #19);
+  - the new step-16 keys. The mode is Windowed Fullscreen when `left_selects_windowed_fullscreen` passes, and this step does not touch mouse capture: slider arrows go through `SSlider::OnNavigation`, not the mouse.
+  - the other merged batch PRs, which add no Slate widgets or input-mode changes (`git diff 90849f5 5b13856 -- Source`).
+- I could not prove from engine source exactly why the click is lost after an overflow. **Attribution is still pending QA's bisect** of `90849f5` against `b5b8523`.
+
+**Fix (settings section only):**
+
+- `SVSSessionMenu.cpp`: Window mode and Resolution put their labels beside the selector (120 px column) instead of above it, which saves about 44 px. The help line is shortened to fit one line ("Sliders apply at once. Saved on this computer only."), saving about 20 px. The selector arrows' horizontal padding goes from 14 to 10 so "Desktop · 2560 × 1440" still fits the narrower value button. The estimated margin is now about 20 px at 960×540. Nothing changes in behaviour, tags, Tab order or handlers.
+- `VSSettingsSmoke.cpp` + `Tests/UI/test_settings.py`: new required check `settings_fit_without_scrolling`, which needs the menu's `SScrollBox::GetScrollOffsetOfEnd() == 0` when Settings first opens at 960×540. That turns the layout overflow into a direct failure instead of a downstream click symptom. No existing expectation was loosened.
+- `Tests/UI/README.md`: first-run description.
+
+**Checks actually run:** `python3 -m unittest discover -s Tests/UI -p 'test_settings_runner.py'` 6/6 OK, smoke check names cross-checked against the runner's required list, `git diff --check` clean.
+
+**Deferred to integration:**
+
+- Rerun rendered `Tests/UI/test_settings.py`. It must pass `settings_fit_without_scrolling` and `arrow_selects_windowed` plus the cascade.
+- Rerun native `ValStrike.UI.Settings`.
+- Rerun `Tests/UI/test_session.py`. The session page is untouched, but the brief asks for it when the layout changes.
+- Compile: the C++ change is layout plus one smoke check.
+
+**Remaining risk:** if the rerun still shows `arrow_selects_windowed FAIL` with `settings_fit_without_scrolling PASS`, the overflow was not the cause. The next suspect is then the Windowed Fullscreen transition itself (hover or capture after the window resize), compared against QA's `90849f5` run. Return it to this owner with that log.
+
+### 2026-11-04 — GPF-01 follow-up after INT-03 (D1 click, D2 clipping)
+
+**INT-03 input:** `settings_fit_without_scrolling PASS overflow=0.0`; D1 is unchanged (`arrow_selects_windowed FAIL mode=1`, `Saved/Tests/Settings/20261104T104448Z_2bc54a/first.log:1458-1460`); D2: "Desktop · 2560 × 14…" is clipped. The bisect shows D1 predates GPT-06 (`90849f5` fails too).
+
+**D1 hypothesis (engine source, not yet proven by a run):**
+
+- `FSlateApplication::ProcessMouseButtonDownEvent` sends a click to the current mouse captor, not to the widget under the point (`SlateApplication.cpp:5336`).
+- `FSceneViewport::OnViewportActivated` (`SceneViewport.cpp:1509`) calls `AcquireFocusAndCapture` on window activation whenever `bShouldCaptureMouseOnActivate` is set, whatever the UI-only input mode. The flag starts true from `CaptureMouseOnLaunch`. It is cleared only when the viewport takes capture or loses keyboard focus, and a game launched on an inactive Space or second display does neither before the menu opens.
+- When macOS activates the window, the game viewport therefore grabs the mouse. The next click (the arrow) goes to the viewport, and its mouse-up releases capture. The following click (`VS.Settings`) works. In every run the arrow is the first synthesized click and `VS.Settings` the second.
+- PR #19 passed on a single laptop display. All failing runs are on the dual-display M4.
+- Unexplained: `shift_tab_returns_to_window_mode` passes just before the click, although `AcquireFocusAndCapture` also moves keyboard focus to the viewport.
+
+**Changes (pushed to PR #48):**
+
+- `SVSSessionMenu::Tick` (runs only while the menu is visible): if the game viewport holds the cursor capture, release it. If it holds keyboard focus, return focus to the menu. Log `VSMENU_RECLAIM viewport_capture=<0|1> viewport_focus=<0|1>` when either happens. Real players hit the same thing when switching back to the game with the menu open.
+- `VSSettingsSmoke.cpp` `Click()` now also logs `VSSET_CLICK_TRACE {tag, captor_before, focus_before, under_point, hovered_after_move, captor_after_down, mode_before, mode_after, status_after}`. Handlers run synchronously, so `mode_after != mode_before` (or the "Press Apply display" status) shows that the arrow's `OnClicked` ran.
+- D2: the selector value button's horizontal padding is now 6 px (was 12), and the Windowed Fullscreen value reads "Desktop · {0}" with single spaces. That recovers about 20 px for "Desktop · 2560 × 1440". The page height is unchanged (still fits 960×540, about 23 px spare in INT-03's screenshot).
+- No test expectation changed.
+
+**Checks actually run:** `test_settings_runner.py` 6/6 OK, `git diff --check` clean, paren balance of the new log statement. No Unreal build.
+
+**How to read the next rendered run:**
+
+- `VSMENU_RECLAIM viewport_capture=1` before the arrow click, then `arrow_selects_windowed PASS`: the hypothesis is confirmed and fixed.
+- No `VSMENU_RECLAIM`, and the trace shows `captor_before:"none"`, `under_point:"SButton:VS.WindowMode.Next"`, `hovered_after_move:true`, `captor_after_down:"SButton:VS.WindowMode.Next"`, but `mode_after == mode_before`: the press reaches the arrow and its `OnClicked`/`Cycle` path fails. Look at the arrow lambda next.
+- `under_point` names another widget: hit-testing is the problem.
+- `hovered_after_move:false`: `SButton` refuses the mouse-up because the arrow isn't marked as hovered.
+- Check D2 in `screenshots/first/settings-pending-windowed.png`.

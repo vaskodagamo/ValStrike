@@ -359,6 +359,15 @@ The gameplay/integration idle slots were checked clean at their original heads b
 
 **Dispatched:** “Art — Third-person player model” (`01a1a5ba-709c-7dd3-bc9e-d70ee4f951bc`) and “Art — Tactical HUD icons” (`01a1a5ba-7e9f-7c41-9b0f-38db0ea9a923`) were created with explicit `thinking: high`; model was omitted to preserve the configured default. Both have separate worktrees starting at `d46a27c0c9a1a61b2d52bd76b797529a0e9dbbfb`. Existing art and gameplay worktrees were not changed.
 
+## 2026-11-04 — Industrial environment reference pack
+
+**Request:** The user liked the map/environment colors in the generated first-person rifle composition and asked for further examples for artists building walls, ground, boxes and objects.
+
+**Delivered:** Six built-in image_gen references, all using that same image as visual authority: courtyard, service lane, crates/cover, modular walls/doors, ground surfaces and small utility props. Saved to `Art/References/Environment/IndustrialV2/` with a copy of the approved anchor, complete prompts, file hashes and an artist brief. The brief defines the restrained concrete/graphite/crimson palette, material hierarchy, proposed modular dimensions, geometry-versus-texture guidance and a representative-sample-first review sequence. Delivery ZIP: ignored `Artifacts/IndustrialV2-EnvironmentReferencePack.zip`.
+
+**Verification/limits:** Visually inspected all six images; checked seven PNGs including the copied anchor, JSON/local links and ZIP integrity. This is concept/reference delivery only: no new tests or Unreal build, no native meshes/materials/maps, no tiling-texture claim. Dimensions are artist proposals; existing validated map/cover/objective/collision contracts take priority. No new worker was dispatched and no existing artist's ownership changed.
+
+**Next action:** Use this pack to brief a bounded environment-asset sample (wall/corner, medium crate, paving) before expanding the kit. Central review should approve the representative visual quality before further production and native integration.
 ## 2026-11-04 — Selected Urban Entry concept and reference package
 
 **Request and selection:** The user rejected the blocky FPArms01/Player01 visual quality and requested image concepts/references for a third-party 3D draft and artist finishing workflow. Both source sessions received a stop-and-preserve direction. Generated three original character directions with built-in image_gen; the user explicitly selected “A — Urban entry: cropped jacket, single shoulder plate.”

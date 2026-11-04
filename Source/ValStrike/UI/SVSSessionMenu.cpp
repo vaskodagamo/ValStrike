@@ -1,12 +1,16 @@
 #include "SVSSessionMenu.h"
 
 #include "Framework/Application/SlateApplication.h"
+#include "Framework/Application/SlateUser.h"
+#include "Engine/GameViewportClient.h"
+#include "Engine/World.h"
 #include "Engine/UserInterfaceSettings.h"
 #include "InputCoreTypes.h"
 #include "Styling/CoreStyle.h"
 #include "VSSessionState.h"
 #include "VSUserSettings.h"
 #include "../VSPlayerController.h"
+#include "../ValStrike.h"
 #include "Widgets/Input/SButton.h"
 #include "Widgets/Input/SEditableTextBox.h"
 #include "Widgets/Input/SSlider.h"
@@ -15,6 +19,7 @@
 #include "Widgets/Layout/SScrollBox.h"
 #include "Widgets/Layout/SDPIScaler.h"
 #include "Widgets/Layout/SWidgetSwitcher.h"
+#include "Widgets/SViewport.h"
 #include "Widgets/SBoxPanel.h"
 #include "Widgets/Text/STextBlock.h"
 
@@ -239,6 +244,9 @@ TSharedRef<SWidget> SVSSessionMenu::MakeSessionPage()
 TSharedRef<SWidget> SVSSessionMenu::MakeSettingsPage()
 {
     TSharedPtr<SButton> ApplyButton, BackButton;
+    // Window mode and resolution put their label beside the selector so the
+    // whole page fits a 960x540 window without the scroll box engaging.
+    constexpr float SelectorLabelWidth = 120.0f;
     // Each local player's menu is built after its world loads, and LoadMap
     // resets the audio device's volume, so this applies the saved value per map.
     MasterVolume = VSUserSettings::LoadMasterVolume();
@@ -252,7 +260,7 @@ TSharedRef<SWidget> SVSSessionMenu::MakeSettingsPage()
         + SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 8)
         [
             SNew(STextBlock).Font(FCoreStyle::GetDefaultFontStyle("Regular", 13)).ColorAndOpacity(MenuMuted).AutoWrapText(true)
-            .Text(NSLOCTEXT("ValStrike", "SettingsHelp", "Sensitivity and volume apply at once. Saved on this computer only."))
+            .Text(NSLOCTEXT("ValStrike", "SettingsHelp", "Sliders apply at once. Saved on this computer only."))
         ]
         + SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 5)
         [
@@ -338,27 +346,41 @@ TSharedRef<SWidget> SVSSessionMenu::MakeSettingsPage()
                 })
             ]
         ]
-        + SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 5)
-        [ Label(NSLOCTEXT("ValStrike", "WindowModeLabel", "WINDOW MODE"), 12, MenuMuted) ]
         + SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 8)
         [
-            MakeSelector(TEXT("VS.WindowMode"), ModeButton,
-                [this]() { return VSUserSettings::WindowModeText(PendingMode); },
-                [this](int32 Direction) { CycleWindowMode(Direction); },
-                []() { return true; })
+            SNew(SHorizontalBox)
+            + SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+            [
+                SNew(SBox).WidthOverride(SelectorLabelWidth)
+                [ Label(NSLOCTEXT("ValStrike", "WindowModeLabel", "WINDOW MODE"), 12, MenuMuted) ]
+            ]
+            + SHorizontalBox::Slot().FillWidth(1)
+            [
+                MakeSelector(TEXT("VS.WindowMode"), ModeButton,
+                    [this]() { return VSUserSettings::WindowModeText(PendingMode); },
+                    [this](int32 Direction) { CycleWindowMode(Direction); },
+                    []() { return true; })
+            ]
         ]
-        + SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 5)
-        [ Label(NSLOCTEXT("ValStrike", "ResolutionLabel", "RESOLUTION"), 12, MenuMuted) ]
         + SVerticalBox::Slot().AutoHeight()
         [
-            MakeSelector(TEXT("VS.Resolution"), ResolutionButton,
-                [this]() {
-                    const FText Size = VSUserSettings::ResolutionText(GetPendingResolution());
-                    return PendingMode == EWindowMode::WindowedFullscreen
-                        ? FText::Format(NSLOCTEXT("ValStrike", "DesktopResolution", "Desktop  ·  {0}"), Size) : Size;
-                },
-                [this](int32 Direction) { CycleResolution(Direction); },
-                [this]() { return CanChooseResolution(); })
+            SNew(SHorizontalBox)
+            + SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+            [
+                SNew(SBox).WidthOverride(SelectorLabelWidth)
+                [ Label(NSLOCTEXT("ValStrike", "ResolutionLabel", "RESOLUTION"), 12, MenuMuted) ]
+            ]
+            + SHorizontalBox::Slot().FillWidth(1)
+            [
+                MakeSelector(TEXT("VS.Resolution"), ResolutionButton,
+                    [this]() {
+                        const FText Size = VSUserSettings::ResolutionText(GetPendingResolution());
+                        return PendingMode == EWindowMode::WindowedFullscreen
+                            ? FText::Format(NSLOCTEXT("ValStrike", "DesktopResolution", "Desktop · {0}"), Size) : Size;
+                    },
+                    [this](int32 Direction) { CycleResolution(Direction); },
+                    [this]() { return CanChooseResolution(); })
+            ]
         ]
         + SVerticalBox::Slot().AutoHeight().Padding(0, 4, 0, 2)
         [
@@ -398,7 +420,7 @@ TSharedRef<SWidget> SVSSessionMenu::MakeSelector(FName Tag, TSharedPtr<SButton>&
     // Only the value is a Tab stop; Left/Right change it. The arrows are for mouse use.
     const auto Arrow = [Tag, Cycle, Enabled](int32 Direction, const TCHAR* Glyph) {
         return SNew(SButton).Tag(FName(*FString::Printf(TEXT("%s.%s"), *Tag.ToString(), Direction < 0 ? TEXT("Previous") : TEXT("Next"))))
-            .IsFocusable(false).HAlign(HAlign_Center).ContentPadding(FMargin(14, 7))
+            .IsFocusable(false).HAlign(HAlign_Center).ContentPadding(FMargin(10, 7))
             .IsEnabled_Lambda(TFunction<bool()>(Enabled))
             .OnClicked_Lambda([Cycle, Direction]() { Cycle(Direction); return FReply::Handled(); })
             [ Label(FText::FromString(Glyph), 17) ];
@@ -407,7 +429,7 @@ TSharedRef<SWidget> SVSSessionMenu::MakeSelector(FName Tag, TSharedPtr<SButton>&
         + SHorizontalBox::Slot().AutoWidth() [ Arrow(-1, TEXT("‹")) ]
         + SHorizontalBox::Slot().FillWidth(1).Padding(6, 0)
         [
-            SAssignNew(OutValueButton, SButton).Tag(Tag).HAlign(HAlign_Center).VAlign(VAlign_Center).ContentPadding(FMargin(12, 8))
+            SAssignNew(OutValueButton, SButton).Tag(Tag).HAlign(HAlign_Center).VAlign(VAlign_Center).ContentPadding(FMargin(6, 8))
             .IsEnabled_Lambda(TFunction<bool()>(Enabled))
             .OnClicked_Lambda([Cycle]() { Cycle(1); return FReply::Handled(); })
             [
@@ -415,6 +437,39 @@ TSharedRef<SWidget> SVSSessionMenu::MakeSelector(FName Tag, TSharedPtr<SButton>&
             ]
         ]
         + SHorizontalBox::Slot().AutoWidth() [ Arrow(1, TEXT("›")) ];
+}
+
+void SVSSessionMenu::Tick(const FGeometry& Geometry, const double CurrentTime, const float DeltaTime)
+{
+    SCompoundWidget::Tick(Geometry, CurrentTime, DeltaTime);
+    // Only ticks while the menu is visible. When the OS activates the window
+    // (first activation after launching on an inactive Space, or switching back
+    // to the game), FSceneViewport::OnViewportActivated calls
+    // AcquireFocusAndCapture regardless of the UI-only input mode. The viewport
+    // then owns the mouse and swallows the next click on any menu control, so
+    // hand the mouse and focus back to the menu.
+    const UWorld* World = Controller.IsValid() ? Controller->GetWorld() : nullptr;
+    const UGameViewportClient* Client = World ? World->GetGameViewport() : nullptr;
+    const TSharedPtr<SViewport> ViewportWidget = Client ? Client->GetGameViewportWidget() : nullptr;
+    const TSharedPtr<FSlateUser> User = FSlateApplication::IsInitialized() ? FSlateApplication::Get().GetCursorUser() : nullptr;
+    if (!ViewportWidget || !User)
+    {
+        return;
+    }
+    const bool bCaptured = User->GetCursorCaptor() == ViewportWidget;
+    const bool bFocused = User->GetFocusedWidget() == ViewportWidget;
+    if (bCaptured)
+    {
+        User->ReleaseCursorCapture();
+    }
+    if (bFocused)
+    {
+        FocusWidget(InitialFocus());
+    }
+    if (bCaptured || bFocused)
+    {
+        UE_LOG(LogValStrike, Display, TEXT("VSMENU_RECLAIM viewport_capture=%d viewport_focus=%d"), int32(bCaptured), int32(bFocused));
+    }
 }
 
 bool SVSSessionMenu::IsConnecting() const

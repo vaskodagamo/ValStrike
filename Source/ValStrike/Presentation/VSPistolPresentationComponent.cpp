@@ -20,7 +20,9 @@ UVSPistolPresentationComponent::UVSPistolPresentationComponent()
     FirstPersonGrip = FTransform(FRotator(-2, -3, 0), FVector(34, 12, -14));
     // Held forward of the placeholder torso so observers can read the silhouette.
     WorldGrip = FTransform(FRotator::ZeroRotator, FVector(45, 16, 120));
-    FlashScale = FVector(0.08f, 0.035f, 0.035f);
+    FlashScale = FVector(0.08f, 0.04f, 0.028f);
+    // GPT-09: about 40 ms of flash; body kick keeps the base defaults beside the slide kick.
+    FlashDuration = 0.04f;
     ReloadMagazineOffset = FVector(0.0f, 0.0f, -10.0f);
     SlideKickDistance = 2.5f;
 }

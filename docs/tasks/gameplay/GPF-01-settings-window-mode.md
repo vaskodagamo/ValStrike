@@ -1,0 +1,27 @@
+# Task GPF-01: fix INT-02-D1, where the settings window-mode arrow click no longer changes the mode
+
+- Status: In progress
+- Defect: INT-02-D1 in `docs/workstreams/integration-02.md` (PR #43). `Tests/UI/test_settings.py` (rendered) fails 2/2 on main `5b13856` at `arrow_selects_windowed FAIL mode=1`, followed by cascading window-mode failures. Volume and sensitivity checks pass.
+- Owner/session and provider: the GPT-06 session (it wrote the volume row in PR #39 and has that context)
+- Lead: Claude gameplay lead
+- Branch and exact base SHA: new `claude/gpf-01-settings-window-mode` from `origin/main` `5b13856`, in the existing worktree `/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/gpt-06-volume-setting`
+- Owns: the same paths as GPT-06:
+  - `UI/VSUserSettings*`
+  - the settings section of `UI/SVSSessionMenu.*`
+  - `UI/VSSettingsSmoke.*`
+  - `Tests/UI/test_settings*.py`
+  - the settings section of `Tests/UI/README.md`
+  - append to `docs/workstreams/settings.md`
+- Evidence (read-only, in the QA checkout): `/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/team-integration/Saved/Tests/Settings/20261104T092738Z_083123/`
+  - `first.log:1457-1459`
+  - `screenshots/first/settings-pending-windowed.png`
+  - the earlier run `…092513Z_b8f7e4` for comparison
+- Attribution: unconfirmed. The QA session is bisecting in parallel by running the same runner on `90849f5` and `b5b8523`; the lead forwards the result. Suspects in GPT-06's diff:
+  - the added row and tightened padding moving the window-mode row, at 2560×1440 Windowed Fullscreen, under a clipping or overlapping widget;
+  - the smoke test's new Tab/Left sequence in step 16 (`SlateKey(EKeys::Left)` on the volume slider and on the window mode) changing the state before the click;
+  - the `Next` arrow's `OnClicked`/enabled binding.
+- Result: the mode arrow click works again, and the test expectations stay unchanged unless the bisect proves the failure predates GPT-06 and lies in the test itself; then say so explicitly. Stop when the fix is committed, the PR is open and the handoff is written.
+- Validation tier: V1
+- Contributor checks: the existing engine-free settings tests and runner unit tests; `git diff --check`. No Unreal build.
+- Integration-owned checks: rerun only `Tests/UI/test_settings.py` (rendered) and native `ValStrike.UI.Settings`, plus `Tests/UI/test_session.py` if the page layout changed.
+- Publication: owner pushes and opens a PR; the user merges.
