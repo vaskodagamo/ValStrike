@@ -28,6 +28,7 @@ void AVSScoreboardState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
     Super::GetLifetimeReplicatedProps(OutLifetimeProps);
     DOREPLIFETIME(AVSScoreboardState, Rows);
     DOREPLIFETIME(AVSScoreboardState, Revision);
+    DOREPLIFETIME(AVSScoreboardState, KillFeed);
 }
 
 void AVSScoreboardState::BeginPlay()
@@ -72,6 +73,27 @@ bool AVSScoreboardState::ServerPublish(const TArray<FVSScoreboardRow>& NewRows)
     ++Revision;
     ForceNetUpdate();
     OnRep_Rows();
+    return true;
+}
+
+bool AVSScoreboardState::ServerPublishKillFeed(const TArray<FVSKillFeedEntry>& NewFeed)
+{
+    if (!HasAuthority())
+    {
+        return false;
+    }
+    // Entries are immutable once appended, so equal sequences mean equal content.
+    bool bSame = NewFeed.Num() == KillFeed.Num();
+    for (int32 Index = 0; bSame && Index < KillFeed.Num(); ++Index)
+    {
+        bSame = KillFeed[Index].Sequence == NewFeed[Index].Sequence;
+    }
+    if (bSame)
+    {
+        return false;
+    }
+    KillFeed = NewFeed;
+    ForceNetUpdate();
     return true;
 }
 

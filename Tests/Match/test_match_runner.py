@@ -356,5 +356,90 @@ class MatchLifecycleTests(unittest.TestCase):
         self.assertIn("changed during", result["error"])
 
 
+def spectate_line(event, viewer, target, round_id):
+    payload = json.dumps({"event": event, "viewer": viewer, "target": target, "round": round_id}, separators=(",", ":"))
+    return f"[2026.11.04-10.00.00:000][  1]LogValStrike: Display: VSSPECTATE {payload}"
+
+
+class MatchSpectateTests(unittest.TestCase):
+    """GPT-13 sample VSSPECTATE lines; driver is id 1 on team 1, observer id 2 on team 2."""
+
+    def setUp(self):
+        self.reports = valid_reports()
+        for role, team, ident in (("driver", 1, 1), ("observer", 2, 2)):
+            check = next(item for item in self.reports[role]["checks"] if item["name"] == "replicated_match")
+            check["detail"] = f"team={team} id={ident} round=1"
+
+    def statuses(self, driver="", observer=""):
+        return {check["check"]: check["status"]
+                for check in match.evaluate_spectate(self.reports, {"driver": driver, "observer": observer})}
+
+    def test_parse_accepts_structured_lines_and_ignores_others(self):
+        text = "LogNet: unrelated\n" + spectate_line("start", 1, 3, 4) + "\n" + spectate_line("stop", 1, 0, 5)
+        self.assertEqual(match.parse_spectate(text), [{"event": "start", "viewer": 1, "target": 3, "round": 4},
+                                                      {"event": "stop", "viewer": 1, "target": 0, "round": 5}])
+
+    def test_parse_rejects_malformed_events(self):
+        for payload in ('{"event":"start"', '{"event":"jump","viewer":1,"target":3,"round":1}',
+                        '{"event":"start","viewer":1,"target":0,"round":1}', '{"event":"stop","viewer":1,"target":3,"round":1}',
+                        '{"event":"start","viewer":0,"target":3,"round":1}', '{"event":"start","viewer":1,"target":3}',
+                        '{"event":"start","viewer":1,"target":true,"round":1}', '{"event":"start","viewer":1,"target":3,"round":1,"x":1}',
+                        '{"event":"start","viewer":1,"viewer":1,"target":3,"round":1}'):
+            with self.subTest(payload=payload), self.assertRaisesRegex(RuntimeError, "VSSPECTATE"):
+                match.parse_spectate("LogValStrike: Display: VSSPECTATE " + payload)
+
+    def test_no_spectate_is_not_reached_never_a_pass(self):
+        statuses = self.statuses()
+        self.assertEqual(set(statuses.values()), {"not_reached"})
+        self.assertEqual(len(statuses), 3)
+        absent = match.evaluate_spectate(self.reports, {"driver": None, "observer": None})
+        self.assertEqual({check["status"] for check in absent}, {"not_reached"})
+        self.assertIn("log absent", absent[0]["detail"]["reason"])
+
+    def test_teammate_start_then_reset_stop_passes(self):
+        driver = "\n".join((spectate_line("start", 1, 3, 4), spectate_line("stop", 1, 0, 5)))
+        self.assertEqual(set(self.statuses(driver).values()), {"pass"})
+
+    def test_enemy_self_or_foreign_viewer_target_fails(self):
+        for line in (spectate_line("start", 1, 2, 4), spectate_line("start", 1, 1, 4), spectate_line("start", 2, 3, 4)):
+            with self.subTest(line=line):
+                statuses = self.statuses(line + "\n" + spectate_line("stop", 1, 0, 5))
+                self.assertEqual(statuses["spectate: teammate_start"], "fail")
+                self.assertEqual(statuses["spectate: no_enemy_or_dead_target"], "fail")
+        statuses = self.statuses("\n".join((spectate_line("start", 1, 3, 4), spectate_line("cycle", 1, 2, 4),
+                                            spectate_line("stop", 1, 0, 5))))
+        self.assertEqual(statuses["spectate: teammate_start"], "pass")
+        self.assertEqual(statuses["spectate: no_enemy_or_dead_target"], "fail")
+
+    def test_missing_stop_or_bad_sequence_fails_and_same_round_stop_is_not_reached(self):
+        for driver in (spectate_line("start", 1, 3, 4),
+                       "\n".join((spectate_line("start", 1, 3, 4), spectate_line("start", 1, 3, 4), spectate_line("stop", 1, 0, 5))),
+                       "\n".join((spectate_line("start", 1, 3, 4), spectate_line("cycle", 1, 3, 4), spectate_line("stop", 1, 0, 5)))):
+            with self.subTest(driver=driver):
+                self.assertEqual(self.statuses(driver)["spectate: stop_on_round_reset"], "fail")
+        statuses = self.statuses("\n".join((spectate_line("start", 1, 3, 4), spectate_line("stop", 1, 0, 4))))
+        self.assertEqual(statuses["spectate: stop_on_round_reset"], "not_reached")
+        self.assertEqual(statuses["spectate: teammate_start"], "pass")
+
+    def test_missing_identity_with_events_fails(self):
+        next(item for item in self.reports["driver"]["checks"] if item["name"] == "replicated_match")["detail"] = {"observed": 1}
+        statuses = self.statuses("\n".join((spectate_line("start", 1, 3, 4), spectate_line("stop", 1, 0, 5))))
+        self.assertEqual(statuses["spectate: teammate_start"], "fail")
+
+    def test_runner_records_not_reached_without_failing_and_fails_on_enemy_target(self):
+        status, result = MatchLifecycleTests.run_fixture(self)
+        self.assertEqual(status, 0)
+        self.assertEqual(len(result["checks"]), 43)
+        self.assertEqual({check["status"] for check in result["spectate_checks"]}, {"not_reached"})
+        original = match.evaluate_spectate
+        enemy = "\n".join((spectate_line("start", 1, 2, 4), spectate_line("stop", 1, 0, 5)))
+        with patch.object(match, "evaluate_spectate",
+                          side_effect=lambda reports, logs: original(self.reports, {**logs, "driver": enemy})):
+            status, result = MatchLifecycleTests.run_fixture(self)
+        self.assertEqual(status, 1)
+        self.assertFalse(result["passed"])
+        self.assertIn("fail", {check["status"] for check in result["spectate_checks"]})
+
+
 if __name__ == "__main__":
     unittest.main()

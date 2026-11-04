@@ -1,0 +1,301 @@
+{
+  "asset_id": "MSH-W07",
+  "source_files": [
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Gray_Cabinet_20261104_texture_c02c572c/Meshy_AI_Industrial_Gray_Cabin_1104115853_texture.png",
+      "bytes": 12396257,
+      "sha256": "963483dbb8f8ffb27e8b45879b7369a569beec64eef8154d360aa0feade2ce8a",
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Gray_Cabinet_20261104_texture_c02c572c/Meshy_AI_model.fbx",
+      "bytes": 14326172,
+      "sha256": "adfdfedab8b71d7845e51567a629149104070a4f32d78ac204d8fcec81ef0ceb"
+    },
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Gray_Cabinet_20261104_texture_c02c572c/Meshy_AI_texture_0_metallic.png",
+      "bytes": 871010,
+      "sha256": "f9b5ec34f3ba4914479d88ba5a9489c25899967b773e4e0b7896427830de10ef",
+      "size": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Gray_Cabinet_20261104_texture_c02c572c/Meshy_AI_texture_0_normal.png",
+      "bytes": 9737924,
+      "sha256": "6a46d73b1f659723e749d118bff0b3789b758973581c4ee8f1b8faf6f1874cb6",
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Gray_Cabinet_20261104_texture_c02c572c/Meshy_AI_texture_0_roughness.png",
+      "bytes": 941396,
+      "sha256": "eba3085e7878b0582ae5a7a8ea9f98292d9ba51ec9e86ee5d8c9ca7e3526eeb3",
+      "size": [
+        2048,
+        2048
+      ]
+    }
+  ],
+  "blender_version": "5.2.2 LTS",
+  "original_objects": [
+    {
+      "name": "Mesh_0",
+      "vertices": 2177,
+      "triangles": 3774,
+      "polygons": 3774,
+      "materials": [
+        "Material.001"
+      ],
+      "uv_layers": [
+        "UVMap"
+      ],
+      "bounds_min": [
+        -0.342523992061615,
+        -0.03235901892185211,
+        -0.5
+      ],
+      "bounds_max": [
+        0.3397200107574463,
+        0.03394202142953873,
+        0.5
+      ],
+      "dimensions": [
+        0.6822440028190613,
+        0.06630104035139084,
+        1.0
+      ],
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        -4.371138828673793e-08,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "edges": {
+        "boundary": 506,
+        "nonmanifold": 506,
+        "wire": 0
+      },
+      "degenerate_faces": 0
+    }
+  ],
+  "textures": [
+    {
+      "role": "basecolor",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W07/Textures/T_MSH_W07_basecolor.png",
+      "sha256": "963483dbb8f8ffb27e8b45879b7369a569beec64eef8154d360aa0feade2ce8a",
+      "size": [
+        4096,
+        4096
+      ],
+      "color_space": "sRGB"
+    },
+    {
+      "role": "metallic",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W07/Textures/T_MSH_W07_metallic.png",
+      "sha256": "f9b5ec34f3ba4914479d88ba5a9489c25899967b773e4e0b7896427830de10ef",
+      "size": [
+        2048,
+        2048
+      ],
+      "color_space": "Non-Color"
+    },
+    {
+      "role": "normal",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W07/Textures/T_MSH_W07_normal.png",
+      "sha256": "6a46d73b1f659723e749d118bff0b3789b758973581c4ee8f1b8faf6f1874cb6",
+      "size": [
+        4096,
+        4096
+      ],
+      "color_space": "Non-Color"
+    },
+    {
+      "role": "roughness",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W07/Textures/T_MSH_W07_roughness.png",
+      "sha256": "eba3085e7878b0582ae5a7a8ea9f98292d9ba51ec9e86ee5d8c9ca7e3526eeb3",
+      "size": [
+        2048,
+        2048
+      ],
+      "color_space": "Non-Color"
+    }
+  ],
+  "game_textures": [
+    {
+      "role": "basecolor",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W07/Textures/T_MSH_W07_basecolor.png",
+      "sha256": "963483dbb8f8ffb27e8b45879b7369a569beec64eef8154d360aa0feade2ce8a",
+      "size": [
+        4096,
+        4096
+      ],
+      "color_space": "sRGB"
+    },
+    {
+      "role": "metallic",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W07/Textures/T_MSH_W07_metallic.png",
+      "sha256": "f9b5ec34f3ba4914479d88ba5a9489c25899967b773e4e0b7896427830de10ef",
+      "size": [
+        2048,
+        2048
+      ],
+      "color_space": "Non-Color"
+    },
+    {
+      "role": "normal",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W07/Textures/T_MSH_W07_normal.png",
+      "sha256": "6a46d73b1f659723e749d118bff0b3789b758973581c4ee8f1b8faf6f1874cb6",
+      "size": [
+        4096,
+        4096
+      ],
+      "color_space": "Non-Color"
+    },
+    {
+      "role": "roughness",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W07/Textures/T_MSH_W07_roughness.png",
+      "sha256": "eba3085e7878b0582ae5a7a8ea9f98292d9ba51ec9e86ee5d8c9ca7e3526eeb3",
+      "size": [
+        2048,
+        2048
+      ],
+      "color_space": "Non-Color"
+    }
+  ],
+  "cleanup": {
+    "dimensions_m": [
+      2,
+      0.2,
+      3
+    ],
+    "pivot": "base_corner",
+    "target_triangles": 3774,
+    "edits": {
+      "base_contact_vertices": 54,
+      "base_contact_residual_limit_m": 0.0001
+    },
+    "shading": "custom corner normals transferred from normalized detail master",
+    "budget_note": "Target preserves silhouettes with high-to-low texture rebake; panel retains its already modest source density."
+  },
+  "cleaned_game": {
+    "name": "SM_VS_MSH_W07_InfillPanel",
+    "vertices": 2177,
+    "triangles": 3774,
+    "polygons": 3774,
+    "materials": [
+      "M_MSH_W07"
+    ],
+    "uv_layers": [
+      "UVMap"
+    ],
+    "bounds_min": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "bounds_max": [
+      2.0,
+      0.20000000298023224,
+      3.0
+    ],
+    "dimensions": [
+      2.0,
+      0.20000000298023224,
+      3.0
+    ],
+    "location": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rotation": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "scale": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "edges": {
+      "boundary": 506,
+      "nonmanifold": 506,
+      "wire": 0
+    },
+    "degenerate_faces": 0
+  },
+  "detail_master": {
+    "name": "SOURCE_VS_MSH_W07_InfillPanel_DetailMaster",
+    "vertices": 2177,
+    "triangles": 3774,
+    "polygons": 3774,
+    "materials": [
+      "M_MSH_W07"
+    ],
+    "uv_layers": [
+      "UVMap"
+    ],
+    "bounds_min": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "bounds_max": [
+      2.0,
+      0.20000000298023224,
+      3.0
+    ],
+    "dimensions": [
+      2.0,
+      0.20000000298023224,
+      3.0
+    ],
+    "location": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rotation": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "scale": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "edges": {
+      "boundary": 506,
+      "nonmanifold": 506,
+      "wire": 0
+    },
+    "degenerate_faces": 0
+  },
+  "game_fbx": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W07/SM_VS_MSH_W07_InfillPanel.fbx",
+  "fbx_sha256": "f7116fe363144c8adc9ef835ecdf1ffd567d095226c658705cc641dcfa3e7ea3",
+  "blend": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W07/InfillPanel.blend",
+  "normal_convention": "Supplied RGB retained, interpreted as tangent +Y/OpenGL in Blender. Vendor convention unlabelled; Unreal green-channel handling pending native inspection.",
+  "source_ready_not_native_verified": true,
+  "actual_identity": "Thin metal infill panel, not a cabinet",
+  "delivery_status": "Source ready for art review; native import/runtime pending",
+  "collision_intent": "No source collision mesh; preserve existing map collision; panel requires wall backing; stairs not exported for gameplay.",
+  "blend_sha256": "fbc5b78177edbcecd6ff4b9f9ac315364a2c588577394db5991380bef1b21e31"
+}

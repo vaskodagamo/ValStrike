@@ -15,6 +15,7 @@
 #include "InputKeyEventArgs.h"
 #include "Misc/CommandLine.h"
 #include "Misc/Parse.h"
+#include <initializer_list>
 #include "../VSCharacter.h"
 #include "../ValStrike.h"
 
@@ -66,6 +67,18 @@ private:
         Key(LocalController.Get(), EKeys::LeftShift, false, bWalk);
         Key(LocalController.Get(), EKeys::LeftControl, false, bCrouch);
         Key(LocalController.Get(), EKeys::SpaceBar, false, bJump);
+        Key(LocalController.Get(), EKeys::Two, false, bPistol);
+    }
+
+    struct FWindow { double Start; double End; };
+
+    static bool During(double Time, std::initializer_list<FWindow> Windows)
+    {
+        for (const FWindow& Window : Windows)
+        {
+            if (Time >= Window.Start && Time < Window.End) { return true; }
+        }
+        return false;
     }
 
     bool Place(AVSCharacter* Character, const FVector& Location)
@@ -101,12 +114,13 @@ private:
         }
         const UCameraComponent* Camera = Driver->FindComponentByClass<UCameraComponent>();
         const double EyeZ = Camera ? Camera->GetComponentLocation().Z : Position.Z;
-        UE_LOG(LogValStrike, Display, TEXT("VSMOVE_JSON {\"event\":\"sample\",\"role\":\"%s\",\"t\":%.3f,\"player\":\"VSDriver\",\"player_id\":%d,\"authority\":%s,\"net_role\":%d,\"x\":%.3f,\"y\":%.3f,\"z\":%.3f,\"speed\":%.3f,\"vz\":%.3f,\"grounded\":%s,\"crouched\":%s,\"half_height\":%.3f,\"eye_z\":%.3f,\"body_min_z\":%.3f,\"body_max_z\":%.3f}"),
+        UE_LOG(LogValStrike, Display, TEXT("VSMOVE_JSON {\"event\":\"sample\",\"role\":\"%s\",\"t\":%.3f,\"player\":\"VSDriver\",\"player_id\":%d,\"authority\":%s,\"net_role\":%d,\"x\":%.3f,\"y\":%.3f,\"z\":%.3f,\"speed\":%.3f,\"vz\":%.3f,\"grounded\":%s,\"crouched\":%s,\"half_height\":%.3f,\"eye_z\":%.3f,\"body_min_z\":%.3f,\"body_max_z\":%.3f,\"weapon\":\"%s\"}"),
             *Role, Time, Driver->GetPlayerState()->GetPlayerId(), Driver->HasAuthority() ? TEXT("true") : TEXT("false"),
             static_cast<int32>(Driver->GetLocalRole()), Position.X, Position.Y, Position.Z,
             Velocity.Size2D(), Velocity.Z, Driver->GetCharacterMovement()->IsMovingOnGround() ? TEXT("true") : TEXT("false"),
             Driver->IsCrouched() ? TEXT("true") : TEXT("false"), Driver->GetCapsuleComponent()->GetUnscaledCapsuleHalfHeight(),
-            EyeZ, VisualBounds.IsValid ? VisualBounds.Min.Z : Position.Z, VisualBounds.IsValid ? VisualBounds.Max.Z : Position.Z);
+            EyeZ, VisualBounds.IsValid ? VisualBounds.Min.Z : Position.Z, VisualBounds.IsValid ? VisualBounds.Max.Z : Position.Z,
+            Driver->GetMovementWeaponKind() == VSMovementRules::WeaponKind::Pistol ? TEXT("pistol") : TEXT("rifle"));
     }
 
     void Tick(UWorld* World, ELevelTick TickType, float DeltaSeconds)
@@ -165,6 +179,14 @@ private:
                 Event(TEXT("setup"), Time, TEXT("initial"));
             }
         }
+        // Weapon weight slows the rifle run; start the boundary run where the old
+        // 450 cm/s tuning was at 11 s, so the driver still reaches the wall by 16.5 s.
+        if (bServer && Time >= 10.9 && !bBoundaryPlaced)
+        {
+            bBoundaryPlaced = true;
+            if (!Place(Driver, FVector(200.0, -1100.0, 90.0))) { Fail(Time, TEXT("boundary_placement_failed")); return; }
+            Event(TEXT("setup"), Time, TEXT("boundary"));
+        }
         if (bServer && Time >= 20.0 && !bStairsPlaced)
         {
             bStairsPlaced = true;
@@ -177,23 +199,32 @@ private:
             if (!Place(Driver, FVector(-900.0, 0.0, 90.0))) { Fail(Time, TEXT("cover_placement_failed")); return; }
             Event(TEXT("setup"), Time, TEXT("cover"));
         }
+        // Movement feel stages (GPT-15): pistol weight, standing Ctrl+Space
+        // crouch-jump, running jump, running crouch-jump, held-crouch jump.
+        if (bServer && Time >= 32.0 && !bFeelPlaced)
+        {
+            bFeelPlaced = true;
+            if (!Place(Driver, FVector(-1400.0, -1100.0, 90.0))) { Fail(Time, TEXT("feel_placement_failed")); return; }
+            Event(TEXT("setup"), Time, TEXT("feel"));
+        }
         if (Role == TEXT("driver"))
         {
             PC->SetControlRotation(FRotator::ZeroRotator);
             Key(PC, EKeys::LeftShift, Time >= 3.0 && Time < 5.0, bWalk);
-            Key(PC, EKeys::LeftControl, Time >= 5.5 && Time < 7.0, bCrouch);
-            const bool bMove = (Time >= 1.0 && Time < 2.5) || (Time >= 3.0 && Time < 5.0)
-                || (Time >= 5.5 && Time < 7.0) || (Time >= 11.0 && Time < 18.0)
-                || (Time >= 21.0 && Time < 24.0) || (Time >= 28.0 && Time < 31.0);
-            Key(PC, EKeys::W, bMove, bForward);
-            Key(PC, EKeys::SpaceBar, Time >= 8.0 && Time < 8.15, bJump);
+            Key(PC, EKeys::Two, During(Time, {{32.5, 32.6}}), bPistol);
+            // Ctrl before Space within a tick: both reach the same predicted move.
+            Key(PC, EKeys::LeftControl, During(Time, {{5.5, 7.0}, {35.0, 36.2}, {38.6, 39.6}, {40.2, 41.7}}), bCrouch);
+            Key(PC, EKeys::W, During(Time, {{1.0, 2.5}, {3.0, 5.0}, {5.5, 7.0}, {11.0, 18.0}, {21.0, 24.0},
+                {28.0, 31.0}, {33.0, 34.6}, {36.6, 39.8}}), bForward);
+            Key(PC, EKeys::SpaceBar, During(Time, {{8.0, 8.15}, {35.0, 35.15}, {37.2, 37.35}, {38.6, 38.75},
+                {40.7, 40.85}}), bJump);
         }
         if (Time >= -1.0 && Time - LastSample >= 0.1)
         {
             LastSample = Time;
             Sample(Driver, Time);
         }
-        if (Time >= 33.0)
+        if (Time >= 42.5)
         {
             Event(TEXT("done"), Time);
             bFinished = true;
@@ -207,7 +238,8 @@ private:
     float StartTime = 30.0f;
     double LastSample = -1000.0;
     bool bReady = false, bFinished = false, bStairsPlaced = false, bCoverPlaced = false, bNameRequested = false;
-    bool bForward = false, bWalk = false, bCrouch = false, bJump = false;
+    bool bBoundaryPlaced = false, bFeelPlaced = false;
+    bool bForward = false, bWalk = false, bCrouch = false, bJump = false, bPistol = false;
 };
 
 TUniquePtr<FVSMovementSmoke> MovementSmoke;

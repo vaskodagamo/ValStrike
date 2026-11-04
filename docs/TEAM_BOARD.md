@@ -1,5 +1,37 @@
 # Team board
 
+## Producer handoff — 2026-11-04
+
+User explicitly authorized “Direktor (2)” to message “Direktor” to finish/checkpoint this dispatch and transfer producer ownership; the authorization was verified in that chat's user reply. After this checkpoint, **Direktor (2)** (`01a1a67c-4861-7e62-a15e-505444092624`), checkout `/Users/webproduktion3/.codex/worktrees/10a1/ValStrike`, owns producer/art-lead coordination and central TEAM_BOARD/WORK_LOG updates. This outgoing Direktor stops further dispatch and central writes after publication. Every existing worker/worktree is preserved; user retains merges. [Checkpoint handoff](teams/PRODUCER_HANDOFF_2026-11-04.md).
+
+## First-person hands / knife kickoff and native-status check — 2026-11-04
+
+User requested a hands/gloves/knife check and kickoff if missing. Read-only evidence: old ART-05 is the rejected procedural FPArms01 prototype, stopped and never native-integrated; the newer glove pair is an image reference only. No native FPArms/knife exists in inspected main or the INT-ART-01 checkout. Coordinator owns this update on `codex/hands-knife-dispatch`, main baseline `b342ca9`, carrying the earlier PR #68 assignment records so active weapon ownership remains visible.
+
+| Task | Owner / fresh worktree | Exclusive writes / state |
+| --- | --- | --- |
+| [ART-19 FPArms02](tasks/art/ART-19-fparms02.md) | Codex “Art — Meshy first-person hands” (`01a1a6cf-0f10-73d0-8c33-29cb863d7b33`), High; `.parallel-worktrees/art19-fparms02`, `codex/art19-fparms02` | `Art/Source/Characters/FPArms02/`, `docs/assets/fparms02/`, `docs/workstreams/art19-fparms02.md`; Meshy single-hand draft → paired cleanup/finger rig → source/pose handoff |
+| [ART-20 K01 knife](tasks/art/ART-20-knife01.md) | Codex “Art — Meshy K01 knife” (`01a1a6cf-270a-7e70-a435-a966fd3a5822`), High; `.parallel-worktrees/art20-knife01`, `codex/art20-knife01` | `Art/Source/Weapons/Knife01/`, `docs/assets/knife01/`, `docs/workstreams/art20-knife01.md`; Meshy draft → local cleanup/grip fit → source handoff |
+
+Both chats were dispatched at High reasoning from clean prepared HEAD `babef7d71d2456fe213ca489b2fbb4e545a34216`; configured model unchanged. User approved **60 additional credits**, allocated **30 to ART-19 and 30 to ART-20**, one textured Meshy 7.1 standard image-to-3D job each, no extra paid stage/retry/purchase. This is separate from ART-17/18's 60-credit approval. Use built-in imagegen references, official resumable Meshy jobs, local artist finishing and no humanoid auto-rig for isolated hands. No new native/map/code owner or engine slot is created. Knife combat/equip logic is not part of the art task; source and native/gameplay readiness remain distinct.
+
+**Character/world integration:** source PR #65 (character pilot), #63 (four props) and #64 (INT-05 verification/release) are merged. Inspected main `b342ca9` and the current `claude/int-art-01-meshy-playtest` checkout still contain no new Meshy/UrbanEntry native assets. Its last handoff is preflight-only and cites now-cleared source/slot blockers. The existing Claude owner retains its exact paths and can resume using [INT-ART-01 cleared-gate handoff](tasks/integration/INT-ART-01-RESUME.md); no competing integrator is started. The handoff grants bounded native transform reconciliation for its reported Y-axis concern while preserving source and world-space map contracts. Live gameplay GPT-12/13/14 work remains source-only; recheck slot reservations at execution. The coordinator cannot resume the external Claude chat through Codex chat tools; user receives a one-line resume prompt.
+
+## R02 / P02 Meshy weapon replacement kickoff — 2026-11-04
+
+User reports the current gun is too big beside the character and explicitly requests new rifle/pistol chats, using **Meshy AI** for the new models. User approved **60 credits total**: exactly 30 per weapon, one textured image-to-3D task each, no paid retries/extra stages. Coordinator owns this dispatch on `codex/weapon-v2-dispatch`, based on merged main `b8183db` (PR #62). [Weapon V2 shared brief](tasks/art/WEAPON_V2_BRIEF.md) records reference direction, scale targets, exact proposed job options, official pricing and the approval.
+
+| Task | New owner / worktree | Exclusive source + docs | Result / allowance |
+| --- | --- | --- | --- |
+| [ART-17 R02 rifle](tasks/art/ART-17-rifle02.md) | Codex “Art — Meshy R02 rifle” (`01a1a6c3-9f0b-76b3-aabd-ccfed653040f`), High; `.parallel-worktrees/art17-rifle02`, `codex/art17-rifle02` | `Art/Source/Weapons/Rifle02/`, `docs/assets/rifle02/`, `docs/workstreams/art17-rifle02.md` | Meshy draft → artist cleanup → real character-scale/hand-fit previews and socket recipe; **30 credits** |
+| [ART-18 P02 pistol](tasks/art/ART-18-pistol02.md) | Codex “Art — Meshy P02 pistol” (`01a1a6c3-ae6d-7bc3-b164-ee3e417314ec`), High; `.parallel-worktrees/art18-pistol02`, `codex/art18-pistol02` | `Art/Source/Weapons/Pistol02/`, `docs/assets/pistol02/`, `docs/workstreams/art18-pistol02.md` | Meshy draft → artist cleanup → real character-scale/hand-fit previews and socket recipe; **30 credits** |
+
+Dispatched both chats at High reasoning, configured model unchanged, from clean prepared HEAD `e0071ce295c78cfdfa453af86b83596dc4cfa2ec`. Each received its own worktree, exact 30-credit allowance, resumable-job requirement and source-only scope. No coordinator Meshy submission or model completion claim.
+
+Initial R02 length target 72–78 cm; P02 20–22 cm, with slimmer grips/receiver/slide proportions inspected against the frozen 170 cm character at scale 1. Existing R01 is 86 cm long; P01 23.929 cm. This is a redesign request, not proof the source dimensions alone caused the reported appearance. Artists also document import/socket/camera risks for native review. New files only: R01/P01, character sources/poses, existing gameplay/native assets and other checkouts remain read-only. No new engine slot, contributor build, repeated test suite or humanoid auto-rig.
+
+ART-15 was notified to finish its existing R01 pilot handoff as a temporary baseline without restarting pose work or scaling the character. ART-16 and INT-ART-01 continue their existing batch. New weapon source readiness does **not** automatically extend INT-ART-01's native Content/code ownership; replacement import is a later explicitly scoped handoff to the single integration owner after source review. User retains PR merges.
+
 ## Meshy first-playtest kickoff — 2026-11-04
 
 User authorized new art chats plus a prompt for a new Claude integration chat. Initial kickoff main was `ee25083` (including PR #57); main advanced to `5e9048f` with #58–61 during dispatch. Coordinator owns this kickoff on `codex/meshy-playtest-dispatch`; the following assignments supersede the completed ART-12/13 source ownership for the new pass. Original worker checkouts stay frozen/read-only. No structures/stair repair or new paid generation is launched.
