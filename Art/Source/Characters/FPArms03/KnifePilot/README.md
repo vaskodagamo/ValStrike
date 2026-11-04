@@ -1,6 +1,6 @@
 # FPArms03 KnifePilot — ART-26
 
-**Held source checkpoint:** top-view palm/handle contact and attack windup cropping still fail appearance acceptance. See `docs/assets/fparms03/knife-pilot/review.md`.
+**ART-26-C1 correction:** grip/palm relationship, finger closure, local thumb/web weighting and attack windup framing are revised. Current evidence is in `docs/assets/fparms03/knife-pilot/c1-review.md`; the original held review remains a historical checkpoint at `2b944b3`. Art-lead and native acceptance are separate gates.
 
 Derived first-person K01 hands and five source actions for KNIFE-01. This package does not implement equip inputs, melee authority, damage, audio or native presentation. Those belong to the separate gameplay/native owners. See the task-owned readiness report before admission.
 
@@ -28,7 +28,7 @@ Slash sweeps laterally with a separate windup/follow-through; stab extends forwa
 
 ## Attachment and camera
 
-Authored in centimeters, +X forward and +Z up. Root stays identity. Bone names, rest transforms and hierarchy match frozen ART-24; original mesh topology/positions, UVs, custom normals, weights and PBR are retained. No finger/weapon rescaling or optimization. The pair is still 780,956 triangles; runtime budget/LOD approval remains pending.
+Authored in centimeters, +X forward and +Z up. Root stays identity. Bone names, rest transforms and hierarchy match frozen ART-24; original mesh topology/positions, UVs, custom normals and PBR are retained. C1 changes only 25,613 right thumb/web vertex weights (hand/thumb and tiny existing index-boundary influences), with at most four influences; every before/after value is in `c1-weight-changes.json`. The left weights and all other right vertices remain unchanged. No finger/weapon rescaling or optimization. The pair is still 780,956 triangles; runtime budget/LOD approval remains pending.
 
 For column vectors, `K01_component = Arm_component @ posed_weapon_socket_r @ weapon_local_from_socket`. Use the exact matrix in `animation-contract.json`; K01 remains at scale 1 with its authored grip-local origin. Do not attach a second knife mesh embedded in these exports—none is present. Convert the measured basis consistently at native import and verify with the actual skeleton.
 
@@ -39,3 +39,9 @@ The source camera is at (−20, 0, 5) cm looking +X with 90° horizontal FOV. To
 Run one Blender 5.2.2 LTS process at a time, with `--background --factory-startup --threads 2 --python-exit-code 1 --python <script>`. Stage the exact frozen inputs first. `author_knife.py -- build` creates only the derived source and contract; use Blender's `--` separator before `build`. `inspect_contacts.py` provides sparse grip/off-hand observations, not exhaustive collision proof. `export_and_inspect.py` reuses focused source/FBX checks, verifies original surface/rest/weights, clip timing/root motion and actual round trips. `render_evidence.py -- source` and `-- export` produce matched actual idle/contact, equip, locomotion, impact and recovery views using the same K01, camera, lights and original PBR.
 
 Rebuilding overwrites derived outputs, not base FPArms03. No service/account call, credit spend, Unreal operation, build or gameplay test suite is part of this task. Source appearance, native import/material/camera correctness and full playable knife acceptance are separate gates.
+
+## ART-26-C1 focused reproduction
+
+After staging the same frozen inputs, run `author_knife.py -- build`, `export_and_inspect.py -- --c1`, `render_evidence.py -- c1-source`, `render_evidence.py -- c1-export`, then `render_evidence.py -- c1-export --sheet`. Assemble the existing frames with `python3 Art/Source/Characters/FPArms03/KnifePilot/assemble_action_sheet.py` (Pillow). The notation begins after Blender's `--python <script>` argument. The C1 inspector reuses prior all-frame root/timing evidence, checks changed source surfaces/rest and the exact allowed weight delta, then inspects the actual changed FBXs at relevant poses. The sheet pass also projects all right hand/finger and K01 vertices at every hold/attack frame against the documented camera. It excludes the forearm and intentional offscreen equip entry. This is source framing evidence, not native camera acceptance.
+
+`inspect_contacts.py -- --c1` writes supplementary current contact observations. Original unprefixed JSON/images retain the frozen pre-C1 evidence; use `c1-*` evidence for the correction. Individual low-resolution `c1-strip_*` renders are local assembly intermediates; the full action sheet is the review artifact. No source action timing or shared gameplay rule changes in C1.

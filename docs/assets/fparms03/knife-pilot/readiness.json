@@ -1,33 +1,37 @@
 {
-  "task": "ART-26",
-  "date_europe_berlin": "2026-11-04T17:31:08.261801+01:00",
-  "state": "source checkpoint; appearance held; verification pending",
+  "task": "ART-26-C1",
+  "date_europe_berlin": "2026-11-04T18:18:15.630147+01:00",
+  "state": "source correction ready for art-lead review; native verification pending",
   "branch": "codex/art26-knife-first-person",
-  "branch_base": "5e53cb4de062f8ae0f91b171b09406c85ce6444f",
+  "prior_held_source": "2b944b314f9c20d8b64ee9892b1048302701992c",
   "credits_spent": 0,
   "service_account_calls": 0,
   "validation_tier": "V1 source only",
-  "passed": [
-    "Original mesh/UV/custom-normal/weight signatures and 39-bone rest hierarchy",
-    "Five 60 fps clips with contracted timing, impact markers and identity root",
-    "Loop and return-to-idle endpoints",
-    "Actual skeletal and animation FBX round trips",
-    "13 matched source/actual-FBX image pairs inspected"
+  "corrected": [
+    "Palm/handle relationship and finger pad closure",
+    "Thumb/web spike with explicit local weight delta",
+    "Slash/stab windup crops and intermediate hold/follow-through clipping"
   ],
-  "held": [
-    "Firm grip: palm-to-handle gap and incomplete finger wrap in top view",
-    "Windup framing: right edge slash crop and lower edge stab crop",
-    "Dense deformation outliers; runtime mesh budget unapproved"
+  "passed": [
+    "Original surface/UV/custom normals and 39-bone rest hierarchy",
+    "Exact local weight delta; unchanged left and other right weights",
+    "Changed actual FBX poses and export scope",
+    "All 199 exported hold/attack frames within documented FOV"
+  ],
+  "limitations": [
+    "Five sparse pad samples have residual penetration below 1 mm",
+    "Dense deformation outliers and runtime triangle budget not generally approved"
   ],
   "pending": [
-    "Native import/material/skeleton/attachment/camera verification",
-    "Native sequence notifies and cancellation",
-    "Combined gameplay, remote presentation/audio and server/client acceptance"
+    "Art-lead visual acceptance",
+    "Native import/material/camera/attachment/notifies/cancellation",
+    "Combined gameplay and server/client acceptance"
   ],
-  "review": "review.md",
-  "export_evidence": "export-inspection.json",
-  "contact_evidence": "contact-inspection.json",
+  "review": "c1-review.md",
+  "export_evidence": "c1-export-inspection.json",
+  "contact_evidence": "c1-contact-inspection.json",
+  "framing_evidence": "c1-framing.json",
+  "weight_evidence": "c1-weight-summary.json",
   "animation_contract": "animation-contract.json",
-  "scope": "Only new KnifePilot source, knife-pilot evidence and ART-26 handoff; base source read-only",
-  "structural_work_required": "Not established; no structural edits authorized or made"
+  "action_sheet": "Previews/c1_full_actions.png"
 }

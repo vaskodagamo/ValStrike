@@ -78,6 +78,8 @@ Both Macs need the same commit and their own build. **This two-Mac LAN run has n
 ## What to look at
 
 - The other player: Urban Entry body holding the new compact **R02** rifle in both hands, walking when moving. With the pistol (key 2), the new **P02** in a two-handed ready pose. Fire (left mouse) and reload (R): the flash comes from the new muzzle, the pistol slide kicks back, and the magazine drops.
+- The other player: Urban Entry body, rifle shouldered in both hands, walking when moving; with the pistol (key 2), a two-handed pistol ready pose.
+- Site01 (INT-ART-02 phase B branch only, once published): a grey concrete wall/blind-recess/wall section on the north side of the service building along the north service route, with three roof parapets above it.
 - Site01: four light concrete tiles in the Gallery (around X 100, Y 950), a dark panel on the service-building wall facing the Gallery, a long crate on the service roof, and Meshy cube crates replacing the north crate and the two-high site crate stack. Walk against the replaced crates: collision is the original crate collision.
 - Your own view: the new R02 and P02 in first person, with no arms yet. R02 sits slightly nearer and more central than the old rifle. No body parts block the camera.
 
@@ -90,5 +92,5 @@ Both Macs need the same commit and their own build. **This two-Mac LAN run has n
 - **Pistol (remote):** held two-handed in a stationary ready pose (INT-ART-02). While moving with the pistol the body keeps that pose and glides; there is no pistol walk. Glove/finger contact is pilot quality up close.
 - **New weapons (INT-ART-04):** R02 and P02 replace R01 and P01 at their source sizes. On the remote rifle, the stock reaches the cheek with no shoulder seat, and the fingers are not retuned for R02 (ART-17's open fit items). Each weapon is about 460K triangles with no LODs: pilot assets, not profiled. First person has no hands yet. In this revision, the development weapon checks `pistol_assets` and `attached_assets` still expect the old asset names and fail until their owners update them; gameplay is unaffected.
 - **Character quality:** generated face/hair, cloth folds and finger contact are pilot quality, not close-up/hero quality.
-- **Lighting message:** Site01 shows an orange on-screen "multiple directional lights" development warning; it comes from the map's existing two directional lights and predates this change.
+- **Lighting message:** Site01 shows an orange on-screen "multiple directional lights" development warning on the INT-ART-01 and phase A revisions; INT-ART-02 phase B removes it (same sun, no visual change).
 - Not verified: two-Mac LAN, packaged builds, Windows/Linux, four players, performance.

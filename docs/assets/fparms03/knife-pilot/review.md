@@ -23,3 +23,7 @@ Next source action is a bounded contact/pose correction using the existing rig a
 ## Pending integration
 
 Native skeleton/material import, attachment basis and camera offsets, animation notifies/cancellation, LMB/RMB authority and timing, locomotion blending, remote visibility/audio and actual server/client acceptance are unverified. The 780,956-triangle pair still needs runtime budget/LOD review. No playable or full-feature completion claim is made. The gameplay/native owners own those checks; the user merges.
+
+## 2026-11-04 — ART-26-C1 superseding source review
+
+The returned contact/framing defects are corrected in the current derived source. See [C1 review](c1-review.md), [current readiness](readiness.json) and [full-action sheet](Previews/c1_full_actions.png). The earlier observations above remain the record for `2b944b3`; use the C1 evidence for the revised source. Art-lead/native acceptance remains separate.

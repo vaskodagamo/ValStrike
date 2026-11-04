@@ -1,0 +1,31 @@
+{
+  "task": "ART-26-C1",
+  "changed_vertices": 25613,
+  "mesh": "SK_FPArms03_R",
+  "changed_group_counts": {
+    "thumb_03_r": 4209,
+    "hand_r": 25613,
+    "thumb_02_r": 14458,
+    "thumb_01_r": 16284
+  },
+  "rest_region_bounds_cm": [
+    [
+      27.013671875,
+      34.69144058227539
+    ],
+    [
+      -11.166401863098145,
+      -6.117794513702393
+    ],
+    [
+      -3.6820356845855713,
+      3.624845266342163
+    ]
+  ],
+  "max_influences": 4,
+  "left_weight_changes": 0,
+  "exact_delta": "c1-weight-changes.json",
+  "exact_delta_sha256": "1a5d9543ca3da01e0af560fe79e443844f91233c308ac46d1ee9db2e43d200c0",
+  "reason": "Continuous inner-thumb/hand blend removes the narrow original classification seam. Existing thumb proportions retained where available; nearest existing chain otherwise. Tiny pre-existing index influence at the web is retained across the blend; at most four normalized weights. No geometry or rest edits.",
+  "geometry_uv_normals_pbr_rest_changed": false
+}
