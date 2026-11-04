@@ -49,6 +49,9 @@ REQUIRED_CHECKS = {
 SPECTATE_ROLES = ("driver", "observer")
 SPECTATE_MARKER = "VSSPECTATE "
 SPECTATE_EVENTS = ("start", "cycle", "stop")
+SPECTATE_STAGE_MARKER = "VSSPECTATE_STAGE "
+SPECTATE_JOIN_MARKER = "VSMATCH_REQUEST_SPECTATE_JOIN"
+MATE_ROLE = "mate"  # GPF-03 auxiliary teammate; like late, it writes no report.
 IDENTITY = re.compile(r"\bteam=(\d+) id=(\d+)\b")
 
 
@@ -182,14 +185,38 @@ def client_identity(report):
     return None
 
 
-def evaluate_spectate(reports, logs):
+def parse_spectate_stage(text):
+    """The server's VSSPECTATE_STAGE line (GPF-03), or None when the stage was not reached."""
+    found = []
+    for line in (text or "").splitlines():
+        index = line.find(SPECTATE_STAGE_MARKER)
+        if index < 0:
+            continue
+        payload = line[index + len(SPECTATE_STAGE_MARKER):].strip()
+        try:
+            stage = json.loads(payload, parse_constant=reject_nonfinite, object_pairs_hook=unique_object)
+        except (ValueError, RecursionError) as error:
+            raise RuntimeError(f"Malformed VSSPECTATE_STAGE line: {payload!r}") from error
+        if (not isinstance(stage, dict) or set(stage) != {"viewer", "teammate", "enemy", "round"}
+                or any(type(stage[key]) is not int or stage[key] <= 0 for key in stage)
+                or len({stage["viewer"], stage["teammate"], stage["enemy"]}) != 3):
+            raise RuntimeError(f"Invalid VSSPECTATE_STAGE line: {payload!r}")
+        found.append(stage)
+    if len(found) > 1:
+        raise RuntimeError("More than one VSSPECTATE_STAGE line")
+    return found[0] if found else None
+
+
+def evaluate_spectate(reports, logs, server_log=None):
     """GPT-07 death-spectate checks from client logs: pass, fail or not_reached (never a silent pass).
 
-    `logs` maps a client role to its log text, or None when the log is absent. The log line carries
-    no life state, so a dead target is excluded by the client's CanWatch re-check and the
-    engine-free rule test; this runner rejects zero, self and known-enemy targets.
+    `logs` maps a client role to its log text, or None when the log is absent. `server_log` may carry
+    the GPF-03 stage line naming the dead viewer, its living teammate and the enemy; with it, the
+    stage must produce a start on that teammate and a stop in a later round. The client line has no
+    life state; in the stage the only dead players are the viewer and the enemy, both rejected targets.
     """
     identities = {role: client_identity(reports.get(role)) for role in SPECTATE_ROLES}
+    stage = parse_spectate_stage(server_log)
     events = {}
     problems = []
     for role in SPECTATE_ROLES:
@@ -203,17 +230,16 @@ def evaluate_spectate(reports, logs):
     def result(name, status, detail):
         return {"check": f"spectate: {name}", "status": status, "detail": detail}
 
-    if not any(event["event"] == "start" for items in events.values() for event in items):
-        reason = ("no client entered death spectate. The existing scenario's only persistent combatants, "
-                  "driver and observer, are on teams " + json.dumps(teams) + ", so no persistent client "
-                  "dies while a teammate lives, and the late client keeps no report")
+    if stage is None and not any(event["event"] == "start" for items in events.values() for event in items):
+        reason = ("the server did not reach the spectate stage and no client entered death spectate; "
+                  "outside that stage driver and observer are on teams " + json.dumps(teams) + " and have no teammate")
         if problems:
             reason += "; " + ", ".join(problems)
         detail = {"reason": reason, "events": seen}
         return [result(name, "not_reached", detail)
                 for name in ("teammate_start", "stop_on_round_reset", "no_enemy_or_dead_target")]
 
-    invalid, sequence, unstopped, resets, fallback_stops, starts = [], [], [], 0, 0, []
+    invalid, sequence, unstopped, resets, same_round_stops, starts = [], [], [], 0, 0, []
     for role, items in events.items():
         identity = identities[role]
         if items and identity is None:
@@ -221,6 +247,8 @@ def evaluate_spectate(reports, logs):
             continue
         enemies = {other[1] for other_role, other in identities.items()
                    if other_role != role and other and other[0] != identity[0]}
+        if stage and identity and stage["viewer"] == identity[1]:
+            enemies.add(stage["enemy"])
         current, started_round = 0, None
         for event in items:
             if event["viewer"] != identity[1]:
@@ -233,7 +261,7 @@ def evaluate_spectate(reports, logs):
                 if current:
                     sequence.append(f"{role}: start while watching {current}")
                 current, started_round = event["target"], event["round"]
-                starts.append({"role": role, "target": event["target"], "round": event["round"]})
+                starts.append({"role": role, "viewer": event["viewer"], "target": event["target"], "round": event["round"]})
             elif event["event"] == "cycle":
                 if not current or event["target"] == current:
                     sequence.append(f"{role}: cycle without a new target")
@@ -241,33 +269,45 @@ def evaluate_spectate(reports, logs):
             else:
                 if not current:
                     sequence.append(f"{role}: stop without a start")
-                elif event["round"] > started_round:
+                elif event["round"] != started_round:
                     resets += 1
                 else:
-                    fallback_stops += 1
+                    same_round_stops += 1
                 current, started_round = 0, None
         if current:
             unstopped.append(role)
 
+    detail = {"stage": stage, "starts": starts, "events": seen, "teams": teams}
+    if problems:
+        detail["problems"] = problems
     start_invalid = [item for item in invalid if ": start target" in item or "identity" in item or "viewer" in item]
-    detail = {"starts": starts, "events": seen, "teams": teams}
+    if stage is not None:
+        viewer_roles = [role for role, identity in identities.items() if identity and identity[1] == stage["viewer"]]
+        expected = [item for item in starts if item["viewer"] == stage["viewer"]
+                    and item["target"] == stage["teammate"] and item["round"] == stage["round"]]
+        if not viewer_roles:
+            start_invalid.append(f"stage viewer {stage['viewer']} is neither driver nor observer")
+        elif not expected:
+            start_invalid.append(f"no start from {stage['viewer']} on teammate {stage['teammate']} in round {stage['round']}")
     checks = [result("teammate_start", "fail" if start_invalid else "pass", {**detail, "invalid": start_invalid})]
     if sequence or unstopped:
         checks.append(result("stop_on_round_reset", "fail", {**detail, "sequence": sequence, "unstopped": unstopped}))
     elif resets:
-        checks.append(result("stop_on_round_reset", "pass", {**detail, "reset_stops": resets, "same_round_stops": fallback_stops}))
+        checks.append(result("stop_on_round_reset", "pass", {**detail, "reset_stops": resets, "same_round_stops": same_round_stops}))
     else:
-        checks.append(result("stop_on_round_reset", "not_reached",
-                             {**detail, "reason": "every spectate ended in its own round (teammate death or match end)",
-                              "same_round_stops": fallback_stops}))
-    checks.append(result("no_enemy_or_dead_target", "fail" if invalid else "pass",
+        # The stage always ends with a round reset, so a missing reset stop there is a defect.
+        checks.append(result("stop_on_round_reset", "fail" if stage else "not_reached",
+                             {**detail, "reason": "no spectate ended at a round reset", "same_round_stops": same_round_stops}))
+    targeted = any(event["event"] != "stop" for items in events.values() for event in items)
+    checks.append(result("no_enemy_or_dead_target", "fail" if invalid else "pass" if targeted else "not_reached",
                          {**detail, "invalid": invalid,
-                          "dead_target": "not in the log; excluded by the client's CanWatch re-check and spectate_rules_test"}))
+                          "dead_target": "the stage's dead players are the viewer and the enemy, both rejected; "
+                                         "elsewhere the client's CanWatch re-check and spectate_rules_test cover it"}))
     return checks
 
 
 def launch_command(executable, project, output, role, port, rendered=False):
-    if role not in LAUNCH_ROLES:
+    if role not in LAUNCH_ROLES + (MATE_ROLE,):
         raise ValueError(f"Unknown match role: {role}")
     port = match_port(port)
     destination = f"{MAP}?game={MODE}" if role == "server" else f"127.0.0.1:{port}?Name=VSMatch{role.title()}"
@@ -412,6 +452,9 @@ def main(argv=None):
         if LATE_JOIN_MARKER in log and "late" not in processes:
             launch("late")
             print("Match smoke: launched late-join client", flush=True)
+        if SPECTATE_JOIN_MARKER in log and MATE_ROLE not in processes:
+            launch(MATE_ROLE)
+            print("Match smoke: launched spectate teammate client", flush=True)
         if LATE_LEAVE_MARKER in log and not late_teardown_requested:
             if "late" not in processes:
                 raise RuntimeError("Server requested late-client leave before requesting its join")
@@ -482,7 +525,8 @@ def main(argv=None):
         checks = evaluate(reports)
         logs = {role: (output / f"{role}.log").read_text(errors="replace") if (output / f"{role}.log").is_file() else None
                 for role in SPECTATE_ROLES}
-        spectate = evaluate_spectate(reports, logs)
+        server_text = (output / "server.log").read_text(errors="replace") if (output / "server.log").is_file() else None
+        spectate = evaluate_spectate(reports, logs, server_text)
         after = evidence_metadata(root)
         if any(metadata[key] != after[key] for key in ("source_sha256", "editor_module_sha256", "map_sha256")):
             problem = problem or "Source, Editor module or Site01 map changed during the runtime test"
@@ -501,7 +545,8 @@ def main(argv=None):
         "exit_before_cleanup": before_cleanup, "exit_after_cleanup": cleanup_exit,
         "late_client": {"launched": "late" in processes, "teardown_requested": late_teardown_requested,
                         "teardown_completed": late_teardown_complete, "exit_after_leave": late_exit_after_leave},
-        "elapsed_seconds": time.monotonic() - began, "checks": checks, "spectate_checks": spectate, "reports": reports,
+        "elapsed_seconds": time.monotonic() - began, "checks": checks, "spectate_checks": spectate,
+        "spectate_client": {"launched": MATE_ROLE in processes}, "reports": reports,
     }
     (output / "result.json").write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
     for check in checks:

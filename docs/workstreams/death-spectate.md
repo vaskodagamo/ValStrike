@@ -71,3 +71,41 @@ The log line does not carry the target's life state. The runner cannot see a dea
 - Deferred to integration: Editor build (compile **verification pending**), `Scripts/test_match.py` (43 checks plus the three spectate checks, expected `not_reached`), and a manual 2v2 check that `VSSPECTATE` lines appear in the client log for scenarios 1, 4 and 6 above.
 - Risks: the `%llu` formatting matches existing `VSMATCH` lines. The line is client-side Display verbosity, so it appears in `-abslog` client logs.
 - Next owner: INT QA.
+
+## 2026-11-04 — GPF-03: spectate stage in the match runner
+
+Task: GPF-03, branch `claude/gpf-03-spectate-scenario` from `origin/main` `30997f4`, same worktree. Validation tier V1. INT-06 passed 43/43, but all three GPT-13 spectate checks came back `not_reached`.
+
+### Why a new auxiliary client and not `VSMatchLate`
+
+`VSMatchLate` is only a participant in match 1, round 2, and it has to carry the device and disconnect there for `disconnect_drop`. A death on its team in that round would break `disconnect_drop` or the later plant that `detonation_win` needs. No development revive path exists. The stage therefore runs **after every existing check**, and the existing rounds and timings are unchanged.
+
+### Stage (`Match/Tests/VSMatchSmoke.cpp`)
+
+1. Second MatchComplete: the server records `fresh_pawn_reset` and `twelve_rounds` as before. It then sets stage 100 and logs `VSMATCH_REQUEST_SPECTATE_JOIN`. The runner launches a fourth process, role `mate`, named `VSMatchMate`. Like late, it writes no report. On the 1:1 roster it joins team One.
+2. When the mate is in the roster, the server sets stage 101. The observer writes its report at stage 100. The driver requests a real rematch at stage 101, then writes its report. If the mate does not join within 45 s, the server sets stage 102, nobody requests a rematch, and the server finishes as before. The spectate checks then fail, because the server logged a join request but no stage line.
+3. Match 3, round 1 (internal `MatchIndex` 2): the persistent teammate, the mate and the enemy are placed at the site. 0.3 s into Active, the server logs `VSSPECTATE_STAGE {"viewer","teammate","enemy","round"}` and kills the teammate with real `ApplyPointDamage(1000)`. 3.5 s later, after the 2 s spectate delay, it kills the enemy, so the mate's team wins by elimination.
+4. The next Preparation ends spectate on the dead client (`stop` in a new round). The server finishes 2 s later.
+
+`TeamController` now also excludes `VSMatchMate`. The auxiliary-client exceptions for late (no report, no native timeout) now also cover `mate`.
+
+### Runner (`Scripts/test_match.py`)
+
+- Launches `mate` on `VSMATCH_REQUEST_SPECTATE_JOIN`, keeps it alive, and stops it at cleanup. Unexpected exits fail the run, as for the other roles. `ROLES`, `LAUNCH_ROLES` and `REQUIRED_CHECKS` are unchanged, and the result now records `spectate_client.launched`.
+- `evaluate_spectate` reads the server's `VSSPECTATE_STAGE` line. When the stage was reached:
+  - `teammate_start` needs a `start` from that viewer, on that teammate, in that round.
+  - `stop_on_round_reset` needs a stop in a later round. A missing one is `fail`, not `not_reached`.
+  - The stage enemy counts as an enemy target.
+
+  The only dead players in the stage are the viewer and the enemy, and both are rejected as targets. Without the stage line, the earlier behavior is kept (`not_reached`). A reset stop now means any round id that differs from the start round, which is valid after a rematch.
+
+### Completion handoff
+
+- Commit/PR: see the PR for `claude/gpf-03-spectate-scenario` (the user merges).
+- Checks actually run: `python3 -m unittest Tests/Match/test_match_runner.py` (36 tests, OK); `clang++ -std=c++17 -Wall -Wextra -Werror -pedantic Tests/Match/spectate_rules_test.cpp` (21 checks, 0 failures); `git diff --check` (clean).
+- Deferred to integration: Editor build (compile **verification pending**) and `Scripts/test_match.py`. Expected: 43 checks plus the three spectate checks as `pass`, with four client processes.
+- Risks:
+  - The run gets longer. Previous runs took about 125 s, and I estimate about 25–40 s more: client launch, a 3 s Preparation, about 4 s Active, then the result display and Preparation. The native limit is 220 s and the runner limit is 240 s.
+  - The driver's report is now written a few seconds later, at stage 101/102 instead of 100.
+  - Mate team assignment depends on the `One <= Two` balance in `VSMatchGameMode`. The stage reads the team instead of assuming it.
+- Next owner: INT QA.
