@@ -11,6 +11,7 @@
 #include "../Combat/VSHealthComponent.h"
 #include "../Rules/VSMatchRules.h"
 #include "Tests/VSMatchSmoke.h"
+#include "../ValStrike.h"
 #include "../VSCharacter.h"
 
 namespace
@@ -92,6 +93,16 @@ TArray<ValStrike::Spectate::Candidate> SpectateCandidates(const AVSMatchGameStat
     }
     return Candidates;
 }
+
+#if !UE_BUILD_SHIPPING
+// One structured line per local view-target change, read by Scripts/test_match.py.
+void LogSpectate(const UWorld* World, const AVSMatchPlayerState* Self, const TCHAR* Event, uint64 Target)
+{
+    const AVSMatchGameState* State = World ? World->GetGameState<AVSMatchGameState>() : nullptr;
+    UE_LOG(LogValStrike, Display, TEXT("VSSPECTATE {\"event\":\"%s\",\"viewer\":%llu,\"target\":%llu,\"round\":%llu}"),
+        Event, Self ? Self->ConnectionId : 0ull, Target, State ? State->Match.RoundId : 0ull);
+}
+#endif
 }
 
 void AVSMatchPlayerController::BeginPlay()
@@ -273,6 +284,12 @@ bool AVSMatchPlayerController::WatchSpectateTarget(uint64 TargetId)
     {
         return false;
     }
+#if !UE_BUILD_SHIPPING
+    if (SpectateTargetId != TargetId)
+    {
+        LogSpectate(GetWorld(), GetPlayerState<AVSMatchPlayerState>(), SpectateTargetId == 0 ? TEXT("start") : TEXT("cycle"), TargetId);
+    }
+#endif
     SpectateTargetId = TargetId;
     if (GetViewTarget() != TargetPawn)
     {
@@ -288,6 +305,9 @@ void AVSMatchPlayerController::StopDeathSpectate()
         return;
     }
     SpectateTargetId = 0;
+#if !UE_BUILD_SHIPPING
+    LogSpectate(GetWorld(), GetPlayerState<AVSMatchPlayerState>(), TEXT("stop"), 0);
+#endif
     // A fresh possession already set its own view; this covers a still-held death pawn.
     if (APawn* Own = GetPawnOrSpectator())
     {
