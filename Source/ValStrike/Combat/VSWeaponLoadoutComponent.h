@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "VSWeaponLoadoutRules.h"
 #include "VSWeaponLoadoutComponent.generated.h"
 
 class AVSCharacter;
@@ -41,6 +42,9 @@ struct FVSLoadoutState
     UPROPERTY() bool bEquipping = false;
     // Accepted switches during this pawn's life; observers detect switches with it.
     UPROPERTY() uint32 EquipCount = 0;
+    // Latest sequenced request the server processed, accepted or rejected. Only the
+    // owning client reads it, to reconcile its predicted switch.
+    UPROPERTY() uint32 AckSequence = 0;
 };
 
 /**
@@ -49,6 +53,11 @@ struct FVSLoadoutState
  * switch holsters the previous weapon (canceling its reload) and blocks the new
  * one for EquipDuration. Fresh pawns, including every match round reset, start
  * with full weapons and the rifle ready.
+ *
+ * The owning client predicts its switch: the slot and equip timer change on the
+ * key press, and each replicated state is reconciled by ack sequence
+ * (VSWeaponLoadoutRules::Predictor). Observers and the server use only server
+ * state, and the server alone decides whether a weapon may fire.
  */
 UCLASS(ClassGroup = (Combat))
 class VALSTRIKE_API UVSWeaponLoadoutComponent : public UActorComponent
@@ -57,15 +66,20 @@ class VALSTRIKE_API UVSWeaponLoadoutComponent : public UActorComponent
 public:
     UVSWeaponLoadoutComponent();
 
-    // Local input entry point. Sends a request only when it could be accepted.
+    // Local input entry point. A remote owner predicts the switch at once and
+    // sends a sequenced request; a listen-server host applies it directly.
     void RequestEquip(EVSEquipRequest Request);
+    // Replicated server state, never the owner's prediction.
     const FVSLoadoutState& GetState() const { return State; }
-    EVSWeaponSlot GetEquippedSlot() const { return State.Equipped; }
-    bool IsEquipping() const { return State.bEquipping; }
+    // This machine's view: the prediction on the owning client, server state elsewhere.
+    EVSWeaponSlot GetEquippedSlot() const;
+    bool IsEquipping() const;
+    bool IsPredicting() const { return Prediction.active; }
     float GetEquipDuration() const { return EquipDuration; }
     UVSWeaponComponent* GetWeapon(EVSWeaponSlot Slot) const;
-    UVSWeaponComponent* GetEquippedWeapon() const { return GetWeapon(State.Equipped); }
-    // Fire/reload gate. The server uses its own clock; clients use replicated state.
+    UVSWeaponComponent* GetEquippedWeapon() const { return GetWeapon(GetEquippedSlot()); }
+    // Fire/reload gate. The server uses its own clock; the owning client uses its
+    // predicted slot and timer; observers use replicated state.
     EVSWeaponReadiness GetReadiness(const UVSWeaponComponent* Weapon) const;
     virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
@@ -87,9 +101,15 @@ private:
     void Equip(EVSWeaponSlot Slot);
     void FinishEquip();
     void Reject(FName Reason);
+    VSWeaponLoadoutRules::ServerView GetServerView() const;
+    // Owning client: sends the queued predicted request or schedules it, then reconciles.
+    void SendPredictedRequest();
+    void ReconcilePrediction();
+    void StopStowedWeapons();
 
+    // Sequence 0 is unsequenced (listen-server host and raw development requests).
     UFUNCTION(Server, Reliable)
-    void ServerRequestEquip(uint8 Request);
+    void ServerRequestEquip(uint8 Request, uint32 Sequence);
     UFUNCTION()
     void OnRep_State();
 
@@ -104,9 +124,11 @@ private:
     float MinSwitchInterval = 0.1f;
 
     FTimerHandle EquipTimer;
+    FTimerHandle SendTimer;   // Owning client: queued predicted request.
+    VSWeaponLoadoutRules::Predictor Prediction;
     double EquipReadyTime = 0.0;      // Server clock.
     double LastSwitchTime = -1.0e9;   // Server clock.
-    double LastLocalRequestTime = -1.0e9;
+    double LastLocalRequestTime = -1.0e9; // Listen-server host only.
 #if !UE_BUILD_SHIPPING && !UE_BUILD_TEST
     TMap<FName, uint32> Rejections;
 #endif
