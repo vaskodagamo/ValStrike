@@ -17,13 +17,47 @@ for source in json.loads((DOC/'inputs.json').read_text())['sources']:
 bpy.ops.wm.open_mainfile(filepath=str(ROOT/'Reference/Frozen/ART24_FPArms03.blend'))
 scene=bpy.context.scene;scene.render.fps=60;scene.frame_start=1
 arm=bpy.data.objects['SKEL_FPArms03'];meshes=[bpy.data.objects['SK_FPArms03_'+s] for s in ['R','L']]
+# ART-26-C1: repair the inner-thumb/hand blend with a continuous rest-space
+# mask instead of the original narrow classification boundary. Geometry stays intact.
+def repair_thumb_weights():
+    o=meshes[0];hand=o.vertex_groups['hand_r'].index
+    thumbs=[o.vertex_groups[f'thumb_{i:02}_r'].index for i in [1,2,3]];allowed=set(thumbs+[hand]+[o.vertex_groups[f'index_{i:02}_r'].index for i in [1,2,3]]);changed=[]
+    bones=[arm.data.bones[f'thumb_{i:02}_r'] for i in [1,2,3]]
+    lengths=[b.length for b in bones]
+    for v in o.data.vertices:
+        old={g.group:g.weight for g in v.groups};total=sum(old.get(g,0) for g in thumbs)
+        if not set(old).issubset(allowed):continue
+        target=max(total,smooth((v.co.y-(-11+.25*(v.co.x-28)))/1.5)*smooth((v.co.x-27)/3))
+        transfer=min(old.get(hand,0),target-total)
+        if transfer<.00001:continue
+        if total>.0001:distribution={g:old.get(g,0)/total for g in thumbs}
+        else:
+            nearest=None;length=0
+            for bone,size in zip(bones,lengths):
+                delta=bone.tail_local-bone.head_local;t=max(0,min(1,(v.co-bone.head_local).dot(delta)/delta.length_squared));q=bone.head_local+delta*t
+                item=((v.co-q).length,length+t*size)
+                if nearest is None or item[0]<nearest[0]:nearest=item
+                length+=size
+            distance=nearest[1];t1=smooth((distance-lengths[0]+.7)/1.4);t2=smooth((distance-lengths[0]-lengths[1]+.7)/1.4)
+            distribution=dict(zip(thumbs,[1-t1,t1*(1-t2),t2]))
+        new=old.copy();new[hand]=old.get(hand,0)-transfer
+        new.update({g:old.get(g,0)+transfer*distribution[g] for g in thumbs})
+        if sum(w>.000001 for w in new.values())>4:
+            new=dict(sorted(new.items(),key=lambda item:item[1],reverse=True)[:4]);denominator=sum(new.values());new={k:v/denominator for k,v in new.items()}
+        for g in old:o.vertex_groups[g].remove([v.index])
+        for g,w in new.items():
+            if w>.000001:o.vertex_groups[g].add([v.index],w,'REPLACE')
+        changed.append({'vertex':v.index,'rest_cm':list(v.co),'before':{o.vertex_groups[g].name:w for g,w in old.items()},'after':{o.vertex_groups[g].name:w for g,w in new.items() if w>.000001}})
+    if MODE=='build':
+        (DOC/'c1-weight-changes.json').write_text(json.dumps({'reason':'Continuous inner-thumb/hand blend removes the narrow original classification seam. Existing thumb proportions retained where available; nearest existing chain otherwise. Tiny pre-existing index influence at the web is retained across the blend; at most four normalized weights. No geometry or rest edits.','mesh':o.name,'changed_vertices':len(changed),'changes':changed},separators=(',',':'))+'\n')
+repair_thumb_weights()
 arm.animation_data.action=None
 for a in list(bpy.data.actions):bpy.data.actions.remove(a)
 for b in arm.pose.bones:b.rotation_mode='QUATERNION';b.matrix_basis=Matrix.Identity(4)
-K=trans((8,-10,-2))@rot('Z',18)@rot('Y',-20)
+K=trans((8,-10,0))@rot('Z',18)@rot('Y',-20)
 CROSS=Matrix(((0,1,0,0),(.8,0,-.6,0),(-.6,0,-.8,0),(0,0,0,1)))
 FOREARM=22.612010205024273
-RIGHT_CURL={'index':[35,35,0],'middle':[35,35,0],'ring':[30,35,0],'pinky':[15,15,0],'thumb':[-10,-15,-5]}
+RIGHT_CURL={'index': [12.5, 43.75, 55], 'middle': [24.375, 60, 41.875], 'ring': [6.875, 40, 66.25], 'pinky': [-20, 20, 72.5], 'thumb': [-27, 0, -6.875]}
 def place(side,wrist,basis,direction):
     wrist=Vector(wrist);direction=Vector(direction).normalized();elbow=wrist-direction*FOREARM
     root=arm.data.bones['forearm_'+side]
@@ -40,16 +74,16 @@ def pose(kind,frame):
         for digit in ['index','middle','ring','pinky','thumb']:
             angles=RIGHT_CURL[digit] if side=='r' else ([0,8,5] if digit=='thumb' else [15,22,12])
             for i,angle in enumerate(angles):arm.pose.bones[f'{digit}_{i+1:02}_{side}'].rotation_quaternion=rot('X',-angle).to_quaternion()
-        arm.pose.bones['thumb_01_'+side].rotation_quaternion=(rot('Z',-8 if side=='r' else 3)@rot('X',10 if side=='r' else 0)).to_quaternion()
+        arm.pose.bones['thumb_01_'+side].rotation_quaternion=(rot('Z',-8 if side=='r' else 3)@rot('X',27 if side=='r' else 0)).to_quaternion()
     # Translation (cm) + component-space Euler rotation deltas (degrees).
     keys={
       'Equip':[(1,[-8,4,-27,0,35,-15]),(13,[-3,1,-9,0,12,-5]),(25,[0,0,0,0,0,0])],
-      'Slash':[(1,[0,0,0,0,0,0]),(5,[-3,-8,5,-8,-5,35]),(10,[5,10,2,12,5,-35]),(17,[0,14,-4,15,18,-50]),(34,[0,0,0,0,0,0])],
-      'Stab':[(1,[0,0,0,0,0,0]),(10,[-6,-3,1,0,12,0]),(19,[17,1,3,0,0,-8]),(26,[13,1,2,0,0,-8]),(55,[0,0,0,0,0,0])]}
+      'Slash':[(1,[0,0,0,0,0,0]),(5,[0,-2,4,-8,-5,20]),(10,[5,10,2,12,5,-35]),(17,[0,14,2,15,18,-50]),(34,[0,0,0,0,0,0])],
+      'Stab':[(1,[0,0,0,0,0,0]),(10,[0,0,3,0,8,0]),(19,[17,1,3,0,0,-8]),(26,[13,1,2,0,0,-8]),(55,[0,0,0,0,0,0])]}
     values=interpolate(keys[kind],frame) if kind in keys else [0,0,.28*math.sin((frame-1)/60*2*math.pi),0,0,0]
     if kind=='Locomotion':values=[0,.6*math.sin((frame-1)/48*2*math.pi),.65*math.sin((frame-1)/48*4*math.pi),0,0,1.2*math.sin((frame-1)/48*2*math.pi)]
     delta=trans(values[:3])@trans(K.translation)@rot('Z',values[5])@rot('Y',values[4])@rot('X',values[3])@trans(-K.translation)
-    right=delta@K;wrist=right@Vector((-1.5,-9.55,3))
+    right=delta@K;wrist=right@Vector((-1.5,-8.6,5))
     elbow_forward=9+4*max(0,values[0]/17) if kind=='Stab' else 9
     place('r',wrist,right.to_quaternion().to_matrix().to_4x4()@CROSS,right.to_3x3()@Vector((elbow_forward,20,-3)))
     retract=0
