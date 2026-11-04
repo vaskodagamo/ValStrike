@@ -178,3 +178,161 @@ class NetSummaryTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+# Synthetic driver timeline matching VSMovementSmoke.cpp and the GPT-15 tuning:
+# rifle 387/174/155 cm/s, pistol 432, jump 738.2 cm/s at 1955.6 cm/s^2, tuck +22 cm.
+JUMP_V, GRAVITY, TUCK = 738.2, 1955.6, 22.0
+FLOOR_Z = 90.15  # Standing capsule center over the graybox floor.
+
+
+def arc(t, start, offset=0.0):
+    """Feet height above the floor and vertical speed for a jump launched at start."""
+    dt = t - start
+    height = offset + JUMP_V * dt - GRAVITY * dt * dt / 2
+    return (height, JUMP_V - GRAVITY * dt) if dt >= 0 and height > 0 else None
+
+
+def sample(t, **overrides):
+    s = {"x": -1400.0, "y": -1100.0, "speed": 0.0, "vz": 0.0, "grounded": True, "crouched": False,
+         "weapon": "pistol" if t >= 32.6 else "rifle", "feet": 0.0}
+    if 1.6 <= t <= 2.4: s["speed"] = 387.0
+    if 3.6 <= t <= 4.8: s["speed"] = 174.0
+    if 5.5 <= t < 7.0: s.update(crouched=True, speed=155.0)
+    if 11.0 <= t <= 18.0: s["x"] = min(1916.0, 200.0 + 387.0 * (t - 11.0))
+    if s["x"] >= 1916.0 or 16.5 <= t <= 18.0: s["speed"] = 0.0
+    elif 11.0 <= t <= 18.0: s["speed"] = 387.0
+    if 22.0 <= t <= 23.0: s["feet"] = 80.0
+    if 30.0 <= t <= 31.0: s["x"] = -634.0
+    if 33.6 <= t <= 34.4: s["speed"] = 432.0
+    if 36.6 <= t <= 39.8: s["speed"] = 432.0
+    if 35.0 <= t < 36.2 or 38.6 <= t < 39.6 or 40.2 <= t < 41.7: s["crouched"] = True
+    for start, offset in ((8.0, 0.0), (35.0, TUCK), (37.2, 0.0), (38.6, TUCK), (40.7, TUCK)):
+        flight = arc(t, start, offset)
+        if flight:
+            s.update(feet=flight[0], vz=flight[1], grounded=False)
+    s.update(overrides)
+    half = 56.0 if s["crouched"] else 88.0
+    z = FLOOR_Z - 88.0 + s.pop("feet") + half
+    return dict(s, event="sample", player="VSDriver", t=round(t, 3), z=z, half_height=half,
+                body_min_z=z - half, body_max_z=z - half + 2 * half, eye_z=z + (32.0 if s["crouched"] else 64.0))
+
+
+def evidence(mutate=None, done_t=42.5):
+    roles = {"server": (3, True), "driver": (2, False), "observer": (1, False)}
+    result = {}
+    for role, (net_role, authority) in roles.items():
+        records = []
+        if role == "server":
+            records.append({"event": "ready", "role": role, "t": 0.1, "initial_spawn_distance": 1200})
+        for tick in range(-10, int(done_t * 10)):
+            item = sample(tick / 10 + 0.001)
+            if mutate:
+                item = mutate(item) or item
+            records.append(dict(item, role=role, player_id=7, net_role=net_role, authority=authority))
+        records.append({"event": "done", "role": role, "t": done_t})
+        result[role] = records
+    return result
+
+
+def results(data):
+    return {c["check"]: c for c in movement.evaluate(data)}
+
+
+def failed(data):
+    return sorted(name for name, c in results(data).items() if not c["passed"])
+
+
+def retune(item, **values):
+    """Rebuild one sample with overrides, keeping its pose fields consistent."""
+    feet = item["z"] - item["half_height"] - (FLOOR_Z - 88.0)
+    fields = {k: item[k] for k in ("x", "speed", "vz", "grounded", "crouched", "weapon")}
+    fields["feet"] = feet
+    fields.update(values)
+    return sample(item["t"], **fields)
+
+
+class EvaluateTests(unittest.TestCase):
+    NEW = ("rifle before switch", "pistol weight", "Ctrl+Space crouch-jump", "running jump",
+           "running crouch-jump", "no landing gain", "held-crouch jump", "feel stages completed")
+
+    def test_new_tuning_timeline_passes_every_check(self):
+        checks = results(evidence())
+        self.assertEqual(failed(evidence()), [])
+        for role in ("server", "driver", "observer"):
+            for name in self.NEW:
+                self.assertIn(f"{role}: {name}", checks)
+        cj = checks["driver: Ctrl+Space crouch-jump"]["detail"]
+        self.assertAlmostEqual(cj["gain_cm"], 22.0, delta=3)
+        self.assertGreater(cj["feet_apex_cm"], 155)
+
+    def test_bounds_for_rifle_speeds_and_jump_height(self):
+        def scale(field, start, end, value):
+            return lambda i: retune(i, **{field: value}) if start <= i["t"] <= end else None
+        for label, start, end, ok, bad in (("run", 1.6, 2.4, (361, 409), (359, 411, 450)),
+                                           ("walk", 3.6, 4.8, (156, 194), (154, 196, 202.5)),
+                                           ("crouch move", 6.0, 6.8, (136, 174), (134, 176, 180))):
+            for speed in ok:
+                self.assertNotIn(f"driver: {label} speed", failed(evidence(scale("speed", start, end, speed))))
+            for speed in bad:
+                self.assertIn(f"driver: {label} speed", failed(evidence(scale("speed", start, end, speed))))
+
+    def test_old_floaty_jump_fails_jump_height(self):
+        def old_jump(item):
+            if 8.0 <= item["t"] <= 9.5:
+                dt = item["t"] - 8.0
+                feet = 420 * dt - 980 * dt * dt / 2
+                grounded = not (dt < 0.857 and feet > 0)
+                return retune(item, feet=max(feet, 0), grounded=grounded, vz=420 - 980 * dt)
+            return None
+        self.assertIn("server: jump and land", failed(evidence(old_jump)))
+
+    def test_no_switch_fails_pistol_weight_only(self):
+        rifle = evidence(lambda i: retune(i, weapon="rifle"))
+        self.assertEqual([n for n in failed(rifle) if n.startswith("driver")], ["driver: pistol weight"])
+        slow = evidence(lambda i: retune(i, speed=387.0) if 33.6 <= i["t"] <= 34.4 else None)
+        self.assertIn("driver: pistol weight", failed(slow))
+
+    def test_missing_weapon_field_fails_weapon_checks(self):
+        stale = evidence(lambda i: {k: v for k, v in i.items() if k != "weapon"})
+        names = failed(stale)
+        self.assertIn("observer: rifle before switch", names)
+        self.assertIn("observer: pistol weight", names)
+
+    def test_crouch_jump_without_tuck_gain_fails(self):
+        def untucked(item):
+            for start in (35.0, 38.6, 40.7):
+                if start <= item["t"] <= start + 0.8:
+                    flight = arc(item["t"], start)
+                    return retune(item, feet=flight[0] if flight else 0.0, grounded=not flight)
+            return None
+        names = failed(evidence(untucked))
+        for name in ("Ctrl+Space crouch-jump", "running crouch-jump", "held-crouch jump"):
+            self.assertIn(f"driver: {name}", names)
+        self.assertNotIn("driver: running jump", names)
+
+    def test_extra_crouch_jump_height_fails(self):
+        def engine_tuck(item):
+            if 35.0 <= item["t"] <= 36.0:
+                flight = arc(item["t"], 35.0, 32.0 + 15.0)
+                return retune(item, feet=flight[0] if flight else 0.0, grounded=not flight)
+            return None
+        self.assertIn("server: Ctrl+Space crouch-jump", failed(evidence(engine_tuck)))
+
+    def test_running_jump_must_not_gain_height_or_speed(self):
+        higher = evidence(lambda i: retune(i, feet=arc(i["t"], 37.2)[0] + 20)
+                          if 37.2 <= i["t"] <= 38.1 and arc(i["t"], 37.2) else None)
+        self.assertIn("driver: running jump", failed(higher))
+        faster = evidence(lambda i: retune(i, speed=470.0) if 37.2 <= i["t"] <= 39.5 else None)
+        names = failed(faster)
+        for name in ("running jump", "running crouch-jump", "no landing gain"):
+            self.assertIn(f"driver: {name}", names)
+
+    def test_held_crouch_must_start_crouched_on_ground(self):
+        standing = evidence(lambda i: retune(i, crouched=False) if 40.45 <= i["t"] <= 40.65 else None)
+        self.assertIn("driver: held-crouch jump", failed(standing))
+
+    def test_old_smoke_ending_at_33_seconds_fails(self):
+        names = failed(evidence(done_t=33.0))
+        self.assertIn("server: feel stages completed", names)
+        self.assertNotIn("server: completed", names)

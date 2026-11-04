@@ -147,6 +147,79 @@ def records(path, complete_only=True):
     return result
 
 
+# Movement feel stages (GPT-15, docs/workstreams/movement-feel.md). The pistol is
+# 432 cm/s; a crouch-jump clears 161.3 cm, 22 cm above the 139.3 cm jump.
+PISTOL_SPEED = (410, 450)
+AIR_SPEED_MAX = 445  # Pistol max plus 3 %: neither air nor landing may gain speed.
+CROUCH_JUMP_FEET = (145, 170)
+CROUCH_JUMP_GAIN = (15, 30)
+RUNNING_JUMP_HEIGHT_TOLERANCE = 8
+FEEL_DONE_AFTER = 42.0
+
+
+def feel_checks(data, samples, floor, height):
+    """Checks for the stages after 32 s: weapon weight and each jump variant."""
+    def window(start, end):
+        return [i for i in samples if start <= i["t"] <= end]
+
+    def feet(item):
+        return item["z"] - item["half_height"]
+
+    def feet_apex(start, end):
+        group = window(start, end)
+        return max(map(feet, group)) - floor_feet if group and floor is not None else None
+
+    def within(value, bounds):
+        return value is not None and bounds[0] < value < bounds[1]
+
+    def gain(value):
+        return None if value is None or stand is None else value - stand
+
+    floor_feet = floor - 88 if floor is not None else None
+    stand = feet_apex(8.0, 9.5)
+    result = []
+    rifle = window(1.6, 2.4)
+    result.append(("rifle before switch", len(rifle) >= 4 and all(i.get("weapon") == "rifle" for i in rifle),
+                   {"weapons": sorted({str(i.get("weapon")) for i in rifle})}))
+    pistol = window(33.6, 34.4)
+    pistol_speed = statistics.median(i["speed"] for i in pistol) if pistol else None
+    result.append(("pistol weight", len(pistol) >= 4 and all(i.get("weapon") == "pistol" for i in pistol) and
+                   PISTOL_SPEED[0] <= (pistol_speed or 0) <= PISTOL_SPEED[1],
+                   {"samples": len(pistol), "median_cm_s": pistol_speed,
+                    "weapons": sorted({str(i.get("weapon")) for i in pistol})}))
+    standing_cj = feet_apex(35.0, 36.0)
+    result.append(("Ctrl+Space crouch-jump",
+                   any(i["crouched"] and not i["grounded"] for i in window(35.0, 36.0)) and
+                   within(standing_cj, CROUCH_JUMP_FEET) and within(gain(standing_cj), CROUCH_JUMP_GAIN),
+                   {"feet_apex_cm": standing_cj, "gain_cm": gain(standing_cj)}))
+    run_jump = window(37.2, 38.1)
+    run_height = max(i["z"] for i in run_jump) - floor if run_jump and floor is not None else None
+    run_air = [i["speed"] for i in window(37.3, 37.9) if not i["grounded"]]
+    result.append(("running jump",
+                   run_height is not None and abs(run_height - height) < RUNNING_JUMP_HEIGHT_TOLERANCE and
+                   len(run_air) >= 3 and statistics.median(run_air) >= PISTOL_SPEED[0] and max(run_air) <= AIR_SPEED_MAX,
+                   {"jump_height_cm": run_height, "standing_jump_cm": height, "air_samples": len(run_air),
+                    "max_air_cm_s": max(run_air, default=None)}))
+    running_cj = feet_apex(38.6, 39.5)
+    crouch_air = [i["speed"] for i in window(38.7, 39.3) if not i["grounded"]]
+    result.append(("running crouch-jump",
+                   within(gain(running_cj), CROUCH_JUMP_GAIN) and len(crouch_air) >= 3 and
+                   max(crouch_air) <= AIR_SPEED_MAX,
+                   {"feet_apex_cm": running_cj, "gain_cm": gain(running_cj), "air_samples": len(crouch_air),
+                    "max_air_cm_s": max(crouch_air, default=None)}))
+    landed = [i["speed"] for i in window(38.0, 38.5) if i["grounded"]]
+    result.append(("no landing gain", len(landed) >= 2 and max(landed) <= AIR_SPEED_MAX,
+                   {"samples": len(landed), "max_cm_s": max(landed, default=None)}))
+    held = window(40.45, 40.65)
+    held_cj = feet_apex(40.7, 41.6)
+    result.append(("held-crouch jump", len(held) >= 1 and all(i["crouched"] and i["grounded"] for i in held) and
+                   within(held_cj, CROUCH_JUMP_FEET),
+                   {"crouched_samples": len(held), "feet_apex_cm": held_cj}))
+    done = [i["t"] for i in data if i.get("event") == "done"]
+    result.append(("feel stages completed", any(t >= FEEL_DONE_AFTER for t in done), {"done_t": done}))
+    return result
+
+
 def evaluate(evidence):
     checks = []
 
@@ -173,9 +246,10 @@ def evaluate(evidence):
             return statistics.median(i[field] for i in items) if items else None
 
         for label, start, end, low, high in (
-            ("run", 1.6, 2.4, 400, 480),
-            ("walk", 3.6, 4.8, 170, 230),
-            ("crouch move", 6.0, 6.8, 150, 205),
+            # Rifle weapon weight (VSMovementRules): 387 run, 174 slow-walk, 155 crouch.
+            ("run", 1.6, 2.4, 360, 410),
+            ("walk", 3.6, 4.8, 155, 195),
+            ("crouch move", 6.0, 6.8, 135, 175),
         ):
             group = window(start, end)
             speed = median(group, "speed")
@@ -205,7 +279,8 @@ def evaluate(evidence):
         jump = window(8.0, 9.5)
         height = max((i["z"] for i in jump), default=0) - (floor or 0)
         landed = window(10.0, 10.8)
-        check(f"{role}: jump and land", floor is not None and 50 < height < 120 and
+        # CS2 arc scaled to 176 cm: 139.3 cm apex; 0.1 s sampling reads up to 2.4 cm low.
+        check(f"{role}: jump and land", floor is not None and 125 < height < 150 and
               any(not i["grounded"] and i["vz"] > 50 for i in jump) and
               len(landed) >= 4 and all(i["grounded"] and abs(i["z"] - floor) < 5 for i in landed),
               {"jump_height_cm": height, "landing_samples": len(landed)})
@@ -226,6 +301,8 @@ def evaluate(evidence):
               cover_x is not None and -640 <= cover_x <= -630 and
               (median(cover, "speed") or 0) < 5,
               {"x": cover_x, "speed": median(cover, "speed")})
+        for name, passed, detail in feel_checks(data, samples, floor, height):
+            check(f"{role}: {name}", passed, detail)
 
     # The server must see both players before test-only positioning begins.
     ready = [r for r in evidence["server"] if r.get("event") == "ready"]

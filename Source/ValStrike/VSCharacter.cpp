@@ -26,15 +26,17 @@
 #include "InputModifiers.h"
 #include "Net/UnrealNetwork.h"
 #include "UObject/ConstructorHelpers.h"
+#include "VSCharacterMovementComponent.h"
 #include "VSPlayerController.h"
 #include "ValStrike.h"
 
-AVSCharacter::AVSCharacter()
+AVSCharacter::AVSCharacter(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer.SetDefaultSubobjectClass<UVSCharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
 {
     bReplicates = true;
     SetReplicateMovement(true);
 
-    GetCapsuleComponent()->InitCapsuleSize(34.0f, 88.0f);
+    GetCapsuleComponent()->InitCapsuleSize(34.0f, static_cast<float>(VSMovementRules::StandingHalfHeight));
     GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Ignore);
     Health = CreateDefaultSubobject<UVSHealthComponent>(TEXT("Health"));
     Rifle = CreateDefaultSubobject<UVSRifleComponent>(TEXT("Rifle"));
@@ -56,14 +58,18 @@ AVSCharacter::AVSCharacter()
     UCharacterMovementComponent* Movement = GetCharacterMovement();
     Movement->bOrientRotationToMovement = false;
     Movement->GetNavAgentPropertiesRef().bCanCrouch = true;
-    Movement->MaxWalkSpeed = 450.0f;
-    Movement->MaxWalkSpeedCrouched = 180.0f;
+    // Unweighted (unarmed) speeds; UVSCharacterMovementComponent applies weapon
+    // weight. Gravity and jump are CS2's arc scaled to 176 cm (VSMovementRules):
+    // apex about 139 cm, airtime about 0.755 s.
+    Movement->MaxWalkSpeed = static_cast<float>(VSMovementRules::BaseMaxWalkSpeed);
+    Movement->MaxWalkSpeedCrouched = static_cast<float>(VSMovementRules::BaseMaxWalkSpeedCrouched);
     Movement->MinAnalogWalkSpeed = 0.0f;
     Movement->MaxAcceleration = 2048.0f;
     Movement->BrakingDecelerationWalking = 2048.0f;
-    Movement->JumpZVelocity = 420.0f;
+    Movement->GravityScale = static_cast<float>(VSMovementRules::GravityScale);
+    Movement->JumpZVelocity = static_cast<float>(VSMovementRules::JumpZVelocity);
     Movement->AirControl = 0.15f;
-    Movement->SetCrouchedHalfHeight(56.0f);
+    Movement->SetCrouchedHalfHeight(static_cast<float>(VSMovementRules::CrouchedHalfHeight));
 
     FirstPersonCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCamera"));
     FirstPersonCamera->SetupAttachment(GetCapsuleComponent());
@@ -133,6 +139,17 @@ UVSWeaponComponent* AVSCharacter::GetEquippedWeapon() const
 EVSWeaponSlot AVSCharacter::GetEquippedWeaponSlot() const
 {
     return Loadout ? Loadout->GetEquippedSlot() : EVSWeaponSlot::Rifle;
+}
+
+VSMovementRules::WeaponKind AVSCharacter::GetMovementWeaponKind() const
+{
+    if (!Loadout) { return VSMovementRules::WeaponKind::Unarmed; }
+    switch (Loadout->GetEquippedSlot())
+    {
+    case EVSWeaponSlot::Rifle: return VSMovementRules::WeaponKind::Rifle;
+    case EVSWeaponSlot::Pistol: return VSMovementRules::WeaponKind::Pistol;
+    }
+    return VSMovementRules::WeaponKind::Unarmed;
 }
 
 uint32 AVSCharacter::GetAcceptedShotCount(EVSWeaponSlot Slot) const
@@ -387,6 +404,26 @@ void AVSCharacter::BeginCrouch() { if (CanMatchMove()) { Crouch(); } }
 void AVSCharacter::EndCrouch() { if (CanMatchMove()) { UnCrouch(); } }
 void AVSCharacter::BeginWalk() { bWalkHeld = CanMatchMove(); }
 void AVSCharacter::EndWalk() { bWalkHeld = false; }
+
+bool AVSCharacter::CanJumpInternal_Implementation() const
+{
+    // The engine adds !IsCrouched(); the jump count and movement-state checks stay.
+    return JumpIsAllowedInternal();
+}
+
+void AVSCharacter::CheckJumpInput(float DeltaTime)
+{
+    // A jump from a ground crouch launches from standing height, then the held
+    // crouch tucks in the air during this same move, so Ctrl+Space reaches as
+    // high as Space then Ctrl. Runs in every predicted, replayed and server move.
+    // Under a low ceiling UnCrouch fails and the jump starts crouched with no gain.
+    UCharacterMovementComponent* Movement = GetCharacterMovement();
+    if (bPressedJump && JumpCurrentCount == 0 && IsCrouched() && Movement && Movement->IsMovingOnGround() && CanJump())
+    {
+        Movement->UnCrouch(false);
+    }
+    Super::CheckJumpInput(DeltaTime);
+}
 
 void AVSCharacter::OnStartCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust)
 {
