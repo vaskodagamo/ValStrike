@@ -19,6 +19,7 @@ An original desktop tactical FPS: deliberate movement and round-based combat ins
 | [Backlog](docs/BACKLOG.md) | Ordered tasks, dependencies, and status |
 | [Work log](docs/WORK_LOG.md) | Work completed, verification, issues, and handoff |
 | [Asset chat brief](docs/ASSET_BRIEF.md) | Separate environment asset batch and starting prompt |
+| [Meshy asset inbox](meshy_ai_assets/README.md) | Upload generated world objects, character and animations for artist cleanup and Site01 integration |
 | [Parallel work history](docs/PARALLEL_WORK.md) | Historical assignments and combat/HUD contract |
 | [Playtest assignment history](docs/PLAYTEST_WORKSTREAMS.md) | Earlier six-stream contracts and playtest gates; current ownership is in the team board |
 | [Weapon art direction](docs/WEAPON_ART_DIRECTION.md) | Pistol asset and revised rifle/pistol finishes |
