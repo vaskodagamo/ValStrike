@@ -1,6 +1,6 @@
 # ART-26-C1 — grip and framing correction
 
-Reviewed 2026-11-04 (Europe/Berlin). Same branch/worktree and draft [PR #109](https://github.com/vaskodagamo/ValStrike/pull/109). Source correction prepared for art-lead review; native/full-feature verification remains pending. The unprefixed reports/images describe the earlier held `2b944b3` checkpoint, not this correction.
+Reviewed 2026-11-04 (Europe/Berlin). Same branch/worktree; correction draft [PR #115](https://github.com/vaskodagamo/ValStrike/pull/115). The user merged the earlier held #109 checkpoint during C1; that merge did not clear its art gates. Source correction prepared for art-lead review; native/full-feature verification remains pending. The unprefixed reports/images describe the earlier held `2b944b3` checkpoint, not this correction.
 
 ## Returned defects and correction
 
