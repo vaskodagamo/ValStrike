@@ -1,5 +1,5 @@
 """Real Blender source compositions. Frozen character is read only; no pose edits."""
-import bpy,json,math
+import bpy,json,math,sys
 from pathlib import Path
 from mathutils import Vector,Matrix
 from mathutils.bvhtree import BVHTree
@@ -37,9 +37,10 @@ def ruler(xmin,xmax,z,y=-7):
  for x in [xmin]+list(range(math.ceil(xmin/10)*10,math.floor(xmax/10)*10+1,10))+[xmax]:line('cm_tick',[(x,y,z-.65),(x,y,z+.65)])
 # Actual side, width/part separation evident in three-quarter.
 camera((14,-160,2),(14,0,2),90);ruler(-23,52,-15)
-label('R02  /  CLEANED MESHY SOURCE  /  BLENDER',-42,25,1.5);label('75.00 cm   |   6.60 cm wide   |   25.45 cm high   |   ruler ticks 10 cm',-42,-24,1.2);render('R02_side')
+label('R02  /  CLEANED MESHY SOURCE  /  BLENDER',-42,25,1.5);label('75.00 cm   |   7.25 cm wide   |   25.46 cm high   |   ruler ticks 10 cm',-42,-24,1.2);render('R02_side')
 for o in rulers:o.hide_render=True
 clearlabels();camera((94,-135,70),(14,0,1),94);label('R02  /  THREE-QUARTER  /  BLENDER',-44,27,1.5);label('Separate magazine  |  packed PBR textures  |  centimeter source',-44,-26,1.2);render('R02_threequarter')
+if '--quick' in sys.argv:sys.exit(0)
 # R01 and R02 in one orthographic scene, identical scale and camera.
 clearlabels()
 with bpy.data.libraries.load(str(REPO/'Art/Source/Weapons/Rifle01/Models/R01_Kestrel.blend'),link=False) as (data,to):to.objects=[n for n in data.objects if n in ['SM_VS_Rifle01_Body','SM_VS_Rifle01_Magazine']]
@@ -48,7 +49,7 @@ for o in old:
  sc.collection.objects.link(o);o.hide_render=False;o.hide_set(False);o.location=(14,0,25) if 'Magazine' in o.name else (0,0,23)
 for o in parts:o.location.z-=23
 camera((14,-200,0),(14,0,0),110);sc.render.resolution_y=1400
-label('SAME CAMERA / SAME CENTIMETERS / BLENDER',-52,49,1.6);label('R01  86.00 x 9.04 x 32.20 cm',-52,43,1.5);label('R02  75.00 x 6.60 x 25.45 cm',-52,-5,1.5)
+label('SAME CAMERA / SAME CENTIMETERS / BLENDER',-52,49,1.6);label('R01  86.00 x 9.04 x 32.20 cm',-52,43,1.5);label('R02  75.00 x 7.25 x 25.46 cm',-52,-5,1.5)
 ruler(-30,56,3);ruler(-23,52,-38);render('R01_R02_same_scale')
 for o in old:o.hide_render=True
 for o in rulers:o.hide_render=True

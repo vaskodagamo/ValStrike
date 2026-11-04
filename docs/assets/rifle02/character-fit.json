@@ -77,7 +77,7 @@
         -7.297909259796143,
         144.84158325195312
       ],
-      "nearest_body_surface_cm": 10.07607650756836
+      "nearest_body_surface_cm": 9.80266284942627
     },
     "middle_01_l": {
       "world_cm": [
@@ -85,7 +85,7 @@
         -17.327510833740234,
         145.49700927734375
       ],
-      "nearest_body_surface_cm": 1.6348052024841309
+      "nearest_body_surface_cm": 1.5304324626922607
     },
     "middle_03_l_end": {
       "world_cm": [
@@ -93,7 +93,7 @@
         -18.843351364135742,
         150.3971405029297
       ],
-      "nearest_body_surface_cm": 0.7322613596916199
+      "nearest_body_surface_cm": 0.9261810779571533
     },
     "hand_r": {
       "world_cm": [
@@ -101,7 +101,7 @@
         -19.42194175720215,
         137.10848999023438
       ],
-      "nearest_body_surface_cm": 4.711697578430176
+      "nearest_body_surface_cm": 4.704241752624512
     },
     "thumb_03_r_end": {
       "world_cm": [
@@ -109,7 +109,7 @@
         -17.75242805480957,
         138.99832153320312
       ],
-      "nearest_body_surface_cm": 1.2945938110351562
+      "nearest_body_surface_cm": 1.07102632522583
     },
     "index_03_r_end": {
       "world_cm": [
@@ -117,7 +117,7 @@
         -19.298057556152344,
         139.50439453125
       ],
-      "nearest_body_surface_cm": 0.36065244674682617
+      "nearest_body_surface_cm": 0.6453098654747009
     },
     "middle_01_r": {
       "world_cm": [
@@ -125,7 +125,7 @@
         -21.78305435180664,
         137.7687530517578
       ],
-      "nearest_body_surface_cm": 0.1185026466846466
+      "nearest_body_surface_cm": 0.1191001906991005
     },
     "middle_03_r_end": {
       "world_cm": [
@@ -133,7 +133,7 @@
         -18.330141067504883,
         136.4499053955078
       ],
-      "nearest_body_surface_cm": 0.13379783928394318
+      "nearest_body_surface_cm": 0.13021978735923767
     }
   },
   "limitation": "Unmodified supplied moving clip: numerical contact placement only, fingers/shoulder are not reposed. Review renders for visible gaps/intersections. No animation or native fit pass."

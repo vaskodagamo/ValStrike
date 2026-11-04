@@ -1,6 +1,6 @@
 # R02 compact rifle — ART-17
 
-Editable source for art review; native verification pending. Built from the isolated
+Corrected source for art review after the user rejected the first cleanup; native verification pending. Built from the isolated
 built-in ImageGen reference through one Meshy 7.1 image-to-3D job, followed by local
 Blender cleanup. This is a new model, not a resized R01.
 
@@ -13,21 +13,26 @@ reference and exact prompt are in `Reference/`.
 
 - `Exports/SM_VS_Rifle02_Body.fbx`: grip-local body, identity export transform.
 - `Exports/SM_VS_Rifle02_Magazine.fbx`: insertion-local magazine, identity export transform.
-- `Textures/`: unchanged downloaded base color, metallic, roughness and normal maps.
+- `Textures/`: unchanged downloaded PNG maps; `Textures/GLB/` contains the exact
+  embedded JPEG bytes used by the original GLB PBR shader and the corrected source.
 - `cleanup_r02.py`: reproducible local cleanup from the archived Meshy GLB. It
-  normalizes orientation/scale, shapes receiver/grip width and grip depth, separates
-  and closes the magazine seam, reduces geometry, removes malformed cap fins, and
-  creates the source/materials/FBXs. Rebuilding overwrites later artist edits.
+  normalizes orientation/scale with matching normal transforms, applies a continuous
+  palm-width correction, separates/caps the connected magazine component, preserves
+  full surface detail and original PBR, and creates the source/FBXs. Rebuilding overwrites later artist edits.
 - `preview_r02.py`: six actual Blender compositions using the frozen character and
   R01 as read-only staged references. It does not save or alter character poses.
-- `verify_exports.py`: focused saved-source, pivot, UV and FBX round-trip inspection.
+- `verify_exports.py`: focused saved-source, pivot, UV, custom-normal and FBX round-trip inspection.
+- `review_preservation.py`: original/corrected/FBX renders with identical camera,
+  lighting, scale and original PBR material; the visual acceptance evidence.
 - `inspect_draft.py` / `inspect_fit.py`: early draft and frozen-pose inspections.
 
-The source is **74.995 × 6.599 × 25.448 cm** assembled. The grip's palm-region width
-is approximately **3.20 cm**, with local fore/aft shaping; source/object scale is 1.
+The source is **75.000 × 7.251 × 25.455 cm** assembled. The grip's palm-region width
+is approximately **3.22 cm**, with continuous local width fitting; source/object scale is 1.
 The original dense draft and cleaned source remain editable; no functional internal
-mechanism is modeled. The receiver has some generated surface undulation, visible
-in the real close views. This is not a final hand-retopologized production LOD set.
+mechanism is modeled. The original crisp receiver, rail, sight and stock surfaces are retained. The
+rejected cleanup had damaged them; that was not the untouched Meshy quality.
+No decimation is applied. Final source is 460,346 triangles including the new seam
+caps; runtime performance and LOD work remain separate.
 
 [Delivery, fit and import recipe](../../../../docs/assets/rifle02/README.md),
 [measured source](../../../../docs/assets/rifle02/source-measurements.json),
@@ -41,6 +46,7 @@ Run sequentially from this assigned worktree, one Blender process at a time:
 blender --background --factory-startup --threads 2 --python-exit-code 1 --python Art/Source/Weapons/Rifle02/cleanup_r02.py
 blender --background --factory-startup --threads 2 --python-exit-code 1 --python Art/Source/Weapons/Rifle02/preview_r02.py
 blender --background --factory-startup --threads 2 --python-exit-code 1 --python Art/Source/Weapons/Rifle02/verify_exports.py
+blender --background --factory-startup --threads 2 --python-exit-code 1 --python Art/Source/Weapons/Rifle02/review_preservation.py
 ```
 
 These are source-authoring commands only. No Unreal work is authorized here.
