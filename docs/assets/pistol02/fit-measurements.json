@@ -1,0 +1,205 @@
+{
+  "character_unchanged": true,
+  "character_neutral_height_cm": 170,
+  "pose_action": "A_UE01_Walk_Backward_with_Gun",
+  "pose_frame": 1,
+  "weapon_world_matrix": [
+    [
+      0.964095413684845,
+      0.26555612683296204,
+      0.0,
+      52.0
+    ],
+    [
+      -0.26555612683296204,
+      0.964095413684845,
+      0.0,
+      -34.29999923706055
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      112.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "weapon_world_location_cm": [
+    52,
+    -34.3,
+    112
+  ],
+  "weapon_world_rotation_xyz_degrees": [
+    0,
+    0,
+    -15.4
+  ],
+  "hand_r_bone_relative_matrix": [
+    [
+      -0.0009310543537139893,
+      0.9996410012245178,
+      -0.026779716834425926,
+      2.1434242725372314
+    ],
+    [
+      0.9989017248153687,
+      -0.0003249049186706543,
+      -0.04685705900192261,
+      8.605094909667969
+    ],
+    [
+      -0.04684894159436226,
+      -0.026793893426656723,
+      -0.9985424876213074,
+      -1.9687001705169678
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "bones_in_weapon_grip_frame_cm": {
+    "hand_r": [
+      -8.685876846313477,
+      -2.192605972290039,
+      -1.5052108764648438
+    ],
+    "hand_l": [
+      11.261974334716797,
+      19.62095069885254,
+      4.6118621826171875
+    ],
+    "index_01_r": [
+      3.223592758178711,
+      -0.9990463256835938,
+      0.34334564208984375
+    ],
+    "index_03_r": [
+      6.0115814208984375,
+      0.04773998260498047,
+      -0.50396728515625
+    ],
+    "middle_01_r": [
+      3.833465576171875,
+      -2.1163015365600586,
+      -1.1891937255859375
+    ],
+    "middle_03_r": [
+      4.125886917114258,
+      0.2691354751586914,
+      -1.9343185424804688
+    ],
+    "thumb_03_r": [
+      -0.511805534362793,
+      1.0958251953125,
+      1.1416549682617188
+    ]
+  },
+  "cameras": {
+    "P02_full_character.png": {
+      "location_cm": [
+        115.0,
+        -360.0,
+        155.0
+      ],
+      "target_cm": [
+        35,
+        -15,
+        77
+      ],
+      "type": "ORTHO",
+      "ortho_scale_cm": 190,
+      "horizontal_fov_degrees": null,
+      "resolution": [
+        900,
+        1000
+      ]
+    },
+    "P02_grip_contact.png": {
+      "location_cm": [
+        59.0,
+        -100.0,
+        128.0
+      ],
+      "target_cm": [
+        53,
+        -34,
+        111
+      ],
+      "type": "ORTHO",
+      "ortho_scale_cm": 30,
+      "horizontal_fov_degrees": null,
+      "resolution": [
+        1100,
+        780
+      ]
+    },
+    "P02_support_hand_gap.png": {
+      "location_cm": [
+        68.0,
+        -105.0,
+        140.0
+      ],
+      "target_cm": [
+        64,
+        -29,
+        116
+      ],
+      "type": "ORTHO",
+      "ortho_scale_cm": 50,
+      "horizontal_fov_degrees": null,
+      "resolution": [
+        1100,
+        780
+      ]
+    },
+    "P02_first_person_90deg.png": {
+      "location_cm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "target_cm": [
+        100,
+        0,
+        0
+      ],
+      "type": "PERSP",
+      "ortho_scale_cm": null,
+      "horizontal_fov_degrees": 90,
+      "resolution": [
+        1280,
+        720
+      ]
+    }
+  },
+  "limitations": [
+    "Frozen rifle pose reused without bone or mesh edits; not a pistol animation acceptance.",
+    "Support hand remains forward of pistol grip; a pistol-specific two-hand pose is required.",
+    "First-person image is weapon-only at 90-degree horizontal FOV, not a game screenshot."
+  ],
+  "hand_r_relative_location_cm": [
+    2.1434242725372314,
+    8.605094909667969,
+    -1.9687001705169678
+  ],
+  "hand_r_relative_rotation_xyz_degrees": [
+    1.5370488020684503,
+    177.31477077827918,
+    -89.94659725535784
+  ],
+  "support_hand_wrist_distance_to_grip_cm": 23.088591581520554,
+  "right_index_distal_joint_local_cm": [
+    6.0115814208984375,
+    0.04773998260498047,
+    -0.50396728515625
+  ],
+  "visual_fit_review": "Palm is accommodated at scale 1. Frozen fingers overlap the lower trigger guard; support hand is forward. Pistol-specific finger/left-hand posing is required; no fit acceptance claimed."
+}

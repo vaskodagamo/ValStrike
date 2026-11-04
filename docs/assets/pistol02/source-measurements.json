@@ -1,0 +1,143 @@
+{
+  "tool": "5.2.2 LTS",
+  "units": "cm",
+  "forward": "+X",
+  "up": "+Z",
+  "uniform_scale_from_meshy": 0.11033497271080281,
+  "axis_flip_xy": -1,
+  "source_meshy_triangles": 454988,
+  "anchors": {
+    "Grip": {
+      "location_cm": [
+        0,
+        0,
+        0
+      ],
+      "rotation_xyz_degrees": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Muzzle": {
+      "location_cm": [
+        15.5,
+        0,
+        5.0
+      ],
+      "rotation_xyz_degrees": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Slide": {
+      "location_cm": [
+        0,
+        0,
+        3.9
+      ],
+      "rotation_xyz_degrees": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Magazine": {
+      "location_cm": [
+        -2.5,
+        0,
+        -1.0
+      ],
+      "rotation_xyz_degrees": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    }
+  },
+  "parts": [
+    {
+      "name": "SM_VS_Pistol02_Body",
+      "triangles": 12514,
+      "vertices": 6245,
+      "materials": [
+        "P02_Gunmetal_Charcoal_PBR",
+        "P02_CutInterior"
+      ],
+      "dimensions_cm": [
+        20.639139652252197,
+        3.3406633138656616,
+        9.950000286102295
+      ],
+      "transform_identity": true
+    },
+    {
+      "name": "SM_VS_Pistol02_Slide",
+      "triangles": 13756,
+      "vertices": 6869,
+      "materials": [
+        "P02_Gunmetal_Charcoal_PBR",
+        "P02_CutInterior"
+      ],
+      "dimensions_cm": [
+        20.959228515625,
+        3.345995783805847,
+        3.2121739387512207
+      ],
+      "transform_identity": true
+    },
+    {
+      "name": "SM_VS_Pistol02_Magazine",
+      "triangles": 634,
+      "vertices": 321,
+      "materials": [
+        "P02_Gunmetal_Charcoal_PBR",
+        "P02_CutInterior"
+      ],
+      "dimensions_cm": [
+        5.934539198875427,
+        2.913418173789978,
+        5.693639755249023
+      ],
+      "transform_identity": true
+    }
+  ],
+  "bounds_cm": [
+    [
+      -5.468916893005371,
+      -1.676943302154541,
+      -6.693639755249023
+    ],
+    [
+      15.490311622619629,
+      1.6690524816513062,
+      7.112174034118652
+    ]
+  ],
+  "dimensions_cm": [
+    20.959228515625,
+    3.345995783805847,
+    13.805813789367676
+  ]
+}
