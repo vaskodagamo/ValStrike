@@ -106,3 +106,8 @@ User merges since: #69, #70, #71 and #74. Verified: Editor, one Mac, loopback, p
 - GPF-02 ([PR #84](https://github.com/vaskodagamo/ValStrike/pull/84)): INT-06-D2 was an unsent menu cancel (Escape or Cancel button), inferred from logs, together with a physical-mouse event. That points to physical input on the visible test window, the same family as the unscripted-fire watch item. The fix makes the game robust to silent connect teardown and logs the cancel source. Not built yet.
 - GPF-03 ([PR #86](https://github.com/vaskodagamo/ValStrike/pull/86)): the spectate checks become reachable through a fourth `mate` client. A whitespace CI failure has gone to the owner. Not built yet.
 - Integration queue for the producer, after INT-ART-01: one combined INT run of #84 + #86 (build; `test_session.py --rendered` ×3; `test_match.py`). Then GPF-04 (D3, queued), followed by its movement lan and `typical` check.
+
+## 2026-11-04 — GPF-04 dispatched (producer release)
+
+- Producer released GPF-04 after #93 (INT-ART-01 native) merged at `a1c2371`. The movement source paths and capacity are free. Dispatched to the **existing** GPT-15 session in its clean `gpt-15-movement-feel` worktree, on the new branch `claude/gpf-04-steady-corrections` from `a1c2371`. Scope: movement files plus the movement-weight sections of `VSCharacter.*`, keeping the #93 presentation code. Checks: engine-free only, including -Wshadow. One main-targeted PR with an exact-head handoff, verification pending.
+- The earlier queue order is superseded. GPF-04 verification combines with the still-pending GPF-02/03 checks (both merged, #84/#86) in one native/QA candidate that the producer releases. The lead starts no QA or new batch on its own.
