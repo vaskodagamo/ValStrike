@@ -1,6 +1,6 @@
 # INT-ART-01 — Meshy character and Site01 first playtest
 
-- Status: Reserved for the user's **new Claude integration chat**. Start with engine-free preflight; native work waits for the source readiness gates and INT-04's engine-slot release.
+- Status: Reserved for the user's **new Claude integration chat**. Start with engine-free preflight; native work waits for the source readiness gates and the current engineering batch's engine-slot release (INT-05 at final kickoff).
 - Backlog: PLAY-02 / PLAY-04. Result: the reviewed Meshy character and approved props visibly working in existing Site01, one actual local server/two-client acceptance run, and exact other-Mac playtest instructions.
 - Owner: one new Claude session launched by the user from the prepared checkout. No additional workers. Codex coordinator/art lead owns this assignment and central status; existing Claude engineering lead retains its own sub-board and current gameplay tasks.
 - Branch/worktree: `claude/int-art-01-meshy-playtest`, `/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/int-art-01-meshy-playtest`.
@@ -22,7 +22,7 @@ All other paths are read-only. In particular: gameplay/HUD/Combat/Damage/Match f
 
 ## Readiness and scheduling
 
-Read AGENTS.md, CLAUDE.md, TEAM_WORKFLOW, the newest TEAM_BOARD entry and this brief. Inspect the **live** engineering board read-only at `/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/team-gameplay/docs/teams/GAMEPLAY_BOARD.md`; committed root copies may lag. INT-04 currently owns the UE slot for settings verification. This task is next in the art queue after its recorded release; a free-looking lock alone is not permission to interrupt an assigned run. Use `Scripts/with_ue_slot.py` for every Unreal import, preview, build and runtime job. Exit 75 means stop/return to the queue; never loop, poll, bypass or kill someone else's processes.
+Read AGENTS.md, CLAUDE.md, TEAM_WORKFLOW, the newest TEAM_BOARD entry and this brief. Inspect the **live** engineering board read-only at `/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/team-gameplay/docs/teams/GAMEPLAY_BOARD.md`; committed root copies may lag. INT-04 finished and released its slot in PR #61. INT-05 now owns the engineering slot for the merged GPT-10/GPT-11 checks. This task is queued after the current engineering batch's recorded release (INT-05 at kickoff); a free-looking lock alone is not permission to interrupt an assigned run. Use `Scripts/with_ue_slot.py` for every Unreal import, preview, build and runtime job. Exit 75 means stop/return to the queue; never loop, poll, bypass or kill someone else's processes.
 
 Prepare a minimal import/animation/placement plan now using the read-only handoffs in the original `meshy-character` / `meshy-props-surfaces` worktrees and current map/presentation code. Do not revalidate those entire source pipelines. Actual import gates:
 

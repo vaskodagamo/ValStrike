@@ -436,6 +436,8 @@ The gameplay/integration idle slots were checked clean at their original heads b
 
 **Dispatch:** Created “Art — Character playtest prep” (`01a1a6b0-8aa8-7373-b8bb-bc5506f451d4`) at clean prepared head `51d19ee`, and “Art — Site01 props playtest prep” (`01a1a6b0-98fd-7f41-851e-1fd1c5fc2452`) at `09a2e4b`; both explicit High reasoning, configured model unchanged. Each received its actual worktree and exclusive scope. Claude checkout is prepared at `7157124` with the integration brief; user launches it with the supplied kickoff. Registry transfers only MSH-C01/W03/W04/W07/W10; held assets remain with their frozen source records. No native integration or new art completion is claimed at dispatch.
 
+**Queue update before final handoff:** Main advanced to `5e9048f` with PRs #58–61 while sessions started. INT-04 is complete/released; the live engineering board now schedules INT-05 for the merged crosshair/fire-validation changes. Updated the native brief and Claude prompt to wait for the current engineering batch release (INT-05), preserving existing gameplay ownership. Coordinator kickoff is published as PR #62; art chats are active.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.
