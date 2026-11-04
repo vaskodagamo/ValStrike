@@ -1,0 +1,50 @@
+{
+  "Art/Source/Weapons/Pistol02/Originals/model.fbx": {
+    "bytes": 59733420,
+    "sha256": "97927489157dda604071c14b65ce7d9aade52303bd2688781aa66a82f71b3b10"
+  },
+  "Art/Source/Weapons/Pistol02/Originals/texture_0_roughness.png": {
+    "bytes": 1413831,
+    "sha256": "6a6164b2b65512de27b29f8045bdbbcb6158a6cd1b34961f790f21f89486c503"
+  },
+  "Art/Source/Weapons/Pistol02/Originals/texture_0_metallic.png": {
+    "bytes": 1195720,
+    "sha256": "c6b808aa319e02cdc0b76a4c75ea9f9e4dcd20b15c13aee4bc331f7718c11125"
+  },
+  "Art/Source/Weapons/Pistol02/Originals/texture_0_base_color.png": {
+    "bytes": 22074650,
+    "sha256": "32a7c4c4a9014d53c6b3be0a769a466a335d91d41364691136295db3dd3e39ad"
+  },
+  "Art/Source/Weapons/Pistol02/Originals/thumbnail.png": {
+    "bytes": 96482,
+    "sha256": "766bb5cf39cceeb7c2bd239dc2a82e6db76740f16e9aa8a7109f1ac75653a366"
+  },
+  "Art/Source/Weapons/Pistol02/Originals/texture_0_normal.png": {
+    "bytes": 18984635,
+    "sha256": "44e98e22f72fe7f22988a7a21dbd04551af1f22b0121e8a4cb0984adfab6292d"
+  },
+  "Art/Source/Weapons/Pistol02/Originals/model.glb": {
+    "bytes": 34345020,
+    "sha256": "fdeb0cffcafd195160d4e445e3e97887c92289e02bc2b3964c12e53ded26aadd"
+  },
+  "Art/Source/Weapons/Pistol02/Models/P02_Kestrel.blend": {
+    "bytes": 22278484,
+    "sha256": "bfca7b1f043708d95919060862977f0b2c0a87cd2f78fa13add4c8d10bfcca2b"
+  },
+  "Art/Source/Weapons/Pistol02/Reference/P02_reference.png": {
+    "bytes": 1684249,
+    "sha256": "7971131ce1af30fcaa54a32180c0dc52abd9d55a5c8d2eda5fdabae3588c5f21"
+  },
+  "Art/Source/Weapons/Pistol02/Models/Exports/SM_VS_Pistol02_Body.fbx": {
+    "bytes": 19459948,
+    "sha256": "e3652729bef062ef1c3d33843826bf2074952b66221aa3bc8c8c05f0e31dad65"
+  },
+  "Art/Source/Weapons/Pistol02/Models/Exports/SM_VS_Pistol02_Slide.fbx": {
+    "bytes": 19505628,
+    "sha256": "f036e0e793f54848f58b820014ca152c96dcef5bc8c057f051292744e4a12bdc"
+  },
+  "Art/Source/Weapons/Pistol02/Models/Exports/SM_VS_Pistol02_Magazine.fbx": {
+    "bytes": 19032412,
+    "sha256": "69f7717bf81efca5c6fcaee0818f20b0252c2915f03ac4c66e565ae94b6a3e61"
+  }
+}

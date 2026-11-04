@@ -1,0 +1,76 @@
+{
+  "asset": "P02",
+  "task": "ART-18",
+  "base_commit": "e0071ce295c78cfdfa453af86b83596dc4cfa2ec",
+  "operation_id": "art18-p02-20261104-01",
+  "resource": "image-to-3d",
+  "status": "SUCCEEDED",
+  "allowance_credits": 30,
+  "estimated_credits": 30,
+  "actual_credits": 30,
+  "cli_version": "0.8.2",
+  "node_version": "22.21.1",
+  "settings": {
+    "model_type": "standard",
+    "ai_model": "meshy-7.1",
+    "geometry_resolution": "standard",
+    "should_texture": true,
+    "enable_pbr": true,
+    "texture_resolution": "4k",
+    "should_remesh": false,
+    "target_formats": [
+      "glb",
+      "fbx"
+    ]
+  },
+  "reference": "Art/Source/Weapons/Pistol02/Reference/P02_reference.png",
+  "reference_sha256": "7971131ce1af30fcaa54a32180c0dc52abd9d55a5c8d2eda5fdabae3588c5f21",
+  "pricing_source": "https://docs.meshy.ai/en/api/pricing",
+  "approved": "docs/tasks/art/WEAPON_V2_BRIEF.md",
+  "task_id": "01a1a6c5-c95f-77e6-8e57-3e88b38c77ea",
+  "parent_task_id": null,
+  "downloads": [
+    {
+      "key": "model.glb",
+      "relative_path": "downloads/model.glb",
+      "bytes": 34345020,
+      "sha256": "fdeb0cffcafd195160d4e445e3e97887c92289e02bc2b3964c12e53ded26aadd"
+    },
+    {
+      "key": "model.fbx",
+      "relative_path": "downloads/model.fbx",
+      "bytes": 59733420,
+      "sha256": "97927489157dda604071c14b65ce7d9aade52303bd2688781aa66a82f71b3b10"
+    },
+    {
+      "key": "thumbnail.primary",
+      "relative_path": "downloads/thumbnail.png",
+      "bytes": 96482,
+      "sha256": "766bb5cf39cceeb7c2bd239dc2a82e6db76740f16e9aa8a7109f1ac75653a366"
+    },
+    {
+      "key": "texture.0.base_color",
+      "relative_path": "downloads/texture_0_base_color.png",
+      "bytes": 22074650,
+      "sha256": "32a7c4c4a9014d53c6b3be0a769a466a335d91d41364691136295db3dd3e39ad"
+    },
+    {
+      "key": "texture.0.metallic",
+      "relative_path": "downloads/texture_0_metallic.png",
+      "bytes": 1195720,
+      "sha256": "c6b808aa319e02cdc0b76a4c75ea9f9e4dcd20b15c13aee4bc331f7718c11125"
+    },
+    {
+      "key": "texture.0.roughness",
+      "relative_path": "downloads/texture_0_roughness.png",
+      "bytes": 1413831,
+      "sha256": "6a6164b2b65512de27b29f8045bdbbcb6158a6cd1b34961f790f21f89486c503"
+    },
+    {
+      "key": "texture.0.normal",
+      "relative_path": "downloads/texture_0_normal.png",
+      "bytes": 18984635,
+      "sha256": "44e98e22f72fe7f22988a7a21dbd04551af1f22b0121e8a4cb0984adfab6292d"
+    }
+  ]
+}
