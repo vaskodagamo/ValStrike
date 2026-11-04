@@ -1,0 +1,23 @@
+# Task GPT-14: server-authoritative kill feed on the HUD
+
+- Status: In progress
+- Backlog: PLAY-03 ("Join flow and game state understandable"). Today no kill feed exists; kills show only on the scoreboard.
+- Owner/session and provider: Claude session "GPT-14 kill feed"
+- Branch and base: `claude/gpt-14-kill-feed` from `origin/main` `b342ca9`
+- Worktree: `/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/gpt-14-kill-feed`
+- Owns:
+  - `Source/ValStrike/Scoreboard/VSMatchStatsSubsystem.*`: emit a feed entry where a kill, team kill or self kill is resolved
+  - `Source/ValStrike/Scoreboard/VSScoreboardState.*`: a replicated, bounded feed
+  - a new pure `Source/ValStrike/Scoreboard/VSKillFeedModel.h`
+  - a new kill-feed draw block in `Source/ValStrike/VSHUD.cpp`, plus declarations in `VSHUD.h` (do not touch the reticle, hit-marker or damage-indicator blocks)
+  - a new `Tests/Scoreboard/kill_feed_model_test.cpp` (or the existing `Tests/Scoreboard` pattern)
+  - a new `docs/workstreams/kill-feed.md`
+- Read-only: `Scoreboard/VSStatsLedger.*`, `VSScoreboardModel.*` and `SVSScoreboard.*` (unless an additive accessor is unavoidable; then say so in the PR), `Damage/**`, `Match/**`, `Feedback/**`, `Combat/**`, Content and maps.
+- Result:
+  - The server appends `{seq, killer name/team, victim name/team, weapon (rifle/pistol), headshot, kind (kill/teamkill/self)}` when the ledger credits the death, so exactly one entry per death. A ring of at most 5 entries is replicated, with a monotonic sequence so late joiners and reorders don't duplicate.
+  - Clients draw the newest 5 entries top right, each for about 5 s. The local player's own entries are highlighted. Team colors use the existing HUD palette, and the text is plain HUD text. No new assets: if a weapon icon is wanted, use text ("RIFLE"/"PISTOL"/"HS") and note an icon slot for art.
+  - Round reset clears it. On a dedicated server no draw happens, and no client-side prediction is involved.
+  - A pure model test covers append, cap, sequence dedupe, expiry and reset.
+- Validation tier: V2 (replicated state). Contributor checks: the model test with clang and g++ `-Wall -Wextra -Werror -pedantic`, `git diff --check`. No Unreal.
+- Integration-owned checks: Editor build, `Scripts/test_damage.py` (46/46) and `test_match.py` (no regression), `Tests/UI/test_session.py --rendered` (72/72) plus a screenshot check if a kill occurs on camera, otherwise a human playtest.
+- Engine slot: none. Publication: push and open a PR; the user merges.
