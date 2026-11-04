@@ -1,55 +1,66 @@
-# P02 Kestrel — ART-18 source handoff
+# P02 Kestrel — corrected high-detail source
 
-2026-11-04 (Europe/Berlin). Source implementation ready for art review; **native verification pending**. New Meshy-derived compact pistol, not a scaled P01. User merges the PR. No native Content, gameplay, character source or central status was edited.
+2026-11-04 (Europe/Berlin). User-requested quality correction to ART-18 / [correction PR #81](https://github.com/vaskodagamo/ValStrike/pull/81) (follow-up to merged #73). **Corrected source for visual review; runtime optimization and native verification pending.** The previous 26,904-triangle export was rejected for degraded surface quality and is superseded.
 
-## Result and evidence
+## What changed
 
-| Assembled envelope, cm | Length X | Width Y | Height Z |
+Rebuilt from the unchanged original Meshy GLB. Removed the 5.5% decimation, general smoothing and PBR overrides. Kept the original geometry, UVs, PBR maps and custom corner normals. The muzzle-forward transform now explicitly updates both positions and normals. Part separation preserves per-corner normals through cutting; only newly filled cut caps use flat interior normals. The magazine retains its original exterior floor plus a concealed visual stem.
+
+The new source is **21.000 × 3.352 × 13.833 cm**, with separate Body (211,980 triangles), Slide (241,968) and Magazine (7,464): **461,412 triangles total**. The original had 454,988; added cut boundaries/caps/stem explain the increase. This is a high-detail authoring/reference export, **not an optimized runtime LOD**. No further reduction should be accepted without a same-camera visual comparison and shading validation.
+
+Two shared materials, one UV channel, identity mesh transforms, centimeters, +X muzzle-forward, +Z up. [Packed editable blend](../../../Art/Source/Weapons/Pistol02/Models/P02_Kestrel.blend), [FBX parts](../../../Art/Source/Weapons/Pistol02/Models/Exports), [measurements](source-measurements.json), [source hashes](source-hashes.json), [socket/import recipe](IMPORT.md).
+
+## Quality comparison — actual source renders
+
+The corrected and untouched-original renders below use the same camera, lighting, material maps, scale and resolution. The rejected export is retained as historical visual evidence. These are **Blender source renders, not Unreal screenshots**.
+
+| Rejected export (`ae5cf6e`) | Corrected separated source |
+| --- | --- |
+| ![Rejected P02](Previews/P02_rejected_ae5cf6e.png) | ![Corrected P02](Previews/P02_three_quarter.png) |
+
+![Untouched Meshy original under the identical camera and lighting](Previews/P02_original_same_camera.png)
+
+![Final FBX reimport with source PBR rebound, same camera and lighting](Previews/P02_fbx_same_camera.png)
+
+The final-export view uses reimported FBX geometry/normals and explicitly rebinds the source PBR slots for the same material setup. It does not claim automatic FBX or Unreal material conversion.
+
+The corrected source visually retains the original slide, serrations, bevels and panel boundaries. Image analysis measured mean absolute RGB difference **0.021/255** between corrected and original renders; **0.073%** of pixels differ by more than 8/255 in any channel. This supports the inspected comparison only; it is not a runtime or general topology test. [Measurement](quality-comparison.json). The remaining generated shape/texture limitations belong to the original Meshy result; this correction preserves its detail rather than claiming exact reproduction of the concept image.
+
+## Scale and fit evidence
+
+| Envelope, cm | Length X | Width Y | Height Z |
 | --- | ---: | ---: | ---: |
-| P01 unchanged reference | 23.929 | 4.300 | 18.325 |
-| P02 final | 20.959 | 3.346 | 13.806 |
-| Reduction | 12.41% | 22.19% | 24.66% |
+| P01 unchanged | 23.929 | 4.300 | 18.325 |
+| Corrected P02 | 21.000 | 3.352 | 13.833 |
 
-Three meshes: Body 12,514 triangles; Slide 13,756; Magazine 634. Total **26,904** triangles, two shared materials, one UV channel. Identity mesh transforms; centimeters, +X muzzle-forward, +Z up. The original draft had 454,988 triangles. Local cleanup welded coincident UV-boundary geometry, reduced and lightly relaxed the surface, cut/capped separate slide and magazine floor, and added a concealed simple magazine visual stem. Existing external UV loops remain; cut interiors use the constant interior material. No functional internals.
+![P01 above P02, one camera and identical scale](Previews/P01_P02_same_scale.png)
 
-[Editable packed Blender source](../../../Art/Source/Weapons/Pistol02/Models/P02_Kestrel.blend), [three FBX parts](../../../Art/Source/Weapons/Pistol02/Models/Exports), [measurements](source-measurements.json), [export check](export-verification.json), [source hashes](source-hashes.json).
+![Corrected side view](Previews/P02_side.png)
 
-## Genuine source previews
+![Frozen 170 cm neutral-height character, supplied crouched rifle pose](Previews/P02_full_character.png)
 
-All images below are Blender renders of the actual cleaned mesh, **not Unreal/game screenshots**. Studio views use orthographic cameras (31 cm span); ruler ticks are 1 cm, total 21 cm. Old/new uses one orthographic camera with a 48 cm span, identical scene units, no individual scaling; P01 is above P02. Three-quarter camera `(7,-65,26)` looks at `(5,0,0)`; side camera `(5,-65,0)` looks at `(5,0,0)`. Character cameras and 90-degree horizontal-FOV camera are recorded exactly in [fit measurements](fit-measurements.json).
-
-![P01 above P02, same scale and camera](Previews/P01_P02_same_scale.png)
-
-![P02 three-quarter with centimeter ruler](Previews/P02_three_quarter.png)
-
-![P02 side](Previews/P02_side.png)
-
-![Frozen 170 cm neutral-height character, supplied crouched rifle-pose frame](Previews/P02_full_character.png)
-
-![Actual right palm and fingers](Previews/P02_grip_contact.png)
+![Right palm and fingers](Previews/P02_grip_contact.png)
 
 ![Unmodified support-hand gap](Previews/P02_support_hand_gap.png)
 
 ![Weapon-only 90-degree horizontal-FOV composition](Previews/P02_first_person_90deg.png)
 
-## Fit result and limits
+Studio orthographic span is 31 cm; ruler ticks are 1 cm over 21 cm. Three-quarter camera `(7,-65,26)` looks at `(5,0,0)`; side camera `(5,-65,0)` looks at `(5,0,0)`. P01/P02 uses one 48 cm orthographic camera without individual scaling. Character/FPS camera transforms are in [fit measurements](fit-measurements.json).
 
-The frozen ART-13 blend hash matches commit `4c2887fe7ab34bdff96efc6686cfe9147fb2481b`. Only a task-local ignored copy was loaded. Character neutral height stays 170 cm and scale stays 1. The displayed action is unchanged `A_UE01_Walk_Backward_with_Gun`, frame 1; its crouch is not a shortened character.
+The frozen ART-13 source hash matches commit `4c2887fe7ab34bdff96efc6686cfe9147fb2481b`. Only an ignored task-local copy was loaded. Neutral height stays 170 cm at scale 1. The unchanged `A_UE01_Walk_Backward_with_Gun`, frame 1, is crouched. No character or pose edits were made.
 
-The grip cross-section envelope at local Z = -3 ±0.5 cm is **6.801 × 3.136 cm** (X/Y vertex band; not an internal-clearance measurement). The palm is accommodated in the inspected render, but the supplied rifle-pose fingers overlap the lower trigger guard. The support wrist is **23.089 cm** from the weapon Grip datum and does not contact the pistol. A pistol-specific right-finger and support-hand pose remains necessary; no two-hand fit pass or animation readiness is claimed. No character pose was authored or saved.
+The grip envelope at local Z = -3 ±0.5 cm is **6.834 × 3.166 cm** (X/Y vertex band, not internal clearance). The palm is accommodated in the inspected view, but frozen fingers still overlap the lower trigger guard and the support wrist remains **23.089 cm** from Grip. A pistol-specific finger/support-hand pose remains necessary; no two-hand fit or animation acceptance is claimed.
 
-Residual Meshy waviness remains along slide/edge highlights. The local finish reduces generated micro-normal strength and metallic response, but this is a source art-review candidate, not final close-up surface approval. The magazine is an exterior visual shell plus concealed stem; no detailed inner reload cavity. Native inspection must check material conversion, cap/slide motion, muzzle alignment, import scale, camera framing and hand intersections.
+## Checks and remaining work
 
-## Checks actually run
+Blender 5.2.2 LTS: reopened the saved corrected source; reimported all three FBXs; matched triangle/UV counts and bounds within **0.000000716 cm**. Sampled 4,537 source corner normals; over 99% located after coordinate rounding in each FBX, with maximum matched angular difference **0.035 degrees**. [Export verification](export-verification.json). Inspected corrected/original and rejected comparisons and the final FBX with identical source PBR, plus the regenerated scale/character/grip/FPS views. Packed images and unchanged original hashes checked. Task-scoped diff/LFS checks accompany publication. No new test framework.
 
-Blender 5.2.2 LTS: original GLB inspection; saved final blend reopen; three-part FBX round-trip with matching triangle/UV counts and maximum bounds error **0.000000835 cm**; packed-image presence; actual studio, comparison, full-character, grip, support-gap and FPS render inspection. One failed smoothing preview exposed UV-boundary cracks; welding before smoothing corrected them, and affected source/export/render evidence was regenerated. No test framework was added.
-
-`git diff --check` and task-scoped Git LFS checks accompany publication. No Unreal launch/import/build, multiplayer suite, packaged client, dedicated-server or cross-platform check ran. The coordinator assigns later native import to one integration owner; current INT-ART-01 scope is not automatically extended.
+Art/user visual review, runtime LOD budget and any later reduction/rebake remain pending. Native import must check normals, material channels, scale/socket/camera placement, part motion and hand intersections. No Unreal launch/import/build, multiplayer suite, packaged client, dedicated-server or cross-platform check ran; no UE slot used. The coordinator assigns a later single integration owner. This does not extend INT-ART-01 automatically.
 
 ## Provenance and reproduction
 
-Built-in imagegen produced the isolated input: [exact prompt](../../../Art/Source/Weapons/Pistol02/Reference/PROMPT.md). Official Meshy CLI **0.8.2** under Node **22.21.1**, explicit `meshy-7.1`, standard geometry, 4K texture request/PBR, no remesh. Job `01a1a6c5-c95f-77e6-8e57-3e88b38c77ea`, operation `art18-p02-20261104-01`, succeeded; **30 actual credits / 30 authorized**, no retry or extra stage. [Manifest](meshy-manifest.json), [exact options](request.json), [official pricing](https://docs.meshy.ai/en/api/pricing). The base-color and normal exports are 4096px; packed data map is 2048px as returned by Meshy. The 4K request does not mean every returned PBR channel is 4K.
+Built-in imagegen input and [exact prompt](../../../Art/Source/Weapons/Pistol02/Reference/PROMPT.md) are unchanged. Official Meshy CLI 0.8.2 / Node 22.21.1, pinned `meshy-7.1`, standard geometry, 4K textures/PBR, no remesh. Task `01a1a6c5-c95f-77e6-8e57-3e88b38c77ea`; **30/30 credits originally, 0 additional credits for correction**. No paid retry or extra stage. [Manifest](meshy-manifest.json), [request](request.json), [pricing](https://docs.meshy.ai/en/api/pricing). Base-color/normal maps are 4096px; metallic/roughness are 2048px as supplied. Original GLB/FBX, four maps and thumbnail remain untouched under `Originals/`.
 
-Original GLB/FBX, all four returned texture files and thumbnail are preserved unmodified under `Art/Source/Weapons/Pistol02/Originals/`, with hashes. Inputs are original generated project art; no branded firearm or third-party gun mesh was used. Meshy service/account terms govern generated outputs; no claim of exclusive copyright or separately verified license is made. Character/P01 remain existing project references and are not duplicated in this delivery.
+Original generated project art; no branded weapon or external gun mesh was copied. Meshy account/service terms govern generated outputs; no exclusive-copyright or separately verified license claim. Existing character/P01 references are not duplicated in this delivery.
 
-Reproduce local source cleanup with Blender `--factory-startup --background --threads 2 --python-exit-code 1 --python Art/Source/Weapons/Pistol02/Models/cleanup_p02.py`, then `render_p02.py`. These overwrite P02 generated outputs; preserve manual changes first. Fit scripts require the ignored frozen character copy described in `character-reference.json`, including its Textures folder. Run `fit_preview.py`, then `verify_exports.py` sequentially. No script invokes Meshy, starts Unreal or spends credits.
+Run Blender `--factory-startup --background --threads 2 --python-exit-code 1 --python Art/Source/Weapons/Pistol02/Models/cleanup_p02.py`, then `render_p02.py`, `fit_preview.py`, and `verify_exports.py`, sequentially. These overwrite task outputs; preserve manual edits first. Fit scripts need the ignored frozen reference copy and Textures folder listed in `character-reference.json`. No script calls Meshy, spends credits or starts Unreal. The historical rejected render is retained from `ae5cf6e`; it is not regenerated by the corrected pipeline.

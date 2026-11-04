@@ -1,4 +1,5 @@
 {
+  "revision": "2026-11-04 quality correction after user rejection",
   "tool": "5.2.2 LTS",
   "units": "cm",
   "forward": "+X",
@@ -6,6 +7,8 @@
   "uniform_scale_from_meshy": 0.11033497271080281,
   "axis_flip_xy": -1,
   "source_meshy_triangles": 454988,
+  "surface_processing": "No decimation or smoothing; original corner normals and PBR preserved; cut-plane caps use flat interior material.",
+  "runtime_optimization": "Deferred; these are high-detail source/reference exports.",
   "anchors": {
     "Grip": {
       "location_cm": [
@@ -28,7 +31,7 @@
       "location_cm": [
         15.5,
         0,
-        5.0
+        5
       ],
       "rotation_xyz_degrees": [
         0,
@@ -62,7 +65,7 @@
       "location_cm": [
         -2.5,
         0,
-        -1.0
+        -1
       ],
       "rotation_xyz_degrees": [
         0,
@@ -79,65 +82,68 @@
   "parts": [
     {
       "name": "SM_VS_Pistol02_Body",
-      "triangles": 12514,
-      "vertices": 6245,
+      "triangles": 211980,
+      "vertices": 105978,
       "materials": [
-        "P02_Gunmetal_Charcoal_PBR",
+        "P02_Original_Meshy_PBR",
         "P02_CutInterior"
       ],
+      "custom_normals": true,
       "dimensions_cm": [
-        20.639139652252197,
-        3.3406633138656616,
+        20.654770851135254,
+        3.3503546714782715,
         9.950000286102295
       ],
       "transform_identity": true
     },
     {
       "name": "SM_VS_Pistol02_Slide",
-      "triangles": 13756,
-      "vertices": 6869,
+      "triangles": 241968,
+      "vertices": 120976,
       "materials": [
-        "P02_Gunmetal_Charcoal_PBR",
+        "P02_Original_Meshy_PBR",
         "P02_CutInterior"
       ],
+      "custom_normals": true,
       "dimensions_cm": [
-        20.959228515625,
-        3.345995783805847,
-        3.2121739387512207
+        20.999999046325684,
+        3.349858045578003,
+        3.229830265045166
       ],
       "transform_identity": true
     },
     {
       "name": "SM_VS_Pistol02_Magazine",
-      "triangles": 634,
-      "vertices": 321,
+      "triangles": 7464,
+      "vertices": 3736,
       "materials": [
-        "P02_Gunmetal_Charcoal_PBR",
+        "P02_Original_Meshy_PBR",
         "P02_CutInterior"
       ],
+      "custom_normals": true,
       "dimensions_cm": [
-        5.934539198875427,
-        2.913418173789978,
-        5.693639755249023
+        5.973270893096924,
+        2.934837222099304,
+        5.702908992767334
       ],
       "transform_identity": true
     }
   ],
   "bounds_cm": [
     [
-      -5.468916893005371,
-      -1.676943302154541,
-      -6.693639755249023
+      -5.493429183959961,
+      -1.6798611879348755,
+      -6.702908992767334
     ],
     [
-      15.490311622619629,
-      1.6690524816513062,
-      7.112174034118652
+      15.506569862365723,
+      1.6722257137298584,
+      7.129830360412598
     ]
   ],
   "dimensions_cm": [
-    20.959228515625,
-    3.345995783805847,
-    13.805813789367676
+    20.999999046325684,
+    3.352086901664734,
+    13.832739353179932
   ]
 }

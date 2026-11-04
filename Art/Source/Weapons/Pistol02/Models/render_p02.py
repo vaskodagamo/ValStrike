@@ -1,4 +1,4 @@
-import bpy,math,json
+import bpy,math,json,sys
 from pathlib import Path
 from mathutils import Vector
 ROOT=Path(__file__).resolve().parent;REPO=ROOT.parents[4];DOC=REPO/'docs/assets/pistol02';OUT=DOC/'Previews'
@@ -21,8 +21,38 @@ def line(a,b):
 line((-5.5,0,-8.2),(15.5,0,-8.2))
 for x in range(22):line((x-5.5,0,-8.2),(x-5.5,0,-7.8 if x%5 else -7.5))
 def render(name):
+ if '--export-only' in sys.argv and name!='P02_fbx_same_camera.png':return
  sc.render.filepath=str(OUT/name);bpy.ops.render.render(write_still=True)
 render('P02_three_quarter.png')
+# Same scene/camera/lighting comparison against untouched Meshy output.
+corrected = [o for o in sc.objects if o.type == 'MESH']
+for o in corrected:o.hide_render=True
+before=set(sc.objects)
+bpy.ops.import_scene.gltf(filepath=str(ROOT.parent/'Originals/model.glb'))
+raw=next(o for o in set(sc.objects)-before if o.type=='MESH')
+bpy.ops.object.select_all(action='DESELECT');raw.select_set(True);bpy.context.view_layer.objects.active=raw
+scale=21/raw.dimensions.x;raw.scale=(scale,)*3;raw.rotation_mode='XYZ';raw.rotation_euler.z=math.pi;raw.location=(5,0,.2)
+bpy.ops.object.transform_apply(location=True,rotation=True,scale=True)
+render('P02_original_same_camera.png')
+bpy.data.objects.remove(raw,do_unlink=True)
+# Final export round-trip, retaining the exact baseline material/light setup.
+# Rebind source PBR explicitly: this checks exported geometry/normals, not FBX
+# auto-material conversion or an Unreal material import.
+source_materials=list(corrected[0].data.materials)
+export_objects=[]
+for file in sorted((ROOT/'Exports').glob('*.fbx')):
+ before=set(sc.objects)
+ bpy.ops.import_scene.fbx(filepath=str(file),use_image_search=False)
+ imported=list(set(sc.objects)-before);export_objects.extend(imported)
+ for o in imported:
+  if o.type=='MESH':
+   indices=[p.material_index for p in o.data.polygons]
+   o.data.materials.clear()
+   for mat in source_materials:o.data.materials.append(mat)
+   for poly,idx in zip(o.data.polygons,indices):poly.material_index=idx
+render('P02_fbx_same_camera.png')
+for o in export_objects:bpy.data.objects.remove(o,do_unlink=True)
+for o in corrected:o.hide_render=False
 cam.location=(5,-65,0);cam.rotation_euler=(Vector((5,0,0))-cam.location).to_track_quat('-Z','Y').to_euler();render('P02_side.png')
 for o in ruler:o.hide_render=True
 # Existing P01 unchanged, same scene units and a single camera for both weapons.
