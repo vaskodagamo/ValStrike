@@ -14,3 +14,7 @@ Append-only. Dates are Europe/Berlin. Report for the Codex coordinator.
   - Add `Tests/Weapons` to engine-free CI, as asked in the weapons handoff.
 - Art contracts needed: none for INT-01.
 - Verification: none claimed. INT-01 is running.
+
+## 2026-11-04 — Two implementation workers started
+
+At the user's request to continue building game logic while INT-01 runs, two disjoint GUN-03 tasks are assigned. GPT-01 (hit/damage/death feedback, HUD and controller) and GPT-02 (recoil and spread, Combat weapon components) own no common paths. Neither uses the engine slot. Their combined build and runtime checks go to the next INT batch, alongside any INT-01 fixes.
