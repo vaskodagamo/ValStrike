@@ -1,0 +1,254 @@
+{
+  "engine": "5.8.4-58902052+++UE5+Release-5.8",
+  "mode": "import_and_save",
+  "source_sha256": {
+    "Art/Source/Characters/UrbanEntry01/Rifle02Pilot/Exports/A_UE01_R02_Hold.fbx": "85ae71c43d7a9882c6f4f378b18849627b80718c9544a3c31263495aa269f856",
+    "Art/Source/Characters/UrbanEntry01/Rifle02Pilot/Exports/A_UE01_R02_Walk.fbx": "f5147213b0474c3f40c9345011c81021c7e53be20b47f161d1cca31e19e44962",
+    "Art/Source/Characters/UrbanEntry01/Rifle02Pilot/Exports/A_UE01_R02_Run.fbx": "788da7cfb7adf1a9b59b7c7becd973cda105f3de45004e23b54eba13e95cfc84"
+  },
+  "clips": {
+    "A_UE01_R02_Hold": {
+      "length_s": 1.0,
+      "expected_s": 1.0,
+      "root_motion": false,
+      "skeleton": "/Game/Art/Characters/UrbanEntry01/SK_VS_UrbanEntry01_Skeleton.SK_VS_UrbanEntry01_Skeleton"
+    },
+    "A_UE01_R02_Walk": {
+      "length_s": 1.0333,
+      "expected_s": 1.0333,
+      "root_motion": false,
+      "skeleton": "/Game/Art/Characters/UrbanEntry01/SK_VS_UrbanEntry01_Skeleton.SK_VS_UrbanEntry01_Skeleton"
+    },
+    "A_UE01_R02_Run": {
+      "length_s": 0.6333,
+      "expected_s": 0.6333,
+      "root_motion": false,
+      "skeleton": "/Game/Art/Characters/UrbanEntry01/SK_VS_UrbanEntry01_Skeleton.SK_VS_UrbanEntry01_Skeleton"
+    }
+  },
+  "fit": {
+    "basis": "y_negated",
+    "bones_compared": 66,
+    "native_only_bones": [
+      "SKEL_UE01"
+    ],
+    "frames": {
+      "A_UE01_R02_Hold@1": {
+        "max_bone_translation_error_cm": 6e-05,
+        "max_bone_axis_error": 0.000131,
+        "R02_component_cm": [
+          20.0,
+          15.0,
+          129.0
+        ],
+        "hand_r_offset_cm": [
+          5.1772,
+          -12.7049,
+          -3.0491
+        ]
+      },
+      "A_UE01_R02_Hold@31": {
+        "max_bone_translation_error_cm": 6e-05,
+        "max_bone_axis_error": 0.000131,
+        "R02_component_cm": [
+          20.0,
+          15.0,
+          129.0
+        ],
+        "hand_r_offset_cm": [
+          5.1772,
+          -12.7049,
+          -3.0491
+        ]
+      },
+      "A_UE01_R02_Hold@61": {
+        "max_bone_translation_error_cm": 6e-05,
+        "max_bone_axis_error": 0.000131,
+        "R02_component_cm": [
+          20.0,
+          15.0,
+          129.0
+        ],
+        "hand_r_offset_cm": [
+          5.1772,
+          -12.7049,
+          -3.0491
+        ]
+      },
+      "A_UE01_R02_Walk@1": {
+        "max_bone_translation_error_cm": 0.0001,
+        "max_bone_axis_error": 0.000131,
+        "R02_component_cm": [
+          20.0707,
+          15.5416,
+          131.3152
+        ],
+        "hand_r_offset_cm": [
+          5.1773,
+          -12.7049,
+          -3.0491
+        ]
+      },
+      "A_UE01_R02_Walk@16": {
+        "max_bone_translation_error_cm": 6e-05,
+        "max_bone_axis_error": 0.000127,
+        "R02_component_cm": [
+          19.2046,
+          14.4483,
+          126.1513
+        ],
+        "hand_r_offset_cm": [
+          5.1773,
+          -12.7049,
+          -3.0491
+        ]
+      },
+      "A_UE01_R02_Walk@32": {
+        "max_bone_translation_error_cm": 5e-05,
+        "max_bone_axis_error": 0.00013,
+        "R02_component_cm": [
+          20.2069,
+          11.6831,
+          130.311
+        ],
+        "hand_r_offset_cm": [
+          5.1772,
+          -12.7049,
+          -3.0491
+        ]
+      },
+      "A_UE01_R02_Walk@47": {
+        "max_bone_translation_error_cm": 6e-05,
+        "max_bone_axis_error": 0.000134,
+        "R02_component_cm": [
+          23.6334,
+          13.4178,
+          125.232
+        ],
+        "hand_r_offset_cm": [
+          5.1772,
+          -12.7049,
+          -3.0491
+        ]
+      },
+      "A_UE01_R02_Walk@63": {
+        "max_bone_translation_error_cm": 0.00011,
+        "max_bone_axis_error": 0.000131,
+        "R02_component_cm": [
+          20.0707,
+          15.5416,
+          131.3152
+        ],
+        "hand_r_offset_cm": [
+          5.1773,
+          -12.7049,
+          -3.0491
+        ]
+      },
+      "A_UE01_R02_Run@1": {
+        "max_bone_translation_error_cm": 0.00011,
+        "max_bone_axis_error": 0.000131,
+        "R02_component_cm": [
+          20.147,
+          15.7358,
+          124.3929
+        ],
+        "hand_r_offset_cm": [
+          5.1772,
+          -12.7049,
+          -3.049
+        ]
+      },
+      "A_UE01_R02_Run@10": {
+        "max_bone_translation_error_cm": 0.00011,
+        "max_bone_axis_error": 0.000137,
+        "R02_component_cm": [
+          21.9844,
+          16.0533,
+          126.9035
+        ],
+        "hand_r_offset_cm": [
+          5.1773,
+          -12.7049,
+          -3.0491
+        ]
+      },
+      "A_UE01_R02_Run@20": {
+        "max_bone_translation_error_cm": 6e-05,
+        "max_bone_axis_error": 0.000148,
+        "R02_component_cm": [
+          24.6508,
+          14.2009,
+          118.8616
+        ],
+        "hand_r_offset_cm": [
+          5.1773,
+          -12.7049,
+          -3.0491
+        ]
+      },
+      "A_UE01_R02_Run@30": {
+        "max_bone_translation_error_cm": 0.00014,
+        "max_bone_axis_error": 0.000142,
+        "R02_component_cm": [
+          24.5412,
+          13.4031,
+          125.9898
+        ],
+        "hand_r_offset_cm": [
+          5.1773,
+          -12.7049,
+          -3.0491
+        ]
+      },
+      "A_UE01_R02_Run@39": {
+        "max_bone_translation_error_cm": 9e-05,
+        "max_bone_axis_error": 0.000131,
+        "R02_component_cm": [
+          20.147,
+          15.7358,
+          124.3929
+        ],
+        "hand_r_offset_cm": [
+          5.1773,
+          -12.7049,
+          -3.0491
+        ]
+      }
+    },
+    "max_bone_translation_error_cm": 0.00014,
+    "max_bone_axis_error": 0.000148,
+    "hand_r_offset": {
+      "location_cm": [
+        5.1772,
+        -12.7049,
+        -3.0491
+      ],
+      "quat_xyzw": [
+        0.772515,
+        -0.63491,
+        -0.009241,
+        -0.005007
+      ]
+    },
+    "hand_r_offset_max_spread": 0.0001,
+    "art28_expected": {
+      "location_cm": [
+        5.177231,
+        -12.70488,
+        -3.049062
+      ],
+      "quat_xyzw": [
+        -0.772515,
+        0.63491,
+        0.009242,
+        0.005007
+      ]
+    },
+    "gait_stance_speed_cm_s": {
+      "A_UE01_R02_Walk": 138.2,
+      "A_UE01_R02_Run": 287.4
+    }
+  },
+  "unchanged_existing_assets": true
+}

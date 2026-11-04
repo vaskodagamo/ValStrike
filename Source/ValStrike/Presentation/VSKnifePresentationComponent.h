@@ -72,10 +72,13 @@ protected:
     TSoftObjectPtr<UAnimSequence> ArmsSlashAsset;
     UPROPERTY(EditDefaultsOnly, Category = "Knife Presentation")
     TSoftObjectPtr<UAnimSequence> ArmsStabAsset;
-    // ART-26 source framing: the arm component sits at (+20, 0, -5) cm from the
-    // camera (source camera (-20, 0, 5) looking +X, 90 degree horizontal FOV).
+    // Arm component offset from the (unchanged, 90 degree) first-person camera. ART-26's
+    // source framing was (+20, 0, -5); INT-ART-05 moves the same-scale arms 8 cm forward,
+    // 3 cm right and 5 cm down (candidate D, knife-rifle-acceptance/fp-framing): measured
+    // screen coverage idle 13% -> 10%, crosshair-box coverage at slash impact 32% -> 18%
+    // and follow-through 41% -> 26%, with both hands and K01 kept whole.
     UPROPERTY(EditDefaultsOnly, Category = "Knife Presentation")
-    FTransform ArmsFromCamera = FTransform(FVector(20.0f, 0.0f, -5.0f));
+    FTransform ArmsFromCamera = FTransform(FVector(28.0f, 3.0f, -10.0f));
 
 private:
     void HandleCue(const FVSKnifeCueEvent& Event);
