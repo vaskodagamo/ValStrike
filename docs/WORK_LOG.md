@@ -456,6 +456,8 @@ The gameplay/integration idle slots were checked clean at their original heads b
 
 **Assignments/budget:** ART-19 FPArms02 owns a fresh hands/forearms source folder and must finish anatomical topology, paired handedness and finger rig locally after Meshy. ART-20 owns a fresh K01 knife source folder and grip-fit recipe; knife combat is not silently added. User explicitly approved **60 additional credits**, 30 per task for one textured standard Meshy image job, separate from rifle/pistol funds; no paid retries/extra stages. Both use High reasoning, isolated worktrees, exact owned paths and no contributor builds/new suites/native imports. Paid drafts, source/pose readiness and native/gameplay acceptance are separate states.
 
+**Dispatch:** Created “Art — Meshy first-person hands” (`01a1a6cf-0f10-73d0-8c33-29cb863d7b33`) and “Art — Meshy K01 knife” (`01a1a6cf-270a-7e70-a435-a966fd3a5822`) at explicit High reasoning in their separate clean worktrees, both starting at `babef7d`. Both received their exact 30-credit cap and required source/rig/fit scope. No native integration or paid submission was performed by the coordinator.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.
