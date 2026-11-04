@@ -1,0 +1,215 @@
+{
+  "generator": "Built-in image_gen",
+  "date": "2026-11-04",
+  "reference": "00_StyleAnchor.png",
+  "images": [
+    {
+      "id": "01_ConcreteWall",
+      "folder": "Walls",
+      "name": "Straight concrete wall",
+      "dimensions_cm": [
+        200,
+        20,
+        300
+      ],
+      "prompt": "Use case: stylized-concept.\nAsset type: SINGLE OBJECT input reference for image-to-3D modeling, part of a coherent modular tactical FPS environment kit.\nInput image 1 is ONLY a material/palette/style reference. Do not reproduce its scene, character, hands, rifle, sky or composition.\nArt direction: grounded stylized tactical industrial architecture, sophisticated clean authored shapes, realistic construction proportions and restrained detail. Pale warm-grey concrete, slate blue-grey panels, graphite structure, sparse muted dusty crimson accents and faded warm-yellow safety paint. Designed bevels, broad inset panels, fine restrained casting texture and seam wear, no voxel or blockout aesthetic, no dense photoreal grunge.\nComposition: exactly ONE isolated complete asset, ONE view only, centered with comfortable margin; near-orthographic three-quarter product view, no dramatic perspective, whole silhouette uncropped. Pure white seamless background with very faint contact shadow only, soft neutral studio light and gentle ambient occlusion revealing geometry, no directional cast shadow. No other objects, figure, text, labels, dimensions, arrows, watermark, reference boards or collage. Do not invent a pedestal or ground plane underneath the object.\nModularity: straight flat mating edges, coherent thickness, subtly bevelled manufactured edges, no decorative protrusions at connection faces. Render dimensions as proportions only; NEVER print dimension text in image.\nSubject: One freestanding rectangular precast concrete wall segment, width 2 metres, height 3 metres, thickness 20 cm. Two broad vertical cast panels divided by a shallow center joint; subtle horizontal casting joint at one metre, few recessed tie holes. Quiet pale warm grey concrete with a graphite flush bottom strip. Flat matching left/right terminal edges, no end posts, no feet, no separate base. Strongly show the slim 20cm end thickness. Calm uncluttered surface, no diagonal paint so repeats can meet.",
+      "file": "Walls/01_ConcreteWall.png",
+      "generated_source_filename": "exec-9a7dc6a9-97df-419e-a527-295529969eb5.png"
+    },
+    {
+      "id": "02_MetalPanelWall",
+      "folder": "Walls",
+      "name": "Metal infill wall",
+      "dimensions_cm": [
+        200,
+        20,
+        300
+      ],
+      "prompt": "Use case: stylized-concept.\nAsset type: SINGLE OBJECT input reference for image-to-3D modeling, part of a coherent modular tactical FPS environment kit.\nInput image 1 is ONLY a material/palette/style reference. Do not reproduce its scene, character, hands, rifle, sky or composition.\nArt direction: grounded stylized tactical industrial architecture, sophisticated clean authored shapes, realistic construction proportions and restrained detail. Pale warm-grey concrete, slate blue-grey panels, graphite structure, sparse muted dusty crimson accents and faded warm-yellow safety paint. Designed bevels, broad inset panels, fine restrained casting texture and seam wear, no voxel or blockout aesthetic, no dense photoreal grunge.\nComposition: exactly ONE isolated complete asset, ONE view only, centered with comfortable margin; near-orthographic three-quarter product view, no dramatic perspective, whole silhouette uncropped. Pure white seamless background with very faint contact shadow only, soft neutral studio light and gentle ambient occlusion revealing geometry, no directional cast shadow. No other objects, figure, text, labels, dimensions, arrows, watermark, reference boards or collage. Do not invent a pedestal or ground plane underneath the object.\nModularity: straight flat mating edges, coherent thickness, subtly bevelled manufactured edges, no decorative protrusions at connection faces. Render dimensions as proportions only; NEVER print dimension text in image.\nSubject: One freestanding rectangular metal-clad industrial wall segment, width 2 metres, height 3 metres, overall thickness 20cm. Three broad vertical slate blue-grey steel inset panels in a flush graphite structural perimeter, modest recessed fasteners, very thin muted crimson horizontal detail near upper edge. Wall must have a solid backing and flat terminal sides. Same outer envelope as a concrete wall, no feet or wide base, no pipes or appendages.",
+      "file": "Walls/02_MetalPanelWall.png",
+      "generated_source_filename": "exec-875d1ad6-8344-4c0c-94f4-6ebb0f1563e5.png"
+    },
+    {
+      "id": "03_CornerWall",
+      "folder": "Walls",
+      "name": "90-degree concrete corner",
+      "dimensions_cm": [
+        200,
+        200,
+        300
+      ],
+      "prompt": "Use case: stylized-concept.\nAsset type: SINGLE OBJECT input reference for image-to-3D modeling, part of a coherent modular tactical FPS environment kit.\nInput image 1 is ONLY a material/palette/style reference. Do not reproduce its scene, character, hands, rifle, sky or composition.\nArt direction: grounded stylized tactical industrial architecture, sophisticated clean authored shapes, realistic construction proportions and restrained detail. Pale warm-grey concrete, slate blue-grey panels, graphite structure, sparse muted dusty crimson accents and faded warm-yellow safety paint. Designed bevels, broad inset panels, fine restrained casting texture and seam wear, no voxel or blockout aesthetic, no dense photoreal grunge.\nComposition: exactly ONE isolated complete asset, ONE view only, centered with comfortable margin; near-orthographic three-quarter product view, no dramatic perspective, whole silhouette uncropped. Pure white seamless background with very faint contact shadow only, soft neutral studio light and gentle ambient occlusion revealing geometry, no directional cast shadow. No other objects, figure, text, labels, dimensions, arrows, watermark, reference boards or collage. Do not invent a pedestal or ground plane underneath the object.\nModularity: straight flat mating edges, coherent thickness, subtly bevelled manufactured edges, no decorative protrusions at connection faces. Render dimensions as proportions only; NEVER print dimension text in image.\nSubject: One continuous L-shaped 90-degree precast concrete wall corner. Outer footprint 2m by 2m, height 3m, both wall legs thickness20cm, joined corner not two detached objects. Show from the open concave side so both INSIDE faces and the flat terminal end thicknesses can be seen, with the joined corner at the back. Same pale warm-grey cast panels and graphite flush bottom strip as kit walls. No floor joining the walls, no ceiling, no end columns, no extra footings. Exact square corner, flat cut ends, restrained bevels.",
+      "file": "Walls/03_CornerWall.png",
+      "generated_source_filename": "exec-3f57b24c-4f6b-4ddf-a545-beca753dff4e.png"
+    },
+    {
+      "id": "04_PedestrianDoorFrame",
+      "folder": "Doors",
+      "name": "Open doorway module",
+      "dimensions_cm": [
+        200,
+        20,
+        300
+      ],
+      "prompt": "Use case: stylized-concept.\nAsset type: SINGLE OBJECT input reference for image-to-3D modeling, part of a coherent modular tactical FPS environment kit.\nInput image 1 is ONLY a material/palette/style reference. Do not reproduce its scene, character, hands, rifle, sky or composition.\nArt direction: grounded stylized tactical industrial architecture, sophisticated clean authored shapes, realistic construction proportions and restrained detail. Pale warm-grey concrete, slate blue-grey panels, graphite structure, sparse muted dusty crimson accents and faded warm-yellow safety paint. Designed bevels, broad inset panels, fine restrained casting texture and seam wear, no voxel or blockout aesthetic, no dense photoreal grunge.\nComposition: exactly ONE isolated complete asset, ONE view only, centered with comfortable margin; near-orthographic three-quarter product view, no dramatic perspective, whole silhouette uncropped. Pure white seamless background with very faint contact shadow only, soft neutral studio light and gentle ambient occlusion revealing geometry, no directional cast shadow. No other objects, figure, text, labels, dimensions, arrows, watermark, reference boards or collage. Do not invent a pedestal or ground plane underneath the object.\nModularity: straight flat mating edges, coherent thickness, subtly bevelled manufactured edges, no decorative protrusions at connection faces. Render dimensions as proportions only; NEVER print dimension text in image.\nSubject: One isolated upright concrete wall module containing an EMPTY pedestrian doorway. Outer width2m, height3m, thickness20cm. Centered clear rectangular opening width1.2m height2.4m goes all the way to ground, NO bottom bar or threshold, no door leaf, no room beyond. Pale warm-grey concrete, graphite metal liner flush inside jambs and lintel, small muted crimson panel above opening. White backdrop visible through clear hole. Flat outer ends align with kit wall modules. This is one joined inverted-U construction.",
+      "file": "Doors/04_PedestrianDoorFrame.png",
+      "generated_source_filename": "exec-0daf6f97-13cd-472f-8335-dc8a5406e8ea.png"
+    },
+    {
+      "id": "05_PedestrianDoorLeaf",
+      "folder": "Doors",
+      "name": "Separate service door leaf",
+      "dimensions_cm": [
+        120,
+        6,
+        240
+      ],
+      "prompt": "Use case: stylized-concept.\nAsset type: SINGLE OBJECT input reference for image-to-3D modeling, part of a coherent modular tactical FPS environment kit.\nInput image 1 is ONLY a material/palette/style reference. Do not reproduce its scene, character, hands, rifle, sky or composition.\nArt direction: grounded stylized tactical industrial architecture, sophisticated clean authored shapes, realistic construction proportions and restrained detail. Pale warm-grey concrete, slate blue-grey panels, graphite structure, sparse muted dusty crimson accents and faded warm-yellow safety paint. Designed bevels, broad inset panels, fine restrained casting texture and seam wear, no voxel or blockout aesthetic, no dense photoreal grunge.\nComposition: exactly ONE isolated complete asset, ONE view only, centered with comfortable margin; near-orthographic three-quarter product view, no dramatic perspective, whole silhouette uncropped. Pure white seamless background with very faint contact shadow only, soft neutral studio light and gentle ambient occlusion revealing geometry, no directional cast shadow. No other objects, figure, text, labels, dimensions, arrows, watermark, reference boards or collage. Do not invent a pedestal or ground plane underneath the object.\nModularity: straight flat mating edges, coherent thickness, subtly bevelled manufactured edges, no decorative protrusions at connection faces. Render dimensions as proportions only; NEVER print dimension text in image.\nSubject: One isolated CLOSED service door LEAF alone, width1.2m height2.4m thickness6cm. No frame, surrounding wall, doorway, floor or room. Slate-blue grey painted steel panel with graphite narrow reinforced perimeter, large shallow inset central rectangle, short horizontal lever handle on right edge, two compact hinges aligned on left edge, tiny crimson rectangular accent near upper left. Door leaf upright, show front and slim hinge-side thickness at three-quarter view. A solid separate object for later placement in the modular doorway.",
+      "file": "Doors/05_PedestrianDoorLeaf.png",
+      "generated_source_filename": "exec-0a05cc9f-07fc-4392-b4a1-72183d333a65.png"
+    },
+    {
+      "id": "06_GarageFrame",
+      "folder": "Garage",
+      "name": "Open garage portal",
+      "dimensions_cm": [
+        400,
+        30,
+        300
+      ],
+      "prompt": "Use case: stylized-concept.\nAsset type: SINGLE OBJECT input reference for image-to-3D modeling, part of a coherent modular tactical FPS environment kit.\nInput image 1 is ONLY a material/palette/style reference. Do not reproduce its scene, character, hands, rifle, sky or composition.\nArt direction: grounded stylized tactical industrial architecture, sophisticated clean authored shapes, realistic construction proportions and restrained detail. Pale warm-grey concrete, slate blue-grey panels, graphite structure, sparse muted dusty crimson accents and faded warm-yellow safety paint. Designed bevels, broad inset panels, fine restrained casting texture and seam wear, no voxel or blockout aesthetic, no dense photoreal grunge.\nComposition: exactly ONE isolated complete asset, ONE view only, centered with comfortable margin; near-orthographic three-quarter product view, no dramatic perspective, whole silhouette uncropped. Pure white seamless background with very faint contact shadow only, soft neutral studio light and gentle ambient occlusion revealing geometry, no directional cast shadow. No other objects, figure, text, labels, dimensions, arrows, watermark, reference boards or collage. Do not invent a pedestal or ground plane underneath the object.\nModularity: straight flat mating edges, coherent thickness, subtly bevelled manufactured edges, no decorative protrusions at connection faces. Render dimensions as proportions only; NEVER print dimension text in image.\nSubject: One isolated broad inverted-U industrial GARAGE OPENING frame, outer width4m height3m depth30cm. Empty clear rectangular opening width3.6m height2.6m reaching the ground. Two pale concrete jambs and concrete lintel, charcoal inner steel lining and recessed shutter tracks. No shutter/door, NO ground slab or threshold, no building, no room or objects inside. White background clearly visible through hole. Sparse muted crimson on upper lintel and a few faded yellow markings low on jambs. Broad width greater than height. Flat exterior ends for wall connection.",
+      "file": "Garage/06_GarageFrame.png",
+      "generated_source_filename": "exec-c42b0936-c75e-441b-b73a-9a3d148b91a1.png"
+    },
+    {
+      "id": "07_GarageShutter",
+      "folder": "Garage",
+      "name": "Separate closed garage shutter",
+      "dimensions_cm": [
+        360,
+        8,
+        260
+      ],
+      "prompt": "Use case: stylized-concept.\nAsset type: SINGLE OBJECT input reference for image-to-3D modeling, part of a coherent modular tactical FPS environment kit.\nInput image 1 is ONLY a material/palette/style reference. Do not reproduce its scene, character, hands, rifle, sky or composition.\nArt direction: grounded stylized tactical industrial architecture, sophisticated clean authored shapes, realistic construction proportions and restrained detail. Pale warm-grey concrete, slate blue-grey panels, graphite structure, sparse muted dusty crimson accents and faded warm-yellow safety paint. Designed bevels, broad inset panels, fine restrained casting texture and seam wear, no voxel or blockout aesthetic, no dense photoreal grunge.\nComposition: exactly ONE isolated complete asset, ONE view only, centered with comfortable margin; near-orthographic three-quarter product view, no dramatic perspective, whole silhouette uncropped. Pure white seamless background with very faint contact shadow only, soft neutral studio light and gentle ambient occlusion revealing geometry, no directional cast shadow. No other objects, figure, text, labels, dimensions, arrows, watermark, reference boards or collage. Do not invent a pedestal or ground plane underneath the object.\nModularity: straight flat mating edges, coherent thickness, subtly bevelled manufactured edges, no decorative protrusions at connection faces. Render dimensions as proportions only; NEVER print dimension text in image.\nSubject: One isolated rectangular CLOSED roller-garage door curtain alone, width3.6m height2.6m thickness8cm. Broad horizontal slate/graphite metal slats with shallow realistic curvature, simple reinforced lower bar, one small recessed lifting handle low at center. Narrow muted crimson painted horizontal stripe across upper third, restrained wear. No surrounding frame, tracks, concrete, wall, roller housing, room or floor. This is one rectangular shutter insert for a modular garage portal. Show front and slight end thickness, width clearly greater than height.",
+      "file": "Garage/07_GarageShutter.png",
+      "generated_source_filename": "exec-2453eb8f-0fe7-4e61-9c79-5e7263c01f28.png"
+    },
+    {
+      "id": "08_RoofDeck",
+      "folder": "Roofs",
+      "name": "Flat roof deck tile",
+      "dimensions_cm": [
+        200,
+        200,
+        20
+      ],
+      "prompt": "Use case: stylized-concept.\nAsset type: SINGLE OBJECT input reference for image-to-3D modeling, part of a coherent modular tactical FPS environment kit.\nInput image 1 is ONLY a material/palette/style reference. Do not reproduce its scene, character, hands, rifle, sky or composition.\nArt direction: grounded stylized tactical industrial architecture, sophisticated clean authored shapes, realistic construction proportions and restrained detail. Pale warm-grey concrete, slate blue-grey panels, graphite structure, sparse muted dusty crimson accents and faded warm-yellow safety paint. Designed bevels, broad inset panels, fine restrained casting texture and seam wear, no voxel or blockout aesthetic, no dense photoreal grunge.\nComposition: exactly ONE isolated complete asset, ONE view only, centered with comfortable margin; near-orthographic three-quarter product view, no dramatic perspective, whole silhouette uncropped. Pure white seamless background with very faint contact shadow only, soft neutral studio light and gentle ambient occlusion revealing geometry, no directional cast shadow. No other objects, figure, text, labels, dimensions, arrows, watermark, reference boards or collage. Do not invent a pedestal or ground plane underneath the object.\nModularity: straight flat mating edges, coherent thickness, subtly bevelled manufactured edges, no decorative protrusions at connection faces. Render dimensions as proportions only; NEVER print dimension text in image.\nSubject: One isolated square flat industrial ROOF DECK tile 2m by2m, thickness20cm. Top cool charcoal waterproof roof surface with four very broad shallow panel areas, straight subtle seams, grey concrete/steel edge fascia. Flat square edges on all four sides, no parapet, no rail, no support columns, no pipes or vents, no ground below. Gently bevel edges. Show elevated three-quarter overhead view so entire top and two thin side faces visible. This is a flat reusable ceiling/roof slab.",
+      "file": "Roofs/08_RoofDeck.png",
+      "generated_source_filename": "exec-5067a2b1-6086-4424-be58-9fe7bfd06e75.png"
+    },
+    {
+      "id": "09_ParapetStraight",
+      "folder": "Roofs",
+      "name": "Straight roof parapet",
+      "dimensions_cm": [
+        200,
+        20,
+        80
+      ],
+      "prompt": "Use case: stylized-concept.\nAsset type: SINGLE OBJECT input reference for image-to-3D modeling, part of a coherent modular tactical FPS environment kit.\nInput image 1 is ONLY a material/palette/style reference. Do not reproduce its scene, character, hands, rifle, sky or composition.\nArt direction: grounded stylized tactical industrial architecture, sophisticated clean authored shapes, realistic construction proportions and restrained detail. Pale warm-grey concrete, slate blue-grey panels, graphite structure, sparse muted dusty crimson accents and faded warm-yellow safety paint. Designed bevels, broad inset panels, fine restrained casting texture and seam wear, no voxel or blockout aesthetic, no dense photoreal grunge.\nComposition: exactly ONE isolated complete asset, ONE view only, centered with comfortable margin; near-orthographic three-quarter product view, no dramatic perspective, whole silhouette uncropped. Pure white seamless background with very faint contact shadow only, soft neutral studio light and gentle ambient occlusion revealing geometry, no directional cast shadow. No other objects, figure, text, labels, dimensions, arrows, watermark, reference boards or collage. Do not invent a pedestal or ground plane underneath the object.\nModularity: straight flat mating edges, coherent thickness, subtly bevelled manufactured edges, no decorative protrusions at connection faces. Render dimensions as proportions only; NEVER print dimension text in image.\nSubject: One isolated straight low roof PARAPET segment width2m height80cm thickness20cm. Pale warm-grey concrete panel topped with graphite metal coping of almost same width, slight drip lip only; small vertical recessed casting seam at center. Flat matching end faces, no footings, no attached roof slab, no railing poles, no room or building. Broad low barrier, beautifully finished modest bevels, soft casting texture.",
+      "file": "Roofs/09_ParapetStraight.png",
+      "generated_source_filename": "exec-4630d6ed-7b8f-4575-9ae9-d5a68255cb36.png"
+    },
+    {
+      "id": "10_ParapetCorner",
+      "folder": "Roofs",
+      "name": "90-degree roof parapet corner",
+      "dimensions_cm": [
+        200,
+        200,
+        80
+      ],
+      "prompt": "Use case: stylized-concept.\nAsset type: SINGLE OBJECT input reference for image-to-3D modeling, part of a coherent modular tactical FPS environment kit.\nInput image 1 is ONLY a material/palette/style reference. Do not reproduce its scene, character, hands, rifle, sky or composition.\nArt direction: grounded stylized tactical industrial architecture, sophisticated clean authored shapes, realistic construction proportions and restrained detail. Pale warm-grey concrete, slate blue-grey panels, graphite structure, sparse muted dusty crimson accents and faded warm-yellow safety paint. Designed bevels, broad inset panels, fine restrained casting texture and seam wear, no voxel or blockout aesthetic, no dense photoreal grunge.\nComposition: exactly ONE isolated complete asset, ONE view only, centered with comfortable margin; near-orthographic three-quarter product view, no dramatic perspective, whole silhouette uncropped. Pure white seamless background with very faint contact shadow only, soft neutral studio light and gentle ambient occlusion revealing geometry, no directional cast shadow. No other objects, figure, text, labels, dimensions, arrows, watermark, reference boards or collage. Do not invent a pedestal or ground plane underneath the object.\nModularity: straight flat mating edges, coherent thickness, subtly bevelled manufactured edges, no decorative protrusions at connection faces. Render dimensions as proportions only; NEVER print dimension text in image.\nSubject: One isolated L-shaped 90-degree low roof PARAPET corner: two joined legs in outer2m by2m footprint, height80cm thickness20cm. Pale warm-grey concrete body and continuous graphite metal coping over both legs meeting in a clean mitred corner. Show from open concave side with interior corner at rear; visible flat terminal ends. No floor, roof deck, railings or building attached. One continuous low wall object.",
+      "file": "Roofs/10_ParapetCorner.png",
+      "generated_source_filename": "exec-f82b4e30-4a03-4f01-a4f5-65afa35c087f.png"
+    },
+    {
+      "id": "11_ConcreteGroundTile",
+      "folder": "Ground",
+      "name": "Concrete paving tile",
+      "dimensions_cm": [
+        200,
+        200,
+        10
+      ],
+      "prompt": "Use case: stylized-concept.\nAsset type: SINGLE OBJECT input reference for image-to-3D modeling, part of a coherent modular tactical FPS environment kit.\nInput image 1 is ONLY a material/palette/style reference. Do not reproduce its scene, character, hands, rifle, sky or composition.\nArt direction: grounded stylized tactical industrial architecture, sophisticated clean authored shapes, realistic construction proportions and restrained detail. Pale warm-grey concrete, slate blue-grey panels, graphite structure, sparse muted dusty crimson accents and faded warm-yellow safety paint. Designed bevels, broad inset panels, fine restrained casting texture and seam wear, no voxel or blockout aesthetic, no dense photoreal grunge.\nComposition: exactly ONE isolated complete asset, ONE view only, centered with comfortable margin; near-orthographic three-quarter product view, no dramatic perspective, whole silhouette uncropped. Pure white seamless background with very faint contact shadow only, soft neutral studio light and gentle ambient occlusion revealing geometry, no directional cast shadow. No other objects, figure, text, labels, dimensions, arrows, watermark, reference boards or collage. Do not invent a pedestal or ground plane underneath the object.\nModularity: straight flat mating edges, coherent thickness, subtly bevelled manufactured edges, no decorative protrusions at connection faces. Render dimensions as proportions only; NEVER print dimension text in image.\nSubject: One isolated square concrete GROUND TILE 2m by2m and10cm thick. Cool pale grey top with four broad square paving panels formed by a single shallow cross seam, subtle surface variation. Straight flat outer perimeter, small neat bevel, quiet uniform edges enabling repetition. No surrounding ground, no pedestal, no painted arrows, no huge cracks, no vegetation. Elevated three-quarter overhead view shows full square top and two shallow sides. Broad restrained values, realistic proportions, not a chunky cube.",
+      "file": "Ground/11_ConcreteGroundTile.png",
+      "generated_source_filename": "exec-5c0b5e38-7633-4771-ae4b-c4adc463bee8.png"
+    },
+    {
+      "id": "12_DrainGroundTile",
+      "folder": "Ground",
+      "name": "Ground tile with inset drain",
+      "dimensions_cm": [
+        200,
+        200,
+        10
+      ],
+      "prompt": "Use case: stylized-concept.\nAsset type: SINGLE OBJECT input reference for image-to-3D modeling, part of a coherent modular tactical FPS environment kit.\nInput image 1 is ONLY a material/palette/style reference. Do not reproduce its scene, character, hands, rifle, sky or composition.\nArt direction: grounded stylized tactical industrial architecture, sophisticated clean authored shapes, realistic construction proportions and restrained detail. Pale warm-grey concrete, slate blue-grey panels, graphite structure, sparse muted dusty crimson accents and faded warm-yellow safety paint. Designed bevels, broad inset panels, fine restrained casting texture and seam wear, no voxel or blockout aesthetic, no dense photoreal grunge.\nComposition: exactly ONE isolated complete asset, ONE view only, centered with comfortable margin; near-orthographic three-quarter product view, no dramatic perspective, whole silhouette uncropped. Pure white seamless background with very faint contact shadow only, soft neutral studio light and gentle ambient occlusion revealing geometry, no directional cast shadow. No other objects, figure, text, labels, dimensions, arrows, watermark, reference boards or collage. Do not invent a pedestal or ground plane underneath the object.\nModularity: straight flat mating edges, coherent thickness, subtly bevelled manufactured edges, no decorative protrusions at connection faces. Render dimensions as proportions only; NEVER print dimension text in image.\nSubject: One isolated square ground tile 2m by2m thickness10cm. Same cool pale grey concrete paving as kit, with ONE narrow charcoal rectangular grated drainage channel running across the CENTER from one outer edge to opposite outer edge, channel20cm wide; flush metal grate slats over a shallow dark recessed channel. The remaining two large concrete regions have quiet shallow seams. Square flat perimeter, no surrounding ground, no platform or pedestal. High three-quarter overhead view reveals whole tile and thin sides. Channel reaches exactly two opposite edge midpoints to connect to another drain tile.",
+      "file": "Ground/12_DrainGroundTile.png",
+      "generated_source_filename": "exec-715d9a09-475f-49e1-b1da-600450ad91a1.png"
+    },
+    {
+      "id": "13_AsphaltGroundTile",
+      "folder": "Ground",
+      "name": "Asphalt yard tile",
+      "dimensions_cm": [
+        200,
+        200,
+        10
+      ],
+      "prompt": "Use case: stylized-concept.\nAsset type: SINGLE OBJECT input reference for image-to-3D modeling, part of a coherent modular tactical FPS environment kit.\nInput image 1 is ONLY a material/palette/style reference. Do not reproduce its scene, character, hands, rifle, sky or composition.\nArt direction: grounded stylized tactical industrial architecture, sophisticated clean authored shapes, realistic construction proportions and restrained detail. Pale warm-grey concrete, slate blue-grey panels, graphite structure, sparse muted dusty crimson accents and faded warm-yellow safety paint. Designed bevels, broad inset panels, fine restrained casting texture and seam wear, no voxel or blockout aesthetic, no dense photoreal grunge.\nComposition: exactly ONE isolated complete asset, ONE view only, centered with comfortable margin; near-orthographic three-quarter product view, no dramatic perspective, whole silhouette uncropped. Pure white seamless background with very faint contact shadow only, soft neutral studio light and gentle ambient occlusion revealing geometry, no directional cast shadow. No other objects, figure, text, labels, dimensions, arrows, watermark, reference boards or collage. Do not invent a pedestal or ground plane underneath the object.\nModularity: straight flat mating edges, coherent thickness, subtly bevelled manufactured edges, no decorative protrusions at connection faces. Render dimensions as proportions only; NEVER print dimension text in image.\nSubject: One isolated square industrial yard ground tile2m by2m thickness10cm. Dark cool charcoal fine asphalt top, extremely subtle aggregate, a single faded warm-yellow straight stripe10cm wide crossing the CENTER from the middle of one edge to middle of opposite edge. Clean straight square edges for repetition, no concrete border, no surrounding ground, no chunks or loose stones, no pedestal. High three-quarter overhead view, full top and two thin side faces. A quiet designed material consistent with reference, not photoreal noisy gravel.",
+      "file": "Ground/13_AsphaltGroundTile.png",
+      "generated_source_filename": "exec-f6e554b2-450e-4cf1-bf0d-e1bc689cc4db.png"
+    },
+    {
+      "id": "14_CargoCrateCube",
+      "folder": "Crates",
+      "name": "Stackable cargo crate",
+      "dimensions_cm": [
+        100,
+        100,
+        100
+      ],
+      "prompt": "Use case: stylized-concept.\nAsset type: SINGLE OBJECT input reference for image-to-3D modeling, part of a coherent modular tactical FPS environment kit.\nInput image 1 is ONLY a material/palette/style reference. Do not reproduce its scene, character, hands, rifle, sky or composition.\nArt direction: grounded stylized tactical industrial architecture, sophisticated clean authored shapes, realistic construction proportions and restrained detail. Pale warm-grey concrete, slate blue-grey panels, graphite structure, sparse muted dusty crimson accents and faded warm-yellow safety paint. Designed bevels, broad inset panels, fine restrained casting texture and seam wear, no voxel or blockout aesthetic, no dense photoreal grunge.\nComposition: exactly ONE isolated complete asset, ONE view only, centered with comfortable margin; near-orthographic three-quarter product view, no dramatic perspective, whole silhouette uncropped. Pure white seamless background with very faint contact shadow only, soft neutral studio light and gentle ambient occlusion revealing geometry, no directional cast shadow. No other objects, figure, text, labels, dimensions, arrows, watermark, reference boards or collage. Do not invent a pedestal or ground plane underneath the object.\nModularity: straight flat mating edges, coherent thickness, subtly bevelled manufactured edges, no decorative protrusions at connection faces. Render dimensions as proportions only; NEVER print dimension text in image.\nSubject: One isolated industrial tactical cargo crate exactly cubic, about1m by1m by1m. Original premium stylized design matching reference: dark graphite external frame with broad bevels, slate grey inset panels with subtle pressed X reinforcement, recessed horizontal lifting handles, compact muted crimson corner guards. Flat reinforced top with four recessed stacking seats, integrated shallow feet aligned underneath. Restrained fasteners and gentle edge wear. Closed lid, no weapon, no loose objects, no stickers or text. View front, right and top clearly.",
+      "file": "Crates/14_CargoCrateCube.png",
+      "generated_source_filename": "exec-68e51fc2-a2e8-4f7c-a1e7-8c4c660aa65d.png"
+    },
+    {
+      "id": "15_CargoCrateLong",
+      "folder": "Crates",
+      "name": "Long cargo crate",
+      "dimensions_cm": [
+        200,
+        100,
+        100
+      ],
+      "prompt": "Use case: stylized-concept.\nAsset type: SINGLE OBJECT input reference for image-to-3D modeling, part of a coherent modular tactical FPS environment kit.\nInput image 1 is ONLY a material/palette/style reference. Do not reproduce its scene, character, hands, rifle, sky or composition.\nArt direction: grounded stylized tactical industrial architecture, sophisticated clean authored shapes, realistic construction proportions and restrained detail. Pale warm-grey concrete, slate blue-grey panels, graphite structure, sparse muted dusty crimson accents and faded warm-yellow safety paint. Designed bevels, broad inset panels, fine restrained casting texture and seam wear, no voxel or blockout aesthetic, no dense photoreal grunge.\nComposition: exactly ONE isolated complete asset, ONE view only, centered with comfortable margin; near-orthographic three-quarter product view, no dramatic perspective, whole silhouette uncropped. Pure white seamless background with very faint contact shadow only, soft neutral studio light and gentle ambient occlusion revealing geometry, no directional cast shadow. No other objects, figure, text, labels, dimensions, arrows, watermark, reference boards or collage. Do not invent a pedestal or ground plane underneath the object.\nModularity: straight flat mating edges, coherent thickness, subtly bevelled manufactured edges, no decorative protrusions at connection faces. Render dimensions as proportions only; NEVER print dimension text in image.\nSubject: One isolated long industrial cargo crate2m wide1m deep1m high. Same family as reference cubic boxes: graphite bevelled frame, slate-grey inset pressed metal panels, two large recessed panels across long front with modest X ribs, one inset horizontal handle per panel, muted crimson corner guards, subtle seams and fasteners. Flat reinforced top with recessed stacking seats and integrated shallow feet. Closed, no loose pieces, no weapon, no text. Wide rectangular proportions, view long face, short side and top.",
+      "file": "Crates/15_CargoCrateLong.png",
+      "generated_source_filename": "exec-97d0870c-88aa-40f5-84f9-6b941d0870e3.png"
+    },
+    {
+      "id": "16_StairFlight",
+      "folder": "Access",
+      "name": "Straight stair flight",
+      "dimensions_cm": [
+        200,
+        200,
+        100
+      ],
+      "prompt": "Use case: stylized-concept.\nAsset type: SINGLE OBJECT input reference for image-to-3D modeling, part of a coherent modular tactical FPS environment kit.\nInput image 1 is ONLY a material/palette/style reference. Do not reproduce its scene, character, hands, rifle, sky or composition.\nArt direction: grounded stylized tactical industrial architecture, sophisticated clean authored shapes, realistic construction proportions and restrained detail. Pale warm-grey concrete, slate blue-grey panels, graphite structure, sparse muted dusty crimson accents and faded warm-yellow safety paint. Designed bevels, broad inset panels, fine restrained casting texture and seam wear, no voxel or blockout aesthetic, no dense photoreal grunge.\nComposition: exactly ONE isolated complete asset, ONE view only, centered with comfortable margin; near-orthographic three-quarter product view, no dramatic perspective, whole silhouette uncropped. Pure white seamless background with very faint contact shadow only, soft neutral studio light and gentle ambient occlusion revealing geometry, no directional cast shadow. No other objects, figure, text, labels, dimensions, arrows, watermark, reference boards or collage. Do not invent a pedestal or ground plane underneath the object.\nModularity: straight flat mating edges, coherent thickness, subtly bevelled manufactured edges, no decorative protrusions at connection faces. Render dimensions as proportions only; NEVER print dimension text in image.\nSubject: One isolated straight solid industrial concrete STAIR FLIGHT: overall width2m, horizontal run2m, rise1m. Five equal treads40cm deep with five equal risers20cm high. Pale warm-grey concrete mass, darker grey non-slip tread surfaces, narrow faded yellow nosing strips. Straight flat back and side faces for joining platform modules. No handrails, no posts, no extra landing, no surrounding floor or building. Elevated front three-quarter view reveals all five steps and right solid side profile. Crisp engineered form, restrained believable wear.",
+      "file": "Access/16_StairFlight.png",
+      "generated_source_filename": "exec-ee0dcad4-9267-44b7-9750-47954badf77a.png"
+    }
+  ]
+}
