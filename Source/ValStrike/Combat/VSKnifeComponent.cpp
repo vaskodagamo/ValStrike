@@ -302,6 +302,8 @@ void UVSKnifeComponent::DevelopmentRequestAttack(uint8 RawKind, uint32 Sequence)
     if (FParse::Value(FCommandLine::Get(), TEXT("VSWeaponSmoke="), Role)
         && (Role == TEXT("server") || Role == TEXT("driver") || Role == TEXT("observer")))
     {
+        if (Sequence == 0 && ++NextLocalSequence == 0) { ++NextLocalSequence; }
+        ServerRequestKnifeAttack(RawKind, Sequence == 0 ? NextLocalSequence : Sequence);
         ServerRequestKnifeAttack(RawKind, Sequence);
     }
 }

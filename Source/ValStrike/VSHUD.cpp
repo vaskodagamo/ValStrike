@@ -534,6 +534,16 @@ void AVSHUD::DrawHUD()
         DrawLabel(FString::Printf(TEXT("%d RESERVE"), FMath::Max(0, Data.ReserveAmmo)),
             AmmoX + 16.0f * Scale, PanelY + 72.0f * Scale, 12.0f * Scale, Muted);
     }
+    else if (!Data.WeaponName.IsEmpty())
+    {
+        // Knife: its label only, no ammo, magazine or reload. The reticle stays
+        // static because no firearm spread is equipped.
+        const float AmmoX = Canvas->SizeX - Margin - 230.0f * Scale;
+        DrawRect(Panel, AmmoX, PanelY, 230.0f * Scale, 90.0f * Scale);
+        DrawBoundedLabel(Data.bEquipping ? Data.WeaponName + TEXT("  EQUIPPING") : Data.WeaponName,
+            AmmoX + 16.0f * Scale, PanelY + 11.0f * Scale, 13.0f * Scale, 198.0f * Scale, Data.bEquipping ? Muted : Accent);
+        DrawLabel(TEXT("LMB  SLASH    RMB  STAB"), AmmoX + 16.0f * Scale, PanelY + 44.0f * Scale, 12.0f * Scale, Muted);
+    }
 
     if (bDead && !MatchView.bSpectating && !MatchView.bShowResult)
     {
@@ -559,10 +569,13 @@ void AVSHUD::DrawHUD()
     {
         const float HelpY = Canvas->SizeY - Margin - 48.0f * Scale;
         DrawRect(Panel, CenterX - 198.0f * Scale, HelpY, 396.0f * Scale, 48.0f * Scale);
-        DrawLabel(Data.bHasWeapon ? TEXT("WASD  MOVE    SPACE  JUMP    SHIFT  WALK    CTRL  CROUCH")
+        // The knife is armed but has no ammo: weapon help without the reload key.
+        const bool bKnife = !Data.bHasWeapon && !Data.WeaponName.IsEmpty();
+        DrawLabel(Data.bHasWeapon || bKnife ? TEXT("WASD  MOVE    SPACE  JUMP    SHIFT  WALK    CTRL  CROUCH")
             : TEXT("WASD  MOVE    MOUSE  LOOK    SPACE  JUMP"), CenterX,
             HelpY + 8.0f * Scale, 12.0f * Scale, Muted, true);
-        DrawLabel(Data.bHasWeapon ? TEXT("R  RELOAD    1  RIFLE    2  PISTOL    Q  LAST WEAPON") : TEXT("SHIFT  WALK    CTRL  CROUCH"),
+        DrawLabel(Data.bHasWeapon ? TEXT("R  RELOAD    1  RIFLE    2  PISTOL    Q  LAST WEAPON")
+            : bKnife ? TEXT("1  RIFLE    2  PISTOL    3  KNIFE    Q  LAST WEAPON") : TEXT("SHIFT  WALK    CTRL  CROUCH"),
             CenterX, HelpY + 27.0f * Scale, 12.0f * Scale, Muted, true);
     }
 }

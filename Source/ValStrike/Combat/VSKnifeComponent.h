@@ -83,6 +83,10 @@ public:
     virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 #if !UE_BUILD_SHIPPING && !UE_BUILD_TEST
+    // Raw RPC with an arbitrary kind byte, bypassing local checks (weapon smoke
+    // only). Sequence 0 takes the next local sequence; any other value is sent as is.
+    void DevelopmentRequestAttack(uint8 RawKind, uint32 Sequence = 0);
+    uint32 DevelopmentLastSequence() const { return NextLocalSequence; }
     // Raw RPC with arbitrary bytes, bypassing local checks (weapon smoke only).
     void DevelopmentRequestAttack(uint8 RawKind, uint32 Sequence);
     uint32 DevelopmentRejections(const FName Reason) const { return Rejections.FindRef(Reason); }

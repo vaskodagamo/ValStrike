@@ -8,7 +8,9 @@ Required launch (wrap this whole runner once, not its children):
 
 practice: graybox, practice game mode, null-RHI clients. Dense validation timeline:
 equip validation (dead, gated, duplicate, spam, invalid, mid-reload), per-weapon
-ammo/damage, semi-automatic pistol, equip time blocking fire, HUD and models.
+ammo/damage, semi-automatic pistol, equip time blocking fire, HUD and models;
+then the knife: equip 3 and Q across three slots, slash/stab hit, out of range,
+wall, raw rejections, and cancellation on switch, phase, reset and death.
 visual: graybox, rendered clients. Spaced first-person/observer captures of the
 rifle, raising pistol, pistol, pistol flash, pistol reload and rifle again.
 match: Site01, match game mode with one player per team, rendered clients.
@@ -66,12 +68,22 @@ MATCH_COMMON = (
     "match_pistol_reload", "match_rifle_elimination", "round_reset_restores_both",
 )
 MATCH_CLIENT = MATCH_COMMON + ("match_rifle_models", "match_pistol_models", "round_reset_models")
+# KNIFE-01, appended to practice after the firearm timeline; firearm names are unchanged.
+KNIFE_COMMON = (
+    "knife_equipped", "knife_slash_hit_once", "knife_out_of_range", "knife_wall", "knife_cancel_switch",
+    "knife_equip_last", "knife_cancel_phase", "knife_cancel_reset", "knife_stab_hit", "knife_cancel_death",
+)
+KNIFE_SERVER = KNIFE_COMMON + (
+    "knife_reject_equip", "knife_reject_cooldown", "knife_reject_invalid", "knife_reject_replay",
+    "knife_reject_holstered",
+)
+KNIFE_CLIENT = KNIFE_COMMON + ("knife_hides_firearms", "knife_presentation_cues")
 REQUIRED_CHECKS = {
     "practice": {
         "server": PRACTICE_COMMON + ("server_no_visuals", "reject_equip_time", "reject_holstered", "reject_duplicate",
-                                     "reject_spam", "reject_invalid", "reject_phase", "reject_dead"),
-        "driver": PRACTICE_CLIENT,
-        "observer": PRACTICE_CLIENT,
+                                     "reject_spam", "reject_invalid", "reject_phase", "reject_dead") + KNIFE_SERVER,
+        "driver": PRACTICE_CLIENT + KNIFE_CLIENT,
+        "observer": PRACTICE_CLIENT + KNIFE_CLIENT,
     },
     "visual": {"server": ("visual_server_sequence",), "driver": VISUAL_CLIENT, "observer": VISUAL_CLIENT},
     "match": {

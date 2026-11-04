@@ -2,6 +2,7 @@
 
 #include "Camera/CameraComponent.h"
 #include "Combat/VSHealthComponent.h"
+#include "Combat/VSKnifeComponent.h"
 #include "Combat/VSPistolComponent.h"
 #include "Combat/VSRifleComponent.h"
 #include "Combat/VSWeaponLoadoutComponent.h"
@@ -43,6 +44,7 @@ AVSCharacter::AVSCharacter(const FObjectInitializer& ObjectInitializer)
     Rifle = CreateDefaultSubobject<UVSRifleComponent>(TEXT("Rifle"));
     Pistol = CreateDefaultSubobject<UVSPistolComponent>(TEXT("Pistol"));
     Loadout = CreateDefaultSubobject<UVSWeaponLoadoutComponent>(TEXT("Loadout"));
+    Knife = CreateDefaultSubobject<UVSKnifeComponent>(TEXT("Knife"));
     RiflePresentation = CreateDefaultSubobject<UVSRiflePresentationComponent>(TEXT("RiflePresentation"));
     PistolPresentation = CreateDefaultSubobject<UVSPistolPresentationComponent>(TEXT("PistolPresentation"));
     CharacterPresentation = CreateDefaultSubobject<UVSCharacterPresentationComponent>(TEXT("CharacterPresentation"));
@@ -125,6 +127,12 @@ FVSPlayerHUDData AVSCharacter::GetHUDData() const
         Data.WeaponName = Weapon->GetDisplayName();
         Data.bEquipping = Loadout->IsEquipping();
     }
+    else if (Loadout->IsKnifeEquipped())
+    {
+        // The knife has a name but no ammo or reload: bHasWeapon stays false.
+        Data.WeaponName = TEXT("KNIFE");
+        Data.bEquipping = Loadout->IsEquipping();
+    }
     return Data;
 }
 
@@ -150,6 +158,7 @@ VSMovementRules::WeaponKind AVSCharacter::GetMovementWeaponKind() const
     {
     case EVSWeaponSlot::Rifle: return VSMovementRules::WeaponKind::Rifle;
     case EVSWeaponSlot::Pistol: return VSMovementRules::WeaponKind::Pistol;
+    case EVSWeaponSlot::Knife: return VSMovementRules::WeaponKind::Knife;
     }
     return VSMovementRules::WeaponKind::Unarmed;
 }
@@ -204,6 +213,8 @@ void AVSCharacter::OnRep_MatchGates()
         // previously held fire or a canceled reload.
         Rifle->OwnerDied();
         Pistol->OwnerDied();
+        // Server: a closed phase or death drops pending knife impacts.
+        Knife->CancelActions();
     }
     UCharacterMovementComponent* Movement = GetCharacterMovement();
     if (!CanMatchMove())
@@ -297,9 +308,11 @@ void AVSCharacter::CreateInputMappings()
     CrouchAction = MakeAction(TEXT("Crouch"), EInputActionValueType::Boolean);
     WalkAction = MakeAction(TEXT("Walk"), EInputActionValueType::Boolean);
     FireAction = MakeAction(TEXT("Fire"), EInputActionValueType::Boolean);
+    SecondaryAction = MakeAction(TEXT("Secondary"), EInputActionValueType::Boolean);
     ReloadAction = MakeAction(TEXT("Reload"), EInputActionValueType::Boolean);
     EquipRifleAction = MakeAction(TEXT("EquipRifle"), EInputActionValueType::Boolean);
     EquipPistolAction = MakeAction(TEXT("EquipPistol"), EInputActionValueType::Boolean);
+    EquipKnifeAction = MakeAction(TEXT("EquipKnife"), EInputActionValueType::Boolean);
     EquipLastAction = MakeAction(TEXT("EquipLast"), EInputActionValueType::Boolean);
 
     const auto MapMovementKey = [this](FKey Key, bool bNegate, bool bUseYAxis)
@@ -326,9 +339,11 @@ void AVSCharacter::CreateInputMappings()
     MovementMapping->MapKey(CrouchAction, EKeys::LeftControl);
     MovementMapping->MapKey(WalkAction, EKeys::LeftShift);
     MovementMapping->MapKey(FireAction, EKeys::LeftMouseButton);
+    MovementMapping->MapKey(SecondaryAction, EKeys::RightMouseButton);
     MovementMapping->MapKey(ReloadAction, EKeys::R);
     MovementMapping->MapKey(EquipRifleAction, EKeys::One);
     MovementMapping->MapKey(EquipPistolAction, EKeys::Two);
+    MovementMapping->MapKey(EquipKnifeAction, EKeys::Three);
     MovementMapping->MapKey(EquipLastAction, EKeys::Q);
 }
 
@@ -367,9 +382,11 @@ void AVSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
     Input->BindAction(FireAction, ETriggerEvent::Started, this, &AVSCharacter::BeginFire);
     Input->BindAction(FireAction, ETriggerEvent::Completed, this, &AVSCharacter::StopCombatInput);
     Input->BindAction(FireAction, ETriggerEvent::Canceled, this, &AVSCharacter::StopCombatInput);
+    Input->BindAction(SecondaryAction, ETriggerEvent::Started, this, &AVSCharacter::BeginSecondary);
     Input->BindAction(ReloadAction, ETriggerEvent::Started, this, &AVSCharacter::BeginReload);
     Input->BindAction(EquipRifleAction, ETriggerEvent::Started, this, &AVSCharacter::EquipRifle);
     Input->BindAction(EquipPistolAction, ETriggerEvent::Started, this, &AVSCharacter::EquipPistol);
+    Input->BindAction(EquipKnifeAction, ETriggerEvent::Started, this, &AVSCharacter::EquipKnife);
     Input->BindAction(EquipLastAction, ETriggerEvent::Started, this, &AVSCharacter::EquipLast);
 
     PlayerController->SetInputMode(FInputModeGameOnly());
@@ -406,7 +423,19 @@ void AVSCharacter::LookPitch(const FInputActionValue& Value)
 
 void AVSCharacter::BeginFire()
 {
+    // With the knife out the primary button slashes; no firearm is equipped then
+    // (GetEquippedWeapon() is null), so nothing falls back to the rifle.
+    if (Loadout->IsKnifeEquipped())
+    {
+        if (CanMatchCombat()) { Knife->RequestAttack(EVSKnifeAttack::Slash); }
+        return;
+    }
     if (UVSWeaponComponent* Weapon = GetEquippedWeapon(); Weapon && CanMatchCombat()) { Weapon->StartFire(); }
+}
+void AVSCharacter::BeginSecondary()
+{
+    // Firearms have no secondary action yet; the knife stabs.
+    if (Loadout->IsKnifeEquipped() && CanMatchCombat()) { Knife->RequestAttack(EVSKnifeAttack::Stab); }
 }
 void AVSCharacter::BeginReload()
 {
@@ -414,6 +443,8 @@ void AVSCharacter::BeginReload()
 }
 void AVSCharacter::EquipRifle() { Loadout->RequestEquip(EVSEquipRequest::Rifle); }
 void AVSCharacter::EquipPistol() { Loadout->RequestEquip(EVSEquipRequest::Pistol); }
+// Request byte 3 (VSWeaponLoadoutRules::EncodeRequest(Slot::Knife)), never slot value 2.
+void AVSCharacter::EquipKnife() { Loadout->RequestEquip(EVSEquipRequest::Knife); }
 void AVSCharacter::EquipLast() { Loadout->RequestEquip(EVSEquipRequest::Last); }
 void AVSCharacter::BeginJump() { if (CanMatchMove()) { Jump(); } }
 void AVSCharacter::BeginCrouch() { if (CanMatchMove()) { Crouch(); } }
