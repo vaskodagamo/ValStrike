@@ -408,6 +408,14 @@ The gameplay/integration idle slots were checked clean at their original heads b
 
 **Next action:** Artists return cleaned source/export/previews for lead review, then one assigned native/map owner combines them in existing Site01 with preserved layout/collision. Character rig/skin/clip validation is a separate assignment after intake; do not replace it with the rejected procedural model.
 
+## 2026-11-04 — ART-13 character artist started
+
+**Request/result:** User extracted the character ZIP and asked another artist to work on it. Verified the base character, six animation FBXs and three textures against the original downloaded archive: all ten SHA-256 values matched. Added extracted-file hashes to the intake manifest and assigned MSH-C01 in the register.
+
+**Dispatch:** Reused “Art — Third-person player model” at High reasoning for new ART-13 in `.parallel-worktrees/meshy-character`, branch `codex/meshy-character`, base `6afa573`. The chat acknowledged the assignment and is active. Exact ownership covers `Art/Source/Characters/UrbanEntry01/`, asset docs and one workstream handoff. Old rejected ART-07 files/commits remain untouched. Task covers actual rig/material/skin cleanup, all six clip previews, compatible source exports and integration notes; no independent rerig, primitive replacement or new traversal mechanics.
+
+**Checks/limits:** Extracted-file hashes, worktree setup, assignment paths and diff whitespace checked. No new tests or Unreal build/import. Cleaned asset quality, skeleton/deformation compatibility and eventual in-game acceptance remain pending. Coordinator publishes the dispatch on existing PR #54; user retains merges. Next: artist source/previews handoff, then lead review and separately assigned native integration.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.

@@ -2,6 +2,8 @@
 
 ## ART-13 — Extracted Meshy character (2026-11-04)
 
+Dispatched and acknowledged active: “Art — Third-person player model”, High reasoning, new worktree prepared at `6afa573`. Actual source cleanup is in progress; no model/native acceptance claim.
+
 User requested the other artist start on the extracted character. [ART-13](tasks/art/ART-13-meshy-character.md) assigns the idle “Art — Third-person player model” chat at High reasoning to a new `.parallel-worktrees/meshy-character` / `codex/meshy-character` worktree. Exclusive source `Art/Source/Characters/UrbanEntry01/`, asset docs `docs/assets/urban-entry01/` and its handoff. MSH-C01's ten extracted files match the original ZIP by SHA-256. Work covers actual model/rig/material cleanup and six supplied animations; no resumption of rejected procedural ART-07, no native Content/gameplay edits or Unreal slot. Source review precedes centralized character integration. Coordinator owns this assignment, intake metadata and register on `codex/meshy-world-dispatch`.
 
 ## Meshy world production dispatch — 2026-11-04
