@@ -9,6 +9,7 @@ Current ownership and verification queue live in [TEAM_BOARD.md](TEAM_BOARD.md),
 | ID | Task | Status | Completion condition |
 | --- | --- | --- | --- |
 | TEAM-01 | Establish provider-neutral hierarchy and isolated contributor workspaces | Done | Shared rules and Claude entry point, worktree slots, proportional validation and central integration queue prepared, checked and published for user merge |
+| [TEAM-02](tasks/TEAM-02-producer.md) | Activate one recurring producer across Codex art and Claude gameplay | Implementation ready | Same-chat daily 30-minute schedule active; ownership transfer and both Claude handoffs delivered; 300-credit daily admission guard checked; publication/first-cycle evidence in [producer checkpoint](producer/STATUS.md) |
 | INT-01 | Verify the combined current-main gameplay batch | Ready | One selected revision built and affected checks executed centrally; failures assigned, evidence and limits recorded |
 
 ## Planning

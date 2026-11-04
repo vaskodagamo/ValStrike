@@ -27,6 +27,7 @@ An original desktop tactical FPS: deliberate movement and round-based combat ins
 | [Round rules foundation](docs/ROUND_RULES_BRIEF.md) | Isolated match/objective logic, tests and integration boundary |
 | [Team workflow](docs/TEAM_WORKFLOW.md) | Shared hierarchy, worktree ownership and centralized validation for Codex, Claude and humans |
 | [Team board](docs/TEAM_BOARD.md) | Current owners, prepared worktrees and integration queue |
+| [Studio producer](docs/PRODUCER.md) | Recurring coordination, worker registry, Meshy budget and Claude handoff |
 | [Agent instructions](AGENTS.md) / [Claude entry point](CLAUDE.md) | Shared contributor rules; start here before implementation |
 
 ## First playable target
