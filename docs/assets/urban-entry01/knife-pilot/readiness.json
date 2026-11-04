@@ -1,0 +1,248 @@
+{
+  "task": "ART-27",
+  "date_europe_berlin": "2026-11-04",
+  "branch": "codex/art27-knife-third-person",
+  "prepared_head": "c8bb6309e353f151681bdf96b2fe9ecad40a3aa5",
+  "source_commit": "39c065cc1bc05e8d7037290eb67cb722481c16f5",
+  "state": "implementation ready; source-owner third-person review passed; art-lead/native/runtime review pending",
+  "source": {
+    "path": "Art/Source/Characters/UrbanEntry01/KnifePilot/UrbanEntry01_KnifePilot.blend",
+    "bytes": 27542804,
+    "sha256": "c26731ce2ed4d28fa1b4c00f2e7cd32140ae9e6d9a3384bc0cf4e0b353abbf8a"
+  },
+  "exports": [
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/KnifePilot/Exports/A_UE01_Knife_Equip.fbx",
+      "bytes": 538764,
+      "sha256": "063ba7ea2d2d796c6792f8500343b359a8eac8a4b345c49e4a7a36d2680d35e1"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/KnifePilot/Exports/A_UE01_Knife_Hold.fbx",
+      "bytes": 637772,
+      "sha256": "34fe48863b586774af0c5086690c5f70d99d2b70f6e2ac549280d1bb0e48e80d"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/KnifePilot/Exports/A_UE01_Knife_Run.fbx",
+      "bytes": 577500,
+      "sha256": "5c6862b8468f4a2488a44c03f2862670608ac94d17db8322e4bb27524e845329"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/KnifePilot/Exports/A_UE01_Knife_Slash.fbx",
+      "bytes": 549356,
+      "sha256": "2ee9cea21b2304e817ffcd0d244d68173178dac0e1f7d42916a908e5761fca2e"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/KnifePilot/Exports/A_UE01_Knife_Stab.fbx",
+      "bytes": 634428,
+      "sha256": "04e89b9a59339f0bfd99d4dc2b0142a4e537a19799824d723890f976c38d14d1"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/KnifePilot/Exports/A_UE01_Knife_Walk.fbx",
+      "bytes": 673260,
+      "sha256": "4f2fae6eafb9430a36d85706bafb2d2d71b968680e3c96e7749b5cd5b8b11e27"
+    }
+  ],
+  "contract": {
+    "path": "docs/assets/urban-entry01/knife-pilot/animation-contract.json",
+    "bytes": 3224,
+    "sha256": "2b1e61472a65b5b4a06612cbdbb552d0d054e577665c659b0d6ccd05bb6a62bc"
+  },
+  "preserved_inputs": "source-references.json",
+  "artifact_manifest": "artifact-manifest.json",
+  "validation": "source-validation.json",
+  "source_review": "README.md",
+  "clips": {
+    "A_UE01_Knife_Hold": {
+      "frame_range": [
+        1,
+        61
+      ],
+      "fps": 60,
+      "duration_seconds": 1.0,
+      "impact_frame": null,
+      "impact_seconds": null,
+      "loop": true,
+      "root_motion": false
+    },
+    "A_UE01_Knife_Equip": {
+      "frame_range": [
+        1,
+        25
+      ],
+      "fps": 60,
+      "duration_seconds": 0.4,
+      "impact_frame": null,
+      "impact_seconds": null,
+      "loop": false,
+      "root_motion": false
+    },
+    "A_UE01_Knife_Slash": {
+      "frame_range": [
+        1,
+        34
+      ],
+      "fps": 60,
+      "duration_seconds": 0.55,
+      "impact_frame": 10,
+      "impact_seconds": 0.15,
+      "loop": false,
+      "root_motion": false
+    },
+    "A_UE01_Knife_Stab": {
+      "frame_range": [
+        1,
+        55
+      ],
+      "fps": 60,
+      "duration_seconds": 0.9,
+      "impact_frame": 19,
+      "impact_seconds": 0.3,
+      "loop": false,
+      "root_motion": false
+    },
+    "A_UE01_Knife_Walk": {
+      "frame_range": [
+        1,
+        63
+      ],
+      "fps": 60,
+      "duration_seconds": 1.0333333333333334,
+      "impact_frame": null,
+      "impact_seconds": null,
+      "loop": true,
+      "root_motion": false,
+      "lower_body_source": "A_UE01_Walking"
+    },
+    "A_UE01_Knife_Run": {
+      "frame_range": [
+        1,
+        39
+      ],
+      "fps": 60,
+      "duration_seconds": 0.6333333333333333,
+      "impact_frame": null,
+      "impact_seconds": null,
+      "loop": true,
+      "root_motion": false,
+      "lower_body_source": "A_UE01_Running"
+    }
+  },
+  "socket": {
+    "parent": "hand_r",
+    "space": "Blender bone HEAD-local centimeters, column vectors",
+    "matrix": [
+      [
+        0.47330552339553833,
+        -0.8653672933578491,
+        0.16468441486358643,
+        2.1089963912963867
+      ],
+      [
+        -0.04894813150167465,
+        0.16082574427127838,
+        0.9857683777809143,
+        12.109195709228516
+      ],
+      [
+        -0.8795372843742371,
+        -0.47463083267211914,
+        0.033761728554964066,
+        0.6281394362449646
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "scale": [
+      1,
+      1,
+      1
+    ],
+    "hold_hand_component_matrix": [
+      [
+        0.3524896502494812,
+        0.7673131227493286,
+        -0.535706639289856,
+        26.99999237060547
+      ],
+      [
+        0.9159441590309143,
+        -0.16554023325443268,
+        0.36557236313819885,
+        -21.0
+      ],
+      [
+        0.19182796776294708,
+        -0.6195377707481384,
+        -0.7611669301986694,
+        123.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "hold_knife_component_matrix": [
+      [
+        0.6004506945610046,
+        0.07263337075710297,
+        0.7963564395904541,
+        36.69844055175781
+      ],
+      [
+        0.12008988857269287,
+        -0.9927632808685303,
+        -2.812594175338745e-07,
+        -20.84320640563965
+      ],
+      [
+        0.7905932664871216,
+        0.09563407301902771,
+        -0.6048277020454407,
+        115.4243392944336
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "source_gates": {
+    "preserved_character_mesh_rig_weights_PBR_and_prior_actions": true,
+    "preserved_K01_mesh_PBR_scale": true,
+    "actual_six_FBX_reimports_on_original_character": true,
+    "max_sampled_joint_error_cm": 0.00010034901762364125,
+    "max_sampled_vertex_error_cm": 0.00012042002958423307,
+    "all_277_frames_surface_checked": true,
+    "source_visual_review": "pass within third-person scope; close-up glove limits retained",
+    "matched_original_candidate_export_views": true,
+    "game_distance_views": "5m / 90 degree horizontal FOV / 1920x1080 source renders"
+  },
+  "pending_gates": [
+    "Art-lead review of frozen source",
+    "Native import/PBR and measured hand_r/bone/mesh axis conversion",
+    "Native spine_01 upper-body layering over locomotion/crouch/airborne states and gait-rate tuning",
+    "Accepted cosmetic timing, switches/cancellation and remote visibility",
+    "Combined candidate build and actual rendered server/client acceptance",
+    "Runtime performance/LOD budget"
+  ],
+  "limitations": [
+    "Inherited angular glove fingers/thumb-side cavity/compressed pads; not hero or first-person approved",
+    "Constant ready hold; no new idle breathing or unrelated crouch/directional gait redesign",
+    "Discrete surface tests do not establish continuous-time or blended-motion clearance",
+    "Original K01 70640 triangles; no measured native performance acceptance"
+  ],
+  "credits_consumed": 0,
+  "new_meshy_jobs": 0,
+  "account_api_calls": 0,
+  "unreal_operations": 0,
+  "builds": 0,
+  "next_owner": "Direktor (2) art review, then assigned INT-ART-03 integrator; user merges"
+}
