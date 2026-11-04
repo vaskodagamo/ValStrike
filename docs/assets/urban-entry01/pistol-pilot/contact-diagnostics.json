@@ -1,0 +1,31 @@
+{
+  "limitations": "Selected skin vertices, not continuous collision. Nearest-normal sign is not a reliable inside test for open/multipart gun meshes. Visual review still required.",
+  "hand_to_hand": {
+    "l": {
+      "selected_vertices": 1095,
+      "nearest_surface_distance_cm": 0.4460831880569458,
+      "negative_normal_samples_deeper_than_0_05cm": 0,
+      "max_negative_normal_depth_cm": 0
+    },
+    "r": {
+      "selected_vertices": 1129,
+      "nearest_surface_distance_cm": 0.008837245404720306,
+      "negative_normal_samples_deeper_than_0_05cm": 0,
+      "max_negative_normal_depth_cm": 0
+    }
+  },
+  "weapons": {
+    "P01": {
+      "minimum_selected_hand_vertex_to_slide_surface_cm": 3.320162296295166,
+      "maximum_hand_vertex_x_in_weapon_cm": 5.790766716003418,
+      "muzzle_anchor_x_cm": 16.7,
+      "hand_vertices_behind_muzzle_anchor_cm": 10.909233283996581
+    },
+    "P02": {
+      "minimum_selected_hand_vertex_to_slide_surface_cm": 1.1720173358917236,
+      "maximum_hand_vertex_x_in_weapon_cm": 5.790766716003418,
+      "muzzle_anchor_x_cm": 15.5,
+      "hand_vertices_behind_muzzle_anchor_cm": 9.709233283996582
+    }
+  }
+}

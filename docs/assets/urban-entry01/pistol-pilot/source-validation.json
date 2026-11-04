@@ -1,0 +1,567 @@
+{
+  "task_id": "ART-23",
+  "blender": "5.2.2 LTS",
+  "source_reopened": true,
+  "frame_range": [
+    1,
+    61
+  ],
+  "fps": 60,
+  "root_motion": false,
+  "root": "pelvis",
+  "preservation": {
+    "character_mesh": {
+      "vertices": 39934,
+      "triangles": 30970,
+      "custom_normals": true,
+      "positions": "f4d11d7600cf52b5773c12307cecb471ca17b9fd0deb3f97cd8382fe9f81d8c9",
+      "topology": "080eee0545b45a64441614670e23279aed4c05efdfdec3f54e97a63943b377dc",
+      "normals": "7aa60f84950a54d3db63a309714dd8751ea898b65f579955cccd018189c9c313",
+      "uvs": "a1ab1ddcf65b02b37f8ccb4d0e28e9fee33f6b134c2fc807e13ae4d75ad4b201",
+      "weights": "6a05868fec70045c79fa4e38055c863daf4d2e1b27aa9a09790b255993841d30",
+      "material_indices": "1634608499f96209a68e416e02c3950efe49718b8873dfdd69c27abbf1d50a37"
+    },
+    "rig_hash": "b545f1ca9a823f095562ecbe02753648b73a1cb9fe40654a668b25d457e9e77e",
+    "material_hash": "c810b51630818fc85b46d3017842deb495690e648afc0f01b62e2ce3facf285c",
+    "original_action_hashes": {
+      "SmartRigArmature|rest|BaseLayer": "904b4077ccfd89a583fd9153893ee56b3ceb0585bba8ddc98b396076f90d49fd",
+      "A_UE01_Walking": "1a608c37f97091848ecae05e0b3ea91551abd1fcd5e5cac943f769993e6f38b2",
+      "A_UE01_Walk_Backward_with_Gun": "40b7857ee1da4f10446856749bd550bf28cb7d61b45c0430eacd495b4b78c507",
+      "A_UE01_Walk_Backward_While_Shooting": "5002c34691e6df25c8de205c9f242c557fe129788e89ca47dd57e118a2371795",
+      "A_UE01_Vault_with_Rifle": "310910a4bf84c362cefdb6caaadd64b0ddefe6aa71ccf1584c0775af0d32a346",
+      "A_UE01_Running": "282f85d9cf1ca338f5c1aa45e8faffd220d81413313d7f046fc7c5b62e3c2787",
+      "A_UE01_Pilot_Walk_RifleHold": "253d6c15978c9f312ecee66ad874f78ea9226a0a7a8e117bd649a5f185f1658a",
+      "A_UE01_Pilot_RifleHold": "569fd33340f1685056574dbcb26e4c31fdfb8e532e9e150d5c1041980c11d4cd",
+      "A_UE01_Crouch_Walk_Left_with_Gun": "2dad983aabcec4232436950449bf7d4251e2ff52316bdb3a4030adeb1e531533"
+    },
+    "all_equal_to_frozen_pilot_source": true
+  },
+  "weapons": {
+    "P01": {
+      "hand_r_component_matrix": [
+        [
+          -0.00015413761138916016,
+          0.9998102784156799,
+          -0.019470274448394775,
+          24.999982833862305
+        ],
+        [
+          0.9999687075614929,
+          -2.1606683731079102e-07,
+          -0.007921859622001648,
+          -7.3000078201293945
+        ],
+        [
+          -0.007920406758785248,
+          -0.01947110891342163,
+          -0.9997789859771729,
+          132.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "weapon_component_matrix": [
+        [
+          1.0000001192092896,
+          4.583853296935558e-08,
+          -5.029141902923584e-08,
+          38.0
+        ],
+        [
+          -1.538719516247511e-07,
+          1.0,
+          8.940696716308594e-08,
+          -3.0
+        ],
+        [
+          -1.695007085800171e-07,
+          -1.3597309589385986e-07,
+          1.0000001192092896,
+          137.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "hand_r_local_matrix": [
+        [
+          -0.00015418393013533205,
+          0.9999685883522034,
+          -0.007920274510979652,
+          4.258268356323242
+        ],
+        [
+          0.9998107552528381,
+          -6.047284273336118e-08,
+          -0.01947094313800335,
+          12.900200843811035
+        ],
+        [
+          -0.0194703359156847,
+          -0.007921773009002209,
+          -0.9997792840003967,
+          -5.286075115203857
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "scale": [
+        1.0000001192092896,
+        1.0,
+        1.0000001192092896
+      ],
+      "bone_references_weapon_cm": {
+        "hand_r": [
+          -13.000018119812012,
+          -4.300009250640869,
+          -4.999996662139893
+        ],
+        "hand_l": [
+          -9.000006675720215,
+          6.299999713897705,
+          -6.499979496002197
+        ],
+        "index_01_r": [
+          -1.1456152200698853,
+          -3.1482057571411133,
+          -2.803629159927368
+        ],
+        "index_03_r": [
+          1.723010540008545,
+          -3.7043075561523438,
+          -1.5462740659713745
+        ],
+        "thumb_03_r": [
+          -8.953888893127441,
+          0.2343718260526657,
+          -3.4627792835235596
+        ],
+        "index_03_l": [
+          3.9679479598999023,
+          2.4216625690460205,
+          -5.0121846199035645
+        ],
+        "thumb_03_l": [
+          -0.6942759156227112,
+          5.102386474609375,
+          -2.986687660217285
+        ]
+      }
+    },
+    "P02": {
+      "hand_r_component_matrix": [
+        [
+          -0.00015413761138916016,
+          0.9998102784156799,
+          -0.019470274448394775,
+          24.999982833862305
+        ],
+        [
+          0.9999687075614929,
+          -2.1606683731079102e-07,
+          -0.007921859622001648,
+          -7.3000078201293945
+        ],
+        [
+          -0.007920406758785248,
+          -0.01947110891342163,
+          -0.9997789859771729,
+          132.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "weapon_component_matrix": [
+        [
+          1.0000001192092896,
+          4.583853296935558e-08,
+          -5.029141902923584e-08,
+          38.0
+        ],
+        [
+          -1.538719516247511e-07,
+          1.0,
+          8.940696716308594e-08,
+          -2.999999523162842
+        ],
+        [
+          -1.695007085800171e-07,
+          -1.3597309589385986e-07,
+          1.0000001192092896,
+          134.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "hand_r_local_matrix": [
+        [
+          -0.00015418393013533205,
+          0.9999685883522034,
+          -0.007920274510979652,
+          4.28203010559082
+        ],
+        [
+          0.9998107552528381,
+          -6.047284273336118e-08,
+          -0.01947094313800335,
+          12.958613395690918
+        ],
+        [
+          -0.0194703359156847,
+          -0.007921773009002209,
+          -0.9997792840003967,
+          -2.2867465019226074
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "scale": [
+        1.0000001192092896,
+        1.0,
+        1.0000001192092896
+      ],
+      "bone_references_weapon_cm": {
+        "hand_r": [
+          -13.000018119812012,
+          -4.3000102043151855,
+          -1.9999967813491821
+        ],
+        "hand_l": [
+          -9.000006675720215,
+          6.299998760223389,
+          -3.4999794960021973
+        ],
+        "index_01_r": [
+          -1.1456152200698853,
+          -3.1482067108154297,
+          0.19637076556682587
+        ],
+        "index_03_r": [
+          1.723010540008545,
+          -3.70430850982666,
+          1.4537259340286255
+        ],
+        "thumb_03_r": [
+          -8.953888893127441,
+          0.2343708723783493,
+          -0.4627792537212372
+        ],
+        "index_03_l": [
+          3.9679479598999023,
+          2.421661615371704,
+          -2.0121846199035645
+        ],
+        "thumb_03_l": [
+          -0.6942759156227112,
+          5.102385520935059,
+          0.013312273658812046
+        ]
+      }
+    }
+  },
+  "views": {
+    "P01_candidate_body": {
+      "position_cm": [
+        270.0,
+        -430.0,
+        180.0
+      ],
+      "target_cm": [
+        12,
+        0,
+        85
+      ],
+      "orthographic_scale_cm": 195,
+      "horizontal_fov_degrees": null,
+      "resolution": [
+        900,
+        800
+      ],
+      "source_only": true
+    },
+    "P01_candidate_right": {
+      "position_cm": [
+        90.0,
+        -100.0,
+        148.0
+      ],
+      "target_cm": [
+        37,
+        0,
+        133
+      ],
+      "orthographic_scale_cm": 42,
+      "horizontal_fov_degrees": null,
+      "resolution": [
+        900,
+        800
+      ],
+      "source_only": true
+    },
+    "P01_candidate_left": {
+      "position_cm": [
+        90.0,
+        100.0,
+        148.0
+      ],
+      "target_cm": [
+        37,
+        0,
+        133
+      ],
+      "orthographic_scale_cm": 42,
+      "horizontal_fov_degrees": null,
+      "resolution": [
+        900,
+        800
+      ],
+      "source_only": true
+    },
+    "P01_distance_5m": {
+      "position_cm": [
+        276.99945068359375,
+        -423.9991455078125,
+        85.0
+      ],
+      "target_cm": [
+        12.0,
+        0.0,
+        85.0
+      ],
+      "orthographic_scale_cm": null,
+      "horizontal_fov_degrees": 90,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "source_only": true
+    },
+    "P01_original_same_pose": {
+      "position_cm": [
+        90.0,
+        -100.0,
+        148.0
+      ],
+      "target_cm": [
+        37,
+        0,
+        133
+      ],
+      "orthographic_scale_cm": 42,
+      "horizontal_fov_degrees": null,
+      "resolution": [
+        900,
+        800
+      ],
+      "source_only": true
+    },
+    "P01_reimport_right": {
+      "position_cm": [
+        90.0,
+        -100.0,
+        148.0
+      ],
+      "target_cm": [
+        37,
+        0,
+        133
+      ],
+      "orthographic_scale_cm": 42,
+      "horizontal_fov_degrees": null,
+      "resolution": [
+        900,
+        800
+      ],
+      "source_only": true
+    },
+    "P01_reimport_left": {
+      "position_cm": [
+        90.0,
+        100.0,
+        148.0
+      ],
+      "target_cm": [
+        37,
+        0,
+        133
+      ],
+      "orthographic_scale_cm": 42,
+      "horizontal_fov_degrees": null,
+      "resolution": [
+        900,
+        800
+      ],
+      "source_only": true
+    },
+    "P02_candidate_body": {
+      "position_cm": [
+        270.0,
+        -430.0,
+        180.0
+      ],
+      "target_cm": [
+        12,
+        0,
+        85
+      ],
+      "orthographic_scale_cm": 195,
+      "horizontal_fov_degrees": null,
+      "resolution": [
+        900,
+        800
+      ],
+      "source_only": true
+    },
+    "P02_candidate_right": {
+      "position_cm": [
+        90.0,
+        -100.0,
+        148.0
+      ],
+      "target_cm": [
+        37,
+        0,
+        133
+      ],
+      "orthographic_scale_cm": 42,
+      "horizontal_fov_degrees": null,
+      "resolution": [
+        900,
+        800
+      ],
+      "source_only": true
+    },
+    "P02_candidate_left": {
+      "position_cm": [
+        90.0,
+        100.0,
+        148.0
+      ],
+      "target_cm": [
+        37,
+        0,
+        133
+      ],
+      "orthographic_scale_cm": 42,
+      "horizontal_fov_degrees": null,
+      "resolution": [
+        900,
+        800
+      ],
+      "source_only": true
+    },
+    "P02_distance_5m": {
+      "position_cm": [
+        276.99945068359375,
+        -423.9991455078125,
+        85.0
+      ],
+      "target_cm": [
+        12.0,
+        0.0,
+        85.0
+      ],
+      "orthographic_scale_cm": null,
+      "horizontal_fov_degrees": 90,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "source_only": true
+    },
+    "P02_original_same_pose": {
+      "position_cm": [
+        90.0,
+        -100.0,
+        148.0
+      ],
+      "target_cm": [
+        37,
+        0,
+        133
+      ],
+      "orthographic_scale_cm": 42,
+      "horizontal_fov_degrees": null,
+      "resolution": [
+        900,
+        800
+      ],
+      "source_only": true
+    },
+    "P02_reimport_right": {
+      "position_cm": [
+        90.0,
+        -100.0,
+        148.0
+      ],
+      "target_cm": [
+        37,
+        0,
+        133
+      ],
+      "orthographic_scale_cm": 42,
+      "horizontal_fov_degrees": null,
+      "resolution": [
+        900,
+        800
+      ],
+      "source_only": true
+    },
+    "P02_reimport_left": {
+      "position_cm": [
+        90.0,
+        100.0,
+        148.0
+      ],
+      "target_cm": [
+        37,
+        0,
+        133
+      ],
+      "orthographic_scale_cm": 42,
+      "horizontal_fov_degrees": null,
+      "resolution": [
+        900,
+        800
+      ],
+      "source_only": true
+    }
+  },
+  "roundtrip": {
+    "animation_only": true,
+    "bone_count": 66,
+    "rest_matrix_max_error": 3.0517578125e-05,
+    "sampled_frames": [
+      1,
+      31,
+      61
+    ],
+    "max_joint_error_cm": 6.323364595183226e-05,
+    "max_vertex_error_cm": 7.159904838726539e-05,
+    "loop_max_joint_delta_cm": 0.0,
+    "material_note": "Original character material rebound to the imported character for matched shading, not automatic native FBX shader acceptance."
+  }
+}
