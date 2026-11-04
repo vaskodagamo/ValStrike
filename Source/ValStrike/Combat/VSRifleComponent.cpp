@@ -12,4 +12,6 @@ UVSRifleComponent::UVSRifleComponent()
     ReloadDuration = 2.0f;
     Range = 10000.0f;
     DamageClass = ValStrike::Damage::WeaponClass::Rifle;
+    // Climb, drift and spread bloom under held fire; exact first shot (playtest proposal).
+    RecoilTuning = VSRecoilRules::RifleTuning();
 }

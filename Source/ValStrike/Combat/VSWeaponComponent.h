@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "../Damage/VSDamageModel.h"
+#include "VSRecoilRules.h"
 #include "VSWeaponComponent.generated.h"
 
 class AVSCharacter;
@@ -17,6 +18,16 @@ struct FVSRifleState
     UPROPERTY() bool bReloading = false;
     // Server-accepted shots by this weapon during this pawn's life.
     UPROPERTY() uint32 ShotsFired = 0;
+};
+
+/** One shot's recoil/spread result on this machine (not replicated). */
+struct FVSShotSpread
+{
+    uint32 ShotId = 0;
+    // Consecutive-shot index: 0 is the first shot after recovery.
+    uint32 Index = 0;
+    float SpreadDegrees = 0.0f;
+    FVector Direction = FVector::ForwardVector;
 };
 
 /**
@@ -45,6 +56,15 @@ public:
     ValStrike::Damage::WeaponClass GetDamageClass() const { return DamageClass; }
     bool IsAutomatic() const { return bAutomatic; }
     const FString& GetDisplayName() const { return DisplayName; }
+    // Spread cone half-angle the next shot would get now, from this machine's recoil
+    // state: the owning client's prediction, or the server's for other pawns there.
+    // Simulated proxies have no shot history and report the stance-only value.
+    float GetCurrentSpreadDegrees() const;
+    // Owning client: direction predicted for the latest locally sent shot.
+    const FVSShotSpread& GetLastPredictedShot() const { return LastPredictedShot; }
+    // Server: direction the latest accepted shot was traced along.
+    const FVSShotSpread& GetLastServerShot() const { return LastServerShot; }
+    virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
     virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 #if !UE_BUILD_SHIPPING && !UE_BUILD_TEST
@@ -80,6 +100,9 @@ protected:
     float Range = 10000.0f;
     // Damage per hit zone comes from the shared table in Damage/VSDamageModel.cpp.
     ValStrike::Damage::WeaponClass DamageClass = ValStrike::Damage::WeaponClass::Rifle;
+    // Recoil pattern, spread and view kick (Combat/VSRecoilRules.h). Not editable:
+    // server and client must evaluate the same values.
+    VSRecoilRules::Tuning RecoilTuning = VSRecoilRules::RifleTuning();
 
 private:
     AVSCharacter* Character() const;
@@ -90,6 +113,11 @@ private:
     void FinishReload();
     void CancelActions();
     void Reject(FName Reason);
+    VSRecoilRules::Stance CurrentStance() const;
+    // Deterministic shot direction: Aim offset by the recoil pattern and spread for
+    // this shot id and index. Server trace and client prediction both use it.
+    FVSShotSpread ResolveShot(uint32 ShotId, uint32 Index, const FVector& Aim) const;
+    void ApplyViewKick(uint32 ShotId);
 
     UFUNCTION(Server, Reliable)
     void ServerRequestFire(uint32 ShotId, FVector Origin, FVector Direction);
@@ -104,6 +132,14 @@ private:
     uint32 LastRequestId = 0;
     double NextServerFireTime = 0.0;
     bool bFireHeld = false;
+    // Recoil heat per role: a listen-server host predicts and validates in one object.
+    VSRecoilRules::State LocalRecoil;
+    VSRecoilRules::State ServerRecoil;
+    FVSShotSpread LastPredictedShot;
+    FVSShotSpread LastServerShot;
+    // Owning client: view kick not yet recovered, and when it was last added.
+    VSRecoilRules::Offset OutstandingViewKick;
+    double LastViewKickTime = 0.0;
 #if !UE_BUILD_SHIPPING && !UE_BUILD_TEST
     TMap<FName, uint32> Rejections;
 #endif
