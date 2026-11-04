@@ -1,0 +1,69 @@
+{
+  "engine": "5.8.4-58902052+++UE5+Release-5.8",
+  "mode": "fresh_process_reopen",
+  "readiness_sha256": "2c91ae0d831135addf056099b4048e09135565ae03fc88bd439780a927c552d2",
+  "source_commit": "887de0a05558169bb6f18717b579d13779449c43",
+  "source_fbx_sha256": "85903b1e7cbcfb5054aefc23fbe617cadd9a480273be378e0fa81cda2bd509a1",
+  "asset": "/Game/Art/Characters/UrbanEntry01/Animations/A_UE01_Pilot_PistolHold.A_UE01_Pilot_PistolHold",
+  "skeleton": "/Game/Art/Characters/UrbanEntry01/SK_VS_UrbanEntry01_Skeleton.SK_VS_UrbanEntry01_Skeleton",
+  "length_s": 1.0,
+  "root_motion": false,
+  "p01_grip_derivation": {
+    "native_hand_r_cm": [
+      25.0,
+      7.3,
+      132.0
+    ],
+    "source_hand_r_cm": [
+      24.999982833862305,
+      -7.3000078201293945,
+      132.0
+    ],
+    "bone_chain": [
+      "hand_r",
+      "lowerarm_r",
+      "upperarm_r",
+      "clavicle_r",
+      "spine_03",
+      "spine_02",
+      "spine_01",
+      "pelvis",
+      "SKEL_UE01"
+    ],
+    "basis": "y_negated",
+    "p01_component_cm": [
+      38.0,
+      3.0,
+      137.0
+    ],
+    "p01_component_rotator_roll_pitch_yaw": [
+      -0.0,
+      -0.0,
+      0.0
+    ],
+    "hand_r_offset_location_cm": [
+      4.2582,
+      -12.9002,
+      -5.2861
+    ],
+    "hand_r_offset_rotator_roll_pitch_yaw": [
+      -179.546,
+      -1.1157,
+      -90.0089
+    ],
+    "hand_r_offset_quat_xyzw": [
+      -0.70704,
+      0.707095,
+      0.009685,
+      0.004084
+    ]
+  },
+  "unchanged_existing_assets": {
+    "Content/Art/Characters/UrbanEntry01/SK_VS_UrbanEntry01.uasset": "9c573f7792540aa6d069695136b62669a0bb72c793461d205d82306e83661f22",
+    "Content/Art/Characters/UrbanEntry01/SK_VS_UrbanEntry01_Skeleton.uasset": "786960463f3159a181f3bde51b47967b726f9a34951159fe1479037ddcf9a806",
+    "Content/Art/Characters/UrbanEntry01/Animations/A_UE01_Pilot_RifleHold.uasset": "70297c2f92e9ebce804a294e696d48f0afa003a8500b5a2868364686ed9976a4",
+    "Content/Art/Characters/UrbanEntry01/Animations/A_UE01_Pilot_Walk_RifleHold.uasset": "aa9e0c942263bcd664508d60c544adf261a74eefca085760d52db8401d2c00b4",
+    "Content/Art/Characters/UrbanEntry01/Animations/A_UE01_Walking.uasset": "3d7faf8cd820711aac895f09bca828893a65815460955b603942020127c27997"
+  },
+  "runtime_verified": false
+}
