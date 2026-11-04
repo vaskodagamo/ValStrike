@@ -333,6 +333,16 @@ Tick-rate measurement, idle two-client Site01 match, windows after warm-up: cap 
 
 **Limits and next action:** Publish this workflow for the user's review/merge, then assign INT-01 to one integration owner with an exact candidate SHA and affected checks. Current-main runtime acceptance remains pending according to the latest damage/economy/effects/join-key handoffs. This setup provides rules, task records and worktrees, not an autonomous scheduler; the existing UE lock enforces only mutual exclusion.
 
+## 2026-11-04 — Codex art team and Claude gameplay lead kickoff
+
+**Request:** Start new Codex art sessions; the user will start Claude for gameplay and requested its kickoff prompt. PR #30 is merged at main `66428e5`.
+
+**Assignments:** Two bounded source-art tasks: ART-05 original first-person arms/gloves with rifle/pistol grip poses, and ART-06 two Site01 navigation signs addressing the existing R1/R2 review. Each gets its own worktree and exact source/docs ownership. This chat acts as art lead; no separate management agent or repeated art review was started. Accepted weapon geometry/palette and production maps remain read-only in this batch.
+
+**Gameplay delegation:** Reserved the gameplay lead slot for the user-started Claude session and the integration slot for its one QA owner. `docs/teams/CLAUDE_GAMEPLAY_KICKOFF.md` authorizes a scoped engineering sub-board and separate worker worktrees, with INT-01 as the first priority. Central policy/board and all art remain Codex-owned; the user retains merges.
+
+**Validation and limits:** Kickoff is documentation/worktree setup only. No Unreal build, new test suite or runtime claim. Art workers produce real editable source/exports and limited inspected source previews; native import and runtime fit are deliberately a later shared integration job. The next report records launched chat identities. No Claude session is launched here.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.
