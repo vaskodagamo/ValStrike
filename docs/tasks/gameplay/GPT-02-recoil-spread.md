@@ -1,0 +1,60 @@
+# Task GPT-02: deterministic recoil and server-authoritative spread for rifle and pistol
+
+- Status: In progress
+- Backlog ID: GUN-03 (recoil part); the weapons handoff notes "the pistol has no tracer, recoil, spread or audio".
+- Owner/session and provider: Claude session "GPT-02 recoil and spread"
+- Lead: Claude gameplay lead (`team-gameplay`)
+- Branch and exact base SHA: `claude/gpt-02-recoil-spread` from `90849f5`
+- Absolute worktree path: `/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/gpt-02-recoil-spread`
+- Owns:
+  - `Source/ValStrike/Combat/VSWeaponComponent.h/.cpp`
+  - `Source/ValStrike/Combat/VSRifleComponent.h/.cpp`
+  - `Source/ValStrike/Combat/VSPistolComponent.h/.cpp`
+  - new `Source/ValStrike/Combat/VSRecoilRules.h/.cpp`
+  - new `Tests/Weapons/recoil_rules_test.cpp`
+  - `Tests/Weapons/test_weapons_runner.py`, only to register the new engine-free test if that is the existing pattern
+  - `docs/workstreams/recoil-spread.md`
+- Read-only dependencies / other owners:
+  - `VSCharacter.*`: apply view kick through the owning `APlayerController` instead
+  - `VSHUD.*`, `VSPlayerController.*`, `Feedback/**`: GPT-01
+  - `Damage/**`, `Effects/**`, `Presentation/**`, `Match/**`, the loadout component/rules, `Build.cs`, `Config/`
+  - all Content, art and maps
+  - If a change outside the owned paths seems required, stop and ask the lead.
+- Result:
+  - A pure, engine-free recoil/spread model (`VSRecoilRules`) with per-weapon tuning:
+    - rifle: sustained-fire vertical climb plus bounded horizontal drift, recovering after a pause;
+    - pistol: per-shot kick, fast recovery;
+    - spread: grows with consecutive shots and movement/airborne state, shrinks when crouched.
+  - The **server** computes each shot's direction offset from the shot index and a seed derived from the shot id. It never trusts a client-supplied offset; the client's predicted tracer uses the same function, so the two agree.
+  - The owning client applies the view kick locally, once per accepted local shot, with no doubled kick on server replication.
+  - The shooter's current spread is exposed through a read-only accessor (`GetCurrentSpreadDegrees()` or similar) for a later crosshair task. GPT-02 does not draw it.
+  - Tuning values are clearly marked as playtest proposals.
+  - Stop when the implementation and engine-free test are committed, a PR is open and the handoff is written.
+- Out of scope:
+  - audio, animation, presentation/first-person pose
+  - crosshair drawing
+  - weapon switch prediction
+  - lag compensation (NEXT-02)
+  - new weapons or economy
+- Validation tier: V2: hit direction is an authority/damage rule.
+- Contributor checks:
+  - An engine-free C++ test of `VSRecoilRules`: determinism for the same seed/index, bounded climb/drift, recovery, spread ordering (crouch < stand < move < air), first-shot accuracy if designed in. Follow the pattern of `Tests/Weapons/weapon_loadout_rules_test.cpp`.
+  - `git diff --check`.
+  - **No Unreal build or runtime runs:** the engine slot belongs to INT-01.
+- New test, justified: shot-direction determinism is the server/client agreement rule.
+- Integration-owned checks: combined Editor build, then:
+  - `Scripts/test_combat.py`: expected counts may change if the first shot is no longer perfectly accurate. Say exactly which checks and why in the handoff; prefer first-shot-accurate tuning so existing aimed-shot checks keep passing.
+  - `Scripts/test_weapons.py` (practice and match)
+  - `Tests/Damage/run_runtime.py`
+  - `Scripts/test_shot_effects.py`
+- Engine slot: none.
+- Publication: owner pushes the branch and opens a PR to `main`; the user merges.
+
+## Completion handoff
+
+- Commit/PR:
+- Changed:
+- Checks actually run and result:
+- Deferred checks and integration owner:
+- Remaining defect/dependency:
+- Next action/owner:

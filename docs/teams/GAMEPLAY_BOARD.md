@@ -8,7 +8,8 @@ Owner: Claude gameplay/engineering lead (delegated by the coordinator in [TEAM_B
 | --- | --- | --- | --- |
 | Engineering lead | User-started Claude session | `.parallel-worktrees/team-gameplay`, branch `codex/team-gameplay` (historical prefix), fast-forwarded to `origin/main` `90849f5` | Active: this board, briefs, triage |
 | Integration / QA owner (INT-01) | Claude session "INT-01 baseline verification", started by the lead | `.parallel-worktrees/team-integration`, branch `codex/team-integration`, base `90849f5` | Assigned; sole engineering user of the engine slot |
-| Implementation workers | None yet | — | No concrete defect yet. Workers are assigned only for INT-01 findings, one owner per path set, at most two at once |
+| Implementation worker (GPT-01) | Claude session "GPT-01 hit feedback" | `.parallel-worktrees/gpt-01-hit-feedback`, branch `claude/gpt-01-hit-feedback`, base `90849f5` | Assigned 2026-11-04 at the user's request to continue game logic; no engine use |
+| Implementation worker (GPT-02) | Claude session "GPT-02 recoil and spread" | `.parallel-worktrees/gpt-02-recoil-spread`, branch `claude/gpt-02-recoil-spread`, base `90849f5` | Assigned 2026-11-04; no engine use |
 
 Paths are relative to `/Users/webproduktion3/Documents/ValStrike`. Engine: `/Users/webproduktion3/UE_5.8/UE_5.8` (UE 5.8.4, Xcode 26.1.1).
 
@@ -17,6 +18,11 @@ Paths are relative to `/Users/webproduktion3/Documents/ValStrike`. Engine: `/Use
 | ID | Result | Owner / checkout | Exclusive paths | State / validation |
 | --- | --- | --- | --- | --- |
 | INT-01 | One combined build of `origin/main` `90849f5` plus the affected suites once; per-suite pass/fail with evidence and owner-addressed defects | INT-01 QA session; `team-integration` | `docs/workstreams/integration-01.md`; its own ignored `Saved/`, `Binaries/`, `Intermediate/`. No source edits | In progress; V2. [Brief](../tasks/gameplay/INT-01-baseline-verification.md) |
+
+| GPT-01 | GUN-03: server-confirmed hit marker, damage-direction indicator, death feedback | GPT-01 session; `gpt-01-hit-feedback` | new `Feedback/**`, `VSHUD.h/.cpp`, `VSHUDData.h`, `VSPlayerController.h/.cpp` (feedback hosting only), new `Tests/Feedback/**`, `docs/workstreams/hit-feedback.md` | In progress; V2. [Brief](../tasks/gameplay/GPT-01-hit-feedback.md) |
+| GPT-02 | GUN-03: deterministic recoil, server-authoritative spread, rifle and pistol | GPT-02 session; `gpt-02-recoil-spread` | `Combat/VSWeaponComponent.*`, `Combat/VSRifleComponent.*`, `Combat/VSPistolComponent.*`, new `Combat/VSRecoilRules.*`, new `Tests/Weapons/recoil_rules_test.cpp`, `docs/workstreams/recoil-spread.md` | In progress; V2. [Brief](../tasks/gameplay/GPT-02-recoil-spread.md) |
+
+Path conflicts with INT-01 findings: a fix in GPT-01/GPT-02-owned files goes to that owner, or waits until its PR is handed off. `VSCharacter.*`, `Damage/**`, `Effects/**`, `Match/**`, `UI/**` and `Scoreboard/**` stay unclaimed for fix tasks. GPT-02 lands before the next INT batch, which reruns combat/weapons/damage/shot-effects for both workers together.
 
 Fix tasks get IDs `GPF-<nn>` here and a brief in `docs/tasks/gameplay/` before any worker starts.
 
