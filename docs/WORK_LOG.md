@@ -468,6 +468,12 @@ The gameplay/integration idle slots were checked clean at their original heads b
 
 **Verification/limits:** Four focused budget-boundary tests passed; actual ledger reports 0/300 new credits committed. Automation creation/view/saved configuration confirmed ACTIVE and the requested interval/thread; no scheduled invocation has yet been observed. Claude smoke returned `CLAUDE_RUNNER_OK`, exit 0, no error. No new paid generation, Unreal build, import or runtime test was performed for this workflow. INT-06 movement D3 and native acceptance remain open in their owners' evidence. User merges the producer PR; the next scheduled cycle reconciles actual progress without idle logs or duplicate writers.
 
+## 2026-11-04 — ART-22 universal hands reserved
+
+**Priority/ownership:** Verified the user's direct request in Direktor for bare forearms with gloves usable across rifle, pistol and knife. Reserved ART-22/FPArms03 for the existing High-reasoning hands owner, with a separate worktree/source folder. ART-19 receives a safe checkpoint/publish/stop instruction; its sleeve source remains preserved. This replaces one assignment, without adding another worker.
+
+**Scope/budget:** Reuse inspection first, then at most one standard Meshy 7.1 textured/PBR 4K right-hand/bare-forearm draft if necessary. Official matching price checked; 30 credits reserved centrally from the 300/day pool, 270 available, no task submitted yet. Artist owns the pair, compatible rig and distinct frozen weapon poses, matched source/export comparisons and honest held states. Native integration remains separate. See [ART-22](tasks/art/ART-22-fparms03-universal.md) and [producer checkpoint](producer/STATUS.md) for dispatch state. V0 brief/diff checks only; no new test or build. INT-06 release was confirmed in the live engineering board and delivered to the existing native integrator, which began its assigned candidate/import cycle. GPF-04 stays queued; no native success is claimed. Prepared ART-22 checkout is `86549e7`; ART-19 checkpoint/publication precedes artist transfer.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.

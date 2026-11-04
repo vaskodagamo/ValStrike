@@ -22,6 +22,16 @@
 
 Four focused spending-guard tests passed: idempotency/settlement, concurrent cap enforcement, unresolved jobs across Berlin midnight, and missing/reset/overrun refusal. Command: `python3 -m unittest discover -s Tests -p 'test_producer_budget.py' -v`. No full suite, build, Meshy generation or game runtime test was run for TEAM-02. Review/diff/link checks cover the policy files.
 
-Publication: implementation `a57cbda`, [PR #88](https://github.com/vaskodagamo/ValStrike/pull/88), awaiting user merge.
+Publication: implementation `a57cbda`, [PR #88](https://github.com/vaskodagamo/ValStrike/pull/88), merged by the user.
 
 Next: inspect final R02/hands/knife handoffs and real comparisons as they arrive; reconcile the recorded QA slot release with INT-ART-01. Keep GPF-04 queued until contributor capacity and shared paths permit a bounded dispatch. Each native owner records the exact candidate and actual results; user retains merges and other-Mac playtest acceptance.
+
+## Universal-hands priority update — 2026-11-04
+
+Direct user request verified in Direktor. ART-22/FPArms03 is reserved for the same hands chat after its ART-19 frozen checkpoint, with a separate worktree and exact source paths. Checkpoint instruction delivered; full dispatch waits for safe completion. Reuse good glove geometry first; optional single 30-credit draft reserved as `ART-22-FPArms03-draft-1`, not yet submitted. Daily new pool now has 30 reserved / 270 available. No paid Meshy operation by producer.
+
+K01 #85 and P02 #81 are merged/frozen. GPF-02/03 implementations are ready and their engine checks queued; the live gameplay board records INT-06 release. R02 correction, current hands and native integration are the continuing contributors. ART-22 replaces hands work after checkpoint; keep GPF-04 queued until capacity/shared paths clear.
+
+ART-22 worktree prepared clean at `86549e74e5d2a83c4401a6ceb650e2c9c6d655cb` (main `159431d` plus brief). ART-19 checkpoint `afa582a` is committed and uploading; wait for publication/safe stop before dispatch. Producer follow-up branch: `codex/universal-hands-dispatch`; #88 is now merged.
+
+INT-ART-01 received the explicit INT-06 release notice in its existing Claude chat and began reconciling the candidate for native work. Its one engine-slot job is now next; GPF-04 remains queued to protect the shared character source. No native result is claimed.

@@ -1,5 +1,13 @@
 # Team board
 
+## ART-22 universal bare-forearm hands — 2026-11-04
+
+Direct user priority verified in Direktor: one reusable bare-forearm/glove rig for rifle, pistol and knife. [ART-22 brief](tasks/art/ART-22-fparms03-universal.md) reserves the **existing hands chat** at High, new `.parallel-worktrees/art22-fparms03` / `codex/art22-fparms03`, exclusively `Art/Source/Characters/FPArms03/`, `docs/assets/fparms03/` and `docs/workstreams/art22-fparms03.md`. ART-19 must checkpoint/publish and stop first; FPArms02 remains preserved. No additional worker or native owner.
+
+Reuse inspection precedes any paid request. Reservation `ART-22-FPArms03-draft-1` holds **30 of today's 300 new credits**, optional one Meshy 7.1 standard textured/PBR 4K right hand + bare forearm; no retries/extras. No submission yet. Pair construction, compatible finger rig and weapon-specific poses are local artist work. Corrected P02 #81 and K01 #85 are frozen; R02 correction is still pending, so rifle fit remains provisional until its exact commit. Required real source/export/pose comparisons and centralized native verification remain separate.
+
+Capacity reconciliation: P02 and K01 have stopped; GPF-02/03 are implementation ready, engineering verification queued, INT-06 slot explicitly released in the live sub-board. R02, hands and INT-ART-01 are the continuing contributors. ART-22 replaces the hands assignment after its checkpoint rather than adding a fourth worker; GPF-04 stays queued.
+
 ## Recurring producer active — 2026-11-04
 
 **Direktor (2)** is the sole producer/art lead. [Operating policy](PRODUCER.md), [live checkpoint](producer/STATUS.md) and [worker registry](producer/control.json) supersede historical status below. The user retains scope/art decisions and all merges. Automation `valstrike-studio-producer` resumes the same chat every 30 minutes, every day while the local Mac/app are available. Target three active contributors after existing assignments finish; no independent new batches from either provider.

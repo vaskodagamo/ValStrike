@@ -56,7 +56,18 @@
       "thread_id": "01a1a6cf-0f10-73d0-8c33-29cb863d7b33",
       "worktree": ".parallel-worktrees/art19-fparms02",
       "handoff": "docs/workstreams/art19-fparms02.md",
-      "prior_credit_cap": 30
+      "prior_credit_cap": 30,
+      "next_assignment": {
+        "task": "ART-22",
+        "brief": "docs/tasks/art/ART-22-fparms03-universal.md",
+        "worktree": ".parallel-worktrees/art22-fparms03",
+        "branch": "codex/art22-fparms03",
+        "handoff": "docs/workstreams/art22-fparms03.md",
+        "state": "reserved; start only after ART-19 frozen checkpoint",
+        "reservation": "ART-22-FPArms03-draft-1",
+        "credit_cap": 30,
+        "prepared_head": "86549e74e5d2a83c4401a6ceb650e2c9c6d655cb"
+      }
     },
     {
       "task": "ART-20",
