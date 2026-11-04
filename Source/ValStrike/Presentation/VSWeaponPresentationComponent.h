@@ -14,8 +14,9 @@ class UMaterialInterface;
 
 /**
  * Cosmetic first-person and observer views of one loadout weapon. Polls public
- * replicated state; never sends gameplay requests. Visible only while its slot is
- * equipped and the owner is alive. Accepted shots before attachment, while
+ * replicated state and the loadout's local view (the owner's predicted slot);
+ * never sends gameplay requests. Visible only while its slot is equipped and the
+ * owner is alive. Accepted shots before attachment, while
  * stowed or before a revival are never replayed. No collision or navigation.
  */
 UCLASS(Abstract, ClassGroup = (Presentation))
