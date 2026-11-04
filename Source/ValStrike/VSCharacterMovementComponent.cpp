@@ -3,12 +3,15 @@
 #include "Components/CapsuleComponent.h"
 #include "VSCharacter.h"
 #include "VSMovementRules.h"
+#include "Combat/VSWeaponLoadoutComponent.h"
 
 float UVSCharacterMovementComponent::GetWeaponSpeedMultiplier() const
 {
     const AVSCharacter* Character = Cast<AVSCharacter>(CharacterOwner);
-    return static_cast<float>(VSMovementRules::SpeedMultiplier(
-        Character ? Character->GetMovementWeaponKind() : VSMovementRules::WeaponKind::Unarmed));
+    VSMovementRules::WeaponKind Kind = Character ? Character->GetMovementWeaponKind() : VSMovementRules::WeaponKind::Unarmed;
+    // The knife slot is the unweighted base speed, never a firearm fallback.
+    if (Character && Character->GetEquippedWeaponSlot() == EVSWeaponSlot::Knife) { Kind = VSMovementRules::WeaponKind::Knife; }
+    return static_cast<float>(VSMovementRules::SpeedMultiplier(Kind));
 }
 
 float UVSCharacterMovementComponent::GetMaxSpeed() const

@@ -22,6 +22,9 @@ enum class Cue : std::uint8_t
     DefuseStart,
     DeviceBeep,
     DefuseComplete,
+    KnifeSwing, // Knife impact that met nothing.
+    KnifeWall,  // Knife impact against world geometry.
+    KnifeFlesh, // Knife impact on a player.
     Count
 };
 constexpr int CueCount = static_cast<int>(Cue::Count);
@@ -146,6 +149,46 @@ public:
 private:
     bool initialized = false;
     double last = 0.0;
+};
+
+/** Knife contact cue from one pawn's replicated impact counter and result. */
+struct KnifeDecision
+{
+    bool play = false;
+    Cue cue = Cue::KnifeSwing;
+    bool baseline = false;
+};
+
+class KnifeWatch
+{
+public:
+    // Values match EVSKnifeImpact (VSKnifeRules::ImpactResult).
+    static constexpr std::uint8_t Miss = 1;
+    static constexpr std::uint8_t Wall = 2;
+    static constexpr std::uint8_t Player = 3;
+
+    KnifeDecision Observe(std::uint32_t impacts, std::uint8_t result)
+    {
+        KnifeDecision decision;
+        if (!initialized || impacts < last)
+        {
+            // First sight or a fresh pawn adopts the count: no replayed swing.
+            initialized = true;
+            last = impacts;
+            decision.baseline = true;
+            return decision;
+        }
+        if (impacts == last) { return decision; }
+        last = impacts;
+        // Several impacts in one replication batch play the latest result once.
+        decision.play = result == Miss || result == Wall || result == Player;
+        decision.cue = result == Player ? Cue::KnifeFlesh : result == Wall ? Cue::KnifeWall : Cue::KnifeSwing;
+        return decision;
+    }
+
+private:
+    bool initialized = false;
+    std::uint32_t last = 0;
 };
 
 /** Objective cue decisions from the replicated match wire state. */
@@ -326,6 +369,26 @@ inline void Sweep(std::vector<float>& out, int rate, double seconds, double from
     }
 }
 
+/** Band-limited noise swelling and fading, for a blade cutting air. */
+inline void Whoosh(std::vector<float>& out, int rate, double seconds, std::uint32_t seed, double fromHz, double toHz, double gain)
+{
+    Noise noise(seed);
+    const int n = static_cast<int>(seconds * rate);
+    out.resize(static_cast<std::size_t>(n));
+    double low = 0.0;
+    double lower = 0.0;
+    for (int i = 0; i < n; ++i)
+    {
+        const double t = static_cast<double>(i) / rate;
+        const double cutoff = fromHz + (toHz - fromHz) * (t / seconds);
+        const double alpha = 1.0 - std::exp(-2.0 * Pi * cutoff / rate);
+        low += alpha * (noise.Next() - low);
+        lower += alpha * 0.25 * (low - lower);
+        const double env = std::sin(Pi * t / seconds);
+        out[static_cast<std::size_t>(i)] = static_cast<float>(Clamp1(gain * env * env * 2.0 * (low - lower)));
+    }
+}
+
 /** Fills `out` with the cue's mono samples at `rate` Hz. Unknown cues give silence. */
 inline void Generate(Cue cue, int variant, int rate, std::vector<float>& out)
 {
@@ -378,6 +441,16 @@ inline void Generate(Cue cue, int variant, int rate, std::vector<float>& out)
         Blips(out, rate, hz, 3, 0.12, 0.03, 0.6);
         break;
     }
+    case Cue::KnifeSwing:
+        Whoosh(out, rate, 0.18, seed, 900.0, 3200.0, 0.8);
+        break;
+    case Cue::KnifeWall:
+        // Bright metallic tick on a short scrape.
+        Burst(out, rate, 0.14, seed, 0.6, 0.012, 9000.0, 2600.0, 0.45, 0.04);
+        break;
+    case Cue::KnifeFlesh:
+        Burst(out, rate, 0.12, seed, 0.65, 0.02, 1200.0, 110.0, 0.6, 0.03);
+        break;
     case Cue::Count:
         break;
     }

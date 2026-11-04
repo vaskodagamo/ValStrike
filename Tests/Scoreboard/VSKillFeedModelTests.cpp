@@ -180,6 +180,13 @@ void LabelsAndHighlight()
     CHECK(std::strcmp(WeaponLabel(Weapon::Rifle), "RIFLE") == 0);
     CHECK(std::strcmp(WeaponLabel(Weapon::Pistol), "PISTOL") == 0);
     CHECK(std::strcmp(WeaponLabel(Weapon::Unknown), "") == 0);
+    CHECK(std::strcmp(WeaponLabel(Weapon::Knife), "KNIFE") == 0);
+    // Replicated bytes of the existing values are unchanged.
+    CHECK(static_cast<int>(Weapon::Rifle) == 0 && static_cast<int>(Weapon::Pistol) == 1 && static_cast<int>(Weapon::Unknown) == 2);
+    CHECK(WeaponFromDamageClass(Damage::WeaponClass::Rifle) == Weapon::Rifle);
+    CHECK(WeaponFromDamageClass(Damage::WeaponClass::Pistol) == Weapon::Pistol);
+    CHECK(WeaponFromDamageClass(Damage::WeaponClass::Knife) == Weapon::Knife);
+    CHECK(WeaponFromDamageClass(Damage::WeaponClass::Count) == Weapon::Unknown);
     CHECK(std::strcmp(KindLabel(Kind::Kill), "") == 0);
     CHECK(std::strcmp(KindLabel(Kind::TeamKill), "TEAMKILL") == 0);
     CHECK(std::strcmp(KindLabel(Kind::SelfKill), "SELF") == 0);

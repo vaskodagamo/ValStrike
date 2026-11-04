@@ -10,7 +10,7 @@
 namespace VSMovementRules
 {
 // What the player holds, for weapon weight. Every loadout slot maps to one.
-enum class WeaponKind : std::uint8_t { Unarmed, Pistol, Rifle };
+enum class WeaponKind : std::uint8_t { Unarmed, Pistol, Rifle, Knife };
 
 // CS2 reference values (Source units, u/s and u/s^2).
 namespace Cs2
@@ -43,6 +43,8 @@ constexpr double SpeedMultiplier(WeaponKind Kind)
     {
     case WeaponKind::Pistol: return Cs2::PistolSpeed / Cs2::UnarmedSpeed;
     case WeaponKind::Rifle: return Cs2::RifleSpeed / Cs2::UnarmedSpeed;
+    // CS2's unarmed reference speed is the knife: the unweighted base speed.
+    case WeaponKind::Knife:
     case WeaponKind::Unarmed: break;
     }
     return 1.0;

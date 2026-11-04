@@ -25,7 +25,8 @@ enum class HitZone : std::uint8_t
 };
 constexpr std::size_t ZoneCount = static_cast<std::size_t>(HitZone::Count);
 
-enum class WeaponClass : std::uint8_t { Rifle, Pistol, Count };
+// Append before Count only: values are replicated (hit feedback, kill feed).
+enum class WeaponClass : std::uint8_t { Rifle, Pistol, Knife, Count };
 constexpr std::size_t WeaponCount = static_cast<std::size_t>(WeaponClass::Count);
 
 // Health is 100 today. A lethal hit uses an amount far above any configured
@@ -63,6 +64,9 @@ struct HitRequest
     WeaponClass Weapon = WeaponClass::Rifle;
     HitZone Zone = HitZone::None;
     float DistanceCm = 0.0f; // Non-finite or negative values are treated as 0.
+    // Melee attack damage (the knife's slash or stab). Positive values replace
+    // the profile's BaseDamage after the same clamp; 0 uses the profile.
+    float AttackDamage = 0.0f;
 };
 
 enum class HitStatus : std::uint8_t { Applied, InvalidWeapon, InvalidZone };
@@ -87,6 +91,9 @@ float FalloffScale(const Falloff& Profile, float DistanceCm);
 const char* ZoneName(HitZone Zone);
 const char* WeaponName(WeaponClass Weapon);
 inline bool IsHeadshot(HitZone Zone) { return Zone == HitZone::Head; }
+// Head hit that counts as a headshot for markers, the kill feed and stats. The
+// knife deals flat damage on every zone and never reports one.
+inline bool IsHeadshotHit(WeaponClass Weapon, HitZone Zone) { return Weapon != WeaponClass::Knife && IsHeadshot(Zone); }
 inline bool IsValidZone(HitZone Zone) { return Zone > HitZone::None && Zone < HitZone::Count; }
 inline bool IsValidWeapon(WeaponClass Weapon) { return Weapon < WeaponClass::Count; }
 }

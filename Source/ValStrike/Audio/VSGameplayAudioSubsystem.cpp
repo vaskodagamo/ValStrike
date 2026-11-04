@@ -1,6 +1,7 @@
 #include "VSGameplayAudioSubsystem.h"
 
 #include "../Combat/VSHealthComponent.h"
+#include "../Combat/VSKnifeComponent.h"
 #include "../Combat/VSWeaponComponent.h"
 #include "../Combat/VSWeaponLoadoutComponent.h"
 #include "../Match/VSMatchGameState.h"
@@ -32,6 +33,7 @@ constexpr float MaxArtSeconds = 3.0f;   // Cap for art cues that report no finit
 constexpr float FootOffset = -88.0f;
 constexpr float OwnFootstepVolume = 0.35f;
 constexpr float FirstPersonShotVolume = 0.8f;
+constexpr float FirstPersonKnifeVolume = 0.7f;
 
 int32 PcmIndex(Cue Kind, int32 Variant)
 {
@@ -98,6 +100,7 @@ void UVSGameplayAudioSubsystem::Deinitialize()
     }
     Voices.Reset();
     ShotWatches.Reset();
+    KnifeWatches.Reset();
     PawnWatches.Reset();
     ArtSounds.Reset();
     PlaceholderPcm.Reset();
@@ -142,6 +145,9 @@ TSoftObjectPtr<USoundBase>& UVSGameplayAudioSubsystem::ArtSlot(VSGameplayAudio::
     case Cue::PlantStart: return PlantStartSound;
     case Cue::DefuseStart: return DefuseStartSound;
     case Cue::DeviceBeep: return DeviceBeepSound;
+    case Cue::KnifeSwing: return KnifeSwingSound;
+    case Cue::KnifeWall: return KnifeWallSound;
+    case Cue::KnifeFlesh: return KnifeFleshSound;
     case Cue::DefuseComplete:
     case Cue::Count: break;
     }
@@ -199,6 +205,7 @@ void UVSGameplayAudioSubsystem::ObservePawns(double Now, float DeltaTime)
         if (!IsValid(Pawn) || !Pawn->HasActorBegunPlay()) { continue; }
         const bool bFirstPerson = Pawn == ViewTarget && Pawn->IsLocallyControlled();
         ObserveShots(*Pawn, bFirstPerson, Now);
+        ObserveKnife(*Pawn, bFirstPerson);
 
         const UCharacterMovementComponent* Movement = Pawn->GetCharacterMovement();
         const UVSHealthComponent* Health = Pawn->GetHealthComponent();
@@ -221,6 +228,10 @@ void UVSGameplayAudioSubsystem::ObservePawns(double Now, float DeltaTime)
         }
     }
     for (auto It = ShotWatches.CreateIterator(); It; ++It)
+    {
+        if (!It.Key().IsValid()) { It.RemoveCurrent(); }
+    }
+    for (auto It = KnifeWatches.CreateIterator(); It; ++It)
     {
         if (!It.Key().IsValid()) { It.RemoveCurrent(); }
     }
@@ -247,6 +258,21 @@ void UVSGameplayAudioSubsystem::ObserveShots(const AVSCharacter& Pawn, bool bFir
         Play(Shot, 0, nullptr, Pawn.GetPawnViewLocation(), !bFirstPerson, ERange::Shot,
             bFirstPerson ? VSGameplayAudioDetail::FirstPersonShotVolume : 1.0f);
     }
+}
+
+void UVSGameplayAudioSubsystem::ObserveKnife(const AVSCharacter& Pawn, bool bFirstPerson)
+{
+    // Server-resolved impacts only: a miss swings, a wall or player has contact.
+    // Firearm cues never play for the knife (it has no shot counter).
+    const UVSKnifeComponent* Knife = Pawn.FindComponentByClass<UVSKnifeComponent>();
+    if (!Knife) { return; }
+    VSGameplayAudio::KnifeWatch& Watch = KnifeWatches.FindOrAdd(TWeakObjectPtr<const UActorComponent>(Knife));
+    const VSGameplayAudio::KnifeDecision Decision =
+        Watch.Observe(Knife->GetState().ImpactCount, static_cast<uint8>(Knife->GetState().LastImpact));
+    if (Decision.baseline) { ++Stats.Baselines; }
+    if (!Decision.play) { return; }
+    Play(Decision.cue, 0, nullptr, Pawn.GetPawnViewLocation(), !bFirstPerson, ERange::Footstep,
+        bFirstPerson ? VSGameplayAudioDetail::FirstPersonKnifeVolume : 1.0f);
 }
 
 void UVSGameplayAudioSubsystem::ObserveOwnLife()

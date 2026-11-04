@@ -45,6 +45,15 @@ DamageTable VSDamageModelBuildDefault()
     Pistol.ZoneMultiplier = VSDamageModelAnatomy();
     Pistol.HeadIsLethal = true;
     Pistol.DistanceFalloff = Falloff{false, 1500.0f, 3500.0f, 0.75f};
+
+    // Knife: flat damage on every zone, no lethal head, falloff or penetration.
+    // Each attack passes its own damage (VSKnifeRules); the base is the slash.
+    WeaponProfile& Knife = Table.Weapons[static_cast<std::size_t>(WeaponClass::Knife)];
+    Knife.BaseDamage = 40.0f;
+    Knife.ZoneMultiplier.fill(1.0f);
+    Knife.ZoneMultiplier[VSDamageModelZoneIndex(HitZone::None)] = 0.0f;
+    Knife.HeadIsLethal = false;
+    Knife.DistanceFalloff = Falloff{};
     return Table;
 }
 
@@ -121,7 +130,11 @@ HitResult Compute(const DamageTable& Table, const HitRequest& Request)
         Result.Status = HitStatus::InvalidZone;
         return Result;
     }
-    const WeaponProfile Profile = VSDamageModelSanitizeProfile(Table.Weapons[static_cast<std::size_t>(Request.Weapon)]);
+    WeaponProfile Profile = VSDamageModelSanitizeProfile(Table.Weapons[static_cast<std::size_t>(Request.Weapon)]);
+    if (std::isfinite(Request.AttackDamage) && Request.AttackDamage > 0.0f)
+    {
+        Profile.BaseDamage = VSDamageModelClamp(Request.AttackDamage, 0.0f, MaxBaseDamage, 0.0f);
+    }
     Result.Status = HitStatus::Applied;
     Result.Multiplier = Profile.ZoneMultiplier[VSDamageModelZoneIndex(Request.Zone)];
     if (Request.Zone == HitZone::Head && Profile.HeadIsLethal && Profile.BaseDamage > 0.0f)
@@ -162,6 +175,7 @@ const char* WeaponName(WeaponClass Weapon)
     {
     case WeaponClass::Rifle: return "Rifle";
     case WeaponClass::Pistol: return "Pistol";
+    case WeaponClass::Knife: return "Knife";
     default: return "Invalid";
     }
 }
