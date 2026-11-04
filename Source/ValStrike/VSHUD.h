@@ -27,6 +27,8 @@ private:
     void DrawWrappedLabel(const FString& Text, float X, float Y, float Height, float Width,
         const FLinearColor& Color, bool bCentered = false);
     void DrawMatchHUD(const FVSMatchHUDData& Data, const FVSRoundHUDPresentation& View, float Scale);
+    // Server-authoritative kill feed, top right under the menu hint.
+    void DrawKillFeed(float Scale);
     // Server-confirmed shooter marker around the reticle.
     void DrawHitMarker(const FVSHitFeedbackView& Feedback, float CenterX, float CenterY, float Scale);
     // Victim's directional arcs pointing at where the damage came from.
