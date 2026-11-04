@@ -20,6 +20,9 @@ MAPS = {"graybox": MAP, "site01": "/Game/Maps/Site01/VS_Site01"}
 MODES = {"practice": "/Script/ValStrike.VSGameMode",
          "match": "/Script/ValStrike.VSMatchGameMode"}
 GENERATOR_VERSION = 2
+# One-way outgoing (lag ms, lag variance ms, loss %) per process; give both server and client the same
+# profile, so added RTT is about twice the lag. Engine FPacketSimulationSettings, compiled out of Shipping.
+NET_PROFILES = {"lan": (0, 0, 0), "good": (20, 5, 0), "typical": (40, 10, 1), "poor": (90, 30, 3)}
 _playtest = None
 
 
@@ -148,11 +151,11 @@ def command(args, engine, root, host):
             raise SetupError("Match requires --map site01 and its authored spawn/site markers.")
         log = root / "Saved/Logs" / f"VS_Server_{args.port}.log"
         return argv + [selected_map(key) + "?game=" + MODES[mode], "-server", "-nullrhi", "-nosound", "-unattended",
-                       f"-port={args.port}", f"-abslog={log}"] + server_contract_switches(args)
+                       f"-port={args.port}", f"-abslog={log}"] + server_contract_switches(args) + net_emulation_switches(args)
     log = root / "Saved/Logs" / f"VS_Client_{os.getpid()}.log"
     # The only URL option the helper ever adds; the address itself stays a validated host:port.
     destination = args.address + (f"?JoinKey={args.join_key}" if args.join_key else "")
-    return argv + [destination, "-game", "-windowed", "-ResX=1280", "-ResY=720", f"-abslog={log}"]
+    return argv + [destination, "-game", "-windowed", "-ResX=1280", "-ResY=720", f"-abslog={log}"] + net_emulation_switches(args)
 
 
 def server_contract_switches(args):
@@ -171,6 +174,28 @@ def server_contract_switches(args):
         switches.append("-VSServerExitWhenDone")
         switches += [f"{switch}={value}" for value, switch in timers if value is not None]
     return switches
+
+
+def net_emulation_switches(args):
+    """Map --net-profile/--pkt-* to the engine's -PktLag/-PktLagVariance/-PktLoss command-line settings."""
+    explicit = (args.pkt_lag, args.pkt_lag_variance, args.pkt_loss)
+    if args.net_profile is None and all(value is None for value in explicit):
+        return []
+    base = NET_PROFILES[args.net_profile or "lan"]
+    lag, variance, loss = (base[index] if value is None else value for index, value in enumerate(explicit))
+    if variance > lag:
+        raise SetupError("--pkt-lag-variance cannot exceed --pkt-lag (the engine applies lag +/- variance, and no variance without lag).")
+    return [f"-PktLag={lag}", f"-PktLagVariance={variance}", f"-PktLoss={loss}"]
+
+
+def add_net_emulation(subparser):
+    group = subparser.add_argument_group("network emulation (development/editor builds only; compiled out of Shipping)")
+    group.add_argument("--net-profile", choices=tuple(NET_PROFILES),
+                       help="outgoing lag/variance/loss preset for this process; use the same profile on server and client")
+    group.add_argument("--pkt-lag", type=bounded(0, 1000, "packet lag"), help="0-1000 ms outgoing lag; overrides the profile")
+    group.add_argument("--pkt-lag-variance", type=bounded(0, 500, "packet lag variance"),
+                       help="0-500 ms, lag +/- this value; must not exceed --pkt-lag; overrides the profile")
+    group.add_argument("--pkt-loss", type=bounded(0, 100, "packet loss"), help="0-100 percent outgoing loss; overrides the profile")
 
 
 def probe(argv):
@@ -319,9 +344,11 @@ def parser():
                         help="seconds empty before exiting; default 60; requires --exit-when-done")
     server.add_argument("--result-grace", type=bounded(0, 3600, "result grace"),
                         help="seconds to allow a rematch after a completed match; default 15; requires --exit-when-done")
+    add_net_emulation(server)
     client = actions.add_parser("client", help="editor development client; NOT a packaged client")
     client.add_argument("--address", type=address, default="127.0.0.1:7777")
     client.add_argument("--join-key", type=join_key, help="key the server was started with")
+    add_net_emulation(client)
     return result
 
 

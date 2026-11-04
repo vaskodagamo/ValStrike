@@ -56,3 +56,42 @@ PR #19 was merged into main at 2026-11-03 23:01 (merge `f1e3779`) while these ru
 - Pending (queued behind the shared slot): native `ValStrike.UI` including `JoinKey`, the rendered `Tests/UI/test_join_key.py` run, and the UI session suite regression. Results will be appended here.
 
 **Known limitation (needs a central decision):** Unreal itself logs the travel URL with its options on the client (`LogNet: Browse:`, `LogLoad: LoadMap:`). The server logs the login options (`LogNet: Login request:`) and its command line (`-VSServerJoinKey=`). So keyed joins put the key into local log files even though ValStrike code never logs it. Keeping it off the client's lines needs a `ULocalPlayer` subclass that supplies `GetGameLoginOptions()`, registered through `LocalPlayerClassName` in `DefaultEngine.ini`. The server side is the Server stream's call. The rendered runner counts these engine-written occurrences per file and line kind, then redacts them, so test artifacts do not keep the key.
+
+## 2026-11-04 — GPT-06: persistent master volume
+
+**Branch/base:** `claude/gpt-06-volume-setting` from `90849f5`. Task brief `docs/tasks/gameplay/GPT-06-volume-setting.md` (lead: Claude gameplay lead). Validation tier V1.
+
+**Observable change:** the Settings page has a **MASTER VOLUME** row under mouse sensitivity, built like it: a slider (Left/Right step 5 %) and a numeric field, range label "0 – 100 % · default 100". The value is stored as `[ValStrike.UserSettings] MasterVolume=<percent>` next to `MouseSensitivity` in this machine's `GameUserSettings.ini` and saved through `UGameUserSettings::SaveSettings` when the page closes. Missing or malformed stored text falls back to 100; numbers clamp to 0–100 and snap to 5 %.
+
+**Engine API choice (UE 5.8.4 source):** `FAudioDevice::SetTransientPrimaryVolume` on the local world's audio device.
+
+- `AudioDevice.cpp` `FAudioDevice::Update`: `PrimaryVolume = GetTransientPrimaryVolume()`, then multiplied by `FApp::GetVolumeMultiplier()` (the unfocused-window multiplier stays intact).
+- `AudioMixerSource.cpp`: every non-preview source multiplies by `AudioDevice->GetPrimaryVolume()`. So it covers all gameplay audio without a shared `USoundClass`/`USoundMix`; the GPT-05 `Audio/` module needs no dependency on settings.
+- The setter marshals itself to the audio thread when called from the game thread.
+- `UnrealEngine.cpp` `UEngine::LoadMap` calls `SetTransientPrimaryVolume(1.0f)` during teardown, so the value is reapplied when each local player's menu is built for the new world (`SVSSessionMenu::MakeSettingsPage`). Seamless travel does not reset it. A dedicated server never builds the menu, and `ApplyMasterVolume` also refuses `NM_DedicatedServer`.
+- A code-created master sound class was rejected: it only affects sounds assigned to it (or a configured default class), which would couple settings to GPT-05's assets and `Config/`.
+
+**Changed paths:**
+
+- `Source/ValStrike/UI/VSUserSettings.h/.cpp`: volume constants, clamp/parse/format/gain, read/write/load/store, `ApplyMasterVolume`. The decimal grammar shared with sensitivity moved to a local `ParseDecimal`; sensitivity behaviour is unchanged.
+- `Source/ValStrike/UI/SVSSessionMenu.h/.cpp` (settings page only): the row, Tab order slider → field for sensitivity, then volume, then window mode → resolution → Apply → Back. Volume is applied on change and saved on page close. Vertical spacing was tightened (12→8 under help/slider rows, 10→8 under the mode selector and above the key hint) to keep the page inside 540 px.
+- `Source/ValStrike/UI/VSUserSettingsTests.cpp`: volume clamp, parse accept/reject, format round trip for every step, gain, stored fallback, write next to sensitivity, null-world apply.
+- `Source/ValStrike/UI/VSSettingsSmoke.cpp`, `Tests/UI/test_settings.py`: the first run checks the unset default, Tab to the volume slider, Left → 95 % applied and stored, Tab through the field to the window mode; the runner checks `MasterVolume=95` on disk; restart checks the loaded and displayed 95.
+- `Tests/UI/README.md` settings section.
+- Untouched: `VSPlayerController.*`, `Audio/`, `Config/`, `Build.cs` (`AudioDevice.h` is reachable through Engine's public include paths).
+
+**Checks actually run:**
+
+- `python3 -m unittest discover -s Tests/UI -p 'test_settings_runner.py' -v`: **6/6 OK** (includes uniqueness of the new required check names).
+- Cross-check that every required runner check name is emitted by the smoke source (look checks via `CheckLook`).
+- `git diff --check`: clean.
+
+**Deferred to integration (verification pending):** C++ compile (Editor, Mac Development, unity), native `ValStrike.UI.Settings`, rendered `Tests/UI/test_settings.py` (review the `settings` screenshot at 960×540 for fit: the extra row adds about 70 px and spacing was reduced by about 18 px; the estimate is not measured), `Tests/UI/test_session.py` for the session-page Tab order. Listening check: with GPT-05 audio present, 0 % is silent, 50 % audibly quieter, and the value survives a map change and a restart.
+
+**Risks:**
+
+- PIE with "Enable game sound" off: the editor mutes the PIE device with this same setter, and building the menu sets it back to the saved volume. Editor-only.
+- A `PlayerCameraManager` fade with `bFadeAudio` also drives this setter and would override the volume while fading. ValStrike does not use audio fades today.
+- Changing volume and then leaving the world without closing the Settings page (e.g. a disconnect while the page is open) keeps the value in memory but does not write it to disk until the next settings save. The controller's own save only tracks sensitivity, and that file is GPT-01's.
+
+**Next action/owner:** Claude gameplay lead reviews, INT-01 schedules the checks above in the next batch, and the user merges.

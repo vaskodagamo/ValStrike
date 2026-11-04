@@ -1,8 +1,10 @@
 #include "VSUserSettings.h"
 
+#include "AudioDevice.h"
 #include "CoreGlobals.h"
 #include "Engine/Engine.h"
 #include "Engine/GameViewportClient.h"
+#include "Engine/World.h"
 #include "Framework/Application/SlateApplication.h"
 #include "GameFramework/GameUserSettings.h"
 #include "Kismet/KismetSystemLibrary.h"
@@ -12,18 +14,13 @@
 
 const TCHAR* const VSUserSettings::ConfigSection = TEXT("ValStrike.UserSettings");
 const TCHAR* const VSUserSettings::MouseSensitivityKey = TEXT("MouseSensitivity");
+const TCHAR* const VSUserSettings::MasterVolumeKey = TEXT("MasterVolume");
 
-float VSUserSettings::ClampMouseSensitivity(float Value)
+namespace
 {
-    if (!FMath::IsFinite(Value))
-    {
-        return DefaultMouseSensitivity;
-    }
-    const float Clamped = FMath::Clamp(Value, MinMouseSensitivity, MaxMouseSensitivity);
-    return FMath::RoundToFloat(Clamped * 1000.0f) / 1000.0f;
-}
-
-bool VSUserSettings::ParseMouseSensitivity(const FString& Text, float& OutValue)
+// Plain decimal with optional surrounding spaces, a leading sign and one decimal
+// point or comma. No exponents, hex, words or trailing characters.
+bool ParseDecimal(const FString& Text, double& OutValue)
 {
     FString Number = Text.TrimStartAndEnd();
     Number.ReplaceCharInline(TEXT(','), TEXT('.'));
@@ -55,6 +52,28 @@ bool VSUserSettings::ParseMouseSensitivity(const FString& Text, float& OutValue)
     }
     const double Value = FCString::Atod(*Number);
     if (!FMath::IsFinite(Value))
+    {
+        return false;
+    }
+    OutValue = Value;
+    return true;
+}
+}
+
+float VSUserSettings::ClampMouseSensitivity(float Value)
+{
+    if (!FMath::IsFinite(Value))
+    {
+        return DefaultMouseSensitivity;
+    }
+    const float Clamped = FMath::Clamp(Value, MinMouseSensitivity, MaxMouseSensitivity);
+    return FMath::RoundToFloat(Clamped * 1000.0f) / 1000.0f;
+}
+
+bool VSUserSettings::ParseMouseSensitivity(const FString& Text, float& OutValue)
+{
+    double Value = 0.0;
+    if (!ParseDecimal(Text, Value))
     {
         return false;
     }
@@ -97,6 +116,90 @@ void VSUserSettings::StoreMouseSensitivity(float Value)
     {
         WriteMouseSensitivity(*File, Value);
     }
+}
+
+int32 VSUserSettings::ClampMasterVolume(double Percent)
+{
+    if (!FMath::IsFinite(Percent))
+    {
+        return DefaultMasterVolume;
+    }
+    const double Clamped = FMath::Clamp(Percent, double(MinMasterVolume), double(MaxMasterVolume));
+    return FMath::RoundToInt32(Clamped / MasterVolumeStep) * MasterVolumeStep;
+}
+
+bool VSUserSettings::ParseMasterVolume(const FString& Text, int32& OutPercent)
+{
+    FString Number = Text.TrimStartAndEnd();
+    Number.RemoveFromEnd(TEXT("%"));
+    double Value = 0.0;
+    if (!ParseDecimal(Number, Value))
+    {
+        return false;
+    }
+    OutPercent = ClampMasterVolume(Value);
+    return true;
+}
+
+FString VSUserSettings::FormatMasterVolume(int32 Percent)
+{
+    return FString::Printf(TEXT("%d"), ClampMasterVolume(Percent));
+}
+
+float VSUserSettings::MasterVolumeGain(int32 Percent)
+{
+    return ClampMasterVolume(Percent) / 100.0f;
+}
+
+int32 VSUserSettings::ReadMasterVolume(const FConfigFile& File)
+{
+    FString Stored;
+    int32 Percent = DefaultMasterVolume;
+    if (File.GetString(ConfigSection, MasterVolumeKey, Stored) && ParseMasterVolume(Stored, Percent))
+    {
+        return Percent;
+    }
+    return DefaultMasterVolume;
+}
+
+void VSUserSettings::WriteMasterVolume(FConfigFile& File, int32 Percent)
+{
+    File.SetString(ConfigSection, MasterVolumeKey, *FormatMasterVolume(Percent));
+}
+
+int32 VSUserSettings::LoadMasterVolume()
+{
+    const FConfigFile* File = GConfig ? GConfig->FindConfigFile(GGameUserSettingsIni) : nullptr;
+    return File ? ReadMasterVolume(*File) : DefaultMasterVolume;
+}
+
+void VSUserSettings::StoreMasterVolume(int32 Percent)
+{
+    FConfigFile* File = GConfig ? GConfig->FindConfigFile(GGameUserSettingsIni) : nullptr;
+    FString Stored;
+    if (File && (!File->GetString(ConfigSection, MasterVolumeKey, Stored) || Stored != FormatMasterVolume(Percent)))
+    {
+        WriteMasterVolume(*File, Percent);
+    }
+}
+
+bool VSUserSettings::ApplyMasterVolume(const UWorld* World, int32 Percent)
+{
+    if (!World || World->GetNetMode() == NM_DedicatedServer)
+    {
+        return false;
+    }
+    // The device's transient primary volume scales every active sound (the
+    // mixer multiplies each source by FAudioDevice::GetPrimaryVolume()), so no
+    // sound class or mix has to be shared with the gameplay audio code. The
+    // setter queues itself onto the audio thread when called from the game thread.
+    FAudioDevice* Device = World->GetAudioDeviceRaw();
+    if (!Device)
+    {
+        return false;
+    }
+    Device->SetTransientPrimaryVolume(MasterVolumeGain(Percent));
+    return true;
 }
 
 bool VSUserSettings::SaveUserSettings()

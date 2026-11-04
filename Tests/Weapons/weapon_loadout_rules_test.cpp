@@ -4,6 +4,8 @@
 #include "../../Source/ValStrike/Combat/VSWeaponLoadoutRules.h"
 
 #include <cstdio>
+#include <deque>
+#include <vector>
 
 namespace
 {
@@ -30,6 +32,98 @@ Request Base()
 }
 
 bool Is(const Result& Out, Verdict V, Slot S) { return Out.verdict == V && Out.target == S; }
+
+constexpr double Equip = 0.5;
+constexpr double Interval = 0.1;
+
+// Owning client and server joined by a fixed one-way delay, stepping 10 ms. The
+// server mirrors ServerRequestEquip/Equip/FinishEquip; snapshots replicate after
+// every server change.
+struct Network
+{
+    struct Message { double arrival; std::uint8_t raw; std::uint32_t sequence; };
+    struct Snapshot { double arrival; ServerView view; };
+    double delay = 0.06;
+    double now = 0.0;
+    bool combatAllowed = true;
+    Predictor client;
+    ServerView server;
+    double lastSwitch = -1.0e9;
+    double readyAt = 0.0;
+    std::deque<Message> toServer;
+    std::deque<Snapshot> toClient;
+    std::vector<Outcome> outcomes;
+    std::vector<Slot> viewHistory;
+    int viewChangesWithoutPress = 0;
+
+    void Press(std::uint8_t Raw)
+    {
+        client.Press(Raw, server, now, Equip);
+        Flush();
+    }
+
+    void Flush()
+    {
+        std::uint32_t Sequence = 0;
+        Slot Target = Slot::Rifle;
+        if (client.TakeSend(now, Interval, Sequence, Target))
+        {
+            toServer.push_back({now + delay, static_cast<std::uint8_t>(Target), Sequence});
+        }
+    }
+
+    void Publish() { toClient.push_back({now + delay, server}); }
+
+    void Serve(const Message& In)
+    {
+        Request R;
+        R.raw = In.raw;
+        R.combatAllowed = combatAllowed;
+        R.equipped = server.equipped;
+        R.previous = server.previous;
+        R.now = now;
+        R.lastSwitch = lastSwitch;
+        R.minInterval = Interval;
+        const Result Out = Evaluate(R);
+        if (In.sequence != 0) { server.ack = In.sequence; }
+        if (Out.verdict == Verdict::Accept)
+        {
+            server.previous = server.equipped;
+            server.equipped = Out.target;
+            server.equipping = true;
+            ++server.equipCount;
+            lastSwitch = now;
+            readyAt = now + Equip;
+        }
+        Publish();
+    }
+
+    void Run(double Seconds)
+    {
+        const double End = now + Seconds;
+        while (now < End - 1.0e-9)
+        {
+            now += 0.01;
+            Flush();
+            while (!toServer.empty() && toServer.front().arrival <= now + 1.0e-9) { Serve(toServer.front()); toServer.pop_front(); }
+            if (server.equipping && now >= readyAt) { server.equipping = false; Publish(); }
+            while (!toClient.empty() && toClient.front().arrival <= now + 1.0e-9)
+            {
+                const Slot Before = View();
+                outcomes.push_back(client.Reconcile(toClient.front().view, now));
+                toClient.pop_front();
+                if (View() != Before) { ++viewChangesWithoutPress; viewHistory.push_back(View()); }
+            }
+        }
+    }
+
+    Slot View() const { return client.active ? client.equipped : server.equipped; }
+    bool Has(Outcome O) const
+    {
+        for (const Outcome Each : outcomes) { if (Each == O) { return true; } }
+        return false;
+    }
+};
 }
 
 int main()
@@ -101,6 +195,129 @@ int main()
     Expect(!IsReady(true, 10.0, 10.5), "equipping weapon is not ready");
     Expect(IsReady(true, 10.5, 10.5), "ready exactly at equip completion");
     Expect(IsReady(true, 11.0, 10.5), "ready after equip completion");
+    {
+        Expect(IsSequenceNewer(2, 1) && !IsSequenceNewer(1, 2) && !IsSequenceNewer(5, 5), "sequence order");
+        Expect(IsSequenceNewer(1, 0xFFFFFFFFu) && !IsSequenceNewer(0xFFFFFFFFu, 1), "sequence order across wrap-around");
+        Predictor P;
+        P.sentSequence = 0xFFFFFFFFu;
+        ServerView S;
+        P.Press(RequestPistol, S, 0.0, Equip);
+        std::uint32_t Sequence = 7;
+        Slot Target = Slot::Rifle;
+        Expect(P.TakeSend(0.0, Interval, Sequence, Target) && Sequence == 1 && Target == Slot::Pistol, "wrapped sequence skips unsequenced 0");
+    }
+    {
+        // Local press: immediate slot and timer, explicit-slot request, local duplicate/invalid filtering.
+        Predictor P;
+        ServerView S;
+        Expect(!P.Press(RequestRifle, S, 1.0, Equip) && !P.active, "pressing the equipped slot predicts nothing");
+        Expect(!P.Press(9, S, 1.0, Equip) && !P.active, "invalid press predicts nothing");
+        Expect(P.Press(RequestLast, S, 1.0, Equip) && P.equipped == Slot::Pistol && P.previous == Slot::Rifle, "last predicts the previous slot at once");
+        Expect(P.IsEquipping(S, 1.49) && !P.IsEquipping(S, 1.5), "predicted equip timer starts at the press");
+        std::uint32_t Sequence = 0;
+        Slot Target = Slot::Rifle;
+        Expect(P.TakeSend(1.0, Interval, Sequence, Target) && Sequence == 1 && Target == Slot::Pistol, "last is sent as an explicit slot");
+        Expect(!P.TakeSend(1.0, Interval, Sequence, Target), "one request per press");
+        Expect(P.Press(RequestRifle, S, 1.05, Equip) && P.queued, "press inside the spacing window queues");
+        Expect(!P.TakeSend(1.14, Interval, Sequence, Target), "queued request waits for interval plus margin");
+        Expect(P.TakeSend(1.16, Interval, Sequence, Target) && Sequence == 2 && Target == Slot::Rifle, "queued request sends when the window opens");
+    }
+    {
+        // Reconciliation by ack sequence.
+        Predictor P;
+        ServerView S;
+        P.Press(RequestPistol, S, 0.0, Equip);
+        std::uint32_t Sequence = 0;
+        Slot Target = Slot::Rifle;
+        P.TakeSend(0.0, Interval, Sequence, Target);
+        Expect(P.Reconcile(S, 0.05) == Outcome::Keep && P.equipped == Slot::Pistol, "stale snapshot keeps the prediction");
+        ServerView Accepted{Slot::Pistol, Slot::Rifle, true, 1, 1};
+        Expect(P.Reconcile(Accepted, 0.12) == Outcome::Confirm && P.equipped == Slot::Pistol, "ack with agreement confirms");
+        Expect(P.IsEquipping(Accepted, 0.49) && !P.IsEquipping(Accepted, 0.5), "confirmed switch keeps the local timer, not the server flag");
+        Expect(P.Reconcile(Accepted, 0.55) == Outcome::Confirm, "local timer done but server still equipping holds");
+        ServerView Done = Accepted;
+        Done.equipping = false;
+        Expect(P.Reconcile(Done, 0.62) == Outcome::Settle && !P.active, "settles once both sides finished");
+        Expect(P.Reconcile(Done, 0.7) == Outcome::Mirror && P.equipped == Slot::Pistol, "mirrors the server afterwards");
+    }
+    {
+        Predictor P;
+        ServerView S;
+        P.Press(RequestPistol, S, 0.0, Equip);
+        std::uint32_t Sequence = 0;
+        Slot Target = Slot::Rifle;
+        P.TakeSend(0.0, Interval, Sequence, Target);
+        S.ack = 1; // Rejected: state unchanged, ack advanced.
+        Expect(P.Reconcile(S, 0.12) == Outcome::Snap && !P.active && P.equipped == Slot::Rifle, "rejected latest request snaps back");
+        Expect(!P.IsEquipping(S, 0.2), "snapped view uses the server equip flag");
+        Expect(P.Press(RequestPistol, S, 0.3, Equip) && P.queued, "can request again after a snap-back");
+    }
+    {
+        // Server-driven change after confirmation (not caused by this client's requests).
+        Predictor P;
+        ServerView S;
+        P.Press(RequestPistol, S, 0.0, Equip);
+        std::uint32_t Sequence = 0;
+        Slot Target = Slot::Rifle;
+        P.TakeSend(0.0, Interval, Sequence, Target);
+        ServerView Accepted{Slot::Pistol, Slot::Rifle, true, 1, 1};
+        P.Reconcile(Accepted, 0.12);
+        ServerView Other{Slot::Pistol, Slot::Rifle, true, 3, 1};
+        Expect(P.Reconcile(Other, 0.2) == Outcome::Snap && !P.active, "unacknowledged server switches replace a confirmed prediction");
+    }
+    {
+        // Dropping a queued request (combat gate closed) reconciles against the server.
+        Predictor P;
+        ServerView S;
+        P.Press(RequestPistol, S, 0.0, Equip);
+        P.DropQueued();
+        Expect(P.Reconcile(S, 0.0) == Outcome::Snap && P.equipped == Slot::Rifle, "dropped request snaps to the server");
+    }
+    {
+        // Accepted switch over a 120 ms round trip: no flicker, ready one RTT/2 before the server.
+        Network N;
+        N.Press(RequestPistol);
+        Expect(N.View() == Slot::Pistol && N.client.IsEquipping(N.server, N.now), "switch is visible on the press");
+        N.Run(1.0);
+        Expect(N.View() == Slot::Pistol && N.server.equipped == Slot::Pistol && N.viewChangesWithoutPress == 0, "accepted switch never flickers");
+        Expect(N.Has(Outcome::Confirm) && N.Has(Outcome::Settle) && !N.Has(Outcome::Snap), "accepted switch confirms then settles");
+    }
+    {
+        // Rapid 2/1/2 then 1 within one interval settle on the last press with matching server state.
+        Network N;
+        N.Press(RequestPistol);
+        N.Run(0.02);
+        N.Press(RequestRifle);
+        N.Run(0.02);
+        N.Press(RequestPistol);
+        N.Run(0.02);
+        N.Press(RequestRifle);
+        Expect(N.View() == Slot::Rifle, "view follows the newest press");
+        N.Run(1.5);
+        Expect(N.View() == Slot::Rifle && N.server.equipped == Slot::Rifle && !N.client.active, "rapid presses settle on the last request");
+        Expect(N.viewChangesWithoutPress == 0 && !N.Has(Outcome::Snap), "rapid accepted presses never snap");
+        Expect(N.server.equipCount == 2, "coalesced presses send only the needed switches");
+    }
+    {
+        // Pressing back to the in-flight target cancels the queued request.
+        Network N;
+        N.Press(RequestPistol);
+        N.Run(0.02);
+        N.Press(RequestRifle);
+        N.Press(RequestPistol);
+        N.Run(1.0);
+        Expect(N.View() == Slot::Pistol && N.server.equipCount == 1 && N.server.ack == 1, "press back to in-flight target sends nothing more");
+        Expect(N.viewChangesWithoutPress == 0, "cancelled request never flickers");
+    }
+    {
+        // Server rejects (combat gate closed on the server only): one snap, then agreement.
+        Network N;
+        N.combatAllowed = false;
+        N.Press(RequestPistol);
+        N.Run(1.0);
+        Expect(N.View() == Slot::Rifle && N.server.equipped == Slot::Rifle && !N.client.active, "server rejection snaps back to the rifle");
+        Expect(N.Has(Outcome::Snap) && N.viewChangesWithoutPress == 1, "rejection snaps exactly once");
+    }
     std::printf("%d/%d weapon loadout rule checks passed\n", Checks - Failures, Checks);
     return Failures == 0 ? 0 : 1;
 }

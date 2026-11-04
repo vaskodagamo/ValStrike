@@ -4,6 +4,7 @@
 #include "VSWeaponLoadoutComponent.h"
 #include "../VSCharacter.h"
 #include "Engine/World.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PlayerController.h"
 #include "../Damage/VSDamageSubsystem.h"
 #include "../Match/VSMatchGameMode.h"
@@ -18,7 +19,9 @@
 
 UVSWeaponComponent::UVSWeaponComponent()
 {
-    PrimaryComponentTick.bCanEverTick = false;
+    // Ticks only on the owning client while a view kick is recovering.
+    PrimaryComponentTick.bCanEverTick = true;
+    PrimaryComponentTick.bStartWithTickEnabled = false;
     SetIsReplicatedByDefault(true);
 }
 
@@ -103,7 +106,84 @@ void UVSWeaponComponent::SendShot()
     if (State.bReloading || State.Magazine <= 0 || !IsReadyLocally()) { return; }
     // Zero is reserved; sequence never resets during the pawn's lifetime.
     if (++NextLocalShotId == 0) { ++NextLocalShotId; }
-    ServerRequestFire(NextLocalShotId, Pawn->GetPawnViewLocation(), Pawn->GetBaseAimRotation().Vector());
+    const FVector Aim = Pawn->GetBaseAimRotation().Vector();
+    // Predict with the same rule the server applies; the request carries only the
+    // unmodified aim, never an offset.
+    const uint32 Index = VSRecoilRules::RegisterShot(LocalRecoil, RecoilTuning, GetWorld()->GetTimeSeconds());
+    LastPredictedShot = ResolveShot(NextLocalShotId, Index, Aim);
+    ServerRequestFire(NextLocalShotId, Pawn->GetPawnViewLocation(), Aim);
+    // Once per locally sent shot; replicated state never kicks the view again.
+    ApplyViewKick(NextLocalShotId);
+}
+
+VSRecoilRules::Stance UVSWeaponComponent::CurrentStance() const
+{
+    const AVSCharacter* Pawn = Character();
+    const UCharacterMovementComponent* Movement = Pawn ? Pawn->GetCharacterMovement() : nullptr;
+    if (!Movement) { return VSRecoilRules::Stance::Standing; }
+    return VSRecoilRules::ClassifyStance(Movement->IsFalling(), Pawn->bIsCrouched, Pawn->GetVelocity().Size2D(), RecoilTuning);
+}
+
+FVSShotSpread UVSWeaponComponent::ResolveShot(uint32 ShotId, uint32 Index, const FVector& Aim) const
+{
+    const VSRecoilRules::Stance ShooterStance = CurrentStance();
+    const uint32 Seed = VSRecoilRules::ShotSeed(ShotId, static_cast<uint32>(DamageClass));
+    const VSRecoilRules::Offset Deviation = VSRecoilRules::ShotOffset(RecoilTuning, Index, ShooterStance, Seed);
+    const FVector Forward = Aim.GetSafeNormal();
+    const FRotationMatrix Basis(Forward.Rotation());
+    FVSShotSpread Shot;
+    Shot.ShotId = ShotId;
+    Shot.Index = Index;
+    Shot.SpreadDegrees = static_cast<float>(VSRecoilRules::SpreadDegrees(RecoilTuning, Index, ShooterStance));
+    Shot.Direction = (Forward
+        + Basis.GetScaledAxis(EAxis::Y) * FMath::Tan(FMath::DegreesToRadians(Deviation.yaw))
+        + Basis.GetScaledAxis(EAxis::Z) * FMath::Tan(FMath::DegreesToRadians(Deviation.pitch))).GetSafeNormal();
+    return Shot;
+}
+
+void UVSWeaponComponent::ApplyViewKick(uint32 ShotId)
+{
+    AVSCharacter* Pawn = Character();
+    APlayerController* PC = Pawn ? Cast<APlayerController>(Pawn->GetController()) : nullptr;
+    if (!PC || !PC->IsLocalController()) { return; }
+    const VSRecoilRules::Offset Kick = VSRecoilRules::ViewKick(RecoilTuning,
+        VSRecoilRules::ShotSeed(ShotId, static_cast<uint32>(DamageClass)));
+    if (Kick.pitch == 0.0 && Kick.yaw == 0.0) { return; }
+    PC->SetControlRotation(PC->GetControlRotation() + FRotator(Kick.pitch, Kick.yaw, 0.0));
+    OutstandingViewKick.pitch += Kick.pitch;
+    OutstandingViewKick.yaw += Kick.yaw;
+    LastViewKickTime = GetWorld()->GetTimeSeconds();
+    SetComponentTickEnabled(true);
+}
+
+void UVSWeaponComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+    Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+    AVSCharacter* Pawn = Character();
+    APlayerController* PC = Pawn ? Cast<APlayerController>(Pawn->GetController()) : nullptr;
+    const VSRecoilRules::Offset Step = VSRecoilRules::RecoverView(OutstandingViewKick, RecoilTuning,
+        GetWorld()->GetTimeSeconds() - LastViewKickTime, DeltaTime);
+    // Remove only the kick still outstanding, so the player's own aim changes stay.
+    if (PC && PC->IsLocalController() && (Step.pitch != 0.0 || Step.yaw != 0.0))
+    {
+        PC->SetControlRotation(PC->GetControlRotation() - FRotator(Step.pitch, Step.yaw, 0.0));
+    }
+    OutstandingViewKick.pitch -= Step.pitch;
+    OutstandingViewKick.yaw -= Step.yaw;
+    if (!PC || !PC->IsLocalController() || (OutstandingViewKick.pitch == 0.0 && OutstandingViewKick.yaw == 0.0))
+    {
+        OutstandingViewKick = VSRecoilRules::Offset();
+        SetComponentTickEnabled(false);
+    }
+}
+
+float UVSWeaponComponent::GetCurrentSpreadDegrees() const
+{
+    const AVSCharacter* Pawn = Character();
+    const VSRecoilRules::State& Heat = Pawn && Pawn->IsLocallyControlled() ? LocalRecoil : ServerRecoil;
+    const double Now = GetWorld() ? GetWorld()->GetTimeSeconds() : 0.0;
+    return static_cast<float>(VSRecoilRules::SpreadDegrees(RecoilTuning,
+        VSRecoilRules::ShotIndexAt(Heat, RecoilTuning, Now), CurrentStance()));
 }
 
 void UVSWeaponComponent::Reject(FName Reason)
@@ -156,10 +236,14 @@ void UVSWeaponComponent::ServerRequestFire_Implementation(uint32 ShotId, FVector
     NextServerFireTime = FMath::Max(Now, NextServerFireTime) + FireInterval;
     --State.Magazine;
     ++State.ShotsFired;
+    // Recoil and spread come from server state, the shot id and the server's view of
+    // the pawn's stance; the validated aim is the only client input.
+    const uint32 Index = VSRecoilRules::RegisterShot(ServerRecoil, RecoilTuning, Now);
+    LastServerShot = ResolveShot(ShotId, Index, Direction);
     FHitResult Hit;
     FCollisionQueryParams Query(SCENE_QUERY_STAT(VSWeaponTrace), false, Pawn);
     if (GetWorld()->LineTraceSingleByChannel(Hit, ServerOrigin,
-        ServerOrigin + Direction.GetSafeNormal() * Range, ECC_Visibility, Query))
+        ServerOrigin + LastServerShot.Direction * Range, ECC_Visibility, Query))
     {
         AVSCharacter* Target = Cast<AVSCharacter>(Hit.GetActor());
         UVSDamageSubsystem* DamageService = UVSDamageSubsystem::Get(this);
@@ -278,6 +362,8 @@ bool UVSWeaponComponent::DevelopmentReset()
     State.Magazine = MagazineCapacity;
     State.Reserve = InitialReserve;
     NextServerFireTime = 0.0;
+    ServerRecoil = VSRecoilRules::State();
+    LastServerShot = FVSShotSpread();
     // Preserve request history: old packets must not become valid after reset.
     GetOwner()->ForceNetUpdate();
     return true;

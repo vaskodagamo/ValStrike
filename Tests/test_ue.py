@@ -148,6 +148,32 @@ class UnrealHelperTests(unittest.TestCase):
                 with self.subTest(action=action, value=value), redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
                     ue.parser().parse_args([action, "--join-key", value])
 
+    def test_net_emulation_is_opt_in_and_maps_to_engine_packet_settings(self):
+        self.make(self.root / "Content/Maps/VS_Graybox.umap")
+        for action in ("server", "client"):
+            with self.subTest(action=action):
+                plain = ue.command(ue.parser().parse_args([action]), self.engine, self.root, "Mac")
+                self.assertFalse([item for item in plain if item.startswith("-Pkt")])
+                poor = ue.command(ue.parser().parse_args([action, "--net-profile", "poor"]), self.engine, self.root, "Mac")
+                self.assertEqual(poor[:len(plain)], plain)
+                self.assertEqual(poor[len(plain):], ["-PktLag=90", "-PktLagVariance=30", "-PktLoss=3"])
+                mixed = ue.command(ue.parser().parse_args([action, "--net-profile", "typical", "--pkt-loss", "0"]),
+                                   self.engine, self.root, "Mac")
+                self.assertEqual(mixed[-3:], ["-PktLag=40", "-PktLagVariance=10", "-PktLoss=0"])
+                explicit = ue.command(ue.parser().parse_args([action, "--pkt-lag", "100"]), self.engine, self.root, "Mac")
+                self.assertEqual(explicit[-3:], ["-PktLag=100", "-PktLagVariance=0", "-PktLoss=0"])
+                with self.assertRaisesRegex(ue.SetupError, "cannot exceed --pkt-lag"):
+                    ue.command(ue.parser().parse_args([action, "--pkt-lag-variance", "5"]), self.engine, self.root, "Mac")
+
+    def test_net_emulation_rejects_out_of_range_values(self):
+        for option, value in (("--pkt-lag", "-1"), ("--pkt-lag", "1001"), ("--pkt-lag", "1.5"),
+                              ("--pkt-lag-variance", "-5"), ("--pkt-lag-variance", "501"),
+                              ("--pkt-loss", "-1"), ("--pkt-loss", "101"), ("--net-profile", "awful")):
+            for action in ("server", "client"):
+                with self.subTest(action=action, option=option, value=value), redirect_stderr(io.StringIO()), \
+                        self.assertRaises(SystemExit):
+                    ue.parser().parse_args([action, option, value])
+
     def test_server_contract_flags_reject_invalid_values(self):
         for option, value in (("--session-id", "-lead"), ("--session-id", "a?game=x"), ("--session-id", "a b"),
                               ("--session-id", "x" * 65), ("--max-players", "0"), ("--max-players", "5"),

@@ -177,7 +177,8 @@ void UVSWeaponPresentationComponent::TickComponent(float DeltaTime, ELevelTick T
         if (bReloading) { ReloadAge += DeltaTime; FlashRemaining = KickRemaining = 0; }
         else { ReloadAge = 0; }
         // Raise from a lowered pose over the equip time, timed from when this
-        // view first observed the replicated equip (includes replication delay).
+        // view first observed the equip: the key press on the predicting owner,
+        // the replicated switch (with its delay) for observers.
         if (IsEquippingThisSlot())
         {
             EquipAge = bWasVisible ? EquipAge + DeltaTime : 0.0f;
