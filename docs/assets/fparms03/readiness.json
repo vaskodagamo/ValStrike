@@ -1,0 +1,60 @@
+{
+  "task": "ART-22",
+  "date": "2026-11-04 Europe/Berlin",
+  "reviewer": "ART-22 source owner (Codex)",
+  "source_sha256": "81824bad1b4f2c348efa3a91c1ece960c112c54559d0edd2b0babe0b7855cc61",
+  "state": "Implementation ready for art review; deformation/contact held; native verification pending",
+  "preservation": {
+    "status": "pass",
+    "evidence": "preservation-comparison.json",
+    "visual": "Matched original/source/reimported FBX whole and wrist/glove views inspected. Silhouette, cuff/skin transition, glove detail and specular response retained. Original PBR explicitly rebound for FBX comparison; native material recreation is not proven.",
+    "changes": [
+      "Uniform centimeter scale and axis conversion",
+      "Left mirror with reversed winding and matching UV/custom normals",
+      "39-bone rig and skin weights; distinct bounded pose actions"
+    ],
+    "reduction": false,
+    "smoothing": false,
+    "recolor": false
+  },
+  "rig_export": {
+    "status": "pass",
+    "evidence": "export-inspection.json",
+    "bones": 39,
+    "actions": 6,
+    "max_influences": 4,
+    "compatibility": "ART-19 names/parents retained; new rest landmarks/rolls require native skeleton/retarget validation."
+  },
+  "deformation": {
+    "status": "held",
+    "evidence": [
+      "Previews/03_pair_grip.png",
+      "Previews/04_right_grip_close.png",
+      "Previews/05_right_grip_palm.png",
+      "Previews/06_wrist_twist.png",
+      "export-inspection.json"
+    ],
+    "findings": "Open/curl/wrist views have coherent silhouettes and no obvious long web spike. Dense MCP/finger/web regions nevertheless show local compression/stretch: hold p99 edge ratios roughly 2.2\u20132.4 and isolated larger outliers. Strong knife thumb opposition folds the web/glove surface. This is a source rig study, not an accepted animation deformation solution."
+  },
+  "weapon_fit": {
+    "status": "held",
+    "R02": "Corrected #89 frozen at 67f985be0099ac870ed2b0c6ed87443a07380406; dominant trigger/guard and support contact require refinement. No old #76 source used.",
+    "P02": "Corrected #81; reverse contact view shows support fingers and thumb intersecting the grip. Trigger finger is extended outside the trigger; firing pose not accepted.",
+    "K01": "Preserved #85; dominant fingers curl around handle, off hand is separate at +Y and does not intentionally grip the blade. Thumb/web fold and exact grip/guard contacts remain held; no swept-clearance claim.",
+    "camera": "90-degree horizontal FOV source studies only. Knife composition crops much of the hands at the lower edge; native framing still pending.",
+    "evidence": "Previews/08_*_hold_90fov.png, 09_*_contact.png, 10_*_reverse_contact.png; weapon-fit.json"
+  },
+  "runtime": {
+    "status": "pending",
+    "triangles_pair": 780956,
+    "checks_deferred": [
+      "Native import/materials/skeleton",
+      "Production deformation and weapon-contact approval",
+      "Socket/camera/animation transitions",
+      "LOD and measured performance",
+      "Central runtime/network acceptance"
+    ],
+    "unreal_operations": 0
+  },
+  "next_owner": "Producer/art lead reviews held source findings and scopes deformation/contact follow-up before a native integration batch. User merges."
+}

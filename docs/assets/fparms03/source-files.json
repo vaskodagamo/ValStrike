@@ -1,0 +1,167 @@
+[
+  {
+    "path": "Art/Source/Characters/FPArms03/Exports/A_FPArms03_Grip.fbx",
+    "bytes": 346124,
+    "sha256": "5a6bd70a8362bc7b03612d49a4df26f67efecdc3e6001910f9c8bdf576fdc262"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/Exports/A_FPArms03_KnifeHold.fbx",
+    "bytes": 346124,
+    "sha256": "b937f464ae868fa6dab7bd2e62eade732e6193dfe899f31908eaf97cb87c05a9"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/Exports/A_FPArms03_Open.fbx",
+    "bytes": 346124,
+    "sha256": "ae9e8f101aef4098b7524642906e9f1ef3958dd63b7541a43d1968f31c624cea"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/Exports/A_FPArms03_PistolHold.fbx",
+    "bytes": 346124,
+    "sha256": "297e99316ac32a29ce931732da523718375412b7abcd5ba56ab5de3adffbb12b"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/Exports/A_FPArms03_RifleHold.fbx",
+    "bytes": 346124,
+    "sha256": "e709841dce365394c473b5c046a6462963cded04b6163c20aed66e3db6db6a03"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/Exports/A_FPArms03_Wrist.fbx",
+    "bytes": 346124,
+    "sha256": "974998891bfff594400eb4343ee9db8d916d1af2dcd6f90d0fd51412b7d7146b"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/Exports/SK_FPArms03.fbx",
+    "bytes": 32239100,
+    "sha256": "11f78ce5bd7023475ef0c512c4bcd5724c0cee76297de6525b2ac950a4cfbaf0"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/FPArms03.blend",
+    "bytes": 76855650,
+    "sha256": "81824bad1b4f2c348efa3a91c1ece960c112c54559d0edd2b0babe0b7855cc61"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/Original/MeshyDraft.blend",
+    "bytes": 35155010,
+    "sha256": "ac6b8e4b1f6dd7934243ef021ccf6abdfafe1efef3213254380798ad6048e1e7"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/Original/model.fbx",
+    "bytes": 53522876,
+    "sha256": "acb70e2ffd321ba80288f98c4fb7c7e88a78be13fcc94afd5d311c36973a03d7"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/Original/model.glb",
+    "bytes": 28637516,
+    "sha256": "d3fc0adef729b301a10e15d9957dac67f5e6ded58e9153b852b4d60502731621"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/Original/texture_0_base_color.png",
+    "bytes": 21873609,
+    "sha256": "e7ebeb8f5a736689f60263933362ab1c99fce8c037d8d6113901c007d4d4d76f"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/Original/texture_0_metallic.png",
+    "bytes": 20703,
+    "sha256": "a687d9ba7540d700a457f0291ea5aa369685a14c3ce4435a1c3652bb4be81d83"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/Original/texture_0_normal.png",
+    "bytes": 16454468,
+    "sha256": "88b39e3ab4818b29a6fc40e448e0f7b8f398c058066ccd5b4fece51f1d6ae7af"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/Original/texture_0_roughness.png",
+    "bytes": 967659,
+    "sha256": "d8a37296b0ba3a0c9ab1731ce06d43f3dd1d1936deba3a2264a76512b6d42f4c"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/Original/thumbnail.png",
+    "bytes": 57014,
+    "sha256": "893b57e0367f5f1ca6201480999076abdd6584c4fab5d9a4d1187db8c91a841c"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/README.md",
+    "bytes": 4981,
+    "sha256": "8d2ae7f2cb038839dc30e938c6bd232138a92e1a7b177adb56ea2e509a09253e"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/Reference/RightHand_BareForearm.png",
+    "bytes": 1527243,
+    "sha256": "9665280e0da1723ece40ece2a1c69db9b85f7c7e4e0e2d52a31bfbf519255ab3"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/Reference/generation.json",
+    "bytes": 2226,
+    "sha256": "fdc82ca21caac064de76ac19bc1afae98a892da976f646f483138af025b6cd0e"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/Textures/Embedded/Image_0.jpg",
+    "bytes": 9541389,
+    "sha256": "f6774c27f3375588737cfcd8d085f8fc2e322ff84d8649ac37519dc8fce8d4b0"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/Textures/Embedded/Image_1.jpg",
+    "bytes": 967267,
+    "sha256": "ff2771299ca9b9389a2c03c384e7ad565d07128b1c22549e37ec353febec2c42"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/Textures/Embedded/Image_2.jpg",
+    "bytes": 6742231,
+    "sha256": "2e69c91edae20dd8e326b4866dffb0e48b3c8fb45e984bfb7b96e3dfbf54ce17"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/Textures/T_FPArms03_base_color.png",
+    "bytes": 21873609,
+    "sha256": "e7ebeb8f5a736689f60263933362ab1c99fce8c037d8d6113901c007d4d4d76f"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/Textures/T_FPArms03_metallic.png",
+    "bytes": 20703,
+    "sha256": "a687d9ba7540d700a457f0291ea5aa369685a14c3ce4435a1c3652bb4be81d83"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/Textures/T_FPArms03_normal.png",
+    "bytes": 16454468,
+    "sha256": "88b39e3ab4818b29a6fc40e448e0f7b8f398c058066ccd5b4fece51f1d6ae7af"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/Textures/T_FPArms03_roughness.png",
+    "bytes": 967659,
+    "sha256": "d8a37296b0ba3a0c9ab1731ce06d43f3dd1d1936deba3a2264a76512b6d42f4c"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/compare_preservation.py",
+    "bytes": 5283,
+    "sha256": "0f7cb3d43ba3ec8f3085cfda388c30946537d1623577af7529889d5607046c87"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/export_and_inspect.py",
+    "bytes": 7347,
+    "sha256": "0f3f9fb572542f04030e5ad66e390bec5b2746657aab2deaedadfd492ea22de6"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/fit_weapons.py",
+    "bytes": 8108,
+    "sha256": "94096c9aaa15aae79c3bdeca9136d473e860b58362a466f71154c08ba690bdfd"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/inspect_draft.py",
+    "bytes": 1814,
+    "sha256": "27174795e07e203cadf153effcc62455b6c7097beee63a501c7131a688536f2e"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/inspect_reuse.py",
+    "bytes": 2763,
+    "sha256": "2caac3f9db8ccaeeaec0c95a3481effc49090f110254a14802ce94bd6f2164bf"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/prepare_source.py",
+    "bytes": 12871,
+    "sha256": "d01679147a8f457f1916694ad59a92eb5da16eed79d222c582674bb8411a1684"
+  },
+  {
+    "path": "Art/Source/Characters/FPArms03/preview_source.py",
+    "bytes": 2340,
+    "sha256": "ce5a5fd78ad8738e8b51f1191a73d320079b49886cf3cf5ecbf6908f7ff134c7"
+  }
+]
