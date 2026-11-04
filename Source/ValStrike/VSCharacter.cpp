@@ -238,13 +238,18 @@ void AVSCharacter::BeginPlay()
     if (GetNetMode() != NM_DedicatedServer)
     {
         // Native pilot body when its assets exist; otherwise the prototype stays.
-        // The remote rifle then sits in the fitted right hand. The pistol keeps
-        // its existing world offset (no fitted pistol pose for this pilot).
+        // The remote rifle sits in the fitted right hand; the pistol too, but only
+        // together with its own pistol pose (otherwise its old world offset stays).
         UPrimitiveComponent* const Prototype[] = {BodyVisual, HeadVisual};
         if (CharacterPresentation->Initialize(GetMesh(), Prototype))
         {
             RiflePresentation->SetWorldAttachment(UVSCharacterPresentationComponent::RifleGripBone,
                 UVSCharacterPresentationComponent::RifleGripOffset);
+            if (CharacterPresentation->HasPistolPose())
+            {
+                PistolPresentation->SetWorldAttachment(UVSCharacterPresentationComponent::RifleGripBone,
+                    UVSCharacterPresentationComponent::PistolGripOffset);
+            }
         }
         if (!RiflePresentation->Initialize(this, FirstPersonCamera, GetMesh()))
         {

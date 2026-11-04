@@ -2,6 +2,7 @@
 
 #include "../VSCharacter.h"
 #include "../Combat/VSHealthComponent.h"
+#include "../Combat/VSWeaponLoadoutComponent.h"
 #include "Animation/AnimSequence.h"
 #include "Components/PrimitiveComponent.h"
 #include "Components/SkeletalMeshComponent.h"
@@ -11,6 +12,10 @@ const FName UVSCharacterPresentationComponent::RifleGripBone(TEXT("hand_r"));
 // grip_derivation in docs/assets/meshy-pilot-integration/character-import-report.json.
 const FTransform UVSCharacterPresentationComponent::RifleGripOffset(
     FQuat(-0.814922, 0.579475, 0.00887, 0.00564).GetNormalized(), FVector(4.1008, -13.5549, -6.1893));
+
+// p01_grip_derivation in docs/assets/meshy-site01-followups/pistol-import-report.json.
+const FTransform UVSCharacterPresentationComponent::PistolGripOffset(
+    FQuat(-0.70704, 0.707095, 0.009685, 0.004084).GetNormalized(), FVector(4.2582, -12.9002, -5.2861));
 
 namespace
 {
@@ -25,6 +30,7 @@ UVSCharacterPresentationComponent::UVSCharacterPresentationComponent()
     MeshAsset = TSoftObjectPtr<USkeletalMesh>(FSoftObjectPath(FString::Printf(TEXT("%s/SK_VS_UrbanEntry01.SK_VS_UrbanEntry01"), CharacterRoot)));
     HoldAsset = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(FString::Printf(TEXT("%s/Animations/A_UE01_Pilot_RifleHold.A_UE01_Pilot_RifleHold"), CharacterRoot)));
     WalkAsset = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(FString::Printf(TEXT("%s/Animations/A_UE01_Pilot_Walk_RifleHold.A_UE01_Pilot_Walk_RifleHold"), CharacterRoot)));
+    PistolHoldAsset = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(FString::Printf(TEXT("%s/Animations/A_UE01_Pilot_PistolHold.A_UE01_Pilot_PistolHold"), CharacterRoot)));
 }
 
 bool UVSCharacterPresentationComponent::Initialize(USkeletalMeshComponent* InBody, TArrayView<UPrimitiveComponent* const> PrototypeVisuals)
@@ -35,6 +41,7 @@ bool UVSCharacterPresentationComponent::Initialize(USkeletalMeshComponent* InBod
     USkeletalMesh* Mesh = MeshAsset.LoadSynchronous();
     Hold = HoldAsset.LoadSynchronous();
     Walk = WalkAsset.LoadSynchronous();
+    PistolHold = PistolHoldAsset.LoadSynchronous();
     // The hold is the minimum usable pose; without it keep the prototype rather
     // than showing an unanimated bind pose.
     if (!Mesh || !Hold) { return false; }
@@ -51,23 +58,23 @@ bool UVSCharacterPresentationComponent::Initialize(USkeletalMeshComponent* InBod
         if (Visual) { Visual->SetVisibility(false); }
     }
     bActive = true;
-    bWalkPlaying = false;
     bShown = true;
-    InBody->PlayAnimation(Hold, true);
+    Current = nullptr;
+    PlayClip(Hold, 1.0f);
     SetComponentTickEnabled(true);
     return true;
 }
 
-void UVSCharacterPresentationComponent::PlayLocomotion(bool bMoving, float PlayRate)
+void UVSCharacterPresentationComponent::PlayClip(UAnimSequence* Clip, float PlayRate)
 {
     USkeletalMeshComponent* Mesh = Body.Get();
-    if (!Mesh) { return; }
-    if (bMoving != bWalkPlaying && (!bMoving || Walk))
+    if (!Mesh || !Clip) { return; }
+    if (Clip != Current)
     {
-        Mesh->PlayAnimation(bMoving ? Walk.Get() : Hold.Get(), true);
-        bWalkPlaying = bMoving;
+        Mesh->PlayAnimation(Clip, true);
+        Current = Clip;
     }
-    Mesh->SetPlayRate(bWalkPlaying ? PlayRate : 1.0f);
+    Mesh->SetPlayRate(PlayRate);
 }
 
 void UVSCharacterPresentationComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* TickFunction)
@@ -85,8 +92,15 @@ void UVSCharacterPresentationComponent::TickComponent(float DeltaTime, ELevelTic
     }
     if (!bAlive) { return; }
 
+    // Same slot source as the weapon views, so pose and visible weapon agree.
+    if (PistolHold && Pawn->GetEquippedWeaponSlot() == EVSWeaponSlot::Pistol)
+    {
+        PlayClip(PistolHold, 1.0f);
+        return;
+    }
     // Simulated proxies receive this velocity through CharacterMovement replication.
     const float Speed = Pawn->GetVelocity().Size2D();
+    const bool bMoving = Speed > 20.0f && Walk;
     const float PlayRate = Speed > WalkClipSpeed ? FMath::Min(Speed / WalkClipSpeed, MaxWalkPlayRate) : 1.0f;
-    PlayLocomotion(Speed > 20.0f, PlayRate);
+    PlayClip(bMoving ? Walk.Get() : Hold.Get(), bMoving ? PlayRate : 1.0f);
 }
