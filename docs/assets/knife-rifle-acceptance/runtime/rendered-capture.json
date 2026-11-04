@@ -1,0 +1,3624 @@
+{
+ "purpose": "Rendered evidence capture only; pass/fail is the official null-RHI runner",
+ "runner": "weapons",
+ "commands": {
+  "server": [
+   "/Users/webproduktion3/UE_5.8/UE_5.8/Engine/Binaries/Mac/UnrealEditor.app/Contents/MacOS/UnrealEditor",
+   "/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/int-art-01-meshy-playtest/ValStrike.uproject",
+   "/Game/Maps/VS_Graybox",
+   "-server",
+   "-nosound",
+   "-unattended",
+   "-VSWeaponSmoke=server",
+   "-VSWeaponSmokeStart=30",
+   "-VSWeaponScenario=practice",
+   "-VSWeaponOutput=/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/int-art-01-meshy-playtest/Saved/IntArt05/rendered_weapons/20261104T200145/server.json",
+   "-abslog=/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/int-art-01-meshy-playtest/Saved/IntArt05/rendered_weapons/20261104T200145/server.log",
+   "-ExecCmds=t.MaxFPS 60",
+   "-nullrhi",
+   "-port=7894",
+   "-multihome=127.0.0.1"
+  ],
+  "observer": [
+   "/Users/webproduktion3/UE_5.8/UE_5.8/Engine/Binaries/Mac/UnrealEditor.app/Contents/MacOS/UnrealEditor",
+   "/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/int-art-01-meshy-playtest/ValStrike.uproject",
+   "127.0.0.1:7894?Name=VSWeaponObserver",
+   "-game",
+   "-unattended",
+   "-VSWeaponSmoke=observer",
+   "-VSWeaponSmokeStart=30",
+   "-VSWeaponScenario=practice",
+   "-VSWeaponOutput=/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/int-art-01-meshy-playtest/Saved/IntArt05/rendered_weapons/20261104T200145/observer.json",
+   "-abslog=/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/int-art-01-meshy-playtest/Saved/IntArt05/rendered_weapons/20261104T200145/observer.log",
+   "-ExecCmds=t.MaxFPS 60",
+   "-windowed",
+   "-ResX=1000",
+   "-ResY=700"
+  ],
+  "driver": [
+   "/Users/webproduktion3/UE_5.8/UE_5.8/Engine/Binaries/Mac/UnrealEditor.app/Contents/MacOS/UnrealEditor",
+   "/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/int-art-01-meshy-playtest/ValStrike.uproject",
+   "127.0.0.1:7894?Name=VSWeaponDriver",
+   "-game",
+   "-unattended",
+   "-VSWeaponSmoke=driver",
+   "-VSWeaponSmokeStart=30",
+   "-VSWeaponScenario=practice",
+   "-VSWeaponOutput=/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/int-art-01-meshy-playtest/Saved/IntArt05/rendered_weapons/20261104T200145/driver.json",
+   "-abslog=/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/int-art-01-meshy-playtest/Saved/IntArt05/rendered_weapons/20261104T200145/driver.log",
+   "-ExecCmds=t.MaxFPS 60",
+   "-windowed",
+   "-ResX=1000",
+   "-ResY=700"
+  ]
+ },
+ "frames": [
+  {
+   "role": "driver",
+   "file": "driver_0000.jpg",
+   "wall_time": 1793818914.993,
+   "window": 27535
+  },
+  {
+   "role": "observer",
+   "file": "observer_0000.jpg",
+   "wall_time": 1793818915.002,
+   "window": 27536
+  },
+  {
+   "role": "driver",
+   "file": "driver_0001.jpg",
+   "wall_time": 1793818915.133,
+   "window": 27535
+  },
+  {
+   "role": "observer",
+   "file": "observer_0001.jpg",
+   "wall_time": 1793818915.147,
+   "window": 27536
+  },
+  {
+   "role": "driver",
+   "file": "driver_0002.jpg",
+   "wall_time": 1793818915.286,
+   "window": 27535
+  },
+  {
+   "role": "observer",
+   "file": "observer_0002.jpg",
+   "wall_time": 1793818915.326,
+   "window": 27536
+  },
+  {
+   "role": "driver",
+   "file": "driver_0003.jpg",
+   "wall_time": 1793818915.414,
+   "window": 27535
+  },
+  {
+   "role": "observer",
+   "file": "observer_0003.jpg",
+   "wall_time": 1793818915.655,
+   "window": 27536
+  },
+  {
+   "role": "driver",
+   "file": "driver_0004.jpg",
+   "wall_time": 1793818915.669,
+   "window": 27535
+  },
+  {
+   "role": "observer",
+   "file": "observer_0004.jpg",
+   "wall_time": 1793818915.838,
+   "window": 27536
+  },
+  {
+   "role": "driver",
+   "file": "driver_0005.jpg",
+   "wall_time": 1793818915.849,
+   "window": 27535
+  },
+  {
+   "role": "observer",
+   "file": "observer_0005.jpg",
+   "wall_time": 1793818915.992,
+   "window": 27536
+  },
+  {
+   "role": "driver",
+   "file": "driver_0006.jpg",
+   "wall_time": 1793818916.007,
+   "window": 27535
+  },
+  {
+   "role": "observer",
+   "file": "observer_0006.jpg",
+   "wall_time": 1793818916.254,
+   "window": 27536
+  },
+  {
+   "role": "driver",
+   "file": "driver_0007.jpg",
+   "wall_time": 1793818916.28,
+   "window": 27535
+  },
+  {
+   "role": "observer",
+   "file": "observer_0007.jpg",
+   "wall_time": 1793818916.471,
+   "window": 27536
+  },
+  {
+   "role": "driver",
+   "file": "driver_0008.jpg",
+   "wall_time": 1793818916.501,
+   "window": 27535
+  },
+  {
+   "role": "observer",
+   "file": "observer_0008.jpg",
+   "wall_time": 1793818916.629,
+   "window": 27536
+  },
+  {
+   "role": "driver",
+   "file": "driver_0009.jpg",
+   "wall_time": 1793818916.659,
+   "window": 27535
+  },
+  {
+   "role": "observer",
+   "file": "observer_0009.jpg",
+   "wall_time": 1793818916.939,
+   "window": 27536
+  },
+  {
+   "role": "driver",
+   "file": "driver_0010.jpg",
+   "wall_time": 1793818916.94,
+   "window": 27535
+  },
+  {
+   "role": "observer",
+   "file": "observer_0010.jpg",
+   "wall_time": 1793818917.09,
+   "window": 27536
+  },
+  {
+   "role": "driver",
+   "file": "driver_0011.jpg",
+   "wall_time": 1793818917.111,
+   "window": 27535
+  },
+  {
+   "role": "observer",
+   "file": "observer_0011.jpg",
+   "wall_time": 1793818917.25,
+   "window": 27536
+  },
+  {
+   "role": "driver",
+   "file": "driver_0012.jpg",
+   "wall_time": 1793818917.28,
+   "window": 27535
+  },
+  {
+   "role": "observer",
+   "file": "observer_0012.jpg",
+   "wall_time": 1793818917.561,
+   "window": 27536
+  },
+  {
+   "role": "driver",
+   "file": "driver_0013.jpg",
+   "wall_time": 1793818917.563,
+   "window": 27535
+  },
+  {
+   "role": "observer",
+   "file": "observer_0013.jpg",
+   "wall_time": 1793818917.728,
+   "window": 27536
+  },
+  {
+   "role": "driver",
+   "file": "driver_0014.jpg",
+   "wall_time": 1793818917.731,
+   "window": 27535
+  },
+  {
+   "role": "driver",
+   "file": "driver_0015.jpg",
+   "wall_time": 1793818917.915,
+   "window": 27535
+  },
+  {
+   "role": "observer",
+   "file": "observer_0014.jpg",
+   "wall_time": 1793818917.912,
+   "window": 27536
+  },
+  {
+   "role": "driver",
+   "file": "driver_0016.jpg",
+   "wall_time": 1793818918.132,
+   "window": 27535
+  },
+  {
+   "role": "observer",
+   "file": "observer_0015.jpg",
+   "wall_time": 1793818918.142,
+   "window": 27536
+  },
+  {
+   "role": "driver",
+   "file": "driver_0017.jpg",
+   "wall_time": 1793818918.449,
+   "window": 27535
+  },
+  {
+   "role": "observer",
+   "file": "observer_0016.jpg",
+   "wall_time": 1793818918.456,
+   "window": 27536
+  },
+  {
+   "role": "driver",
+   "file": "driver_0018.jpg",
+   "wall_time": 1793818918.613,
+   "window": 27535
+  },
+  {
+   "role": "observer",
+   "file": "observer_0017.jpg",
+   "wall_time": 1793818918.63,
+   "window": 27536
+  },
+  {
+   "role": "driver",
+   "file": "driver_0019.jpg",
+   "wall_time": 1793818918.77,
+   "window": 27535
+  },
+  {
+   "role": "observer",
+   "file": "observer_0018.jpg",
+   "wall_time": 1793818918.822,
+   "window": 27536
+  },
+  {
+   "role": "driver",
+   "file": "driver_0020.jpg",
+   "wall_time": 1793818918.964,
+   "window": 27535
+  },
+  {
+   "role": "observer",
+   "file": "observer_0019.jpg",
+   "wall_time": 1793818919.015,
+   "window": 27536
+  },
+  {
+   "role": "driver",
+   "file": "driver_0021.jpg",
+   "wall_time": 1793818919.237,
+   "window": 27535
+  },
+  {
+   "role": "driver",
+   "file": "driver_0022.jpg",
+   "wall_time": 1793818919.458,
+   "window": 27535
+  },
+  {
+   "role": "driver",
+   "file": "driver_0023.jpg",
+   "wall_time": 1793818919.623,
+   "window": 27535
+  },
+  {
+   "role": "driver",
+   "file": "driver_0024.jpg",
+   "wall_time": 1793818919.853,
+   "window": 27535
+  },
+  {
+   "role": "observer",
+   "file": "observer_0020.jpg",
+   "wall_time": 1793818920.133,
+   "window": 27541
+  },
+  {
+   "role": "observer",
+   "file": "observer_0021.jpg",
+   "wall_time": 1793818920.282,
+   "window": 27541
+  },
+  {
+   "role": "observer",
+   "file": "observer_0022.jpg",
+   "wall_time": 1793818920.421,
+   "window": 27541
+  },
+  {
+   "role": "observer",
+   "file": "observer_0023.jpg",
+   "wall_time": 1793818920.574,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0025.jpg",
+   "wall_time": 1793818920.702,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0024.jpg",
+   "wall_time": 1793818920.76,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0026.jpg",
+   "wall_time": 1793818920.855,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0025.jpg",
+   "wall_time": 1793818920.918,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0027.jpg",
+   "wall_time": 1793818921.007,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0026.jpg",
+   "wall_time": 1793818921.071,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0028.jpg",
+   "wall_time": 1793818921.165,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0027.jpg",
+   "wall_time": 1793818921.227,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0029.jpg",
+   "wall_time": 1793818921.33,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0028.jpg",
+   "wall_time": 1793818921.389,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0030.jpg",
+   "wall_time": 1793818921.483,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0029.jpg",
+   "wall_time": 1793818921.547,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0031.jpg",
+   "wall_time": 1793818921.646,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0030.jpg",
+   "wall_time": 1793818921.707,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0032.jpg",
+   "wall_time": 1793818921.804,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0031.jpg",
+   "wall_time": 1793818921.873,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0033.jpg",
+   "wall_time": 1793818921.975,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0032.jpg",
+   "wall_time": 1793818922.042,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0034.jpg",
+   "wall_time": 1793818922.139,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0033.jpg",
+   "wall_time": 1793818922.201,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0035.jpg",
+   "wall_time": 1793818922.298,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0034.jpg",
+   "wall_time": 1793818922.364,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0036.jpg",
+   "wall_time": 1793818922.455,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0035.jpg",
+   "wall_time": 1793818922.52,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0037.jpg",
+   "wall_time": 1793818922.617,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0036.jpg",
+   "wall_time": 1793818922.647,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0038.jpg",
+   "wall_time": 1793818922.754,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0037.jpg",
+   "wall_time": 1793818922.777,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0039.jpg",
+   "wall_time": 1793818922.9,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0038.jpg",
+   "wall_time": 1793818922.921,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0040.jpg",
+   "wall_time": 1793818923.107,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0039.jpg",
+   "wall_time": 1793818923.132,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0041.jpg",
+   "wall_time": 1793818923.269,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0040.jpg",
+   "wall_time": 1793818923.283,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0042.jpg",
+   "wall_time": 1793818923.422,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0041.jpg",
+   "wall_time": 1793818923.434,
+   "window": 27541
+  },
+  {
+   "role": "observer",
+   "file": "observer_0042.jpg",
+   "wall_time": 1793818923.588,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0043.jpg",
+   "wall_time": 1793818923.571,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0043.jpg",
+   "wall_time": 1793818923.73,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0044.jpg",
+   "wall_time": 1793818923.747,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0044.jpg",
+   "wall_time": 1793818923.92,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0045.jpg",
+   "wall_time": 1793818923.934,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0045.jpg",
+   "wall_time": 1793818924.08,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0046.jpg",
+   "wall_time": 1793818924.099,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0046.jpg",
+   "wall_time": 1793818924.219,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0047.jpg",
+   "wall_time": 1793818924.246,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0047.jpg",
+   "wall_time": 1793818924.483,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0048.jpg",
+   "wall_time": 1793818924.499,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0048.jpg",
+   "wall_time": 1793818924.645,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0049.jpg",
+   "wall_time": 1793818924.665,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0049.jpg",
+   "wall_time": 1793818924.777,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0050.jpg",
+   "wall_time": 1793818924.791,
+   "window": 27544
+  },
+  {
+   "role": "driver",
+   "file": "driver_0051.jpg",
+   "wall_time": 1793818924.934,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0050.jpg",
+   "wall_time": 1793818924.92,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0052.jpg",
+   "wall_time": 1793818925.071,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0051.jpg",
+   "wall_time": 1793818925.088,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0053.jpg",
+   "wall_time": 1793818925.273,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0052.jpg",
+   "wall_time": 1793818925.313,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0054.jpg",
+   "wall_time": 1793818925.415,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0053.jpg",
+   "wall_time": 1793818925.454,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0055.jpg",
+   "wall_time": 1793818925.551,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0054.jpg",
+   "wall_time": 1793818925.631,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0056.jpg",
+   "wall_time": 1793818925.721,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0055.jpg",
+   "wall_time": 1793818925.786,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0057.jpg",
+   "wall_time": 1793818925.864,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0056.jpg",
+   "wall_time": 1793818925.936,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0058.jpg",
+   "wall_time": 1793818926.01,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0057.jpg",
+   "wall_time": 1793818926.096,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0059.jpg",
+   "wall_time": 1793818926.177,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0058.jpg",
+   "wall_time": 1793818926.273,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0060.jpg",
+   "wall_time": 1793818926.35,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0059.jpg",
+   "wall_time": 1793818926.441,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0061.jpg",
+   "wall_time": 1793818926.506,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0060.jpg",
+   "wall_time": 1793818926.58,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0062.jpg",
+   "wall_time": 1793818926.659,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0061.jpg",
+   "wall_time": 1793818926.741,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0063.jpg",
+   "wall_time": 1793818926.816,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0062.jpg",
+   "wall_time": 1793818926.888,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0064.jpg",
+   "wall_time": 1793818926.97,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0063.jpg",
+   "wall_time": 1793818927.045,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0065.jpg",
+   "wall_time": 1793818927.127,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0064.jpg",
+   "wall_time": 1793818927.209,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0066.jpg",
+   "wall_time": 1793818927.307,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0065.jpg",
+   "wall_time": 1793818927.378,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0067.jpg",
+   "wall_time": 1793818927.459,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0066.jpg",
+   "wall_time": 1793818927.536,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0068.jpg",
+   "wall_time": 1793818927.633,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0067.jpg",
+   "wall_time": 1793818927.702,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0069.jpg",
+   "wall_time": 1793818927.787,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0068.jpg",
+   "wall_time": 1793818927.869,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0070.jpg",
+   "wall_time": 1793818927.958,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0069.jpg",
+   "wall_time": 1793818928.035,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0071.jpg",
+   "wall_time": 1793818928.116,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0070.jpg",
+   "wall_time": 1793818928.201,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0072.jpg",
+   "wall_time": 1793818928.278,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0071.jpg",
+   "wall_time": 1793818928.4,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0073.jpg",
+   "wall_time": 1793818928.44,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0072.jpg",
+   "wall_time": 1793818928.564,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0074.jpg",
+   "wall_time": 1793818928.592,
+   "window": 27544
+  },
+  {
+   "role": "driver",
+   "file": "driver_0075.jpg",
+   "wall_time": 1793818928.738,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0073.jpg",
+   "wall_time": 1793818928.709,
+   "window": 27541
+  },
+  {
+   "role": "observer",
+   "file": "observer_0074.jpg",
+   "wall_time": 1793818928.89,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0076.jpg",
+   "wall_time": 1793818928.878,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0075.jpg",
+   "wall_time": 1793818929.042,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0077.jpg",
+   "wall_time": 1793818929.063,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0076.jpg",
+   "wall_time": 1793818929.23,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0078.jpg",
+   "wall_time": 1793818929.246,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0077.jpg",
+   "wall_time": 1793818929.403,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0079.jpg",
+   "wall_time": 1793818929.422,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0078.jpg",
+   "wall_time": 1793818929.582,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0080.jpg",
+   "wall_time": 1793818929.597,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0079.jpg",
+   "wall_time": 1793818929.761,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0081.jpg",
+   "wall_time": 1793818929.78,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0080.jpg",
+   "wall_time": 1793818929.938,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0082.jpg",
+   "wall_time": 1793818929.955,
+   "window": 27544
+  },
+  {
+   "role": "driver",
+   "file": "driver_0083.jpg",
+   "wall_time": 1793818930.132,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0081.jpg",
+   "wall_time": 1793818930.11,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0084.jpg",
+   "wall_time": 1793818930.287,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0082.jpg",
+   "wall_time": 1793818930.305,
+   "window": 27541
+  },
+  {
+   "role": "observer",
+   "file": "observer_0083.jpg",
+   "wall_time": 1793818930.474,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0085.jpg",
+   "wall_time": 1793818930.453,
+   "window": 27544
+  },
+  {
+   "role": "driver",
+   "file": "driver_0086.jpg",
+   "wall_time": 1793818930.655,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0084.jpg",
+   "wall_time": 1793818930.635,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0087.jpg",
+   "wall_time": 1793818930.8,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0085.jpg",
+   "wall_time": 1793818930.815,
+   "window": 27541
+  },
+  {
+   "role": "observer",
+   "file": "observer_0086.jpg",
+   "wall_time": 1793818930.998,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0088.jpg",
+   "wall_time": 1793818930.977,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0087.jpg",
+   "wall_time": 1793818931.147,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0089.jpg",
+   "wall_time": 1793818931.166,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0088.jpg",
+   "wall_time": 1793818931.318,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0090.jpg",
+   "wall_time": 1793818931.336,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0089.jpg",
+   "wall_time": 1793818931.481,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0091.jpg",
+   "wall_time": 1793818931.506,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0090.jpg",
+   "wall_time": 1793818931.662,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0092.jpg",
+   "wall_time": 1793818931.678,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0091.jpg",
+   "wall_time": 1793818931.832,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0093.jpg",
+   "wall_time": 1793818931.849,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0092.jpg",
+   "wall_time": 1793818931.999,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0094.jpg",
+   "wall_time": 1793818932.016,
+   "window": 27544
+  },
+  {
+   "role": "driver",
+   "file": "driver_0095.jpg",
+   "wall_time": 1793818932.2,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0093.jpg",
+   "wall_time": 1793818932.181,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0096.jpg",
+   "wall_time": 1793818932.358,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0094.jpg",
+   "wall_time": 1793818932.377,
+   "window": 27541
+  },
+  {
+   "role": "observer",
+   "file": "observer_0095.jpg",
+   "wall_time": 1793818932.542,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0097.jpg",
+   "wall_time": 1793818932.527,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0096.jpg",
+   "wall_time": 1793818932.707,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0098.jpg",
+   "wall_time": 1793818932.722,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0097.jpg",
+   "wall_time": 1793818932.881,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0099.jpg",
+   "wall_time": 1793818932.9,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0098.jpg",
+   "wall_time": 1793818933.042,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0100.jpg",
+   "wall_time": 1793818933.056,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0099.jpg",
+   "wall_time": 1793818933.219,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0101.jpg",
+   "wall_time": 1793818933.233,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0100.jpg",
+   "wall_time": 1793818933.394,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0102.jpg",
+   "wall_time": 1793818933.409,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0101.jpg",
+   "wall_time": 1793818933.562,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0103.jpg",
+   "wall_time": 1793818933.574,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0102.jpg",
+   "wall_time": 1793818933.736,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0104.jpg",
+   "wall_time": 1793818933.759,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0103.jpg",
+   "wall_time": 1793818933.895,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0105.jpg",
+   "wall_time": 1793818933.915,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0104.jpg",
+   "wall_time": 1793818934.064,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0106.jpg",
+   "wall_time": 1793818934.079,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0105.jpg",
+   "wall_time": 1793818934.248,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0107.jpg",
+   "wall_time": 1793818934.27,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0106.jpg",
+   "wall_time": 1793818934.433,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0108.jpg",
+   "wall_time": 1793818934.453,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0107.jpg",
+   "wall_time": 1793818934.62,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0109.jpg",
+   "wall_time": 1793818934.636,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0108.jpg",
+   "wall_time": 1793818934.83,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0110.jpg",
+   "wall_time": 1793818934.847,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0109.jpg",
+   "wall_time": 1793818935.033,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0111.jpg",
+   "wall_time": 1793818935.046,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0110.jpg",
+   "wall_time": 1793818935.224,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0112.jpg",
+   "wall_time": 1793818935.247,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0111.jpg",
+   "wall_time": 1793818935.399,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0113.jpg",
+   "wall_time": 1793818935.415,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0112.jpg",
+   "wall_time": 1793818935.586,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0114.jpg",
+   "wall_time": 1793818935.605,
+   "window": 27544
+  },
+  {
+   "role": "driver",
+   "file": "driver_0115.jpg",
+   "wall_time": 1793818935.772,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0113.jpg",
+   "wall_time": 1793818935.754,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0116.jpg",
+   "wall_time": 1793818935.919,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0114.jpg",
+   "wall_time": 1793818935.94,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0117.jpg",
+   "wall_time": 1793818936.093,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0115.jpg",
+   "wall_time": 1793818936.11,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0118.jpg",
+   "wall_time": 1793818936.267,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0116.jpg",
+   "wall_time": 1793818936.289,
+   "window": 27541
+  },
+  {
+   "role": "observer",
+   "file": "observer_0117.jpg",
+   "wall_time": 1793818936.458,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0119.jpg",
+   "wall_time": 1793818936.441,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0118.jpg",
+   "wall_time": 1793818936.616,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0120.jpg",
+   "wall_time": 1793818936.638,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0119.jpg",
+   "wall_time": 1793818936.791,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0121.jpg",
+   "wall_time": 1793818936.81,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0120.jpg",
+   "wall_time": 1793818936.95,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0122.jpg",
+   "wall_time": 1793818936.961,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0121.jpg",
+   "wall_time": 1793818937.122,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0123.jpg",
+   "wall_time": 1793818937.138,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0122.jpg",
+   "wall_time": 1793818937.301,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0124.jpg",
+   "wall_time": 1793818937.325,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0123.jpg",
+   "wall_time": 1793818937.466,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0125.jpg",
+   "wall_time": 1793818937.497,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0124.jpg",
+   "wall_time": 1793818937.665,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0126.jpg",
+   "wall_time": 1793818937.683,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0125.jpg",
+   "wall_time": 1793818937.843,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0127.jpg",
+   "wall_time": 1793818937.862,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0126.jpg",
+   "wall_time": 1793818938.028,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0128.jpg",
+   "wall_time": 1793818938.043,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0127.jpg",
+   "wall_time": 1793818938.197,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0129.jpg",
+   "wall_time": 1793818938.211,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0128.jpg",
+   "wall_time": 1793818938.372,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0130.jpg",
+   "wall_time": 1793818938.382,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0129.jpg",
+   "wall_time": 1793818938.54,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0131.jpg",
+   "wall_time": 1793818938.563,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0130.jpg",
+   "wall_time": 1793818938.784,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0132.jpg",
+   "wall_time": 1793818938.804,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0131.jpg",
+   "wall_time": 1793818938.962,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0133.jpg",
+   "wall_time": 1793818938.974,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0132.jpg",
+   "wall_time": 1793818939.137,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0134.jpg",
+   "wall_time": 1793818939.156,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0133.jpg",
+   "wall_time": 1793818939.295,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0135.jpg",
+   "wall_time": 1793818939.325,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0134.jpg",
+   "wall_time": 1793818939.431,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0136.jpg",
+   "wall_time": 1793818939.496,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0135.jpg",
+   "wall_time": 1793818939.597,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0137.jpg",
+   "wall_time": 1793818939.667,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0136.jpg",
+   "wall_time": 1793818939.737,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0138.jpg",
+   "wall_time": 1793818939.83,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0137.jpg",
+   "wall_time": 1793818939.899,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0139.jpg",
+   "wall_time": 1793818939.995,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0138.jpg",
+   "wall_time": 1793818940.036,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0140.jpg",
+   "wall_time": 1793818940.138,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0139.jpg",
+   "wall_time": 1793818940.208,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0141.jpg",
+   "wall_time": 1793818940.289,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0140.jpg",
+   "wall_time": 1793818940.38,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0142.jpg",
+   "wall_time": 1793818940.487,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0141.jpg",
+   "wall_time": 1793818940.551,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0143.jpg",
+   "wall_time": 1793818940.62,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0142.jpg",
+   "wall_time": 1793818940.699,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0144.jpg",
+   "wall_time": 1793818940.773,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0143.jpg",
+   "wall_time": 1793818940.849,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0145.jpg",
+   "wall_time": 1793818940.931,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0144.jpg",
+   "wall_time": 1793818941.003,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0146.jpg",
+   "wall_time": 1793818941.077,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0145.jpg",
+   "wall_time": 1793818941.152,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0147.jpg",
+   "wall_time": 1793818941.256,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0146.jpg",
+   "wall_time": 1793818941.292,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0148.jpg",
+   "wall_time": 1793818941.403,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0147.jpg",
+   "wall_time": 1793818941.443,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0149.jpg",
+   "wall_time": 1793818941.557,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0148.jpg",
+   "wall_time": 1793818941.587,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0150.jpg",
+   "wall_time": 1793818941.72,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0149.jpg",
+   "wall_time": 1793818941.736,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0151.jpg",
+   "wall_time": 1793818941.884,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0150.jpg",
+   "wall_time": 1793818941.907,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0152.jpg",
+   "wall_time": 1793818942.057,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0151.jpg",
+   "wall_time": 1793818942.073,
+   "window": 27541
+  },
+  {
+   "role": "observer",
+   "file": "observer_0152.jpg",
+   "wall_time": 1793818942.238,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0153.jpg",
+   "wall_time": 1793818942.224,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0153.jpg",
+   "wall_time": 1793818942.401,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0154.jpg",
+   "wall_time": 1793818942.419,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0154.jpg",
+   "wall_time": 1793818942.566,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0155.jpg",
+   "wall_time": 1793818942.582,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0155.jpg",
+   "wall_time": 1793818942.733,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0156.jpg",
+   "wall_time": 1793818942.751,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0156.jpg",
+   "wall_time": 1793818942.895,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0157.jpg",
+   "wall_time": 1793818942.915,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0157.jpg",
+   "wall_time": 1793818943.067,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0158.jpg",
+   "wall_time": 1793818943.092,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0158.jpg",
+   "wall_time": 1793818943.238,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0159.jpg",
+   "wall_time": 1793818943.258,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0159.jpg",
+   "wall_time": 1793818943.406,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0160.jpg",
+   "wall_time": 1793818943.417,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0160.jpg",
+   "wall_time": 1793818943.595,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0161.jpg",
+   "wall_time": 1793818943.619,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0161.jpg",
+   "wall_time": 1793818943.767,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0162.jpg",
+   "wall_time": 1793818943.792,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0162.jpg",
+   "wall_time": 1793818943.935,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0163.jpg",
+   "wall_time": 1793818943.949,
+   "window": 27544
+  },
+  {
+   "role": "driver",
+   "file": "driver_0164.jpg",
+   "wall_time": 1793818944.129,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0163.jpg",
+   "wall_time": 1793818944.113,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0165.jpg",
+   "wall_time": 1793818944.281,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0164.jpg",
+   "wall_time": 1793818944.298,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0166.jpg",
+   "wall_time": 1793818944.46,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0165.jpg",
+   "wall_time": 1793818944.476,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0167.jpg",
+   "wall_time": 1793818944.63,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0166.jpg",
+   "wall_time": 1793818944.646,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0168.jpg",
+   "wall_time": 1793818944.794,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0167.jpg",
+   "wall_time": 1793818944.811,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0169.jpg",
+   "wall_time": 1793818944.961,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0168.jpg",
+   "wall_time": 1793818944.981,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0170.jpg",
+   "wall_time": 1793818945.134,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0169.jpg",
+   "wall_time": 1793818945.161,
+   "window": 27541
+  },
+  {
+   "role": "observer",
+   "file": "observer_0170.jpg",
+   "wall_time": 1793818945.328,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0171.jpg",
+   "wall_time": 1793818945.314,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0171.jpg",
+   "wall_time": 1793818945.487,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0172.jpg",
+   "wall_time": 1793818945.504,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0172.jpg",
+   "wall_time": 1793818945.65,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0173.jpg",
+   "wall_time": 1793818945.671,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0173.jpg",
+   "wall_time": 1793818945.803,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0174.jpg",
+   "wall_time": 1793818945.82,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0174.jpg",
+   "wall_time": 1793818945.973,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0175.jpg",
+   "wall_time": 1793818945.994,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0175.jpg",
+   "wall_time": 1793818946.158,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0176.jpg",
+   "wall_time": 1793818946.171,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0176.jpg",
+   "wall_time": 1793818946.316,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0177.jpg",
+   "wall_time": 1793818946.339,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0177.jpg",
+   "wall_time": 1793818946.486,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0178.jpg",
+   "wall_time": 1793818946.503,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0178.jpg",
+   "wall_time": 1793818946.661,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0179.jpg",
+   "wall_time": 1793818946.67,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0179.jpg",
+   "wall_time": 1793818946.834,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0180.jpg",
+   "wall_time": 1793818946.848,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0180.jpg",
+   "wall_time": 1793818946.994,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0181.jpg",
+   "wall_time": 1793818947.015,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0181.jpg",
+   "wall_time": 1793818947.168,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0182.jpg",
+   "wall_time": 1793818947.186,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0182.jpg",
+   "wall_time": 1793818947.331,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0183.jpg",
+   "wall_time": 1793818947.35,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0183.jpg",
+   "wall_time": 1793818947.51,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0184.jpg",
+   "wall_time": 1793818947.52,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0184.jpg",
+   "wall_time": 1793818947.694,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0185.jpg",
+   "wall_time": 1793818947.706,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0185.jpg",
+   "wall_time": 1793818947.893,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0186.jpg",
+   "wall_time": 1793818947.906,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0186.jpg",
+   "wall_time": 1793818948.095,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0187.jpg",
+   "wall_time": 1793818948.111,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0187.jpg",
+   "wall_time": 1793818948.278,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0188.jpg",
+   "wall_time": 1793818948.295,
+   "window": 27544
+  },
+  {
+   "role": "driver",
+   "file": "driver_0189.jpg",
+   "wall_time": 1793818948.486,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0188.jpg",
+   "wall_time": 1793818948.466,
+   "window": 27541
+  },
+  {
+   "role": "observer",
+   "file": "observer_0189.jpg",
+   "wall_time": 1793818948.681,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0190.jpg",
+   "wall_time": 1793818948.663,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0190.jpg",
+   "wall_time": 1793818948.85,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0191.jpg",
+   "wall_time": 1793818948.863,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0191.jpg",
+   "wall_time": 1793818949.005,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0192.jpg",
+   "wall_time": 1793818949.022,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0192.jpg",
+   "wall_time": 1793818949.181,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0193.jpg",
+   "wall_time": 1793818949.209,
+   "window": 27544
+  },
+  {
+   "role": "driver",
+   "file": "driver_0194.jpg",
+   "wall_time": 1793818949.372,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0193.jpg",
+   "wall_time": 1793818949.355,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0195.jpg",
+   "wall_time": 1793818949.526,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0194.jpg",
+   "wall_time": 1793818949.538,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0196.jpg",
+   "wall_time": 1793818949.725,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0195.jpg",
+   "wall_time": 1793818949.746,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0197.jpg",
+   "wall_time": 1793818949.916,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0196.jpg",
+   "wall_time": 1793818949.936,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0198.jpg",
+   "wall_time": 1793818950.107,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0197.jpg",
+   "wall_time": 1793818950.133,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0199.jpg",
+   "wall_time": 1793818950.283,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0198.jpg",
+   "wall_time": 1793818950.303,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0200.jpg",
+   "wall_time": 1793818950.452,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0199.jpg",
+   "wall_time": 1793818950.468,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0201.jpg",
+   "wall_time": 1793818950.615,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0200.jpg",
+   "wall_time": 1793818950.635,
+   "window": 27541
+  },
+  {
+   "role": "observer",
+   "file": "observer_0201.jpg",
+   "wall_time": 1793818950.796,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0202.jpg",
+   "wall_time": 1793818950.776,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0202.jpg",
+   "wall_time": 1793818950.964,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0203.jpg",
+   "wall_time": 1793818950.978,
+   "window": 27544
+  },
+  {
+   "role": "driver",
+   "file": "driver_0204.jpg",
+   "wall_time": 1793818951.151,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0203.jpg",
+   "wall_time": 1793818951.139,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0205.jpg",
+   "wall_time": 1793818951.312,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0204.jpg",
+   "wall_time": 1793818951.33,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0206.jpg",
+   "wall_time": 1793818951.486,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0205.jpg",
+   "wall_time": 1793818951.511,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0207.jpg",
+   "wall_time": 1793818951.64,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0206.jpg",
+   "wall_time": 1793818951.661,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0208.jpg",
+   "wall_time": 1793818951.815,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0207.jpg",
+   "wall_time": 1793818951.837,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0209.jpg",
+   "wall_time": 1793818951.99,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0208.jpg",
+   "wall_time": 1793818951.999,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0210.jpg",
+   "wall_time": 1793818952.15,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0209.jpg",
+   "wall_time": 1793818952.17,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0211.jpg",
+   "wall_time": 1793818952.301,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0210.jpg",
+   "wall_time": 1793818952.321,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0212.jpg",
+   "wall_time": 1793818952.483,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0211.jpg",
+   "wall_time": 1793818952.5,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0213.jpg",
+   "wall_time": 1793818952.648,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0212.jpg",
+   "wall_time": 1793818952.665,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0214.jpg",
+   "wall_time": 1793818952.826,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0213.jpg",
+   "wall_time": 1793818952.844,
+   "window": 27541
+  },
+  {
+   "role": "observer",
+   "file": "observer_0214.jpg",
+   "wall_time": 1793818953.023,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0215.jpg",
+   "wall_time": 1793818953.0,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0215.jpg",
+   "wall_time": 1793818953.187,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0216.jpg",
+   "wall_time": 1793818953.211,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0216.jpg",
+   "wall_time": 1793818953.353,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0217.jpg",
+   "wall_time": 1793818953.371,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0217.jpg",
+   "wall_time": 1793818953.531,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0218.jpg",
+   "wall_time": 1793818953.551,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0218.jpg",
+   "wall_time": 1793818953.709,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0219.jpg",
+   "wall_time": 1793818953.726,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0219.jpg",
+   "wall_time": 1793818953.877,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0220.jpg",
+   "wall_time": 1793818953.899,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0220.jpg",
+   "wall_time": 1793818954.05,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0221.jpg",
+   "wall_time": 1793818954.066,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0221.jpg",
+   "wall_time": 1793818954.24,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0222.jpg",
+   "wall_time": 1793818954.248,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0222.jpg",
+   "wall_time": 1793818954.398,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0223.jpg",
+   "wall_time": 1793818954.417,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0223.jpg",
+   "wall_time": 1793818954.576,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0224.jpg",
+   "wall_time": 1793818954.592,
+   "window": 27544
+  },
+  {
+   "role": "driver",
+   "file": "driver_0225.jpg",
+   "wall_time": 1793818954.762,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0224.jpg",
+   "wall_time": 1793818954.739,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0226.jpg",
+   "wall_time": 1793818954.922,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0225.jpg",
+   "wall_time": 1793818954.941,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0227.jpg",
+   "wall_time": 1793818955.094,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0226.jpg",
+   "wall_time": 1793818955.116,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0228.jpg",
+   "wall_time": 1793818955.26,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0227.jpg",
+   "wall_time": 1793818955.276,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0229.jpg",
+   "wall_time": 1793818955.441,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0228.jpg",
+   "wall_time": 1793818955.454,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0230.jpg",
+   "wall_time": 1793818955.628,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0229.jpg",
+   "wall_time": 1793818955.642,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0231.jpg",
+   "wall_time": 1793818955.815,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0230.jpg",
+   "wall_time": 1793818955.833,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0232.jpg",
+   "wall_time": 1793818956.004,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0231.jpg",
+   "wall_time": 1793818956.022,
+   "window": 27541
+  },
+  {
+   "role": "observer",
+   "file": "observer_0232.jpg",
+   "wall_time": 1793818956.186,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0233.jpg",
+   "wall_time": 1793818956.173,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0233.jpg",
+   "wall_time": 1793818956.357,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0234.jpg",
+   "wall_time": 1793818956.369,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0234.jpg",
+   "wall_time": 1793818956.538,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0235.jpg",
+   "wall_time": 1793818956.555,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0235.jpg",
+   "wall_time": 1793818956.708,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0236.jpg",
+   "wall_time": 1793818956.745,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0236.jpg",
+   "wall_time": 1793818956.88,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0237.jpg",
+   "wall_time": 1793818956.912,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0237.jpg",
+   "wall_time": 1793818957.058,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0238.jpg",
+   "wall_time": 1793818957.077,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0238.jpg",
+   "wall_time": 1793818957.195,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0239.jpg",
+   "wall_time": 1793818957.24,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0239.jpg",
+   "wall_time": 1793818957.349,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0240.jpg",
+   "wall_time": 1793818957.418,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0240.jpg",
+   "wall_time": 1793818957.5,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0241.jpg",
+   "wall_time": 1793818957.578,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0241.jpg",
+   "wall_time": 1793818957.66,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0242.jpg",
+   "wall_time": 1793818957.738,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0242.jpg",
+   "wall_time": 1793818957.81,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0243.jpg",
+   "wall_time": 1793818957.909,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0243.jpg",
+   "wall_time": 1793818957.982,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0244.jpg",
+   "wall_time": 1793818958.053,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0244.jpg",
+   "wall_time": 1793818958.129,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0245.jpg",
+   "wall_time": 1793818958.211,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0245.jpg",
+   "wall_time": 1793818958.286,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0246.jpg",
+   "wall_time": 1793818958.362,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0246.jpg",
+   "wall_time": 1793818958.437,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0247.jpg",
+   "wall_time": 1793818958.517,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0247.jpg",
+   "wall_time": 1793818958.606,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0248.jpg",
+   "wall_time": 1793818958.759,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0248.jpg",
+   "wall_time": 1793818958.779,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0249.jpg",
+   "wall_time": 1793818958.935,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0249.jpg",
+   "wall_time": 1793818958.95,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0250.jpg",
+   "wall_time": 1793818959.104,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0250.jpg",
+   "wall_time": 1793818959.12,
+   "window": 27541
+  },
+  {
+   "role": "observer",
+   "file": "observer_0251.jpg",
+   "wall_time": 1793818959.297,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0251.jpg",
+   "wall_time": 1793818959.28,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0252.jpg",
+   "wall_time": 1793818959.452,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0252.jpg",
+   "wall_time": 1793818959.469,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0253.jpg",
+   "wall_time": 1793818959.616,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0253.jpg",
+   "wall_time": 1793818959.637,
+   "window": 27544
+  },
+  {
+   "role": "driver",
+   "file": "driver_0254.jpg",
+   "wall_time": 1793818959.814,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0254.jpg",
+   "wall_time": 1793818959.798,
+   "window": 27541
+  },
+  {
+   "role": "observer",
+   "file": "observer_0255.jpg",
+   "wall_time": 1793818959.983,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0255.jpg",
+   "wall_time": 1793818959.964,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0256.jpg",
+   "wall_time": 1793818960.149,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0256.jpg",
+   "wall_time": 1793818960.168,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0257.jpg",
+   "wall_time": 1793818960.305,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0257.jpg",
+   "wall_time": 1793818960.32,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0258.jpg",
+   "wall_time": 1793818960.472,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0258.jpg",
+   "wall_time": 1793818960.489,
+   "window": 27544
+  },
+  {
+   "role": "driver",
+   "file": "driver_0259.jpg",
+   "wall_time": 1793818960.649,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0259.jpg",
+   "wall_time": 1793818960.638,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0260.jpg",
+   "wall_time": 1793818960.811,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0260.jpg",
+   "wall_time": 1793818960.828,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0261.jpg",
+   "wall_time": 1793818960.967,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0261.jpg",
+   "wall_time": 1793818960.989,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0262.jpg",
+   "wall_time": 1793818961.136,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0262.jpg",
+   "wall_time": 1793818961.156,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0263.jpg",
+   "wall_time": 1793818961.311,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0263.jpg",
+   "wall_time": 1793818961.329,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0264.jpg",
+   "wall_time": 1793818961.469,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0264.jpg",
+   "wall_time": 1793818961.492,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0265.jpg",
+   "wall_time": 1793818961.629,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0265.jpg",
+   "wall_time": 1793818961.642,
+   "window": 27541
+  },
+  {
+   "role": "observer",
+   "file": "observer_0266.jpg",
+   "wall_time": 1793818961.817,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0266.jpg",
+   "wall_time": 1793818961.801,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0267.jpg",
+   "wall_time": 1793818961.982,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0267.jpg",
+   "wall_time": 1793818961.996,
+   "window": 27544
+  },
+  {
+   "role": "driver",
+   "file": "driver_0268.jpg",
+   "wall_time": 1793818962.178,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0268.jpg",
+   "wall_time": 1793818962.157,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0269.jpg",
+   "wall_time": 1793818962.333,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0269.jpg",
+   "wall_time": 1793818962.352,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0270.jpg",
+   "wall_time": 1793818962.51,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0270.jpg",
+   "wall_time": 1793818962.525,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0271.jpg",
+   "wall_time": 1793818962.681,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0271.jpg",
+   "wall_time": 1793818962.699,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0272.jpg",
+   "wall_time": 1793818962.85,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0272.jpg",
+   "wall_time": 1793818962.871,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0273.jpg",
+   "wall_time": 1793818963.021,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0273.jpg",
+   "wall_time": 1793818963.039,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0274.jpg",
+   "wall_time": 1793818963.204,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0274.jpg",
+   "wall_time": 1793818963.227,
+   "window": 27541
+  },
+  {
+   "role": "observer",
+   "file": "observer_0275.jpg",
+   "wall_time": 1793818963.405,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0275.jpg",
+   "wall_time": 1793818963.389,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0276.jpg",
+   "wall_time": 1793818963.559,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0276.jpg",
+   "wall_time": 1793818963.579,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0277.jpg",
+   "wall_time": 1793818963.754,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0277.jpg",
+   "wall_time": 1793818963.774,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0278.jpg",
+   "wall_time": 1793818963.92,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0278.jpg",
+   "wall_time": 1793818963.939,
+   "window": 27544
+  },
+  {
+   "role": "driver",
+   "file": "driver_0279.jpg",
+   "wall_time": 1793818964.095,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0279.jpg",
+   "wall_time": 1793818964.078,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0280.jpg",
+   "wall_time": 1793818964.254,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0280.jpg",
+   "wall_time": 1793818964.276,
+   "window": 27541
+  },
+  {
+   "role": "observer",
+   "file": "observer_0281.jpg",
+   "wall_time": 1793818964.448,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0281.jpg",
+   "wall_time": 1793818964.429,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0282.jpg",
+   "wall_time": 1793818964.616,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0282.jpg",
+   "wall_time": 1793818964.631,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0283.jpg",
+   "wall_time": 1793818964.821,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0283.jpg",
+   "wall_time": 1793818964.845,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0284.jpg",
+   "wall_time": 1793818965.02,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0284.jpg",
+   "wall_time": 1793818965.037,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0285.jpg",
+   "wall_time": 1793818965.195,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0285.jpg",
+   "wall_time": 1793818965.21,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0286.jpg",
+   "wall_time": 1793818965.361,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0286.jpg",
+   "wall_time": 1793818965.379,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0287.jpg",
+   "wall_time": 1793818965.534,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0287.jpg",
+   "wall_time": 1793818965.553,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0288.jpg",
+   "wall_time": 1793818965.692,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0288.jpg",
+   "wall_time": 1793818965.711,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0289.jpg",
+   "wall_time": 1793818965.867,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0289.jpg",
+   "wall_time": 1793818965.884,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0290.jpg",
+   "wall_time": 1793818966.043,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0290.jpg",
+   "wall_time": 1793818966.059,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0291.jpg",
+   "wall_time": 1793818966.212,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0291.jpg",
+   "wall_time": 1793818966.231,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0292.jpg",
+   "wall_time": 1793818966.389,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0292.jpg",
+   "wall_time": 1793818966.411,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0293.jpg",
+   "wall_time": 1793818966.56,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0293.jpg",
+   "wall_time": 1793818966.579,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0294.jpg",
+   "wall_time": 1793818966.737,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0294.jpg",
+   "wall_time": 1793818966.759,
+   "window": 27544
+  },
+  {
+   "role": "observer",
+   "file": "observer_0295.jpg",
+   "wall_time": 1793818966.91,
+   "window": 27541
+  },
+  {
+   "role": "driver",
+   "file": "driver_0295.jpg",
+   "wall_time": 1793818966.925,
+   "window": 27544
+  }
+ ],
+ "audio_recorders": {
+  "observer": [
+   "TIMEOUT"
+  ],
+  "driver": [
+   "STOPPED Error Domain=com.apple.ScreenCaptureKit.SCStreamErrorDomain Code=-3805 \"Failed during stream due to application connection being interrupted\" UserInfo={NSLocalizedDescription=Failed during stream due to application connection being interrupted}",
+   "RECORDING_START 1793818915.679",
+   "RECORDING_DONE buffers=0 status=0"
+  ]
+ },
+ "smoke_reports_present": {
+  "server": true,
+  "observer": true,
+  "driver": true
+ }
+}

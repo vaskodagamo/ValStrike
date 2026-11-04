@@ -2,9 +2,9 @@
 
 2026-11-04 (Europe/Berlin), INT-ART-01. This build shows the Meshy **Urban Entry** character as every *other* player's third-person body and four approved Meshy props in Site01. It is a development Editor playtest, not a packaged game.
 
-**Tested revision (INT-ART-03, full knife):** `1b572d0783ba97337dd1cce2d376976ba1456980` on branch `claude/int-art-03-knife`. It is main `4997215`, which already has R02/P02 #118, the Site01 facade #116, ART-26-C1 #115, ART-27 #110 and the KNIFE-01-M1 repair, plus the frozen WPN-02-CHECKS test-name correction `22b71bf` (PR #121), plus the native knife: gloved first-person hands and K01, and the remote knife body. Later commits on the branch only add scripts, evidence and documentation. Until this PR is merged, `main` has the knife gameplay with no knife art. Earlier revisions remain valid for what they tested: `c2ba852` (R02/P02), `61fc972` (pistol pose) and `34e6e78` (pilot).
+**Tested revision (INT-ART-05, knife acceptance and R02 rifle fit):** `8c70673eea6fd44b446e22418de5deac11e59aab` on branch `claude/int-art-05-knife-rifle-acceptance`. It is main `561ea4d` (with #123 and ART-28 #124), plus the frozen KNIFE-01-C1 cue/camera fix `a96e188` (PR #127), plus the ART-28 rifle hold/walk/run with the new hand grip and the adjusted first-person knife framing. Later commits on the branch only add evidence and documentation. Earlier revisions remain valid for what they tested: `1b572d0` (knife), `c2ba852` (R02/P02), `61fc972` and `34e6e78`.
 
-Evidence for everything below: [INT-ART-01 evidence](../assets/meshy-pilot-integration/README.md), [INT-ART-02 evidence](../assets/meshy-site01-followups/README.md), [INT-ART-04 weapon evidence](../assets/weapon-replacement02/README.md) and [INT-ART-03 knife evidence](../assets/knife-integration/README.md).
+Evidence for everything below: [INT-ART-01 evidence](../assets/meshy-pilot-integration/README.md), [INT-ART-02 evidence](../assets/meshy-site01-followups/README.md), [INT-ART-04 weapon evidence](../assets/weapon-replacement02/README.md) [INT-ART-03 knife evidence](../assets/knife-integration/README.md) and [INT-ART-05 evidence](../assets/knife-rifle-acceptance/README.md).
 
 ## 1. Prepare the other Mac
 
@@ -15,8 +15,8 @@ VS_CHECKOUT="$HOME/Documents/ValStrike-meshy-pilot"
 GIT_LFS_SKIP_SMUDGE=1 git clone https://github.com/vaskodagamo/ValStrike.git "$VS_CHECKOUT"
 cd "$VS_CHECKOUT"
 git lfs install --local
-git fetch origin claude/int-art-03-knife
-GIT_LFS_SKIP_SMUDGE=1 git checkout --detach 1b572d0783ba97337dd1cce2d376976ba1456980
+git fetch origin claude/int-art-05-knife-rifle-acceptance
+GIT_LFS_SKIP_SMUDGE=1 git checkout --detach 8c70673eea6fd44b446e22418de5deac11e59aab
 git lfs pull origin
 git lfs fsck
 git rev-parse HEAD
@@ -87,6 +87,7 @@ Both Macs need the same commit and their own build. **This two-Mac LAN run has n
   - left click slashes across and right click stabs forward;
   - Q or 1/2 switch back;
   - while the knife is out the HUD shows `KNIFE / LMB SLASH RMB STAB` and no ammo.
+- The other player's rifle (INT-ART-05): R02 stock seated at the shoulder, head upright and clear, both hands on the rifle; they walk or run with the rifle at speed.
 - The other player with the knife: K01 in the right hand with the ART-27 ready stance, walking or running. Slash and stab play on the upper body, also while moving.
 
 ## Known temporary limitations (pilot only)
@@ -97,7 +98,7 @@ Both Macs need the same commit and their own build. **This two-Mac LAN run has n
 - **Death:** a dead player's body disappears (no death animation); it returns on respawn/round reset.
 - **Pistol (remote):** held two-handed in a stationary ready pose (INT-ART-02). While moving with the pistol the body keeps that pose and glides; there is no pistol walk. Glove/finger contact is pilot quality up close.
 - **New weapons (INT-ART-04):** R02 and P02 replace R01 and P01 at their source sizes. On the remote rifle, the stock reaches the cheek with no shoulder seat, and the fingers are not retuned for R02 (ART-17's open fit items). Each weapon is about 460K triangles with no LODs: pilot assets, not profiled. First person has hands only for the knife. The WPN-02 correction updates the old-name development checks in this revision.
-- **Knife (INT-ART-03):** the gloved first-person hands are large, and at slash impact the forearm crosses the crosshair (the source framing). The hand pair is about 781K triangles with no LODs and has not been profiled. Crouch keeps the standing pose. On another player, the first slash after equipping may not animate (a known gameplay-cue issue, reported). First-person clip switches are not blended.
+- **Knife (INT-ART-03):** the gloved first-person hands are large, and at slash impact the forearm crosses the crosshair (the source framing). The hand pair is about 781K triangles with no LODs and has not been profiled. Crouch keeps the standing pose. The first remote slash now animates. Remote stabs that are cancelled within the same network update (by a switch, reset or death) are not shown; the gameplay owner decides whether that stays. The hands are now slightly smaller and lower in view. First-person clip switches are not blended.
 - **Character quality:** generated face/hair, cloth folds and finger contact are pilot quality, not close-up/hero quality.
 - **Lighting message:** Site01 shows an orange on-screen "multiple directional lights" development warning on the INT-ART-01 and phase A revisions; INT-ART-02 phase B removes it (same sun, no visual change).
 - Not verified: two-Mac LAN, packaged builds, Windows/Linux, four players, performance.

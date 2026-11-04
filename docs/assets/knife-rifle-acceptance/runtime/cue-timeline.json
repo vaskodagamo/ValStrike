@@ -1,0 +1,586 @@
+{
+ "null_rhi_practice (pass/fail record)": {
+  "driver": {
+   "counts": {
+    "Equip": 3,
+    "Slash": 3,
+    "Impact": 4,
+    "Stab": 5,
+    "Cancel": 4,
+    "Holster": 2
+   },
+   "timeline": [
+    {
+     "t": "2026.11.04-19.00.01:196",
+     "cue": "Equip",
+     "local": true,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.00.02:096",
+     "cue": "Slash",
+     "local": true,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.00.02:262",
+     "cue": "Impact",
+     "local": false,
+     "result": 3,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.00.03:498",
+     "cue": "Slash",
+     "local": true,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.00.03:681",
+     "cue": "Impact",
+     "local": false,
+     "result": 1,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.00.04:698",
+     "cue": "Slash",
+     "local": true,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.00.04:865",
+     "cue": "Impact",
+     "local": false,
+     "result": 2,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.00.05:699",
+     "cue": "Stab",
+     "local": true,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.00.05:717",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.00.05:717",
+     "cue": "Holster",
+     "local": true,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.00.06:700",
+     "cue": "Equip",
+     "local": true,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.00.07:500",
+     "cue": "Stab",
+     "local": true,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.00.07:517",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.00.08:606",
+     "cue": "Stab",
+     "local": true,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.00.08:622",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.00.08:623",
+     "cue": "Holster",
+     "local": true,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.00.09:506",
+     "cue": "Equip",
+     "local": true,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.00.10:307",
+     "cue": "Stab",
+     "local": true,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.00.10:641",
+     "cue": "Impact",
+     "local": false,
+     "result": 3,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.00.11:307",
+     "cue": "Stab",
+     "local": true,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.00.11:341",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "view": "first_person"
+    }
+   ]
+  },
+  "observer": {
+   "counts": {
+    "Equip": 3,
+    "Slash": 3,
+    "Impact": 4,
+    "Cancel": 4,
+    "Holster": 2,
+    "Stab": 1
+   },
+   "timeline": [
+    {
+     "t": "2026.11.04-19.00.01:213",
+     "cue": "Equip",
+     "local": false,
+     "result": 0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.00.02:113",
+     "cue": "Slash",
+     "local": false,
+     "result": 0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.00.02:263",
+     "cue": "Impact",
+     "local": false,
+     "result": 3,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.00.03:514",
+     "cue": "Slash",
+     "local": false,
+     "result": 0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.00.03:681",
+     "cue": "Impact",
+     "local": false,
+     "result": 1,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.00.04:714",
+     "cue": "Slash",
+     "local": false,
+     "result": 0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.00.04:864",
+     "cue": "Impact",
+     "local": false,
+     "result": 2,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.00.05:715",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.00.05:715",
+     "cue": "Holster",
+     "local": false,
+     "result": 0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.00.06:732",
+     "cue": "Equip",
+     "local": false,
+     "result": 0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.00.07:515",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.00.08:624",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.00.08:624",
+     "cue": "Holster",
+     "local": false,
+     "result": 0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.00.09:524",
+     "cue": "Equip",
+     "local": false,
+     "result": 0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.00.10:325",
+     "cue": "Stab",
+     "local": false,
+     "result": 0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.00.10:642",
+     "cue": "Impact",
+     "local": false,
+     "result": 3,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.00.11:325",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "view": "third_person"
+    }
+   ]
+  }
+ },
+ "rendered_audio_capture (evidence)": {
+  "driver": {
+   "counts": {
+    "Equip": 3,
+    "Slash": 3,
+    "Impact": 4,
+    "Stab": 5,
+    "Cancel": 4,
+    "Holster": 2
+   },
+   "timeline": [
+    {
+     "t": "2026.11.04-19.02.35:778",
+     "cue": "Equip",
+     "local": true,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.02.36:668",
+     "cue": "Slash",
+     "local": true,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.02.36:863",
+     "cue": "Impact",
+     "local": false,
+     "result": 3,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.02.38:088",
+     "cue": "Slash",
+     "local": true,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.02.38:272",
+     "cue": "Impact",
+     "local": false,
+     "result": 1,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.02.39:266",
+     "cue": "Slash",
+     "local": true,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.02.39:450",
+     "cue": "Impact",
+     "local": false,
+     "result": 2,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.02.40:266",
+     "cue": "Stab",
+     "local": true,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.02.40:290",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.02.40:291",
+     "cue": "Holster",
+     "local": true,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.02.41:280",
+     "cue": "Equip",
+     "local": true,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.02.42:072",
+     "cue": "Stab",
+     "local": true,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.02.42:095",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.02.43:187",
+     "cue": "Stab",
+     "local": true,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.02.43:213",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.02.43:213",
+     "cue": "Holster",
+     "local": true,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.02.44:081",
+     "cue": "Equip",
+     "local": true,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.02.44:873",
+     "cue": "Stab",
+     "local": true,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.02.45:216",
+     "cue": "Impact",
+     "local": false,
+     "result": 3,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.02.45:876",
+     "cue": "Stab",
+     "local": true,
+     "result": 0,
+     "view": "first_person"
+    },
+    {
+     "t": "2026.11.04-19.02.45:893",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "view": "first_person"
+    }
+   ]
+  },
+  "observer": {
+   "counts": {
+    "Equip": 3,
+    "Slash": 3,
+    "Impact": 4,
+    "Cancel": 4,
+    "Holster": 2,
+    "Stab": 1
+   },
+   "timeline": [
+    {
+     "t": "2026.11.04-19.02.35:799",
+     "cue": "Equip",
+     "local": false,
+     "result": 0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.02.36:720",
+     "cue": "Slash",
+     "local": false,
+     "result": 0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.02.36:865",
+     "cue": "Impact",
+     "local": false,
+     "result": 3,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.02.38:110",
+     "cue": "Slash",
+     "local": false,
+     "result": 0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.02.38:269",
+     "cue": "Impact",
+     "local": false,
+     "result": 1,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.02.39:289",
+     "cue": "Slash",
+     "local": false,
+     "result": 0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.02.39:443",
+     "cue": "Impact",
+     "local": false,
+     "result": 2,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.02.40:290",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.02.40:291",
+     "cue": "Holster",
+     "local": false,
+     "result": 0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.02.41:297",
+     "cue": "Equip",
+     "local": false,
+     "result": 0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.02.42:090",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.02.43:210",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.02.43:211",
+     "cue": "Holster",
+     "local": false,
+     "result": 0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.02.44:099",
+     "cue": "Equip",
+     "local": false,
+     "result": 0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.02.44:894",
+     "cue": "Stab",
+     "local": false,
+     "result": 0,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.02.45:212",
+     "cue": "Impact",
+     "local": false,
+     "result": 3,
+     "view": "third_person"
+    },
+    {
+     "t": "2026.11.04-19.02.45:890",
+     "cue": "Cancel",
+     "local": false,
+     "result": 0,
+     "view": "third_person"
+    }
+   ]
+  }
+ }
+}
