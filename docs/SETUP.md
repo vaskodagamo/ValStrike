@@ -1,5 +1,7 @@
 # ValStrike development setup
 
+> **Execution ownership (2026-11-04):** Commands below are reference recipes, not instructions for every contributor to build/test. Follow [TEAM_WORKFLOW.md](TEAM_WORKFLOW.md): integration owns combined builds/runtime checks, assigned asset authoring uses a reserved slot, and every heavy Unreal command uses `Scripts/with_ue_slot.py`.
+
 Status: local Unreal 5.8.4 / Xcode 26.1.1 toolchain verified on 2026-11-03. The Editor target compiles and the generated map loads in a development client. Packaged builds and complete multiplayer movement acceptance remain open.
 
 ## Observed local environment

@@ -19,12 +19,14 @@ An original desktop tactical FPS: deliberate movement and round-based combat ins
 | [Backlog](docs/BACKLOG.md) | Ordered tasks, dependencies, and status |
 | [Work log](docs/WORK_LOG.md) | Work completed, verification, issues, and handoff |
 | [Asset chat brief](docs/ASSET_BRIEF.md) | Separate environment asset batch and starting prompt |
-| [Parallel work](docs/PARALLEL_WORK.md) | Chat history, shared combat/HUD contract, and integration |
-| [Current playtest assignments](docs/PLAYTEST_WORKSTREAMS.md) | Six coordinated follow-ups, current ownership and first Mac playtest gates |
+| [Parallel work history](docs/PARALLEL_WORK.md) | Historical assignments and combat/HUD contract |
+| [Playtest assignment history](docs/PLAYTEST_WORKSTREAMS.md) | Earlier six-stream contracts and playtest gates; current ownership is in the team board |
 | [Weapon art direction](docs/WEAPON_ART_DIRECTION.md) | Pistol asset and revised rifle/pistol finishes |
 | [First tactical map](docs/MAP_BRIEF.md) | One-site layout, map ownership, spawn and objective metadata |
 | [Round rules foundation](docs/ROUND_RULES_BRIEF.md) | Isolated match/objective logic, tests and integration boundary |
-| [Agent instructions](AGENTS.md) | How future coding sessions maintain this project |
+| [Team workflow](docs/TEAM_WORKFLOW.md) | Shared hierarchy, worktree ownership and centralized validation for Codex, Claude and humans |
+| [Team board](docs/TEAM_BOARD.md) | Current owners, prepared worktrees and integration queue |
+| [Agent instructions](AGENTS.md) / [Claude entry point](CLAUDE.md) | Shared contributor rules; start here before implementation |
 
 ## First playable target
 

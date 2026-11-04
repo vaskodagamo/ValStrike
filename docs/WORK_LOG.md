@@ -319,6 +319,20 @@ Tick-rate measurement, idle two-client Site01 match, windows after warm-up: cap 
 
 **Next action:** rerun the `joinkey` scenario in the integration batch; merge PR #21 after review. SET-04 re-measures the tick rate with four players on a packaged server.
 
+## 2026-11-04 — Shared team hierarchy and centralized validation
+
+**Request:** Pull main and replace independent per-session test/build cycles with a game-development hierarchy, shared Codex/Claude rules and separate worktrees. The user retains PR merges.
+
+**Baseline:** Fast-forwarded the clean coordinating checkout from `d89d939` to remote main `95a0ba7`, including the newer Claude changes. Implementation is on `codex/team-workflow`. Existing contributor branches and checkouts were preserved.
+
+**Changed:** TEAM_WORKFLOW.md defines the user/coordinator/engineering/art/integration responsibilities, exact path ownership, three validation tiers, one combined build/runtime batch, targeted test reuse and no build-slot retry loops. AGENTS.md is the shared entry point; CLAUDE.md points to it. TEAM_BOARD.md tracks owners, prepared slots and the next integration batch; TASK_TEMPLATE.md and the PR template make handoffs concise. README, setup and MVP workflow guidance agree. Earlier assignment documents are explicitly historical; prior evidence is retained.
+
+**Workspaces:** Created independent `codex/team-gameplay`, `codex/team-art` and `codex/team-integration` branches under `.parallel-worktrees/`, initially from `95a0ba7`; publication advances each to this policy commit. They are idle, ready for one assigned writer each, usable by either provider. No new chat, agent, editor or build was launched. Policy files do not retroactively update a running chat: the coordinator must give it the new policy and a specific task on reassignment.
+
+**Verification:** Documentation diff and local-link review; standard Git worktree creation. Final publication checks include clean isolated heads and identical policy files in all three slots. No gameplay code, asset or CI workflow changed; no new tests or Unreal build are justified for this V0 change. Existing engine-free CI remains the shared broad gate.
+
+**Limits and next action:** Publish this workflow for the user's review/merge, then assign INT-01 to one integration owner with an exact candidate SHA and affected checks. Current-main runtime acceptance remains pending according to the latest damage/economy/effects/join-key handoffs. This setup provides rules, task records and worktrees, not an autonomous scheduler; the existing UE lock enforces only mutual exclusion.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.

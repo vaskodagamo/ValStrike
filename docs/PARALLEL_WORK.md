@@ -1,5 +1,7 @@
 # Parallel development ownership
 
+> **Historical assignment (superseded 2026-11-04):** Current roles, ownership and verification rules are in [TEAM_WORKFLOW.md](TEAM_WORKFLOW.md) and [TEAM_BOARD.md](TEAM_BOARD.md). The assignments and per-stream build/test requirements below are retained as history. They do not authorize new work or independent Unreal builds. The user now retains PR merges.
+
 Updated: 2026-11-03. The user requested parallel chats to accelerate the MVP. This document assigns independent deliverables; it does not waive milestone acceptance gates.
 
 ## Current assignment

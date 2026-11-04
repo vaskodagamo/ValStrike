@@ -113,12 +113,12 @@ Automate repeatable weapon and round-rule tests. Use multiplayer functional test
 
 ## How AI fits the project
 
-For development, use AI to draft and revise small C++ systems, tests, build scripts, and documentation. Compile frequently, check APIs against the pinned engine release, and review network authority explicitly. C++ text diffs support this workflow; Blueprints, maps, and animation still need editor verification. No engine guarantees correct AI-generated code.
+For development, use AI to draft and revise small C++ systems, tests, build scripts, and documentation. Batch compilation under the integration owner, check APIs against the pinned engine release, and review network authority explicitly. C++ text diffs support this workflow; Blueprints, maps, and animation still need editor verification. No engine guarantees correct AI-generated code.
 
 For game bots, add a practice opponent after human multiplayer works: navigation, perception/line of sight, patrol/search/engage states, reaction delay, and aim error. Run decisions on the server and use the same weapon rules as players. A runtime language model is unnecessary for the initial combat behavior. Bots are a follow-on task, not a substitute for multiplayer acceptance.
 
 ## Working rhythm
 
-Choose a backlog task, implement one observable increment, verify it, update its status, and append evidence and the next action to the work log. Record major technical choices in decision documents. Keep bugs in the backlog with reproduction steps and expected/actual behavior. Maintain a playable verified baseline as soon as M1 exists.
+Use the assignments and validation tiers in [TEAM_WORKFLOW.md](TEAM_WORKFLOW.md). Contributors implement one observable increment and submit a concise handoff with targeted checks; integration verifies a combined batch. The coordinator updates central status and the work log. Record major technical choices in decision documents. Keep bugs in the backlog with reproduction steps and expected/actual behavior. Maintain a playable verified baseline as soon as M1 exists.
 
 Open setup choices: Windows tester/build access; Linux server build access; reference performance hardware; asset budget. Resolve these as dependencies arise. No paid services or asset purchases are included in this planning baseline.
