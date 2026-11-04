@@ -16,6 +16,7 @@ struct FVSWeaponHit
     const UPrimitiveComponent* HitComponent = nullptr; // FHitResult::GetComponent() of the server trace.
     ValStrike::Damage::WeaponClass Weapon = ValStrike::Damage::WeaponClass::Rifle;
     float DistanceCm = 0.0f;                      // FHitResult::Distance of the server trace.
+    float AttackDamage = 0.0f;                    // Melee attack damage (knife); 0 for firearms.
 };
 
 /**
@@ -38,7 +39,8 @@ struct FVSDamageEvent
     bool bLethalRule = false;     // The weapon's lethal-head rule fired.
     bool bKilled = false;         // This hit took the victim from alive to dead.
 
-    bool IsHeadshot() const { return ValStrike::Damage::IsHeadshot(Zone); }
+    // Never true for the knife (flat damage on every zone).
+    bool IsHeadshot() const { return ValStrike::Damage::IsHeadshotHit(Weapon, Zone); }
 };
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FVSDamageEventSignature, const FVSDamageEvent&);

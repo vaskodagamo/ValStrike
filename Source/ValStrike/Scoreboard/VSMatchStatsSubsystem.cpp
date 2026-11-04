@@ -316,8 +316,8 @@ void UVSMatchStatsSubsystem::AppendKillFeed(const FVSDamageEvent& Event, const A
     Entry.KillerTeam = VSMatchStatsTeamOf(Attacker);
     Entry.VictimTeam = VSMatchStatsTeamOf(Victim);
     Entry.Kind = static_cast<uint8>(FeedKind);
-    Entry.Weapon = static_cast<uint8>(Event.Weapon == ValStrike::Damage::WeaponClass::Pistol ? VSFeed::Weapon::Pistol
-        : Event.Weapon == ValStrike::Damage::WeaponClass::Rifle ? VSFeed::Weapon::Rifle : VSFeed::Weapon::Unknown);
+    Entry.Weapon = static_cast<uint8>(VSFeed::WeaponFromDamageClass(Event.Weapon));
+    // Never set for the knife (FVSDamageEvent::IsHeadshot).
     Entry.bHeadshot = Event.IsHeadshot();
     const AGameStateBase* GameState = GetWorld() ? GetWorld()->GetGameState() : nullptr;
     const double Now = GameState ? GameState->GetServerWorldTimeSeconds() : (GetWorld() ? GetWorld()->GetTimeSeconds() : 0.0);

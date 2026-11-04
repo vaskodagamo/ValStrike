@@ -34,6 +34,10 @@ void WeaponWeight()
 {
     // CS2 ratios: knife 250, pistol 240, rifle 215.
     EXPECT(SpeedMultiplier(WeaponKind::Unarmed) == 1.0);
+    // The knife moves at the unweighted base speed (450 cm/s running).
+    EXPECT(SpeedMultiplier(WeaponKind::Knife) == 1.0);
+    EXPECT(MaxSpeed(BaseMaxWalkSpeed, WeaponKind::Knife) == 450.0);
+    EXPECT(MaxSpeed(BaseMaxWalkSpeed, WeaponKind::Pistol) < MaxSpeed(BaseMaxWalkSpeed, WeaponKind::Knife));
     EXPECT(Near(SpeedMultiplier(WeaponKind::Pistol), 0.96, 1e-12));
     EXPECT(Near(SpeedMultiplier(WeaponKind::Rifle), 0.86, 1e-12));
     // Heavier is slower, at every base speed (run, crouch).

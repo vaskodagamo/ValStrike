@@ -93,6 +93,7 @@ float UVSDamageSubsystem::ApplyWeaponHit(const FVSWeaponHit& Hit)
     Request.Weapon = Hit.Weapon;
     Request.Zone = Zones->ResolveZone(Hit.HitComponent);
     Request.DistanceCm = Hit.DistanceCm;
+    Request.AttackDamage = Hit.AttackDamage;
     const VSD::HitResult Result = VSD::Compute(Table, Request);
     if (Result.Status != VSD::HitStatus::Applied || Result.Damage <= 0.0f)
     {
