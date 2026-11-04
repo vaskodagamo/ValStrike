@@ -1,0 +1,25 @@
+{
+  "references": [
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/UrbanEntry01_Pilot.blend",
+      "sha256": "25bf7b8d18ec7ed1966dc1be2fa367e09d0df0666b7ca5feb3b72fc9710949ea",
+      "bytes": 4336302,
+      "verified_ref": "c8bb6309e353f151681bdf96b2fe9ecad40a3aa5"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Exports/SK_VS_UrbanEntry01.fbx",
+      "sha256": "cf6930297e3579704be638829b8043934d1cab6a45fc15c4e8df0ff04cc6e782",
+      "bytes": 2179436,
+      "verified_ref": "c8bb6309e353f151681bdf96b2fe9ecad40a3aa5"
+    },
+    {
+      "path": "Art/Source/Weapons/Knife01/Knife01.blend",
+      "sha256": "87f851319fb0223ac7b938b15b7c88ca4da436d2bcade263bef97366d20e0be6",
+      "bytes": 22705219,
+      "verified_ref": "d774eafb710af68bf5fa23666e5d0ddacb651d3e"
+    }
+  ],
+  "credits_consumed": 0,
+  "unreal_operations": 0,
+  "new_meshy_calls": 0
+}

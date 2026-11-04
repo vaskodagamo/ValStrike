@@ -116,3 +116,19 @@ User merges since: #69, #70, #71 and #74. Verified: Editor, one Mac, loopback, p
 
 - The producer accepted GPF-04 (#97 `100245d`) as frozen. The producer's INT-ART-02, run by the existing INT-ART-01 owner, verifies one combined candidate: #97 + #84 + #86 + ART-23. Checks: movement lan and `typical` (D3), session ×3 (GPF-02), the reachable-spectate match (GPF-03) and pistol presentation. The gameplay team runs no QA and has no queued implementation. GPT-15 stops after #97.
 - Open for the producer, raised by the user: the new rifle (R02) and pistol (P02) exist only as `Art/Source` FBX/blend. They are not imported under `Content/`, and `VS{Rifle,Pistol}PresentationComponent.cpp` still loads `Rifle01`/`Pistol01`. INT-ART-02 explicitly excludes the P02 replacement. A weapon swap needs its own native batch: import, mesh paths, grip and muzzle refit for first person and third person, rifle-presentation and weapons checks. Its order relative to the ART-24 hands work is a producer decision.
+
+## 2026-11-04 — KNIFE-01 gameplay prepared (queued)
+
+- The producer authorized the full knife (user scope expansion). Brief: [KNIFE-01-gameplay.md](../tasks/gameplay/KNIFE-01-gameplay.md). Owner: the existing GPT-04 session (loadout and prediction), in its clean `gpt-04-switch-prediction` worktree, on a new `claude/knife-01-gameplay` branch at release. Phase A covers disjoint files; phase B covers the shared `VSCharacter`/HUD/controller/smoke files after the INT-ART-02 phase-A freeze. **Not started**: the three slots are occupied by ART-26, ART-25 and INT-ART-02.
+- Protocol trap recorded: request 2 = Last. Knife becomes slot 2 and request 3, with explicit encode/decode helpers replacing the `static_cast` at `VSWeaponLoadoutRules.h:44,113`.
+- Contract gaps proposed once to the producer: melee arc (slash 35°, stab 10° half-angle, tunable), the knife kill reward (keep the flat 200), flat damage by zone, attacks allowed airborne or crouched.
+- WPN-R02/P02 (the new rifle and pistol in game) stays queued with the producer as an explicit follow-up.
+
+## 2026-11-04 — GPF closure from INT-ART-02 evidence; KNIFE-01 phase B released
+
+- Reused the INT-ART-02 evidence read-only (candidate `61fc972` = main `5407272` with #84/#86/#97 + ART-23; no duplicate QA):
+  - movement `typical` 69/69, 0 in-motion corrections, 26 setup teleports, one valid run;
+  - session ×3, 72/72 each;
+  - match 46/46 with spectate reached.
+- **GPF-02, GPF-03 and GPF-04 are closed.** D3 is closed with a caveat: one clean run; reopen if it recurs.
+- KNIFE-01 phase B released to the same GPT-04 owner and worktree, on a new branch `claude/knife-01-phase-b` from frozen #105 plus current main. One main-targeted PR, then freeze for INT-ART-03.

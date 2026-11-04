@@ -10,6 +10,7 @@ class UCameraComponent;
 class UPrimitiveComponent;
 class UVSRifleComponent;
 class UVSPistolComponent;
+class UVSKnifeComponent;
 class UVSWeaponComponent;
 class UVSWeaponLoadoutComponent;
 class UVSHealthComponent;
@@ -40,6 +41,8 @@ public:
     UVSRifleComponent* GetRifleComponent() const { return Rifle; }
     UVSPistolComponent* GetPistolComponent() const { return Pistol; }
     UVSWeaponLoadoutComponent* GetLoadoutComponent() const { return Loadout; }
+    // Always carried; LMB slashes and RMB stabs while the knife slot is equipped.
+    UVSKnifeComponent* GetKnifeComponent() const { return Knife; }
     // Fixed loadout: every slot always has its weapon; null only for invalid slots.
     UVSWeaponComponent* GetWeapon(EVSWeaponSlot Slot) const;
     UVSWeaponComponent* GetEquippedWeapon() const;
@@ -79,9 +82,11 @@ protected:
 private:
     void CreateInputMappings();
     void BeginFire();
+    void BeginSecondary();
     void BeginReload();
     void EquipRifle();
     void EquipPistol();
+    void EquipKnife();
     void EquipLast();
     void HandleHealthChanged();
     void BeginJump();
@@ -111,6 +116,9 @@ private:
 
     UPROPERTY(VisibleAnywhere, Category = "Combat")
     TObjectPtr<UVSWeaponLoadoutComponent> Loadout;
+
+    UPROPERTY(VisibleAnywhere, Category = "Combat")
+    TObjectPtr<UVSKnifeComponent> Knife;
 
     UPROPERTY(VisibleAnywhere, Category = "Combat")
     TObjectPtr<UVSHealthComponent> Health;
@@ -171,6 +179,9 @@ private:
     TObjectPtr<UInputAction> FireAction;
 
     UPROPERTY(Transient)
+    TObjectPtr<UInputAction> SecondaryAction;
+
+    UPROPERTY(Transient)
     TObjectPtr<UInputAction> ReloadAction;
 
     UPROPERTY(Transient)
@@ -178,6 +189,9 @@ private:
 
     UPROPERTY(Transient)
     TObjectPtr<UInputAction> EquipPistolAction;
+
+    UPROPERTY(Transient)
+    TObjectPtr<UInputAction> EquipKnifeAction;
 
     UPROPERTY(Transient)
     TObjectPtr<UInputAction> EquipLastAction;

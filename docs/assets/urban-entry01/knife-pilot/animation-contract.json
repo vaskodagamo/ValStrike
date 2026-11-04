@@ -1,0 +1,166 @@
+{
+  "task": "ART-27",
+  "clips": {
+    "A_UE01_Knife_Hold": {
+      "frame_range": [
+        1,
+        61
+      ],
+      "fps": 60,
+      "duration_seconds": 1.0,
+      "impact_frame": null,
+      "impact_seconds": null,
+      "loop": true,
+      "root_motion": false
+    },
+    "A_UE01_Knife_Equip": {
+      "frame_range": [
+        1,
+        25
+      ],
+      "fps": 60,
+      "duration_seconds": 0.4,
+      "impact_frame": null,
+      "impact_seconds": null,
+      "loop": false,
+      "root_motion": false
+    },
+    "A_UE01_Knife_Slash": {
+      "frame_range": [
+        1,
+        34
+      ],
+      "fps": 60,
+      "duration_seconds": 0.55,
+      "impact_frame": 10,
+      "impact_seconds": 0.15,
+      "loop": false,
+      "root_motion": false
+    },
+    "A_UE01_Knife_Stab": {
+      "frame_range": [
+        1,
+        55
+      ],
+      "fps": 60,
+      "duration_seconds": 0.9,
+      "impact_frame": 19,
+      "impact_seconds": 0.3,
+      "loop": false,
+      "root_motion": false
+    },
+    "A_UE01_Knife_Walk": {
+      "frame_range": [
+        1,
+        63
+      ],
+      "fps": 60,
+      "duration_seconds": 1.0333333333333334,
+      "impact_frame": null,
+      "impact_seconds": null,
+      "loop": true,
+      "root_motion": false,
+      "lower_body_source": "A_UE01_Walking"
+    },
+    "A_UE01_Knife_Run": {
+      "frame_range": [
+        1,
+        39
+      ],
+      "fps": 60,
+      "duration_seconds": 0.6333333333333333,
+      "impact_frame": null,
+      "impact_seconds": null,
+      "loop": true,
+      "root_motion": false,
+      "lower_body_source": "A_UE01_Running"
+    }
+  },
+  "socket": {
+    "parent": "hand_r",
+    "space": "Blender bone HEAD-local centimeters, column vectors",
+    "matrix": [
+      [
+        0.47330552339553833,
+        -0.8653672933578491,
+        0.16468441486358643,
+        2.1089963912963867
+      ],
+      [
+        -0.04894813150167465,
+        0.16082574427127838,
+        0.9857683777809143,
+        12.109195709228516
+      ],
+      [
+        -0.8795372843742371,
+        -0.47463083267211914,
+        0.033761728554964066,
+        0.6281394362449646
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "scale": [
+      1,
+      1,
+      1
+    ],
+    "hold_hand_component_matrix": [
+      [
+        0.3524896502494812,
+        0.7673131227493286,
+        -0.535706639289856,
+        26.99999237060547
+      ],
+      [
+        0.9159441590309143,
+        -0.16554023325443268,
+        0.36557236313819885,
+        -21.0
+      ],
+      [
+        0.19182796776294708,
+        -0.6195377707481384,
+        -0.7611669301986694,
+        123.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "hold_knife_component_matrix": [
+      [
+        0.6004506945610046,
+        0.07263337075710297,
+        0.7963564395904541,
+        36.69844055175781
+      ],
+      [
+        0.12008988857269287,
+        -0.9927632808685303,
+        -2.812594175338745e-07,
+        -20.84320640563965
+      ],
+      [
+        0.7905932664871216,
+        0.09563407301902771,
+        -0.6048277020454407,
+        115.4243392944336
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  }
+}

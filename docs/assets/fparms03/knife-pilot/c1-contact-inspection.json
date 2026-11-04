@@ -1,0 +1,180 @@
+{
+  "method": "Sparse vertices, nearest K01 surface and majority of three ray-parity directions; 0.05 cm threshold. Supplement to images, not exhaustive collision or swept-volume acceptance.",
+  "grip": {
+    "thumb_03_r": {
+      "sampled": 276,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "thumb_02_r": {
+      "sampled": 647,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "thumb_01_r": {
+      "sampled": 509,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "hand_r": {
+      "sampled": 3733,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "index_02_r": {
+      "sampled": 432,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "index_01_r": {
+      "sampled": 369,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "index_03_r": {
+      "sampled": 263,
+      "inside_over_0_05cm": 1,
+      "max_depth_cm": 0.0762589683290571,
+      "deepest_point_K01_cm": [
+        1.3715276718139648,
+        1.006906270980835,
+        -0.6590156555175781
+      ]
+    },
+    "middle_01_r": {
+      "sampled": 658,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "middle_02_r": {
+      "sampled": 284,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "middle_03_r": {
+      "sampled": 249,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "ring_01_r": {
+      "sampled": 356,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "ring_02_r": {
+      "sampled": 398,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "ring_03_r": {
+      "sampled": 240,
+      "inside_over_0_05cm": 3,
+      "max_depth_cm": 0.09808148235970293,
+      "deepest_point_K01_cm": [
+        -3.62015962600708,
+        0.9597314596176147,
+        -0.7745232582092285
+      ]
+    },
+    "pinky_01_r": {
+      "sampled": 372,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "pinky_02_r": {
+      "sampled": 381,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "pinky_03_r": {
+      "sampled": 211,
+      "inside_over_0_05cm": 1,
+      "max_depth_cm": 0.07525320257991552,
+      "deepest_point_K01_cm": [
+        -5.741998672485352,
+        0.30013301968574524,
+        -1.520888090133667
+      ]
+    }
+  },
+  "samples": {
+    "Equip:1": {
+      "sampled_off_hand_min_surface_distance_cm": 12.75784683227539,
+      "right_arm_shape_vs_attachment_max_deviation_cm": 0.0
+    },
+    "Equip:13": {
+      "sampled_off_hand_min_surface_distance_cm": 15.926027297973633,
+      "right_arm_shape_vs_attachment_max_deviation_cm": 1.4789640826483558e-05
+    },
+    "Equip:25": {
+      "sampled_off_hand_min_surface_distance_cm": 18.9870662689209,
+      "right_arm_shape_vs_attachment_max_deviation_cm": 1.3704402793121256e-05
+    },
+    "Idle:1": {
+      "sampled_off_hand_min_surface_distance_cm": 18.9870662689209,
+      "right_arm_shape_vs_attachment_max_deviation_cm": 1.3704402793121256e-05
+    },
+    "Idle:31": {
+      "sampled_off_hand_min_surface_distance_cm": 18.9870662689209,
+      "right_arm_shape_vs_attachment_max_deviation_cm": 1.3704402793121256e-05
+    },
+    "Idle:61": {
+      "sampled_off_hand_min_surface_distance_cm": 18.9870662689209,
+      "right_arm_shape_vs_attachment_max_deviation_cm": 1.3704402793121256e-05
+    },
+    "Locomotion:1": {
+      "sampled_off_hand_min_surface_distance_cm": 18.9870662689209,
+      "right_arm_shape_vs_attachment_max_deviation_cm": 1.3704402793121256e-05
+    },
+    "Locomotion:25": {
+      "sampled_off_hand_min_surface_distance_cm": 18.9870662689209,
+      "right_arm_shape_vs_attachment_max_deviation_cm": 1.3704402793121256e-05
+    },
+    "Locomotion:49": {
+      "sampled_off_hand_min_surface_distance_cm": 18.9870662689209,
+      "right_arm_shape_vs_attachment_max_deviation_cm": 1.3704402793121256e-05
+    },
+    "Slash:1": {
+      "sampled_off_hand_min_surface_distance_cm": 18.9870662689209,
+      "right_arm_shape_vs_attachment_max_deviation_cm": 1.3704402793121256e-05
+    },
+    "Slash:10": {
+      "sampled_off_hand_min_surface_distance_cm": 19.249608993530273,
+      "right_arm_shape_vs_attachment_max_deviation_cm": 1.299818647769898e-05
+    },
+    "Slash:17": {
+      "sampled_off_hand_min_surface_distance_cm": 16.850086212158203,
+      "right_arm_shape_vs_attachment_max_deviation_cm": 1.5474265796836815e-05
+    },
+    "Slash:34": {
+      "sampled_off_hand_min_surface_distance_cm": 18.9870662689209,
+      "right_arm_shape_vs_attachment_max_deviation_cm": 1.3704402793121256e-05
+    },
+    "Stab:1": {
+      "sampled_off_hand_min_surface_distance_cm": 18.9870662689209,
+      "right_arm_shape_vs_attachment_max_deviation_cm": 1.3704402793121256e-05
+    },
+    "Stab:19": {
+      "sampled_off_hand_min_surface_distance_cm": 26.564653396606445,
+      "right_arm_shape_vs_attachment_max_deviation_cm": 3.6007775891219813
+    },
+    "Stab:28": {
+      "sampled_off_hand_min_surface_distance_cm": 25.50313949584961,
+      "right_arm_shape_vs_attachment_max_deviation_cm": 2.775077974022996
+    },
+    "Stab:55": {
+      "sampled_off_hand_min_surface_distance_cm": 18.9870662689209,
+      "right_arm_shape_vs_attachment_max_deviation_cm": 1.3704402793121256e-05
+    }
+  },
+  "dense_deformation": {
+    "SK_FPArms03_R": {
+      "edge_ratio_p99": 1.8233714624174608,
+      "edge_ratio_max": 24.35458923485259
+    },
+    "SK_FPArms03_L": {
+      "edge_ratio_p99": 1.4920833930639004,
+      "edge_ratio_max": 21.717484106280086
+    }
+  }
+}

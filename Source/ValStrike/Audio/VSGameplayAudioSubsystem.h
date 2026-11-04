@@ -24,8 +24,9 @@ struct FVSGameplayAudioStats
 };
 
 /**
- * Client-only gameplay audio: shots, footsteps, landings, own damage/death and
- * objective cues, spatialized with code-built attenuation.
+ * Client-only gameplay audio: shots, knife swings and contacts, footsteps,
+ * landings, own damage/death and objective cues, spatialized with code-built
+ * attenuation.
  *
  * Observes replicated state through public read-only accessors, like
  * UVSShotEffectsSubsystem, and plays each event once (no replay on respawn,
@@ -70,6 +71,9 @@ public:
     UPROPERTY(Config, EditDefaultsOnly, Category = "Audio|Art") TSoftObjectPtr<USoundBase> DefuseStartSound;
     UPROPERTY(Config, EditDefaultsOnly, Category = "Audio|Art") TSoftObjectPtr<USoundBase> DeviceBeepSound;
     UPROPERTY(Config, EditDefaultsOnly, Category = "Audio|Art") TSoftObjectPtr<USoundBase> DefuseCompleteSound;
+    UPROPERTY(Config, EditDefaultsOnly, Category = "Audio|Art") TSoftObjectPtr<USoundBase> KnifeSwingSound;
+    UPROPERTY(Config, EditDefaultsOnly, Category = "Audio|Art") TSoftObjectPtr<USoundBase> KnifeWallSound;
+    UPROPERTY(Config, EditDefaultsOnly, Category = "Audio|Art") TSoftObjectPtr<USoundBase> KnifeFleshSound;
 
 protected:
     virtual bool DoesSupportWorldType(const EWorldType::Type WorldType) const override;
@@ -93,6 +97,7 @@ private:
     bool IsAudioWorld() const;
     void ObservePawns(double Now, float DeltaTime);
     void ObserveShots(const AVSCharacter& Pawn, bool bFirstPerson, double Now);
+    void ObserveKnife(const AVSCharacter& Pawn, bool bFirstPerson);
     void ObserveOwnLife();
     void ObserveObjective();
     void Play(VSGameplayAudio::Cue Kind, int32 Variant, USceneComponent* AttachTo, const FVector& Location,
@@ -114,6 +119,7 @@ private:
     TArray<TArray<uint8>> PlaceholderPcm;
 
     TMap<TWeakObjectPtr<const UActorComponent>, VSShotEffects::ShotCounter> ShotWatches;
+    TMap<TWeakObjectPtr<const UActorComponent>, VSGameplayAudio::KnifeWatch> KnifeWatches;
     TMap<TWeakObjectPtr<const AVSCharacter>, FPawnWatch> PawnWatches;
     TWeakObjectPtr<const UVSHealthComponent> OwnHealth;
     VSGameplayAudio::LifeWatch OwnLife;

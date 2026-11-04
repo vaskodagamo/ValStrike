@@ -1,5 +1,44 @@
 # Team board
 
+## Current admission — 2026-11-04, 17:51 Europe/Berlin
+
+**Active: ART-26-C1 only**, existing hands artist at High, same draft #109/branch. Producer confirmed loose grip and windup crops in actual exports and returned the bounded correction. ART-27 #110 is frozen and source-reviewed for the third-person pilot; KNIFE-01 phase B #108 is engineering-reviewed/frozen with green CI, runtime pending.
+
+**Reserved, not running:** [INT-ART-04 R02/P02 replacement](tasks/integration/INT-ART-04-weapon-replacement.md), existing native owner and exact native/presentation paths. Claude UI dispatch is blocked by the locked Mac; one unlock request is pending. Preserve its local ART-25-containing facade branch and publication hold; start the new task from merged main after verified delivery. INT-ART-03 waits for corrected accepted first-person knife source and INT-ART-04's presentation/engine release. No additional worker is authorized merely because capacity is available. [Evidence and next trigger](producer/STATUS.md).
+
+
+## Current admission — 2026-11-04, 17:25 Europe/Berlin
+
+INT-ART-02 finished and stopped: phase A #103 merged; phase B candidate `c7386b6` / evidence `7436d57` is locally verified and remains unpublished pending ART-25 public-payload approval. Producer inspected actual native facade/roof comparisons; pilot section accepted with tan-backed recess, incomplete surrounding building and no player close-wall capture documented. [Checkpoint](producer/STATUS.md).
+
+The three active contributors are **ART-26 first-person knife**, **ART-27 third-person knife** (High, fresh `art27-knife-third-person` at `c8bb630`, [brief](tasks/art/ART-27-knife-third-person.md)), and **KNIFE-01 gameplay phase B** (existing GPT-04, `claude/knife-01-phase-b`, lead confirmed active after explicit producer release). Gameplay phase A is frozen in #105 at `1fa433e`. Preserve #103 native presentation; no parallel native source writer/build.
+
+Next: review actual source/action handoffs and frozen phase-B gameplay for the sole INT-ART-03 integration batch. R02/P02 native replacement remains queued separately and does not require finished hands. Publication approval does not block ongoing knife work; user retains merges. Earlier sections below are historical checkpoints.
+
+
+## Full knife authorized — 2026-11-04
+
+User's direct request in Direktor explicitly expands the source-only knife task to the [complete knife feature](tasks/KNIFE-01-full-feature.md). Completion requires key 3/Q, gloved first-person K01 and remote attacks, slash/stab, authoritative damage/cancellation, audio/HUD/kill feed and real server/client evidence. Existing request byte 2 means Last, so Knife uses an explicit separate request mapping. No new Meshy jobs.
+
+- **ART-24 frozen:** source `b637948`, handoff `5e53cb4`, #102, clean stopped owner verified. Producer inspected actual final/reimport reverse and overhead contact views; the specific buried-support defect is corrected. General deformation/camera/native gates remain.
+- **ART-26 dispatched at High:** same hands owner replaces ART-24, new branch `codex/art26-knife-first-person` in its existing checkout, exclusive derived FPArms03 KnifePilot source/docs. [Brief](tasks/art/ART-26-knife-first-person.md): natural K01 contact/framing and equip/idle/locomotion/slash/stab with shared impact timing. Zero credits.
+- **KNIFE-01 gameplay phase A active:** ART-25 finished and went idle, so the producer released its slot to existing GPT-04. Lead confirmed actual start on `claude/knife-01-gameplay` in `gpt-04-switch-prediction`, base `5407272`. Exact engineering brief in the live gameplay board. Shared phase-B hooks remain serialized behind native freeze/release; no contributor build.
+- **ART-27 / INT-ART-03 queued:** [third-person source](tasks/art/ART-27-knife-third-person.md) retains the existing character owner; [full native acceptance](tasks/integration/INT-ART-03-knife.md) retains the sole integrator after current Site01 work and reviewed handoffs. Neither is dispatched yet.
+
+Active contributor slots are **ART-26, KNIFE-01 gameplay and INT-ART-02**. ART-25 is frozen locally; automatic approval review blocked its 52-file public source push, with user approval pending in the artist chat. Producer reviewed actual wall/parapet comparisons and the backed-facade source assembly; native work may continue locally, without publishing that payload or derivatives before approval. Next available source capacity admits ART-27. New R02/P02 import/refit is retained as an explicit later native task and does not require completed first-person hands. The user need not repeat these priorities.
+
+## Current map priority — 2026-11-04, 16:42 Europe/Berlin
+
+Direct user priority verified in Direktor: remaining world objects and visibly building the first map. The following supersedes the earlier cycle state. **GPF-04 #97 is now frozen/merged** at `100245d`; engineering reviewed its bounded test-timing correction. No movement gameplay changed; the teleport-settlement explanation and D3 closure still require actual runtime acceptance.
+
+| Active contributor | Exclusive assignment / result |
+| --- | --- |
+| Existing hands artist, High | ART-24 local P02 hand contact repair; unchanged scope/zero credits. |
+| Existing props artist, High | [ART-25](tasks/art/ART-25-courtyard-structure.md), new `art25-courtyard-structure` / `codex/art25-courtyard-structure`, prepared clean `4f57d74`. Only new CourtyardPilot source/docs: first W01 wall, W08 pedestrian doorway and W09 parapet subset, original surface preserved, measured assembly recipe. Dispatched and actual original-FBX inspection acknowledged; zero credits. |
+| Existing native integrator | [INT-ART-02](tasks/integration/INT-ART-02-site01-followups.md), same isolated integration checkout/new `claude/int-art-02-site01-followups`. Full prompt delivered and branch change observed. Phase A combines ART-23 P01 pose/offset and GPF-02/03/04 affected acceptance. Phase B dresses a coherent Site01 courtyard/service facade and approach once ART-25's first frozen subset is reviewed. |
+
+Three contributors; gameplay writers and other art owners are stopped. One native/map owner and engine slot; no competing QA session. Map phase includes actual eye-level/overhead Unreal before/after evidence, save/reopen, routes/cover/collision and a bounded inspection of competing directional lights. Layout/spawns/objective/recovery remain intact; W08 may need a backed facade treatment because the service building has no route opening. No requirement to finish all remaining world objects or first-person hands first. New R02/P02 native replacement remains a separate later fit/integration batch; this assignment does not claim those models are in game.
+
 ## Current dispatch — 2026-11-04, 16:18 scheduled cycle (Europe/Berlin)
 
 This checkpoint supersedes the historical assignment states below. **INT-ART-01 #93 is merged and its native writer has stopped.** Local Editor verification covers character/four props, Site01 server/two-client presentation and the affected movement/rifle checks; [evidence](assets/meshy-pilot-integration/README.md) and [other-Mac guide](playtest/meshy-pilot.md). The runtime paths in merged main `a1c2371` match the verified final integration head `2475185`; no repeat build is needed for the intervening source-art/docs merges. Two-Mac, packaged and performance acceptance remain pending.

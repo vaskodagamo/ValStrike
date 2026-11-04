@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "VSStatsLedger.h"
+#include "../Damage/VSDamageModel.h"
 
 // Engine-independent kill feed. The server appends one entry when the stats
 // ledger resolves a death; clients only choose which replicated entries to show.
@@ -26,7 +27,20 @@ enum class Kind : std::uint8_t
     World,    // Attacker unknown to the ledger (no player source).
 };
 
-enum class Weapon : std::uint8_t { Rifle, Pistol, Unknown };
+// Replicated as a byte: append only.
+enum class Weapon : std::uint8_t { Rifle, Pistol, Unknown, Knife };
+
+// Feed identity of the damage class that dealt the final hit.
+inline Weapon WeaponFromDamageClass(Damage::WeaponClass Value)
+{
+    switch (Value)
+    {
+    case Damage::WeaponClass::Rifle: return Weapon::Rifle;
+    case Damage::WeaponClass::Pistol: return Weapon::Pistol;
+    case Damage::WeaponClass::Knife: return Weapon::Knife;
+    default: return Weapon::Unknown;
+    }
+}
 
 // Whether a ledger hit outcome is a resolved death, and which feed kind it is.
 // Ignored and plain damage outcomes never produce an entry.
@@ -49,6 +63,7 @@ inline const char* WeaponLabel(Weapon Value)
     {
     case Weapon::Rifle: return "RIFLE";
     case Weapon::Pistol: return "PISTOL";
+    case Weapon::Knife: return "KNIFE";
     default: return "";
     }
 }

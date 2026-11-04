@@ -1,0 +1,105 @@
+{
+  "task": "ART-26",
+  "fps": 60,
+  "root_motion": false,
+  "units": "cm; +X forward / +Z up",
+  "clips": {
+    "Equip": {
+      "end": 25,
+      "duration": 0.4,
+      "action": "A_FPArms03_KnifeEquip",
+      "start": 1,
+      "fps": 60,
+      "root_motion": false,
+      "frame_to_seconds": "(frame - 1) / 60"
+    },
+    "Idle": {
+      "end": 61,
+      "duration": 1.0,
+      "loop": true,
+      "action": "A_FPArms03_KnifeIdle",
+      "start": 1,
+      "fps": 60,
+      "root_motion": false,
+      "frame_to_seconds": "(frame - 1) / 60"
+    },
+    "Locomotion": {
+      "end": 49,
+      "duration": 0.8,
+      "loop": true,
+      "action": "A_FPArms03_KnifeLocomotion",
+      "start": 1,
+      "fps": 60,
+      "root_motion": false,
+      "frame_to_seconds": "(frame - 1) / 60"
+    },
+    "Slash": {
+      "end": 34,
+      "duration": 0.55,
+      "impact_frame": 10,
+      "impact_seconds": 0.15,
+      "action": "A_FPArms03_KnifeSlash",
+      "start": 1,
+      "fps": 60,
+      "root_motion": false,
+      "frame_to_seconds": "(frame - 1) / 60"
+    },
+    "Stab": {
+      "end": 55,
+      "duration": 0.9,
+      "impact_frame": 19,
+      "impact_seconds": 0.3,
+      "action": "A_FPArms03_KnifeStab",
+      "start": 1,
+      "fps": 60,
+      "root_motion": false,
+      "frame_to_seconds": "(frame - 1) / 60"
+    }
+  },
+  "attachment": {
+    "bone": "weapon_socket_r",
+    "weapon_local_from_socket": [
+      [
+        -0.9999999403953552,
+        -5.960464477539063e-08,
+        1.0244548320770264e-07,
+        -1.5000040531158447
+      ],
+      [
+        1.5273690223693848e-07,
+        0.8000001311302185,
+        -0.6000000238418579,
+        6.880005359649658
+      ],
+      [
+        -5.960464477539063e-08,
+        -0.6000001430511475,
+        -0.800000011920929,
+        -1.1600027084350586
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "formula": "K01 component matrix = arm component matrix @ posed weapon_socket_r matrix @ weapon_local_from_socket; column vectors",
+    "weapon_scale": 1,
+    "K01_commit": "d774eafb710af68bf5fa23666e5d0ddacb651d3e"
+  },
+  "camera": {
+    "position_cm": [
+      -20,
+      0,
+      5
+    ],
+    "target_cm": [
+      80,
+      0,
+      5
+    ],
+    "horizontal_fov_degrees": 90
+  },
+  "impact_authority": "Visual markers only; server gameplay owns impact validation/damage."
+}

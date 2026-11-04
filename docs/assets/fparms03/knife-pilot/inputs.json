@@ -1,0 +1,22 @@
+{
+  "task": "ART-26",
+  "branch_base": "5e53cb4de062f8ae0f91b171b09406c85ce6444f",
+  "credits": 0,
+  "service_calls": 0,
+  "sources": [
+    {
+      "name": "ART24_FPArms03.blend",
+      "commit": "5e53cb4de062f8ae0f91b171b09406c85ce6444f",
+      "path": "Art/Source/Characters/FPArms03/FPArms03.blend",
+      "sha256": "e0f156033051d7da9be013e5b64418f525bd88883fa95a4f28bae03c117b5556",
+      "bytes": 73544280
+    },
+    {
+      "name": "K01.blend",
+      "commit": "d774eafb710af68bf5fa23666e5d0ddacb651d3e",
+      "path": "Art/Source/Weapons/Knife01/Knife01.blend",
+      "sha256": "87f851319fb0223ac7b938b15b7c88ca4da436d2bcade263bef97366d20e0be6",
+      "bytes": 22705219
+    }
+  ]
+}

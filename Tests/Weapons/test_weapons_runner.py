@@ -46,6 +46,26 @@ class WeaponRunnerTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "reject_spam"):
             runner.evaluate(reports, "practice")
 
+    def test_knife_checks_extend_practice_without_changing_firearm_checks(self):
+        # Firearm contract sizes before KNIFE-01: 16 common, 25 per client, 24 on the server.
+        self.assertEqual(len(runner.PRACTICE_COMMON), 16)
+        self.assertEqual(len(runner.PRACTICE_CLIENT), 25)
+        practice = runner.REQUIRED_CHECKS["practice"]
+        self.assertEqual(len(practice["server"]), 24 + 15)
+        self.assertEqual(len(practice["driver"]), 25 + 12)
+        self.assertEqual(practice["driver"], practice["observer"])
+        for role in runner.ROLES:
+            for name in ("knife_equipped", "knife_slash_hit_once", "knife_wall", "knife_cancel_switch",
+                         "knife_cancel_phase", "knife_cancel_reset", "knife_cancel_death"):
+                self.assertIn(name, practice[role])
+            self.assertEqual(len(set(practice[role])), len(practice[role]))
+        for name in ("knife_reject_equip", "knife_reject_cooldown", "knife_reject_replay", "knife_reject_holstered"):
+            self.assertIn(name, practice["server"])
+        self.assertIn("knife_presentation_cues", practice["driver"])
+        for scenario in ("visual", "match"):
+            for names in runner.REQUIRED_CHECKS[scenario].values():
+                self.assertFalse([name for name in names if name.startswith("knife_")])
+
     def test_every_required_name_exists_in_the_native_harness(self):
         source = SOURCE.read_text()
         for scenario in runner.SCENARIOS:

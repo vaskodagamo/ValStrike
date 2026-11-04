@@ -3,6 +3,8 @@
 #include "VSWeaponLoadoutRules.h"
 
 #include "VSHealthComponent.h"
+#include "VSKnifeComponent.h"
+#include "VSKnifeRules.h"
 #include "VSPistolComponent.h"
 #include "VSRifleComponent.h"
 #include "../VSCharacter.h"
@@ -16,6 +18,24 @@
 #include "Misc/CommandLine.h"
 #include "Misc/Parse.h"
 #endif
+
+namespace VSLoadoutDetail
+{
+namespace Rules = VSWeaponLoadoutRules;
+// Engine enums mirror the rules' slot and request domains value for value; the
+// two domains only meet through EncodeRequest/DecodeRequest.
+static_assert(static_cast<uint8>(EVSWeaponSlot::Rifle) == static_cast<uint8>(Rules::Slot::Rifle)
+    && static_cast<uint8>(EVSWeaponSlot::Pistol) == static_cast<uint8>(Rules::Slot::Pistol)
+    && static_cast<uint8>(EVSWeaponSlot::Knife) == static_cast<uint8>(Rules::Slot::Knife), "slot domain");
+static_assert(static_cast<uint8>(EVSEquipRequest::Rifle) == Rules::RequestRifle
+    && static_cast<uint8>(EVSEquipRequest::Pistol) == Rules::RequestPistol
+    && static_cast<uint8>(EVSEquipRequest::Last) == Rules::RequestLast
+    && static_cast<uint8>(EVSEquipRequest::Knife) == Rules::RequestKnife, "request domain");
+
+Rules::Slot ToRulesSlot(EVSWeaponSlot Slot) { return static_cast<Rules::Slot>(Slot); }
+EVSWeaponSlot FromRulesSlot(Rules::Slot Slot) { return static_cast<EVSWeaponSlot>(Slot); }
+uint8 RequestByte(EVSEquipRequest Request) { return static_cast<uint8>(Request); }
+}
 
 UVSWeaponLoadoutComponent::UVSWeaponLoadoutComponent()
 {
@@ -57,14 +77,38 @@ UVSWeaponComponent* UVSWeaponLoadoutComponent::GetWeapon(EVSWeaponSlot Slot) con
     {
     case EVSWeaponSlot::Rifle: return Pawn->GetRifleComponent();
     case EVSWeaponSlot::Pistol: return Pawn->GetPistolComponent();
+    case EVSWeaponSlot::Knife: return nullptr; // Not a firearm.
     }
     return nullptr;
+}
+
+UVSKnifeComponent* UVSWeaponLoadoutComponent::GetKnife() const
+{
+    return GetOwner() ? GetOwner()->FindComponentByClass<UVSKnifeComponent>() : nullptr;
+}
+
+bool UVSWeaponLoadoutComponent::HasSlot(EVSWeaponSlot Slot) const
+{
+    return Slot == EVSWeaponSlot::Knife ? GetKnife() != nullptr : GetWeapon(Slot) != nullptr;
+}
+
+float UVSWeaponLoadoutComponent::EquipDurationFor(EVSWeaponSlot Slot) const
+{
+    return Slot == EVSWeaponSlot::Knife ? static_cast<float>(VSKnifeRules::EquipSeconds) : EquipDuration;
+}
+
+VSWeaponLoadoutRules::EquipTimes UVSWeaponLoadoutComponent::GetEquipTimes() const
+{
+    VSWeaponLoadoutRules::EquipTimes Times;
+    Times.firearm = EquipDuration;
+    Times.knife = VSKnifeRules::EquipSeconds;
+    return Times;
 }
 
 EVSWeaponSlot UVSWeaponLoadoutComponent::GetEquippedSlot() const
 {
     // Only the owning client ever activates the prediction.
-    return Prediction.active ? static_cast<EVSWeaponSlot>(Prediction.equipped) : State.Equipped;
+    return Prediction.active ? VSLoadoutDetail::FromRulesSlot(Prediction.equipped) : State.Equipped;
 }
 
 bool UVSWeaponLoadoutComponent::IsEquipping() const
@@ -75,8 +119,8 @@ bool UVSWeaponLoadoutComponent::IsEquipping() const
 VSWeaponLoadoutRules::ServerView UVSWeaponLoadoutComponent::GetServerView() const
 {
     VSWeaponLoadoutRules::ServerView View;
-    View.equipped = static_cast<VSWeaponLoadoutRules::Slot>(State.Equipped);
-    View.previous = static_cast<VSWeaponLoadoutRules::Slot>(State.Previous);
+    View.equipped = VSLoadoutDetail::ToRulesSlot(State.Equipped);
+    View.previous = VSLoadoutDetail::ToRulesSlot(State.Previous);
     View.equipping = State.bEquipping;
     View.equipCount = State.EquipCount;
     View.ack = State.AckSequence;
@@ -85,7 +129,20 @@ VSWeaponLoadoutRules::ServerView UVSWeaponLoadoutComponent::GetServerView() cons
 
 EVSWeaponReadiness UVSWeaponLoadoutComponent::GetReadiness(const UVSWeaponComponent* Weapon) const
 {
+    // A null equipped firearm (knife slot) never matches: firearms are holstered.
     if (!Weapon || Weapon != GetEquippedWeapon()) { return EVSWeaponReadiness::Holstered; }
+    return SlotReadiness(GetEquippedSlot());
+}
+
+EVSWeaponReadiness UVSWeaponLoadoutComponent::GetKnifeReadiness() const
+{
+    if (!IsKnifeEquipped()) { return EVSWeaponReadiness::Holstered; }
+    return SlotReadiness(EVSWeaponSlot::Knife);
+}
+
+EVSWeaponReadiness UVSWeaponLoadoutComponent::SlotReadiness(EVSWeaponSlot Slot) const
+{
+    if (Slot != GetEquippedSlot()) { return EVSWeaponReadiness::Holstered; }
     // The owner's predicted readiness only gates its own requests; the server
     // still rejects fire for a weapon that is holstered or equipping there.
     const bool bReady = GetOwner()->HasAuthority()
@@ -111,16 +168,20 @@ void UVSWeaponLoadoutComponent::RequestEquip(EVSEquipRequest Request)
     {
         // A listen-server host switches on the call itself; nothing to predict.
         // Mirror the server's duplicate and rate checks.
-        const EVSWeaponSlot Target = Request == EVSEquipRequest::Last ? State.Previous : static_cast<EVSWeaponSlot>(Request);
-        if (Target == State.Equipped || Now - LastLocalRequestTime < MinSwitchInterval) { return; }
+        VSWeaponLoadoutRules::Slot Target = VSWeaponLoadoutRules::Slot::Rifle;
+        if (!VSWeaponLoadoutRules::ResolveRequest(VSLoadoutDetail::RequestByte(Request), VSLoadoutDetail::ToRulesSlot(State.Previous), Target)
+            || VSLoadoutDetail::FromRulesSlot(Target) == State.Equipped || Now - LastLocalRequestTime < MinSwitchInterval)
+        {
+            return;
+        }
         LastLocalRequestTime = Now;
         Pawn->StopCombatInput();
-        ServerRequestEquip(static_cast<uint8>(Request), 0);
+        ServerRequestEquip(VSLoadoutDetail::RequestByte(Request), 0);
         return;
     }
     // Switch the local view and start the equip timer now; the request follows
     // within the server's rate limit, coalesced to the newest press.
-    if (!Prediction.Press(static_cast<uint8>(Request), GetServerView(), Now, EquipDuration)) { return; }
+    if (!Prediction.Press(VSLoadoutDetail::RequestByte(Request), GetServerView(), Now, GetEquipTimes())) { return; }
     Pawn->StopCombatInput();
     SendPredictedRequest();
 }
@@ -137,7 +198,7 @@ void UVSWeaponLoadoutComponent::SendPredictedRequest()
     VSWeaponLoadoutRules::Slot Target = VSWeaponLoadoutRules::Slot::Rifle;
     if (Prediction.TakeSend(Now, MinSwitchInterval, Sequence, Target))
     {
-        ServerRequestEquip(static_cast<uint8>(Target), Sequence);
+        ServerRequestEquip(VSWeaponLoadoutRules::EncodeRequest(Target), Sequence);
     }
     else if (Prediction.queued)
     {
@@ -180,8 +241,8 @@ void UVSWeaponLoadoutComponent::ServerRequestEquip_Implementation(uint8 Request,
     In.alive = Pawn->GetHealthComponent()->IsAlive();
     // The live match gate first processes expired deadlines, as for firing.
     In.combatAllowed = In.alive && AVSMatchGameMode::AllowsCombat(Pawn) && Pawn->CanMatchCombat();
-    In.equipped = static_cast<Rules::Slot>(State.Equipped);
-    In.previous = static_cast<Rules::Slot>(State.Previous);
+    In.equipped = VSLoadoutDetail::ToRulesSlot(State.Equipped);
+    In.previous = VSLoadoutDetail::ToRulesSlot(State.Previous);
     In.now = GetWorld()->GetTimeSeconds();
     In.lastSwitch = LastSwitchTime;
     In.minInterval = MinSwitchInterval;
@@ -195,27 +256,41 @@ void UVSWeaponLoadoutComponent::ServerRequestEquip_Implementation(uint8 Request,
     case Rules::Verdict::Duplicate: Reject(TEXT("duplicate")); return;
     case Rules::Verdict::Spam: Reject(TEXT("spam")); return;
     }
-    const EVSWeaponSlot Target = static_cast<EVSWeaponSlot>(Out.target);
-    if (!GetWeapon(Target)) { Reject(TEXT("invalid")); return; }
+    const EVSWeaponSlot Target = VSLoadoutDetail::FromRulesSlot(Out.target);
+    if (!HasSlot(Target)) { Reject(TEXT("invalid")); return; }
     Equip(Target);
 }
 
 void UVSWeaponLoadoutComponent::Equip(EVSWeaponSlot Slot)
 {
     const double Now = GetWorld()->GetTimeSeconds();
-    // Holstering stops fire and cancels an active reload without ammo transfer.
-    if (UVSWeaponComponent* Outgoing = GetEquippedWeapon()) { Outgoing->Holster(); }
+    HolsterSlot(State.Equipped);
     State.Previous = State.Equipped;
     State.Equipped = Slot;
     ++State.EquipCount;
     LastSwitchTime = Now;
-    EquipReadyTime = Now + EquipDuration;
-    State.bEquipping = EquipDuration > 0.0f;
+    const float Duration = EquipDurationFor(Slot);
+    EquipReadyTime = Now + Duration;
+    State.bEquipping = Duration > 0.0f;
     FTimerManager& Timers = GetWorld()->GetTimerManager();
-    if (State.bEquipping) { Timers.SetTimer(EquipTimer, this, &UVSWeaponLoadoutComponent::FinishEquip, EquipDuration, false); }
+    if (State.bEquipping) { Timers.SetTimer(EquipTimer, this, &UVSWeaponLoadoutComponent::FinishEquip, Duration, false); }
     else { Timers.ClearTimer(EquipTimer); }
     OnRep_State();
     GetOwner()->ForceNetUpdate();
+}
+
+void UVSWeaponLoadoutComponent::HolsterSlot(EVSWeaponSlot Slot)
+{
+    // Holstering stops fire and cancels an active reload without ammo transfer;
+    // a stowed knife never lands a pending impact.
+    if (Slot == EVSWeaponSlot::Knife)
+    {
+        if (UVSKnifeComponent* Knife = GetKnife()) { Knife->CancelActions(); }
+    }
+    else if (UVSWeaponComponent* Outgoing = GetWeapon(Slot))
+    {
+        Outgoing->Holster();
+    }
 }
 
 void UVSWeaponLoadoutComponent::FinishEquip()
@@ -264,6 +339,7 @@ bool UVSWeaponLoadoutComponent::DevelopmentReset()
         || FParse::Param(FCommandLine::Get(), TEXT("VSCombatDev"));
     if (!GetOwner()->HasAuthority() || !bOptIn) { return false; }
     GetWorld()->GetTimerManager().ClearTimer(EquipTimer);
+    if (UVSKnifeComponent* Knife = GetKnife()) { Knife->CancelActions(); }
     const uint32 EquipCount = State.EquipCount;
     const uint32 AckSequence = State.AckSequence;
     State = FVSLoadoutState();

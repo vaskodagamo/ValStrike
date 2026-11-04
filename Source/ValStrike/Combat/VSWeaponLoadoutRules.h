@@ -7,12 +7,67 @@
 // Validation times are server seconds.
 namespace VSWeaponLoadoutRules
 {
-enum class Slot : std::uint8_t { Rifle = 0, Pistol = 1 };
+// Loadout slots. The knife is always carried, never bought and has no ammo.
+enum class Slot : std::uint8_t { Rifle = 0, Pistol = 1, Knife = 2 };
+constexpr int SlotCount = 3;
 
-// Raw request bytes from the network: rifle, pistol, last weapon.
+// Raw request bytes on the network. Slots and requests are separate domains:
+// byte 2 is "last weapon", so the knife is request 3 although it is slot 2.
+// Convert only through EncodeRequest/DecodeRequest.
 constexpr std::uint8_t RequestRifle = 0;
 constexpr std::uint8_t RequestPistol = 1;
 constexpr std::uint8_t RequestLast = 2;
+constexpr std::uint8_t RequestKnife = 3;
+
+enum class RequestKind : std::uint8_t { Equip, Last, Invalid };
+
+struct DecodedRequest
+{
+    RequestKind kind = RequestKind::Invalid;
+    Slot slot = Slot::Rifle; // Meaningful only for Equip.
+};
+
+constexpr std::uint8_t EncodeRequest(Slot Target)
+{
+    switch (Target)
+    {
+    case Slot::Rifle: return RequestRifle;
+    case Slot::Pistol: return RequestPistol;
+    case Slot::Knife: return RequestKnife;
+    }
+    return RequestRifle;
+}
+
+// Any byte; everything above RequestKnife is invalid.
+constexpr DecodedRequest DecodeRequest(std::uint8_t Raw)
+{
+    switch (Raw)
+    {
+    case RequestRifle: return {RequestKind::Equip, Slot::Rifle};
+    case RequestPistol: return {RequestKind::Equip, Slot::Pistol};
+    case RequestLast: return {RequestKind::Last, Slot::Rifle};
+    case RequestKnife: return {RequestKind::Equip, Slot::Knife};
+    default: return {RequestKind::Invalid, Slot::Rifle};
+    }
+}
+
+// The slot a request resolves to against a view (server state or the owner's
+// prediction); false for an invalid byte.
+constexpr bool ResolveRequest(std::uint8_t Raw, Slot Previous, Slot& OutTarget)
+{
+    const DecodedRequest In = DecodeRequest(Raw);
+    if (In.kind == RequestKind::Invalid) { return false; }
+    OutTarget = In.kind == RequestKind::Last ? Previous : In.slot;
+    return true;
+}
+
+// Seconds from an accepted switch until the new slot may act.
+struct EquipTimes
+{
+    double firearm = 0.5;
+    double knife = 0.4;
+    double For(Slot Target) const { return Target == Slot::Knife ? knife : firearm; }
+};
 
 enum class Verdict : std::uint8_t { Accept, Invalid, Dead, Phase, Duplicate, Spam };
 
@@ -38,10 +93,10 @@ struct Result
 // limit. "Last" resolves from server state, never from the client's view.
 inline Result Evaluate(const Request& In)
 {
-    if (In.raw > RequestLast) { return {Verdict::Invalid, In.equipped}; }
+    Slot Target = In.equipped;
+    if (!ResolveRequest(In.raw, In.previous, Target)) { return {Verdict::Invalid, In.equipped}; }
     if (!In.alive) { return {Verdict::Dead, In.equipped}; }
     if (!In.combatAllowed) { return {Verdict::Phase, In.equipped}; }
-    const Slot Target = In.raw == RequestLast ? In.previous : static_cast<Slot>(In.raw);
     if (Target == In.equipped) { return {Verdict::Duplicate, Target}; }
     if (In.now - In.lastSwitch < In.minInterval) { return {Verdict::Spam, Target}; }
     return {Verdict::Accept, Target};
@@ -104,17 +159,16 @@ struct Predictor
     bool confirmed = false;
     std::uint32_t confirmedCount = 0;
 
-    // Rifle/pistol/last press. Last resolves from the predicted view, so the
-    // request on the wire is always an explicit slot. False if nothing changes.
-    bool Press(std::uint8_t Raw, const ServerView& Server, double Now, double EquipDuration)
+    // Rifle/pistol/knife/last press. Last resolves from the predicted view, so
+    // the request on the wire is always an explicit slot. False if nothing changes.
+    bool Press(std::uint8_t Raw, const ServerView& Server, double Now, const EquipTimes& Times)
     {
         if (!active) { Adopt(Server); }
-        if (Raw > RequestLast) { return false; }
-        const Slot Target = Raw == RequestLast ? previous : static_cast<Slot>(Raw);
-        if (Target == equipped) { return false; }
+        Slot Target = equipped;
+        if (!ResolveRequest(Raw, previous, Target) || Target == equipped) { return false; }
         previous = equipped;
         equipped = Target;
-        readyTime = Now + EquipDuration;
+        readyTime = Now + Times.For(Target);
         active = true;
         confirmed = false;
         // Pressing back to the in-flight target cancels a queued request instead of
@@ -127,7 +181,8 @@ struct Predictor
     // Earliest time the queued request may be sent.
     double NextSendTime(double MinInterval) const { return lastSend + MinInterval + SendSpacingMargin; }
 
-    // Takes the queued request when its spacing window is open.
+    // Takes the queued request when its spacing window is open. Send
+    // EncodeRequest(OutTarget), never the slot value itself.
     bool TakeSend(double Now, double MinInterval, std::uint32_t& OutSequence, Slot& OutTarget)
     {
         if (!queued || Now < NextSendTime(MinInterval)) { return false; }

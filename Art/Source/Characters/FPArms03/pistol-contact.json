@@ -1,0 +1,50 @@
+{
+  "right_wrist": [
+    -9.8,
+    -4.1,
+    -4
+  ],
+  "left_wrist": [
+    -9.9,
+    5.8,
+    -5.5
+  ],
+  "right_curl": [
+    30,
+    50,
+    15
+  ],
+  "left_curl": [
+    42,
+    58,
+    30
+  ],
+  "right_index": [
+    0,
+    5,
+    5
+  ],
+  "right_index_spread": 8,
+  "right_thumb": [
+    0,
+    0,
+    0
+  ],
+  "left_thumb": [
+    0,
+    0,
+    0
+  ],
+  "right_thumb_spread": -8,
+  "left_thumb_spread": 0,
+  "right_middle": [
+    25,
+    45,
+    10
+  ],
+  "right_ring": [
+    20,
+    45,
+    10
+  ]
+}

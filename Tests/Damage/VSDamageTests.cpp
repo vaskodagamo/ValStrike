@@ -94,9 +94,10 @@ void EveryZoneAndWeaponMatchesProposalTable()
 
 void ProposalTableKeepsAnatomyOrdering()
 {
-    for (std::size_t Weapon = 0; Weapon < WeaponCount; ++Weapon)
+    // Firearms only: the knife is flat on every zone (Tests/Weapons/knife_rules_test.cpp).
+    for (const WeaponClass Weapon : {WeaponClass::Rifle, WeaponClass::Pistol})
     {
-        const WeaponProfile& Profile = DefaultTable().Weapons[Weapon];
+        const WeaponProfile& Profile = DefaultTable().Weapons[static_cast<std::size_t>(Weapon)];
         const auto M = [&](HitZone Zone) { return Profile.ZoneMultiplier[static_cast<std::size_t>(Zone)]; };
         CHECK(M(HitZone::None) == 0.0f);
         CHECK(M(HitZone::Head) > M(HitZone::UpperTorso));

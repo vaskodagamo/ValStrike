@@ -1,0 +1,37 @@
+{
+  "task": "ART-26-C1",
+  "date_europe_berlin": "2026-11-04T18:18:15.630147+01:00",
+  "state": "source correction ready for art-lead review; native verification pending",
+  "branch": "codex/art26-knife-first-person",
+  "prior_held_source": "2b944b314f9c20d8b64ee9892b1048302701992c",
+  "credits_spent": 0,
+  "service_account_calls": 0,
+  "validation_tier": "V1 source only",
+  "corrected": [
+    "Palm/handle relationship and finger pad closure",
+    "Thumb/web spike with explicit local weight delta",
+    "Slash/stab windup crops and intermediate hold/follow-through clipping"
+  ],
+  "passed": [
+    "Original surface/UV/custom normals and 39-bone rest hierarchy",
+    "Exact local weight delta; unchanged left and other right weights",
+    "Changed actual FBX poses and export scope",
+    "All 199 exported hold/attack frames within documented FOV"
+  ],
+  "limitations": [
+    "Five sparse pad samples have residual penetration below 1 mm",
+    "Dense deformation outliers and runtime triangle budget not generally approved"
+  ],
+  "pending": [
+    "Art-lead visual acceptance",
+    "Native import/material/camera/attachment/notifies/cancellation",
+    "Combined gameplay and server/client acceptance"
+  ],
+  "review": "c1-review.md",
+  "export_evidence": "c1-export-inspection.json",
+  "contact_evidence": "c1-contact-inspection.json",
+  "framing_evidence": "c1-framing.json",
+  "weight_evidence": "c1-weight-summary.json",
+  "animation_contract": "animation-contract.json",
+  "action_sheet": "Previews/c1_full_actions.png"
+}
