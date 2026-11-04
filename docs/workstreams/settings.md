@@ -126,3 +126,32 @@ PR #19 was merged into main at 2026-11-03 23:01 (merge `f1e3779`) while these ru
 - Compile: the C++ change is layout plus one smoke check.
 
 **Remaining risk:** if the rerun still shows `arrow_selects_windowed FAIL` with `settings_fit_without_scrolling PASS`, the overflow was not the cause. The next suspect is then the Windowed Fullscreen transition itself (hover or capture after the window resize), compared against QA's `90849f5` run. Return it to this owner with that log.
+
+### 2026-11-04 — GPF-01 follow-up after INT-03 (D1 click, D2 clipping)
+
+**INT-03 input:** `settings_fit_without_scrolling PASS overflow=0.0`; D1 is unchanged (`arrow_selects_windowed FAIL mode=1`, `Saved/Tests/Settings/20261104T104448Z_2bc54a/first.log:1458-1460`); D2: "Desktop · 2560 × 14…" is clipped. The bisect shows D1 predates GPT-06 (`90849f5` fails too).
+
+**D1 hypothesis (engine source, not yet proven by a run):**
+
+- `FSlateApplication::ProcessMouseButtonDownEvent` sends a click to the current mouse captor, not to the widget under the point (`SlateApplication.cpp:5336`).
+- `FSceneViewport::OnViewportActivated` (`SceneViewport.cpp:1509`) calls `AcquireFocusAndCapture` on window activation whenever `bShouldCaptureMouseOnActivate` is set, whatever the UI-only input mode. The flag starts true from `CaptureMouseOnLaunch`. It is cleared only when the viewport takes capture or loses keyboard focus, and a game launched on an inactive Space or second display does neither before the menu opens.
+- When macOS activates the window, the game viewport therefore grabs the mouse. The next click (the arrow) goes to the viewport, and its mouse-up releases capture. The following click (`VS.Settings`) works. In every run the arrow is the first synthesized click and `VS.Settings` the second.
+- PR #19 passed on a single laptop display. All failing runs are on the dual-display M4.
+- Unexplained: `shift_tab_returns_to_window_mode` passes just before the click, although `AcquireFocusAndCapture` also moves keyboard focus to the viewport.
+
+**Changes (pushed to PR #48):**
+
+- `SVSSessionMenu::Tick` (runs only while the menu is visible): if the game viewport holds the cursor capture, release it. If it holds keyboard focus, return focus to the menu. Log `VSMENU_RECLAIM viewport_capture=<0|1> viewport_focus=<0|1>` when either happens. Real players hit the same thing when switching back to the game with the menu open.
+- `VSSettingsSmoke.cpp` `Click()` now also logs `VSSET_CLICK_TRACE {tag, captor_before, focus_before, under_point, hovered_after_move, captor_after_down, mode_before, mode_after, status_after}`. Handlers run synchronously, so `mode_after != mode_before` (or the "Press Apply display" status) shows that the arrow's `OnClicked` ran.
+- D2: the selector value button's horizontal padding is now 6 px (was 12), and the Windowed Fullscreen value reads "Desktop · {0}" with single spaces. That recovers about 20 px for "Desktop · 2560 × 1440". The page height is unchanged (still fits 960×540, about 23 px spare in INT-03's screenshot).
+- No test expectation changed.
+
+**Checks actually run:** `test_settings_runner.py` 6/6 OK, `git diff --check` clean, paren balance of the new log statement. No Unreal build.
+
+**How to read the next rendered run:**
+
+- `VSMENU_RECLAIM viewport_capture=1` before the arrow click, then `arrow_selects_windowed PASS`: the hypothesis is confirmed and fixed.
+- No `VSMENU_RECLAIM`, and the trace shows `captor_before:"none"`, `under_point:"SButton:VS.WindowMode.Next"`, `hovered_after_move:true`, `captor_after_down:"SButton:VS.WindowMode.Next"`, but `mode_after == mode_before`: the press reaches the arrow and its `OnClicked`/`Cycle` path fails. Look at the arrow lambda next.
+- `under_point` names another widget: hit-testing is the problem.
+- `hovered_after_move:false`: `SButton` refuses the mouse-up because the arrow isn't marked as hovered.
+- Check D2 in `screenshots/first/settings-pending-windowed.png`.

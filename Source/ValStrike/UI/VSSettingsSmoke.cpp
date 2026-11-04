@@ -11,6 +11,7 @@
 #include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "Framework/Application/SlateApplication.h"
+#include "Framework/Application/SlateUser.h"
 #include "GameFramework/GameUserSettings.h"
 #include "GameFramework/Pawn.h"
 #include "HAL/FileManager.h"
@@ -609,6 +610,12 @@ private:
         return Widget ? StaticCastSharedPtr<SEditableTextBox>(Widget)->GetText().ToString() : FString();
     }
 
+    static FString Describe(const TSharedPtr<SWidget>& Widget)
+    {
+        if (!Widget) return TEXT("none");
+        return Widget->GetTag() == NAME_None ? Widget->GetTypeAsString() : Widget->GetTypeAsString() + TEXT(":") + Widget->GetTag().ToString();
+    }
+
     static TSharedPtr<SWidget> Focused()
     {
         return FSlateApplication::IsInitialized() ? FSlateApplication::Get().GetUserFocusedWidget(0) : nullptr;
@@ -657,11 +664,26 @@ private:
         FSlateApplication& App = FSlateApplication::Get();
         const TSharedPtr<SWindow> Window = App.FindWidgetWindow(Widget.ToSharedRef());
         const bool bHitTestable = Window && Window->IsScreenspaceMouseWithin(Position);
+        // Trace: who owns the mouse and focus, what Slate hit-tests at the point,
+        // and whether the click changed menu state (handlers run synchronously).
+        const TSharedPtr<FSlateUser> User = App.GetCursorUser();
+        const FString CaptorBefore = Describe(User ? User->GetCursorCaptor() : nullptr);
+        const FString FocusBefore = Describe(Focused());
+        const FWidgetPath UnderPoint = App.LocateWindowUnderMouse(Position, App.GetInteractiveTopLevelWindows());
+        const FString Under = Describe(UnderPoint.IsValid() ? TSharedPtr<SWidget>(UnderPoint.GetLastWidget()) : nullptr);
+        const int32 ModeBefore = Menu ? int32(Menu->GetPendingWindowMode()) : -1;
         App.ProcessMouseMoveEvent(FPointerEvent(FSlateApplicationBase::CursorPointerIndex, Position, Position, None, EKeys::Invalid, 0.0f, FModifierKeysState()));
+        const bool bHovered = Widget->IsHovered();
         App.ProcessMouseButtonDownEvent(nullptr, FPointerEvent(FSlateApplicationBase::CursorPointerIndex, Position, Position, Left, EKeys::LeftMouseButton, 0.0f, FModifierKeysState()));
+        const FString CaptorAfterDown = Describe(User ? User->GetCursorCaptor() : nullptr);
         App.ProcessMouseButtonUpEvent(FPointerEvent(FSlateApplicationBase::CursorPointerIndex, Position, Position, None, EKeys::LeftMouseButton, 0.0f, FModifierKeysState()));
+        const int32 ModeAfter = Menu ? int32(Menu->GetPendingWindowMode()) : -1;
         LogLine(FString::Printf(TEXT("VSSET_CLICK %s at (%.1f, %.1f) hit_testable=%s"), Tag, Position.X, Position.Y,
             bHitTestable ? TEXT("true") : TEXT("false")));
+        LogLine(FString::Printf(TEXT("VSSET_CLICK_TRACE {\"tag\":\"%s\",\"captor_before\":\"%s\",\"focus_before\":\"%s\",\"under_point\":\"%s\",")
+            TEXT("\"hovered_after_move\":%s,\"captor_after_down\":\"%s\",\"mode_before\":%d,\"mode_after\":%d,\"status_after\":\"%s\"}"),
+            Tag, *CaptorBefore, *FocusBefore, *Under, bHovered ? TEXT("true") : TEXT("false"), *CaptorAfterDown, ModeBefore, ModeAfter,
+            Menu ? *Menu->GetSettingsStatus().ToString().Replace(TEXT("\""), TEXT("'")) : TEXT("")));
         return bHitTestable;
     }
 
