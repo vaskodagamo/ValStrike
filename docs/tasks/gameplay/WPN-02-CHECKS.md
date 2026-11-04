@@ -1,0 +1,11 @@
+# WPN-02-CHECKS — Update active weapon asset expectations
+
+Producer owns this brief and admission. Existing Claude gameplay lead dispatches the same idle GPT-04 owner in its `gpt-04-switch-prediction` worktree, preserving frozen KNIFE-01-M1 on a new `claude/wpn02-asset-checks` branch from current main (admission `fa637c5`). No new worker. Lead records actual branch/base in its delegated board.
+
+INT-ART-04 candidate `c2ba852` imported and rendered R02/P02 correctly. Rifle presentation is 37/39 solely because owner/observer `attached_assets` expects `SM_VS_Rifle01_Body`. Practice is 39/39 server and 36/37 each client solely because `pistol_assets` expects `SM_VS_Pistol01_*`; all knife-specific checks passed. Read the existing native evidence; do not re-diagnose or rebuild.
+
+Exact writes, a bounded exception to historical rifle-test ownership: `Source/ValStrike/Combat/VSWeaponSmoke.cpp` pistol mesh-name expectations only; `Source/ValStrike/Presentation/VSRiflePresentationTest.cpp` rifle body-name expectation only; active weapon folders in `asset_sha256` lists in `Scripts/test_weapons.py`, `Scripts/test_rifle_presentation.py`, `Scripts/test_shot_effects.py`; new `docs/workstreams/weapon-asset-checks.md`. No native content, presentation implementation, gameplay/knife code, thresholds, scenario timing or counts. All former path owners are frozen; sole native owner is explicitly kept out of these paths.
+
+Expect exact R02/P02 names while retaining every socket/attachment assertion and check count. Include active Rifle02/Pistol02 folders in the appropriate evidence-hash lists, preserving the historical lists if useful. Do not accept both old/new asset names or suppress failures, because that would hide an active-asset regression.
+
+Validation: inspect the constant/list-only diff against the actual imported asset paths and existing check contract; whitespace check. No new test, rule recompilation, Unreal build, runtime runner or broad CI rerun. Publish one concise main-targeted PR, exact frozen head and handoff; user merges. INT-ART-03 combines it before its one native build and affected practice/rifle presentation acceptance. Native import/wiring can proceed concurrently in disjoint paths; return any scope conflict to producer.

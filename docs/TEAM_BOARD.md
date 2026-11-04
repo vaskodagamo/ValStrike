@@ -1,5 +1,14 @@
 # Team board
 
+## Current admission — 2026-11-04, 18:54 Europe/Berlin
+
+**INT-ART-03 active:** existing native owner/new `claude/int-art-03-knife` from `4997215`, full gloved first-person and remote knife presentation/acceptance. Combine frozen #121/`22b71bf` asset-name correction before one build. Existing GPT-04 finished that constant/list-only task; no contributor tests/build.
+
+**ART-28 active at High:** existing character artist, fresh `art28-rifle02-character-fit` at `9cb17bc`, [R02 shoulder/hand fit brief](tasks/art/ART-28-rifle02-character-fit.md). Producer confirmed stock-at-cheek defect in real #118 remote images. Derived source only; later native batch, no overlap with knife integration.
+
+R02/P02 #118 merged and rendered; all 39 knife-specific checks passed, with two stale firearm-name assertions now corrected in #121. Full knife art/runtime acceptance remains pending. [Exact candidate/results](producer/STATUS.md). User merges; two active contributors after check owner froze.
+
+
 ## Current admission — 2026-11-04, 18:25 Europe/Berlin
 
 **INT-ART-04 active:** same native owner, new `claude/int-art-04-weapon-replacement` observed; R02/P02 replacement and one corrected combined candidate. Mac access restored. Existing facade published as #116 after direct ART-25 approval and merged #112; no repeated QA for publication.
