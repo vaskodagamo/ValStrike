@@ -426,6 +426,18 @@ The gameplay/integration idle slots were checked clean at their original heads b
 
 **Publication update, same session:** PR #56 merged at main `82d7a4c` during reconciliation. Coordinator pushed `b44800f` and opened main-targeted PR #57; GitHub reports it mergeable. All three artist chats acknowledged the workflow-only notice and preserved their worktrees. Document/CSV/manifest/link inspection and staged whitespace checks passed; no additional asset validation was run.
 
+## 2026-11-04 — Meshy playtest source and native-integration kickoff
+
+**Request/result:** User authorized new art sessions and asked for a prompt for a new Claude chat to make the character/world objects testable. Main `ee25083` includes the earlier coordination PR #57. Prepared two bounded source-review/finishing assignments, ART-15 character and ART-16 four props, plus INT-ART-01 for one user-started Claude native integration owner. New isolated worktrees preserve the completed ART-12/13 checkouts and their source evidence. Codex source tasks reuse existing checks and publish exact pilot-readiness revisions; no paid Meshy stages or contributor Unreal work.
+
+**Ownership/queue:** Coordinator delegates pilot visual acceptance within the explicit criteria. Claude receives exact native Content, Site01 map and limited character/world-weapon presentation paths, with authority/camera/gameplay/first-person behavior preserved. Read the live Claude board: INT-04 currently owns the engine slot, GPT-10 owns the crosshair and GPT-11 weapon request validation. INT-ART-01 can preflight now; heavy work follows INT-04 release and frozen reviewed source inputs. Source art and integration PRs target main; user retains merges.
+
+**Acceptance:** First batch is the reviewed character/usable animation subset plus approved paving, two crates and wall-backed panel. Held structures/stairs and vault mechanics remain excluded. One integration owner imports/reopens, places, wires and checks a combined candidate with actual server/two-client rendered evidence, then supplies exact other-Mac source-checkout/playtest instructions. This kickoff does not claim assets are integrated or runtime verified. Assignment/docs inspection only here; no Unreal launch or new test suite.
+
+**Dispatch:** Created “Art — Character playtest prep” (`01a1a6b0-8aa8-7373-b8bb-bc5506f451d4`) at clean prepared head `51d19ee`, and “Art — Site01 props playtest prep” (`01a1a6b0-98fd-7f41-851e-1fd1c5fc2452`) at `09a2e4b`; both explicit High reasoning, configured model unchanged. Each received its actual worktree and exclusive scope. Claude checkout is prepared at `7157124` with the integration brief; user launches it with the supplied kickoff. Registry transfers only MSH-C01/W03/W04/W07/W10; held assets remain with their frozen source records. No native integration or new art completion is claimed at dispatch.
+
+**Queue update before final handoff:** Main advanced to `5e9048f` with PRs #58–61 while sessions started. INT-04 is complete/released; the live engineering board now schedules INT-05 for the merged crosshair/fire-validation changes. Updated the native brief and Claude prompt to wait for the current engineering batch release (INT-05), preserving existing gameplay ownership. Coordinator kickoff is published as PR #62; art chats are active.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.
