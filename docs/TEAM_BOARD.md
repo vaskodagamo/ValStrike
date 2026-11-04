@@ -1,5 +1,19 @@
 # Team board
 
+## Merge/workflow reconciliation — 2026-11-04
+
+New shared Meshy workflow [ART-14](tasks/art/ART-14-meshy-agent-workflow.md) is merged in PR #55 at main `ca2e2cb`; inbox PR #53 is also on main. PR #54 was merged into `codex/meshy-asset-intake` **after** that inbox branch was merged to main, leaving the ART-11/12/13 assignments and inventories outside main. Coordinator is publishing a main-targeted follow-up carrying those missing records. Authentication documentation follow-up PR #56 is open against main; its owner reports successful saved-session authentication/balance checks, not a paid generation pilot. User retains merges.
+
+All three source passes have now stopped with local commits, not published/native-integrated results:
+
+| Task | Local source / handoff commits | Current acceptance |
+| --- | --- | --- |
+| ART-11 structure | `a4f44f1` / `f9e19da` | Source prepared; topology and mating-profile repairs remain; one supposed corner is an alcove. Art review hold |
+| ART-12 props/surfaces | `901b558` / `2bddfdd` | Four source-ready assets; stairs game export deferred after damaging reductions |
+| ART-13 character | `4c2887f` / `f9ebe2c` | Source/animation-only exports ready for review; native rig/motion/weapon-hand acceptance pending |
+
+The [shared Meshy skill](../Art/Skills/valstrike-meshy/SKILL.md) governs future programmatic jobs for Codex and Claude. Existing input cleanup has zero paid-stage allowance: reuse uploads and rig/clips. New generation, retexture, rerig or motion jobs require a bounded assignment and stage-specific credit allowance; submit once and resume recorded task IDs. No new paid job, build or worker is launched by this reconciliation. Finished workers preserve their handoffs and stop; native Unreal work remains centralized.
+
 ## ART-13 — Extracted Meshy character (2026-11-04)
 
 Dispatched and acknowledged active: “Art — Third-person player model”, High reasoning, new worktree prepared at `6afa573`. Actual source cleanup is in progress; no model/native acceptance claim.

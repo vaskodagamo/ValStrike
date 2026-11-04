@@ -1,6 +1,9 @@
 # ART-12 — Meshy Site01 props-surfaces cleanup
 
-- Status: Assigned, 2026-11-04.
+- Status: Four assets source ready; stairs game export deferred. Local source `901b558`, handoff `2bddfdd`, 2026-11-04. Not published or native-integrated.
+
+Workflow update: follow [shared Meshy skill](../../../Art/Skills/valstrike-meshy/SKILL.md) for any future assigned programmatic service work. This completed cleanup pass has no paid stages and a zero-credit allowance. Preserve the current handoff; do not regenerate or rerun the task merely to adopt the new workflow.
+
 - Backlog: PLAY-02, approved Meshy world-asset cleanup.
 - Owner: Codex chat “Art — Tactical HUD icons” (`01a1a5ba-7e9f-7c41-9b0f-38db0ea9a923`), High reasoning. Previous task is frozen; leave its old worktree/commits unchanged.
 - Worktree: `/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/meshy-props-surfaces`; branch `codex/meshy-props-surfaces`.

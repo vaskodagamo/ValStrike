@@ -1,6 +1,9 @@
 # ART-11 — Meshy Site01 structure cleanup
 
-- Status: Assigned, 2026-11-04.
+- Status: Source prepared with repair holds; local source `a4f44f1`, handoff `f9e19da`, 2026-11-04. Not published or native-integrated.
+
+Workflow update: follow [shared Meshy skill](../../../Art/Skills/valstrike-meshy/SKILL.md) for any future assigned programmatic service work. This completed cleanup pass has no paid stages and a zero-credit allowance. Preserve the current handoff; do not regenerate or rerun the task merely to adopt the new workflow.
+
 - Backlog: PLAY-02, approved Meshy world-asset cleanup.
 - Owner: Codex chat “Art — Site01 navigation signs” (`01a1a5af-0f13-78f1-8aaa-1903c1392df7`), High reasoning. Previous task is frozen; leave its old worktree/commits unchanged.
 - Worktree: `/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/meshy-structure`; branch `codex/meshy-structure`.

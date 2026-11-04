@@ -1,6 +1,9 @@
 # ART-13 — Urban Entry Meshy character and animation cleanup
 
-- Status: Assigned, 2026-11-04.
+- Status: Source and six animation exports ready for review; local source `4c2887f`, handoff `f9ebe2c`, 2026-11-04. Native rig/motion/weapon-hand acceptance pending.
+
+Workflow update: follow [shared Meshy skill](../../../Art/Skills/valstrike-meshy/SKILL.md) for any future assigned programmatic service work. This completed cleanup pass has no paid stages and a zero-credit allowance. Reuse the existing rig/clips and preserve the handoff; do not regenerate or rerun the task merely to adopt the new workflow.
+
 - Backlog: PLAY-02 / replacement for rejected ART-07 prototype; user explicitly requested an artist work on the extracted character.
 - Owner: Codex “Art — Third-person player model” (`01a1a5ba-709c-7dd3-bc9e-d70ee4f951bc`), High reasoning. Preserve previous ART-07 checkout and commits; do not resume procedural modeling.
 - Worktree: `/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/meshy-character`; branch `codex/meshy-character`.

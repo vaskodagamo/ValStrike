@@ -416,6 +416,14 @@ The gameplay/integration idle slots were checked clean at their original heads b
 
 **Checks/limits:** Extracted-file hashes, worktree setup, assignment paths and diff whitespace checked. No new tests or Unreal build/import. Cleaned asset quality, skeleton/deformation compatibility and eventual in-game acceptance remain pending. Coordinator publishes the dispatch on existing PR #54; user retains merges. Next: artist source/previews handoff, then lead review and separately assigned native integration.
 
+## 2026-11-04 — Meshy merge and art-workflow reconciliation
+
+**Request/findings:** User asked whether everything is merged and noted the new art workflow. Fetched main `ca2e2cb`: inbox PR #53 and shared Meshy workflow PR #55 are merged. Coordinator's stacked PR #54 was merged into the old inbox branch after #53 had already merged, so its inventories/ART-11/12/13 assignments never reached main. Merged main into the coordinator branch and prepared a main-targeted follow-up for those records. Authentication follow-up PR #56 is separately open; its owner reports successful account checks. No PR was merged here; user retains merges.
+
+**Source status:** Read all three completed artist handoffs. Structure source/handoff `a4f44f1` / `f9e19da` retains topology/profile repair and review holds. Props/surfaces `901b558` / `2bddfdd` provides four source-ready assets; stairs have detailed source only after rejected reductions. Character `4c2887f` / `f9ebe2c` provides editable source and six animation-only exports; art approval, root-motion/foot-drift/weapon-hand decisions and native acceptance remain pending. These are local, unpublished commits in their separate worktrees, not merged map assets. Updated the central board, briefs and register to match; existing artist worktrees were not edited.
+
+**Workflow/next action:** Notified the three existing artist chats about `valstrike-meshy`, shared by Codex and Claude. Their completed cleanup assignments authorize zero paid stages; preserve uploads/rig/clips and stop without re-running production or account checks. Future paid jobs need an exact assignment, stage-specific allowance and recorded task IDs for resumption. Lead review precedes source publication and separately assigned centralized Unreal integration. No new worker, generation charge, test suite or Unreal operation in this reconciliation; verification is document/diff/CSV inspection only.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.
