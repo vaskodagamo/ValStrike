@@ -1,0 +1,166 @@
+{
+  "SK_FPArms03_R": {
+    "thumb_03_r": {
+      "sampled": 263,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "thumb_02_r": {
+      "sampled": 413,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "thumb_01_r": {
+      "sampled": 226,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "hand_r": {
+      "sampled": 4265,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "index_02_r": {
+      "sampled": 432,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "index_01_r": {
+      "sampled": 367,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "index_03_r": {
+      "sampled": 263,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "middle_01_r": {
+      "sampled": 658,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "middle_02_r": {
+      "sampled": 284,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "middle_03_r": {
+      "sampled": 249,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "ring_01_r": {
+      "sampled": 356,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "ring_02_r": {
+      "sampled": 398,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "ring_03_r": {
+      "sampled": 240,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "pinky_01_r": {
+      "sampled": 372,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "pinky_02_r": {
+      "sampled": 381,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "pinky_03_r": {
+      "sampled": 211,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    }
+  },
+  "SK_FPArms03_L": {
+    "thumb_03_l": {
+      "sampled": 263,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "thumb_02_l": {
+      "sampled": 413,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "thumb_01_l": {
+      "sampled": 226,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "hand_l": {
+      "sampled": 4265,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "index_02_l": {
+      "sampled": 432,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "index_01_l": {
+      "sampled": 367,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "index_03_l": {
+      "sampled": 263,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "middle_01_l": {
+      "sampled": 658,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "middle_02_l": {
+      "sampled": 284,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "middle_03_l": {
+      "sampled": 249,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "ring_01_l": {
+      "sampled": 356,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "ring_02_l": {
+      "sampled": 398,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "ring_03_l": {
+      "sampled": 240,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "pinky_01_l": {
+      "sampled": 372,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "pinky_02_l": {
+      "sampled": 381,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    },
+    "pinky_03_l": {
+      "sampled": 211,
+      "inside_over_0_05cm": 0,
+      "max_depth_cm": 0
+    }
+  }
+}

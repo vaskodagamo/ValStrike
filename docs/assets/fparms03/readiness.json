@@ -2,8 +2,8 @@
   "task": "ART-22",
   "date": "2026-11-04 Europe/Berlin",
   "reviewer": "ART-22 source owner (Codex)",
-  "source_sha256": "81824bad1b4f2c348efa3a91c1ece960c112c54559d0edd2b0babe0b7855cc61",
-  "state": "Implementation ready for art review; deformation/contact held; native verification pending",
+  "source_sha256": "e0f156033051d7da9be013e5b64418f525bd88883fa95a4f28bae03c117b5556",
+  "state": "ART-24 stationary P02 correction ready for art review; general deformation and rifle/knife contacts held; native verification pending",
   "preservation": {
     "status": "pass",
     "evidence": "preservation-comparison.json",
@@ -39,7 +39,7 @@
   "weapon_fit": {
     "status": "held",
     "R02": "Corrected #89 frozen at 67f985be0099ac870ed2b0c6ed87443a07380406; dominant trigger/guard and support contact require refinement. No old #76 source used.",
-    "P02": "Corrected #81; reverse contact view shows support fingers and thumb intersecting the grip. Trigger finger is extended outside the trigger; firing pose not accepted.",
+    "P02": "ART-24 supersedes ART-22 buried-support finding: stationary source correction; see art24/review.json and matched before/source/actual-FBX evidence. Other weapon holds remain held.",
     "K01": "Preserved #85; dominant fingers curl around handle, off hand is separate at +Y and does not intentionally grip the blade. Thumb/web fold and exact grip/guard contacts remain held; no swept-clearance claim.",
     "camera": "90-degree horizontal FOV source studies only. Knife composition crops much of the hands at the lower edge; native framing still pending.",
     "evidence": "Previews/08_*_hold_90fov.png, 09_*_contact.png, 10_*_reverse_contact.png; weapon-fit.json"
@@ -56,5 +56,6 @@
     ],
     "unreal_operations": 0
   },
-  "next_owner": "Producer/art lead reviews held source findings and scopes deformation/contact follow-up before a native integration batch. User merges."
+  "next_owner": "Producer/art lead reviews held source findings and scopes deformation/contact follow-up before a native integration batch. User merges.",
+  "art24_review": "art24/review.json"
 }
