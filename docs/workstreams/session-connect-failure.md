@@ -44,5 +44,5 @@ User cancel intentionally stays a non-error. Every other way an attempt can end 
 
 ## Risks
 
-- The watchdog's "in flight" test relies on engine defaults that ValStrike doesn't override. `Browse` shuts down the old world's net driver before a new pending connection (`ShouldShutdownWorldNetDriver`, `UnrealEngine.cpp:15801`), so a connect made while already connected is covered too. If someone later binds `OnOverrideBrowseURL` or `OnOverridePendingNetGameUpdate`, re-check this.
+- The watchdog's "in flight" test relies on engine defaults that ValStrike doesn't override. `Browse` shuts down the old world's net driver before a new pending connection (`ShouldShutdownWorldNetDriver`, `UnrealEngine.cpp:15803`), so a connect made while already connected is covered too. If someone later binds `OnOverrideBrowseURL` or `OnOverridePendingNetGameUpdate`, re-check this.
 - Runtime behaviour is unverified until integration runs the suite.
