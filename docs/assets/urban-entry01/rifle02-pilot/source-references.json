@@ -1,0 +1,40 @@
+{
+  "task": "ART-28",
+  "references": [
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/UrbanEntry01_Pilot.blend",
+      "sha256": "25bf7b8d18ec7ed1966dc1be2fa367e09d0df0666b7ca5feb3b72fc9710949ea",
+      "bytes": 4336302,
+      "verified_ref": "9cb17bc1f6c1e7cac8d928495b987e7d684002fb"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Exports/SK_VS_UrbanEntry01.fbx",
+      "sha256": "cf6930297e3579704be638829b8043934d1cab6a45fc15c4e8df0ff04cc6e782",
+      "bytes": 2179436,
+      "verified_ref": "9cb17bc1f6c1e7cac8d928495b987e7d684002fb"
+    },
+    {
+      "path": "Art/Source/Weapons/Rifle02/R02_Compact.blend",
+      "sha256": "fb282abdc17285f50e8a30efdced65a5a5c62f1896c6ec3f19c7336f0830afa2",
+      "bytes": 62113213,
+      "verified_ref": "67f985be0099ac870ed2b0c6ed87443a07380406"
+    }
+  ],
+  "observed_native_evidence": [
+    {
+      "path": "docs/assets/weapon-replacement02/runtime/remote_before_after.png",
+      "sha256": "ceac5b1dcc36af4f6ad1db414b207cf8c1fb9353636d65e285971c64f1721b9e"
+    },
+    {
+      "path": "docs/assets/weapon-replacement02/runtime/site01_remote_rifle.png",
+      "sha256": "5ad8030044e992988f595bf7b5e1746899003b9052e745850ca3a2360aec7607"
+    },
+    {
+      "path": "docs/assets/weapon-replacement02/weapons-reopen-report.json",
+      "sha256": "de2ffd3e8dd586f3947dc6f857226038dccc630ab37bec1a8c451ac72e71cfb2"
+    }
+  ],
+  "new_meshy_jobs": 0,
+  "credits_consumed": 0,
+  "unreal_operations": 0
+}

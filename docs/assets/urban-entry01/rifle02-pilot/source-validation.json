@@ -1,0 +1,933 @@
+{
+  "task": "ART-28",
+  "blender": "5.2.2 LTS",
+  "source_reopened": true,
+  "preservation": {
+    "character_mesh": {
+      "vertices": 39934,
+      "triangles": 30970,
+      "custom_normals": true,
+      "positions": "f4d11d7600cf52b5773c12307cecb471ca17b9fd0deb3f97cd8382fe9f81d8c9",
+      "topology": "080eee0545b45a64441614670e23279aed4c05efdfdec3f54e97a63943b377dc",
+      "normals": "7aa60f84950a54d3db63a309714dd8751ea898b65f579955cccd018189c9c313",
+      "uvs": "a1ab1ddcf65b02b37f8ccb4d0e28e9fee33f6b134c2fc807e13ae4d75ad4b201",
+      "weights": "6a05868fec70045c79fa4e38055c863daf4d2e1b27aa9a09790b255993841d30",
+      "material_indices": "1634608499f96209a68e416e02c3950efe49718b8873dfdd69c27abbf1d50a37"
+    },
+    "rig_hash": "b545f1ca9a823f095562ecbe02753648b73a1cb9fe40654a668b25d457e9e77e",
+    "material_hash": "c810b51630818fc85b46d3017842deb495690e648afc0f01b62e2ce3facf285c",
+    "prior_action_hashes": {
+      "SmartRigArmature|rest|BaseLayer": "904b4077ccfd89a583fd9153893ee56b3ceb0585bba8ddc98b396076f90d49fd",
+      "A_UE01_Walking": "1a608c37f97091848ecae05e0b3ea91551abd1fcd5e5cac943f769993e6f38b2",
+      "A_UE01_Walk_Backward_with_Gun": "40b7857ee1da4f10446856749bd550bf28cb7d61b45c0430eacd495b4b78c507",
+      "A_UE01_Walk_Backward_While_Shooting": "5002c34691e6df25c8de205c9f242c557fe129788e89ca47dd57e118a2371795",
+      "A_UE01_Vault_with_Rifle": "310910a4bf84c362cefdb6caaadd64b0ddefe6aa71ccf1584c0775af0d32a346",
+      "A_UE01_Running": "282f85d9cf1ca338f5c1aa45e8faffd220d81413313d7f046fc7c5b62e3c2787",
+      "A_UE01_Pilot_Walk_RifleHold": "253d6c15978c9f312ecee66ad874f78ea9226a0a7a8e117bd649a5f185f1658a",
+      "A_UE01_Pilot_RifleHold": "569fd33340f1685056574dbcb26e4c31fdfb8e532e9e150d5c1041980c11d4cd",
+      "A_UE01_Crouch_Walk_Left_with_Gun": "2dad983aabcec4232436950449bf7d4251e2ff52316bdb3a4030adeb1e531533"
+    },
+    "weapon_parts": {
+      "PREVIEW_ONLY_SM_VS_Rifle02_Body": {
+        "mesh": {
+          "vertices": 224203,
+          "triangles": 448486,
+          "custom_normals": true,
+          "positions": "ffc6ceeaa2d5b3bf499131f5ba7de47faf0ece15d10a830e5e30277869b86885",
+          "topology": "6a3b005631de35b332bd2ab57e3f987cf95c09aaabb8d13be3c00f12058683e0",
+          "normals": "4f28a37fcfffda3e1ae947b88de5c2ec724acccf4200f9a91ebe0fd5643b0390",
+          "uvs": "873b6e9d350efddf175a58b00556668fb8dc10967c999457c3a6ffaa3504a7cb",
+          "weights": "5f5d2198ec230dfc97290861fe8084424b76f55db413e76b6bc842eef46d95ab",
+          "material_indices": "093a956c5856b76fd203fb8aed147a068908582a624ca578248c3294e77ba369"
+        },
+        "materials": [
+          "71dd484e90545c183b281a875dd2da1c29f8d4359a491b188c397aad6dfc959d",
+          "b5fd9a79295ae113eb75a9c96dd94f5d9b22949f57d63db0388e263184b4c3cf"
+        ]
+      },
+      "PREVIEW_ONLY_SM_VS_Rifle02_Magazine": {
+        "mesh": {
+          "vertices": 5932,
+          "triangles": 11860,
+          "custom_normals": true,
+          "positions": "ee917317b0929db4ffcf63f235e18e877ca69887989e03074294db1aacc07750",
+          "topology": "772805826aa3bfce5585a9863a1a5a7f4f0a78880d40ac6b721b735c77c09f81",
+          "normals": "d0623df69006d1ece96cf9b6489fd63f8f0a181f4ecc6e6af0753bddb37c7056",
+          "uvs": "4834d26f63c1eeb3fad5ae1b352ebd90891e37db5c1766ca5ad8d5b3c27d0d53",
+          "weights": "65e59680a4ac624c3e0b246bea294a7571822461a9db2d667b21d50f77a79c2c",
+          "material_indices": "51ae092bbdebe13eadf16f67aaaec2eb65495d000a9ec7f82560968784446cc5"
+        },
+        "materials": [
+          "71dd484e90545c183b281a875dd2da1c29f8d4359a491b188c397aad6dfc959d",
+          "b5fd9a79295ae113eb75a9c96dd94f5d9b22949f57d63db0388e263184b4c3cf"
+        ]
+      }
+    },
+    "all_equal_to_frozen_sources": true
+  },
+  "clips": {
+    "A_UE01_R02_Hold": {
+      "frame_range": [
+        1,
+        61
+      ],
+      "fps": 60,
+      "loop": true,
+      "root_motion": false,
+      "duration_seconds": 1.0,
+      "animation_only": true,
+      "bone_count": 66,
+      "rest_matrix_max_error": 3.0517578125e-05,
+      "sampled_frames": [
+        1,
+        31,
+        61
+      ],
+      "max_joint_error_cm": 0.00010412097216763444,
+      "max_vertex_error_cm": 0.00010898624135712931,
+      "loop_joint_error_cm": 0.0,
+      "lower_body_curves_unchanged": null
+    },
+    "A_UE01_R02_Walk": {
+      "frame_range": [
+        1,
+        63
+      ],
+      "fps": 60,
+      "loop": true,
+      "root_motion": false,
+      "lower_body_source": "A_UE01_Walking",
+      "duration_seconds": 1.0333333333333334,
+      "animation_only": true,
+      "bone_count": 66,
+      "rest_matrix_max_error": 3.0517578125e-05,
+      "sampled_frames": [
+        1,
+        16,
+        32,
+        47,
+        63
+      ],
+      "max_joint_error_cm": 0.00010923630571957667,
+      "max_vertex_error_cm": 0.00011577229124461363,
+      "loop_joint_error_cm": 8.753176989762398e-05,
+      "lower_body_curves_unchanged": true
+    },
+    "A_UE01_R02_Run": {
+      "frame_range": [
+        1,
+        39
+      ],
+      "fps": 60,
+      "loop": true,
+      "root_motion": false,
+      "lower_body_source": "A_UE01_Running",
+      "duration_seconds": 0.6333333333333333,
+      "animation_only": true,
+      "bone_count": 66,
+      "rest_matrix_max_error": 3.0517578125e-05,
+      "sampled_frames": [
+        1,
+        10,
+        20,
+        30,
+        39
+      ],
+      "max_joint_error_cm": 0.00013023002455167371,
+      "max_vertex_error_cm": 0.00014316633673049734,
+      "loop_joint_error_cm": 7.631778344628355e-05,
+      "lower_body_curves_unchanged": true
+    }
+  },
+  "contacts": {
+    "A_UE01_R02_Hold": {
+      "1": {
+        "stock_rear_sample_count": 299,
+        "stock_min_surface_distance_cm": 0.0004368448571767658,
+        "stock_nearest_normal_min_signed_cm": -0.3016779161989689,
+        "stock_rear_median_distance_cm": 1.3689359426498413,
+        "head_min_vertex_to_rifle_surface_cm": 16.27191162109375,
+        "hands": {
+          "r": {
+            "selected_vertices": 1129,
+            "nearest_surface_distance_cm": 0.02354767918586731,
+            "negative_normal_samples_deeper_than_0_1cm": 13,
+            "max_negative_normal_depth_cm": 0.2186904139816761,
+            "deepest_sample_weapon_cm": [
+              -5.255591869354248,
+              -0.7721283435821533,
+              -3.038745164871216
+            ]
+          },
+          "l": {
+            "selected_vertices": 1095,
+            "nearest_surface_distance_cm": 0.009499795734882355,
+            "negative_normal_samples_deeper_than_0_1cm": 0,
+            "max_negative_normal_depth_cm": 0.06592685709733814,
+            "deepest_sample_weapon_cm": [
+              29.446453094482422,
+              -1.2028987407684326,
+              5.0415849685668945
+            ]
+          }
+        }
+      },
+      "31": {
+        "stock_rear_sample_count": 299,
+        "stock_min_surface_distance_cm": 0.0004368448571767658,
+        "stock_nearest_normal_min_signed_cm": -0.3016779161989689,
+        "stock_rear_median_distance_cm": 1.3689359426498413,
+        "head_min_vertex_to_rifle_surface_cm": 16.27191162109375,
+        "hands": {
+          "r": {
+            "selected_vertices": 1129,
+            "nearest_surface_distance_cm": 0.02354767918586731,
+            "negative_normal_samples_deeper_than_0_1cm": 13,
+            "max_negative_normal_depth_cm": 0.2186904139816761,
+            "deepest_sample_weapon_cm": [
+              -5.255591869354248,
+              -0.7721283435821533,
+              -3.038745164871216
+            ]
+          },
+          "l": {
+            "selected_vertices": 1095,
+            "nearest_surface_distance_cm": 0.009499795734882355,
+            "negative_normal_samples_deeper_than_0_1cm": 0,
+            "max_negative_normal_depth_cm": 0.06592685709733814,
+            "deepest_sample_weapon_cm": [
+              29.446453094482422,
+              -1.2028987407684326,
+              5.0415849685668945
+            ]
+          }
+        }
+      },
+      "61": {
+        "stock_rear_sample_count": 299,
+        "stock_min_surface_distance_cm": 0.0004368448571767658,
+        "stock_nearest_normal_min_signed_cm": -0.3016779161989689,
+        "stock_rear_median_distance_cm": 1.3689359426498413,
+        "head_min_vertex_to_rifle_surface_cm": 16.27191162109375,
+        "hands": {
+          "r": {
+            "selected_vertices": 1129,
+            "nearest_surface_distance_cm": 0.02354767918586731,
+            "negative_normal_samples_deeper_than_0_1cm": 13,
+            "max_negative_normal_depth_cm": 0.2186904139816761,
+            "deepest_sample_weapon_cm": [
+              -5.255591869354248,
+              -0.7721283435821533,
+              -3.038745164871216
+            ]
+          },
+          "l": {
+            "selected_vertices": 1095,
+            "nearest_surface_distance_cm": 0.009499795734882355,
+            "negative_normal_samples_deeper_than_0_1cm": 0,
+            "max_negative_normal_depth_cm": 0.06592685709733814,
+            "deepest_sample_weapon_cm": [
+              29.446453094482422,
+              -1.2028987407684326,
+              5.0415849685668945
+            ]
+          }
+        }
+      }
+    },
+    "A_UE01_R02_Walk": {
+      "1": {
+        "stock_rear_sample_count": 299,
+        "stock_min_surface_distance_cm": 0.0004524689575191587,
+        "stock_nearest_normal_min_signed_cm": -0.3016929365694523,
+        "stock_rear_median_distance_cm": 1.3689124584197998,
+        "head_min_vertex_to_rifle_surface_cm": 16.271923065185547,
+        "hands": {
+          "r": {
+            "selected_vertices": 1129,
+            "nearest_surface_distance_cm": 0.02353886514902115,
+            "negative_normal_samples_deeper_than_0_1cm": 13,
+            "max_negative_normal_depth_cm": 0.2186800092458725,
+            "deepest_sample_weapon_cm": [
+              -5.255603790283203,
+              -0.7721366882324219,
+              -3.0387537479400635
+            ]
+          },
+          "l": {
+            "selected_vertices": 1095,
+            "nearest_surface_distance_cm": 0.009488929994404316,
+            "negative_normal_samples_deeper_than_0_1cm": 0,
+            "max_negative_normal_depth_cm": 0.06593936382819265,
+            "deepest_sample_weapon_cm": [
+              29.44645118713379,
+              -1.2029039859771729,
+              5.041597366333008
+            ]
+          }
+        }
+      },
+      "16": {
+        "stock_rear_sample_count": 299,
+        "stock_min_surface_distance_cm": 0.000444949691882357,
+        "stock_nearest_normal_min_signed_cm": -0.3016737028956413,
+        "stock_rear_median_distance_cm": 1.3689303398132324,
+        "head_min_vertex_to_rifle_surface_cm": 16.271886825561523,
+        "hands": {
+          "r": {
+            "selected_vertices": 1129,
+            "nearest_surface_distance_cm": 0.023541346192359924,
+            "negative_normal_samples_deeper_than_0_1cm": 13,
+            "max_negative_normal_depth_cm": 0.2186871338635683,
+            "deepest_sample_weapon_cm": [
+              -5.255600452423096,
+              -0.7721291780471802,
+              -3.03875470161438
+            ]
+          },
+          "l": {
+            "selected_vertices": 1095,
+            "nearest_surface_distance_cm": 0.009476655162870884,
+            "negative_normal_samples_deeper_than_0_1cm": 0,
+            "max_negative_normal_depth_cm": 0.06590184573428814,
+            "deepest_sample_weapon_cm": [
+              29.446443557739258,
+              -1.2028961181640625,
+              5.041556358337402
+            ]
+          }
+        }
+      },
+      "32": {
+        "stock_rear_sample_count": 299,
+        "stock_min_surface_distance_cm": 0.00044326981878839433,
+        "stock_nearest_normal_min_signed_cm": -0.3016820438206196,
+        "stock_rear_median_distance_cm": 1.3689223527908325,
+        "head_min_vertex_to_rifle_surface_cm": 16.27190399169922,
+        "hands": {
+          "r": {
+            "selected_vertices": 1129,
+            "nearest_surface_distance_cm": 0.023534903302788734,
+            "negative_normal_samples_deeper_than_0_1cm": 13,
+            "max_negative_normal_depth_cm": 0.2186915371567011,
+            "deepest_sample_weapon_cm": [
+              -5.2555975914001465,
+              -0.7721361517906189,
+              -3.038771867752075
+            ]
+          },
+          "l": {
+            "selected_vertices": 1095,
+            "nearest_surface_distance_cm": 0.009475464932620525,
+            "negative_normal_samples_deeper_than_0_1cm": 0,
+            "max_negative_normal_depth_cm": 0.06590694693568366,
+            "deepest_sample_weapon_cm": [
+              29.446435928344727,
+              -1.2029030323028564,
+              5.041559219360352
+            ]
+          }
+        }
+      },
+      "47": {
+        "stock_rear_sample_count": 299,
+        "stock_min_surface_distance_cm": 0.00044444313971325755,
+        "stock_nearest_normal_min_signed_cm": -0.30167655274271965,
+        "stock_rear_median_distance_cm": 1.3689244985580444,
+        "head_min_vertex_to_rifle_surface_cm": 16.271902084350586,
+        "hands": {
+          "r": {
+            "selected_vertices": 1129,
+            "nearest_surface_distance_cm": 0.023541569709777832,
+            "negative_normal_samples_deeper_than_0_1cm": 13,
+            "max_negative_normal_depth_cm": 0.21869166009128094,
+            "deepest_sample_weapon_cm": [
+              -5.255598545074463,
+              -0.7721266746520996,
+              -3.038759231567383
+            ]
+          },
+          "l": {
+            "selected_vertices": 1095,
+            "nearest_surface_distance_cm": 0.00945290643721819,
+            "negative_normal_samples_deeper_than_0_1cm": 0,
+            "max_negative_normal_depth_cm": 0.06585834901534326,
+            "deepest_sample_weapon_cm": [
+              29.44644546508789,
+              -1.2029037475585938,
+              5.041511535644531
+            ]
+          }
+        }
+      },
+      "63": {
+        "stock_rear_sample_count": 299,
+        "stock_min_surface_distance_cm": 0.0004505008982960135,
+        "stock_nearest_normal_min_signed_cm": -0.3016902320086956,
+        "stock_rear_median_distance_cm": 1.3689212799072266,
+        "head_min_vertex_to_rifle_surface_cm": 16.27192497253418,
+        "hands": {
+          "r": {
+            "selected_vertices": 1129,
+            "nearest_surface_distance_cm": 0.02353886514902115,
+            "negative_normal_samples_deeper_than_0_1cm": 13,
+            "max_negative_normal_depth_cm": 0.2186843827366829,
+            "deepest_sample_weapon_cm": [
+              -5.255598068237305,
+              -0.7721366882324219,
+              -3.0387537479400635
+            ]
+          },
+          "l": {
+            "selected_vertices": 1095,
+            "nearest_surface_distance_cm": 0.009493839927017689,
+            "negative_normal_samples_deeper_than_0_1cm": 0,
+            "max_negative_normal_depth_cm": 0.06593931574707312,
+            "deepest_sample_weapon_cm": [
+              29.446449279785156,
+              -1.2029001712799072,
+              5.041597366333008
+            ]
+          }
+        }
+      }
+    },
+    "A_UE01_R02_Run": {
+      "1": {
+        "stock_rear_sample_count": 299,
+        "stock_min_surface_distance_cm": 0.00044880440691486,
+        "stock_nearest_normal_min_signed_cm": -0.3016890473663807,
+        "stock_rear_median_distance_cm": 1.368917465209961,
+        "head_min_vertex_to_rifle_surface_cm": 16.27190589904785,
+        "hands": {
+          "r": {
+            "selected_vertices": 1129,
+            "nearest_surface_distance_cm": 0.023548100143671036,
+            "negative_normal_samples_deeper_than_0_1cm": 13,
+            "max_negative_normal_depth_cm": 0.21868547424674034,
+            "deepest_sample_weapon_cm": [
+              -5.255598068237305,
+              -0.7721302509307861,
+              -3.0387463569641113
+            ]
+          },
+          "l": {
+            "selected_vertices": 1095,
+            "nearest_surface_distance_cm": 0.00944904237985611,
+            "negative_normal_samples_deeper_than_0_1cm": 0,
+            "max_negative_normal_depth_cm": 0.06588708485514871,
+            "deepest_sample_weapon_cm": [
+              29.446453094482422,
+              -1.2029039859771729,
+              5.041543006896973
+            ]
+          }
+        }
+      },
+      "10": {
+        "stock_rear_sample_count": 299,
+        "stock_min_surface_distance_cm": 0.00045263179345056415,
+        "stock_nearest_normal_min_signed_cm": -0.3016858659684658,
+        "stock_rear_median_distance_cm": 1.368924617767334,
+        "head_min_vertex_to_rifle_surface_cm": 16.27190399169922,
+        "hands": {
+          "r": {
+            "selected_vertices": 1129,
+            "nearest_surface_distance_cm": 0.023552987724542618,
+            "negative_normal_samples_deeper_than_0_1cm": 13,
+            "max_negative_normal_depth_cm": 0.2186862677335739,
+            "deepest_sample_weapon_cm": [
+              -5.25560188293457,
+              -0.7721273899078369,
+              -3.0387518405914307
+            ]
+          },
+          "l": {
+            "selected_vertices": 1095,
+            "nearest_surface_distance_cm": 0.009479706175625324,
+            "negative_normal_samples_deeper_than_0_1cm": 0,
+            "max_negative_normal_depth_cm": 0.0659102144809367,
+            "deepest_sample_weapon_cm": [
+              29.44643211364746,
+              -1.202908992767334,
+              5.041561603546143
+            ]
+          }
+        }
+      },
+      "20": {
+        "stock_rear_sample_count": 299,
+        "stock_min_surface_distance_cm": 0.0004538538632914424,
+        "stock_nearest_normal_min_signed_cm": -0.3016866557300091,
+        "stock_rear_median_distance_cm": 1.3689179420471191,
+        "head_min_vertex_to_rifle_surface_cm": 16.271921157836914,
+        "hands": {
+          "r": {
+            "selected_vertices": 1129,
+            "nearest_surface_distance_cm": 0.0235519390553236,
+            "negative_normal_samples_deeper_than_0_1cm": 13,
+            "max_negative_normal_depth_cm": 0.21868231892585754,
+            "deepest_sample_weapon_cm": [
+              -5.2556047439575195,
+              -0.7721278667449951,
+              -3.0387473106384277
+            ]
+          },
+          "l": {
+            "selected_vertices": 1095,
+            "nearest_surface_distance_cm": 0.00948223378509283,
+            "negative_normal_samples_deeper_than_0_1cm": 0,
+            "max_negative_normal_depth_cm": 0.0659041902208628,
+            "deepest_sample_weapon_cm": [
+              29.44644546508789,
+              -1.2028987407684326,
+              5.041559219360352
+            ]
+          }
+        }
+      },
+      "30": {
+        "stock_rear_sample_count": 299,
+        "stock_min_surface_distance_cm": 0.0004510425787884742,
+        "stock_nearest_normal_min_signed_cm": -0.30167893692851067,
+        "stock_rear_median_distance_cm": 1.3689312934875488,
+        "head_min_vertex_to_rifle_surface_cm": 16.271892547607422,
+        "hands": {
+          "r": {
+            "selected_vertices": 1129,
+            "nearest_surface_distance_cm": 0.023541992530226707,
+            "negative_normal_samples_deeper_than_0_1cm": 13,
+            "max_negative_normal_depth_cm": 0.21869022212922573,
+            "deepest_sample_weapon_cm": [
+              -5.25559663772583,
+              -0.7721281051635742,
+              -3.0387535095214844
+            ]
+          },
+          "l": {
+            "selected_vertices": 1095,
+            "nearest_surface_distance_cm": 0.009444945491850376,
+            "negative_normal_samples_deeper_than_0_1cm": 0,
+            "max_negative_normal_depth_cm": 0.06587039834857933,
+            "deepest_sample_weapon_cm": [
+              29.446441650390625,
+              -1.2029070854187012,
+              5.041522979736328
+            ]
+          }
+        }
+      },
+      "39": {
+        "stock_rear_sample_count": 299,
+        "stock_min_surface_distance_cm": 0.0004505906836129725,
+        "stock_nearest_normal_min_signed_cm": -0.30169013142585754,
+        "stock_rear_median_distance_cm": 1.3689210414886475,
+        "head_min_vertex_to_rifle_surface_cm": 16.271921157836914,
+        "hands": {
+          "r": {
+            "selected_vertices": 1129,
+            "nearest_surface_distance_cm": 0.023552164435386658,
+            "negative_normal_samples_deeper_than_0_1cm": 13,
+            "max_negative_normal_depth_cm": 0.21869022212922573,
+            "deepest_sample_weapon_cm": [
+              -5.2555928230285645,
+              -0.7721258401870728,
+              -3.0387423038482666
+            ]
+          },
+          "l": {
+            "selected_vertices": 1095,
+            "nearest_surface_distance_cm": 0.009461693465709686,
+            "negative_normal_samples_deeper_than_0_1cm": 0,
+            "max_negative_normal_depth_cm": 0.06590143350604194,
+            "deepest_sample_weapon_cm": [
+              29.446460723876953,
+              -1.2029087543487549,
+              5.041560173034668
+            ]
+          }
+        }
+      }
+    }
+  },
+  "views": {
+    "original_right": {
+      "position_cm": [
+        70,
+        -170,
+        155
+      ],
+      "target_cm": [
+        20,
+        -12,
+        135
+      ],
+      "ortho_size_cm": 100,
+      "horizontal_fov_degrees": null,
+      "source_only": true
+    },
+    "original_left": {
+      "position_cm": [
+        70,
+        170,
+        155
+      ],
+      "target_cm": [
+        20,
+        -12,
+        135
+      ],
+      "ortho_size_cm": 100,
+      "horizontal_fov_degrees": null,
+      "source_only": true
+    },
+    "candidate_right": {
+      "position_cm": [
+        70,
+        -170,
+        155
+      ],
+      "target_cm": [
+        20,
+        -12,
+        135
+      ],
+      "ortho_size_cm": 100,
+      "horizontal_fov_degrees": null,
+      "source_only": true
+    },
+    "candidate_left": {
+      "position_cm": [
+        70,
+        170,
+        155
+      ],
+      "target_cm": [
+        20,
+        -12,
+        135
+      ],
+      "ortho_size_cm": 100,
+      "horizontal_fov_degrees": null,
+      "source_only": true
+    },
+    "reimport_right": {
+      "position_cm": [
+        70,
+        -170,
+        155
+      ],
+      "target_cm": [
+        20,
+        -12,
+        135
+      ],
+      "ortho_size_cm": 100,
+      "horizontal_fov_degrees": null,
+      "source_only": true
+    },
+    "reimport_left": {
+      "position_cm": [
+        70,
+        170,
+        155
+      ],
+      "target_cm": [
+        20,
+        -12,
+        135
+      ],
+      "ortho_size_cm": 100,
+      "horizontal_fov_degrees": null,
+      "source_only": true
+    },
+    "reimport_grip": {
+      "position_cm": [
+        65,
+        -100,
+        138
+      ],
+      "target_cm": [
+        20,
+        -14,
+        128
+      ],
+      "ortho_size_cm": 38,
+      "horizontal_fov_degrees": null,
+      "source_only": true
+    },
+    "reimport_support": {
+      "position_cm": [
+        75,
+        110,
+        145
+      ],
+      "target_cm": [
+        46,
+        -11,
+        133
+      ],
+      "ortho_size_cm": 42,
+      "horizontal_fov_degrees": null,
+      "source_only": true
+    },
+    "reimport_stock_right": {
+      "position_cm": [
+        80,
+        -120,
+        150
+      ],
+      "target_cm": [
+        -2,
+        -14,
+        134
+      ],
+      "ortho_size_cm": 45,
+      "horizontal_fov_degrees": null,
+      "source_only": true
+    },
+    "reimport_stock_left": {
+      "position_cm": [
+        80,
+        80,
+        180
+      ],
+      "target_cm": [
+        -2,
+        -14,
+        134
+      ],
+      "ortho_size_cm": 55,
+      "horizontal_fov_degrees": null,
+      "source_only": true
+    },
+    "reimport_top": {
+      "position_cm": [
+        24,
+        -12,
+        260
+      ],
+      "target_cm": [
+        24,
+        -12,
+        132
+      ],
+      "ortho_size_cm": 100,
+      "horizontal_fov_degrees": null,
+      "source_only": true
+    },
+    "hold_01": {
+      "position_cm": [
+        270,
+        -430,
+        180
+      ],
+      "target_cm": [
+        12,
+        0,
+        85
+      ],
+      "ortho_size_cm": 195,
+      "horizontal_fov_degrees": null,
+      "source_only": true
+    },
+    "hold_5m": {
+      "position_cm": [
+        276.99945068359375,
+        -423.9991455078125,
+        85.0
+      ],
+      "target_cm": [
+        12.0,
+        0.0,
+        85.0
+      ],
+      "ortho_size_cm": null,
+      "horizontal_fov_degrees": 90,
+      "source_only": true
+    },
+    "walk_01": {
+      "position_cm": [
+        270,
+        -430,
+        180
+      ],
+      "target_cm": [
+        12,
+        0,
+        85
+      ],
+      "ortho_size_cm": 195,
+      "horizontal_fov_degrees": null,
+      "source_only": true
+    },
+    "walk_16": {
+      "position_cm": [
+        270,
+        -430,
+        180
+      ],
+      "target_cm": [
+        12,
+        0,
+        85
+      ],
+      "ortho_size_cm": 195,
+      "horizontal_fov_degrees": null,
+      "source_only": true
+    },
+    "walk_32": {
+      "position_cm": [
+        270,
+        -430,
+        180
+      ],
+      "target_cm": [
+        12,
+        0,
+        85
+      ],
+      "ortho_size_cm": 195,
+      "horizontal_fov_degrees": null,
+      "source_only": true
+    },
+    "walk_47": {
+      "position_cm": [
+        270,
+        -430,
+        180
+      ],
+      "target_cm": [
+        12,
+        0,
+        85
+      ],
+      "ortho_size_cm": 195,
+      "horizontal_fov_degrees": null,
+      "source_only": true
+    },
+    "walk_5m": {
+      "position_cm": [
+        276.99945068359375,
+        -423.9991455078125,
+        85.0
+      ],
+      "target_cm": [
+        12.0,
+        0.0,
+        85.0
+      ],
+      "ortho_size_cm": null,
+      "horizontal_fov_degrees": 90,
+      "source_only": true
+    },
+    "run_01": {
+      "position_cm": [
+        270,
+        -430,
+        180
+      ],
+      "target_cm": [
+        12,
+        0,
+        85
+      ],
+      "ortho_size_cm": 195,
+      "horizontal_fov_degrees": null,
+      "source_only": true
+    },
+    "run_10": {
+      "position_cm": [
+        270,
+        -430,
+        180
+      ],
+      "target_cm": [
+        12,
+        0,
+        85
+      ],
+      "ortho_size_cm": 195,
+      "horizontal_fov_degrees": null,
+      "source_only": true
+    },
+    "run_20": {
+      "position_cm": [
+        270,
+        -430,
+        180
+      ],
+      "target_cm": [
+        12,
+        0,
+        85
+      ],
+      "ortho_size_cm": 195,
+      "horizontal_fov_degrees": null,
+      "source_only": true
+    },
+    "run_30": {
+      "position_cm": [
+        270,
+        -430,
+        180
+      ],
+      "target_cm": [
+        12,
+        0,
+        85
+      ],
+      "ortho_size_cm": 195,
+      "horizontal_fov_degrees": null,
+      "source_only": true
+    },
+    "run_5m": {
+      "position_cm": [
+        276.99945068359375,
+        -423.9991455078125,
+        85.0
+      ],
+      "target_cm": [
+        12.0,
+        0.0,
+        85.0
+      ],
+      "ortho_size_cm": null,
+      "horizontal_fov_degrees": 90,
+      "source_only": true
+    },
+    "before_known_defect": {
+      "position_cm": [
+        70,
+        -170,
+        155
+      ],
+      "target_cm": [
+        20,
+        -12,
+        135
+      ],
+      "ortho_size_cm": 100,
+      "horizontal_fov_degrees": null,
+      "source_only": true
+    },
+    "reimport_grip_reverse": {
+      "position_cm": [
+        10,
+        50,
+        90
+      ],
+      "target_cm": [
+        19,
+        -14,
+        125
+      ],
+      "ortho_size_cm": 42,
+      "horizontal_fov_degrees": null,
+      "source_only": true
+    }
+  },
+  "native_runtime": "pending",
+  "contact_limitations": "Selected vertices/nearest surface-normal signs, not a closed-volume penetration or continuous collision proof. Stock uses actual rear-pad vertices, not shoulder joint distance; visual evidence remains necessary.",
+  "material_note": "Original PBR rebound to the actual character FBX for matched shading; no new weapon mesh export or native-material verification. Existing R02 export evidence reused unchanged."
+}

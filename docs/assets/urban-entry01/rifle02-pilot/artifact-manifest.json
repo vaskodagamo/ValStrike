@@ -1,0 +1,191 @@
+{
+  "task": "ART-28",
+  "scope": "Frozen source, exports and evidence; subsequent readiness/handoff documentation is separate",
+  "files": [
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Rifle02Pilot/Exports/A_UE01_R02_Hold.fbx",
+      "bytes": 608716,
+      "sha256": "85ae71c43d7a9882c6f4f378b18849627b80718c9544a3c31263495aa269f856"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Rifle02Pilot/Exports/A_UE01_R02_Run.fbx",
+      "bytes": 577964,
+      "sha256": "788da7cfb7adf1a9b59b7c7becd973cda105f3de45004e23b54eba13e95cfc84"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Rifle02Pilot/Exports/A_UE01_R02_Walk.fbx",
+      "bytes": 673500,
+      "sha256": "f5147213b0474c3f40c9345011c81021c7e53be20b47f161d1cca31e19e44962"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Rifle02Pilot/README.md",
+      "bytes": 4996,
+      "sha256": "12980e68db2150ea67175d117ceeae3cbcdaa046c731d6d750aa6f6af3b27519"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Rifle02Pilot/UrbanEntry01_Rifle02Pilot.blend",
+      "bytes": 46354674,
+      "sha256": "6199d8f91d315e0c02b85d73fb332b999442af3bf2515d9b1814692d434037b8"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Rifle02Pilot/prepare_rifle02_pose.py",
+      "bytes": 9139,
+      "sha256": "db5e133dbf348826c9e742bc76d1c993049fde1c2466b4d5b1a13dc75599f401"
+    },
+    {
+      "path": "Art/Source/Characters/UrbanEntry01/Rifle02Pilot/review_rifle02_pose.py",
+      "bytes": 12870,
+      "sha256": "552818ed3d623e54cbaba69b2437070ad5e03af9f6f90b8718c93afe7b58b99b"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/Previews/before_known_defect.png",
+      "bytes": 1100875,
+      "sha256": "0b91b870b54f0872009aa0445e8d18e6aed45191f79d6eb81505e43ead39a102"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/Previews/candidate_left.png",
+      "bytes": 1087467,
+      "sha256": "47a77aec60e529e6f54233d4816cec7b87bb327d4fc1210a7dccbcb2cc40428e"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/Previews/candidate_right.png",
+      "bytes": 1117120,
+      "sha256": "73b77780ed792d91674a841111c7fc3261188410eea8e0569146552b8df1493e"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/Previews/hold_01.png",
+      "bytes": 493284,
+      "sha256": "ae5524b99f28a2656a67cb34166f08c0e35a0d2370103fe380813a81d83502ed"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/Previews/hold_5m.png",
+      "bytes": 2034474,
+      "sha256": "89a57383cd1a51e5f09a99c0b884f191ced6e437c6a005707f3bd11e23c0be01"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/Previews/motion_overview.png",
+      "bytes": 711858,
+      "sha256": "9ccbda5d9a8d078fa9b6729538da0b077663a02d552a67b73d78d45481c74b8d"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/Previews/original_left.png",
+      "bytes": 1087596,
+      "sha256": "ba2049118f16f79d4b56c1d4c923aaea1700aad83dfc144a2e94d45f52615bf1"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/Previews/original_right.png",
+      "bytes": 1117175,
+      "sha256": "d11a47fcebf908c934f1762e40c5682e328b120c815b52b4d273502823dd65d9"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/Previews/reimport_grip.png",
+      "bytes": 1196715,
+      "sha256": "adea52bbd059c901c15d1ee814aa5cb34bffcac0e9e2e62cbae816f7ad2b81ec"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/Previews/reimport_grip_reverse.png",
+      "bytes": 1220330,
+      "sha256": "b5467da196f6d6c2ea0f0b05835082ebe66606ab3f51b1010dbdcd26a0489a03"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/Previews/reimport_left.png",
+      "bytes": 1087968,
+      "sha256": "bef213bfd57956ef0a41389fbc8d77fcfe5ff7c87610065851d1706652d4b5ea"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/Previews/reimport_right.png",
+      "bytes": 1116849,
+      "sha256": "70b1ce74af9f2000c808c4e2095985bf45e210da6144b1545cb9e0db48ced995"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/Previews/reimport_stock_left.png",
+      "bytes": 1256362,
+      "sha256": "25f9f41f641a3d011072e84f8a4be05c081aed2936610a645285091bc9c3bd9a"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/Previews/reimport_stock_right.png",
+      "bytes": 1303277,
+      "sha256": "328292eabcbfcc9432912dd21953c113f7b0547e74be44da240d7611b648a610"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/Previews/reimport_support.png",
+      "bytes": 1057586,
+      "sha256": "eaab4d743b3e5302f3b3d18346025b9a3517fde94e420b5584431c50e06d9c6a"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/Previews/reimport_top.png",
+      "bytes": 1044567,
+      "sha256": "43e0d8ec4997f5d2b6d07bc9292543beb6d2b4b6e60f9cb5fd2c122765ce194f"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/Previews/run_01.png",
+      "bytes": 474053,
+      "sha256": "45ed5d79f087ad6eece861b9e9163de4209397e311022118897c943e8fe67b5b"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/Previews/run_10.png",
+      "bytes": 476224,
+      "sha256": "235188189d6d2d2ecaeb443ad280b853e03407c71dbd2ac9cb58e0f5f9bcc108"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/Previews/run_20.png",
+      "bytes": 468603,
+      "sha256": "1e35a8990cd2e449f94f80b16866598e1eed41b2ac136ea52a84fd22180be65f"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/Previews/run_30.png",
+      "bytes": 474058,
+      "sha256": "29b072fdcd131389be3e2041c2c5f62ca1c2ce120ae08414596404f2c999c2a8"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/Previews/run_5m.png",
+      "bytes": 2028461,
+      "sha256": "a8597ebe76daa9a8ea8eb6069adad21fd58785ebf21fa60053ba209af96601e5"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/Previews/walk_01.png",
+      "bytes": 472459,
+      "sha256": "ecc1dab07e2cddadd1f47c9a4071806b6039a2f8853cbfb50e2c099e981afc03"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/Previews/walk_16.png",
+      "bytes": 478532,
+      "sha256": "9fa56093fdb0598ff14a5dca6787c1ff331ac7b310e72f1cecec0e08366593da"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/Previews/walk_32.png",
+      "bytes": 472465,
+      "sha256": "bf3b5412fd0a3f96cd7e21355ed868bf9988f09ee9066d6439ee7a428758ea5f"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/Previews/walk_47.png",
+      "bytes": 474030,
+      "sha256": "c5b5bee842313c640bb00f41fbf7cf2e506eb61a518be30884c37cbac7bc6a53"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/Previews/walk_5m.png",
+      "bytes": 2030491,
+      "sha256": "e8e7c93bb664a85400c074e65be3907e4780b3dd9a2395e6332ee2c66b89f0e7"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/README.md",
+      "bytes": 6402,
+      "sha256": "8c19e4c63d9f1903ea274fa8d6b9b55e4d3d9dc38d6e142bd341ecc64652b30c"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/assembly-contract.json",
+      "bytes": 4012,
+      "sha256": "068d04cdbf4e9c203cd0a3f4529230e51b803dbbd3bca32dd04bee964095331f"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/source-references.json",
+      "bytes": 1465,
+      "sha256": "4740284201832cb75983f04b3e5bd2ede8aa560086ee5b703a26f5b4a0ea9142"
+    },
+    {
+      "path": "docs/assets/urban-entry01/rifle02-pilot/source-validation.json",
+      "bytes": 28035,
+      "sha256": "76d524c8756715d5f9ac15b6f7dee9447b2d59acf473f653337b6ad044675ed8"
+    }
+  ]
+}
