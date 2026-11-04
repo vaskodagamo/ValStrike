@@ -21,7 +21,7 @@ The shared skill now activates for local Meshy cleanup as well as service work. 
 
 ## Handoff
 
-- State: implementation ready; publication pending. The first task commit contains the complete correction; its exact revision will be recorded in the publication handoff.
-- Checks run: existing `quick_validate.py` passed using `PYTHONPATH=/private/tmp/valstrike-meshy-validation-deps` (system Python lacks PyYAML); linked local guide exists; instruction/diff review completed. No dependencies were installed, tests added, assets changed or engine work performed.
+- State: implementation ready, published as [PR #80](https://github.com/vaskodagamo/ValStrike/pull/80). Implementation commit: `906ddc008be6efb0e492f839f26823d6dbd4738b`; the publication record is a subsequent documentation-only commit. User retains merge.
+- Checks run: existing `quick_validate.py` passed using `PYTHONPATH=/private/tmp/valstrike-meshy-validation-deps` (system Python lacks PyYAML); linked local guide exists; instruction/diff review and `git diff --cached --check` passed. No dependencies were installed, tests added, assets changed or engine work performed.
 - Checks deferred: individual artists' corrected renders/exports, art acceptance and native runtime verification. No asset quality claim is made here.
 - Next owner: Direktor (2) reviews the published revision, updates both installed skill copies consistently, records central status and follows current artist corrections. Active artist chats must receive the rule explicitly; a file update alone does not refresh their context.
