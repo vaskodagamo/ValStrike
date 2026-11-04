@@ -63,7 +63,7 @@
       "branch": "codex/art26-knife-first-person",
       "brief": "docs/tasks/art/ART-26-knife-first-person.md",
       "handoff": "docs/workstreams/art26-knife-first-person.md",
-      "state": "dispatched at High after ART-24 clean stop; knife first-person grip and actions",
+      "state": "active; grip sampled clearance corrected, source/export views rendering for actual visual review before freeze",
       "credit_cap": 0,
       "previous_assignments": [
         {
@@ -124,15 +124,21 @@
       "pr": 85
     },
     {
-      "task": "ART-23",
+      "task": "ART-27",
       "title": "Art \u2014 Character playtest prep",
       "thread_id": "01a1a6b0-8aa8-7373-b8bb-bc5506f451d4",
-      "worktree": ".parallel-worktrees/art23-character-pistol",
-      "handoff": "docs/workstreams/art23-character-pistol.md",
-      "prior_credit_cap": 0,
-      "branch": "codex/art23-character-pistol",
-      "brief": "docs/tasks/art/ART-23-character-pistol-pose.md",
-      "state": "idle; merged; stationary third-person source reviewed, native pending",
+      "worktree": ".parallel-worktrees/art27-knife-third-person",
+      "branch": "codex/art27-knife-third-person",
+      "brief": "docs/tasks/art/ART-27-knife-third-person.md",
+      "handoff": "docs/workstreams/art27-knife-third-person.md",
+      "base": "a22b9bf328b4d400c5bd923c901de8113d1ab32e",
+      "prepared_head": "c8bb630",
+      "state": "active; owner acknowledged fresh worktree and preservation/animation assignment at High",
+      "owned_paths": [
+        "Art/Source/Characters/UrbanEntry01/KnifePilot/",
+        "docs/assets/urban-entry01/knife-pilot/",
+        "docs/workstreams/art27-knife-third-person.md"
+      ],
       "credit_cap": 0,
       "previous_assignments": [
         {
@@ -145,12 +151,24 @@
           "state": "frozen; stopped",
           "head": "02f6bf221bcb9b24415c11b7b554faadfacd2ca8",
           "pr": 65
+        },
+        {
+          "task": "ART-23",
+          "title": "Art \u2014 Character playtest prep",
+          "thread_id": "01a1a6b0-8aa8-7373-b8bb-bc5506f451d4",
+          "worktree": ".parallel-worktrees/art23-character-pistol",
+          "handoff": "docs/workstreams/art23-character-pistol.md",
+          "prior_credit_cap": 0,
+          "branch": "codex/art23-character-pistol",
+          "brief": "docs/tasks/art/ART-23-character-pistol-pose.md",
+          "state": "frozen; source merged and stationary P01 native pose/offset verified in INT-ART-02 A, merged #103; P02 native replacement still queued",
+          "credit_cap": 0,
+          "prepared_head": "fd7621c",
+          "frozen_head": "9232dad8eedf555ff56bbcbca4d47f6ed0a64765",
+          "source_commit": "887de0a05558169bb6f18717b579d13779449c43",
+          "pr": 95
         }
-      ],
-      "prepared_head": "fd7621c",
-      "frozen_head": "9232dad8eedf555ff56bbcbca4d47f6ed0a64765",
-      "source_commit": "887de0a05558169bb6f18717b579d13779449c43",
-      "pr": 95
+      ]
     },
     {
       "task": "ART-25",
@@ -209,14 +227,14 @@
       "main": "a1c2371d36598b0636efd9fb42d9f8bda9060981"
     },
     "active_gameplay": {
-      "task": "GPF-04",
-      "owner": "existing GPT-15 via Team gameplay worktree",
-      "worktree": ".parallel-worktrees/gpt-15-movement-feel",
-      "branch": "claude/gpf-04-steady-corrections",
-      "state": "frozen; #97 merged; timing-only harness correction, runtime D3 pending",
-      "brief": "docs/tasks/gameplay/GPF-04-steady-corrections.md",
-      "head": "100245d7145601b1c4876011c1f8dfc59f52ca0d",
-      "pr": 97
+      "task": "KNIFE-01 phase B",
+      "owner": "existing GPT-04 via Team gameplay worktree",
+      "worktree": ".parallel-worktrees/gpt-04-switch-prediction",
+      "branch": "claude/knife-01-phase-b",
+      "state": "producer release delivered through verified Claude UI; live lead board confirms phase B active, same owner",
+      "brief": "docs/tasks/gameplay/KNIFE-01-gameplay.md",
+      "phase_a_head": "1fa433ee13a44460516add7b8e2be030d6173966",
+      "phase_a_pr": 105
     },
     "next_native_assignment": {
       "task": "INT-ART-02",
@@ -224,36 +242,69 @@
       "branch": "claude/int-art-02-site01-followups",
       "worktree": ".parallel-worktrees/int-art-01-meshy-playtest",
       "brief": "docs/tasks/integration/INT-ART-02-site01-followups.md",
-      "state": "phase A verified/published #103 at 39eb01a; phase B local map acceptance running; no public ART-25 payload until approval",
+      "state": "finished and stopped; phase A #103 user-merged; phase B locally verified/frozen, publication held for direct user approval of ART-25 payload",
       "phase_a": "ART-23 pistol plus combined GPF-02/03/04 acceptance",
       "phase_b": "first coherent Site01 courtyard/service facade and approach, gated on frozen reviewed ART-25 subset",
       "phase_a_head": "39eb01a4257304c5e90509d46568f00346d127c7",
-      "phase_a_candidate": "61fc9721aaf93bbb6ab4ddb841c8982e53bdb1fb"
+      "phase_a_candidate": "61fc9721aaf93bbb6ab4ddb841c8982e53bdb1fb",
+      "phase_b_branch": "claude/int-art-02b-site01-courtyard",
+      "phase_b_candidate": "c7386b6c054ca2ad4bc58ee8aec29a6020a37d4e",
+      "phase_b_head": "7436d57185ae614f3c95058f51e563a570a35abf",
+      "phase_b_evidence": "docs/assets/meshy-site01-followups/README.md in integration checkout (local only)",
+      "producer_visual_review": "Actual native before/after eye-level, joint, overhead and roof sheets reviewed; first facade section accepted for pilot. Tan backing in blind recess and surrounding undecorated facade remain visible; no player walk-up/close-wall capture."
+    },
+    "previous_gameplay_checkpoint": {
+      "task": "GPF-04",
+      "owner": "existing GPT-15 via Team gameplay worktree",
+      "worktree": ".parallel-worktrees/gpt-15-movement-feel",
+      "branch": "claude/gpf-04-steady-corrections",
+      "state": "closed by engineering lead on INT-ART-02 candidate 61fc972: valid typical 69/69, zero in-motion corrections; one run, reopen if recurrence",
+      "brief": "docs/tasks/gameplay/GPF-04-steady-corrections.md",
+      "head": "100245d7145601b1c4876011c1f8dfc59f52ca0d",
+      "pr": 97
     }
   },
   "automation_id": "valstrike-studio-producer",
-  "next_integration_trigger": "Read INT-ART-02 phase-B handoff and pending ART-25 public-publication approval. Native phase-A source is frozen at #103/39eb01a: notify gameplay lead to release KNIFE-01 phase B once rendered run is inactive. Admit ART-27 at next contributor vacancy; no new writer/build.",
+  "next_integration_trigger": "Review ART-26/27 actual reimport/action views and KNIFE-01 phase-B frozen gameplay handoff, then admit sole INT-ART-03 owner when paths/capacity are free. ART-25/INT-ART-02B may publish only after pending direct user approval; no payload bypass. Retain separately bounded R02/P02 native import/refit queue, independent of hands completion.",
   "knife_feature": {
     "task": "KNIFE-01",
     "brief": "docs/tasks/KNIFE-01-full-feature.md",
     "authorized": "2026-11-04 direct user message in Direktor verified",
     "state": "full gameplay/art/native pipeline authorized; actual dispatch tracked separately",
-    "gameplay": "phase A active: existing GPT-04, gpt-04-switch-prediction, claude/knife-01-gameplay from 5407272; lead confirmed actual start. Phase B release follows native source freeze notification.",
+    "gameplay": "phase A frozen #105 at 1fa433e; phase B released to same GPT-04, live lead board confirms active on claude/knife-01-phase-b. Native #103 C++ is frozen and merged.",
     "first_person": "ART-26 active; owner acknowledged frozen ART-24 baseline 5e53cb4 and new knife action work",
-    "third_person": "ART-27 queued, existing character owner, no worktree or worker launched",
-    "native": "INT-ART-03 queued behind current INT-ART-02 and reviewed source/gameplay freezes",
+    "third_person": "ART-27 dispatched at High to existing character owner, fresh art27-knife-third-person worktree/branch prepared c8bb630 from a22b9bf; zero credits",
+    "native": "INT-ART-03 queued for reviewed source/gameplay freezes and free capacity; INT-ART-02 finished locally, separate publication hold remains",
     "credit_cap": 0,
     "gameplay_owner": {
       "ui_session": "local_e7f5a62b-3f49-42e2-854a-1dcddd518154",
       "worktree": ".parallel-worktrees/gpt-04-switch-prediction",
-      "branch": "claude/knife-01-gameplay",
+      "branch": "claude/knife-01-phase-b",
       "brief": "docs/tasks/gameplay/KNIFE-01-gameplay.md",
-      "base": "5407272"
+      "base": "frozen phase A #105 plus current merged main including native #103; exact phase-B candidate follows worker handoff",
+      "phase_a_head": "1fa433ee13a44460516add7b8e2be030d6173966"
     }
   },
   "weapon_replacement_queue": {
     "state": "authorized follow-up retained from direct user question in gameplay chat; separate bounded native import/refit task pending admission",
     "scope": "R02 #89 and P02 #81 in first/third person; not gated on completion of first-person hands, but actual grip/camera/native fit required",
     "owner": "existing sole native integrator after coherent current candidate; no new writer"
+  },
+  "last_material_checkpoint": {
+    "at": "2026-11-04T17:25+01:00",
+    "main": "a22b9bf328b4d400c5bd923c901de8113d1ab32e",
+    "user_merged_prs": [
+      101,
+      102,
+      103,
+      104
+    ],
+    "active_contributors": [
+      "ART-26",
+      "ART-27",
+      "KNIFE-01 phase B"
+    ],
+    "automation": "existing valstrike-studio-producer updated with verified knife/world/R02/P02 scope; same thread, ACTIVE, every 30 minutes",
+    "new_meshy_credits_this_cycle": 0
   }
 }
