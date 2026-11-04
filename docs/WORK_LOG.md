@@ -398,6 +398,34 @@ The gameplay/integration idle slots were checked clean at their original heads b
 
 **Next action:** User uploads original downloads and signals completion; coordinator inventories and assigns real asset batches before any artist starts. User retains PR merges.
 
+## 2026-11-04 — Meshy world artists dispatched; rigged character downloaded
+
+**Request/result:** User confirmed world uploads and requested artists start, plus browser assistance choosing the rigged character/animation download. Inventoried ten world packages (50 files) with SHA-256 and image sizes in `docs/assets/meshy-site01-intake.json`. Assigned five structural packages to ART-11 and five props/surface packages to ART-12. Reused idle “Art — Site01 navigation signs” and “Art — Tactical HUD icons” chats at High reasoning with fresh exclusive worktrees `meshy-structure` and `meshy-props-surfaces`, both based at `b6e4a5f`. Old worktrees/commits remain untouched. Both chats acknowledged their new assignments and started inspection/cleanup; no source-completion claim yet.
+
+**Character:** Inspected the existing Meshy workspace through computer use. Selected FBX, UE5 Mannequin skeleton template, Rigged Character on, Single file off, With Skin, 60 FPS. Browser download completed to `Meshy_AI_assets_20261104_121739.zip`; copied unchanged into local `meshy_ai_assets/characters/UrbanEntry/`. Archive contains one base character FBX, six with-skin animation FBXs (walking, running, crouch-left with gun, backward with gun, backward while shooting, vault with rifle) and base-color/metallic/roughness images. Exact export settings, hash and entries are in `docs/assets/meshy-character-intake.json`; settings screenshot is local `Artifacts/MeshyCharacterExport/export-settings.jpg`.
+
+**Checks/limits:** World file hashes/image dimensions and new worktree heads inspected; browser download visibly completed; character ZIP integrity and copy hash passed. Download contents are verified, not imported rig compatibility or animation deformation. No separate character normal map is present in this archive. No native import/build or new tests. Vault clip is retained as input only; no new traversal mechanics. Originals remain local and unchanged. User retains merges.
+
+**Next action:** Artists return cleaned source/export/previews for lead review, then one assigned native/map owner combines them in existing Site01 with preserved layout/collision. Character rig/skin/clip validation is a separate assignment after intake; do not replace it with the rejected procedural model.
+
+## 2026-11-04 — ART-13 character artist started
+
+**Request/result:** User extracted the character ZIP and asked another artist to work on it. Verified the base character, six animation FBXs and three textures against the original downloaded archive: all ten SHA-256 values matched. Added extracted-file hashes to the intake manifest and assigned MSH-C01 in the register.
+
+**Dispatch:** Reused “Art — Third-person player model” at High reasoning for new ART-13 in `.parallel-worktrees/meshy-character`, branch `codex/meshy-character`, base `6afa573`. The chat acknowledged the assignment and is active. Exact ownership covers `Art/Source/Characters/UrbanEntry01/`, asset docs and one workstream handoff. Old rejected ART-07 files/commits remain untouched. Task covers actual rig/material/skin cleanup, all six clip previews, compatible source exports and integration notes; no independent rerig, primitive replacement or new traversal mechanics.
+
+**Checks/limits:** Extracted-file hashes, worktree setup, assignment paths and diff whitespace checked. No new tests or Unreal build/import. Cleaned asset quality, skeleton/deformation compatibility and eventual in-game acceptance remain pending. Coordinator publishes the dispatch on existing PR #54; user retains merges. Next: artist source/previews handoff, then lead review and separately assigned native integration.
+
+## 2026-11-04 — Meshy merge and art-workflow reconciliation
+
+**Request/findings:** User asked whether everything is merged and noted the new art workflow. Fetched main `ca2e2cb`: inbox PR #53 and shared Meshy workflow PR #55 are merged. Coordinator's stacked PR #54 was merged into the old inbox branch after #53 had already merged, so its inventories/ART-11/12/13 assignments never reached main. Merged main into the coordinator branch and prepared a main-targeted follow-up for those records. Authentication follow-up PR #56 is separately open; its owner reports successful account checks. No PR was merged here; user retains merges.
+
+**Source status:** Read all three completed artist handoffs. Structure source/handoff `a4f44f1` / `f9e19da` retains topology/profile repair and review holds. Props/surfaces `901b558` / `2bddfdd` provides four source-ready assets; stairs have detailed source only after rejected reductions. Character `4c2887f` / `f9ebe2c` provides editable source and six animation-only exports; art approval, root-motion/foot-drift/weapon-hand decisions and native acceptance remain pending. These are local, unpublished commits in their separate worktrees, not merged map assets. Updated the central board, briefs and register to match; existing artist worktrees were not edited.
+
+**Workflow/next action:** Notified the three existing artist chats about `valstrike-meshy`, shared by Codex and Claude. Their completed cleanup assignments authorize zero paid stages; preserve uploads/rig/clips and stop without re-running production or account checks. Future paid jobs need an exact assignment, stage-specific allowance and recorded task IDs for resumption. Lead review precedes source publication and separately assigned centralized Unreal integration. No new worker, generation charge, test suite or Unreal operation in this reconciliation; verification is document/diff/CSV inspection only.
+
+**Publication update, same session:** PR #56 merged at main `82d7a4c` during reconciliation. Coordinator pushed `b44800f` and opened main-targeted PR #57; GitHub reports it mergeable. All three artist chats acknowledged the workflow-only notice and preserved their worktrees. Document/CSV/manifest/link inspection and staged whitespace checks passed; no additional asset validation was run.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.
