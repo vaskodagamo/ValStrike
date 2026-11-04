@@ -1,16 +1,12 @@
 #include "SVSSessionMenu.h"
 
 #include "Framework/Application/SlateApplication.h"
-#include "Framework/Application/SlateUser.h"
-#include "Engine/GameViewportClient.h"
-#include "Engine/World.h"
 #include "Engine/UserInterfaceSettings.h"
 #include "InputCoreTypes.h"
 #include "Styling/CoreStyle.h"
 #include "VSSessionState.h"
 #include "VSUserSettings.h"
 #include "../VSPlayerController.h"
-#include "../ValStrike.h"
 #include "Widgets/Input/SButton.h"
 #include "Widgets/Input/SEditableTextBox.h"
 #include "Widgets/Input/SSlider.h"
@@ -19,7 +15,6 @@
 #include "Widgets/Layout/SScrollBox.h"
 #include "Widgets/Layout/SDPIScaler.h"
 #include "Widgets/Layout/SWidgetSwitcher.h"
-#include "Widgets/SViewport.h"
 #include "Widgets/SBoxPanel.h"
 #include "Widgets/Text/STextBlock.h"
 
@@ -437,39 +432,6 @@ TSharedRef<SWidget> SVSSessionMenu::MakeSelector(FName Tag, TSharedPtr<SButton>&
             ]
         ]
         + SHorizontalBox::Slot().AutoWidth() [ Arrow(1, TEXT("›")) ];
-}
-
-void SVSSessionMenu::Tick(const FGeometry& Geometry, const double CurrentTime, const float DeltaTime)
-{
-    SCompoundWidget::Tick(Geometry, CurrentTime, DeltaTime);
-    // Only ticks while the menu is visible. When the OS activates the window
-    // (first activation after launching on an inactive Space, or switching back
-    // to the game), FSceneViewport::OnViewportActivated calls
-    // AcquireFocusAndCapture regardless of the UI-only input mode. The viewport
-    // then owns the mouse and swallows the next click on any menu control, so
-    // hand the mouse and focus back to the menu.
-    const UWorld* World = Controller.IsValid() ? Controller->GetWorld() : nullptr;
-    const UGameViewportClient* Client = World ? World->GetGameViewport() : nullptr;
-    const TSharedPtr<SViewport> ViewportWidget = Client ? Client->GetGameViewportWidget() : nullptr;
-    const TSharedPtr<FSlateUser> User = FSlateApplication::IsInitialized() ? FSlateApplication::Get().GetCursorUser() : nullptr;
-    if (!ViewportWidget || !User)
-    {
-        return;
-    }
-    const bool bCaptured = User->GetCursorCaptor() == ViewportWidget;
-    const bool bFocused = User->GetFocusedWidget() == ViewportWidget;
-    if (bCaptured)
-    {
-        User->ReleaseCursorCapture();
-    }
-    if (bFocused)
-    {
-        FocusWidget(InitialFocus());
-    }
-    if (bCaptured || bFocused)
-    {
-        UE_LOG(LogValStrike, Display, TEXT("VSMENU_RECLAIM viewport_capture=%d viewport_focus=%d"), int32(bCaptured), int32(bFocused));
-    }
 }
 
 bool SVSSessionMenu::IsConnecting() const
