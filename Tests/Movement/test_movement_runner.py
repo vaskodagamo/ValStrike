@@ -176,8 +176,6 @@ class NetSummaryTests(unittest.TestCase):
         self.assertEqual((summary["profile"], summary["base_profile"]), ("custom", "lan"))
 
 
-if __name__ == "__main__":
-    unittest.main()
 
 
 # Synthetic driver timeline matching VSMovementSmoke.cpp and the GPT-15 tuning:
@@ -199,9 +197,10 @@ def sample(t, **overrides):
     if 1.6 <= t <= 2.4: s["speed"] = 387.0
     if 3.6 <= t <= 4.8: s["speed"] = 174.0
     if 5.5 <= t < 7.0: s.update(crouched=True, speed=155.0)
-    if 11.0 <= t <= 18.0: s["x"] = min(1916.0, 200.0 + 387.0 * (t - 11.0))
-    if s["x"] >= 1916.0 or 16.5 <= t <= 18.0: s["speed"] = 0.0
-    elif 11.0 <= t <= 18.0: s["speed"] = 387.0
+    if 10.9 <= t <= 18.0: s["x"] = 200.0  # Boundary placement at 10.85 s.
+    if 11.8 <= t <= 18.0: s["x"] = min(1916.0, 200.0 + 387.0 * (t - 11.8))
+    if s["x"] >= 1916.0 or 17.0 <= t <= 18.0: s["speed"] = 0.0
+    elif 11.8 <= t <= 18.0: s["speed"] = 387.0
     if 22.0 <= t <= 23.0: s["feet"] = 80.0
     if 30.0 <= t <= 31.0: s["x"] = -634.0
     if 33.6 <= t <= 34.4: s["speed"] = 432.0
@@ -336,3 +335,17 @@ class EvaluateTests(unittest.TestCase):
         names = failed(evidence(done_t=33.0))
         self.assertIn("server: feel stages completed", names)
         self.assertNotIn("server: completed", names)
+
+    def test_boundary_run_timing(self):
+        # The boundary placement (10.85 s) sits between the landing window and the W press.
+        landing = [i for i in evidence()["server"] if i.get("event") == "sample" and 10.0 <= i["t"] <= 10.8]
+        self.assertTrue(landing and all(i["x"] == -1400.0 for i in landing))
+        # Still running into the wall window fails, as does passing the wall.
+        late = evidence(lambda i: retune(i, x=1800.0, speed=387.0) if 17.0 <= i["t"] <= 17.5 else None)
+        self.assertIn("server: boundary blocks movement", failed(late))
+        through = evidence(lambda i: retune(i, x=1930.0) if 12.0 <= i["t"] <= 12.3 else None)
+        self.assertIn("server: boundary blocks movement", failed(through))
+
+
+if __name__ == "__main__":
+    unittest.main()
