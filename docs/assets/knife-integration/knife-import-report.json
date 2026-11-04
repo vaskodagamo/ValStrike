@@ -1,0 +1,663 @@
+{
+  "engine": "5.8.4-58902052+++UE5+Release-5.8",
+  "mode": "import_and_save",
+  "source_sha256": {
+    "Art/Source/Weapons/Knife01/Exports/SM_VS_Knife01.fbx": "8781a8f965649da8f5614547b19c9d3e046dd2b15a2cf18db0237bd3b5f50187",
+    "Art/Source/Characters/FPArms03/KnifePilot/Exports/SK_FPArms03_KnifePilot.fbx": "e23b43ff06728e6aa46a0f3ab5dd88c3d61130d5d672482741f486e60bf04d73",
+    "Art/Source/Weapons/Knife01/Textures/Embedded/Image_0.jpg": "9fe04e0da58cf294b9bfb9c72e8c9e0ca1a01d612648b6049d3f6cb5355974fd",
+    "Art/Source/Weapons/Knife01/Textures/Embedded/Image_1.jpg": "05b8d8c260a57b4292bc16b464ff4f86819eb42b26be7290a4490965ef5920c1",
+    "Art/Source/Weapons/Knife01/Textures/Embedded/Image_2.jpg": "71c3b5e4bf0e7a674129b78e43f05bea4b879a21092d74b05e354b59f920436e",
+    "Art/Source/Characters/FPArms03/Textures/Embedded/Image_0.jpg": "f6774c27f3375588737cfcd8d085f8fc2e322ff84d8649ac37519dc8fce8d4b0",
+    "Art/Source/Characters/FPArms03/Textures/Embedded/Image_1.jpg": "ff2771299ca9b9389a2c03c384e7ad565d07128b1c22549e37ec353febec2c42",
+    "Art/Source/Characters/FPArms03/Textures/Embedded/Image_2.jpg": "2e69c91edae20dd8e326b4866dffb0e48b3c8fb45e984bfb7b96e3dfbf54ce17",
+    "Art/Source/Characters/FPArms03/KnifePilot/Exports/A_FPArms03_KnifeEquip.fbx": "2f9b8e708175432f499a37dc7247787d2c77c51130e109a820c80c81a907c057",
+    "Art/Source/Characters/FPArms03/KnifePilot/Exports/A_FPArms03_KnifeIdle.fbx": "c8439e5615ef64bbd8f8c887ededaecad3bcfafe0a56a0976f69e051df414266",
+    "Art/Source/Characters/FPArms03/KnifePilot/Exports/A_FPArms03_KnifeLocomotion.fbx": "46eb47db9332d34c91898819644135a24c3a4ca0802a25a97449c41495e2e26a",
+    "Art/Source/Characters/FPArms03/KnifePilot/Exports/A_FPArms03_KnifeSlash.fbx": "1ecb94155d0c9ff3435c8360913278dbfae3081484fa365cb84c8738c81940ee",
+    "Art/Source/Characters/FPArms03/KnifePilot/Exports/A_FPArms03_KnifeStab.fbx": "408c2480573a502408dce07ede5c1ad70b891fe3d41a7883215cf4cdd87f9970",
+    "Art/Source/Characters/UrbanEntry01/KnifePilot/Exports/A_UE01_Knife_Hold.fbx": "34fe48863b586774af0c5086690c5f70d99d2b70f6e2ac549280d1bb0e48e80d",
+    "Art/Source/Characters/UrbanEntry01/KnifePilot/Exports/A_UE01_Knife_Equip.fbx": "063ba7ea2d2d796c6792f8500343b359a8eac8a4b345c49e4a7a36d2680d35e1",
+    "Art/Source/Characters/UrbanEntry01/KnifePilot/Exports/A_UE01_Knife_Walk.fbx": "4f2fae6eafb9430a36d85706bafb2d2d71b968680e3c96e7749b5cd5b8b11e27",
+    "Art/Source/Characters/UrbanEntry01/KnifePilot/Exports/A_UE01_Knife_Run.fbx": "5c6862b8468f4a2488a44c03f2862670608ac94d17db8322e4bb27524e845329",
+    "Art/Source/Characters/UrbanEntry01/KnifePilot/Exports/A_UE01_Knife_Slash.fbx": "2ee9cea21b2304e817ffcd0d244d68173178dac0e1f7d42916a908e5761fca2e",
+    "Art/Source/Characters/UrbanEntry01/KnifePilot/Exports/A_UE01_Knife_Stab.fbx": "04e89b9a59339f0bfd99d4dc2b0142a4e537a19799824d723890f976c38d14d1"
+  },
+  "assets": {
+    "k01": {
+      "asset": "/Game/Art/Weapons/Knife01/Meshes/SM_VS_Knife01.SM_VS_Knife01",
+      "bounds_min_cm": [
+        -6.2828,
+        -1.1943,
+        -2.1194
+      ],
+      "bounds_max_cm": [
+        21.5172,
+        1.2049,
+        2.5319
+      ],
+      "triangles": 70640,
+      "lods": 1,
+      "nanite": false,
+      "collision": [
+        0,
+        0
+      ],
+      "sockets": {
+        "Grip": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Tip": [
+          21.5172,
+          -0.0107,
+          1.3176
+        ]
+      },
+      "material": "/Game/Art/Weapons/Knife01/Materials/M_VS_K01.M_VS_K01"
+    },
+    "arms": {
+      "asset": "/Game/Art/Characters/FPArms03/SK_FPArms03_KnifePilot.SK_FPArms03_KnifePilot",
+      "bones": 40,
+      "has_weapon_socket_r": true,
+      "bounds_origin_cm": [
+        21.612,
+        0.0,
+        0.0014
+      ],
+      "bounds_extent_cm": [
+        20.2241,
+        18.4981,
+        4.2222
+      ],
+      "material_slots": [
+        "/Game/Art/Characters/FPArms03/Materials/M_VS_FPArms03.M_VS_FPArms03"
+      ],
+      "skeleton": "/Game/Art/Characters/FPArms03/SK_FPArms03_KnifePilot_Skeleton.SK_FPArms03_KnifePilot_Skeleton"
+    },
+    "clips": {
+      "FP_Equip": {
+        "length_s": 0.4,
+        "frames": 24,
+        "root_motion": false,
+        "sync_markers": []
+      },
+      "FP_Idle": {
+        "length_s": 1.0,
+        "frames": 60,
+        "root_motion": false,
+        "sync_markers": []
+      },
+      "FP_Locomotion": {
+        "length_s": 0.8,
+        "frames": 48,
+        "root_motion": false,
+        "sync_markers": []
+      },
+      "FP_Slash": {
+        "length_s": 0.55,
+        "frames": 33,
+        "root_motion": false,
+        "sync_markers": [
+          0.15
+        ]
+      },
+      "FP_Stab": {
+        "length_s": 0.9,
+        "frames": 54,
+        "root_motion": false,
+        "sync_markers": [
+          0.3
+        ]
+      },
+      "TP_Hold": {
+        "length_s": 1.0,
+        "frames": 60,
+        "root_motion": false,
+        "skeleton": "/Game/Art/Characters/UrbanEntry01/SK_VS_UrbanEntry01_Skeleton.SK_VS_UrbanEntry01_Skeleton",
+        "sync_markers": []
+      },
+      "TP_Equip": {
+        "length_s": 0.4,
+        "frames": 24,
+        "root_motion": false,
+        "skeleton": "/Game/Art/Characters/UrbanEntry01/SK_VS_UrbanEntry01_Skeleton.SK_VS_UrbanEntry01_Skeleton",
+        "sync_markers": []
+      },
+      "TP_Walk": {
+        "length_s": 1.0333,
+        "frames": 62,
+        "root_motion": false,
+        "skeleton": "/Game/Art/Characters/UrbanEntry01/SK_VS_UrbanEntry01_Skeleton.SK_VS_UrbanEntry01_Skeleton",
+        "sync_markers": []
+      },
+      "TP_Run": {
+        "length_s": 0.6333,
+        "frames": 38,
+        "root_motion": false,
+        "skeleton": "/Game/Art/Characters/UrbanEntry01/SK_VS_UrbanEntry01_Skeleton.SK_VS_UrbanEntry01_Skeleton",
+        "sync_markers": []
+      },
+      "TP_Slash": {
+        "length_s": 0.55,
+        "frames": 33,
+        "root_motion": false,
+        "skeleton": "/Game/Art/Characters/UrbanEntry01/SK_VS_UrbanEntry01_Skeleton.SK_VS_UrbanEntry01_Skeleton",
+        "sync_markers": [
+          0.15
+        ]
+      },
+      "TP_Stab": {
+        "length_s": 0.9,
+        "frames": 54,
+        "root_motion": false,
+        "skeleton": "/Game/Art/Characters/UrbanEntry01/SK_VS_UrbanEntry01_Skeleton.SK_VS_UrbanEntry01_Skeleton",
+        "sync_markers": [
+          0.3
+        ]
+      }
+    },
+    "textures": {
+      "K01_BaseColor": {
+        "srgb": true,
+        "compression": "<TextureCompressionSettings.TC_DEFAULT: 0>",
+        "flip_green": false
+      },
+      "K01_ORM": {
+        "srgb": false,
+        "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+        "flip_green": false
+      },
+      "K01_Normal": {
+        "srgb": false,
+        "compression": "<TextureCompressionSettings.TC_NORMALMAP: 1>",
+        "flip_green": true
+      },
+      "FPArms03_BaseColor": {
+        "srgb": true,
+        "compression": "<TextureCompressionSettings.TC_DEFAULT: 0>",
+        "flip_green": false
+      },
+      "FPArms03_ORM": {
+        "srgb": false,
+        "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+        "flip_green": false
+      },
+      "FPArms03_Normal": {
+        "srgb": false,
+        "compression": "<TextureCompressionSettings.TC_NORMALMAP: 1>",
+        "flip_green": true
+      }
+    },
+    "gait_stance_speed_cm_s": {
+      "A_UE01_Knife_Walk": 138.2,
+      "A_UE01_Knife_Run": 287.4,
+      "A_UE01_Pilot_Walk_RifleHold (existing, 145 in C++)": 138.2
+    }
+  },
+  "first_person": {
+    "basis": "y_negated",
+    "frames": {
+      "Equip@1": {
+        "native_socket_cm": [
+          -0.713,
+          12.7146,
+          -24.69
+        ],
+        "socket_translation_error_cm": 0.0,
+        "socket_axis_error": 0.0,
+        "knife_component_cm": [
+          0.0,
+          6.0,
+          -27.0
+        ],
+        "offset": {
+          "location_cm": [
+            -1.5,
+            -6.88,
+            -1.16
+          ],
+          "quat_xyzw": [
+            0.0,
+            -0.948683,
+            -0.316228,
+            -0.0
+          ],
+          "roll_pitch_yaw": [
+            -143.1301,
+            -0.0,
+            -180.0
+          ]
+        }
+      },
+      "Equip@25": {
+        "native_socket_cm": [
+          7.5345,
+          16.6703,
+          2.494
+        ],
+        "socket_translation_error_cm": 0.0001,
+        "socket_axis_error": 0.0,
+        "knife_component_cm": [
+          8.0,
+          10.0,
+          0.0
+        ],
+        "offset": {
+          "location_cm": [
+            -1.5,
+            -6.88,
+            -1.16
+          ],
+          "quat_xyzw": [
+            -0.0,
+            0.948683,
+            0.316228,
+            -0.0
+          ],
+          "roll_pitch_yaw": [
+            -143.1301,
+            -0.0,
+            -179.9999
+          ]
+        }
+      },
+      "Idle@1": {
+        "native_socket_cm": [
+          7.5345,
+          16.6703,
+          2.494
+        ],
+        "socket_translation_error_cm": 0.0001,
+        "socket_axis_error": 0.0,
+        "knife_component_cm": [
+          8.0,
+          10.0,
+          0.0
+        ],
+        "offset": {
+          "location_cm": [
+            -1.5,
+            -6.88,
+            -1.16
+          ],
+          "quat_xyzw": [
+            -0.0,
+            0.948683,
+            0.316228,
+            -0.0
+          ],
+          "roll_pitch_yaw": [
+            -143.1301,
+            0.0,
+            -179.9999
+          ]
+        }
+      },
+      "Idle@61": {
+        "native_socket_cm": [
+          7.5345,
+          16.6703,
+          2.494
+        ],
+        "socket_translation_error_cm": 0.0001,
+        "socket_axis_error": 0.0,
+        "knife_component_cm": [
+          8.0,
+          10.0,
+          0.0
+        ],
+        "offset": {
+          "location_cm": [
+            -1.5,
+            -6.88,
+            -1.16
+          ],
+          "quat_xyzw": [
+            -0.0,
+            0.948683,
+            0.316228,
+            -0.0
+          ],
+          "roll_pitch_yaw": [
+            -143.1301,
+            0.0,
+            -179.9999
+          ]
+        }
+      },
+      "Locomotion@1": {
+        "native_socket_cm": [
+          7.5345,
+          16.6703,
+          2.494
+        ],
+        "socket_translation_error_cm": 0.0001,
+        "socket_axis_error": 0.0,
+        "knife_component_cm": [
+          8.0,
+          10.0,
+          0.0
+        ],
+        "offset": {
+          "location_cm": [
+            -1.5,
+            -6.88,
+            -1.16
+          ],
+          "quat_xyzw": [
+            -0.0,
+            0.948683,
+            0.316228,
+            -0.0
+          ],
+          "roll_pitch_yaw": [
+            -143.1301,
+            0.0,
+            -179.9999
+          ]
+        }
+      },
+      "Locomotion@49": {
+        "native_socket_cm": [
+          7.5345,
+          16.6703,
+          2.494
+        ],
+        "socket_translation_error_cm": 0.0001,
+        "socket_axis_error": 0.0,
+        "knife_component_cm": [
+          8.0,
+          10.0,
+          0.0
+        ],
+        "offset": {
+          "location_cm": [
+            -1.5,
+            -6.88,
+            -1.16
+          ],
+          "quat_xyzw": [
+            -0.0,
+            0.948683,
+            0.316228,
+            -0.0
+          ],
+          "roll_pitch_yaw": [
+            -143.1301,
+            0.0,
+            -179.9999
+          ]
+        }
+      },
+      "Slash@1": {
+        "native_socket_cm": [
+          7.5345,
+          16.6703,
+          2.494
+        ],
+        "socket_translation_error_cm": 0.0001,
+        "socket_axis_error": 0.0,
+        "knife_component_cm": [
+          8.0,
+          10.0,
+          0.0
+        ],
+        "offset": {
+          "location_cm": [
+            -1.5,
+            -6.88,
+            -1.16
+          ],
+          "quat_xyzw": [
+            -0.0,
+            0.948683,
+            0.316228,
+            -0.0
+          ],
+          "roll_pitch_yaw": [
+            -143.1301,
+            0.0,
+            -179.9999
+          ]
+        }
+      },
+      "Slash@10": {
+        "native_socket_cm": [
+          8.6555,
+          5.556,
+          3.0892
+        ],
+        "socket_translation_error_cm": 0.0,
+        "socket_axis_error": 1e-05,
+        "knife_component_cm": [
+          13.0,
+          -0.0,
+          2.0
+        ],
+        "offset": {
+          "location_cm": [
+            -1.5,
+            -6.88,
+            -1.16
+          ],
+          "quat_xyzw": [
+            -0.0,
+            0.948683,
+            0.316228,
+            0.0
+          ],
+          "roll_pitch_yaw": [
+            -143.1301,
+            -0.0,
+            180.0
+          ]
+        }
+      },
+      "Slash@34": {
+        "native_socket_cm": [
+          7.5345,
+          16.6703,
+          2.494
+        ],
+        "socket_translation_error_cm": 0.0001,
+        "socket_axis_error": 0.0,
+        "knife_component_cm": [
+          8.0,
+          10.0,
+          0.0
+        ],
+        "offset": {
+          "location_cm": [
+            -1.5,
+            -6.88,
+            -1.16
+          ],
+          "quat_xyzw": [
+            -0.0,
+            0.948683,
+            0.316228,
+            -0.0
+          ],
+          "roll_pitch_yaw": [
+            -143.1301,
+            0.0,
+            -179.9999
+          ]
+        }
+      },
+      "Stab@1": {
+        "native_socket_cm": [
+          7.5345,
+          16.6703,
+          2.494
+        ],
+        "socket_translation_error_cm": 0.0001,
+        "socket_axis_error": 0.0,
+        "knife_component_cm": [
+          8.0,
+          10.0,
+          0.0
+        ],
+        "offset": {
+          "location_cm": [
+            -1.5,
+            -6.88,
+            -1.16
+          ],
+          "quat_xyzw": [
+            -0.0,
+            0.948683,
+            0.316228,
+            -0.0
+          ],
+          "roll_pitch_yaw": [
+            -143.1301,
+            0.0,
+            -179.9999
+          ]
+        }
+      },
+      "Stab@19": {
+        "native_socket_cm": [
+          23.6107,
+          15.5406,
+          5.494
+        ],
+        "socket_translation_error_cm": 0.0001,
+        "socket_axis_error": 0.0,
+        "knife_component_cm": [
+          25.0,
+          9.0,
+          3.0
+        ],
+        "offset": {
+          "location_cm": [
+            -1.5,
+            -6.88,
+            -1.16
+          ],
+          "quat_xyzw": [
+            0.0,
+            0.948683,
+            0.316228,
+            0.0
+          ],
+          "roll_pitch_yaw": [
+            -143.1301,
+            -0.0,
+            180.0
+          ]
+        }
+      },
+      "Stab@55": {
+        "native_socket_cm": [
+          7.5345,
+          16.6703,
+          2.494
+        ],
+        "socket_translation_error_cm": 0.0001,
+        "socket_axis_error": 0.0,
+        "knife_component_cm": [
+          8.0,
+          10.0,
+          0.0
+        ],
+        "offset": {
+          "location_cm": [
+            -1.5,
+            -6.88,
+            -1.16
+          ],
+          "quat_xyzw": [
+            -0.0,
+            0.948683,
+            0.316228,
+            -0.0
+          ],
+          "roll_pitch_yaw": [
+            -143.1301,
+            0.0,
+            -179.9999
+          ]
+        }
+      }
+    },
+    "offset_on_weapon_socket_r": {
+      "location_cm": [
+        -1.5,
+        -6.88,
+        -1.16
+      ],
+      "quat_xyzw": [
+        0.0,
+        -0.948683,
+        -0.316228,
+        -0.0
+      ],
+      "roll_pitch_yaw": [
+        -143.1301,
+        -0.0,
+        -180.0
+      ]
+    },
+    "offset_max_spread": 0.0,
+    "arms_component_from_camera_cm": [
+      20,
+      0,
+      -5
+    ],
+    "camera_horizontal_fov": 90
+  },
+  "third_person": {
+    "basis": "y_negated",
+    "native_hand_r_cm": [
+      27.0,
+      21.0,
+      123.0
+    ],
+    "hand_translation_error_cm": 0.0,
+    "hand_axis_error": 0.0,
+    "knife_component_cm": [
+      36.6984,
+      20.8432,
+      115.4243
+    ],
+    "offset_on_hand_r": {
+      "location_cm": [
+        2.109,
+        -12.1092,
+        0.6281
+      ],
+      "quat_xyzw": [
+        -0.565402,
+        -0.404277,
+        0.316081,
+        -0.645735
+      ],
+      "roll_pitch_yaw": [
+        -85.9313,
+        -61.5866,
+        5.9045
+      ]
+    },
+    "k01_tip_component_cm": {
+      "hold": [
+        50.67,
+        18.27,
+        131.64
+      ],
+      "slash_impact_f10": [
+        60.24,
+        -6.0,
+        129.1
+      ],
+      "stab_impact_f19": [
+        63.2,
+        12.83,
+        128.73
+      ]
+    }
+  },
+  "unchanged_existing_assets": true
+}
