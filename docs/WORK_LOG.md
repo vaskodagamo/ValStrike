@@ -426,6 +426,14 @@ The gameplay/integration idle slots were checked clean at their original heads b
 
 **Publication update, same session:** PR #56 merged at main `82d7a4c` during reconciliation. Coordinator pushed `b44800f` and opened main-targeted PR #57; GitHub reports it mergeable. All three artist chats acknowledged the workflow-only notice and preserved their worktrees. Document/CSV/manifest/link inspection and staged whitespace checks passed; no additional asset validation was run.
 
+## 2026-11-04 — Meshy playtest source and native-integration kickoff
+
+**Request/result:** User authorized new art sessions and asked for a prompt for a new Claude chat to make the character/world objects testable. Main `ee25083` includes the earlier coordination PR #57. Prepared two bounded source-review/finishing assignments, ART-15 character and ART-16 four props, plus INT-ART-01 for one user-started Claude native integration owner. New isolated worktrees preserve the completed ART-12/13 checkouts and their source evidence. Codex source tasks reuse existing checks and publish exact pilot-readiness revisions; no paid Meshy stages or contributor Unreal work.
+
+**Ownership/queue:** Coordinator delegates pilot visual acceptance within the explicit criteria. Claude receives exact native Content, Site01 map and limited character/world-weapon presentation paths, with authority/camera/gameplay/first-person behavior preserved. Read the live Claude board: INT-04 currently owns the engine slot, GPT-10 owns the crosshair and GPT-11 weapon request validation. INT-ART-01 can preflight now; heavy work follows INT-04 release and frozen reviewed source inputs. Source art and integration PRs target main; user retains merges.
+
+**Acceptance:** First batch is the reviewed character/usable animation subset plus approved paving, two crates and wall-backed panel. Held structures/stairs and vault mechanics remain excluded. One integration owner imports/reopens, places, wires and checks a combined candidate with actual server/two-client rendered evidence, then supplies exact other-Mac source-checkout/playtest instructions. This kickoff does not claim assets are integrated or runtime verified. Assignment/docs inspection only here; no Unreal launch or new test suite.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.

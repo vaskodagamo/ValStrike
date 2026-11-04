@@ -1,5 +1,19 @@
 # Team board
 
+## Meshy first-playtest kickoff — 2026-11-04
+
+User authorized new art chats plus a prompt for a new Claude integration chat. Latest merged main is `ee25083` (including PR #57). Coordinator owns this kickoff on `codex/meshy-playtest-dispatch`; the following assignments supersede the completed ART-12/13 source ownership for the new pass. Original worker checkouts stay frozen/read-only. No structures/stair repair or new paid generation is launched.
+
+| Assignment | Owner / new checkout | Result / state |
+| --- | --- | --- |
+| [ART-15 character pilot](tasks/art/ART-15-character-playtest-prep.md) | New Codex character art chat, High; `.parallel-worktrees/art15-character-pilot`, `codex/art15-character-pilot` | Bounded visual review, minimal usable idle/hold/in-place clip subset, weapon-fit handoff; source-only; ready for dispatch |
+| [ART-16 props pilot](tasks/art/ART-16-props-playtest-prep.md) | New Codex environment art chat, High; `.parallel-worktrees/art16-props-pilot`, `codex/art16-props-pilot` | Review/fix only W03/W04/W07/W10, explicit safe Site01 placement recipe; source-only; ready for dispatch |
+| [INT-ART-01 native pilot](tasks/integration/INT-ART-01-meshy-playtest.md) | User-started **new Claude** integration chat; `.parallel-worktrees/int-art-01-meshy-playtest`, `claude/int-art-01-meshy-playtest` | Sole new Meshy native/map/presentation owner, exact exceptions in brief; engine-free preflight ready, native import/verification gated |
+
+ART-15/16 get exclusive source/docs paths and delegated **pilot** visual acceptance in their briefs; reuse old evidence and only recheck changed assets. Both publish frozen source/readiness revisions and a PR directly to main; user merges. INT-ART-01 may combine those reviewed revisions on its own branch before user merges; it may not modify those source files. No additional approval layer is needed for an asset that meets the assigned pilot criteria; held assets stay excluded. Final production and runtime acceptance remain distinct.
+
+Live engineering board in `team-gameplay` now assigns INT-04 the Unreal slot, GPT-10 HUD reticle work and GPT-11 weapon validation work. This art integration is queued **after INT-04 release**, with one owner for imports, map edits and combined runtime checks through `Scripts/with_ue_slot.py`; no concurrent art-engine job. Read the live board before starting; do not overwrite it or treat a stale committed board as release. New Claude owns only the exact native/presentation exceptions listed in INT-ART-01. Existing gameplay owners keep their paths.
+
 ## Merge/workflow reconciliation — 2026-11-04
 
 New shared Meshy workflow [ART-14](tasks/art/ART-14-meshy-agent-workflow.md) is merged in PR #55 at main `ca2e2cb`; inbox PR #53 is also on main. PR #54 was merged into `codex/meshy-asset-intake` **after** that inbox branch was merged to main, leaving the ART-11/12/13 assignments and inventories outside main. Coordinator opened [PR #57](https://github.com/vaskodagamo/ValStrike/pull/57) against main carrying those missing records and the current source status. Authentication documentation follow-up PR #56 is now merged at main `82d7a4c`; its owner reports successful saved-session authentication/balance checks, not a paid generation pilot. User retains merges.
