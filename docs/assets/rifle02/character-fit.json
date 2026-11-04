@@ -1,0 +1,140 @@
+{
+  "character_reference": "ART-13 frozen 170 cm source, unchanged",
+  "action": "A_UE01_Walk_Backward_While_Shooting",
+  "frame": 1,
+  "fps": 60,
+  "character_scale": [
+    1,
+    1,
+    1
+  ],
+  "weapon_world_location_cm": [
+    19.110095977783203,
+    -20.056598663330078,
+    142.5093231201172
+  ],
+  "weapon_world_rotation_xyz_deg": [
+    0,
+    0,
+    0
+  ],
+  "weapon_scale": [
+    1,
+    1,
+    1
+  ],
+  "hand_r_bone_relative_matrix_rows": [
+    [
+      0.19360855221748352,
+      0.9810467958450317,
+      -0.007920459844172001,
+      2.302093744277954
+    ],
+    [
+      0.9808618426322937,
+      -0.19372962415218353,
+      -0.01947074942290783,
+      15.051779747009277
+    ],
+    [
+      -0.020636189728975296,
+      -0.0039990791119635105,
+      -0.9997791647911072,
+      -5.713413238525391
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "grip_palm_target_world_cm": [
+    15.610095977783203,
+    -20.056598663330078,
+    137.1093292236328
+  ],
+  "grip_contact_local_cm": [
+    -3.5,
+    0.0,
+    -5.400000095367432
+  ],
+  "stock_contact_world_cm": [
+    -3.889904022216797,
+    -20.056598663330078,
+    148.5093231201172
+  ],
+  "right_upperarm_head_world_cm": [
+    -26.18387222290039,
+    -12.699722290039062,
+    140.67568969726562
+  ],
+  "stock_to_upperarm_head_cm": 24.748948893720602,
+  "landmarks": {
+    "hand_l": {
+      "world_cm": [
+        35.067134857177734,
+        -7.297909259796143,
+        144.84158325195312
+      ],
+      "nearest_body_surface_cm": 10.07607650756836
+    },
+    "middle_01_l": {
+      "world_cm": [
+        41.652008056640625,
+        -17.327510833740234,
+        145.49700927734375
+      ],
+      "nearest_body_surface_cm": 1.6348052024841309
+    },
+    "middle_03_l_end": {
+      "world_cm": [
+        40.48335647583008,
+        -18.843351364135742,
+        150.3971405029297
+      ],
+      "nearest_body_surface_cm": 0.7322613596916199
+    },
+    "hand_r": {
+      "world_cm": [
+        3.78277325630188,
+        -19.42194175720215,
+        137.10848999023438
+      ],
+      "nearest_body_surface_cm": 4.711697578430176
+    },
+    "thumb_03_r_end": {
+      "world_cm": [
+        13.629594802856445,
+        -17.75242805480957,
+        138.99832153320312
+      ],
+      "nearest_body_surface_cm": 1.2945938110351562
+    },
+    "index_03_r_end": {
+      "world_cm": [
+        20.03816032409668,
+        -19.298057556152344,
+        139.50439453125
+      ],
+      "nearest_body_surface_cm": 0.36065244674682617
+    },
+    "middle_01_r": {
+      "world_cm": [
+        16.064014434814453,
+        -21.78305435180664,
+        137.7687530517578
+      ],
+      "nearest_body_surface_cm": 0.1185026466846466
+    },
+    "middle_03_r_end": {
+      "world_cm": [
+        15.156176567077637,
+        -18.330141067504883,
+        136.4499053955078
+      ],
+      "nearest_body_surface_cm": 0.13379783928394318
+    }
+  },
+  "limitation": "Unmodified supplied moving clip: numerical contact placement only, fingers/shoulder are not reposed. Review renders for visible gaps/intersections. No animation or native fit pass."
+}

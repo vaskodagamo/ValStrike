@@ -1,0 +1,70 @@
+{
+  "asset_id": "R02",
+  "assignment": "ART-17",
+  "prepared_head": "e0071ce295c78cfdfa453af86b83596dc4cfa2ec",
+  "operation_id": "art17-r02-20261104-one-draft",
+  "resource": "image-to-3d",
+  "task_id": "01a1a6c6-03ec-7521-8b6c-382a26f3c320",
+  "status": "SUCCEEDED",
+  "allowance_credits": 30,
+  "estimated_credits": 30,
+  "actual_credits": 30,
+  "cli_version": "0.8.2",
+  "options": {
+    "model_type": "standard",
+    "ai_model": "meshy-7.1",
+    "geometry_resolution": "standard",
+    "texture_resolution": "4k",
+    "should_texture": true,
+    "enable_pbr": true,
+    "should_remesh": false,
+    "target_formats": [
+      "glb",
+      "fbx"
+    ]
+  },
+  "reference": "Art/Source/Weapons/Rifle02/Reference/R02_reference.png",
+  "reference_generator": "built-in image_gen",
+  "pricing_source": "https://docs.meshy.ai/en/api/pricing",
+  "paid_retries_authorized": false,
+  "reference_sha256": "efb2f18b3541105da8f4a4cd8ef37f2bc40300238979409f609023e43accdc69",
+  "downloaded_originals": [
+    {
+      "file": "model.fbx",
+      "bytes": 60316316,
+      "sha256": "9f2aa254226d81d1c8733d7bebd485427ad7d180d8292a6b83a9d3ae47b40d9c"
+    },
+    {
+      "file": "model.glb",
+      "bytes": 35118372,
+      "sha256": "dc937134bebde584a32d5586db37eab7b393165f1aabb08f010d41ec34b7594b"
+    },
+    {
+      "file": "texture_0_base_color.png",
+      "bytes": 22267436,
+      "sha256": "3e7a2b2fa06deaa3c5b443e1a3483dd0edd17a7e85bb9e481a896a2ea376719f"
+    },
+    {
+      "file": "texture_0_metallic.png",
+      "bytes": 1663031,
+      "sha256": "fb26cdb874ed68613f2a75ade08a26d1117d08579d6803c10978ac97e381560b"
+    },
+    {
+      "file": "texture_0_normal.png",
+      "bytes": 18848780,
+      "sha256": "94aa9e57fd7eeef7da95cc2ccb9ca3064114bcbb6b6c22e2c260a81b37ad98b7"
+    },
+    {
+      "file": "texture_0_roughness.png",
+      "bytes": 1425845,
+      "sha256": "07ba8c338948afdfeb1390a1bc0a600a522408c762e4191ee0dee3f8a40e10f9"
+    },
+    {
+      "file": "thumbnail.png",
+      "bytes": 56743,
+      "sha256": "2aeba6241b47bb7b36b0de694cfb7b92129bc137bd7e27f2c0c2999a7956242f"
+    }
+  ],
+  "originals_local_archive": "Artifacts/Meshy/R02/2026-11-04/originals",
+  "note": "Original downloads retained in ignored local staging. Cleaned geometry and full draft retained in the editable Blender handoff; PBR maps copied unchanged."
+}

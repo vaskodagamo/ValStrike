@@ -1,0 +1,161 @@
+{
+  "length_units": "centimeters",
+  "forward": "+X",
+  "up": "+Z",
+  "source_scale": 0.39435162225363624,
+  "draft_triangles": 458064,
+  "anchors": {
+    "Grip": {
+      "location_cm": [
+        0,
+        0,
+        0
+      ],
+      "rotation_xyz_deg": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Muzzle": {
+      "location_cm": [
+        52,
+        0,
+        7.05
+      ],
+      "rotation_xyz_deg": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "SupportHand": {
+      "location_cm": [
+        29,
+        0,
+        2.4
+      ],
+      "rotation_xyz_deg": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Magazine": {
+      "location_cm": [
+        15.0,
+        0.0,
+        -0.550000011920929
+      ],
+      "rotation_xyz_deg": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    }
+  },
+  "parts": {
+    "SM_VS_Rifle02_Body": {
+      "triangles": 39614,
+      "vertices": 19769,
+      "materials": 2,
+      "uv_layers": [
+        "UVMap"
+      ],
+      "local_bounds": {
+        "min": [
+          -22.995407104492188,
+          -3.3022162914276123,
+          -11.232826232910156
+        ],
+        "max": [
+          52.00006866455078,
+          3.2966370582580566,
+          14.216439247131348
+        ]
+      },
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "degenerate_faces": 0
+    },
+    "SM_VS_Rifle02_Magazine": {
+      "triangles": 1844,
+      "vertices": 924,
+      "materials": 2,
+      "uv_layers": [
+        "UVMap"
+      ],
+      "local_bounds": {
+        "min": [
+          -7.764352798461914,
+          -2.5786657333374023,
+          -7.203832149505615
+        ],
+        "max": [
+          4.072145462036133,
+          2.5748672485351562,
+          0.0005047917366027832
+        ]
+      },
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "degenerate_faces": 0
+    }
+  },
+  "assembled_bounds": {
+    "min": [
+      -22.995407104492188,
+      -3.3022162914276123,
+      -11.232826232910156
+    ],
+    "max": [
+      52.00006866455078,
+      3.2966370582580566,
+      14.216439247131348
+    ]
+  },
+  "assembled_dimensions_cm": [
+    74.99547576904297,
+    6.598853349685669,
+    25.449265480041504
+  ],
+  "grip_slice_z_minus5_cm": {
+    "min": [
+      -6.218343257904053,
+      -1.6092782020568848,
+      -5.486429691314697
+    ],
+    "max": [
+      -0.00021274469327181578,
+      1.5917595624923706,
+      -4.5135817527771
+    ]
+  },
+  "fbx": {
+    "axis_forward": "-Y",
+    "axis_up": "Z",
+    "apply_unit_scale": true,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "visual_collision": false
+  }
+}

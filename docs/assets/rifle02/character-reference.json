@@ -1,0 +1,10 @@
+{
+  "source_commit": "4c2887fe7ab34bdff96efc6686cfe9147fb2481b",
+  "read_only_source": "/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/meshy-character/Art/Source/Characters/UrbanEntry01",
+  "files": {
+    "UrbanEntry01.blend": "554050bf09b004840d1ad6a2e7161017bb382d946dc4fe62330d96460757f88a",
+    "Textures/T_UE01_BaseColor.png": "70555f5060a8dccdb67936ac48b827888c629e8fe8f013b6ffa53a55fb85e50a",
+    "Textures/T_UE01_Metallic.png": "ab0af3e46fc01f463a4432429efce8e068393e56c27b32c63cd4cf837374ed91",
+    "Textures/T_UE01_Roughness.png": "5c4ca64d278d86c9dbea3c7c7b1acb03a96eb50194b0264d8d05b53773647dbf"
+  }
+}
