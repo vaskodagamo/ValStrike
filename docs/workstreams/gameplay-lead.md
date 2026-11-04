@@ -94,3 +94,9 @@ User merges since: #69, #70, #71 and #74. Verified: Editor, one Mac, loopback, p
 **Engine slot:** **not yet released.** The INT QA session holds it for the single D3 attribution run (`test_movement.py --net-profile typical`). After that run the slot is released and goes to the producer's queued INT-ART-01 (Meshy playtest integration). The slot then waits for GPF-02 and GPF-03 to be ready; their checks follow through the producer queue.
 
 **Active contributors after this batch:** QA (D3 run, then INT-ART-01 per producer), GPF-02, GPF-03. That is three; no new batch until the producer dispatches.
+
+## 2026-11-04 — D3 attributed, engine slot released
+
+- QA's attribution ([PR #82](https://github.com/vaskodagamo/ValStrike/pull/82), which also carries the INT-06 attempt-2 record that missed #77): detached `09347c2` (main had already absorbed #74) builds and passes movement `typical` 45/45, with only zero-velocity setup corrections. `a935f0c` has 10 in motion, including 3 at a steady 387 cm/s. **D3 belongs to GPT-15 (#74, merged).** The fix task GPF-04 goes to the producer queue rather than started, because of the three-contributor cap. Players may notice small corrections when moving under latency until it lands.
+- **Engine slot released** by the INT QA session. Next: INT-ART-01 (producer).
+- Active gameplay writers: GPF-02, GPF-03. Queued: GPF-04, then the GPF-02/03/04 integration checks.
