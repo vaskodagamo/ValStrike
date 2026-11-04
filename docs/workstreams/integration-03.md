@@ -80,3 +80,48 @@ GPT-07 spectate observation: the match runner reaches three players (`server lat
 - Deferred: GPT-07 spectate observation; human playtest items carried over from INT-02
 - Remaining defect/dependency: INT-03-D1 and INT-03-D2, both GPF-01. PR #48 resolves only the fit part of INT-02-D1.
 - Next action/owner: the gameplay lead decides whether #48 merges as a partial fix, then routes D1 and D2 back to GPF-01. After a fix, integration reruns only `Tests/UI/test_settings.py`.
+
+## INT-03b: settings-only rerun of #48 at `a0b7562` (2026-11-04, 11:54–11:58)
+
+- Candidate: `96fa38d8ce2f57a16306dbf511550a204e89e990`. This is the local disposable `claude/integration-03b` (not pushed): `origin/main` `887d349`, then `--no-ff` merges of `claude/gpt-09-muzzle-kick` `c84be81` and `claude/gpf-01-settings-window-mode` `a0b7562`, with no conflicts. `a0b7562` adds the D1 fix (the menu reclaims mouse capture and focus from the viewport), two click-path log lines and the D2 clipping fix.
+- Build: unity Editor Mac Development, PASS, no errors or warnings, receipt `689a1b65ad361ae3d02b86352163d21ef2aa2a9108853217cdbc5b3e77ac6e55`. Same toolchain and machine as above; slot wrapper used, no exit 75.
+
+| # | suite | result | counts | evidence path |
+| --- | --- | --- | --- | --- |
+| 0 | `ue.py build --target Editor --platform Mac` | PASS | 4/4 actions, unity | `Saved/INT-03b/00.log` |
+| a | `Tests/UI/test_settings.py` (rendered), run 1 | FAIL | 61 pass, 17 fail. Look contamination: `new_sensitivity_scales_look` yaw 32.105 vs pitch 13.507, ratio 3.822 | `Saved/Tests/Settings/20261104T105458Z_436106/` |
+| a | `Tests/UI/test_settings.py` (rendered), rerun | **FAIL** | 64 pass, 14 fail. `settings_fit_without_scrolling` **PASS** (`overflow=0.0`). `arrow_selects_windowed` **FAIL** (`mode=1`). Look clean (ratio 3.0000) | `Saved/Tests/Settings/20261104T105719Z_348475/` |
+| b | native `Automation RunTests ValStrike.UI` | PASS | 4/4 `Result={Success}` | `Saved/INT-03b/02_ui_automation.log` |
+| c | `Tests/UI/test_session.py --rendered` | PASS | 72/72 | `Saved/Tests/UI/20261104T105607Z_58b9a9/` |
+
+Rerun reason for (a): run 1 showed the README's look-ratio contamination signature (camera yaw and pitch disagree). The rerun cleared it. The window-mode failure was identical in both runs.
+
+### D1 status: still open (owner GPF-01)
+
+The new click trace from the rerun (`first.log:1459-1462`; run 1 `:1458-1461` is identical apart from timing):
+
+```text
+VSSET_CLICK VS.WindowMode.Next at (1577.4, 782.1) hit_testable=true
+VSSET_CLICK_TRACE {"tag":"VS.WindowMode.Next","captor_before":"none","focus_before":"SButton:VS.WindowMode","under_point":"STextBlock","hovered_after_move":true,"captor_after_down":"none","mode_before":1,"mode_after":1,"status_after":"Applied: Windowed Fullscreen  ·  2560 × 1440"}
+VSSET_CHECK arrow_selects_windowed FAIL mode=1
+```
+
+For comparison, a click that works in the same run (run 1 `first.log:1476`):
+
+```text
+VSSET_CLICK_TRACE {"tag":"VS.SettingsBack","captor_before":"none","focus_before":"SVSSessionMenu","under_point":"STextBlock","hovered_after_move":true,"captor_after_down":"SButton:VS.SettingsBack",...}
+```
+
+The second new line, `VSMENU_RECLAIM`, **never appears** in either settings run. It appears once in the session runner (`Saved/Tests/UI/20261104T105607Z_58b9a9/driver.log:1444`, `VSMENU_RECLAIM viewport_capture=0 viewport_focus=1`).
+
+Reading of the trace: the fix's premise does not apply to this failure. Before the click nobody holds capture (`captor_before:"none"`), so there is nothing to reclaim. After mouse-down, the `›` arrow `SButton` does not take capture (`captor_after_down:"none"`), while the Back button under identical conditions does. The press does not reach the arrow button, even though the point is hit-testable and hovered. Next places for the owner to look: the arrow button's enabled state and hit-test visibility in the inline row, and which widget path `ProcessMouseButtonDownEvent` resolves at that point (the inner `STextBlock` "›" should bubble to its `SButton`).
+
+### D2 status: fixed
+
+In `screenshots/first/settings-pending-windowed.png` (run 1 and rerun) the resolution value reads "Desktop · 2560 × 1440", fully visible inside its field.
+
+### INT-03b handoff
+
+- Checks run: build, (a) ×2, (b), (c), as listed above.
+- Remaining: INT-03-D1 open on `a0b7562` (owner GPF-01). INT-03-D2 closed.
+- Next: the lead routes the trace above back to GPF-01. After the next fix, integration reruns only `Tests/UI/test_settings.py`.
