@@ -1,0 +1,19 @@
+{
+  "reopened": true,
+  "placed_art_objects": 6,
+  "texture_references": [
+    "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W01/Textures/Meshy_AI_Concrete_Grid_Panel_1104115854_texture.png",
+    "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W08/Textures/Meshy_AI_Industrial_Portal_1104115853_texture.png",
+    "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W09/Textures/Meshy_AI_Industrial_Security_B_1104115854_texture.png",
+    "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W01/Textures/Meshy_AI_texture_0_metallic.png",
+    "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W08/Textures/Meshy_AI_texture_0_metallic.png",
+    "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W09/Textures/Meshy_AI_texture_0_metallic.png",
+    "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W01/Textures/Meshy_AI_texture_0_normal.png",
+    "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W08/Textures/Meshy_AI_texture_0_normal.png",
+    "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W09/Textures/Meshy_AI_texture_0_normal.png",
+    "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W01/Textures/Meshy_AI_texture_0_roughness.png",
+    "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W08/Textures/Meshy_AI_texture_0_roughness.png",
+    "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W09/Textures/Meshy_AI_texture_0_roughness.png"
+  ],
+  "native_verified": false
+}

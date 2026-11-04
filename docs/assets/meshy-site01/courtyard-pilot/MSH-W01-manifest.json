@@ -1,0 +1,175 @@
+{
+  "asset_id": "MSH-W01",
+  "blender_version": "5.2.2 LTS",
+  "original": {
+    "vertices": 2222,
+    "triangles": 4231,
+    "loops": 12693,
+    "uv_channels": 1,
+    "material_slots": 1,
+    "custom_normals": true,
+    "boundary_edges": 203,
+    "bounds_m": [
+      [
+        -0.3256160020828247,
+        -0.029448986053466797,
+        -0.5
+      ],
+      [
+        0.3218590021133423,
+        0.031240012496709824,
+        0.5
+      ]
+    ],
+    "dimensions_cm": [
+      64.7475004196167,
+      6.068899855017662,
+      100.0
+    ]
+  },
+  "source": {
+    "vertices": 2222,
+    "triangles": 4231,
+    "loops": 12693,
+    "uv_channels": 1,
+    "material_slots": 1,
+    "custom_normals": true,
+    "boundary_edges": 203,
+    "bounds_m": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        1.942425012588501,
+        0.18206699192523956,
+        3.0
+      ]
+    ],
+    "dimensions_cm": [
+      194.2425012588501,
+      18.206699192523956,
+      300.0
+    ]
+  },
+  "fbx_reimport": {
+    "vertices": 2222,
+    "triangles": 4231,
+    "loops": 12693,
+    "uv_channels": 1,
+    "material_slots": 1,
+    "custom_normals": true,
+    "boundary_edges": 203,
+    "bounds_m": [
+      [
+        2.171620039348454e-08,
+        -2.538727130740881e-07,
+        0.0
+      ],
+      [
+        1.942425012588501,
+        0.18206694722175598,
+        3.0
+      ]
+    ],
+    "dimensions_cm": [
+      194.24249908723004,
+      18.206720109446906,
+      300.0
+    ]
+  },
+  "max_bounds_error_cm": 2.538727130740881e-05,
+  "uniform_scale": 3.0,
+  "edits": [
+    "uniform scale",
+    "minimum-XYZ corner pivot",
+    "canonical external PNG path rebinding"
+  ],
+  "geometry_edits": "none beyond affine transform; no snapping, decimation, smoothing or rebake",
+  "source_uv_values_exactly_preserved": true,
+  "source_custom_normals": "original corner normals transformed by inverse transpose; no recompute",
+  "source_reopened": true,
+  "textures_resolve": true,
+  "textures": [
+    {
+      "role": "basecolor",
+      "path": "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W01/Textures/Meshy_AI_Concrete_Grid_Panel_1104115854_texture.png",
+      "sha256": "745d93f3f46720381a5deb75cbabd54d761acc53aaa21db0a1523f493f95632f",
+      "bytes": 21350060,
+      "srgb": true
+    },
+    {
+      "role": "metallic",
+      "path": "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W01/Textures/Meshy_AI_texture_0_metallic.png",
+      "sha256": "6c49c0aa936e59a736ab5bd21322b112bb5b20ba2091b28fe5fa204852fb2fc1",
+      "bytes": 29904,
+      "srgb": false
+    },
+    {
+      "role": "normal",
+      "path": "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W01/Textures/Meshy_AI_texture_0_normal.png",
+      "sha256": "32b2b42b851a5fa83a06571914870518961b1c7f9fa3c02d257aa9eac8f482f8",
+      "bytes": 19809568,
+      "srgb": false
+    },
+    {
+      "role": "roughness",
+      "path": "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W01/Textures/Meshy_AI_texture_0_roughness.png",
+      "sha256": "d096150d0db5d270aae4b1a7355332bd8c885f8e34459010e3f1aba8ee070380",
+      "bytes": 1111378,
+      "srgb": false
+    }
+  ],
+  "input_files": [
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Concrete_Grid_Panel_20261104_texture_0e1290ef/Meshy_AI_Concrete_Grid_Panel_1104115854_texture.png",
+      "bytes": 21350060,
+      "sha256": "745d93f3f46720381a5deb75cbabd54d761acc53aaa21db0a1523f493f95632f",
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Concrete_Grid_Panel_20261104_texture_0e1290ef/Meshy_AI_model.fbx",
+      "bytes": 22890252,
+      "sha256": "d48300a9066812801798ed8bb66a9dfe504313532c1f7e387c877b69f173da4f"
+    },
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Concrete_Grid_Panel_20261104_texture_0e1290ef/Meshy_AI_texture_0_metallic.png",
+      "bytes": 29904,
+      "sha256": "6c49c0aa936e59a736ab5bd21322b112bb5b20ba2091b28fe5fa204852fb2fc1",
+      "size": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Concrete_Grid_Panel_20261104_texture_0e1290ef/Meshy_AI_texture_0_normal.png",
+      "bytes": 19809568,
+      "sha256": "32b2b42b851a5fa83a06571914870518961b1c7f9fa3c02d257aa9eac8f482f8",
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Concrete_Grid_Panel_20261104_texture_0e1290ef/Meshy_AI_texture_0_roughness.png",
+      "bytes": 1111378,
+      "sha256": "d096150d0db5d270aae4b1a7355332bd8c885f8e34459010e3f1aba8ee070380",
+      "size": [
+        2048,
+        2048
+      ]
+    }
+  ],
+  "blend": "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W01/StraightWall.blend",
+  "fbx": "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W01/SM_VS_MSH_W01_StraightWall.fbx",
+  "original_fbx": "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W01/Original.fbx",
+  "normal_convention": "Imported tangent normal node interprets +Y/OpenGL; vendor convention unlabelled. Native verify green flip.",
+  "collision": "No source collision meshes. Native visual only; preserve existing blockers and routes.",
+  "blend_sha256": "716fe831f9b627385ca16004de3f4ce8d84eb3f9e00d07384689a6f689bcf2f0",
+  "fbx_sha256": "b5c16d2fcc206d1073c66c7f84e8a66586ba6f7fe339f0ab4ade2f6e0576c2c9",
+  "original_fbx_sha256": "d48300a9066812801798ed8bb66a9dfe504313532c1f7e387c877b69f173da4f"
+}

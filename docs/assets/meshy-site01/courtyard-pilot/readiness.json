@@ -1,0 +1,399 @@
+{
+  "schema_version": 1,
+  "task_id": "ART-25",
+  "date": "2026-11-04",
+  "timezone": "Europe/Berlin",
+  "status": "ready",
+  "status_scope": "Three preserved sources ready for the explicitly bounded decorative pilot; native/map/runtime and final production verification pending.",
+  "prepared_head": "4f57d745dd427714f8f029599b8006e86a2beb83",
+  "source_commit": "31b74bdf33ed39cec92ebd762acca8aa2a39ae36",
+  "approved_asset_ids": [
+    "MSH-W01",
+    "MSH-W08",
+    "MSH-W09"
+  ],
+  "assets": [
+    {
+      "asset_id": "MSH-W01",
+      "verdict": "ready",
+      "approved_use": "Backed service-facade cladding only; open boundary topology is retained.",
+      "fbx": {
+        "path": "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W01/SM_VS_MSH_W01_StraightWall.fbx",
+        "sha256": "b5c16d2fcc206d1073c66c7f84e8a66586ba6f7fe339f0ab4ade2f6e0576c2c9",
+        "bytes": 413468
+      },
+      "editable_source": {
+        "path": "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W01/StraightWall.blend",
+        "sha256": "716fe831f9b627385ca16004de3f4ce8d84eb3f9e00d07384689a6f689bcf2f0",
+        "bytes": 314775
+      },
+      "preserved_original_fbx": {
+        "path": "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W01/Original.fbx",
+        "sha256": "d48300a9066812801798ed8bb66a9dfe504313532c1f7e387c877b69f173da4f",
+        "bytes": 22890252
+      },
+      "textures": [
+        {
+          "path": "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W01/Textures/Meshy_AI_Concrete_Grid_Panel_1104115854_texture.png",
+          "sha256": "745d93f3f46720381a5deb75cbabd54d761acc53aaa21db0a1523f493f95632f",
+          "bytes": 21350060,
+          "role": "basecolor",
+          "srgb": true
+        },
+        {
+          "path": "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W01/Textures/Meshy_AI_texture_0_metallic.png",
+          "sha256": "6c49c0aa936e59a736ab5bd21322b112bb5b20ba2091b28fe5fa204852fb2fc1",
+          "bytes": 29904,
+          "role": "metallic",
+          "srgb": false
+        },
+        {
+          "path": "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W01/Textures/Meshy_AI_texture_0_normal.png",
+          "sha256": "32b2b42b851a5fa83a06571914870518961b1c7f9fa3c02d257aa9eac8f482f8",
+          "bytes": 19809568,
+          "role": "normal",
+          "srgb": false
+        },
+        {
+          "path": "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W01/Textures/Meshy_AI_texture_0_roughness.png",
+          "sha256": "d096150d0db5d270aae4b1a7355332bd8c885f8e34459010e3f1aba8ee070380",
+          "bytes": 1111378,
+          "role": "roughness",
+          "srgb": false
+        }
+      ],
+      "dimensions_cm": [
+        194.2425012588501,
+        18.206699192523956,
+        300.0
+      ],
+      "source_pivot": "minimum XYZ corner at local (0,0,0)",
+      "source_front": "-Y",
+      "up": "+Z",
+      "expected_native_bounds_cm": {
+        "min": [
+          0,
+          -18.206699192523956,
+          0
+        ],
+        "max": [
+          194.2425012588501,
+          0,
+          300.0
+        ]
+      },
+      "expected_native_front": "+Y after FBX handedness conversion; measure in editor before placement",
+      "triangles": 4231,
+      "uv_channels": 1,
+      "material_slots": 1,
+      "authored_corner_normals_preserved": true,
+      "normal_convention": {
+        "source": "tangent +Y/OpenGL interpretation from original FBX material",
+        "vendor_convention_confirmed": false,
+        "unreal_start_flip_green_channel": true,
+        "acceptance": "confirm under neutral oblique light against source; do not double-invert"
+      },
+      "new_visual_collision": "NoCollision",
+      "geometry_changes": [
+        "positive uniform scale 3.0",
+        "base corner pivot"
+      ],
+      "material_changes": [
+        "canonical external PNG path rebinding only; imported factors/channel links retained"
+      ],
+      "comparison": {
+        "path": "docs/assets/meshy-site01/courtyard-pilot/Previews/MSH-W01_Comparison.png",
+        "sha256": "d2424728aaa5157d75777b25937cf44d0decdb3de293684ce99fbe62a8a2f725",
+        "bytes": 673732
+      },
+      "back_view": {
+        "path": "docs/assets/meshy-site01/courtyard-pilot/Previews/MSH-W01_source_back.png",
+        "sha256": "748415c1390c0557c6946b6a9973cf5f3175839e712e5e88999afacd10261b30",
+        "bytes": 695564
+      },
+      "inspection_manifest": "docs/assets/meshy-site01/courtyard-pilot/MSH-W01-manifest.json"
+    },
+    {
+      "asset_id": "MSH-W08",
+      "verdict": "ready",
+      "approved_use": "Visibly backed blind service recess only; no traversable opening or garage.",
+      "fbx": {
+        "path": "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W08/SM_VS_MSH_W08_PedestrianDoorway.fbx",
+        "sha256": "147233633d89fc99be70bc68a086de7e306b8dd406cf86fd7d332a8e51d04752",
+        "bytes": 449916
+      },
+      "editable_source": {
+        "path": "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W08/PedestrianDoorway.blend",
+        "sha256": "794882017b61479ecc7174882f3102f0f2d188cc5e5021bc926146008db430ac",
+        "bytes": 333439
+      },
+      "preserved_original_fbx": {
+        "path": "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W08/Original.fbx",
+        "sha256": "871ac070b024a59b525b18277b88fef50ac57e22b0298a5b3313e8b9fae73e33",
+        "bytes": 16256908
+      },
+      "textures": [
+        {
+          "path": "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W08/Textures/Meshy_AI_Industrial_Portal_1104115853_texture.png",
+          "sha256": "45e4b54a19ec9488d603e700fa5c2c828ca97796231db151f123b3f1005549c1",
+          "bytes": 12749445,
+          "role": "basecolor",
+          "srgb": true
+        },
+        {
+          "path": "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W08/Textures/Meshy_AI_texture_0_metallic.png",
+          "sha256": "efe44d2f345b816efb8121711c2fe8a085894afcca29a9ccd2bc3c2c7a7c8416",
+          "bytes": 54440,
+          "role": "metallic",
+          "srgb": false
+        },
+        {
+          "path": "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W08/Textures/Meshy_AI_texture_0_normal.png",
+          "sha256": "5dabdb69abed62203dd0e73c4d6e57eea67441bcca57be9688fbabc17bff17bf",
+          "bytes": 12230993,
+          "role": "normal",
+          "srgb": false
+        },
+        {
+          "path": "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W08/Textures/Meshy_AI_texture_0_roughness.png",
+          "sha256": "f4bd8baea47516082baf7820cfd06a483e494802c9db23f02dff13b434bb90ee",
+          "bytes": 1098669,
+          "role": "roughness",
+          "srgb": false
+        }
+      ],
+      "dimensions_cm": [
+        255.21297454833984,
+        48.74280244112015,
+        300.0
+      ],
+      "source_pivot": "minimum XYZ corner at local (0,0,0)",
+      "source_front": "-Y",
+      "up": "+Z",
+      "expected_native_bounds_cm": {
+        "min": [
+          0,
+          -48.74280244112015,
+          0
+        ],
+        "max": [
+          255.21297454833984,
+          0,
+          300.0
+        ]
+      },
+      "expected_native_front": "+Y after FBX handedness conversion; measure in editor before placement",
+      "triangles": 4388,
+      "uv_channels": 1,
+      "material_slots": 1,
+      "authored_corner_normals_preserved": true,
+      "normal_convention": {
+        "source": "tangent +Y/OpenGL interpretation from original FBX material",
+        "vendor_convention_confirmed": false,
+        "unreal_start_flip_green_channel": true,
+        "acceptance": "confirm under neutral oblique light against source; do not double-invert"
+      },
+      "new_visual_collision": "NoCollision",
+      "geometry_changes": [
+        "positive uniform scale 3.0",
+        "base corner pivot"
+      ],
+      "material_changes": [
+        "canonical external PNG path rebinding only; imported factors/channel links retained"
+      ],
+      "comparison": {
+        "path": "docs/assets/meshy-site01/courtyard-pilot/Previews/MSH-W08_Comparison.png",
+        "sha256": "569466cc7c46b016d47d8d94d84154fed762ef7e98a40e309c75483945467ff0",
+        "bytes": 644230
+      },
+      "back_view": {
+        "path": "docs/assets/meshy-site01/courtyard-pilot/Previews/MSH-W08_source_back.png",
+        "sha256": "340368736e417f90b3d79b8b953de86f8c6b79d6146a598dc9cea616b5669c60",
+        "bytes": 707708
+      },
+      "inspection_manifest": "docs/assets/meshy-site01/courtyard-pilot/MSH-W08-manifest.json"
+    },
+    {
+      "asset_id": "MSH-W09",
+      "verdict": "ready",
+      "approved_use": "Decorative modules on the existing inaccessible service roof; no ground cover replacement.",
+      "fbx": {
+        "path": "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W09/SM_VS_MSH_W09_StraightParapet.fbx",
+        "sha256": "958e494522c612ddfa9fb4d27ddc8f6378261dd17223e6e156ea3f54f02de39a",
+        "bytes": 448588
+      },
+      "editable_source": {
+        "path": "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W09/StraightParapet.blend",
+        "sha256": "4b131c75955811d6a0da466951e45d019d2365651537115bc9f98e81dd5ffef5",
+        "bytes": 325132
+      },
+      "preserved_original_fbx": {
+        "path": "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W09/Original.fbx",
+        "sha256": "a490387be22e6835b828a25da02d6f8b54ec0968f21e9b613d461f77c78a26f8",
+        "bytes": 17510364
+      },
+      "textures": [
+        {
+          "path": "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W09/Textures/Meshy_AI_Industrial_Security_B_1104115854_texture.png",
+          "sha256": "1205606187862fc4d064bc80f2eab0cd933ec053caa1d92965b21b2ead6fbd8e",
+          "bytes": 14490783,
+          "role": "basecolor",
+          "srgb": true
+        },
+        {
+          "path": "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W09/Textures/Meshy_AI_texture_0_metallic.png",
+          "sha256": "ed4f1c16732b39651f38a78462422b9f17cfd5512fb5a0e29a7c0322f4265fe9",
+          "bytes": 182677,
+          "role": "metallic",
+          "srgb": false
+        },
+        {
+          "path": "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W09/Textures/Meshy_AI_texture_0_normal.png",
+          "sha256": "ab28705cac5feb784dd3c2e108ebe69a05e90184b34cf294df39f9da30ebba87",
+          "bytes": 13373244,
+          "role": "normal",
+          "srgb": false
+        },
+        {
+          "path": "Art/Source/Environment/MeshySite01/CourtyardPilot/MSH-W09/Textures/Meshy_AI_texture_0_roughness.png",
+          "sha256": "3d6b22ac7396adb9b6e0b22e4c72351afbcb32491421fa5ad9a56ed484292448",
+          "bytes": 962772,
+          "role": "roughness",
+          "srgb": false
+        }
+      ],
+      "dimensions_cm": [
+        200.0,
+        37.373000383377075,
+        63.59099745750427
+      ],
+      "source_pivot": "minimum XYZ corner at local (0,0,0)",
+      "source_front": "-Y",
+      "up": "+Z",
+      "expected_native_bounds_cm": {
+        "min": [
+          0,
+          -37.373000383377075,
+          0
+        ],
+        "max": [
+          200.0,
+          0,
+          63.59099745750427
+        ]
+      },
+      "expected_native_front": "+Y after FBX handedness conversion; measure in editor before placement",
+      "triangles": 4390,
+      "uv_channels": 1,
+      "material_slots": 1,
+      "authored_corner_normals_preserved": true,
+      "normal_convention": {
+        "source": "tangent +Y/OpenGL interpretation from original FBX material",
+        "vendor_convention_confirmed": false,
+        "unreal_start_flip_green_channel": true,
+        "acceptance": "confirm under neutral oblique light against source; do not double-invert"
+      },
+      "new_visual_collision": "NoCollision",
+      "geometry_changes": [
+        "positive uniform scale 2.0",
+        "base corner pivot"
+      ],
+      "material_changes": [
+        "canonical external PNG path rebinding only; imported factors/channel links retained"
+      ],
+      "comparison": {
+        "path": "docs/assets/meshy-site01/courtyard-pilot/Previews/MSH-W09_Comparison.png",
+        "sha256": "7289009efb44926dbb15fc77636e45be2d48561d10bd1c543bad12d01f67ffab",
+        "bytes": 615182
+      },
+      "back_view": {
+        "path": "docs/assets/meshy-site01/courtyard-pilot/Previews/MSH-W09_source_back.png",
+        "sha256": "a9abade012ccd33c53b1648567d1f69ce162fab024c303073ce1fa6a5390fc8b",
+        "bytes": 662790
+      },
+      "inspection_manifest": "docs/assets/meshy-site01/courtyard-pilot/MSH-W09-manifest.json"
+    }
+  ],
+  "assembly_source": {
+    "path": "Art/Source/Environment/MeshySite01/CourtyardPilot/CourtyardAssembly.blend",
+    "sha256": "58573c55562475368638d5028fff229b4f7866bbc78b253418d9ccfbef6565ca",
+    "bytes": 653806
+  },
+  "placement_recipe_path": "docs/assets/meshy-site01/courtyard-pilot/placement.md",
+  "assembly_measurements": {
+    "path": "docs/assets/meshy-site01/courtyard-pilot/assembly-measurements.json",
+    "sha256": "3f685754d43157a4993710985212892db3e71a7940ae83dbe4f0781049e3f082",
+    "bytes": 10923
+  },
+  "assembly_views": [
+    {
+      "path": "docs/assets/meshy-site01/courtyard-pilot/Previews/Assembly_Dimensions.png",
+      "sha256": "44b83c3c857614060a403501efdcdcf9d7de347009ebd96344f8a5439758e67c",
+      "bytes": 1739285
+    },
+    {
+      "path": "docs/assets/meshy-site01/courtyard-pilot/Previews/Assembly_service_approach.png",
+      "sha256": "c00ae6bca654c73933da5a4a36f79b361da51de301448a8b15100156931b9795",
+      "bytes": 1308483
+    },
+    {
+      "path": "docs/assets/meshy-site01/courtyard-pilot/Previews/Assembly_mating.png",
+      "sha256": "197b2f8124c9a6f0aa0363c0b14602ed265293b1750309bcba5ba579dcf36da8",
+      "bytes": 1653827
+    },
+    {
+      "path": "docs/assets/meshy-site01/courtyard-pilot/Previews/Assembly_roof_joint.png",
+      "sha256": "b3a3d8880a1fae55ea35b8b31da5f138a5a6c0b35c5216f0a52dac40c53f4444",
+      "bytes": 1514869
+    }
+  ],
+  "review_path": "docs/assets/meshy-site01/courtyard-pilot/README.md",
+  "held_uses": [
+    "Freestanding or watertight wall/door assembly: sampled profile gaps 1.88\u20134.85 cm, incomplete near-front samples; requires backing.",
+    "New traversable W08 doorway or garage: no opening in existing Site01 service building is assigned.",
+    "W09 as 120 cm gameplay cover or a new reachable roof route."
+  ],
+  "later_gaps": [
+    {
+      "asset_id": "MSH-W05",
+      "identity": "L parapet",
+      "status": "unassigned later group"
+    },
+    {
+      "asset_id": "MSH-W06",
+      "identity": "three-sided alcove, not an L corner",
+      "status": "unassigned later group"
+    },
+    {
+      "asset_id": "MSH-W02",
+      "identity": "stairs",
+      "status": "held; original-tread inspection required after earlier damaging reduction"
+    },
+    {
+      "asset_id": null,
+      "identity": "true garage, roof module, true corner",
+      "status": "named gaps only; no generation or redesign authorized"
+    }
+  ],
+  "checks_completed": [
+    "15 canonical input hashes before/after, 12 copied maps and 3 original FBX copies unchanged.",
+    "3 saved source reopens, actual FBX round trips and matched whole/detail original/source/reimport render review; back views inspected.",
+    "Source UVs unchanged; export polygon indices and UVs exact, normal dot >=0.99999974, maximum vertex error <0.00004 cm.",
+    "Measured assembled facade/roof joints and source aperture samples; actual eye-level, actual-route-coordinate approach and overhead source images inspected.",
+    "Assembly reopen resolved twelve texture references and six placed art objects.",
+    "Authoring-script syntax, diff whitespace and Git LFS content/pointers inspected."
+  ],
+  "remaining_native_checks": [
+    "INT-ART-02 imports only allowlisted delivery FBX/maps from frozen source revision; confirms actual centimeter bounds/front/back and corner pivot, normals/tangents and material channel settings.",
+    "Save/reopen native assets; measure expected placement envelopes and preserve backing, existing collision/tags/transforms/routes/120 cm cover and previous ART-16 assets.",
+    "Inspect recess readability, joints, protruding facade/camera clearance, roof supports, materials, shadows and appearance from actual service-route standing/crouched views.",
+    "Use assigned central affected route/support/visibility and rendered runtime acceptance; source views are not Unreal evidence.",
+    "Platform/LOD/performance, human balance, packaged and final production acceptance remain separate."
+  ],
+  "credits": {
+    "allowance": 0,
+    "spent": 0,
+    "service_calls": 0
+  },
+  "next_owner": "INT-ART-02"
+}
