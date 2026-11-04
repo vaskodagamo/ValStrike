@@ -2,7 +2,7 @@
 
 ## Merge/workflow reconciliation — 2026-11-04
 
-New shared Meshy workflow [ART-14](tasks/art/ART-14-meshy-agent-workflow.md) is merged in PR #55 at main `ca2e2cb`; inbox PR #53 is also on main. PR #54 was merged into `codex/meshy-asset-intake` **after** that inbox branch was merged to main, leaving the ART-11/12/13 assignments and inventories outside main. Coordinator is publishing a main-targeted follow-up carrying those missing records. Authentication documentation follow-up PR #56 is open against main; its owner reports successful saved-session authentication/balance checks, not a paid generation pilot. User retains merges.
+New shared Meshy workflow [ART-14](tasks/art/ART-14-meshy-agent-workflow.md) is merged in PR #55 at main `ca2e2cb`; inbox PR #53 is also on main. PR #54 was merged into `codex/meshy-asset-intake` **after** that inbox branch was merged to main, leaving the ART-11/12/13 assignments and inventories outside main. Coordinator opened [PR #57](https://github.com/vaskodagamo/ValStrike/pull/57) against main carrying those missing records and the current source status. Authentication documentation follow-up PR #56 is now merged at main `82d7a4c`; its owner reports successful saved-session authentication/balance checks, not a paid generation pilot. User retains merges.
 
 All three source passes have now stopped with local commits, not published/native-integrated results:
 

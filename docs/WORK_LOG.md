@@ -424,6 +424,8 @@ The gameplay/integration idle slots were checked clean at their original heads b
 
 **Workflow/next action:** Notified the three existing artist chats about `valstrike-meshy`, shared by Codex and Claude. Their completed cleanup assignments authorize zero paid stages; preserve uploads/rig/clips and stop without re-running production or account checks. Future paid jobs need an exact assignment, stage-specific allowance and recorded task IDs for resumption. Lead review precedes source publication and separately assigned centralized Unreal integration. No new worker, generation charge, test suite or Unreal operation in this reconciliation; verification is document/diff/CSV inspection only.
 
+**Publication update, same session:** PR #56 merged at main `82d7a4c` during reconciliation. Coordinator pushed `b44800f` and opened main-targeted PR #57; GitHub reports it mergeable. All three artist chats acknowledged the workflow-only notice and preserved their worktrees. Document/CSV/manifest/link inspection and staged whitespace checks passed; no additional asset validation was run.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.
