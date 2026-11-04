@@ -1,0 +1,700 @@
+{
+  "engine": "5.8.4-58902052+++UE5+Release-5.8",
+  "map": "/Game/Maps/Site01/VS_Site01",
+  "mode": "capture_place_save_reopen",
+  "recipe": "docs/assets/meshy-site01/courtyard-pilot/placement.md",
+  "runtime_verified": false,
+  "preflight": {
+    "directional_lights_before": {
+      "VS_Sun": {
+        "intensity": 3.0,
+        "cast_shadows": true,
+        "atmosphere_sun_light": true,
+        "forward_shading_priority": 0,
+        "mobility": "<ComponentMobility.MOVABLE: 2>",
+        "light_color_rgba": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "rotation": [
+          -0.0,
+          -48.0,
+          -35.0
+        ]
+      },
+      "VS_StylizedFill": {
+        "intensity": 1.5,
+        "cast_shadows": false,
+        "atmosphere_sun_light": true,
+        "forward_shading_priority": 0,
+        "mobility": "<ComponentMobility.MOVABLE: 2>",
+        "light_color_rgba": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "rotation": [
+          -0.0,
+          -45.0,
+          145.0
+        ]
+      }
+    },
+    "backing_bounds_cm": {
+      "VS_ServicePanel_1_2": [
+        [
+          400.0,
+          1480.0,
+          0.0
+        ],
+        [
+          800.0,
+          1500.0,
+          380.0
+        ]
+      ],
+      "VS_ServicePanel_1_3": [
+        [
+          800.0,
+          1480.0,
+          0.0
+        ],
+        [
+          1200.0,
+          1500.0,
+          380.0
+        ]
+      ],
+      "VS_NorthService": [
+        [
+          -380.0,
+          1270.0,
+          0.0
+        ],
+        [
+          1580.0,
+          1480.0,
+          380.0
+        ]
+      ],
+      "VS_ServiceRoofBand": [
+        [
+          -400.0,
+          1250.0,
+          380.0
+        ],
+        [
+          1600.0,
+          1500.0,
+          394.0
+        ]
+      ]
+    }
+  },
+  "placed": [
+    {
+      "label": "VS_ART25_WallWest",
+      "asset": "/Game/Art/Environment/MeshySite01/CourtyardPilot/W01/SM_VS_MSH_W01_StraightWall",
+      "pivot_cm": [
+        400,
+        1510,
+        0
+      ],
+      "world_bounds_cm": [
+        [
+          400.0,
+          1491.793,
+          0.0
+        ],
+        [
+          594.243,
+          1510.0,
+          300.0
+        ]
+      ]
+    },
+    {
+      "label": "VS_ART25_DoorRecess",
+      "asset": "/Game/Art/Environment/MeshySite01/CourtyardPilot/W08/SM_VS_MSH_W08_PedestrianDoorway",
+      "pivot_cm": [
+        595.2425,
+        1510,
+        0
+      ],
+      "world_bounds_cm": [
+        [
+          595.243,
+          1461.257,
+          0.0
+        ],
+        [
+          850.455,
+          1510.0,
+          300.0
+        ]
+      ]
+    },
+    {
+      "label": "VS_ART25_WallEast",
+      "asset": "/Game/Art/Environment/MeshySite01/CourtyardPilot/W01/SM_VS_MSH_W01_StraightWall",
+      "pivot_cm": [
+        851.4555,
+        1510,
+        0
+      ],
+      "world_bounds_cm": [
+        [
+          851.456,
+          1491.793,
+          0.0
+        ],
+        [
+          1045.698,
+          1510.0,
+          300.0
+        ]
+      ]
+    },
+    {
+      "label": "VS_ART25_RoofParapet1",
+      "asset": "/Game/Art/Environment/MeshySite01/CourtyardPilot/W09/SM_VS_MSH_W09_StraightParapet",
+      "pivot_cm": [
+        421.849,
+        1500,
+        394
+      ],
+      "world_bounds_cm": [
+        [
+          421.849,
+          1462.627,
+          394.0
+        ],
+        [
+          621.849,
+          1500.0,
+          457.591
+        ]
+      ]
+    },
+    {
+      "label": "VS_ART25_RoofParapet2",
+      "asset": "/Game/Art/Environment/MeshySite01/CourtyardPilot/W09/SM_VS_MSH_W09_StraightParapet",
+      "pivot_cm": [
+        622.849,
+        1500,
+        394
+      ],
+      "world_bounds_cm": [
+        [
+          622.849,
+          1462.627,
+          394.0
+        ],
+        [
+          822.849,
+          1500.0,
+          457.591
+        ]
+      ]
+    },
+    {
+      "label": "VS_ART25_RoofParapet3",
+      "asset": "/Game/Art/Environment/MeshySite01/CourtyardPilot/W09/SM_VS_MSH_W09_StraightParapet",
+      "pivot_cm": [
+        823.849,
+        1500,
+        394
+      ],
+      "world_bounds_cm": [
+        [
+          823.849,
+          1462.627,
+          394.0
+        ],
+        [
+          1023.849,
+          1500.0,
+          457.591
+        ]
+      ]
+    }
+  ],
+  "verification": {
+    "preexisting_actors_unchanged": 86,
+    "placed": [
+      {
+        "label": "VS_ART25_WallWest",
+        "world_bounds_cm": [
+          [
+            400.0,
+            1491.793,
+            0.0
+          ],
+          [
+            594.243,
+            1510.0,
+            300.0
+          ]
+        ],
+        "collision": "NoCollision"
+      },
+      {
+        "label": "VS_ART25_DoorRecess",
+        "world_bounds_cm": [
+          [
+            595.243,
+            1461.257,
+            0.0
+          ],
+          [
+            850.455,
+            1510.0,
+            300.0
+          ]
+        ],
+        "collision": "NoCollision"
+      },
+      {
+        "label": "VS_ART25_WallEast",
+        "world_bounds_cm": [
+          [
+            851.456,
+            1491.793,
+            0.0
+          ],
+          [
+            1045.698,
+            1510.0,
+            300.0
+          ]
+        ],
+        "collision": "NoCollision"
+      },
+      {
+        "label": "VS_ART25_RoofParapet1",
+        "world_bounds_cm": [
+          [
+            421.849,
+            1462.627,
+            394.0
+          ],
+          [
+            621.849,
+            1500.0,
+            457.591
+          ]
+        ],
+        "collision": "NoCollision"
+      },
+      {
+        "label": "VS_ART25_RoofParapet2",
+        "world_bounds_cm": [
+          [
+            622.849,
+            1462.627,
+            394.0
+          ],
+          [
+            822.849,
+            1500.0,
+            457.591
+          ]
+        ],
+        "collision": "NoCollision"
+      },
+      {
+        "label": "VS_ART25_RoofParapet3",
+        "world_bounds_cm": [
+          [
+            823.849,
+            1462.627,
+            394.0
+          ],
+          [
+            1023.849,
+            1500.0,
+            457.591
+          ]
+        ],
+        "collision": "NoCollision"
+      }
+    ],
+    "facade_pawn_traces": [
+      {
+        "x": 450,
+        "hit": true,
+        "impact_cm": [
+          450.0,
+          1500.0,
+          90.0
+        ],
+        "actor": "VS_ServicePanel_1_2"
+      },
+      {
+        "x": 600,
+        "hit": true,
+        "impact_cm": [
+          600.0,
+          1500.0,
+          90.0
+        ],
+        "actor": "VS_ServicePanel_1_2"
+      },
+      {
+        "x": 722.849,
+        "hit": true,
+        "impact_cm": [
+          722.849,
+          1500.0,
+          90.0
+        ],
+        "actor": "VS_ServicePanel_1_2"
+      },
+      {
+        "x": 845,
+        "hit": true,
+        "impact_cm": [
+          845.0,
+          1500.0,
+          90.0
+        ],
+        "actor": "VS_ServicePanel_1_3"
+      },
+      {
+        "x": 1000,
+        "hit": true,
+        "impact_cm": [
+          1000.0,
+          1500.0,
+          90.0
+        ],
+        "actor": "VS_ServicePanel_1_3"
+      }
+    ],
+    "visibility_trace": {
+      "hit": true,
+      "impact_cm": [
+        722.849,
+        1500.0,
+        152.0
+      ],
+      "actor": "VS_ServicePanel_1_2"
+    },
+    "directional_lights_after": {
+      "VS_Sun": {
+        "intensity": 3.0,
+        "cast_shadows": true,
+        "atmosphere_sun_light": true,
+        "forward_shading_priority": 1,
+        "mobility": "<ComponentMobility.MOVABLE: 2>",
+        "light_color_rgba": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "rotation": [
+          -0.0,
+          -48.0,
+          -35.0
+        ]
+      },
+      "VS_StylizedFill": {
+        "intensity": 1.5,
+        "cast_shadows": false,
+        "atmosphere_sun_light": true,
+        "forward_shading_priority": 0,
+        "mobility": "<ComponentMobility.MOVABLE: 2>",
+        "light_color_rgba": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "rotation": [
+          -0.0,
+          -45.0,
+          145.0
+        ]
+      }
+    }
+  },
+  "passed": true,
+  "error": null,
+  "captures": [
+    {
+      "id": "before_approach_service_route",
+      "camera_cm": [
+        100,
+        1750,
+        152
+      ],
+      "target_cm": [
+        690,
+        1510,
+        185
+      ],
+      "file": "docs/assets/meshy-site01-followups/courtyard-previews/before_approach_service_route.png",
+      "sha256": "de941e60dda2f88200b02b8c48fe23dd8d18b1d38978b6395f55e205bca63814"
+    },
+    {
+      "id": "before_route_facing_facade",
+      "camera_cm": [
+        722.849,
+        1750,
+        152
+      ],
+      "target_cm": [
+        722.849,
+        1500,
+        170
+      ],
+      "file": "docs/assets/meshy-site01-followups/courtyard-previews/before_route_facing_facade.png",
+      "sha256": "e04bd0dd74d729e549063796e69e867b140ce59e7cfdcbfdd1da01fa90883d9b"
+    },
+    {
+      "id": "before_route_crouched",
+      "camera_cm": [
+        722.849,
+        1750,
+        62
+      ],
+      "target_cm": [
+        722.849,
+        1500,
+        120
+      ],
+      "file": "docs/assets/meshy-site01-followups/courtyard-previews/before_route_crouched.png",
+      "sha256": "4f9c27b064484b003530e14055542fb94915f1f64e86d6aa74db87bb540cf9de"
+    },
+    {
+      "id": "before_oblique_from_west",
+      "camera_cm": [
+        300,
+        1820,
+        152
+      ],
+      "target_cm": [
+        720,
+        1505,
+        190
+      ],
+      "file": "docs/assets/meshy-site01-followups/courtyard-previews/before_oblique_from_west.png",
+      "sha256": "12c0734478b83896e156e416cc5974cda9711f91dd8099ab010b2d6d83a74c1c"
+    },
+    {
+      "id": "before_oblique_from_east",
+      "camera_cm": [
+        1150,
+        1820,
+        152
+      ],
+      "target_cm": [
+        720,
+        1505,
+        190
+      ],
+      "file": "docs/assets/meshy-site01-followups/courtyard-previews/before_oblique_from_east.png",
+      "sha256": "a98cae8eefc9736d50cecc060f9b48af8e5bb95dcaf23d32f5e4a1185ae7c267"
+    },
+    {
+      "id": "before_close_west_joint",
+      "camera_cm": [
+        600,
+        1590,
+        150
+      ],
+      "target_cm": [
+        595,
+        1500,
+        150
+      ],
+      "file": "docs/assets/meshy-site01-followups/courtyard-previews/before_close_west_joint.png",
+      "sha256": "b922e1f6c25320c1f69d92496481ba0dadd95570470fc5e619b76fda4bc5271e"
+    },
+    {
+      "id": "before_close_blind_recess",
+      "camera_cm": [
+        722.849,
+        1620,
+        165
+      ],
+      "target_cm": [
+        722.849,
+        1470,
+        150
+      ],
+      "file": "docs/assets/meshy-site01-followups/courtyard-previews/before_close_blind_recess.png",
+      "sha256": "9ff4981df8b1807ccc29692d9cac5f82a11319c450680712ffc435260eca007e"
+    },
+    {
+      "id": "before_overhead_diagnostic",
+      "camera_cm": [
+        722.849,
+        1760,
+        1500
+      ],
+      "target_cm": [
+        722.849,
+        1755,
+        0
+      ],
+      "file": "docs/assets/meshy-site01-followups/courtyard-previews/before_overhead_diagnostic.png",
+      "sha256": "0b19f3c830f83be566397292df579f034e722204490fa2572b5571df64a82bd2"
+    },
+    {
+      "id": "before_roof_diagnostic",
+      "camera_cm": [
+        722.849,
+        2000,
+        650
+      ],
+      "target_cm": [
+        722.849,
+        1480,
+        420
+      ],
+      "file": "docs/assets/meshy-site01-followups/courtyard-previews/before_roof_diagnostic.png",
+      "sha256": "c1d9fc717be2e9584957b1f178a7c6ee15a67bbf70fff0bef09963c789c77718"
+    },
+    {
+      "id": "after_approach_service_route",
+      "camera_cm": [
+        100,
+        1750,
+        152
+      ],
+      "target_cm": [
+        690,
+        1510,
+        185
+      ],
+      "file": "docs/assets/meshy-site01-followups/courtyard-previews/after_approach_service_route.png",
+      "sha256": "b94b427d027e44d18efd352f158cfc2a6c4036fc41af7a7a0ed39bd6eafde085"
+    },
+    {
+      "id": "after_route_facing_facade",
+      "camera_cm": [
+        722.849,
+        1750,
+        152
+      ],
+      "target_cm": [
+        722.849,
+        1500,
+        170
+      ],
+      "file": "docs/assets/meshy-site01-followups/courtyard-previews/after_route_facing_facade.png",
+      "sha256": "6a243353b30fa51ca5c02e2de7160d23b959ee49458b94f88af2a2faeb54504e"
+    },
+    {
+      "id": "after_route_crouched",
+      "camera_cm": [
+        722.849,
+        1750,
+        62
+      ],
+      "target_cm": [
+        722.849,
+        1500,
+        120
+      ],
+      "file": "docs/assets/meshy-site01-followups/courtyard-previews/after_route_crouched.png",
+      "sha256": "f727e858a15c7290844b342220b345ef57da47533abddaeab2b8eb37d5a80178"
+    },
+    {
+      "id": "after_oblique_from_west",
+      "camera_cm": [
+        300,
+        1820,
+        152
+      ],
+      "target_cm": [
+        720,
+        1505,
+        190
+      ],
+      "file": "docs/assets/meshy-site01-followups/courtyard-previews/after_oblique_from_west.png",
+      "sha256": "a191a201dba6130a2c925edbc3d56b0fc04c89947503ab694e67a83e9426ee79"
+    },
+    {
+      "id": "after_oblique_from_east",
+      "camera_cm": [
+        1150,
+        1820,
+        152
+      ],
+      "target_cm": [
+        720,
+        1505,
+        190
+      ],
+      "file": "docs/assets/meshy-site01-followups/courtyard-previews/after_oblique_from_east.png",
+      "sha256": "d2e7d8f3c2a41217c15d7ae9a2d2eb35cac512f92e691bd929ab8932a29e1953"
+    },
+    {
+      "id": "after_close_west_joint",
+      "camera_cm": [
+        600,
+        1590,
+        150
+      ],
+      "target_cm": [
+        595,
+        1500,
+        150
+      ],
+      "file": "docs/assets/meshy-site01-followups/courtyard-previews/after_close_west_joint.png",
+      "sha256": "619cfd80fc1b1d7a8c35557603927387dc985603ea277d3892ec6c33f6c9a328"
+    },
+    {
+      "id": "after_close_blind_recess",
+      "camera_cm": [
+        722.849,
+        1620,
+        165
+      ],
+      "target_cm": [
+        722.849,
+        1470,
+        150
+      ],
+      "file": "docs/assets/meshy-site01-followups/courtyard-previews/after_close_blind_recess.png",
+      "sha256": "de6f47909048bc81d0a1175bfebff0f7bb99efc2013c94ccfdfc379bc3021a50"
+    },
+    {
+      "id": "after_overhead_diagnostic",
+      "camera_cm": [
+        722.849,
+        1760,
+        1500
+      ],
+      "target_cm": [
+        722.849,
+        1755,
+        0
+      ],
+      "file": "docs/assets/meshy-site01-followups/courtyard-previews/after_overhead_diagnostic.png",
+      "sha256": "9cf09b560cb693976eca92874a3ef2ae284a08568b89b76dbced4987973c234f"
+    },
+    {
+      "id": "after_roof_diagnostic",
+      "camera_cm": [
+        722.849,
+        2000,
+        650
+      ],
+      "target_cm": [
+        722.849,
+        1480,
+        420
+      ],
+      "file": "docs/assets/meshy-site01-followups/courtyard-previews/after_roof_diagnostic.png",
+      "sha256": "fcfb8530c742792903b50ecaf10d4abeb1919d659a72dd1b909098d778da50cf"
+    }
+  ],
+  "map_sha256": "9f28c23b3e8e3d035c671921b05f7200b64dff1da312abab6d7a27fc99f992aa"
+}
