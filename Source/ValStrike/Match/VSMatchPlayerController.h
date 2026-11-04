@@ -4,6 +4,8 @@
 #include "../VSPlayerController.h"
 #include "VSMatchPlayerController.generated.h"
 
+class AVSMatchPlayerState;
+
 UENUM()
 enum class EVSMatchCommand : uint8
 {
@@ -21,6 +23,7 @@ class VALSTRIKE_API AVSMatchPlayerController : public AVSPlayerController
 public:
     using AVSPlayerController::InputKey;
     virtual void BeginPlay() override;
+    virtual void PlayerTick(float DeltaTime) override;
     virtual bool NotifyServerReceivedClientData(APawn* InPawn, float TimeStamp) override;
     virtual void SetupInputComponent() override;
     virtual bool InputKey(const FInputKeyEventArgs& Params) override;
@@ -42,9 +45,20 @@ private:
     void DropObjective();
     bool SendLocalCommand(EVSMatchCommand Command);
 
+    // Client-local death spectating: the camera follows living teammates only.
+    void UpdateDeathSpectate();
+    void CycleSpectateTarget();
+    void StopDeathSpectate();
+    bool WatchSpectateTarget(uint64 TargetId);
+    const AVSMatchPlayerState* FindSpectateTarget(uint64 TargetId) const;
+
     uint32 LocalRequestId = 0;
     bool bObjectiveHeld = false;
     // Only a raw pressed event grants this permit. FlushPressedKeys can synthesize
     // releases, and a subsequent repeat can synthesize a binding-level press.
     bool bFreshObjectivePress = false;
+
+    TWeakObjectPtr<APawn> DeathPawn;
+    double DeathSeconds = 0.0;
+    uint64 SpectateTargetId = 0; // Nonzero only while the camera follows a teammate.
 };
