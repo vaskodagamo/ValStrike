@@ -138,7 +138,8 @@ void UVSWeaponPresentationComponent::Uninitialize()
     WorldBody = WorldMagazine = WorldSlide = WorldFlash = nullptr;
     Character.Reset();
     State = VSRiflePresentation::State();
-    FlashRemaining = KickRemaining = ReloadAge = EquipAge = 0;
+    MuzzleFlash = VSMuzzleFlash::State();
+    KickRemaining = ReloadAge = EquipAge = 0;
     EquipBlend = 1;
     bVisible = bReloading = false;
     ShotPulseCount = ReloadStartCount = 0;
@@ -154,15 +155,17 @@ void UVSWeaponPresentationComponent::TickComponent(float DeltaTime, ELevelTick T
 {
     Super::TickComponent(DeltaTime, TickType, TickFunction);
     if (!Character.IsValid()) { Uninitialize(); return; }
-    FlashRemaining = FMath::Max(0.0f, FlashRemaining - DeltaTime);
-    KickRemaining = FMath::Max(0.0f, KickRemaining - DeltaTime * 9.0f);
-    const VSRiflePresentation::Update Update = State.Observe(ReadSnapshot());
+    MuzzleFlash.Advance(DeltaTime);
+    KickRemaining = FMath::Max(0.0f, KickRemaining - DeltaTime * KickRecovery);
+    const VSRiflePresentation::Snapshot Current = ReadSnapshot();
+    const VSRiflePresentation::Update Update = State.Observe(Current);
     const bool bWasVisible = bVisible;
     bVisible = Update.visible;
     bReloading = Update.reloading;
     if (!bVisible)
     {
-        FlashRemaining = KickRemaining = ReloadAge = EquipAge = 0;
+        MuzzleFlash.Clear();
+        KickRemaining = ReloadAge = EquipAge = 0;
         EquipBlend = 1;
     }
     else
@@ -170,11 +173,12 @@ void UVSWeaponPresentationComponent::TickComponent(float DeltaTime, ELevelTick T
         if (Update.shotPulse)
         {
             ++ShotPulseCount;
-            FlashRemaining = 0.065f;
+            // Shape from the replicated accepted-shot counter, identical on every view.
+            MuzzleFlash.Trigger(Current.shots, FlashDuration);
             KickRemaining = 1.0f;
         }
         if (Update.reloadStarted) { ++ReloadStartCount; ReloadAge = 0; }
-        if (bReloading) { ReloadAge += DeltaTime; FlashRemaining = KickRemaining = 0; }
+        if (bReloading) { ReloadAge += DeltaTime; MuzzleFlash.Clear(); KickRemaining = 0; }
         else { ReloadAge = 0; }
         // Raise from a lowered pose over the equip time, timed from when this
         // view first observed the equip: the key press on the predicting owner,
@@ -206,8 +210,8 @@ void UVSWeaponPresentationComponent::ApplyPose()
     {
         const bool bFP = Body == FirstPersonBody;
         FTransform Pose = bFP ? FirstPersonGrip : WorldGrip;
-        Pose.AddToTranslation(FVector(-2.0f * KickRemaining, 0, -3.0f * ReloadBlend - 14.0f * Lowered));
-        Pose.SetRotation(Pose.GetRotation() * FRotator(1.8f * KickRemaining - 12.0f * ReloadBlend - 30.0f * Lowered, 0, -8.0f * ReloadBlend).Quaternion());
+        Pose.AddToTranslation(FVector(-KickBack * KickRemaining, 0, -3.0f * ReloadBlend - 14.0f * Lowered));
+        Pose.SetRotation(Pose.GetRotation() * FRotator(KickPitch * KickRemaining - 12.0f * ReloadBlend - 30.0f * Lowered, 0, -8.0f * ReloadBlend).Quaternion());
         Body->SetRelativeTransform(Pose);
         Body->SetVisibility(bVisible && (bFP ? bFirstPerson : !bFirstPerson), false);
     }
@@ -223,8 +227,18 @@ void UVSWeaponPresentationComponent::ApplyPose()
         Slide->SetRelativeLocation(FVector(-SlideKickDistance * KickRemaining, 0, 0));
         Slide->SetVisibility(bVisible && (Slide == FirstPersonSlide ? bFirstPerson : !bFirstPerson), false);
     }
-    FirstPersonFlash->SetVisibility(bVisible && bFirstPerson && FlashRemaining > 0, false);
-    WorldFlash->SetVisibility(bVisible && !bFirstPerson && FlashRemaining > 0, false);
+    const VSMuzzleFlash::Pose FlashPose = MuzzleFlash.Current();
+    for (UStaticMeshComponent* FlashVisual : {FirstPersonFlash.Get(), WorldFlash.Get()})
+    {
+        const bool bShow = bVisible && FlashPose.visible && (FlashVisual == FirstPersonFlash ? bFirstPerson : !bFirstPerson);
+        if (bShow)
+        {
+            // Roll about the muzzle axis; FlashScale's unequal Y/Z makes it readable.
+            FlashVisual->SetRelativeRotation(FRotator(0, 0, FlashPose.rollDegrees));
+            FlashVisual->SetRelativeScale3D(FlashScale * FVector(FlashPose.lengthScale, 1, 1));
+        }
+        FlashVisual->SetVisibility(bShow, false);
+    }
 }
 
 bool UVSWeaponPresentationComponent::GetMuzzleTransform(FTransform& Out) const
