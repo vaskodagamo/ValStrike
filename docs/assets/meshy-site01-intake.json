@@ -1,0 +1,497 @@
+{
+  "date": "2026-11-04",
+  "canonical_inbox": "/Users/webproduktion3/Documents/ValStrike/meshy_ai_assets",
+  "provenance": "User supplied Meshy exports from project concepts; vendor generation IDs and license evidence not supplied yet.",
+  "assets": [
+    {
+      "asset_id": "MSH-W01",
+      "task_id": "ART-11",
+      "group": "structure",
+      "folder": "Meshy_AI_Concrete_Grid_Panel_20261104_texture_0e1290ef",
+      "files": [
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Concrete_Grid_Panel_20261104_texture_0e1290ef/Meshy_AI_Concrete_Grid_Panel_1104115854_texture.png",
+          "bytes": 21350060,
+          "sha256": "745d93f3f46720381a5deb75cbabd54d761acc53aaa21db0a1523f493f95632f",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Concrete_Grid_Panel_20261104_texture_0e1290ef/Meshy_AI_model.fbx",
+          "bytes": 22890252,
+          "sha256": "d48300a9066812801798ed8bb66a9dfe504313532c1f7e387c877b69f173da4f"
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Concrete_Grid_Panel_20261104_texture_0e1290ef/Meshy_AI_texture_0_metallic.png",
+          "bytes": 29904,
+          "sha256": "6c49c0aa936e59a736ab5bd21322b112bb5b20ba2091b28fe5fa204852fb2fc1",
+          "size": [
+            2048,
+            2048
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Concrete_Grid_Panel_20261104_texture_0e1290ef/Meshy_AI_texture_0_normal.png",
+          "bytes": 19809568,
+          "sha256": "32b2b42b851a5fa83a06571914870518961b1c7f9fa3c02d257aa9eac8f482f8",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Concrete_Grid_Panel_20261104_texture_0e1290ef/Meshy_AI_texture_0_roughness.png",
+          "bytes": 1111378,
+          "sha256": "d096150d0db5d270aae4b1a7355332bd8c885f8e34459010e3f1aba8ee070380",
+          "size": [
+            2048,
+            2048
+          ]
+        }
+      ]
+    },
+    {
+      "asset_id": "MSH-W02",
+      "task_id": "ART-12",
+      "group": "props-surfaces",
+      "folder": "Meshy_AI_Concrete_Safety_Steps_20261104_texture_db56b86b",
+      "files": [
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Concrete_Safety_Steps_20261104_texture_db56b86b/Meshy_AI_Concrete_Safety_Steps_1104115853_texture.png",
+          "bytes": 19614727,
+          "sha256": "5e050f7570e505d6429b62eacb81fae7e16a911b285f25daad00ca39102456e8",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Concrete_Safety_Steps_20261104_texture_db56b86b/Meshy_AI_model.fbx",
+          "bytes": 56870796,
+          "sha256": "a7f36955aee4a98a8e3cd12843be9abb6396621fcb10f2501afc7c2af2e30353"
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Concrete_Safety_Steps_20261104_texture_db56b86b/Meshy_AI_texture_0_metallic.png",
+          "bytes": 46981,
+          "sha256": "bd8108f9adee321d187e703190e4313cc2cef4ffdcf7c3c3f72d195660fdb8d9",
+          "size": [
+            2048,
+            2048
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Concrete_Safety_Steps_20261104_texture_db56b86b/Meshy_AI_texture_0_normal.png",
+          "bytes": 17574325,
+          "sha256": "8a50f21c6ccc9c8e25ab1b51bd7a4062ef81312f958f2faac08886a05f6a3c23",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Concrete_Safety_Steps_20261104_texture_db56b86b/Meshy_AI_texture_0_roughness.png",
+          "bytes": 1501231,
+          "sha256": "80fa2f4ae9a570bddafb7d9f10bac7d84aefbd1f65855c8dfdeba599e3c7097b",
+          "size": [
+            2048,
+            2048
+          ]
+        }
+      ]
+    },
+    {
+      "asset_id": "MSH-W03",
+      "task_id": "ART-12",
+      "group": "props-surfaces",
+      "folder": "Meshy_AI_Gray_Concrete_Tiles_20261104_texture_00f6de94",
+      "files": [
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Gray_Concrete_Tiles_20261104_texture_00f6de94/Meshy_AI_Gray_Concrete_Tiles_1104115851_texture.png",
+          "bytes": 17489649,
+          "sha256": "e79ee68087d541123842e84b682fc2b1e44e67aba6b39be41dd462a9008f9a64",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Gray_Concrete_Tiles_20261104_texture_00f6de94/Meshy_AI_model.fbx",
+          "bytes": 18611628,
+          "sha256": "f1ec10384fcf954b70bd0c067b4722eae7fab58f3c7832fb358c2ff30f572af0"
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Gray_Concrete_Tiles_20261104_texture_00f6de94/Meshy_AI_texture_0_metallic.png",
+          "bytes": 116686,
+          "sha256": "45e137ae6251d7d7e56f4e80bf53152367e0f4b2b811add07d81b1c1809f2d3e",
+          "size": [
+            2048,
+            2048
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Gray_Concrete_Tiles_20261104_texture_00f6de94/Meshy_AI_texture_0_normal.png",
+          "bytes": 15640365,
+          "sha256": "ca8d9f9f7e11c768489efe2546cc5e4332ea09bf818f2fc9dc94ad5dc94a4919",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Gray_Concrete_Tiles_20261104_texture_00f6de94/Meshy_AI_texture_0_roughness.png",
+          "bytes": 1143619,
+          "sha256": "dc0f96d6aa8161c97d0f1c6584bca3216eeda6a084e25dcef2468f20754d876f",
+          "size": [
+            2048,
+            2048
+          ]
+        }
+      ]
+    },
+    {
+      "asset_id": "MSH-W04",
+      "task_id": "ART-12",
+      "group": "props-surfaces",
+      "folder": "Meshy_AI_Industrial_Cargo_Crate_20261104_texture_96750933",
+      "files": [
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Cargo_Crate_20261104_texture_96750933/Meshy_AI_Industrial_Cargo_Crat_1104115851_texture.png",
+          "bytes": 19625235,
+          "sha256": "94ab58047529f5f2c38f43291bd6615796062dee11e362cff5dfe0e9dacb112c",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Cargo_Crate_20261104_texture_96750933/Meshy_AI_model.fbx",
+          "bytes": 32063932,
+          "sha256": "f02eef730cd6f19cafcfd0ad85823a631de6466091f54a578837f1107801496a"
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Cargo_Crate_20261104_texture_96750933/Meshy_AI_texture_0_metallic.png",
+          "bytes": 273590,
+          "sha256": "1ef42473595b6b7a88eca8e4e2efed51f24c1e43f48ff14c14ec5a41f8e86595",
+          "size": [
+            2048,
+            2048
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Cargo_Crate_20261104_texture_96750933/Meshy_AI_texture_0_normal.png",
+          "bytes": 16630261,
+          "sha256": "fc52752c5849f3c3db49b41191e4c7cfd3abd80d5e3beafdaac781eac2cfe18a",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Cargo_Crate_20261104_texture_96750933/Meshy_AI_texture_0_roughness.png",
+          "bytes": 1619722,
+          "sha256": "31968e6f725388c6f6ff8e3ffa6f701addfbbfad8a09aaf38ea7a53d5d0743c6",
+          "size": [
+            2048,
+            2048
+          ]
+        }
+      ]
+    },
+    {
+      "asset_id": "MSH-W05",
+      "task_id": "ART-11",
+      "group": "structure",
+      "folder": "Meshy_AI_Industrial_Corner_Barrier_20261104_texture_d31f9a34",
+      "files": [
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Corner_Barrier_20261104_texture_d31f9a34/Meshy_AI_Industrial_Corner_Bar_1104115851_texture.png",
+          "bytes": 17321829,
+          "sha256": "5b8f6b5fe0515b47bbdf5f419ec2505459c7ed297eab5a71b2133534dff4446f",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Corner_Barrier_20261104_texture_d31f9a34/Meshy_AI_model.fbx",
+          "bytes": 20064684,
+          "sha256": "6a69a9c96701bc0f23a70699657c49a7c8218452595dd62c59d1c12a6aac796d"
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Corner_Barrier_20261104_texture_d31f9a34/Meshy_AI_texture_0_metallic.png",
+          "bytes": 301802,
+          "sha256": "5e498713b2343147ac9a0baf4978d501b16a9659278553d3dc012d119a4ff47d",
+          "size": [
+            2048,
+            2048
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Corner_Barrier_20261104_texture_d31f9a34/Meshy_AI_texture_0_normal.png",
+          "bytes": 15513279,
+          "sha256": "175d2b04e347b51ab9d10286a8f8bf3010a38ef34b40f023bf72c3e15a811e1a",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Corner_Barrier_20261104_texture_d31f9a34/Meshy_AI_texture_0_roughness.png",
+          "bytes": 1073498,
+          "sha256": "3591394b21d72d40971f857524b364163649222d1e286da1d8c22ff5e0416841",
+          "size": [
+            2048,
+            2048
+          ]
+        }
+      ]
+    },
+    {
+      "asset_id": "MSH-W06",
+      "task_id": "ART-11",
+      "group": "structure",
+      "folder": "Meshy_AI_Industrial_Corner_Barrier_20261104_texture_e89dd755",
+      "files": [
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Corner_Barrier_20261104_texture_e89dd755/Meshy_AI_Industrial_Corner_Bar_1104115853_texture.png",
+          "bytes": 19853961,
+          "sha256": "707a844218cba903beb387c4082d7d5797108db977cd3f4445414029ce167080",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Corner_Barrier_20261104_texture_e89dd755/Meshy_AI_model.fbx",
+          "bytes": 21689388,
+          "sha256": "26aa50e12d956de22ca797c96b8c69e14726154114ecf2fcbf7b34f03bebf287"
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Corner_Barrier_20261104_texture_e89dd755/Meshy_AI_texture_0_metallic.png",
+          "bytes": 29679,
+          "sha256": "1ebe9249c640b90e933a68b1e12932246c1645d48037b21cd1a6393f4c2e0248",
+          "size": [
+            2048,
+            2048
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Corner_Barrier_20261104_texture_e89dd755/Meshy_AI_texture_0_normal.png",
+          "bytes": 17713286,
+          "sha256": "899c9d6971663d63a8b2c5893e71c22d612919737e5ef09d4afa2dd4efb93884",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Corner_Barrier_20261104_texture_e89dd755/Meshy_AI_texture_0_roughness.png",
+          "bytes": 1250815,
+          "sha256": "37baa33adda210babd43fc04d5bb7336cd8f578db2fe00e522699ac415a85bf5",
+          "size": [
+            2048,
+            2048
+          ]
+        }
+      ]
+    },
+    {
+      "asset_id": "MSH-W07",
+      "task_id": "ART-12",
+      "group": "props-surfaces",
+      "folder": "Meshy_AI_Industrial_Gray_Cabinet_20261104_texture_c02c572c",
+      "files": [
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Gray_Cabinet_20261104_texture_c02c572c/Meshy_AI_Industrial_Gray_Cabin_1104115853_texture.png",
+          "bytes": 12396257,
+          "sha256": "963483dbb8f8ffb27e8b45879b7369a569beec64eef8154d360aa0feade2ce8a",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Gray_Cabinet_20261104_texture_c02c572c/Meshy_AI_model.fbx",
+          "bytes": 14326172,
+          "sha256": "adfdfedab8b71d7845e51567a629149104070a4f32d78ac204d8fcec81ef0ceb"
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Gray_Cabinet_20261104_texture_c02c572c/Meshy_AI_texture_0_metallic.png",
+          "bytes": 871010,
+          "sha256": "f9b5ec34f3ba4914479d88ba5a9489c25899967b773e4e0b7896427830de10ef",
+          "size": [
+            2048,
+            2048
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Gray_Cabinet_20261104_texture_c02c572c/Meshy_AI_texture_0_normal.png",
+          "bytes": 9737924,
+          "sha256": "6a46d73b1f659723e749d118bff0b3789b758973581c4ee8f1b8faf6f1874cb6",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Gray_Cabinet_20261104_texture_c02c572c/Meshy_AI_texture_0_roughness.png",
+          "bytes": 941396,
+          "sha256": "eba3085e7878b0582ae5a7a8ea9f98292d9ba51ec9e86ee5d8c9ca7e3526eeb3",
+          "size": [
+            2048,
+            2048
+          ]
+        }
+      ]
+    },
+    {
+      "asset_id": "MSH-W08",
+      "task_id": "ART-11",
+      "group": "structure",
+      "folder": "Meshy_AI_Industrial_Portal_20261104_texture_31514e26",
+      "files": [
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Portal_20261104_texture_31514e26/Meshy_AI_Industrial_Portal_1104115853_texture.png",
+          "bytes": 12749445,
+          "sha256": "45e4b54a19ec9488d603e700fa5c2c828ca97796231db151f123b3f1005549c1",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Portal_20261104_texture_31514e26/Meshy_AI_model.fbx",
+          "bytes": 16256908,
+          "sha256": "871ac070b024a59b525b18277b88fef50ac57e22b0298a5b3313e8b9fae73e33"
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Portal_20261104_texture_31514e26/Meshy_AI_texture_0_metallic.png",
+          "bytes": 54440,
+          "sha256": "efe44d2f345b816efb8121711c2fe8a085894afcca29a9ccd2bc3c2c7a7c8416",
+          "size": [
+            2048,
+            2048
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Portal_20261104_texture_31514e26/Meshy_AI_texture_0_normal.png",
+          "bytes": 12230993,
+          "sha256": "5dabdb69abed62203dd0e73c4d6e57eea67441bcca57be9688fbabc17bff17bf",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Portal_20261104_texture_31514e26/Meshy_AI_texture_0_roughness.png",
+          "bytes": 1098669,
+          "sha256": "f4bd8baea47516082baf7820cfd06a483e494802c9db23f02dff13b434bb90ee",
+          "size": [
+            2048,
+            2048
+          ]
+        }
+      ]
+    },
+    {
+      "asset_id": "MSH-W09",
+      "task_id": "ART-11",
+      "group": "structure",
+      "folder": "Meshy_AI_Industrial_Security_Barrier_20261104_texture_f32de489",
+      "files": [
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Security_Barrier_20261104_texture_f32de489/Meshy_AI_Industrial_Security_B_1104115854_texture.png",
+          "bytes": 14490783,
+          "sha256": "1205606187862fc4d064bc80f2eab0cd933ec053caa1d92965b21b2ead6fbd8e",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Security_Barrier_20261104_texture_f32de489/Meshy_AI_model.fbx",
+          "bytes": 17510364,
+          "sha256": "a490387be22e6835b828a25da02d6f8b54ec0968f21e9b613d461f77c78a26f8"
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Security_Barrier_20261104_texture_f32de489/Meshy_AI_texture_0_metallic.png",
+          "bytes": 182677,
+          "sha256": "ed4f1c16732b39651f38a78462422b9f17cfd5512fb5a0e29a7c0322f4265fe9",
+          "size": [
+            2048,
+            2048
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Security_Barrier_20261104_texture_f32de489/Meshy_AI_texture_0_normal.png",
+          "bytes": 13373244,
+          "sha256": "ab28705cac5feb784dd3c2e108ebe69a05e90184b34cf294df39f9da30ebba87",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Security_Barrier_20261104_texture_f32de489/Meshy_AI_texture_0_roughness.png",
+          "bytes": 962772,
+          "sha256": "3d6b22ac7396adb9b6e0b22e4c72351afbcb32491421fa5ad9a56ed484292448",
+          "size": [
+            2048,
+            2048
+          ]
+        }
+      ]
+    },
+    {
+      "asset_id": "MSH-W10",
+      "task_id": "ART-12",
+      "group": "props-surfaces",
+      "folder": "Meshy_AI_Sci_Fi_Cargo_Crate_20261104_texture_2d8581da",
+      "files": [
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Sci_Fi_Cargo_Crate_20261104_texture_2d8581da/Meshy_AI_Sci_Fi_Cargo_Crate_1104115851_texture.png",
+          "bytes": 20945329,
+          "sha256": "a6bbe974b85f0c4d16399afcf3654925b4eab7ec45690a68b8f0ef4a81a250d3",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Sci_Fi_Cargo_Crate_20261104_texture_2d8581da/Meshy_AI_model.fbx",
+          "bytes": 35503036,
+          "sha256": "116e0b095ed332c903c9b0e24bc3497fa0197defaaa5c05237388840ecb48488"
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Sci_Fi_Cargo_Crate_20261104_texture_2d8581da/Meshy_AI_texture_0_metallic.png",
+          "bytes": 818161,
+          "sha256": "d39146b111170bb07f2e01ef3ae7c5f74e91a295cd85b3d0a6c82bf958a39451",
+          "size": [
+            2048,
+            2048
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Sci_Fi_Cargo_Crate_20261104_texture_2d8581da/Meshy_AI_texture_0_normal.png",
+          "bytes": 17961130,
+          "sha256": "28109631037f68fc8a8be8e7332f3e366d839ddcdffe8fda9451e7ceb2daacb1",
+          "size": [
+            4096,
+            4096
+          ]
+        },
+        {
+          "file": "meshy_ai_assets/world_objects/Meshy_AI_Sci_Fi_Cargo_Crate_20261104_texture_2d8581da/Meshy_AI_texture_0_roughness.png",
+          "bytes": 1711885,
+          "sha256": "a5a20c5913cd136a5a2ab1a2000056048fa38f9b71482ae32746b97f4c89aa5f",
+          "size": [
+            2048,
+            2048
+          ]
+        }
+      ]
+    }
+  ]
+}
