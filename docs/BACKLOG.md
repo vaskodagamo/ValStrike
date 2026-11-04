@@ -43,6 +43,7 @@ SET-04 partial (2026-11-04): server tick rate chosen at 60 Hz and measured again
 | GUN-02 | Add hits, health, death and development reset | Done | GUN-01 | Server validates traces/damage; cover blocks shots; dead players cannot act; server-only development reset restores players/ammo for repeated tests |
 | GUN-03 | Add immediate local feedback | In progress | GUN-02 | Recoil, crosshair, firing audio/effects, confirmed hits and death feedback work without duplicate effects |
 | GUN-04 | Verify weapon authority and network behavior | Queued | GUN-03, MOVE-03 | Invalid/repeated requests rejected; rule tests pass; moving-target hit behavior measured and limitations documented |
+| KNIFE-01 | Complete playable knife (explicit user scope expansion, 2026-11-04) | Authorized pipeline; first-person art dispatched, gameplay preparation/remaining admission queued | Existing loadout/damage and K01/FPArms03 source | Key 3/Q, visible gloved hands and remote character, equip/idle/locomotion/slash/stab, server-validated melee and cancellation, feedback/UI/audio, actual server/client acceptance; [shared contract](tasks/KNIFE-01-full-feature.md) |
 
 Movement evidence (2026-11-03): a three-process loopback smoke test passed 45 checks covering normal/slow/crouched speeds, replicated stance/body bounds, camera height, jump/landing, walls, stairs and cover. MOVE-01/02 remain in progress until the rendered checks are complete; MOVE-03 latency/loss and SET-03 packaging are still open. See WORK_LOG.md and the repeatable command in SETUP.md.
 

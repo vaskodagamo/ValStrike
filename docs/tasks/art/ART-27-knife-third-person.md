@@ -1,0 +1,9 @@
+# ART-27 — UrbanEntry K01 hold and attacks (queued)
+
+Owner: existing character artist `01a1a6b0-8aa8-7373-b8bb-bc5506f451d4`, High, **not dispatched yet**. Producer creates/records a fresh `art27-knife-third-person` worktree when a contributor slot is free. ART-15/23 and native checkouts stay frozen/read-only. Exact future writes: `Art/Source/Characters/UrbanEntry01/KnifePilot/`, `docs/assets/urban-entry01/knife-pilot/`, `docs/workstreams/art27-knife-third-person.md`.
+
+Follow the [full knife contract](../KNIFE-01-full-feature.md). Zero paid jobs/credits, no Unreal/build or new test framework. Derive source from preserved UrbanEntry skeleton/mesh/materials and actual K01 #85; do not change base hierarchy/rest pose, weights or previous clips. Produce natural third-person hold/equip/locomotion and distinct slash/stab actions with root motion off, native `hand_r` assembly recipe and separate source/native basis explanation. Reuse the existing locomotion lower body where possible; no unrelated gait/crouch animation redesign.
+
+Match first-person/gameplay timing: equip 0.40 s, slash impact 0.15 s and total 0.55 s, stab impact 0.30 s and total 0.90 s, 60 fps. Deliver exact action names/ranges/impact metadata and attachment matrices. Inspect grip, shoulder/elbow/wrist motion, blade/off-hand/body clearance and game-distance readability; retain documented existing visual limits rather than distorting the character. No pose pass based solely on numeric proximity.
+
+Actual animation FBX reimport onto the preserved character, representative impact/recovery/whole-body/contact views and compact readiness are required. Reuse previous source/rig evidence; no full unrelated clip rerun. Publish one main-targeted source PR, freeze and stop. Native integration and server/client completion remain the sole integrator's later batch.

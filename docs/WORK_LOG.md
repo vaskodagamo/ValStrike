@@ -488,6 +488,22 @@ The gameplay/integration idle slots were checked clean at their original heads b
 
 **Next:** combine frozen GPF-04 and reviewed ART-23 with the pending GPF-02/03 affected acceptance in one controlled native/QA batch. First-person hand import remains excluded until contact/deformation clears. This coordination cycle used existing evidence, image inspection and diff checks; no new tests, Unreal job or Meshy charge. Ledger remains 30/300 new credits spent. User merges all PRs.
 
+## 2026-11-04 — World-art priority and combined native follow-up activated
+
+**New priority:** verified the user's direct request in Direktor to work on remaining world objects and start building the first map. [ART-25](tasks/art/ART-25-courtyard-structure.md) assigns the existing props owner at High to a new clean `4f57d74` worktree: W01 wall, W08 pedestrian doorway and W09 parapet, original surface preservation, a concrete courtyard/service-facade assembly and zero paid jobs. Artist acknowledged actual source inspection; old ART-11/16 checkouts remain frozen.
+
+**Released native batch:** GPF-04 #97 `100245d` finished and merged during the cycle. Engineering and producer reviewed the bounded timing-only harness change; no movement gameplay changed, and D3 still needs runtime confirmation. The existing integrator received [INT-ART-02](tasks/integration/INT-ART-02-site01-followups.md) and switched to its new branch. Phase A combines the reviewed ART-23 pistol pose with GPF-02/03/04 acceptance; phase B applies the first reviewed frozen ART-25 subset to existing Site01 with real eye-level/overhead views, save/reopen, route/collision checks and bounded lighting review. It does not wait for first-person hands or all remaining objects.
+
+**Ownership/limits:** ART-24, ART-25 and INT-ART-02 are the three active contributors. One map/native owner, one engine slot, no parallel QA or contributor builds. Existing map layout, authority and collision contracts stay intact. Producer performed dispatch/document inspection only; no new paid job or UE operation. #98 was user-merged, so this new priority is published separately. New weapon replacement remains a later explicit fit/native batch.
+
+## 2026-11-04 — Full knife scope authorized and first-person actions dispatched
+
+**Authority/result:** verified the direct user request in Direktor for a complete knife with hands and item 3. [KNIFE-01](tasks/KNIFE-01-full-feature.md) supersedes the old ART-20 combat exclusion and defines loadout/Q, first/third-person actions, shared impact timing, server validation/damage/cancellation, UI/audio/kill feed and actual multiplayer completion. Verified current request byte 2 means Last; the contract requires a separate explicit Knife request mapping.
+
+**Actual kickoff:** ART-24 finished source `b637948` / handoff `5e53cb4`, PR #102, clean stopped checkout. Producer reviewed actual final/reimport contact views: specific stationary penetration corrected; general deformation/native limits remain. The same High-reasoning owner received [ART-26](tasks/art/ART-26-knife-first-person.md) for derived K01 grip plus equip/idle/locomotion/slash/stab, zero credits. Existing Claude lead prepared the exact gameplay brief; after ART-25 froze/ceased work, producer released phase A to existing GPT-04, and actual start was acknowledged on `claude/knife-01-gameplay` from `5407272`. Shared phase-B hooks remain serialized. [ART-27](tasks/art/ART-27-knife-third-person.md) and [INT-ART-03](tasks/integration/INT-ART-03-knife.md) are explicitly queued, not running.
+
+**Capacity/verification:** ART-26 replaces ART-24; finished ART-25 frees the third slot for KNIFE-01 alongside INT-ART-02. ART-25 public publication was rejected by automatic approval review and awaits the user approval already requested in its chat; source and permitted native map work stay local. No fourth contributor or build loop. Native phase A #103 records combined movement/session/spectate/pistol success; phase B map acceptance is running, so no public/native completion claim for the new structures. This producer change used source inspection and documentation checks only. No Meshy charge, Unreal run or native knife completion claim. The user's R02/P02 replacement question was also read directly in gameplay and retained as a separate native follow-up, independent of completed first-person hands.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.
