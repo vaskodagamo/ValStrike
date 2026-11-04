@@ -43,3 +43,41 @@ code, map, central board/log or another checkout was modified. No workers create
 Next owner: coordinator/art lead reviews the source; a separately scoped animation
 and integration owner resolves hold/stock fit and imports the replacement. The user
 retains PR merge authority. Stop at this source handoff.
+
+## 2026-11-04 — User-requested source-preservation repair
+
+**Supersedes the rejected visual result above.** The untouched Meshy output was
+substantially cleaner; the initial local reduction, abrupt grip-depth adjustment
+and replacement shading caused the visible degradation. The earlier description
+of the dents/softness as remaining generated quality was misleading.
+
+Corrected source commit: `67f985be0099ac870ed2b0c6ed87443a07380406`.
+[Follow-up PR #89 to main](https://github.com/vaskodagamo/ValStrike/pull/89), branch
+`codex/art17-rifle02-preserve`, same owned worktree/paths. #76 was already merged,
+so this correction is published separately. **Source-preservation review: pass by
+ART-17 owner on 2026-11-04; producer/user art review and native verification pending.**
+
+Recovered the original full surface detail, UVs, authored normals and PBR. No
+reduction, recolor, roughness remap or normal-map weakening remains. Only 75 cm
+normalization with matching normal transforms, continuous palm-width fitting, and
+connected magazine separation/caps are applied. Exact embedded texture bytes are
+portable in `Textures/GLB/`; the untouched master remains in the packed `.blend`.
+Original GLB SHA-256: `dc937134bebde584a32d5586db37eab7b393165f1aabb08f010d41ec34b7594b`.
+Delivered blend SHA-256: `fb282abdc17285f50e8a30efdced65a5a5c62f1896c6ec3f19c7336f0830afa2`.
+
+Inspected [matched original/source/actual-FBX views and detached caps](../assets/rifle02/README.md#original--corrected--export-quality-gate)
+with identical camera, lights, scale and original PBR; refreshed the scale, character
+and FOV evidence. The [focused export check](../assets/rifle02/export-verification.json)
+passes: 448,486 + 11,860 triangles, no boundary/non-manifold edges, matching UVs and
+pivots, bounds error ≤0.0000017 cm, 8,551 sampled custom normals within 0.028°,
+packed/external texture bytes identical. Python/diff/LFS checks passed.
+
+Final envelope **75.000 × 7.251 × 25.455 cm**, grip width **3.22 cm**. The magazine
+socket is now **(15, 0, −2.5) cm**, identity rotation/scale; other anchors unchanged.
+The existing frozen-pose shoulder/finger limitations remain documented. Full-detail
+source is deliberately retained; native/material/runtime/LOD acceptance stays with
+assigned integration. No Unreal, build, new test suite, shared skill edit or worker.
+**Zero additional credits; original task remains 30/30 credits, no retry.**
+
+Next owner: Direktor (2)/producer reviews #89 and assigns integration/animation work;
+user merges. Stop at this corrected source handoff.

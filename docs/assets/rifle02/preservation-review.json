@@ -1,0 +1,38 @@
+{
+  "camera_location_cm": [
+    94.0,
+    -135.0,
+    70.0
+  ],
+  "camera_target_cm": [
+    14,
+    0,
+    1
+  ],
+  "ortho_scale_cm": 94,
+  "resolution": [
+    1400,
+    900
+  ],
+  "samples": 16,
+  "seed": 0,
+  "material": "Original GLB PBR graph in every state; identical reconstruction after FBX import",
+  "states": [
+    "R02_original_control.png",
+    "R02_corrected_control.png",
+    "R02_fbx_control.png"
+  ],
+  "original_triangles": 458064,
+  "source_reduction": false,
+  "separation_view": "R02_magazine_separation.png: actual exported magazine moved down 10 cm; caps inspected",
+  "reviewer": "ART-17 owner",
+  "review_date": "2026-11-04 Europe/Berlin",
+  "source_preservation_result": "pass; lead/user art review pending",
+  "permitted_differences": "Smooth palm-region grip width fitting and magazine separation/cap only; original receiver/rail/sight/stock surfaces retained",
+  "fbx_material_note": "Material reassigned from source for this geometry/UV/normal preservation comparison; Unreal must recreate the original PBR graph.",
+  "source_sha256": "fb282abdc17285f50e8a30efdced65a5a5c62f1896c6ec3f19c7336f0830afa2",
+  "fbx_sha256": {
+    "SM_VS_Rifle02_Body.fbx": "47578175da9d3f91d005783d6af421ce1fb1004e1a64fae3e583096a6957f644",
+    "SM_VS_Rifle02_Magazine.fbx": "37dbfc4408174a29f6e2d7f7a9443efae8afccab8be115bab18bf76690d25b15"
+  }
+}
