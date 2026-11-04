@@ -1,34 +1,55 @@
 {
-  "slot_order": [
-    "M_K01_Meshy_CoolSteel_Charcoal",
-    "M_K01_SatinSteel",
-    "M_K01_GunmetalTrim",
-    "M_K01_BurgundyInset"
+  "material": "Material_0",
+  "status": "Original imported Meshy GLB graph preserved",
+  "base_color": "Textures/Embedded/Image_0.jpg; sRGB; RGB directly to Base Color",
+  "metallic": "Textures/Embedded/Image_1.jpg; Non-Color; Blue channel",
+  "roughness": "Textures/Embedded/Image_1.jpg; Non-Color; Green channel",
+  "normal": "Textures/Embedded/Image_2.jpg; Non-Color; tangent-space Normal Map",
+  "normal_strength": 1.0,
+  "shader_links": [
+    [
+      "Principled BSDF",
+      "BSDF",
+      "Material Output",
+      "Surface"
+    ],
+    [
+      "Image Texture",
+      "Color",
+      "Principled BSDF",
+      "Base Color"
+    ],
+    [
+      "Separate Color",
+      "Blue",
+      "Principled BSDF",
+      "Metallic"
+    ],
+    [
+      "Separate Color",
+      "Green",
+      "Principled BSDF",
+      "Roughness"
+    ],
+    [
+      "Image Texture.001",
+      "Color",
+      "Separate Color",
+      "Color"
+    ],
+    [
+      "Normal Map",
+      "Normal",
+      "Principled BSDF",
+      "Normal"
+    ],
+    [
+      "Image Texture.002",
+      "Color",
+      "Normal Map",
+      "Color"
+    ]
   ],
-  "unit": "linear shader inputs unless explicitly sRGB",
-  "recipes": {
-    "M_K01_Meshy_CoolSteel_Charcoal": {
-      "region": "retained Meshy grip",
-      "base_color": "Mix generated texture_0_base_color (sRGB) with linear [0.012,0.016,0.023], mix factor 0.92",
-      "metallic": "generated texture_0_metallic (Non-Color) multiplied by 0.08",
-      "roughness": "generated texture_0_roughness (Non-Color) linearly remapped from [0,1] to [0.5,0.8]",
-      "normal": "texture_0_normal, tangent space, Non-Color, strength 0.1"
-    },
-    "M_K01_SatinSteel": {
-      "base_color_srgb_hex": "#A6B1BE",
-      "metallic": 0.65,
-      "roughness": 0.32
-    },
-    "M_K01_GunmetalTrim": {
-      "base_color_srgb_hex": "#4D5765",
-      "metallic": 0.6,
-      "roughness": 0.4
-    },
-    "M_K01_BurgundyInset": {
-      "base_color_srgb_hex": "#6F1F2F",
-      "metallic": 0.15,
-      "roughness": 0.48
-    }
-  },
-  "unreal_note": "Reconstruct the explicit recipes; FBX does not preserve every Blender mix/math node. Use sRGB only for base-color maps; inspect normal-map green-channel convention in native import. No emissive, transparency or gameplay collision."
+  "maps": "Packed in blend and byte-identical external copies extracted from original GLB; separate downloaded API PNGs retained as originals",
+  "unreal_note": "Reconstruct the GLB packed metallic/roughness channel routing; FBX does not preserve all Blender nodes. Inspect actual imported tangent/normal green convention before native acceptance. No material darkening or remap."
 }

@@ -1,0 +1,54 @@
+{
+  "purpose": "Producer requested source-preservation review after direct user correction",
+  "raw_mesh_sha256": "4716920e0b70c585b4c1727eaa4c674bdfb0be6e572f1649885401eb949284f9",
+  "same_camera_lighting_scale": true,
+  "views": {
+    "original": {
+      "pbr": "docs/assets/knife01/Previews/Comparison/original_pbr.png",
+      "common_material": "docs/assets/knife01/Previews/Comparison/original_common_material.png",
+      "triangles": 70640
+    },
+    "candidate": {
+      "pbr": "docs/assets/knife01/Previews/Comparison/candidate_pbr.png",
+      "common_material": "docs/assets/knife01/Previews/Comparison/candidate_common_material.png",
+      "triangles": 70640
+    },
+    "export": {
+      "pbr": "docs/assets/knife01/Previews/Comparison/export_pbr.png",
+      "common_material": "docs/assets/knife01/Previews/Comparison/export_common_material.png",
+      "triangles": 70640
+    }
+  },
+  "common_material": "Diagnostic gray, metallic .35, roughness .42; applied only in temporary render scenes",
+  "material_views": "Original PBR on all three; export uses original graph restored by material name. No intentional material difference.",
+  "original_preservation": {
+    "geometry_uv_corner_normal_fingerprint_before": "4cecc2506fcf8a2bd5405264485463445ac56265d52878e16941752b3ed0b9f7",
+    "after": "4cecc2506fcf8a2bd5405264485463445ac56265d52878e16941752b3ed0b9f7",
+    "matrix_only_normalization": true,
+    "imported_pbr_unchanged": true,
+    "vertices": 39556,
+    "triangles": 70640
+  },
+  "export_materials_restored_by_name": [
+    "Material_0"
+  ],
+  "render_rgb_differences": {
+    "original_vs_candidate_pbr": {
+      "mean_absolute_0_to_1": 6.083101652620826e-06,
+      "max_absolute_0_to_1": 0.0156862735748291
+    },
+    "original_vs_candidate_common_material": {
+      "mean_absolute_0_to_1": 2.7840023903991096e-06,
+      "max_absolute_0_to_1": 0.003921627998352051
+    },
+    "candidate_vs_export_pbr": {
+      "mean_absolute_0_to_1": 5.28945156474947e-06,
+      "max_absolute_0_to_1": 0.0156862735748291
+    },
+    "candidate_vs_export_common_material": {
+      "mean_absolute_0_to_1": 2.68285111815203e-06,
+      "max_absolute_0_to_1": 0.019607841968536377
+    }
+  },
+  "decision": "Retopologized/darkened candidate rejected as degraded. Final candidate preserves original geometry, UVs, custom normals and material graph; only scale/pivot/frames and byte-identical texture extraction."
+}

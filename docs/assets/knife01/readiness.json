@@ -4,26 +4,26 @@
   "state": "source-ready for art review; dedicated hand posing, native and runtime pending",
   "source": {
     "path": "Art/Source/Weapons/Knife01/Knife01.blend",
-    "bytes": 20052785,
-    "sha256": "d92cdebe6ea49af6dc660f4e0199058e433ca7c9d6c8312dcc7b1559f81b2b9d"
+    "bytes": 22705219,
+    "sha256": "87f851319fb0223ac7b938b15b7c88ca4da436d2bcade263bef97366d20e0be6"
   },
   "game_export": {
     "path": "Art/Source/Weapons/Knife01/Exports/SM_VS_Knife01.fbx",
-    "bytes": 685868,
-    "sha256": "4c5d41ad6960e1b35166198e12b4ef60afb93de14394a29e54e54eeea62a4ad0"
+    "bytes": 4657244,
+    "sha256": "8781a8f965649da8f5614547b19c9d3e046dd2b15a2cf18db0237bd3b5f50187"
   },
   "material_recipe": {
     "path": "Art/Source/Weapons/Knife01/materials.json",
-    "bytes": 1295,
-    "sha256": "b87715f93b6b0335bb6fa8ad06346d3632815dd320dd90acad38cb94f9c4d83b"
+    "bytes": 1480,
+    "sha256": "8079ff566225ee5dadc1819b822b98caee358e1ef984f007fc2e1e7c1e34e697"
   },
   "dimensions_cm": [
-    27.784854888916016,
-    2.390648603439331,
-    4.599999904632568
+    27.80000114440918,
+    2.399202823638916,
+    4.651304244995117
   ],
-  "triangles": 9324,
-  "material_slots": 4,
+  "triangles": 70640,
+  "material_slots": 1,
   "uv_layers": [
     "UVMap"
   ],
@@ -49,9 +49,9 @@
   },
   "Tip": {
     "location_cm": [
-      21.504854202270508,
-      0.00029633971280418336,
-      1.3102866411209106
+      21.517200469970703,
+      0.010738800279796124,
+      1.3176288604736328
     ],
     "rotation_degrees": [
       0,
@@ -138,9 +138,9 @@
     ],
     "handedness": "right-hand reference; no mirror applied",
     "hold": "Blade exits index side of inherited curled rifle hand; reference only, no knife animation",
-    "hand_surface_intersection_pairs": 1330,
+    "hand_surface_intersection_pairs": 1705,
     "intersecting_knife_faces_by_region": {
-      "grip": 933,
+      "grip": 1338,
       "guard": 0,
       "blade": 0
     },
@@ -153,28 +153,44 @@
     "actual_fbx_roundtrip": {
       "bounds_cm": [
         [
-          -6.28000020980835,
-          -1.199550986289978,
-          -2.119999885559082
+          -6.282800197601318,
+          -1.204911470413208,
+          -2.119410276412964
         ],
         [
-          21.504854202270508,
-          1.191097617149353,
-          2.4800000190734863
+          21.517200469970703,
+          1.194291353225708,
+          2.531893730163574
         ]
       ],
       "max_bounds_error_cm": 5.960464477539062e-07,
-      "triangles": 9324,
+      "triangles": 70640,
       "frames_max_matrix_error": {
         "Grip": 1.5099580252808664e-07,
-        "Tip": 3.247143467888236e-06
+        "Tip": 3.2493844628334045e-06
       },
-      "material_slots": 4,
+      "material_slots": 1,
       "uv_layers": [
         "UVMap"
       ]
     },
     "topology": {
+      "boundary_edges": 7980,
+      "nonmanifold_edges": 7980,
+      "loose_vertices": 0,
+      "degenerate_faces": 0
+    },
+    "preservation": {
+      "normalized_vertex_max_error_cm": 9.5367431640625e-07,
+      "custom_corner_normals_min_dot": 0.9999997951090336,
+      "uv_hash_unchanged": true,
+      "material_graph_unchanged": true,
+      "mesh_reduction": false,
+      "smoothing": false,
+      "retopology": false,
+      "material_darkening": false
+    },
+    "diagnostic_welded_copy_topology": {
       "boundary_edges": 0,
       "nonmanifold_edges": 0,
       "loose_vertices": 0,
@@ -186,12 +202,14 @@
   "limitations": [
     "Inherited rifle hand pose intersects grip and has extended index finger; dedicated hand pose required",
     "No first-person FPArms02 attachment or attack animation acceptance",
-    "Constant-material blade/trim UV charts overlap; pack before future custom bake",
-    "Generated grip topology and normal response may need further art polish at first-person camera distances",
-    "Separate closed visual shells overlap internally; not manufacturing geometry",
+    "70,640 original triangles retained; no runtime performance acceptance or LOD optimization",
+    "Original duplicated UV/normal seam vertices retained; diagnostic welded copy is closed",
+    "Rejected reconstruction is archived only and must not be integrated",
     "No native asset, gameplay equip, damage, melee networking, movement benefit or runtime verification"
   ],
-  "next_owner": "Art lead reviews; hands/animation owner poses against frozen manifest; separately assigned integration owner imports and verifies native source in reserved UE slot",
+  "matched_comparison": "docs/assets/knife01/comparison.json",
+  "rejected_candidate": "Art/Source/Weapons/Knife01/Candidates/Rejected_Retopology/",
+  "next_owner": "Direktor (2) / art lead reviews; hands/animation owner poses against frozen manifest; separately assigned integration owner imports and verifies native source in reserved UE slot",
   "credits_consumed": 30,
   "knife_combat_implemented": false
 }

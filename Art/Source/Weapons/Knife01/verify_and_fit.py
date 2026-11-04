@@ -10,11 +10,15 @@ bpy.ops.wm.open_mainfile(filepath=str(R/'Knife01.blend'));s=bpy.context.scene;o=
 def bounds(ob):
  ps=[ob.matrix_world@v.co for v in ob.data.vertices];return [[min(v[i] for v in ps) for i in range(3)],[max(v[i] for v in ps) for i in range(3)]]
 ref=bounds(o);tris=sum(len(p.vertices)-2 for p in o.data.polygons);frames={n:[list(r) for r in bpy.data.objects[n].matrix_world] for n in ['Grip','Tip']}
+mat=o.data.materials[0];bs=next(n for n in mat.node_tree.nodes if n.type=='BSDF_PRINCIPLED');nm=next(n for n in mat.node_tree.nodes if n.type=='NORMAL_MAP')
+material_record={'material':mat.name,'status':'Original imported Meshy GLB graph preserved','base_color':'Textures/Embedded/Image_0.jpg; sRGB; RGB directly to Base Color','metallic':'Textures/Embedded/Image_1.jpg; Non-Color; Blue channel','roughness':'Textures/Embedded/Image_1.jpg; Non-Color; Green channel','normal':'Textures/Embedded/Image_2.jpg; Non-Color; tangent-space Normal Map','normal_strength':nm.inputs['Strength'].default_value,'shader_links':[[l.from_node.name,l.from_socket.name,l.to_node.name,l.to_socket.name] for l in mat.node_tree.links],'maps':'Packed in blend and byte-identical external copies extracted from original GLB; separate downloaded API PNGs retained as originals','unreal_note':'Reconstruct the GLB packed metallic/roughness channel routing; FBX does not preserve all Blender nodes. Inspect actual imported tangent/normal green convention before native acceptance. No material darkening or remap.'}
+(R/'materials.json').write_text(json.dumps(material_record,indent=2)+'\n')
+
 report={'source_reopened':True,'source_only_objects':[(x.name,x.type) for x in s.objects],'textures':[]}
 assert {x.name for x in s.objects}=={'SM_VS_Knife01','Grip','Tip'}
 for im in bpy.data.images:
  if im.users and im.source=='FILE':
-  p=Path(bpy.path.abspath(im.filepath));assert p.is_file();im.reload();report['textures'].append({'path':str(p.relative_to(REPO)),'size':list(im.size),'color_space':im.colorspace_settings.name});assert min(im.size)>=2048
+  p=Path(bpy.path.abspath(im.filepath));assert p.is_file();report['textures'].append({'path':str(p.relative_to(REPO)),'size':list(im.size),'color_space':im.colorspace_settings.name});assert min(im.size)>=2048
 for x in list(bpy.data.objects):bpy.data.objects.remove(x,do_unlink=True)
 bpy.ops.import_scene.fbx(filepath=str(R/'Exports/SM_VS_Knife01.fbx'),use_image_search=False)
 imp=next(x for x in s.objects if x.type=='MESH');actual=bounds(imp);err=max(abs(a-b) for row,row2 in zip(ref,actual) for a,b in zip(row,row2));assert err<.001

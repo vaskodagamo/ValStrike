@@ -47,7 +47,7 @@
   "provenance": {
     "image": "Original built-in image_gen output, saved in Reference; exact prompt retained",
     "mesh": "One authorized Meshy 7.1 image-to-3D task on shared authenticated account",
-    "local_revision": "Actual generated grip/UVs retained; blade/trim retopology and material cleanup after user rejected uneven first correction",
+    "local_revision": "Final preserves original Meshy geometry, UVs, custom normals and PBR. Local reconstructed/darkened candidate held as degraded after user correction and matched comparison. Final work: scale, grip origin, visual frames, byte-identical map extraction and FBX.",
     "license_note": "Generated project art via user-authorized services; no third-party brand or purchased mesh introduced; no independent legal license opinion"
   },
   "reference_review": "Single isolated unbranded assembled knife; full silhouette; no hands or sheath; charcoal/cool steel/burgundy palette",

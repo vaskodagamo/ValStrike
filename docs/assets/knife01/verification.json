@@ -16,7 +16,7 @@
   ],
   "textures": [
     {
-      "path": "Art/Source/Weapons/Knife01/Textures/texture_0_base_color.png",
+      "path": "Art/Source/Weapons/Knife01/Textures/Embedded/Image_0.jpg",
       "size": [
         4096,
         4096
@@ -24,7 +24,7 @@
       "color_space": "sRGB"
     },
     {
-      "path": "Art/Source/Weapons/Knife01/Textures/texture_0_metallic.png",
+      "path": "Art/Source/Weapons/Knife01/Textures/Embedded/Image_1.jpg",
       "size": [
         2048,
         2048
@@ -32,18 +32,10 @@
       "color_space": "Non-Color"
     },
     {
-      "path": "Art/Source/Weapons/Knife01/Textures/texture_0_normal.png",
+      "path": "Art/Source/Weapons/Knife01/Textures/Embedded/Image_2.jpg",
       "size": [
         4096,
         4096
-      ],
-      "color_space": "Non-Color"
-    },
-    {
-      "path": "Art/Source/Weapons/Knife01/Textures/texture_0_roughness.png",
-      "size": [
-        2048,
-        2048
       ],
       "color_space": "Non-Color"
     }
@@ -51,23 +43,23 @@
   "fbx_roundtrip": {
     "bounds_cm": [
       [
-        -6.28000020980835,
-        -1.199550986289978,
-        -2.119999885559082
+        -6.282800197601318,
+        -1.204911470413208,
+        -2.119410276412964
       ],
       [
-        21.504854202270508,
-        1.191097617149353,
-        2.4800000190734863
+        21.517200469970703,
+        1.194291353225708,
+        2.531893730163574
       ]
     ],
     "max_bounds_error_cm": 5.960464477539062e-07,
-    "triangles": 9324,
+    "triangles": 70640,
     "frames_max_matrix_error": {
       "Grip": 1.5099580252808664e-07,
-      "Tip": 3.247143467888236e-06
+      "Tip": 3.2493844628334045e-06
     },
-    "material_slots": 4,
+    "material_slots": 1,
     "uv_layers": [
       "UVMap"
     ]
@@ -145,9 +137,9 @@
     ],
     "handedness": "right-hand reference; no mirror applied",
     "hold": "Blade exits index side of inherited curled rifle hand; reference only, no knife animation",
-    "hand_surface_intersection_pairs": 1330,
+    "hand_surface_intersection_pairs": 1705,
     "intersecting_knife_faces_by_region": {
-      "grip": 933,
+      "grip": 1338,
       "guard": 0,
       "blade": 0
     },
