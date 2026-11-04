@@ -1,5 +1,9 @@
 # Team board
 
+## ART-09 — Modular reference expansion (2026-11-04)
+
+The user requested isolated modular walls, corners, doors/garage entrances, roofs, ground tiles and crates for image-to-3D conversion. This coordinator owns [ART-09](tasks/art/ART-09-modular-environment-references.md) on `codex/modular-environment-references` in the root checkout, base `887d349`. Exclusive output: [sixteen-image pack](../Art/References/Environment/ModularIndustrialV1/README.md); implementation ready, V0 reference inspection only. Nominal dimensions and mesh cleanup notes accompany the images; no native-model/runtime verification is claimed. No engine slot or additional worker dispatch. Existing art ownership is unchanged.
+
 Updated 2026-11-04 (Europe/Berlin). Coordinator-owned. Operating rules: [TEAM_WORKFLOW.md](TEAM_WORKFLOW.md). This board replaces old workstream ownership tables; old logs retain their evidence. No row silently reactivates a completed chat.
 
 ## Roles

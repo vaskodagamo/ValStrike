@@ -1,0 +1,129 @@
+{
+  "date": "2026-11-04",
+  "timezone": "Europe/Berlin",
+  "task": "ART-09",
+  "kind": "Generated concept references; no production meshes or seamless texture maps",
+  "provenance": "Sixteen original images generated with built-in image_gen from the user-approved ValStrike OperatorV2 first-person composition; one copied style anchor. No script-based image editing.",
+  "dimensions": "Nominal reconstruction envelopes in generation-prompts.json, in centimeters, width/depth/height. Not measured or guaranteed image geometry.",
+  "files": [
+    {
+      "file": "00_StyleAnchor.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2089516,
+      "sha256": "15cd28ca6ad0bc5679d4abceb64f661cb03ce2076b01831579e767bd4bf49f11"
+    },
+    {
+      "file": "Access/16_StairFlight.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1957503,
+      "sha256": "b6b43c346e38fd3b8882b021fd45e378a692d1f5519a0c9e55e891f49d120376"
+    },
+    {
+      "file": "Crates/14_CargoCrateCube.png",
+      "width": 1312,
+      "height": 1199,
+      "bytes": 1781563,
+      "sha256": "5344d62e261813d7310336802119c19385c794ece9d7254493acd659b9fda9a7"
+    },
+    {
+      "file": "Crates/15_CargoCrateLong.png",
+      "width": 1774,
+      "height": 887,
+      "bytes": 1760338,
+      "sha256": "b511072a850ff3bb8c24c07c55b70d8c1b3b8303b994b7ebc10bb4346eb18d10"
+    },
+    {
+      "file": "Doors/04_PedestrianDoorFrame.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1316530,
+      "sha256": "35f239804caf71c45a9c9053d55f1f2b76385c4940a31c734f299b14ef608e6c"
+    },
+    {
+      "file": "Doors/05_PedestrianDoorLeaf.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1252720,
+      "sha256": "ed713cf612bc47a6d8f365389c745d53badf13e95117ee11244f960961241045"
+    },
+    {
+      "file": "Garage/06_GarageFrame.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1360638,
+      "sha256": "041944555309f82c25961d6a3a98948aa723b493291949e19726fe8003ccd1e6"
+    },
+    {
+      "file": "Garage/07_GarageShutter.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1707863,
+      "sha256": "dd11c8d8e1b9b183e544c529f1d4c8a0c9d40615644160786527b68e2d94358b"
+    },
+    {
+      "file": "Ground/11_ConcreteGroundTile.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1559547,
+      "sha256": "6423514b0da7e5e578494f0a8339f011a76232381af1d2e2847e07e7c97091be"
+    },
+    {
+      "file": "Ground/12_DrainGroundTile.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1817774,
+      "sha256": "95b367281ae5e592c9720d65da5970b4024e96943998526f1581d45e3b550239"
+    },
+    {
+      "file": "Ground/13_AsphaltGroundTile.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1655804,
+      "sha256": "5bf436ad3d8aa9433715efcfe2ff93cb905760de1149f6a17277593ce27ab1c6"
+    },
+    {
+      "file": "Roofs/08_RoofDeck.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1531972,
+      "sha256": "e0db13d493c622a0b18bd45709e050e3954262729cbe2ad3d4fbb5a8c75d2cae"
+    },
+    {
+      "file": "Roofs/09_ParapetStraight.png",
+      "width": 1774,
+      "height": 887,
+      "bytes": 1755869,
+      "sha256": "f8f60028f7a830d48c6d98e31234243b447d87e215f65a0122e2e2072e9fce75"
+    },
+    {
+      "file": "Roofs/10_ParapetCorner.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1477018,
+      "sha256": "1edb9c645d9079559fb225295e2e05b67fdb46399ee9ed9e4f64d6b89445b5b8"
+    },
+    {
+      "file": "Walls/01_ConcreteWall.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 2131808,
+      "sha256": "029ee7d058edc67c98a27505804d7f7ce8c0846c000ed05e244a908d416d3999"
+    },
+    {
+      "file": "Walls/02_MetalPanelWall.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 1710991,
+      "sha256": "a52208811c9534103c4f5cea267cee80a9ed094e79ec9f4f52979005737e9308"
+    },
+    {
+      "file": "Walls/03_CornerWall.png",
+      "width": 1312,
+      "height": 1199,
+      "bytes": 1914105,
+      "sha256": "a43212317ff3b29db87ebf297160612e323e72c1e2baa0aa8f2170583ebdbad9"
+    }
+  ]
+}
