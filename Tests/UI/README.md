@@ -25,6 +25,8 @@ Require `Result={Success}` for `ValStrike.UI.ServerAddress`. The existing engine
 
 Controls: Escape opens/resumes; Tab/Shift+Tab moves focus; Enter submits the address or activates a button; mouse buttons use standard Slate controls. Escape cancels an in-progress connection. Cancelling returns to a fresh local arena because Unreal may already have disconnected the previous server. A listen host's disconnect button says **End hosted session**. Opening a menu never pauses the world.
 
+Every connect attempt ends in exactly one of: connected, a player cancel (non-error status; the driver log records `Session menu: connection cancelled by Escape key` or `… by Cancel button`), or an error status. If the engine ends a pending connection without a network or travel failure, `UVSSessionState` reports "The connection attempt ended before it completed…" and logs a `LogValStrike` warning. Stage 14 fails at once with `unreachable_attempt_reports_error` if the unreachable attempt ends as a non-error. The harness sends no input then, so this means outside input reached the rendered driver window.
+
 Remaining integration gates include damage/death HUD transitions, respawn while a menu is open, a real second player's activity during the menu, server shutdown, and manual mouse use. This focused test proves connected HUD responses and the menu/combat input boundary; it is not a separate server-side combat-authority test. IPv6 is explicitly unsupported in this foundation. Settings, audio, round/score UI, packaged builds, cross-machine play and latency/loss remain separate gates.
 
 ## Settings screen checks
