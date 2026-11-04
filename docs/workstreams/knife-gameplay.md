@@ -255,3 +255,18 @@ Visual and match scenarios are unchanged.
 - The engine C++ is uncompiled.
 - The smoke's lifecycle steps depend on the server seeing each stab accepted before its 0.15 s/0.30 s impact. They trigger on that state, not on time, but a frame longer than the impact delay would turn a cancel check into a hit.
 - The slab is server-only collision; clients never see it.
+
+## KNIFE-01-M1 correction (2026-11-04)
+
+#108 merged at `fcf6a9c`, not at its reviewed head `22df932`. The extra main merge reintroduced two duplicates in the development hook:
+
+- **`VSKnifeComponent.h`:** a second `DevelopmentRequestAttack(uint8, uint32)` declaration and its old comment. This redeclaration does not compile.
+- **`VSKnifeComponent.cpp`:** a second `ServerRequestKnifeAttack(RawKind, Sequence)` call, which made every development attack send two RPCs.
+
+**Fix:** branch `claude/knife-01-m1-fix` from `caf7551` removes exactly those lines. Behavior is unchanged from the reviewed hook: sequence 0 takes the next local sequence, any other value is sent as is, and there is one RPC.
+
+**Checks run:**
+- `git diff 22df932 -- Source/ValStrike/Combat/VSKnifeComponent.h Source/ValStrike/Combat/VSKnifeComponent.cpp` is empty: both files match the reviewed version, and main had not changed them otherwise.
+- `git diff --check`: clean.
+
+No new test and no Unreal build. **Verification pending: INT-ART-03.**
