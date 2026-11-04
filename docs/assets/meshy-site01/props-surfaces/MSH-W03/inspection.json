@@ -1,0 +1,139 @@
+{
+  "asset_id": "MSH-W03",
+  "source_files": [
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Gray_Concrete_Tiles_20261104_texture_00f6de94/Meshy_AI_Gray_Concrete_Tiles_1104115851_texture.png",
+      "bytes": 17489649,
+      "sha256": "e79ee68087d541123842e84b682fc2b1e44e67aba6b39be41dd462a9008f9a64",
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Gray_Concrete_Tiles_20261104_texture_00f6de94/Meshy_AI_model.fbx",
+      "bytes": 18611628,
+      "sha256": "f1ec10384fcf954b70bd0c067b4722eae7fab58f3c7832fb358c2ff30f572af0"
+    },
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Gray_Concrete_Tiles_20261104_texture_00f6de94/Meshy_AI_texture_0_metallic.png",
+      "bytes": 116686,
+      "sha256": "45e137ae6251d7d7e56f4e80bf53152367e0f4b2b811add07d81b1c1809f2d3e",
+      "size": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Gray_Concrete_Tiles_20261104_texture_00f6de94/Meshy_AI_texture_0_normal.png",
+      "bytes": 15640365,
+      "sha256": "ca8d9f9f7e11c768489efe2546cc5e4332ea09bf818f2fc9dc94ad5dc94a4919",
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Gray_Concrete_Tiles_20261104_texture_00f6de94/Meshy_AI_texture_0_roughness.png",
+      "bytes": 1143619,
+      "sha256": "dc0f96d6aa8161c97d0f1c6584bca3216eeda6a084e25dcef2468f20754d876f",
+      "size": [
+        2048,
+        2048
+      ]
+    }
+  ],
+  "blender_version": "5.2.2 LTS",
+  "original_objects": [
+    {
+      "name": "Mesh_0",
+      "vertices": 3889,
+      "triangles": 7774,
+      "polygons": 7774,
+      "materials": [
+        "Material.001"
+      ],
+      "uv_layers": [
+        "UVMap"
+      ],
+      "bounds_min": [
+        -0.9498609900474548,
+        -0.9493849873542786,
+        -0.07963896542787552
+      ],
+      "bounds_max": [
+        0.9493579864501953,
+        0.949882984161377,
+        0.06351201236248016
+      ],
+      "dimensions": [
+        1.899219036102295,
+        1.8992679119110107,
+        0.14315098524093628
+      ],
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        -4.371138828673793e-08,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "edges": {
+        "boundary": 0,
+        "nonmanifold": 0,
+        "wire": 0
+      },
+      "degenerate_faces": 0
+    }
+  ],
+  "textures": [
+    {
+      "role": "basecolor",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W03/Textures/T_MSH_W03_basecolor.png",
+      "sha256": "e79ee68087d541123842e84b682fc2b1e44e67aba6b39be41dd462a9008f9a64",
+      "size": [
+        4096,
+        4096
+      ],
+      "color_space": "sRGB"
+    },
+    {
+      "role": "metallic",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W03/Textures/T_MSH_W03_metallic.png",
+      "sha256": "45e137ae6251d7d7e56f4e80bf53152367e0f4b2b811add07d81b1c1809f2d3e",
+      "size": [
+        2048,
+        2048
+      ],
+      "color_space": "Non-Color"
+    },
+    {
+      "role": "normal",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W03/Textures/T_MSH_W03_normal.png",
+      "sha256": "ca8d9f9f7e11c768489efe2546cc5e4332ea09bf818f2fc9dc94ad5dc94a4919",
+      "size": [
+        4096,
+        4096
+      ],
+      "color_space": "Non-Color"
+    },
+    {
+      "role": "roughness",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W03/Textures/T_MSH_W03_roughness.png",
+      "sha256": "dc0f96d6aa8161c97d0f1c6584bca3216eeda6a084e25dcef2468f20754d876f",
+      "size": [
+        2048,
+        2048
+      ],
+      "color_space": "Non-Color"
+    }
+  ]
+}

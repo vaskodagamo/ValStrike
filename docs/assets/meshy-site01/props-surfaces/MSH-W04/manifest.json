@@ -1,0 +1,323 @@
+{
+  "asset_id": "MSH-W04",
+  "source_files": [
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Cargo_Crate_20261104_texture_96750933/Meshy_AI_Industrial_Cargo_Crat_1104115851_texture.png",
+      "bytes": 19625235,
+      "sha256": "94ab58047529f5f2c38f43291bd6615796062dee11e362cff5dfe0e9dacb112c",
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Cargo_Crate_20261104_texture_96750933/Meshy_AI_model.fbx",
+      "bytes": 32063932,
+      "sha256": "f02eef730cd6f19cafcfd0ad85823a631de6466091f54a578837f1107801496a"
+    },
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Cargo_Crate_20261104_texture_96750933/Meshy_AI_texture_0_metallic.png",
+      "bytes": 273590,
+      "sha256": "1ef42473595b6b7a88eca8e4e2efed51f24c1e43f48ff14c14ec5a41f8e86595",
+      "size": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Cargo_Crate_20261104_texture_96750933/Meshy_AI_texture_0_normal.png",
+      "bytes": 16630261,
+      "sha256": "fc52752c5849f3c3db49b41191e4c7cfd3abd80d5e3beafdaac781eac2cfe18a",
+      "size": [
+        4096,
+        4096
+      ]
+    },
+    {
+      "file": "meshy_ai_assets/world_objects/Meshy_AI_Industrial_Cargo_Crate_20261104_texture_96750933/Meshy_AI_texture_0_roughness.png",
+      "bytes": 1619722,
+      "sha256": "31968e6f725388c6f6ff8e3ffa6f701addfbbfad8a09aaf38ea7a53d5d0743c6",
+      "size": [
+        2048,
+        2048
+      ]
+    }
+  ],
+  "blender_version": "5.2.2 LTS",
+  "original_objects": [
+    {
+      "name": "Mesh_0",
+      "vertices": 143008,
+      "triangles": 286224,
+      "polygons": 286224,
+      "materials": [
+        "Material.001"
+      ],
+      "uv_layers": [
+        "UVMap"
+      ],
+      "bounds_min": [
+        -0.952252984046936,
+        -0.5347890257835388,
+        -0.3952130377292633
+      ],
+      "bounds_max": [
+        0.951511025428772,
+        0.5360609889030457,
+        0.3962029814720154
+      ],
+      "dimensions": [
+        1.903764009475708,
+        1.0708500146865845,
+        0.7914160490036011
+      ],
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        -4.371138828673793e-08,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "edges": {
+        "boundary": 0,
+        "nonmanifold": 0,
+        "wire": 0
+      },
+      "degenerate_faces": 0
+    }
+  ],
+  "textures": [
+    {
+      "role": "basecolor",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W04/Textures/T_MSH_W04_basecolor.png",
+      "sha256": "94ab58047529f5f2c38f43291bd6615796062dee11e362cff5dfe0e9dacb112c",
+      "size": [
+        4096,
+        4096
+      ],
+      "color_space": "sRGB"
+    },
+    {
+      "role": "metallic",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W04/Textures/T_MSH_W04_metallic.png",
+      "sha256": "1ef42473595b6b7a88eca8e4e2efed51f24c1e43f48ff14c14ec5a41f8e86595",
+      "size": [
+        2048,
+        2048
+      ],
+      "color_space": "Non-Color"
+    },
+    {
+      "role": "normal",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W04/Textures/T_MSH_W04_normal.png",
+      "sha256": "fc52752c5849f3c3db49b41191e4c7cfd3abd80d5e3beafdaac781eac2cfe18a",
+      "size": [
+        4096,
+        4096
+      ],
+      "color_space": "Non-Color"
+    },
+    {
+      "role": "roughness",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W04/Textures/T_MSH_W04_roughness.png",
+      "sha256": "31968e6f725388c6f6ff8e3ffa6f701addfbbfad8a09aaf38ea7a53d5d0743c6",
+      "size": [
+        2048,
+        2048
+      ],
+      "color_space": "Non-Color"
+    }
+  ],
+  "game_textures": [
+    {
+      "role": "basecolor",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W04/Textures/T_MSH_W04_Game_basecolor.png",
+      "sha256": "098ba30a1a8f0aa041bb1e4fea52c8e8dc3c32d9b58093e1b96038f1aef492de",
+      "size": [
+        2048,
+        2048
+      ],
+      "color_space": "sRGB"
+    },
+    {
+      "role": "roughness",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W04/Textures/T_MSH_W04_Game_roughness.png",
+      "sha256": "01a00c09ee61d9660cfe712bf9c8c101c858e2e95b6a22b6c0438f86d6696cbb",
+      "size": [
+        2048,
+        2048
+      ],
+      "color_space": "Non-Color"
+    },
+    {
+      "role": "metallic",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W04/Textures/T_MSH_W04_Game_metallic.png",
+      "sha256": "70033e47ba66847456a344a5806da33811d701d65cfb7402d98559c0df083494",
+      "size": [
+        2048,
+        2048
+      ],
+      "color_space": "Non-Color"
+    },
+    {
+      "role": "normal",
+      "path": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W04/Textures/T_MSH_W04_Game_normal.png",
+      "sha256": "fbc2b352f9549eada6ce05f955d38ec9730edd02db8ac2f770886af5f19d2095",
+      "size": [
+        2048,
+        2048
+      ],
+      "color_space": "Non-Color"
+    }
+  ],
+  "cleanup": {
+    "dimensions_m": [
+      2,
+      1,
+      1
+    ],
+    "pivot": "base_center",
+    "target_triangles": 6000,
+    "edits": {
+      "base_contact_vertices": 1058,
+      "base_contact_residual_limit_m": 0.0001
+    },
+    "shading": "custom corner normals transferred from normalized detail master",
+    "budget_note": "Target preserves silhouettes with high-to-low texture rebake; panel retains its already modest source density."
+  },
+  "cleaned_game": {
+    "name": "SM_VS_MSH_W04_LongCargoCrate",
+    "vertices": 2896,
+    "triangles": 6000,
+    "polygons": 6000,
+    "materials": [
+      "M_MSH_W04_Game"
+    ],
+    "uv_layers": [
+      "UV0_Game"
+    ],
+    "bounds_min": [
+      -1.0,
+      -0.5,
+      0.0
+    ],
+    "bounds_max": [
+      1.0,
+      0.5,
+      1.0
+    ],
+    "dimensions": [
+      2.0,
+      1.0,
+      1.0
+    ],
+    "location": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rotation": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "scale": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "edges": {
+      "boundary": 0,
+      "nonmanifold": 0,
+      "wire": 0
+    },
+    "degenerate_faces": 0
+  },
+  "detail_master": {
+    "name": "SOURCE_VS_MSH_W04_LongCargoCrate_DetailMaster",
+    "vertices": 143008,
+    "triangles": 286224,
+    "polygons": 286224,
+    "materials": [
+      "M_MSH_W04"
+    ],
+    "uv_layers": [
+      "UVMap"
+    ],
+    "bounds_min": [
+      -1.0,
+      -0.5,
+      0.0
+    ],
+    "bounds_max": [
+      1.0,
+      0.5,
+      1.0
+    ],
+    "dimensions": [
+      2.0,
+      1.0,
+      1.0
+    ],
+    "location": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "rotation": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "scale": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "edges": {
+      "boundary": 0,
+      "nonmanifold": 0,
+      "wire": 0
+    },
+    "degenerate_faces": 0
+  },
+  "game_fbx": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W04/SM_VS_MSH_W04_LongCargoCrate.fbx",
+  "fbx_sha256": "1d922aa8ff0a372e1fd4891496b08a8de768a21d2934b051835d6c90250c3fb2",
+  "blend": "Art/Source/Environment/MeshySite01/PropsSurfaces/MSH-W04/LongCargoCrate.blend",
+  "normal_convention": "Supplied RGB retained, interpreted as tangent +Y/OpenGL in Blender. Vendor convention unlabelled; Unreal green-channel handling pending native inspection.",
+  "source_ready_not_native_verified": true,
+  "actual_identity": "Long two-panel cargo crate",
+  "delivery_status": "Source ready for art review; native import/runtime pending",
+  "collision_intent": "No source collision mesh; preserve existing map collision; panel requires wall backing; stairs not exported for gameplay.",
+  "bake_settings": {
+    "resolution": [
+      2048,
+      2048
+    ],
+    "channels": [
+      "basecolor",
+      "roughness",
+      "metallic",
+      "normal"
+    ],
+    "color_scalar_pass": "EMIT",
+    "normal_pass": "TANGENT",
+    "normal_axes": [
+      "+X",
+      "+Y",
+      "+Z"
+    ],
+    "margin_px": 16,
+    "cage_extrusion_m": 0.012,
+    "max_ray_distance_m": 0.035
+  },
+  "blend_sha256": "ff70b70d19d73019b8237f6480d1f9860f801d365258f858ba87c7dceb7fc523"
+}
