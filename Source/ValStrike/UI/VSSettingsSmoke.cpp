@@ -667,6 +667,7 @@ private:
         // Trace: who owns the mouse and focus, what Slate hit-tests at the point,
         // and whether the click changed menu state (handlers run synchronously).
         const TSharedPtr<FSlateUser> User = App.GetCursorUser();
+        const bool bAppActive = App.IsActive();
         const FString CaptorBefore = Describe(User ? User->GetCursorCaptor() : nullptr);
         const FString FocusBefore = Describe(Focused());
         const FWidgetPath UnderPoint = App.LocateWindowUnderMouse(Position, App.GetInteractiveTopLevelWindows());
@@ -674,15 +675,24 @@ private:
         const int32 ModeBefore = Menu ? int32(Menu->GetPendingWindowMode()) : -1;
         App.ProcessMouseMoveEvent(FPointerEvent(FSlateApplicationBase::CursorPointerIndex, Position, Position, None, EKeys::Invalid, 0.0f, FModifierKeysState()));
         const bool bHovered = Widget->IsHovered();
+        // Slate grants mouse capture only while the application is active
+        // (FSlateApplication::ProcessReply), and SButton clicks on release only
+        // while it holds capture. A real click on an inactive window activates the
+        // app first; these synthesized events do not, so a game left behind
+        // another app (common with several displays) pressed buttons without
+        // clicking them. Allow capture for this synthesized click only.
+        const bool bPreviousAllowInactive = App.GetHandleDeviceInputWhenApplicationNotActive();
+        App.SetHandleDeviceInputWhenApplicationNotActive(true);
         App.ProcessMouseButtonDownEvent(nullptr, FPointerEvent(FSlateApplicationBase::CursorPointerIndex, Position, Position, Left, EKeys::LeftMouseButton, 0.0f, FModifierKeysState()));
         const FString CaptorAfterDown = Describe(User ? User->GetCursorCaptor() : nullptr);
         App.ProcessMouseButtonUpEvent(FPointerEvent(FSlateApplicationBase::CursorPointerIndex, Position, Position, None, EKeys::LeftMouseButton, 0.0f, FModifierKeysState()));
+        App.SetHandleDeviceInputWhenApplicationNotActive(bPreviousAllowInactive);
         const int32 ModeAfter = Menu ? int32(Menu->GetPendingWindowMode()) : -1;
         LogLine(FString::Printf(TEXT("VSSET_CLICK %s at (%.1f, %.1f) hit_testable=%s"), Tag, Position.X, Position.Y,
             bHitTestable ? TEXT("true") : TEXT("false")));
-        LogLine(FString::Printf(TEXT("VSSET_CLICK_TRACE {\"tag\":\"%s\",\"captor_before\":\"%s\",\"focus_before\":\"%s\",\"under_point\":\"%s\",")
+        LogLine(FString::Printf(TEXT("VSSET_CLICK_TRACE {\"tag\":\"%s\",\"app_active\":%s,\"captor_before\":\"%s\",\"focus_before\":\"%s\",\"under_point\":\"%s\",")
             TEXT("\"hovered_after_move\":%s,\"captor_after_down\":\"%s\",\"mode_before\":%d,\"mode_after\":%d,\"status_after\":\"%s\"}"),
-            Tag, *CaptorBefore, *FocusBefore, *Under, bHovered ? TEXT("true") : TEXT("false"), *CaptorAfterDown, ModeBefore, ModeAfter,
+            Tag, bAppActive ? TEXT("true") : TEXT("false"), *CaptorBefore, *FocusBefore, *Under, bHovered ? TEXT("true") : TEXT("false"), *CaptorAfterDown, ModeBefore, ModeAfter,
             Menu ? *Menu->GetSettingsStatus().ToString().Replace(TEXT("\""), TEXT("'")) : TEXT("")));
         return bHitTestable;
     }

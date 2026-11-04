@@ -155,3 +155,31 @@ PR #19 was merged into main at 2026-11-03 23:01 (merge `f1e3779`) while these ru
 - `under_point` names another widget: hit-testing is the problem.
 - `hovered_after_move:false`: `SButton` refuses the mouse-up because the arrow isn't marked as hovered.
 - Check D2 in `screenshots/first/settings-pending-windowed.png`.
+
+### 2026-11-04 — GPF-01-diag: D1 root cause (contributor compile exception, 3 cycles)
+
+**Cycles used: 3 of 3**, each `with_ue_slot.py` + `ue.py build --target Editor --platform Mac`, then `Tests/UI/test_settings.py` in this worktree. A first invocation without `--engine` stopped at argument parsing before compiling and is not counted.
+
+1. Build OK. Run `Saved/Tests/Settings/20261104T110352Z_94d6d8`, with diagnostics and a one-off 1 s retry. First click: the arrow is in the hit-test path (`SButton:VS.WindowMode.Next[on] > STextBlock[on]`), enabled, `pressed=1` after mouse-down, `captor_after_down:none`, mode 1→1. Tick and paint geometry match (`1541.6,751.2` / `71.6×61.8`, window `0,0 2560×1440`). The retry 1 s later took capture and changed the mode 1→2. Overall PASS, but only because of the retry.
+2. Build OK. Run `…20261104T110702Z_f15cb3`, with Slate debugging hooks (`FSlateDebugging::MouseCaptureEvent`/`FocusEvent`). For both arrow clicks **no "capture gained" event fired at all**, and this time the 1 s retry also failed. `VS.Settings` logged `capture gained` normally. Timing and geometry are ruled out, and capture is never granted rather than gained and then lost.
+3. Build **failed to link** (`FMacPlatformApplicationMisc::ActivateApplication` is not linked into ValStrike without an ApplicationCore dependency in `Build.cs`, which this task doesn't own). No run.
+
+**Root cause:** `FSlateApplication::ProcessReply` (`SlateApplication.cpp:3494`) applies a reply's `CaptureMouse` only `if (bHandleDeviceInputWhenApplicationNotActive || bAppIsActive || bIsVirtualInteraction)`. `SButton` with the default down-and-up click method presses on mouse-down and clicks on mouse-up only while it holds capture (`SButton.cpp:438`). On this dual-display M4 the game is often not the active macOS app when the harness clicks. The press is then accepted, the capture is silently dropped, and `OnClicked` never runs. Whether the app is active varies from run to run, which is why later clicks (`VS.Settings`, Back, one retry) sometimes worked. PR #19 passed on a single laptop display where the game was frontmost. The earlier hypotheses (viewport re-capture, stale layout, focus) are disproven: `VSMENU_RECLAIM` never fired, and the geometry and path are correct.
+
+**Player impact:** none expected. A real click on an inactive macOS window activates the application before Slate processes it, so `bAppIsActive` is true. Only synthesized Slate events skip activation. This is a harness defect, not a menu bug.
+
+**Fix (pushed to #48):**
+
+- `VSSettingsSmoke.cpp` `Click()` sets `SetHandleDeviceInputWhenApplicationNotActive(true)` only around its own synthesized press and release, then restores the previous value. The flag's only use in Slate is the capture/lock gate above.
+- `VSSET_CLICK_TRACE` is kept and now includes `app_active`.
+- The temporary diagnostics and the `SVSSessionMenu::Tick` reclaim from `a0b7562` are removed; its premise was disproven.
+- No check was dropped or loosened.
+- The D2 fix and the fit fix are unchanged.
+
+**Not verified:** this final version has not been compiled or run, because the cycle budget is used up. It uses only inline `FSlateApplication` accessors (`SlateApplication.h:789-790`), so the link error cannot recur.
+
+**Integration:**
+
+- Build, then run `Tests/UI/test_settings.py` once.
+- Expect `arrow_selects_windowed PASS`. The arrow's trace should show `captor_after_down:"SButton:VS.WindowMode.Next"` and `mode_before:1, mode_after:2`, with `app_active` recorded either way.
+- Also run `ValStrike.UI` automation.
