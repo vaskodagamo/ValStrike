@@ -135,7 +135,7 @@
       "brief": "docs/tasks/art/ART-28-rifle02-character-fit.md",
       "handoff": "docs/workstreams/art28-rifle02-character-fit.md",
       "base": "fa637c5d04b83069f56f6a4c75eeeebced83c4f2",
-      "state": "active at High; existing character owner acknowledged new worktree and actual runtime/source inspection",
+      "state": "frozen/stopped; #124 merged; producer actual source review accepted for bounded third-person pilot; native application pending",
       "credit_cap": 0,
       "previous_assignments": [
         {
@@ -187,7 +187,10 @@
           "pr": 110
         }
       ],
-      "prepared_head": "9cb17bc"
+      "prepared_head": "9cb17bc",
+      "source_commit": "7b307cfa93b28c797ed04284ea2c614d9d07a276",
+      "frozen_head": "61a8a78",
+      "pr": 124
     },
     {
       "task": "ART-25",
@@ -247,39 +250,22 @@
       "main": "a1c2371d36598b0636efd9fb42d9f8bda9060981"
     },
     "active_gameplay": {
-      "task": "WPN-02-CHECKS",
+      "task": "KNIFE-01-C1",
       "owner": "same existing GPT-04 via Team gameplay worktree",
       "worktree": ".parallel-worktrees/gpt-04-switch-prediction",
-      "branch": "claude/wpn02-asset-checks",
-      "brief": "docs/tasks/gameplay/WPN-02-CHECKS.md",
-      "state": "frozen/stopped #121; engineering and producer inspected exact names and hash-list changes, sockets/counts unchanged; no new tests/build",
-      "head": "22b71bff1642da8ab1b1077bce25b79cd4ad0213",
-      "pr": 121,
-      "base": "49972150a3c2b88c469204b4d8a73cb57fc1ca4d",
-      "shared_ci": "All four existing CI checks passed on 22b71bff; no manual contributor rerun; affected native acceptance pending.",
-      "native_confirmation": "Exact #121 combined at 794069a; candidate 1b572d0 passed affected practice and rifle presentation checks. PR #121 remains open; user merges."
+      "branch": "claude/knife-01-c1-remote-cues",
+      "brief": "docs/tasks/gameplay/KNIFE-01-C1-remote-cues.md",
+      "base": "561ea4d",
+      "state": "active; exact claude/knife-01-c1-remote-cues branch observed and live lead board confirms same GPT-04, base561ea4d"
     },
     "next_native_assignment": {
-      "task": "INT-ART-03",
+      "task": "INT-ART-05",
       "owner": "existing INT-ART-01 desktop chat",
       "worktree": ".parallel-worktrees/int-art-01-meshy-playtest",
-      "branch": "claude/int-art-03-knife",
-      "brief": "docs/tasks/integration/INT-ART-03-knife.md",
-      "state": "active; native assets imported/reopened, combined #121, one successful Editor build; clean candidate 1b572d0 passed practice and rendered rifle checks; full rendered knife capture/acceptance in progress, no frozen handoff yet",
-      "base": "49972150a3c2b88c469204b4d8a73cb57fc1ca4d",
-      "check_correction_head": "22b71bff1642da8ab1b1077bce25b79cd4ad0213",
-      "check_correction_pr": 121,
-      "candidate": "1b572d0783ba97337dd1cce2d376976ba1456980",
-      "verified_checks": {
-        "practice": "39/39 server, 37/37 driver, 37/37 observer; null RHI/no audio/one-Mac loopback",
-        "rifle_presentation": "39/39, rendered 1000x700 clients/no audio/one-Mac loopback"
-      },
-      "evidence_in_owner_checkout": [
-        "Saved/IntArt03/editor-build.log",
-        "Saved/Tests/Weapons/20261104T181051Z_practice_45689d/result.json",
-        "Saved/Tests/RiflePresentation/20261104T181202Z_graybox_4a9f48/result.json"
-      ],
-      "deferred_process_followup": "After rendered acceptance stops, remind same native owner: exit 75 queues the job; inspecting its own prior process/lock is not a release notification or permission to retry. Observed one self-retry after reopen; no UI input sent during current capture."
+      "branch": "claude/int-art-05-knife-rifle-acceptance",
+      "brief": "docs/tasks/integration/INT-ART-05-knife-acceptance-rifle-fit.md",
+      "base": "561ea4d",
+      "state": "active; verified UI delivery and actual claude/int-art-05-knife-rifle-acceptance branch observed; disjoint import/framing prep, combined build waits for frozen C1"
     },
     "previous_gameplay_checkpoint": {
       "task": "GPF-04",
@@ -337,19 +323,57 @@
       "implementation_commit": "d53eaa4",
       "base": "caf7551",
       "prior_phase_b_head": "fcf6a9cf65265cbcda80423b927b11d263c166ef"
+    },
+    "completed_knife_native": {
+      "task": "INT-ART-03",
+      "owner": "existing INT-ART-01 desktop chat",
+      "worktree": ".parallel-worktrees/int-art-01-meshy-playtest",
+      "branch": "claude/int-art-03-knife",
+      "brief": "docs/tasks/integration/INT-ART-03-knife.md",
+      "state": "frozen and merged #123; first-person runtime reviewed, remote rendering/first slash held",
+      "base": "49972150a3c2b88c469204b4d8a73cb57fc1ca4d",
+      "check_correction_head": "22b71bff1642da8ab1b1077bce25b79cd4ad0213",
+      "check_correction_pr": 121,
+      "candidate": "1b572d0783ba97337dd1cce2d376976ba1456980",
+      "verified_checks": {
+        "practice": "39/39 server, 37/37 driver, 37/37 observer; null RHI/no audio/one-Mac loopback",
+        "rifle_presentation": "39/39, rendered 1000x700 clients/no audio/one-Mac loopback"
+      },
+      "evidence_in_owner_checkout": [
+        "Saved/IntArt03/editor-build.log",
+        "Saved/Tests/Weapons/20261104T181051Z_practice_45689d/result.json",
+        "Saved/Tests/RiflePresentation/20261104T181202Z_graybox_4a9f48/result.json"
+      ],
+      "deferred_process_followup": "Delivered to the same native owner via verified UI before INT-ART-05 start: exit75 must queue, no own-PID/stale-lock self-retry. Included explicitly in new brief.",
+      "head": "3e2ab48",
+      "pr": 123,
+      "producer_visual_review": "Actual first-person lifecycle sheet and remote editor sheet reviewed. Hands/K01 equip/idle/slash/stab/switch/death demonstrated; remote rendered action and first live slash cue held, movement/audio evidence incomplete, native framing improvement assigned."
+    },
+    "completed_weapon_checks": {
+      "task": "WPN-02-CHECKS",
+      "owner": "same existing GPT-04 via Team gameplay worktree",
+      "worktree": ".parallel-worktrees/gpt-04-switch-prediction",
+      "branch": "claude/wpn02-asset-checks",
+      "brief": "docs/tasks/gameplay/WPN-02-CHECKS.md",
+      "state": "frozen and merged #121; affected native runtime checks pass on 1b572d0",
+      "head": "22b71bff1642da8ab1b1077bce25b79cd4ad0213",
+      "pr": 121,
+      "base": "49972150a3c2b88c469204b4d8a73cb57fc1ca4d",
+      "shared_ci": "All four existing CI checks passed on 22b71bff; no manual contributor rerun; affected native acceptance pending.",
+      "native_confirmation": "Exact #121 combined at 794069a; candidate 1b572d0 passed affected practice and rifle presentation checks. PR #121 remains open; user merges."
     }
   },
   "automation_id": "valstrike-studio-producer",
-  "next_integration_trigger": "Wait for frozen INT-ART-03 full visual handoff or actionable failure and ART-28 source handoff. Review actual images before full knife acceptance; deliver exit-75 operating reminder only after rendered run stops. No duplicate task, polling, build or new worker.",
+  "next_integration_trigger": "Read the existing lead/GPT-04 KNIFE-01-C1 frozen correction or precise blocker; same native INT-ART-05 combines it before one build, then rendered remote/moving knife, audio and rifle-fit evidence. Review actual comparison before full acceptance. If exit75 reported, queue and admit again only after confirmed slot release; no polling.",
   "knife_feature": {
     "task": "KNIFE-01",
     "brief": "docs/tasks/KNIFE-01-full-feature.md",
     "authorized": "2026-11-04 direct user message in Direktor verified",
     "state": "full gameplay/art/native pipeline authorized; actual dispatch tracked separately",
     "gameplay": "repaired gameplay compiled and all 39 knife-specific runtime checks passed on INT-ART-04 c2ba852; main includes exact M1 fix. Whole practice 39/39 server, 36/37 each client due old P01 assertion, addressed by #121; full knife presentation pending.",
-    "first_person": "ART-26-C1 #115 source 25fc75b/head 5b8b675; producer accepted specific contact/framing corrections from actual exported contact/action views; general deformation/budget/native pending",
-    "third_person": "ART-27 frozen #110 at bca668a; producer source review accepted for third-person pilot with inherited close-up limits",
-    "native": "INT-ART-03 candidate 1b572d0 compiled and passed practice/rifle suites. Full hands/action/remote visual and audio acceptance still pending; owner actively correcting capture-only window-ID failure.",
+    "first_person": "Corrected #115 source imported in #123; actual first-person lifecycle reviewed on 1b572d0. Functional pilot demonstrated; large framing/forearm target occlusion assigned native placement comparison, no source/mesh scaling or general quality/performance approval.",
+    "third_person": "ART-27 native imported in #123 with editor assembly evidence; full rendered remote attacks held by observer-camera and first-start defects, assigned C1/INT-ART-05.",
+    "native": "INT-ART-03 #123 merged with first-person runtime evidence but remote rendering/first slash/moving attacks/audio gates open. INT-ART-05 dispatched with KNIFE-01-C1 dependency and existing reviewed ART-28 native application.",
     "credit_cap": 0,
     "gameplay_owner": {
       "ui_session": "local_e7f5a62b-3f49-42e2-854a-1dcddd518154",
@@ -361,31 +385,29 @@
     }
   },
   "weapon_replacement_queue": {
-    "state": "R02/P02 imported/rendered and #118 merged. Old-name checks corrected in frozen #121; actual R02 shoulder/hand fit assigned ART-28, future native follow-up after knife batch.",
+    "state": "R02/P02 #118 merged; #121 merged and affected checks pass. ART-28 #124 source correction producer-reviewed/accepted for bounded pilot; actual native three-clip plus socket application dispatched INT-ART-05.",
     "scope": "R02 #89 and P02 #81 in first/third person; not gated on completion of first-person hands, but actual grip/camera/native fit required",
     "owner": "existing sole native integrator after coherent current candidate; no new writer"
   },
   "last_material_checkpoint": {
-    "at": "2026-11-04T19:17+01:00",
-    "main_observed": "49972150a3c2b88c469204b4d8a73cb57fc1ca4d",
+    "at": "2026-11-04T19:50+01:00",
+    "main_observed": "561ea4d",
     "user_merged_prs": [
-      113,
-      114,
-      115,
-      116,
-      117,
-      118,
-      119
+      120,
+      121,
+      122,
+      123,
+      124
     ],
     "active_contributors": [
-      "INT-ART-03 existing native owner",
-      "ART-28 existing character artist at High"
+      "KNIFE-01-C1 same GPT-04; branch and live board confirmed",
+      "INT-ART-05 existing native owner; branch confirmed"
     ],
     "reviewed_frozen": [
-      "WPN-02-CHECKS #121/22b71bf; native runtime confirmation pending"
+      "INT-ART-03 #123/3e2ab48; first-person runtime reviewed, full feature held",
+      "ART-28 #124/61a8a78 source7b307cf; opposing stock/hand/motion/5m review accepted for bounded native pilot"
     ],
     "new_meshy_credits_this_cycle": 0,
-    "publication_authority": "Direct human ART-25 approval verified in registered artist chat; #112 and native #116 merged, exact-payload publication hold cleared.",
-    "native_partial_candidate": "1b572d0783ba97337dd1cce2d376976ba1456980"
+    "publication_authority": "ART-25 exact-payload direct approval remains cleared; no new publication hold observed."
   }
 }
