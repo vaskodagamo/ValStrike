@@ -14,3 +14,9 @@
 - Candidate `c7386b6c054ca2ad4bc58ee8aec29a6020a37d4e` on local branch `claude/int-art-02b-site01-courtyard` (phase A + ART-25 `0c70b2f`). Map/assets only; phase A build reused.
 - Imported/reopened W01/W08/W09 (bounds = ART-25 expectations); placed the six-piece north service facade section with ART-25's pivots; 86 existing actors unchanged; route collision/visibility at Y=1500 unchanged; Site01 inspection 486/486 (same set); match 46/46; Site01 weapons match 29/29. Light warning removed by `VS_Sun` ForwardShadingPriority=1 (engine already chose it). [Evidence](../assets/meshy-site01-followups/README.md).
 - Stop: not pushed. Pushing this branch publishes ART-25's source payload, which its handoff reserves for direct user authorization. Next trigger: user authorizes ART-25 publication (via ART-25's own PR or this PR) → push and open the phase B PR.
+
+## 2026-11-04 (Europe/Berlin) — Phase B published
+
+- Hold cleared: the user approved ART-25 publication, and ART-25 #112 merged at `9b9d79e` / `caf7551`. Its `Art/Source` payload is byte-identical to the frozen `0c70b2f` used here; only ART-25's own handoff gained four lines.
+- Published this branch unchanged as its own main-targeted PR. Tested runtime candidate stays `c7386b6`. It sits on an **older base**: phase A head `39eb01a` (= main `5407272` + phase A) + ART-25 `0c70b2f`. It does not contain #108–#111 (knife) or the #112 merge, and was not re-run on current main. A trial merge with main `caf7551` is conflict-free. Phase A #103 merged as `ef14269`.
+- No rebuild or repeat QA for publication. Next for this owner: INT-ART-04 on a new branch from main.
