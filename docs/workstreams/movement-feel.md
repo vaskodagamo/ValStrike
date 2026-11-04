@@ -150,3 +150,14 @@ The lead assigned the runner to GPT-15 after GPT-12 (#70) merged. The branch mer
   - The UI runners' `from test_movement import stop` is unchanged.
   - No Unreal build or launch.
 - **Deferred to integration:** a real `Scripts/test_movement.py` run (expect 69/69), then the `--net-profile` matrix. The new windows are the narrowest under `poor`.
+
+## 2026-11-04 — INT-06-D1: `-Wshadow` build fix
+
+- **Defect:** the Editor build failed at `VSMovementRules.h:103` with `-Wshadow -Werror`: the `JumpDistance` parameter `Gravity` shadowed the namespace constant `VSMovementRules::Gravity`.
+- **Fix:** renamed the gravity parameter of `JumpApex`, `Airtime` and `JumpDistance` to `GravityCmS2`. No behavior change.
+- **Other new code:** I compared the locals in `VSCharacterMovementComponent.cpp`, the `VSCharacter` changes and the smoke harness against the `UCharacterMovementComponent`, `ACharacter`, `APawn` and `AActor` members, and found no collisions.
+- **Checks run:**
+  - The rules test with `clang++` and `g++` (Apple clang) at `-std=c++17 -Wall -Wextra -Wshadow -Werror -pedantic`: 61/61. The test's compile line now includes `-Wshadow`.
+  - The runner unit tests: 23 OK.
+  - `git diff --check`: clean.
+  - No Unreal build.

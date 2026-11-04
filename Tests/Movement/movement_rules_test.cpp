@@ -1,5 +1,5 @@
 // Standalone checks for weapon weight, the CS2-scaled jump arc and the crouch-jump tuck.
-// clang++ -std=c++17 -Wall -Wextra -Werror -pedantic Tests/Movement/movement_rules_test.cpp -o Saved/Tests/Movement/movement_rules_test
+// clang++ -std=c++17 -Wall -Wextra -Wshadow -Werror -pedantic Tests/Movement/movement_rules_test.cpp -o Saved/Tests/Movement/movement_rules_test
 #include "../../Source/ValStrike/VSMovementRules.h"
 
 #include <cmath>

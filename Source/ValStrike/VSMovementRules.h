@@ -57,16 +57,16 @@ inline double MaxSpeed(double BaseSpeed, WeaponKind Kind)
 
 // Ballistic jump arc from launch velocity and gravity magnitude (no air drag,
 // landing at launch height). Invalid inputs give 0.
-inline double JumpApex(double JumpVelocity, double Gravity)
+inline double JumpApex(double JumpVelocity, double GravityCmS2)
 {
-    if (!std::isfinite(JumpVelocity) || !std::isfinite(Gravity) || JumpVelocity <= 0.0 || Gravity <= 0.0) { return 0.0; }
-    return JumpVelocity * JumpVelocity / (2.0 * Gravity);
+    if (!std::isfinite(JumpVelocity) || !std::isfinite(GravityCmS2) || JumpVelocity <= 0.0 || GravityCmS2 <= 0.0) { return 0.0; }
+    return JumpVelocity * JumpVelocity / (2.0 * GravityCmS2);
 }
 
-inline double Airtime(double JumpVelocity, double Gravity)
+inline double Airtime(double JumpVelocity, double GravityCmS2)
 {
-    if (!std::isfinite(JumpVelocity) || !std::isfinite(Gravity) || JumpVelocity <= 0.0 || Gravity <= 0.0) { return 0.0; }
-    return 2.0 * JumpVelocity / Gravity;
+    if (!std::isfinite(JumpVelocity) || !std::isfinite(GravityCmS2) || JumpVelocity <= 0.0 || GravityCmS2 <= 0.0) { return 0.0; }
+    return 2.0 * JumpVelocity / GravityCmS2;
 }
 
 // Scaling both gravity and jump velocity by HeightScale scales the apex by
@@ -100,9 +100,9 @@ inline double CrouchJumpClearance(double Apex, double EngineTuck, double TargetG
 // Ground distance covered while airborne. A running jump keeps its launch speed
 // (no air friction, air speed capped by the same weapon max), so it goes
 // farther but not higher; landing never exceeds the ground max either.
-inline double JumpDistance(double HorizontalSpeed, double JumpVelocity, double Gravity)
+inline double JumpDistance(double HorizontalSpeed, double JumpVelocity, double GravityCmS2)
 {
     if (!std::isfinite(HorizontalSpeed) || HorizontalSpeed <= 0.0) { return 0.0; }
-    return HorizontalSpeed * Airtime(JumpVelocity, Gravity);
+    return HorizontalSpeed * Airtime(JumpVelocity, GravityCmS2);
 }
 }
