@@ -20,8 +20,8 @@ Paths below are relative to `/Users/webproduktion3/Documents/ValStrike`. The art
 | Slot | Branch | Path | State |
 | --- | --- | --- | --- |
 | Gameplay lead | `codex/team-gameplay` | `.parallel-worktrees/team-gameplay` | Reserved for user-started Claude; kickoff below |
-| First-person arms | `codex/team-art` | `.parallel-worktrees/team-art` | Reserved for new ART-05 Codex session |
-| Site01 signs | `codex/art-site-signage` | `.parallel-worktrees/art-site-signage` | Reserved for new ART-06 Codex session |
+| First-person arms | `codex/team-art` | `.parallel-worktrees/team-art` | ART-05 dispatched; exclusive active owner |
+| Site01 signs | `codex/art-site-signage` | `.parallel-worktrees/art-site-signage` | ART-06 dispatched; exclusive active owner |
 | Integration / QA | `codex/team-integration` | `.parallel-worktrees/team-integration` | Reserved for one Claude-assigned INT-01 owner; no run started here |
 
 The user selected Codex for art and Claude for gameplay on 2026-11-04. These assignments now govern the slots; branch prefixes do not define permissions. New Claude workers receive separate `claude/<task-id>` branches. [Claude lead kickoff](teams/CLAUDE_GAMEPLAY_KICKOFF.md).
@@ -32,8 +32,8 @@ The user selected Codex for art and Claude for gameplay on 2026-11-04. These ass
 | --- | --- | --- | --- | --- |
 | TEAM-01 | Shared hierarchy, validation policy, provider entry points and isolated workspaces | Coordinator; root `codex/team-workflow`, base `95a0ba7` | `AGENTS.md`, `CLAUDE.md`, `.github/pull_request_template.md`, `README.md`, `docs/TEAM_WORKFLOW.md`, `docs/TEAM_BOARD.md`, `docs/TASK_TEMPLATE.md`, current-policy notices in `docs/PARALLEL_WORK.md`, `docs/PLAYTEST_WORKSTREAMS.md`, `docs/SETUP.md`, workflow paragraphs in `docs/MVP_PLAN.md`, `docs/BACKLOG.md`, append to `docs/WORK_LOG.md` | Merged in PR #30 (`66428e5`); V0 checks passed, no Unreal build |
 | INT-01 | Verify the combined current-main gameplay batch and report actionable failures | Delegated to user-started Claude engineering lead; integration slot reserved | Integration report `docs/workstreams/integration-01.md`; source fixes require exact owner in gameplay sub-board | Ready for one QA assignment; V2; use the batch below |
-| ART-05 | First-person arms/gloves source-ready asset | New Codex “Art — First-person arms and gloves”; team-art slot | Exact source/docs paths in [ART-05 brief](tasks/art/ART-05-first-person-arms.md) | Ready for dispatch; V1 source only, no Unreal build |
-| ART-06 | Two Site01 signs and additive placement recipe | New Codex “Art — Site01 navigation signs”; art-site-signage slot | Exact source/docs paths in [ART-06 brief](tasks/art/ART-06-site01-signage.md) | Ready for dispatch; V1 source only, no Unreal build |
+| ART-05 | First-person arms/gloves source-ready asset | Codex “Art — First-person arms and gloves” (`01a1a5af-02f5-7822-85ed-f2b741e45cf5`); team-art slot | Exact source/docs paths in [ART-05 brief](tasks/art/ART-05-first-person-arms.md) | Dispatched from `d4183ca`; V1 source only, no Unreal build |
+| ART-06 | Two Site01 signs and additive placement recipe | Codex “Art — Site01 navigation signs” (`01a1a5af-0f13-78f1-8aaa-1903c1392df7`); art-site-signage slot | Exact source/docs paths in [ART-06 brief](tasks/art/ART-06-site01-signage.md) | Dispatched from `d4183ca`; V1 source only, no Unreal build |
 
 Claude owns only its delegated sub-board, task briefs under `docs/tasks/gameplay/` and `docs/workstreams/gameplay-lead.md`; Codex retains central docs/policy. Engineering can allocate task-scoped `Source/`, `Config/`, `Scripts/`, `Tests/` paths. All art/native Content/maps and art asset documentation are read-only to engineering. ART-05 and ART-06 own no gameplay or Content paths in this source-only batch. No workers are authorized to create more art chats.
 

@@ -343,6 +343,12 @@ Tick-rate measurement, idle two-client Site01 match, windows after warm-up: cap 
 
 **Validation and limits:** Kickoff is documentation/worktree setup only. No Unreal build, new test suite or runtime claim. Art workers produce real editable source/exports and limited inspected source previews; native import and runtime fit are deliberately a later shared integration job. The next report records launched chat identities. No Claude session is launched here.
 
+## 2026-11-04 — Art sessions dispatched
+
+Created “Art — First-person arms and gloves” (`01a1a5af-02f5-7822-85ed-f2b741e45cf5`) and “Art — Site01 navigation signs” (`01a1a5af-0f13-78f1-8aaa-1903c1392df7`). Both receive separate exclusive worktrees starting at `d4183ca8189a8c7f54174e6beab2f04b2cbdc9ee`, exact scoped briefs and source-only validation. They may appear under the parent project in the app, but their instructions require all work in their respective assigned checkout. No asset-completion claim at dispatch.
+
+The gameplay/integration idle slots were checked clean at their original heads before fast-forwarding to the same kickoff commit. Both contain the full Claude kickoff; the user will start that team. Only coordinator documents changed during setup; no Unreal process was launched. Existing feature worktrees were preserved.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.
