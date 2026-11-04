@@ -1,17 +1,19 @@
 """ART-26 adaptation of the focused ART-22/24 source/FBX inspection."""
-import bpy,json,hashlib,array,struct,math
+import bpy,json,hashlib,array,struct,math,sys
 from pathlib import Path
 from mathutils import Matrix,Vector
 ROOT=Path(__file__).resolve().parent;DOC=ROOT.parents[4]/'docs/assets/fparms03/knife-pilot'
+C1='--c1' in sys.argv
 contract=json.loads((DOC/'animation-contract.json').read_text())
 bpy.ops.wm.open_mainfile(filepath=str(ROOT/'KnifePilot.blend'))
 scene=bpy.context.scene;arm=bpy.data.objects['SKEL_FPArms03'];meshes=[bpy.data.objects['SK_FPArms03_'+s] for s in ['R','L']]
-def signature(o):
+def signature(o,weights=True):
     h=hashlib.sha256()
     for collection,attribute,width,code in [(o.data.vertices,'co',3,'f'),(o.data.loops,'vertex_index',1,'i'),(o.data.uv_layers[0].data,'uv',2,'f'),(o.data.corner_normals,'vector',3,'f')]:
         values=array.array(code,[0])*(len(collection)*width);collection.foreach_get(attribute,values);h.update(values.tobytes())
-    for v in o.data.vertices:
-        for g in v.groups:h.update(struct.pack('if',g.group,g.weight))
+    if weights:
+        for v in o.data.vertices:
+            for g in v.groups:h.update(struct.pack('if',g.group,g.weight))
     return h.hexdigest()
 def rest(a):return [{'name':b.name,'parent':b.parent.name if b.parent else None,'matrix':[list(row) for row in b.matrix_local]} for b in a.data.bones]
 def bounds(o):
@@ -29,15 +31,33 @@ def select(objects):
 reset();original_rest=rest(arm);original_bounds={o.name:bounds(o) for o in meshes}
 names=['SKEL_FPArms03','SK_FPArms03_R','SK_FPArms03_L']
 with bpy.data.libraries.load(str(ROOT/'Reference/Frozen/ART24_FPArms03.blend'),link=False) as (src,dst):dst.objects=names[:]
-old=dict(zip(names,dst.objects));preserved={o.name:signature(o)==signature(old[o.name]) for o in meshes};rest_same=rest(arm)==rest(old['SKEL_FPArms03'])
+old=dict(zip(names,dst.objects));preserved={o.name:signature(o,not C1)==signature(old[o.name],not C1) for o in meshes};rest_same=rest(arm)==rest(old['SKEL_FPArms03'])
+weight_report={}
+if C1:
+    changes=json.loads((DOC/'c1-weight-changes.json').read_text());expected={v['vertex']:v for v in changes['changes']}
+    for o in meshes:
+        found=[]
+        for v,original in zip(o.data.vertices,old[o.name].data.vertices):
+            now={o.vertex_groups[g.group].name:g.weight for g in v.groups};before={old[o.name].vertex_groups[g.group].name:g.weight for g in original.groups}
+            if now==before:continue
+            assert o.name=='SK_FPArms03_R' and v.index in expected
+            e=expected[v.index]
+            assert set(now).issubset({'hand_r','thumb_01_r','thumb_02_r','thumb_03_r','index_01_r','index_02_r','index_03_r'})
+            assert max(abs(now.get(k,0)-e['after'].get(k,0)) for k in set(now)|set(e['after']))<.000001
+            assert before==e['before']
+            found.append(v.index)
+        weight_report[o.name]={'changed_vertices':len(found),'allowed_groups':['hand_r','thumb_01_r','thumb_02_r','thumb_03_r','index_01_r','index_02_r','index_03_r'] if found else [],'evidence':'c1-weight-changes.json' if found else None}
+        if o.name=='SK_FPArms03_R':assert set(found)==set(expected)
 assert all(preserved.values()) and rest_same
 for o in dst.objects:bpy.data.objects.remove(o,do_unlink=True)
 report={'blender':bpy.app.version_string,'fps':scene.render.fps,'preserved_surface_uv_normals_weights':preserved,'rest_names_hierarchy_unchanged':rest_same,'clips':{},'exports':{},'source_meshes':{o.name:{'vertices':len(o.data.vertices),'triangles':len(o.data.polygons),'unweighted':sum(not v.groups for v in o.data.vertices)} for o in meshes}}
+if C1:
+    report['preserved_surface_uv_normals']=report.pop('preserved_surface_uv_normals_weights');report['local_weight_changes']=weight_report
 samples={};pose_samples={};actions={}
 for kind,clip in contract['clips'].items():
-    a=bpy.data.actions[clip['action']];actions[kind]=a;end=clip['end'];frames=sorted(set([1,end,(end+1)//2,clip.get('impact_frame',1)]))
+    a=bpy.data.actions[clip['action']];actions[kind]=a;end=clip['end'];frames=sorted(set([1,end,(end+1)//2,clip.get('impact_frame',1)]+({'Slash':[5,17],'Stab':[10,26]}.get(kind,[]) if C1 else [])))
     samples[kind]={};pose_samples[kind]={};root_error=0
-    for frame in range(1,end+1):
+    for frame in (frames if C1 else range(1,end+1)):
         active(a,frame);root_error=max(root_error,max(abs(arm.pose.bones['root'].matrix_basis[i][j]-(1 if i==j else 0)) for i in range(4) for j in range(4)))
         if frame in frames:
             samples[kind][frame]={b.name:[list(row) for row in arm.matrix_world@b.matrix] for b in arm.pose.bones}
@@ -90,5 +110,7 @@ for path in sorted((ROOT/'Exports').glob('*.fbx')):
         assert error<.03,(path.name,error)
         entry['sampled_bone_matrix_max_error']=error
     report['exports'][path.name]=entry
-report['passed']=True;(DOC/'export-inspection.json').write_text(json.dumps(report,indent=2)+'\n')
+report['passed']=True
+if C1:report['reused_evidence']={'commit':'2b944b314f9c20d8b64ee9892b1048302701992c','report':'export-inspection.json','checks':['Unchanged action ranges/impact times and all-frame identity root'],'current_scope':'Changed source preservation and sampled actual animation FBX poses, including windup/follow-through; root is sampled here.'}
+(DOC/('c1-export-inspection.json' if C1 else 'export-inspection.json')).write_text(json.dumps(report,indent=2)+'\n')
 print('ART26_SOURCE_AND_EXPORT_INSPECTION_PASSED')

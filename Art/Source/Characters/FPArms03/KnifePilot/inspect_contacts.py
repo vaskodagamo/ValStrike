@@ -1,5 +1,5 @@
 """Focused K01 grip/off-hand source inspection, supplementing the real views."""
-import bpy,json,math
+import bpy,json,math,sys
 from pathlib import Path
 from mathutils import Matrix,Vector
 from mathutils.bvhtree import BVHTree
@@ -49,5 +49,5 @@ for kind,clip in contract['clips'].items():
                     i,j=e.vertices;length=(o.data.vertices[i].co-o.data.vertices[j].co).length
                     if length>.015:ratios.append((m.vertices[i].co-m.vertices[j].co).length/length)
                 ratios.sort();report['dense_deformation'][o.name]={'edge_ratio_p99':ratios[int(len(ratios)*.99)],'edge_ratio_max':max(ratios)}
-(DOC/'contact-inspection.json').write_text(json.dumps(report,indent=2)+'\n')
+(DOC/('c1-contact-inspection.json' if '--c1' in sys.argv else 'contact-inspection.json')).write_text(json.dumps(report,indent=2)+'\n')
 print('ART26_CONTACT_INSPECTION_COMPLETE')
