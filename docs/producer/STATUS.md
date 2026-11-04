@@ -2,7 +2,16 @@
 
 2026-11-04, Europe/Berlin. Owner: **Direktor (2)**. Read live sources before acting; this is a checkpoint, not a process monitor.
 
-## Latest checkpoint — 16:18 scheduled cycle
+## Latest checkpoint — same cycle, 16:42 map-priority dispatch
+
+- New direct user request in Direktor was read and verified: remaining world objects and building the first map. [ART-25](../tasks/art/ART-25-courtyard-structure.md) is dispatched at High to the existing idle props chat, new clean checkout `4f57d74`. First W01/W08/W09 group only, original-FBX preservation, measured courtyard/service-facade assembly; zero paid jobs. Artist acknowledged active inspection and identified W08 as a backed facade option because the existing service building has no doorway route.
+- GPF-04 finished during this cycle: #97 `100245d`, merged. Producer and engineering lead reviewed the timing-only smoke/runner diff; prior movement gameplay remains unchanged. The artifact explanation is still a runtime hypothesis. Bounded smoke/runner path exception accepted; old owners are idle. Gameplay lead confirmed stopped writer and no competing QA.
+- [INT-ART-02](../tasks/integration/INT-ART-02-site01-followups.md) full assignment delivered through the authorized native chat; actual new branch `claude/int-art-02-site01-followups` observed. Phase A applies reviewed ART-23 P01 pose/offset and combines pending GPF-02/03/04 checks in one candidate. Phase B reserves the same map writer for the first reviewed frozen ART-25 subset, actual Site01 courtyard/facade/approach assembly and bounded light-authority review. First-person hands are not a dependency.
+- **Current three contributors:** ART-24, ART-25, INT-ART-02. Producer #98 was user-merged. New dispatch records therefore use a fresh producer branch. No new charge, source-art edit by producer, test or UE run in this cycle. Source artist and integrator retain all implementation/check responsibility.
+
+**Next trigger:** INT-ART-02 phase-A evidence or failure; ART-25 frozen readiness/actual comparisons release phase B. If source is not ready, native owner publishes phase A and stops at that dependency. Review ART-24 contact evidence separately. R02/P02 replacement still needs its own fit/native batch and is not implied by either source merge or this pistol-pose correction.
+
+## Earlier in the 16:18 scheduled cycle
 
 This section supersedes the earlier states retained below.
 

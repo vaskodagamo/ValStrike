@@ -139,14 +139,28 @@
       "pr": 95
     },
     {
-      "task": "ART-16",
+      "task": "ART-25",
       "title": "Art \u2014 Site01 props playtest prep",
       "thread_id": "01a1a6b0-98fd-7f41-851e-1fd1c5fc2452",
-      "worktree": ".parallel-worktrees/art16-props-pilot",
-      "handoff": "docs/workstreams/art16-props-pilot.md",
-      "prior_credit_cap": 0,
-      "state": "idle; frozen source merged and pilot native integrated in #93",
-      "pr": 63
+      "worktree": ".parallel-worktrees/art25-courtyard-structure",
+      "branch": "codex/art25-courtyard-structure",
+      "brief": "docs/tasks/art/ART-25-courtyard-structure.md",
+      "handoff": "docs/workstreams/art25-courtyard-structure.md",
+      "prepared_head": "4f57d74",
+      "credit_cap": 0,
+      "state": "active; High; owner confirmed original-FBX inspection and assembly recipe",
+      "previous_assignments": [
+        {
+          "task": "ART-16",
+          "title": "Art \u2014 Site01 props playtest prep",
+          "thread_id": "01a1a6b0-98fd-7f41-851e-1fd1c5fc2452",
+          "worktree": ".parallel-worktrees/art16-props-pilot",
+          "handoff": "docs/workstreams/art16-props-pilot.md",
+          "prior_credit_cap": 0,
+          "state": "idle; frozen source merged and pilot native integrated in #93",
+          "pr": 63
+        }
+      ]
     }
   ],
   "claude": {
@@ -167,7 +181,7 @@
       {
         "title": "INT-ART-01 Meshy playtest integration",
         "ui_session": "local_072e5c73-a9f2-45e7-93e8-8db464b2e484",
-        "purpose": "resume existing native character/four-prop integration after engine-slot release"
+        "purpose": "current INT-ART-02 combined pistol/QA phase, then gated Site01 courtyard art phase"
       }
     ],
     "native_checkpoint": {
@@ -182,10 +196,22 @@
       "owner": "existing GPT-15 via Team gameplay worktree",
       "worktree": ".parallel-worktrees/gpt-15-movement-feel",
       "branch": "claude/gpf-04-steady-corrections",
-      "state": "dispatched and acknowledged in live gameplay board; engine-free source work",
-      "brief": "docs/tasks/gameplay/GPF-04-steady-corrections.md"
+      "state": "frozen; #97 merged; timing-only harness correction, runtime D3 pending",
+      "brief": "docs/tasks/gameplay/GPF-04-steady-corrections.md",
+      "head": "100245d7145601b1c4876011c1f8dfc59f52ca0d",
+      "pr": 97
+    },
+    "next_native_assignment": {
+      "task": "INT-ART-02",
+      "owner": "existing INT-ART-01 desktop chat",
+      "branch": "claude/int-art-02-site01-followups",
+      "worktree": ".parallel-worktrees/int-art-01-meshy-playtest",
+      "brief": "docs/tasks/integration/INT-ART-02-site01-followups.md",
+      "state": "active; authorized prompt delivered; owner switched to INT-ART-02 branch",
+      "phase_a": "ART-23 pistol plus combined GPF-02/03/04 acceptance",
+      "phase_b": "first coherent Site01 courtyard/service facade and approach, gated on frozen reviewed ART-25 subset"
     }
   },
   "automation_id": "valstrike-studio-producer",
-  "next_integration_trigger": "GPF-04 frozen source and reviewed ART-23 #95: producer assigns one combined candidate, native pistol wiring and affected movement/session/match/presentation checks. No automatic contributor build; ART-24 first-person hands excluded until accepted."
+  "next_integration_trigger": "INT-ART-02 phase A active; ART-25 first frozen reviewed subset releases phase B under same native owner. ART-24 and later weapon replacement are separate source-fit/native work."
 }

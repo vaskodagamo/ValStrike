@@ -1,5 +1,17 @@
 # Team board
 
+## Current map priority — 2026-11-04, 16:42 Europe/Berlin
+
+Direct user priority verified in Direktor: remaining world objects and visibly building the first map. The following supersedes the earlier cycle state. **GPF-04 #97 is now frozen/merged** at `100245d`; engineering reviewed its bounded test-timing correction. No movement gameplay changed; the teleport-settlement explanation and D3 closure still require actual runtime acceptance.
+
+| Active contributor | Exclusive assignment / result |
+| --- | --- |
+| Existing hands artist, High | ART-24 local P02 hand contact repair; unchanged scope/zero credits. |
+| Existing props artist, High | [ART-25](tasks/art/ART-25-courtyard-structure.md), new `art25-courtyard-structure` / `codex/art25-courtyard-structure`, prepared clean `4f57d74`. Only new CourtyardPilot source/docs: first W01 wall, W08 pedestrian doorway and W09 parapet subset, original surface preserved, measured assembly recipe. Dispatched and actual original-FBX inspection acknowledged; zero credits. |
+| Existing native integrator | [INT-ART-02](tasks/integration/INT-ART-02-site01-followups.md), same isolated integration checkout/new `claude/int-art-02-site01-followups`. Full prompt delivered and branch change observed. Phase A combines ART-23 P01 pose/offset and GPF-02/03/04 affected acceptance. Phase B dresses a coherent Site01 courtyard/service facade and approach once ART-25's first frozen subset is reviewed. |
+
+Three contributors; gameplay writers and other art owners are stopped. One native/map owner and engine slot; no competing QA session. Map phase includes actual eye-level/overhead Unreal before/after evidence, save/reopen, routes/cover/collision and a bounded inspection of competing directional lights. Layout/spawns/objective/recovery remain intact; W08 may need a backed facade treatment because the service building has no route opening. No requirement to finish all remaining world objects or first-person hands first. New R02/P02 native replacement remains a separate later fit/integration batch; this assignment does not claim those models are in game.
+
 ## Current dispatch — 2026-11-04, 16:18 scheduled cycle (Europe/Berlin)
 
 This checkpoint supersedes the historical assignment states below. **INT-ART-01 #93 is merged and its native writer has stopped.** Local Editor verification covers character/four props, Site01 server/two-client presentation and the affected movement/rifle checks; [evidence](assets/meshy-pilot-integration/README.md) and [other-Mac guide](playtest/meshy-pilot.md). The runtime paths in merged main `a1c2371` match the verified final integration head `2475185`; no repeat build is needed for the intervening source-art/docs merges. Two-Mac, packaged and performance acceptance remain pending.

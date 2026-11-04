@@ -488,6 +488,14 @@ The gameplay/integration idle slots were checked clean at their original heads b
 
 **Next:** combine frozen GPF-04 and reviewed ART-23 with the pending GPF-02/03 affected acceptance in one controlled native/QA batch. First-person hand import remains excluded until contact/deformation clears. This coordination cycle used existing evidence, image inspection and diff checks; no new tests, Unreal job or Meshy charge. Ledger remains 30/300 new credits spent. User merges all PRs.
 
+## 2026-11-04 — World-art priority and combined native follow-up activated
+
+**New priority:** verified the user's direct request in Direktor to work on remaining world objects and start building the first map. [ART-25](tasks/art/ART-25-courtyard-structure.md) assigns the existing props owner at High to a new clean `4f57d74` worktree: W01 wall, W08 pedestrian doorway and W09 parapet, original surface preservation, a concrete courtyard/service-facade assembly and zero paid jobs. Artist acknowledged actual source inspection; old ART-11/16 checkouts remain frozen.
+
+**Released native batch:** GPF-04 #97 `100245d` finished and merged during the cycle. Engineering and producer reviewed the bounded timing-only harness change; no movement gameplay changed, and D3 still needs runtime confirmation. The existing integrator received [INT-ART-02](tasks/integration/INT-ART-02-site01-followups.md) and switched to its new branch. Phase A combines the reviewed ART-23 pistol pose with GPF-02/03/04 acceptance; phase B applies the first reviewed frozen ART-25 subset to existing Site01 with real eye-level/overhead views, save/reopen, route/collision checks and bounded lighting review. It does not wait for first-person hands or all remaining objects.
+
+**Ownership/limits:** ART-24, ART-25 and INT-ART-02 are the three active contributors. One map/native owner, one engine slot, no parallel QA or contributor builds. Existing map layout, authority and collision contracts stay intact. Producer performed dispatch/document inspection only; no new paid job or UE operation. #98 was user-merged, so this new priority is published separately. New weapon replacement remains a later explicit fit/native batch.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.
