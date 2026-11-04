@@ -17,9 +17,10 @@ class USkeletalMeshComponent;
  * camera, hit zones and authority are untouched. When the native assets are
  * missing, or on a dedicated server, nothing changes and the prototype visuals stay.
  *
- * Temporary pilot fallbacks (no approved clips): every movement direction plays the
- * forward rifle walk, crouch keeps the standing pose, and the body is hidden while
- * dead. No jump/fire/reload/death animation.
+ * With the pistol equipped the body holds ART-23's stationary pistol pose, also
+ * while moving (no pistol locomotion clip). Temporary pilot fallbacks (no approved
+ * clips): every rifle movement direction plays the forward rifle walk, crouch keeps
+ * the standing pose, and the body is hidden while dead. No jump/fire/reload/death.
  */
 UCLASS(ClassGroup = (Presentation))
 class VALSTRIKE_API UVSCharacterPresentationComponent : public UActorComponent
@@ -39,6 +40,10 @@ public:
     // author a named socket, so it lives here; see character-import-report.json.
     static const FName RifleGripBone;
     static const FTransform RifleGripOffset;
+    // P01 world model on hand_r in ART-23's pistol hold (measured, INT-ART-02
+    // pistol-import-report.json). Use only when HasPistolPose().
+    static const FTransform PistolGripOffset;
+    bool HasPistolPose() const { return bActive && PistolHold != nullptr; }
 
 protected:
     virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* TickFunction) override;
@@ -51,6 +56,9 @@ protected:
     TSoftObjectPtr<UAnimSequence> HoldAsset;
     UPROPERTY(EditDefaultsOnly, Category = "Character Presentation")
     TSoftObjectPtr<UAnimSequence> WalkAsset;
+    // Stationary pistol ready hold, played whenever the pistol is equipped.
+    UPROPERTY(EditDefaultsOnly, Category = "Character Presentation")
+    TSoftObjectPtr<UAnimSequence> PistolHoldAsset;
     // Ground speed of the in-place walk clip, measured from its stance foot (cm/s).
     UPROPERTY(EditDefaultsOnly, Category = "Character Presentation", meta = (ClampMin = "10"))
     float WalkClipSpeed = 145.0f;
@@ -59,12 +67,13 @@ protected:
     float MaxWalkPlayRate = 1.8f;
 
 private:
-    void PlayLocomotion(bool bMoving, float PlayRate);
+    void PlayClip(UAnimSequence* Clip, float PlayRate);
 
     TWeakObjectPtr<USkeletalMeshComponent> Body;
     UPROPERTY(Transient) TObjectPtr<UAnimSequence> Hold;
     UPROPERTY(Transient) TObjectPtr<UAnimSequence> Walk;
+    UPROPERTY(Transient) TObjectPtr<UAnimSequence> PistolHold;
+    UPROPERTY(Transient) TObjectPtr<UAnimSequence> Current;
     bool bActive = false;
-    bool bWalkPlaying = false;
     bool bShown = true;
 };
