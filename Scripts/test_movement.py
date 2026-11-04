@@ -10,6 +10,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import re
 import signal
 import socket
 import statistics
@@ -19,6 +20,117 @@ import time
 import uuid
 
 import ue
+
+ROLES = ("server", "driver", "observer")
+PACKET_SETTINGS = ("PktLag", "PktLagVariance", "PktLoss")
+# Engine NetEmulationHelper.cpp logs "LogNet: PktLag set to %d" (etc.) per net driver that parses the switch.
+# The trailing " set to" keeps PktLag from matching PktLagVariance/PktLagMin.
+PACKET_LOG = re.compile(r"LogNet: (PktLag|PktLagVariance|PktLoss) set to (-?[0-9]+)\b")
+# p.NetShowCorrections (Development-only engine cvar) logs one warning per correction:
+# CharacterMovementComponent.cpp "*** Server: Error for %ls at Time=%.3f is %3.3f ..." (server decided to correct)
+# and "*** Client: Error for ..." (client applied a correction). Setting the cvar echoes `p.NetShowCorrections = "1"`.
+CORRECTION_LOG = re.compile(r"\*\*\* (Server|Client): Error for (\S+) at Time=\S+ is ([0-9.]+)")
+CORRECTIONS_ENABLED = 'p.NetShowCorrections = "1"'
+RTT_UNAVAILABLE = "unavailable: the movement smoke records no ping; use stat net per docs/playtest/net-emulation.md"
+
+
+def build_parser():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--engine", help="Unreal root; defaults to UE_ROOT")
+    parser.add_argument("--port", type=ue.port, default=7789)
+    parser.add_argument("--timeout", type=float, default=120)
+    ue.add_net_emulation(parser)  # Same flags, bounds and composition as ue.py server/client.
+    return parser
+
+
+def net_emulation(args):
+    """Return (switches, requested values or None); switches come from ue.py so composition is not duplicated."""
+    switches = ue.net_emulation_switches(args)
+    if not switches:
+        return [], None
+    requested = {}
+    for switch in switches:
+        name, value = switch[1:].split("=", 1)
+        requested[name] = int(value)
+    if tuple(requested) != PACKET_SETTINGS:
+        raise ue.SetupError(f"Unexpected network emulation switches from ue.py: {switches}")
+    return switches, requested
+
+
+def launch_command(role, executable, project, port, log_path, net_switches):
+    destination = ue.MAP if role == "server" else f"127.0.0.1:{port}?Name=VS{role.title()}"
+    exec_cmds = "t.MaxFPS 60" + (",p.NetShowCorrections 1" if net_switches else "")
+    command = [str(executable), str(project), destination,
+               "-server" if role == "server" else "-game", "-nullrhi", "-nosound", "-unattended",
+               f"-VSMovementSmoke={role}", "-VSMovementSmokeStart=30", f"-abslog={log_path}",
+               f"-ExecCmds={exec_cmds}"]
+    if role == "server":
+        command += [f"-port={port}", "-multihome=127.0.0.1"]
+    return command + list(net_switches)
+
+
+def packet_log_values(text):
+    values = {name: [] for name in PACKET_SETTINGS}
+    for name, value in PACKET_LOG.findall(text):
+        values[name].append(int(value))
+    return values
+
+
+def emulation_problem(logs, requested):
+    """Return why the run is invalid, or None when every process log shows exactly the requested values."""
+    if requested is None:
+        return None
+    problems = []
+    for role in ROLES:
+        observed = packet_log_values(logs.get(role) or "")
+        for name in PACKET_SETTINGS:
+            seen = observed[name]
+            if not seen:
+                problems.append(f"{role}: no 'LogNet: {name} set to' line")
+            elif any(value != requested[name] for value in seen):
+                problems.append(f"{role}: {name} set to {sorted(set(seen))}, requested {requested[name]}")
+    if problems:
+        return "Invalid network emulation run (requested " + json.dumps(requested) + "): " + "; ".join(problems)
+    return None
+
+
+def corrections(text):
+    """Count p.NetShowCorrections lines in one process log, or 'unavailable' if the cvar was not confirmed on."""
+    if CORRECTIONS_ENABLED not in text:
+        return "unavailable"
+    found = CORRECTION_LOG.findall(text)
+    by_character = {}
+    for _side, character, _error in found:
+        by_character[character] = by_character.get(character, 0) + 1
+    return {"count": len(found), "max_error_cm": max((float(error) for *_rest, error in found), default=0.0),
+            "by_character": by_character}
+
+
+def net_summary(args, requested, logs):
+    if requested is None:
+        return {"profile": None, "emulation": "off", "requested": None, "rtt_ms": "unavailable",
+                "corrections": "unavailable",
+                "note": "no --net-profile/--pkt-* given; correction logging (p.NetShowCorrections) not enabled"}
+    overrides = {name: value for name, value in (("pkt_lag", args.pkt_lag), ("pkt_lag_variance", args.pkt_lag_variance),
+                                                 ("pkt_loss", args.pkt_loss)) if value is not None}
+    return {"profile": args.net_profile or "custom", "base_profile": args.net_profile or "lan",
+            "emulation": "on", "overrides": overrides, "requested": requested,
+            "observed": {role: packet_log_values(logs.get(role) or "") for role in ROLES},
+            "rtt_ms": {role: RTT_UNAVAILABLE for role in ("driver", "observer")},
+            # Server lines are the server's correction decisions; driver lines are corrections the client applied.
+            "corrections": {role: corrections(logs.get(role) or "") for role in ROLES}}
+
+
+def conditions(requested):
+    base = "Three local editor processes, null RHI, loopback, "
+    if requested is None:
+        return base + "no artificial latency/loss"
+    return base + ("outgoing packet emulation on every process: lag {PktLag} ms +/- {PktLagVariance} ms, "
+                   "loss {PktLoss}%").format(**requested)
+
+
+def read_log(path):
+    return path.read_text(errors="replace") if path.exists() else ""
 
 
 def records(path, complete_only=True):
@@ -149,12 +261,9 @@ def stop(processes):
             process.wait(timeout=5)
 
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--engine", help="Unreal root; defaults to UE_ROOT")
-    parser.add_argument("--port", type=ue.port, default=7789)
-    parser.add_argument("--timeout", type=float, default=120)
-    args = parser.parse_args()
+def main(argv=None):
+    args = build_parser().parse_args(argv)
+    net_switches, requested = net_emulation(args)
     root = ue.ROOT
     engine = ue.engine_path(args.engine)
     executable = ue.editor_binary(engine, ue.host_platform())
@@ -166,16 +275,10 @@ def main():
     output = root / "Saved/Tests/Movement" / run_id
     output.mkdir(parents=True)
     processes, streams, commands = [], [], {}
-    paths = {role: output / f"{role}.log" for role in ("server", "driver", "observer")}
+    paths = {role: output / f"{role}.log" for role in ROLES}
 
     def launch(role):
-        destination = ue.MAP if role == "server" else f"127.0.0.1:{args.port}?Name=VS{role.title()}"
-        command = [str(executable), str(project), destination,
-                   "-server" if role == "server" else "-game", "-nullrhi", "-nosound", "-unattended",
-                   f"-VSMovementSmoke={role}", "-VSMovementSmokeStart=30", f"-abslog={paths[role]}",
-                   "-ExecCmds=t.MaxFPS 60"]
-        if role == "server":
-            command += [f"-port={args.port}", "-multihome=127.0.0.1"]
+        command = launch_command(role, executable, project, args.port, paths[role], net_switches)
         commands[role] = command
         stream = (output / f"{role}.stdout.log").open("w")
         streams.append(stream)
@@ -220,6 +323,10 @@ def main():
     except (RuntimeError, KeyError, TypeError, ValueError) as error:
         problem = f"Invalid runtime evidence: {error}"
         checks = []
+    logs = {role: read_log(path) for role, path in paths.items()}
+    invalid = emulation_problem(logs, requested)
+    if invalid:
+        problem = invalid + (f"; also: {problem}" if problem else "")
     passed = not problem and all(check["passed"] for check in checks)
     revision = subprocess.run(["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True).stdout.strip()
     dirty = bool(subprocess.run(["git", "status", "--porcelain"], cwd=root,
@@ -229,7 +336,7 @@ def main():
     result = {"passed": passed, "error": problem, "revision": revision, "engine": str(engine),
               "dirty_checkout": dirty, "source_sha256": hashes,
               "engine_build": json.loads((engine / "Build/Build.version").read_text()),
-              "conditions": "Three local editor processes, null RHI, loopback, no artificial latency/loss",
+              "conditions": conditions(requested), "net": net_summary(args, requested, logs),
               "commands": commands, "checks": checks}
     (output / "result.json").write_text(json.dumps(result, indent=2) + "\n")
     for check in checks:

@@ -13,6 +13,7 @@ import json
 import math
 import os
 from pathlib import Path
+import re
 import signal
 import socket
 import subprocess
@@ -45,6 +46,10 @@ REQUIRED_CHECKS = {
     "driver": CLIENT_CHECKS,
     "observer": CLIENT_CHECKS,
 }
+SPECTATE_ROLES = ("driver", "observer")
+SPECTATE_MARKER = "VSSPECTATE "
+SPECTATE_EVENTS = ("start", "cycle", "stop")
+IDENTITY = re.compile(r"\bteam=(\d+) id=(\d+)\b")
 
 
 def match_port(value):
@@ -143,6 +148,121 @@ def evaluate(reports, required_checks=None):
         missing = set(required[role]) - names
         if missing:
             raise RuntimeError(f"Missing required {role} checks: {', '.join(sorted(missing))}")
+    return checks
+
+
+def parse_spectate(text):
+    """Return the VSSPECTATE events of one client log; a malformed line is a defect."""
+    events = []
+    for line in text.splitlines():
+        index = line.find(SPECTATE_MARKER)
+        if index < 0:
+            continue
+        payload = line[index + len(SPECTATE_MARKER):].strip()
+        try:
+            event = json.loads(payload, parse_constant=reject_nonfinite, object_pairs_hook=unique_object)
+        except (ValueError, RecursionError) as error:
+            raise RuntimeError(f"Malformed VSSPECTATE line: {payload!r}") from error
+        if (not isinstance(event, dict) or set(event) != {"event", "viewer", "target", "round"}
+                or event["event"] not in SPECTATE_EVENTS
+                or any(type(event[key]) is not int or event[key] < 0 for key in ("viewer", "target", "round"))
+                or event["viewer"] == 0 or (event["target"] == 0) != (event["event"] == "stop")):
+            raise RuntimeError(f"Invalid VSSPECTATE event: {payload!r}")
+        events.append(event)
+    return events
+
+
+def client_identity(report):
+    """(team, connection id) from the client's replicated_match detail, or None."""
+    for item in report.get("checks", []) if isinstance(report, dict) else []:
+        if isinstance(item, dict) and item.get("name") == "replicated_match" and isinstance(item.get("detail"), str):
+            found = IDENTITY.search(item["detail"])
+            if found and int(found.group(1)) and int(found.group(2)):
+                return int(found.group(1)), int(found.group(2))
+    return None
+
+
+def evaluate_spectate(reports, logs):
+    """GPT-07 death-spectate checks from client logs: pass, fail or not_reached (never a silent pass).
+
+    `logs` maps a client role to its log text, or None when the log is absent. The log line carries
+    no life state, so a dead target is excluded by the client's CanWatch re-check and the
+    engine-free rule test; this runner rejects zero, self and known-enemy targets.
+    """
+    identities = {role: client_identity(reports.get(role)) for role in SPECTATE_ROLES}
+    events = {}
+    problems = []
+    for role in SPECTATE_ROLES:
+        if logs.get(role) is None:
+            problems.append(f"{role} log absent")
+            continue
+        events[role] = parse_spectate(logs[role])
+    teams = {role: identity[0] for role, identity in identities.items() if identity}
+    seen = {role: len(items) for role, items in events.items()}
+
+    def result(name, status, detail):
+        return {"check": f"spectate: {name}", "status": status, "detail": detail}
+
+    if not any(event["event"] == "start" for items in events.values() for event in items):
+        reason = ("no client entered death spectate. The existing scenario's only persistent combatants, "
+                  "driver and observer, are on teams " + json.dumps(teams) + ", so no persistent client "
+                  "dies while a teammate lives, and the late client keeps no report")
+        if problems:
+            reason += "; " + ", ".join(problems)
+        detail = {"reason": reason, "events": seen}
+        return [result(name, "not_reached", detail)
+                for name in ("teammate_start", "stop_on_round_reset", "no_enemy_or_dead_target")]
+
+    invalid, sequence, unstopped, resets, fallback_stops, starts = [], [], [], 0, 0, []
+    for role, items in events.items():
+        identity = identities[role]
+        if items and identity is None:
+            invalid.append(f"{role}: team identity unavailable")
+            continue
+        enemies = {other[1] for other_role, other in identities.items()
+                   if other_role != role and other and other[0] != identity[0]}
+        current, started_round = 0, None
+        for event in items:
+            if event["viewer"] != identity[1]:
+                invalid.append(f"{role}: viewer {event['viewer']} is not {identity[1]}")
+            if event["event"] != "stop":
+                target = event["target"]
+                if target == identity[1] or target in enemies:
+                    invalid.append(f"{role}: {event['event']} target {target} is self or an enemy")
+            if event["event"] == "start":
+                if current:
+                    sequence.append(f"{role}: start while watching {current}")
+                current, started_round = event["target"], event["round"]
+                starts.append({"role": role, "target": event["target"], "round": event["round"]})
+            elif event["event"] == "cycle":
+                if not current or event["target"] == current:
+                    sequence.append(f"{role}: cycle without a new target")
+                current = event["target"]
+            else:
+                if not current:
+                    sequence.append(f"{role}: stop without a start")
+                elif event["round"] > started_round:
+                    resets += 1
+                else:
+                    fallback_stops += 1
+                current, started_round = 0, None
+        if current:
+            unstopped.append(role)
+
+    start_invalid = [item for item in invalid if ": start target" in item or "identity" in item or "viewer" in item]
+    detail = {"starts": starts, "events": seen, "teams": teams}
+    checks = [result("teammate_start", "fail" if start_invalid else "pass", {**detail, "invalid": start_invalid})]
+    if sequence or unstopped:
+        checks.append(result("stop_on_round_reset", "fail", {**detail, "sequence": sequence, "unstopped": unstopped}))
+    elif resets:
+        checks.append(result("stop_on_round_reset", "pass", {**detail, "reset_stops": resets, "same_round_stops": fallback_stops}))
+    else:
+        checks.append(result("stop_on_round_reset", "not_reached",
+                             {**detail, "reason": "every spectate ended in its own round (teammate death or match end)",
+                              "same_round_stops": fallback_stops}))
+    checks.append(result("no_enemy_or_dead_target", "fail" if invalid else "pass",
+                         {**detail, "invalid": invalid,
+                          "dead_target": "not in the log; excluded by the client's CanWatch re-check and spectate_rules_test"}))
     return checks
 
 
@@ -355,16 +475,21 @@ def main(argv=None):
                 signal.signal(sig, handler)
 
     checks = []
+    spectate = []
     after = None
     try:
         reports = {role: load_report(output / f"{role}.json") for role in ROLES}
         checks = evaluate(reports)
+        logs = {role: (output / f"{role}.log").read_text(errors="replace") if (output / f"{role}.log").is_file() else None
+                for role in SPECTATE_ROLES}
+        spectate = evaluate_spectate(reports, logs)
         after = evidence_metadata(root)
         if any(metadata[key] != after[key] for key in ("source_sha256", "editor_module_sha256", "map_sha256")):
             problem = problem or "Source, Editor module or Site01 map changed during the runtime test"
     except (RuntimeError, OSError, subprocess.TimeoutExpired) as error:
         problem = problem or f"Invalid runtime evidence: {error}"
     passed = not problem and bool(checks) and all(check["passed"] for check in checks)
+    passed = passed and all(check["status"] != "fail" for check in spectate)
     result = {
         **metadata, "passed": passed, "error": problem, "engine": str(engine), "engine_build": build,
         "metadata_after": after, "rendered_clients": args.rendered,
@@ -376,11 +501,13 @@ def main(argv=None):
         "exit_before_cleanup": before_cleanup, "exit_after_cleanup": cleanup_exit,
         "late_client": {"launched": "late" in processes, "teardown_requested": late_teardown_requested,
                         "teardown_completed": late_teardown_complete, "exit_after_leave": late_exit_after_leave},
-        "elapsed_seconds": time.monotonic() - began, "checks": checks, "reports": reports,
+        "elapsed_seconds": time.monotonic() - began, "checks": checks, "spectate_checks": spectate, "reports": reports,
     }
     (output / "result.json").write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
     for check in checks:
         print(("PASS " if check["passed"] else "FAIL ") + check["check"] + ": " + json.dumps(check["detail"]))
+    for check in spectate:
+        print(check["status"].upper() + " " + check["check"] + ": " + json.dumps(check["detail"]))
     if problem:
         print(problem, file=sys.stderr)
     print(f"Result: {'PASS' if passed else 'FAIL'}; {output / 'result.json'}")

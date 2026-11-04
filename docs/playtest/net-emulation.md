@@ -55,4 +55,20 @@ Run on one Mac first (loopback plus emulation), then repeat `typical` on the two
 
 - Emulation is per process and outgoing only; it does not model asymmetric links, bandwidth caps or burst loss. OS-level shaping (dummynet/pfctl) is out of scope.
 - `-PktLag*` switches are also read by any other net driver in the process (for example a beacon driver); ValStrike currently has only the game net driver.
-- No ValStrike runner uses these flags yet; adopting them in `Scripts/test_*.py` is a separate task.
+- Only `Scripts/test_movement.py` uses these flags so far (see Runner adoption below); other `Scripts/test_*.py` runners do not.
+
+## Runner adoption
+
+### `Scripts/test_movement.py` (GPT-12)
+
+```sh
+python3 Scripts/test_movement.py --engine "$UE_ROOT" --net-profile lan       # baseline, correction logging on
+python3 Scripts/test_movement.py --engine "$UE_ROOT" --net-profile typical
+python3 Scripts/test_movement.py --engine "$UE_ROOT" --net-profile poor --pkt-loss 5
+```
+
+- The flags are the `Scripts/ue.py` ones (`ue.add_net_emulation`), composed by `ue.net_emulation_switches`, and the same `-PktLag/-PktLagVariance/-PktLoss` switches are appended to the server, driver and observer. With no flag the argv is unchanged.
+- With a flag, every process also gets `p.NetShowCorrections 1` in `-ExecCmds` so the engine logs one `*** Server: Error for …` (server) or `*** Client: Error for …` (client) warning per movement correction.
+- **Invalid run:** after the run, each of `server.log`, `driver.log` and `observer.log` must contain `LogNet: PktLag set to`, `PktLagVariance set to` and `PktLoss set to` lines, all with the requested values. A missing line or any other value fails the run with `Invalid network emulation run (requested …): <role>: …`, even if every movement check passed.
+- The movement checks and tolerances are the same as without emulation.
+- `result.json` gains a `net` block: `profile` (`custom` for `--pkt-*` alone, with `base_profile`), `overrides`, `requested`, `observed` (logged values per role), `rtt_ms` and `corrections` per role. `corrections` is `{count, max_error_cm, by_character}` when the log confirms `p.NetShowCorrections = "1"`, otherwise `"unavailable"`. `rtt_ms` is `"unavailable"`: the movement smoke records no ping, so take RTT from `stat net` as in the procedure above. `conditions` states the emulated lag and loss.
