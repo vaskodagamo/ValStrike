@@ -1,0 +1,71 @@
+{
+  "date": "2026-11-04",
+  "asset_id": "MSH-C01",
+  "source": "User-generated Meshy character, downloaded from signed-in Meshy workspace through browser UI",
+  "archive_relative_to_inbox": "characters/UrbanEntry/Meshy_AI_assets_20261104_121739.zip",
+  "archive_sha256": "8edc9e8ec3ecbf1e8bc3270b10b3e9e02723c17413359265ef3334c4ef419f2a",
+  "export_settings": {
+    "format": "FBX",
+    "skeleton_template": "UE5 Mannequin",
+    "rigged_character": true,
+    "single_file": false,
+    "skin": "With Skin",
+    "fps": 60
+  },
+  "contents": [
+    {
+      "file": "Meshy_AI_TacticalCharacterRemeshed_20261104_animate_7c537b23/Meshy_AI_Animation_Crouch_Walk_Left_with_Gun_withSkin.fbx",
+      "bytes": 24884812
+    },
+    {
+      "file": "Meshy_AI_TacticalCharacterRemeshed_20261104_animate_7c537b23/Meshy_AI_Animation_Running_withSkin.fbx",
+      "bytes": 24786588
+    },
+    {
+      "file": "Meshy_AI_TacticalCharacterRemeshed_20261104_animate_7c537b23/Meshy_AI_Animation_Vault_with_Rifle_withSkin.fbx",
+      "bytes": 24807388
+    },
+    {
+      "file": "Meshy_AI_TacticalCharacterRemeshed_20261104_animate_7c537b23/Meshy_AI_Animation_Walk_Backward_While_Shooting_withSkin.fbx",
+      "bytes": 24895276
+    },
+    {
+      "file": "Meshy_AI_TacticalCharacterRemeshed_20261104_animate_7c537b23/Meshy_AI_Animation_Walk_Backward_with_Gun_withSkin.fbx",
+      "bytes": 24838092
+    },
+    {
+      "file": "Meshy_AI_TacticalCharacterRemeshed_20261104_animate_7c537b23/Meshy_AI_Animation_Walking_withSkin.fbx",
+      "bytes": 24854476
+    },
+    {
+      "file": "Meshy_AI_TacticalCharacterRemeshed_20261104_animate_7c537b23/Meshy_AI_Character_output.fbx",
+      "bytes": 24672124
+    },
+    {
+      "file": "Meshy_AI_TacticalCharacterRemeshed_20261104_animate_7c537b23/Meshy_AI_texture_0.png",
+      "bytes": 17077891
+    },
+    {
+      "file": "Meshy_AI_TacticalCharacterRemeshed_20261104_animate_7c537b23/Meshy_AI_texture_0_metallic.png",
+      "bytes": 1494124
+    },
+    {
+      "file": "Meshy_AI_TacticalCharacterRemeshed_20261104_animate_7c537b23/Meshy_AI_texture_0_roughness.png",
+      "bytes": 2589732
+    }
+  ],
+  "checks": [
+    "Browser observed completed download path",
+    "Original ZIP copied without modification; SHA-256 matched",
+    "ZIP integrity passed",
+    "Archive contains character FBX, six animation FBXs and three texture images"
+  ],
+  "pending": [
+    "Import and inspect actual skeleton hierarchy, skin weights and bind pose",
+    "Check clip skeleton compatibility, root motion/in-place behavior and deformation",
+    "Archive provides base color, metallic and roughness images; no separate normal map was included",
+    "Vault clip is retained as source only; vault gameplay is not authorized by its presence",
+    "Vendor generation/license evidence not supplied; retain provenance follow-up"
+  ],
+  "screenshot_local": "Artifacts/MeshyCharacterExport/export-settings.jpg"
+}

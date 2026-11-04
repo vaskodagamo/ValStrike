@@ -398,6 +398,16 @@ The gameplay/integration idle slots were checked clean at their original heads b
 
 **Next action:** User uploads original downloads and signals completion; coordinator inventories and assigns real asset batches before any artist starts. User retains PR merges.
 
+## 2026-11-04 — Meshy world artists dispatched; rigged character downloaded
+
+**Request/result:** User confirmed world uploads and requested artists start, plus browser assistance choosing the rigged character/animation download. Inventoried ten world packages (50 files) with SHA-256 and image sizes in `docs/assets/meshy-site01-intake.json`. Assigned five structural packages to ART-11 and five props/surface packages to ART-12. Reused idle “Art — Site01 navigation signs” and “Art — Tactical HUD icons” chats at High reasoning with fresh exclusive worktrees `meshy-structure` and `meshy-props-surfaces`, both based at `b6e4a5f`. Old worktrees/commits remain untouched. Both chats acknowledged their new assignments and started inspection/cleanup; no source-completion claim yet.
+
+**Character:** Inspected the existing Meshy workspace through computer use. Selected FBX, UE5 Mannequin skeleton template, Rigged Character on, Single file off, With Skin, 60 FPS. Browser download completed to `Meshy_AI_assets_20261104_121739.zip`; copied unchanged into local `meshy_ai_assets/characters/UrbanEntry/`. Archive contains one base character FBX, six with-skin animation FBXs (walking, running, crouch-left with gun, backward with gun, backward while shooting, vault with rifle) and base-color/metallic/roughness images. Exact export settings, hash and entries are in `docs/assets/meshy-character-intake.json`; settings screenshot is local `Artifacts/MeshyCharacterExport/export-settings.jpg`.
+
+**Checks/limits:** World file hashes/image dimensions and new worktree heads inspected; browser download visibly completed; character ZIP integrity and copy hash passed. Download contents are verified, not imported rig compatibility or animation deformation. No separate character normal map is present in this archive. No native import/build or new tests. Vault clip is retained as input only; no new traversal mechanics. Originals remain local and unchanged. User retains merges.
+
+**Next action:** Artists return cleaned source/export/previews for lead review, then one assigned native/map owner combines them in existing Site01 with preserved layout/collision. Character rig/skin/clip validation is a separate assignment after intake; do not replace it with the rejected procedural model.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.

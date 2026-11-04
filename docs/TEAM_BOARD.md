@@ -2,6 +2,8 @@
 
 ## Meshy world production dispatch — 2026-11-04
 
+Dispatch confirmed: both existing chats are active at High reasoning, using their new worktrees at `b6e4a5f`. Character package MSH-C01 downloaded through Meshy UI with FBX, UE5 Mannequin, rigged character on, separate files, with skin, 60 FPS; original ZIP saved locally under `meshy_ai_assets/characters/UrbanEntry/`. Inventory/settings in `docs/assets/meshy-character-intake.json`; six clips plus base character and three textures present. Skeleton/deformation/native verification remains pending. No character worker or vault gameplay authorized by this download.
+
 Ten uploaded world-object packages (50 original files) are inventoried in `docs/assets/meshy-site01-intake.json`; exact inputs and hashes are recorded. Coordinator owns inventory, registry and this board on `codex/meshy-world-dispatch`. ART-11 reassigns the idle “Art — Site01 navigation signs” chat to five structure packages in new `.parallel-worktrees/meshy-structure`, branch `codex/meshy-structure`. ART-12 reassigns idle “Art — Tactical HUD icons” to five props/surface packages in new `.parallel-worktrees/meshy-props-surfaces`, branch `codex/meshy-props-surfaces`. Both use High reasoning and exact source/docs ownership in [ART-11](tasks/art/ART-11-meshy-structure.md) and [ART-12](tasks/art/ART-12-meshy-props-surfaces.md). Previous worktrees remain frozen and untouched. Source cleanup/preview/export only; no Unreal slot or native edits. One native Site01 integration assignment follows reviewed source handoffs. Character export is being inspected by the coordinator; no character replacement worker starts yet.
 
 ## ART-10 — Meshy intake for existing Site01 (2026-11-04)
