@@ -546,6 +546,12 @@ User merged #120–124. Producer reviewed INT-ART-03's actual first-person lifec
 
 ART-28 source `7b307cf`/handoff `61a8a78` passed producer review of actual exported stock/face/hand, motion and 5 m views for the bounded pilot. Same sole native owner received INT-ART-05: apply all three poses plus measured socket, improve native knife framing, combine C1, then one affected build/runtime batch with remote/moving actions and audible cues. Exit-75 queue correction delivered before work. All art owners idle; two admitted contributors, zero new spend/producer tests/Unreal work. [Evidence and next trigger](producer/STATUS.md).
 
+## 2026-11-04 — Native knife/rifle improvements reviewed; cancellation and capture gates returned
+
+INT-ART-05 #128 candidate `8c70673` passed its one build, rifle 39/39 and visual 13/13; practice 39/37/36 fails only the remote stab aggregate. Producer reviewed actual rifle before/after, first-person framing and remote sequence: shoulder/head clearance and target visibility improve, first remote slash restored 3/3. Preserve intended coalesced cancellation; four cancelled stabs must not be replayed to force C1's five-start assertion. Prepared same-owner KNIFE-01-C2 for action-aware expectations and real moving-attack evidence, plus bounded native continuation reusing unaffected results.
+
+Audio initialization failed on the current default External Headphones, with zero recorder buffers. Producer verified device inventory and installed CoreAudio default-only path, then asked once for a temporary switch to Mac mini Speakers with restoration. No setting changed. Mac locked prevented both Claude dispatches; follow earlier user preference to deliver next available cycle. No competing session, producer tests/builds or new credits. [Current queue and evidence](producer/STATUS.md).
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.

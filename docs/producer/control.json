@@ -250,22 +250,33 @@
       "main": "a1c2371d36598b0636efd9fb42d9f8bda9060981"
     },
     "active_gameplay": {
-      "task": "KNIFE-01-C1",
-      "owner": "same existing GPT-04 via Team gameplay worktree",
+      "task": "KNIFE-01-C2",
+      "owner": "same GPT-04 via existing Claude lead",
       "worktree": ".parallel-worktrees/gpt-04-switch-prediction",
-      "branch": "claude/knife-01-c1-remote-cues",
-      "brief": "docs/tasks/gameplay/KNIFE-01-C1-remote-cues.md",
-      "base": "561ea4d",
-      "state": "active; exact claude/knife-01-c1-remote-cues branch observed and live lead board confirms same GPT-04, base561ea4d"
+      "branch": "claude/knife-01-c2-acceptance",
+      "base": "7445241",
+      "brief": "docs/tasks/gameplay/KNIFE-01-C2-cancelled-cues-moving-attack.md",
+      "state": "reserved, NOT dispatched: Claude UI locked. Existing GPT-04 last handoff frozen/merged C1; no replacement writer. Deliver next available cycle."
     },
     "next_native_assignment": {
-      "task": "INT-ART-05",
+      "task": "INT-ART-05-C1",
       "owner": "existing INT-ART-01 desktop chat",
       "worktree": ".parallel-worktrees/int-art-01-meshy-playtest",
       "branch": "claude/int-art-05-knife-rifle-acceptance",
-      "brief": "docs/tasks/integration/INT-ART-05-knife-acceptance-rifle-fit.md",
+      "brief": "docs/tasks/integration/INT-ART-05-C1-remaining-acceptance.md",
       "base": "561ea4d",
-      "state": "active; verified UI delivery and actual claude/int-art-05-knife-rifle-acceptance branch observed; disjoint import/framing prep, combined build waits for frozen C1"
+      "state": "reserved, NOT dispatched: Claude UI locked. Existing #128 handoff frozen; continue same owner after unlock, C2 freeze and separate audio approval. No replacement writer.",
+      "pr": 128,
+      "head": "5753baeb3d7f24362ba613f8c756beb95b8024c1",
+      "candidate": "8c70673eea6fd44b446e22418de5deac11e59aab",
+      "verified_checks": {
+        "practice": "39/39 server,37/37 driver,36/37 observer; only cancelled-stab aggregate expectation fails",
+        "rifle_presentation": "39/39",
+        "weapons_visual": "13/13",
+        "remote_slash": "3/3 Start followed by Impact; actual rendered sequence reviewed",
+        "audio": "not verified; device initialization failed,0 app-audio buffers"
+      },
+      "producer_review": "Actual rifle before/after, knife A/D framing and remote sequence reviewed. Seat/head clearance and target visibility improved; first remote slash shown. Moving attacks, audible cues and readable moving rifle remain held; current scene is backlit."
     },
     "previous_gameplay_checkpoint": {
       "task": "GPF-04",
@@ -361,19 +372,30 @@
       "base": "49972150a3c2b88c469204b4d8a73cb57fc1ca4d",
       "shared_ci": "All four existing CI checks passed on 22b71bff; no manual contributor rerun; affected native acceptance pending.",
       "native_confirmation": "Exact #121 combined at 794069a; candidate 1b572d0 passed affected practice and rifle presentation checks. PR #121 remains open; user merges."
+    },
+    "completed_knife_c1": {
+      "task": "KNIFE-01-C1",
+      "owner": "same existing GPT-04 via Team gameplay worktree",
+      "worktree": ".parallel-worktrees/gpt-04-switch-prediction",
+      "branch": "claude/knife-01-c1-remote-cues",
+      "brief": "docs/tasks/gameplay/KNIFE-01-C1-remote-cues.md",
+      "base": "561ea4d",
+      "state": "frozen/merged #127 at a96e188; runtime first slash restored; its cancelled-stab assertion failed and returned C2",
+      "head": "a96e18812b57be03a4776e52caab6428a73fd6b8",
+      "pr": 127
     }
   },
   "automation_id": "valstrike-studio-producer",
-  "next_integration_trigger": "Read the existing lead/GPT-04 KNIFE-01-C1 frozen correction or precise blocker; same native INT-ART-05 combines it before one build, then rendered remote/moving knife, audio and rifle-fit evidence. Review actual comparison before full acceptance. If exit75 reported, queue and admit again only after confirmed slot release; no polling.",
+  "next_integration_trigger": "On next available unlocked cycle deliver prepared KNIFE-01-C2 to existing Claude lead/same GPT-04 and INT-ART-05-C1 to existing native owner. Do not resend before verifying destination. Audio route change additionally needs pending explicit user answer; no default-output change or audio rerun yet. Preserve #128/current owners; no new worker/build/polling.",
   "knife_feature": {
     "task": "KNIFE-01",
     "brief": "docs/tasks/KNIFE-01-full-feature.md",
     "authorized": "2026-11-04 direct user message in Direktor verified",
     "state": "full gameplay/art/native pipeline authorized; actual dispatch tracked separately",
-    "gameplay": "repaired gameplay compiled and all 39 knife-specific runtime checks passed on INT-ART-04 c2ba852; main includes exact M1 fix. Whole practice 39/39 server, 36/37 each client due old P01 assertion, addressed by #121; full knife presentation pending.",
+    "gameplay": "C1 #127 merged; first live remote slash restored and shown 3/3 on native8c70673. All authority/lifecycle checks pass. C1 aggregate expects 5 remote stabs despite4 coalesced cancellations; C2 prepared to assert per-action eligibility without resurrecting cancelled starts.",
     "first_person": "Corrected #115 source imported in #123; actual first-person lifecycle reviewed on 1b572d0. Functional pilot demonstrated; large framing/forearm target occlusion assigned native placement comparison, no source/mesh scaling or general quality/performance approval.",
     "third_person": "ART-27 native imported in #123 with editor assembly evidence; full rendered remote attacks held by observer-camera and first-start defects, assigned C1/INT-ART-05.",
-    "native": "INT-ART-03 #123 merged with first-person runtime evidence but remote rendering/first slash/moving attacks/audio gates open. INT-ART-05 dispatched with KNIFE-01-C1 dependency and existing reviewed ART-28 native application.",
+    "native": "INT-ART-05 #128 candidate8c70673 delivers reviewed framing/rifle fit and rendered remote attack. Full acceptance held for corrected cancellation expectation, moving-attack proof,late-join baseline observation and audible cues. Continuation prepared, not delivered because Mac locked.",
     "credit_cap": 0,
     "gameplay_owner": {
       "ui_session": "local_e7f5a62b-3f49-42e2-854a-1dcddd518154",
@@ -385,29 +407,34 @@
     }
   },
   "weapon_replacement_queue": {
-    "state": "R02/P02 #118 merged; #121 merged and affected checks pass. ART-28 #124 source correction producer-reviewed/accepted for bounded pilot; actual native three-clip plus socket application dispatched INT-ART-05.",
+    "state": "R02/P02 replacement merged. ART-28 source applied with all3 native clips/measured attachment in #128; actual stationary rifle seat/head-clearance comparison reviewed, readable moving views remain pending.",
     "scope": "R02 #89 and P02 #81 in first/third person; not gated on completion of first-person hands, but actual grip/camera/native fit required",
     "owner": "existing sole native integrator after coherent current candidate; no new writer"
   },
   "last_material_checkpoint": {
-    "at": "2026-11-04T19:50+01:00",
-    "main_observed": "561ea4d",
+    "at": "2026-11-04T20:21+01:00",
+    "main_observed": "7445241",
     "user_merged_prs": [
-      120,
-      121,
-      122,
-      123,
-      124
+      125,
+      126,
+      127
     ],
-    "active_contributors": [
-      "KNIFE-01-C1 same GPT-04; branch and live board confirmed",
-      "INT-ART-05 existing native owner; branch confirmed"
-    ],
+    "open_native_pr": 128,
+    "active_contributors": [],
+    "worker_status_note": "All registered Codex artists idle/completed; live gameplay board says C1 frozen; native #128 handoff says stopped. Desktop activity cannot be re-observed because Mac locked; no new assignment delivered.",
     "reviewed_frozen": [
-      "INT-ART-03 #123/3e2ab48; first-person runtime reviewed, full feature held",
-      "ART-28 #124/61a8a78 source7b307cf; opposing stock/hand/motion/5m review accepted for bounded native pilot"
+      "#127/a96e188 CIgreen; cancellation assertion contradicts intended rule, C2 reserved",
+      "#128/5753bae candidate8c70673; actual runtime comparisons reviewed, partial acceptance held"
     ],
     "new_meshy_credits_this_cycle": 0,
-    "publication_authority": "ART-25 exact-payload direct approval remains cleared; no new publication hold observed."
+    "publication_authority": "Existing ART-25 approval unchanged; no new art publication hold."
+  },
+  "audio_acceptance": {
+    "state": "pending explicit user answer; no system change made",
+    "current_output": "External Headphones",
+    "proposed_temporary_output": "Mac mini Speakers",
+    "restore_output": "External Headphones",
+    "reason": "UE CoreAudio Error querying Sample Rate; app recorder 0 buffers; installed backend uses default output only",
+    "asked_at": "2026-11-04 Europe/Berlin cycle 20:14"
   }
 }
