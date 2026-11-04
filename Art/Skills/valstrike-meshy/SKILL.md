@@ -24,6 +24,22 @@ meshy balance --format json --no-update-check
 
 Reuse verified credentials. When account connection is needed, follow the official [device sign-in instructions](https://github.com/meshy-dev/meshy-3d-agent/blob/bcfc7e9c12663d600b2fcde2e6a89876ca96e4a2/INSTALL.md): `meshy auth login --device --format json --no-update-check`. Show the returned URL/code, leave browser approval to the user, and await that same command. Never request secrets in chat or store them in the repository. Use bounded tool waits so progress remains visible. Verify authentication afterwards; login alone does not complete an asset job.
 
+### First connection and a free agent check
+
+There is no project API key or checked-in authentication config. On each Mac, run:
+
+```sh
+npm exec --yes --package=meshy-cli@0.8.2 -- meshy auth login --device --format json --no-update-check
+npm exec --yes --package=meshy-cli@0.8.2 -- meshy auth status --format json --no-update-check
+npm exec --yes --package=meshy-cli@0.8.2 -- meshy balance --format json --no-update-check
+```
+
+Complete the browser approval before the two verification commands. The CLI manages credentials at `~/.config/meshy/credentials.v2.json`; do not read, copy or commit that file. Codex and Claude under the same OS user/configuration share the login across worktrees. Other Macs, containers and OS users sign in separately. `MESHY_CONFIG_DIR` or `MESHY_CREDENTIALS_PATH` overrides change that location; keep them consistent across sessions.
+
+For existing API-key setups, the CLI also reads `MESHY_API_KEY` from its process environment. It overrides the stored browser session. A project `.env` is **not automatically loaded**. Prefer browser login for this interactive workflow; do not ask users to paste keys into chat or add one to this skill.
+
+To test access without generating an asset, ask an agent: “Use valstrike-meshy. Verify authentication and available credits only; do not submit generation or animation tasks.” No asset assignment is needed for this read-only connection check. A paid asset pilot still needs the bounded assignment described above.
+
 ## Choose the shortest useful pipeline
 
 | Asset | Pipeline and artist responsibility |
