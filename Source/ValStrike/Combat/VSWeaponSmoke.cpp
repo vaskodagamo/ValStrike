@@ -343,7 +343,11 @@ private:
         }
         if (Role == TEXT("observer"))
         {
-            PC->SetControlRotation(ObserverView);
+            // From the knife segment on, watch the driver's upper body so remote
+            // knife cues are seen in the observer view; the firearm timeline keeps
+            // its fixed view.
+            PC->SetControlRotation(Time >= 13.0
+                ? (Driver->GetActorLocation() + FVector(0, 0, 40) - Target->GetPawnViewLocation()).Rotation() : ObserverView);
             ReleaseTaps(PC);
             if (Once(129, Time, 10.7)) { Tap(PC, EKeys::Two); }
             if (Once(110, Time, 10.6)) { Target->GetLoadoutComponent()->DevelopmentRequestEquip(PistolRequest); }
@@ -694,10 +698,11 @@ private:
             if (!bServer)
             {
                 // Native binding API: every cue reached this view, local only on the owner.
+                // Every live start counts (3 slashes, 5 stabs), including the first after spawn.
                 const auto Count = [this](EVSKnifeCue Cue) { return KnifeCueCounts[static_cast<int32>(Cue)]; };
                 const bool bOwner = Role == TEXT("driver");
                 Check(TEXT("knife_presentation_cues"), Count(EVSKnifeCue::Equip) >= 3 && Count(EVSKnifeCue::Holster) >= 2
-                    && Count(EVSKnifeCue::Slash) >= 1 && Count(EVSKnifeCue::Stab) >= 1 && Count(EVSKnifeCue::Impact) >= 4
+                    && Count(EVSKnifeCue::Slash) >= 3 && Count(EVSKnifeCue::Stab) >= 5 && Count(EVSKnifeCue::Impact) >= 4
                     && Count(EVSKnifeCue::Cancel) >= 4 && (bOwner ? LocalKnifeCues >= 8 : LocalKnifeCues == 0),
                     FString::Printf(TEXT("equip=%d holster=%d slash=%d stab=%d impact=%d cancel=%d local=%d"), Count(EVSKnifeCue::Equip),
                         Count(EVSKnifeCue::Holster), Count(EVSKnifeCue::Slash), Count(EVSKnifeCue::Stab), Count(EVSKnifeCue::Impact),

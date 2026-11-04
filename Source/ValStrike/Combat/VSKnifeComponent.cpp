@@ -53,6 +53,11 @@ void UVSKnifeComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 void UVSKnifeComponent::BeginPlay()
 {
     Super::BeginPlay();
+    // Baseline at spawn, not at the first notification: a fresh pawn's state is
+    // all defaults, so the initial bunch fires no OnRep_State and the first one
+    // is already a live attack. A late joiner's historical state was adopted by
+    // OnRep_State before BeginPlay; adopting the same values again is harmless.
+    if (!GetOwner()->HasAuthority()) { CueWatch.Adopt(CueCounters()); }
     if (GetOwner()->HasAuthority())
     {
         if (UVSHealthComponent* Health = GetOwner()->FindComponentByClass<UVSHealthComponent>())
@@ -160,6 +165,7 @@ void UVSKnifeComponent::ServerRequestKnifeAttack_Implementation(uint8 Kind, uint
         static_cast<float>(Rules::TuningFor(Attack).impactTime), false);
     ++State.AttackCount;
     State.LastAttack = VSKnifeDetail::ToAttack(Attack);
+    SlotAttackIndex[Slot] = State.AttackCount;
     GetOwner()->ForceNetUpdate();
 }
 
@@ -247,6 +253,7 @@ void UVSKnifeComponent::ResolveImpact(int32 Slot)
     ++State.ImpactCount;
     State.LastImpact = VSKnifeDetail::ToImpact(Picked.result);
     State.LastImpactAttack = VSKnifeDetail::ToAttack(Action.kind);
+    State.ImpactAttackIndex = SlotAttackIndex[Slot];
     GetOwner()->ForceNetUpdate();
     KnifeEvent.Broadcast(EVSKnifeEvent::Impact, VSKnifeDetail::ToAttack(Action.kind), State.LastImpact);
 }
@@ -258,6 +265,7 @@ void UVSKnifeComponent::CancelActions()
     ClearImpactTimers();
     if (Cancelled == 0) { return; }
     ++State.CancelCount;
+    State.CancelAttackIndex = State.AttackCount;
     GetOwner()->ForceNetUpdate();
     KnifeEvent.Broadcast(EVSKnifeEvent::Cancel, State.LastAttack, EVSKnifeImpact::None);
 }
@@ -268,31 +276,45 @@ void UVSKnifeComponent::HandleLifeStateChanged()
     if (Pawn && !Pawn->GetHealthComponent()->IsAlive()) { CancelActions(); }
 }
 
+VSKnifeCueRules::Counters UVSKnifeComponent::CueCounters() const
+{
+    VSKnifeCueRules::Counters Value;
+    Value.attacks = State.AttackCount;
+    Value.impacts = State.ImpactCount;
+    Value.cancels = State.CancelCount;
+    Value.impactAttack = State.ImpactAttackIndex;
+    Value.cancelAttack = State.CancelAttackIndex;
+    return Value;
+}
+
 void UVSKnifeComponent::OnRep_State()
 {
-    // First sight (join, respawn, relevancy return) adopts the counters so old
-    // attacks are never replayed.
-    if (!bSeenState)
+    // Before BeginPlay this is the initial replication of a pawn that arrives
+    // with history (late join, relevancy return): adopt it, never replay it.
+    const AActor* OwnerActor = GetOwner();
+    if (!OwnerActor || !OwnerActor->HasActorBegunPlay())
     {
-        bSeenState = true;
-        SeenState = State;
+        CueWatch.Adopt(CueCounters());
         return;
     }
     const AVSCharacter* Pawn = Character();
-    // The owner already started its swing locally (LocalStart).
-    if (State.AttackCount != SeenState.AttackCount && !(Pawn && Pawn->IsLocallyControlled()))
+    const VSKnifeCueRules::Steps Cues = CueWatch.Observe(CueCounters());
+    for (int32 Index = 0; Index < Cues.count; ++Index)
     {
-        KnifeEvent.Broadcast(EVSKnifeEvent::Start, State.LastAttack, EVSKnifeImpact::None);
+        switch (Cues.items[static_cast<std::size_t>(Index)].cue)
+        {
+        case VSKnifeCueRules::Cue::Start:
+            // The owner already started its swing locally (LocalStart).
+            if (!(Pawn && Pawn->IsLocallyControlled())) { KnifeEvent.Broadcast(EVSKnifeEvent::Start, State.LastAttack, EVSKnifeImpact::None); }
+            break;
+        case VSKnifeCueRules::Cue::Impact:
+            KnifeEvent.Broadcast(EVSKnifeEvent::Impact, State.LastImpactAttack, State.LastImpact);
+            break;
+        case VSKnifeCueRules::Cue::Cancel:
+            KnifeEvent.Broadcast(EVSKnifeEvent::Cancel, State.LastAttack, EVSKnifeImpact::None);
+            break;
+        }
     }
-    if (State.ImpactCount != SeenState.ImpactCount)
-    {
-        KnifeEvent.Broadcast(EVSKnifeEvent::Impact, State.LastImpactAttack, State.LastImpact);
-    }
-    if (State.CancelCount != SeenState.CancelCount)
-    {
-        KnifeEvent.Broadcast(EVSKnifeEvent::Cancel, State.LastAttack, EVSKnifeImpact::None);
-    }
-    SeenState = State;
 }
 
 #if !UE_BUILD_SHIPPING && !UE_BUILD_TEST
