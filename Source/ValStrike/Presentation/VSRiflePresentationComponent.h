@@ -4,7 +4,7 @@
 #include "VSWeaponPresentationComponent.h"
 #include "VSRiflePresentationComponent.generated.h"
 
-/** R01 rifle views: accepted body/magazine art, unchanged materials and sockets. */
+/** R02 rifle views (INT-ART-04): native ART-17 body/magazine, recipe sockets; R01 assets stay for comparison. */
 UCLASS(ClassGroup = (Presentation), meta = (BlueprintSpawnableComponent))
 class VALSTRIKE_API UVSRiflePresentationComponent : public UVSWeaponPresentationComponent
 {

@@ -9,13 +9,16 @@
 #include "Engine/SkeletalMesh.h"
 
 const FName UVSCharacterPresentationComponent::RifleGripBone(TEXT("hand_r"));
-// grip_derivation in docs/assets/meshy-pilot-integration/character-import-report.json.
+// R02 on the ART-15 rifle hold: grips.R02_on_rifle_hold in
+// docs/assets/weapon-replacement02/weapons-import-report.json (ART-17 hand-relative fit;
+// R01's former offset was (4.1008,-13.5549,-6.1893), quat (-0.814922,0.579475,0.00887,0.00564)).
 const FTransform UVSCharacterPresentationComponent::RifleGripOffset(
-    FQuat(-0.814922, 0.579475, 0.00887, 0.00564).GetNormalized(), FVector(4.1008, -13.5549, -6.1893));
+    FQuat(-0.772515, 0.63491, 0.009241, 0.005007).GetNormalized(), FVector(2.3021, -15.0518, -5.7134));
 
-// p01_grip_derivation in docs/assets/meshy-site01-followups/pistol-import-report.json.
+// P02 on ART-23's pistol hold: grips.P02_on_pistol_hold in the same report (P02 at
+// (38,3,134); P01's former offset was (4.2582,-12.9002,-5.2861), same rotation).
 const FTransform UVSCharacterPresentationComponent::PistolGripOffset(
-    FQuat(-0.70704, 0.707095, 0.009685, 0.004084).GetNormalized(), FVector(4.2582, -12.9002, -5.2861));
+    FQuat(-0.70704, 0.707095, 0.009685, 0.004084).GetNormalized(), FVector(4.2820, -12.9586, -2.2868));
 
 namespace
 {

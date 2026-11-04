@@ -35,13 +35,13 @@ public:
     bool Initialize(USkeletalMeshComponent* Body, TArrayView<UPrimitiveComponent* const> PrototypeVisuals);
     bool IsNativeCharacterActive() const { return bActive; }
 
-    // R01 world model on hand_r. The offset is ART-15's hold reference converted
-    // to the native skeleton (measured: FBX import negates Y). UE 5.8 Python cannot
-    // author a named socket, so it lives here; see character-import-report.json.
+    // R02 world model on hand_r in ART-15's rifle hold, converted to the native
+    // skeleton (measured: FBX import negates Y). UE 5.8 Python cannot author a named
+    // skeletal socket, so it lives here; see weapon-replacement02/weapons-import-report.json.
     static const FName RifleGripBone;
     static const FTransform RifleGripOffset;
-    // P01 world model on hand_r in ART-23's pistol hold (measured, INT-ART-02
-    // pistol-import-report.json). Use only when HasPistolPose().
+    // P02 world model on hand_r in ART-23's pistol hold (measured, INT-ART-04
+    // weapons-import-report.json). Use only when HasPistolPose().
     static const FTransform PistolGripOffset;
     bool HasPistolPose() const { return bActive && PistolHold != nullptr; }
 
