@@ -540,6 +540,12 @@ Real remote images also confirm R02 stock at cheek/no shoulder seat. ART-28 disp
 
 Producer verified the existing native owner's clean candidate `1b572d0`: successful Editor build, practice 39/37/37 and rendered rifle presentation 39/39, including exact #121. Full knife captures are still being completed after a startup window-ID capture failure; no visual/audio/full-feature completion claim. ART-28 continues contact refinement. No new worker, producer test/build or paid job. Record the exit-75 self-retry as a process follow-up for after rendered acceptance stops; avoid input during captures. [Evidence paths and next trigger](producer/STATUS.md).
 
+## 2026-11-04 — Reviewed knife runtime and R02 source; assigned acceptance corrections
+
+User merged #120–124. Producer reviewed INT-ART-03's actual first-person lifecycle and third-person editor images: first-person functionality demonstrated, while observer framing and a repeatedly missing first remote Slash Start hold full acceptance. Existing lead received KNIFE-01-C1 for the same GPT-04, exact component/smoke paths and focused regression allowance, no contributor build.
+
+ART-28 source `7b307cf`/handoff `61a8a78` passed producer review of actual exported stock/face/hand, motion and 5 m views for the bounded pilot. Same sole native owner received INT-ART-05: apply all three poses plus measured socket, improve native knife framing, combine C1, then one affected build/runtime batch with remote/moving actions and audible cues. Exit-75 queue correction delivered before work. All art owners idle; two admitted contributors, zero new spend/producer tests/Unreal work. [Evidence and next trigger](producer/STATUS.md).
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.

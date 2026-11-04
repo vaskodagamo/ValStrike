@@ -1,5 +1,11 @@
 # Team board
 
+## Current admission — 2026-11-04, 19:50 Europe/Berlin
+
+**KNIFE-01-C1 dispatched:** same GPT-04 via the existing Claude lead, [exact cosmetic cue/observer-camera brief](tasks/gameplay/KNIFE-01-C1-remote-cues.md). Native #123 is merged, but missing first remote Start and missing observer view block full knife acceptance.
+
+**INT-ART-05 dispatched:** same sole native owner, [bounded acceptance and rifle-fit batch](tasks/integration/INT-ART-05-knife-acceptance-rifle-fit.md). Prepare disjoint ART-28 import/framing work; combine frozen C1 before one build/affected checks. ART-28 #124 is frozen and source-reviewed, all artists idle. Two contributors; no new paid jobs. Actual source/native review and remaining gates: [checkpoint](producer/STATUS.md). User merges.
+
 ## Current admission — 2026-11-04, 18:54 Europe/Berlin
 
 **INT-ART-03 active:** existing native owner/new `claude/int-art-03-knife` from `4997215`, full gloved first-person and remote knife presentation/acceptance. Combine frozen #121/`22b71bf` asset-name correction before one build. Existing GPT-04 finished that constant/list-only task; no contributor tests/build.

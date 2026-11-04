@@ -21,6 +21,8 @@ Audit firearm-only loops and null/fallback assumptions across loadout, movement,
 
 ## Owners and admission order
 
+**Current acceptance update, 2026-11-04:** INT-ART-03 #123 is merged. Actual first-person lifecycle is demonstrated on `1b572d0`, but the observer view and first remote Slash Start are defective; moving remote attacks and audible cues remain unverified. [KNIFE-01-C1](gameplay/KNIFE-01-C1-remote-cues.md) is assigned to the existing gameplay owner and [INT-ART-05](integration/INT-ART-05-knife-acceptance-rifle-fit.md) to the same native owner. This supersedes the older admission rows below, not the full-feature completion gates.
+
 | Task | Existing owner / scope | Admission and stopping condition |
 | --- | --- | --- |
 | KNIFE-01 gameplay | Existing GPT-04 (loadout/prediction owner), via Claude gameplay lead; same `gpt-04-switch-prediction` worktree. | Phase A/B and exact M1 repair #114/`adb7374` are merged. INT-ART-04 candidate `c2ba852` compiled the repaired gameplay and passed all 39 knife-specific runtime checks. Frozen cue API goes to native; full knife presentation remains pending. |
