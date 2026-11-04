@@ -1,0 +1,27 @@
+# Task GPT-10: crosshair gap follows the current spread
+
+- Status: In progress
+- Backlog ID: GUN-03 ("Recoil, crosshair, firing audio/effects, confirmed hits and death feedback work without duplicate effects")
+- Owner/session and provider: Claude session "GPT-10 spread crosshair"
+- Lead: Claude gameplay lead (`team-gameplay`)
+- Branch and exact base SHA: `claude/gpt-10-spread-crosshair` from `origin/main` `82d7a4c`
+- Absolute worktree path: `/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/gpt-10-spread-crosshair`
+- Owns:
+  - the reticle block of `Source/ValStrike/VSHUD.cpp` (the four `ReticleLine` calls in `DrawHUD`), plus any new private helper declarations in `VSHUD.h`
+  - a new pure header `Source/ValStrike/Feedback/VSCrosshairRules.h`
+  - a new `Tests/Feedback/crosshair_rules_test.cpp`
+  - a new `docs/workstreams/spread-crosshair.md`
+- Read-only: `Combat/**` (use the existing `UVSWeaponComponent::GetCurrentSpreadDegrees()` and `GetLoadoutComponent()`/equipped weapon), the other `Feedback/**` files, hit-marker and damage-indicator drawing, `VSCharacter.*`, `VSPlayerController.*`, all Content, art and maps.
+- Result:
+  - The reticle's inner gap shows the equipped weapon's current spread cone on this machine. That cone is the same prediction the client fires with. Project it with the camera FOV: `gapPx = tan(spread) / tan(hfov/2) * (canvasWidth/2)`, clamped between today's 4 px × scale minimum and a sane maximum. The arm length stays fixed.
+  - A short visual-only smoothing toward the target, frame-rate independent, so that it opens on firing and moving and closes on recovery. No randomness.
+  - With no weapon, a holstered weapon, NaN or 0 spread: today's static reticle, exactly.
+  - Draw only: no gameplay, no replication, no server change.
+  - A pure reducer (projection, clamp, smoothing step) covered by one engine-free test.
+  - Stop when committed, the PR is open and the handoff is written.
+- Out of scope: crosshair settings or colors, hit markers, scope or ADS, new art.
+- Validation tier: V1 (client presentation)
+- Contributor checks: the engine-free test (clang `-Wall -Wextra -Werror -pedantic`, the same way the other `Tests/Feedback` test is built); `git diff --check`. No Unreal build or runtime.
+- Integration-owned checks: Editor build, `Tests/UI/test_session.py --rendered` (HUD screenshots), `Scripts/test_weapons.py --scenario practice`, plus a visual check that the gap opens while firing or moving.
+- Engine slot: none.
+- Publication: owner pushes the branch and opens a PR; the user merges.
