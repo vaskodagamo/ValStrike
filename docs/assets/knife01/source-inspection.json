@@ -1,0 +1,157 @@
+{
+  "blender": "5.2.2 LTS",
+  "raw": {
+    "vertices": 39556,
+    "triangles": 70640,
+    "uv_sha256": "2eb61205057e3ac35cd1c538326e182facb341d32049b785a6a65950765ea4f2",
+    "has_custom_normals": true
+  },
+  "source_vertices": 39556,
+  "source_triangles": 70640,
+  "material_slots": 1,
+  "material_names": [
+    "Material_0"
+  ],
+  "uv_layers": [
+    "UVMap"
+  ],
+  "bounds_cm": [
+    [
+      -6.282800197601318,
+      -1.2049120664596558,
+      -2.119410276412964
+    ],
+    [
+      21.517200469970703,
+      1.1942907571792603,
+      2.531893730163574
+    ]
+  ],
+  "dimensions_cm": [
+    27.80000114440918,
+    2.399202823638916,
+    4.651304244995117
+  ],
+  "object_location": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "object_rotation": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "object_scale": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "Grip": {
+    "location_cm": [
+      0,
+      0,
+      0
+    ],
+    "rotation_degrees": [
+      0,
+      0,
+      0
+    ],
+    "scale": [
+      1,
+      1,
+      1
+    ]
+  },
+  "Tip": {
+    "location_cm": [
+      21.517200469970703,
+      0.010738800279796124,
+      1.3176288604736328
+    ],
+    "rotation_degrees": [
+      0,
+      0,
+      0
+    ],
+    "scale": [
+      1,
+      1,
+      1
+    ]
+  },
+  "topology": {
+    "boundary_edges": 7980,
+    "nonmanifold_edges": 7980,
+    "loose_vertices": 0,
+    "degenerate_faces": 0
+  },
+  "geometric_topology_on_diagnostic_welded_copy_only": {
+    "boundary_edges": 0,
+    "nonmanifold_edges": 0,
+    "loose_vertices": 0,
+    "degenerate_faces": 0
+  },
+  "preservation": {
+    "normalized_vertex_max_error_cm": 9.5367431640625e-07,
+    "custom_corner_normals_min_dot": 0.9999997951090336,
+    "uv_hash_unchanged": true,
+    "material_graph_unchanged": true,
+    "mesh_reduction": false,
+    "smoothing": false,
+    "retopology": false,
+    "material_darkening": false
+  },
+  "textures": [
+    {
+      "image": "Image_0",
+      "path": "Art/Source/Weapons/Knife01/Textures/Embedded/Image_0.jpg",
+      "bytes": 10578789,
+      "sha256": "9fe04e0da58cf294b9bfb9c72e8c9e0ca1a01d612648b6049d3f6cb5355974fd",
+      "size": [
+        4096,
+        4096
+      ],
+      "space": "sRGB",
+      "byte_identical_to_glb_packed_map": true
+    },
+    {
+      "image": "Image_1",
+      "path": "Art/Source/Weapons/Knife01/Textures/Embedded/Image_1.jpg",
+      "bytes": 1070127,
+      "sha256": "05b8d8c260a57b4292bc16b464ff4f86819eb42b26be7290a4490965ef5920c1",
+      "size": [
+        2048,
+        2048
+      ],
+      "space": "Non-Color",
+      "byte_identical_to_glb_packed_map": true
+    },
+    {
+      "image": "Image_2",
+      "path": "Art/Source/Weapons/Knife01/Textures/Embedded/Image_2.jpg",
+      "bytes": 7946049,
+      "sha256": "71c3b5e4bf0e7a674129b78e43f05bea4b879a21092d74b05e354b59f920436e",
+      "size": [
+        4096,
+        4096
+      ],
+      "space": "Non-Color",
+      "byte_identical_to_glb_packed_map": true
+    }
+  ],
+  "cleanup": [
+    "Preserve original Meshy geometry, UVs, custom normals and PBR material graph",
+    "Normalize cm/+X, grip-local origin; apply transform with measured position/normal preservation",
+    "Add Grip/Tip visual frames and export FBX",
+    "Extract packed GLB map bytes without re-encoding",
+    "Hold rejected reconstruction under Candidates/Rejected_Retopology; not the final asset"
+  ],
+  "fbx": {
+    "axis_forward": "-Y",
+    "axis_up": "Z",
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "bake_space_transform": false
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "original": {
+    "vertices": 209330,
+    "polygons": 390478,
+    "loop_vertex_sha256": "2fdded45018b02fd35031de7498675cb3aca47b4c5e75565f06305ad0720bce3",
+    "uv_sha256": "e047f91f2fa92f8340199286ddb3699a6b48a933ad90ff58a7bf8340c870fd2a",
+    "custom_normals": true
+  },
+  "preserved_source": {
+    "vertices": 209330,
+    "polygons": 390478,
+    "loop_vertex_sha256": "2fdded45018b02fd35031de7498675cb3aca47b4c5e75565f06305ad0720bce3",
+    "uv_sha256": "e047f91f2fa92f8340199286ddb3699a6b48a933ad90ff58a7bf8340c870fd2a",
+    "custom_normals": true
+  },
+  "max_position_error_cm": 0.0,
+  "max_transformed_custom_normal_error": 0.0006814718631201124,
+  "max_normal_storage_vs_theoretical_error": 0.0016291595287990686,
+  "transform": "Uniform scale and basis change only; no reshaping, reduction or smoothing.",
+  "comparison_material": "Same original imported Meshy PBR node graph rebound on all three; native FBX material recreation remains pending.",
+  "final_export_vertices": 209330,
+  "final_export_triangles": 390478
+}

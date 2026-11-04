@@ -1,0 +1,22 @@
+{
+  "P02": {
+    "commit": "ccb08f06e22d23573697a1494a34436f901fa006",
+    "path": "Art/Source/Weapons/Pistol02/Models/P02_Kestrel.blend",
+    "sha256": "cc8736614bcf3ae29cd661413adc3179d142db470e687c68f6fc6eef8f728ed4",
+    "bytes": 41032959
+  },
+  "K01": {
+    "commit": "d774eafb710af68bf5fa23666e5d0ddacb651d3e",
+    "path": "Art/Source/Weapons/Knife01/Knife01.blend",
+    "sha256": "87f851319fb0223ac7b938b15b7c88ca4da436d2bcade263bef97366d20e0be6",
+    "bytes": 22705219
+  },
+  "R02": {
+    "commit": "67f985be0099ac870ed2b0c6ed87443a07380406",
+    "path": "Art/Source/Weapons/Rifle02/R02_Compact.blend",
+    "sha256": "fb282abdc17285f50e8a30efdced65a5a5c62f1896c6ec3f19c7336f0830afa2",
+    "bytes": 62113213,
+    "handoff_commit": "f209b66",
+    "pr": 89
+  }
+}

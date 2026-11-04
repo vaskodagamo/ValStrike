@@ -31,6 +31,10 @@ public:
     // Both anchors must belong to this component's owning character. Units: cm.
     bool Initialize(AVSCharacter* Character, USceneComponent* FirstPersonAnchor, USceneComponent* WorldAnchor);
     void Uninitialize();
+    // Optional, before Initialize: attach the world model to this socket or bone of
+    // the world anchor (e.g. a fitted hand) at Offset instead of WorldGrip. If the
+    // anchor lacks it, the configured WorldGrip is used. First person is unaffected.
+    void SetWorldAttachment(FName SocketOrBone, const FTransform& Offset) { WorldSocket = SocketOrBone; WorldSocketOffset = Offset; }
     bool IsInitialized() const { return Character.IsValid(); }
     EVSWeaponSlot GetSlot() const { return Slot; }
     // Equipped, available and alive; the matching first-person/world view renders.
@@ -114,6 +118,10 @@ private:
     UPROPERTY(Transient) TObjectPtr<UStaticMeshComponent> WorldSlide;
     UPROPERTY(Transient) TObjectPtr<UStaticMeshComponent> WorldFlash;
     TWeakObjectPtr<AVSCharacter> Character;
+    FName WorldSocket;
+    FTransform WorldSocketOffset;
+    // WorldGrip, or WorldSocketOffset when attached to WorldSocket.
+    FTransform ActiveWorldGrip;
     VSRiflePresentation::State State;
     VSMuzzleFlash::State MuzzleFlash;
     float KickRemaining = 0;

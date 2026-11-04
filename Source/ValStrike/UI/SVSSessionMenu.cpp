@@ -7,6 +7,7 @@
 #include "VSSessionState.h"
 #include "VSUserSettings.h"
 #include "../VSPlayerController.h"
+#include "../ValStrike.h"
 #include "Widgets/Input/SButton.h"
 #include "Widgets/Input/SEditableTextBox.h"
 #include "Widgets/Input/SSlider.h"
@@ -185,7 +186,7 @@ TSharedRef<SWidget> SVSSessionMenu::MakeSessionPage()
             [
                 SAssignNew(CancelButton, SButton).HAlign(HAlign_Center).ContentPadding(FMargin(12, 9))
                 .IsEnabled_Lambda([this]() { return IsConnecting(); })
-                .OnClicked_Lambda([this]() { if (Controller.IsValid()) Controller->CancelConnection(); return FReply::Handled(); })
+                .OnClicked_Lambda([this]() { CancelConnection(TEXT("Cancel button")); return FReply::Handled(); })
                 [ Label(NSLOCTEXT("ValStrike", "Cancel", "Cancel connection"), 15) ]
             ]
         ]
@@ -432,6 +433,17 @@ TSharedRef<SWidget> SVSSessionMenu::MakeSelector(FName Tag, TSharedPtr<SButton>&
             ]
         ]
         + SHorizontalBox::Slot().AutoWidth() [ Arrow(1, TEXT("›")) ];
+}
+
+void SVSSessionMenu::CancelConnection(const TCHAR* Source)
+{
+    if (Controller.IsValid() && IsConnecting())
+    {
+        // A player cancel is deliberate and is not an error; log its source so a
+        // stray key or click is distinguishable from an engine-side failure.
+        UE_LOG(LogValStrike, Display, TEXT("Session menu: connection cancelled by %s."), Source);
+        Controller->CancelConnection();
+    }
 }
 
 bool SVSSessionMenu::IsConnecting() const
@@ -701,7 +713,7 @@ FReply SVSSessionMenu::OnPreviewKeyDown(const FGeometry& Geometry, const FKeyEve
         if (!Event.IsRepeat() && Controller.IsValid())
         {
             if (bSettingsOpen) CloseSettings(true);
-            else if (IsConnecting()) Controller->CancelConnection();
+            else if (IsConnecting()) CancelConnection(TEXT("Escape key"));
             else Controller->SetSessionMenuOpen(false);
         }
         return FReply::Handled();

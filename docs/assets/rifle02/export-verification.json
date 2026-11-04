@@ -8,8 +8,14 @@
         "nonmanifold_edges": 0,
         "boundary_details": []
       },
+      "source_custom_normals": true,
+      "custom_normal_roundtrip": {
+        "samples": 4103,
+        "max_angle_error_degrees": 0.027976454840372228,
+        "import_has_custom_normals": true
+      },
       "roundtrip": {
-        "triangles": 39614,
+        "triangles": 448486,
         "max_bounds_error_cm": 1.6689300537109375e-06,
         "uv_layers": [
           "UVMap"
@@ -38,9 +44,15 @@
         "nonmanifold_edges": 0,
         "boundary_details": []
       },
+      "source_custom_normals": true,
+      "custom_normal_roundtrip": {
+        "samples": 4448,
+        "max_angle_error_degrees": 0.01978234059262607,
+        "import_has_custom_normals": true
+      },
       "roundtrip": {
-        "triangles": 1844,
-        "max_bounds_error_cm": 4.76837158203125e-07,
+        "triangles": 11860,
+        "max_bounds_error_cm": 3.5762786865234375e-07,
         "uv_layers": [
           "UVMap"
         ],
@@ -65,7 +77,7 @@
   },
   "packed_images": [
     {
-      "name": "texture_0_base_color.png",
+      "name": "T_R02_base_color",
       "size": [
         4096,
         4096
@@ -74,16 +86,7 @@
       "colorspace": "sRGB"
     },
     {
-      "name": "texture_0_metallic.png",
-      "size": [
-        2048,
-        2048
-      ],
-      "packed": true,
-      "colorspace": "Non-Color"
-    },
-    {
-      "name": "texture_0_normal.png",
+      "name": "T_R02_normal",
       "size": [
         4096,
         4096
@@ -92,7 +95,7 @@
       "colorspace": "Non-Color"
     },
     {
-      "name": "texture_0_roughness.png",
+      "name": "T_R02_orm",
       "size": [
         2048,
         2048
@@ -104,16 +107,16 @@
   "anchors_match_manifest": true,
   "files": {
     "R02_Compact.blend": {
-      "bytes": 87950755,
-      "sha256": "822118770d33ac2ad9e12c0dc74fc39c48b7ba63f12f1687a3061fe80ee9f517"
+      "bytes": 62113213,
+      "sha256": "fb282abdc17285f50e8a30efdced65a5a5c62f1896c6ec3f19c7336f0830afa2"
     },
     "Exports/SM_VS_Rifle02_Body.fbx": {
-      "bytes": 1470316,
-      "sha256": "9550dc3b7ee64c953c0ae09048535eb2495b81bbc935f23ac59361a3d99d8b1a"
+      "bytes": 15681180,
+      "sha256": "47578175da9d3f91d005783d6af421ce1fb1004e1a64fae3e583096a6957f644"
     },
     "Exports/SM_VS_Rifle02_Magazine.fbx": {
-      "bytes": 83788,
-      "sha256": "d9bf951970a0cb571de3449dcef06394b9969625d370a38e255cc0e24e4b888c"
+      "bytes": 408668,
+      "sha256": "37dbfc4408174a29f6e2d7f7a9443efae8afccab8be115bab18bf76690d25b15"
     },
     "Textures/texture_0_base_color.png": {
       "bytes": 22267436,
@@ -130,6 +133,18 @@
     "Textures/texture_0_roughness.png": {
       "bytes": 1425845,
       "sha256": "07ba8c338948afdfeb1390a1bc0a600a522408c762e4191ee0dee3f8a40e10f9"
+    },
+    "Textures/GLB/T_R02_base_color.jpg": {
+      "bytes": 11025439,
+      "sha256": "fa03f448c2fb9bcfdb51d46b10e022634232fbfe3303fea8f5e2c338cc22a27c"
+    },
+    "Textures/GLB/T_R02_normal.jpg": {
+      "bytes": 8266245,
+      "sha256": "788a68c5ebc5f0d538e04bd65213950e88aae093973d605d92c367ed4d56b3aa"
+    },
+    "Textures/GLB/T_R02_orm.jpg": {
+      "bytes": 2286601,
+      "sha256": "e835e5fc65fc41e3b380c5064dc71237456d4cdbd0d34d8feff832fd5e2c2633"
     }
   }
 }

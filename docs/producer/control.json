@@ -1,0 +1,152 @@
+{
+  "schema_version": 1,
+  "producer_thread_id": "01a1a67c-4861-7e62-a15e-505444092624",
+  "producer_title": "Direktor (2)",
+  "producer_checkout": "/Users/webproduktion3/.codex/worktrees/10a1/ValStrike",
+  "source_checkout": "/Users/webproduktion3/Documents/ValStrike",
+  "milestone": "Site01 art-integrated playtest: reviewed character and props, movement/shooting/round smoke, real server/two-client evidence, screenshots and other-Mac instructions.",
+  "timezone": "Europe/Berlin",
+  "cadence_minutes": 30,
+  "days": "every day while the local Mac and app are available",
+  "max_active_contributors": 3,
+  "grandfather_current_assignments": true,
+  "user_merges": true,
+  "meshy_new_credits_per_day": 300,
+  "meshy_ledger": "Artifacts/Producer/meshy-ledger.json",
+  "former_producer": {
+    "thread_id": "01a1a1a4-e12c-7781-bdb6-d8dce64f88f3",
+    "title": "Direktor",
+    "checkpoint": "35e7abb",
+    "pr": 72,
+    "state": "handoff complete; no independent dispatch or central writes",
+    "last_scoped_task": {
+      "task": "ART-21",
+      "worktree": ".parallel-worktrees/art21-meshy-preservation",
+      "branch": "codex/art21-meshy-preservation",
+      "owned_paths": [
+        "Art/Skills/valstrike-meshy/SKILL.md",
+        "Art/Skills/valstrike-meshy/references/source-preservation.md",
+        "docs/tasks/art/ART-21-meshy-source-preservation.md"
+      ],
+      "head": "fbec58880c502fcf9f73c92cfd8832d27e019af5",
+      "pr": 80,
+      "state": "complete; merged; skill reviewed and installed for Codex and Claude"
+    }
+  },
+  "art_threads": [
+    {
+      "task": "ART-17",
+      "title": "Art \u2014 Meshy R02 rifle",
+      "thread_id": "01a1a6c3-9f0b-76b3-aabd-ccfed653040f",
+      "worktree": ".parallel-worktrees/art17-rifle02",
+      "handoff": "docs/workstreams/art17-rifle02.md",
+      "prior_credit_cap": 30,
+      "state": "idle; producer surface-preservation review passed, fit/native pending",
+      "frozen_head": "f209b66472c11ffc53a8ab8c1113693c8c2de25f",
+      "pr": 89
+    },
+    {
+      "task": "ART-18",
+      "title": "Art \u2014 Meshy P02 pistol",
+      "thread_id": "01a1a6c3-ae6d-7bc3-b164-ee3e417314ec",
+      "worktree": ".parallel-worktrees/art18-pistol02",
+      "handoff": "docs/workstreams/art18-pistol02.md",
+      "prior_credit_cap": 30
+    },
+    {
+      "task": "ART-22",
+      "title": "Art \u2014 Meshy first-person hands",
+      "thread_id": "01a1a6cf-0f10-73d0-8c33-29cb863d7b33",
+      "worktree": ".parallel-worktrees/art22-fparms03",
+      "handoff": "docs/workstreams/art22-fparms03.md",
+      "prior_credit_cap": 0,
+      "branch": "codex/art22-fparms03",
+      "brief": "docs/tasks/art/ART-22-fparms03-universal.md",
+      "prepared_head": "f3e55da",
+      "state": "active; generation complete, local rig/contact work",
+      "reservation": "ART-22-FPArms03-draft-1",
+      "credit_cap": 30,
+      "previous_assignments": [
+        {
+          "task": "ART-19",
+          "title": "Art \u2014 Meshy first-person hands",
+          "thread_id": "01a1a6cf-0f10-73d0-8c33-29cb863d7b33",
+          "worktree": ".parallel-worktrees/art19-fparms02",
+          "handoff": "docs/workstreams/art19-fparms02.md",
+          "prior_credit_cap": 30,
+          "state": "frozen; stopped",
+          "source_commit": "afa582abb823897248b666c10fef77464d167fdc",
+          "handoff_commit": "45cf24daa411d94bf07dcfd44f4da879c8240a9e",
+          "pr": 90
+        }
+      ],
+      "meshy_task_id": "01a1a702-abc1-76dc-97f3-b5ad96d100e1",
+      "actual_credits": 30
+    },
+    {
+      "task": "ART-20",
+      "title": "Art \u2014 Meshy K01 knife",
+      "thread_id": "01a1a6cf-270a-7e70-a435-a966fd3a5822",
+      "worktree": ".parallel-worktrees/art20-knife01",
+      "handoff": "docs/workstreams/art20-knife01.md",
+      "prior_credit_cap": 30
+    },
+    {
+      "task": "ART-23",
+      "title": "Art \u2014 Character playtest prep",
+      "thread_id": "01a1a6b0-8aa8-7373-b8bb-bc5506f451d4",
+      "worktree": ".parallel-worktrees/art23-character-pistol",
+      "handoff": "docs/workstreams/art23-character-pistol.md",
+      "prior_credit_cap": 0,
+      "branch": "codex/art23-character-pistol",
+      "brief": "docs/tasks/art/ART-23-character-pistol-pose.md",
+      "state": "dispatched at High; source-only pistol hold, zero credits",
+      "credit_cap": 0,
+      "previous_assignments": [
+        {
+          "task": "ART-15",
+          "title": "Art \u2014 Character playtest prep",
+          "thread_id": "01a1a6b0-8aa8-7373-b8bb-bc5506f451d4",
+          "worktree": ".parallel-worktrees/art15-character-pilot",
+          "handoff": "docs/workstreams/art15-character-pilot.md",
+          "prior_credit_cap": 0,
+          "state": "frozen; stopped",
+          "head": "02f6bf221bcb9b24415c11b7b554faadfacd2ca8",
+          "pr": 65
+        }
+      ],
+      "prepared_head": "fd7621c"
+    },
+    {
+      "task": "ART-16",
+      "title": "Art \u2014 Site01 props playtest prep",
+      "thread_id": "01a1a6b0-98fd-7f41-851e-1fd1c5fc2452",
+      "worktree": ".parallel-worktrees/art16-props-pilot",
+      "handoff": "docs/workstreams/art16-props-pilot.md",
+      "prior_credit_cap": 0
+    }
+  ],
+  "claude": {
+    "verified_binary_version": "2.1.317",
+    "engineering_worktree": ".parallel-worktrees/team-gameplay",
+    "engineering_board": "docs/teams/GAMEPLAY_BOARD.md",
+    "integration_worktree": ".parallel-worktrees/int-art-01-meshy-playtest",
+    "integration_handoff": "docs/workstreams/int-art-01-meshy-playtest.md",
+    "existing_sessions": "User-authorized coordination via Claude desktop UI; no CLI takeover of existing worktrees",
+    "new_assignments": "producer may launch a fresh bounded Claude CLI task in an exclusively assigned worktree after checking active ownership and capacity",
+    "auth_probe": "subscription login verified; tools-disabled CLAUDE_RUNNER_OK, exit 0, is_error false",
+    "desktop_chats": [
+      {
+        "title": "Team gameplay worktree",
+        "ui_session": "local_072937e2-e469-41df-b51c-87a3039cbf6b",
+        "purpose": "engineering lead; finish current batch and queue subsequent tasks through producer"
+      },
+      {
+        "title": "INT-ART-01 Meshy playtest integration",
+        "ui_session": "local_072e5c73-a9f2-45e7-93e8-8db464b2e484",
+        "purpose": "resume existing native character/four-prop integration after engine-slot release"
+      }
+    ]
+  },
+  "automation_id": "valstrike-studio-producer"
+}

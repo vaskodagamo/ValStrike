@@ -28,23 +28,23 @@
     "sha256": "fdeb0cffcafd195160d4e445e3e97887c92289e02bc2b3964c12e53ded26aadd"
   },
   "Art/Source/Weapons/Pistol02/Models/P02_Kestrel.blend": {
-    "bytes": 22278484,
-    "sha256": "bfca7b1f043708d95919060862977f0b2c0a87cd2f78fa13add4c8d10bfcca2b"
+    "bytes": 41032959,
+    "sha256": "cc8736614bcf3ae29cd661413adc3179d142db470e687c68f6fc6eef8f728ed4"
   },
   "Art/Source/Weapons/Pistol02/Reference/P02_reference.png": {
     "bytes": 1684249,
     "sha256": "7971131ce1af30fcaa54a32180c0dc52abd9d55a5c8d2eda5fdabae3588c5f21"
   },
   "Art/Source/Weapons/Pistol02/Models/Exports/SM_VS_Pistol02_Body.fbx": {
-    "bytes": 19459948,
-    "sha256": "e3652729bef062ef1c3d33843826bf2074952b66221aa3bc8c8c05f0e31dad65"
+    "bytes": 26264476,
+    "sha256": "cb171655a43cf5b42758f99654b035fd7b52ac0e161c3560e96b79911a8c736c"
   },
   "Art/Source/Weapons/Pistol02/Models/Exports/SM_VS_Pistol02_Slide.fbx": {
-    "bytes": 19505628,
-    "sha256": "f036e0e793f54848f58b820014ca152c96dcef5bc8c057f051292744e4a12bdc"
+    "bytes": 27176780,
+    "sha256": "e8e07fc98121f323f3f683c369014bde6bc28a4a3ff4f683cb400aba3fa554f6"
   },
   "Art/Source/Weapons/Pistol02/Models/Exports/SM_VS_Pistol02_Magazine.fbx": {
-    "bytes": 19032412,
-    "sha256": "69f7717bf81efca5c6fcaee0818f20b0252c2915f03ac4c66e565ae94b6a3e61"
+    "bytes": 19248796,
+    "sha256": "e10d419325fd868ae3afdd12f411df7a8e71fda85a0aeb8e4566ec60e5ca4b12"
   }
 }

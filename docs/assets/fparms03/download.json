@@ -1,0 +1,141 @@
+{
+  "schema_version": "meshy.cli/v1",
+  "command": "download",
+  "ok": true,
+  "result": {
+    "source": {
+      "kind": "api",
+      "resource": "image-to-3d",
+      "task_id": "01a1a702-abc1-76dc-97f3-b5ad96d100e1",
+      "status": "SUCCEEDED"
+    },
+    "selection": {
+      "selected": [
+        "model.glb",
+        "model.fbx",
+        "thumbnail.primary",
+        "texture.0.base_color",
+        "texture.0.metallic",
+        "texture.0.roughness",
+        "texture.0.normal"
+      ],
+      "dependencies": []
+    },
+    "downloads": {
+      "state": "completed",
+      "files": [
+        {
+          "key": "model.glb",
+          "path": "Art/Source/Characters/FPArms03/Original/model.glb",
+          "relative_path": "model.glb",
+          "bytes": 28637516,
+          "sha256": "d3fc0adef729b301a10e15d9957dac67f5e6ded58e9153b852b4d60502731621",
+          "content_type": "model/gltf-binary",
+          "format": "glb",
+          "container_format": null,
+          "extracted": null,
+          "status": "written",
+          "error": null,
+          "publish_method": "link",
+          "relinked": false
+        },
+        {
+          "key": "model.fbx",
+          "path": "Art/Source/Characters/FPArms03/Original/model.fbx",
+          "relative_path": "model.fbx",
+          "bytes": 53522876,
+          "sha256": "acb70e2ffd321ba80288f98c4fb7c7e88a78be13fcc94afd5d311c36973a03d7",
+          "content_type": "application/octet-stream",
+          "format": "fbx",
+          "container_format": null,
+          "extracted": null,
+          "status": "written",
+          "error": null,
+          "publish_method": "link",
+          "relinked": false
+        },
+        {
+          "key": "thumbnail.primary",
+          "path": "Art/Source/Characters/FPArms03/Original/thumbnail.png",
+          "relative_path": "thumbnail.png",
+          "bytes": 57014,
+          "sha256": "893b57e0367f5f1ca6201480999076abdd6584c4fab5d9a4d1187db8c91a841c",
+          "content_type": "image/png",
+          "format": "png",
+          "container_format": null,
+          "extracted": null,
+          "status": "written",
+          "error": null,
+          "publish_method": "link",
+          "relinked": false
+        },
+        {
+          "key": "texture.0.base_color",
+          "path": "Art/Source/Characters/FPArms03/Original/texture_0_base_color.png",
+          "relative_path": "texture_0_base_color.png",
+          "bytes": 21873609,
+          "sha256": "e7ebeb8f5a736689f60263933362ab1c99fce8c037d8d6113901c007d4d4d76f",
+          "content_type": "image/png",
+          "format": "png",
+          "container_format": null,
+          "extracted": null,
+          "status": "written",
+          "error": null,
+          "publish_method": "link",
+          "relinked": false
+        },
+        {
+          "key": "texture.0.metallic",
+          "path": "Art/Source/Characters/FPArms03/Original/texture_0_metallic.png",
+          "relative_path": "texture_0_metallic.png",
+          "bytes": 20703,
+          "sha256": "a687d9ba7540d700a457f0291ea5aa369685a14c3ce4435a1c3652bb4be81d83",
+          "content_type": "image/png",
+          "format": "png",
+          "container_format": null,
+          "extracted": null,
+          "status": "written",
+          "error": null,
+          "publish_method": "link",
+          "relinked": false
+        },
+        {
+          "key": "texture.0.roughness",
+          "path": "Art/Source/Characters/FPArms03/Original/texture_0_roughness.png",
+          "relative_path": "texture_0_roughness.png",
+          "bytes": 967659,
+          "sha256": "d8a37296b0ba3a0c9ab1731ce06d43f3dd1d1936deba3a2264a76512b6d42f4c",
+          "content_type": "image/png",
+          "format": "png",
+          "container_format": null,
+          "extracted": null,
+          "status": "written",
+          "error": null,
+          "publish_method": "link",
+          "relinked": false
+        },
+        {
+          "key": "texture.0.normal",
+          "path": "Art/Source/Characters/FPArms03/Original/texture_0_normal.png",
+          "relative_path": "texture_0_normal.png",
+          "bytes": 16454468,
+          "sha256": "88b39e3ab4818b29a6fc40e448e0f7b8f398c058066ccd5b4fece51f1d6ae7af",
+          "content_type": "image/png",
+          "format": "png",
+          "container_format": null,
+          "extracted": null,
+          "status": "written",
+          "error": null,
+          "publish_method": "link",
+          "relinked": false
+        }
+      ],
+      "metadata_path": null,
+      "material_links": null
+    },
+    "unknown_urls": [],
+    "saved_json": null
+  },
+  "error": null,
+  "warnings": []
+}

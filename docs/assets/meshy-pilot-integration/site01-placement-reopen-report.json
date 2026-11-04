@@ -1,0 +1,456 @@
+{
+  "engine": "5.8.4-58902052+++UE5+Release-5.8",
+  "map": "/Game/Maps/Site01/VS_Site01",
+  "mode": "reopen_inspect",
+  "runtime_verified": false,
+  "recipe": "docs/assets/meshy-site01/props-surfaces/pilot-placement.md",
+  "verification": {
+    "preexisting_actors_unchanged": 77,
+    "placed": [
+      {
+        "label": "VS_MSH_W03_Gallery_00",
+        "world_bounds_cm": [
+          [
+            -99.99998739910825,
+            750.0000305175781,
+            -10.0
+          ],
+          [
+            100.0,
+            950.0000174872966,
+            1.4901161193847656e-07
+          ]
+        ],
+        "collision": "NoCollision"
+      },
+      {
+        "label": "VS_MSH_W03_Gallery_10",
+        "world_bounds_cm": [
+          [
+            100.00001260089175,
+            750.0000305175781,
+            -10.0
+          ],
+          [
+            300.0,
+            950.0000174872966,
+            1.4901161193847656e-07
+          ]
+        ],
+        "collision": "NoCollision"
+      },
+      {
+        "label": "VS_MSH_W03_Gallery_01",
+        "world_bounds_cm": [
+          [
+            -99.99998739910825,
+            950.0000305175781,
+            -10.0
+          ],
+          [
+            100.0,
+            1150.0000174872966,
+            1.4901161193847656e-07
+          ]
+        ],
+        "collision": "NoCollision"
+      },
+      {
+        "label": "VS_MSH_W03_Gallery_11",
+        "world_bounds_cm": [
+          [
+            100.00001260089175,
+            950.0000305175781,
+            -10.0
+          ],
+          [
+            300.0,
+            1150.0000174872966,
+            1.4901161193847656e-07
+          ]
+        ],
+        "collision": "NoCollision"
+      },
+      {
+        "label": "VS_MSH_W04_ServiceRoof",
+        "world_bounds_cm": [
+          [
+            -299.99999237060547,
+            1324.9999885559082,
+            394.0
+          ],
+          [
+            -100.00000762939453,
+            1424.999984741211,
+            494.0
+          ]
+        ],
+        "collision": "NoCollision"
+      },
+      {
+        "label": "VS_MSH_W07_ServiceInfill",
+        "world_bounds_cm": [
+          [
+            -300.0,
+            1230.4999717960163,
+            0.0
+          ],
+          [
+            -100.00000271332851,
+            1250.4999980926514,
+            300.0
+          ]
+        ],
+        "collision": "NoCollision"
+      },
+      {
+        "label": "VS_MSH_W10_North",
+        "world_bounds_cm": [
+          [
+            1099.9999961853027,
+            899.9999923706055,
+            0.0
+          ],
+          [
+            1200.0000076293945,
+            999.9999923706055,
+            100.0
+          ]
+        ],
+        "collision": "NoCollision"
+      },
+      {
+        "label": "VS_MSH_W10_SiteBase",
+        "world_bounds_cm": [
+          [
+            1409.9999961853027,
+            -350.00000762939453,
+            0.0
+          ],
+          [
+            1510.0000076293945,
+            -250.00000762939453,
+            100.0
+          ]
+        ],
+        "collision": "NoCollision"
+      },
+      {
+        "label": "VS_MSH_W10_SiteTop",
+        "world_bounds_cm": [
+          [
+            1409.9999961853027,
+            -350.00000762939453,
+            100.0
+          ],
+          [
+            1510.0000076293945,
+            -250.00000762939453,
+            200.0
+          ]
+        ],
+        "collision": "NoCollision"
+      }
+    ],
+    "crate_collision": [
+      {
+        "check": "VS_NorthCrate/top",
+        "hit": true,
+        "impact_cm": [
+          1150.0,
+          950.0,
+          100.0
+        ],
+        "actor": "VS_NorthCrate"
+      },
+      {
+        "check": "VS_SiteEastCrateTop/top",
+        "hit": true,
+        "impact_cm": [
+          1460.0,
+          -300.0,
+          200.0
+        ],
+        "actor": "VS_SiteEastCrateTop"
+      },
+      {
+        "check": "VS_NorthCrate/side/x+",
+        "hit": true,
+        "impact_cm": [
+          1200.0,
+          950.0,
+          50.0
+        ],
+        "actor": "VS_NorthCrate"
+      },
+      {
+        "check": "VS_NorthCrate/side/x-",
+        "hit": true,
+        "impact_cm": [
+          1100.0,
+          950.0,
+          50.0
+        ],
+        "actor": "VS_NorthCrate"
+      },
+      {
+        "check": "VS_NorthCrate/side/y+",
+        "hit": true,
+        "impact_cm": [
+          1150.0,
+          1000.0,
+          50.0
+        ],
+        "actor": "VS_NorthCrate"
+      },
+      {
+        "check": "VS_NorthCrate/side/y-",
+        "hit": true,
+        "impact_cm": [
+          1150.0,
+          900.0,
+          50.0
+        ],
+        "actor": "VS_NorthCrate"
+      },
+      {
+        "check": "VS_SiteEastCrate/side/x+",
+        "hit": true,
+        "impact_cm": [
+          1510.0,
+          -300.0,
+          50.0
+        ],
+        "actor": "VS_SiteEastCrate"
+      },
+      {
+        "check": "VS_SiteEastCrate/side/x-",
+        "hit": true,
+        "impact_cm": [
+          1410.0,
+          -300.0,
+          50.0
+        ],
+        "actor": "VS_SiteEastCrate"
+      },
+      {
+        "check": "VS_SiteEastCrate/side/y+",
+        "hit": true,
+        "impact_cm": [
+          1460.0,
+          -250.0,
+          50.0
+        ],
+        "actor": "VS_SiteEastCrate"
+      },
+      {
+        "check": "VS_SiteEastCrate/side/y-",
+        "hit": true,
+        "impact_cm": [
+          1460.0,
+          -350.0,
+          50.0
+        ],
+        "actor": "VS_SiteEastCrate"
+      },
+      {
+        "check": "VS_SiteEastCrateTop/side/x+",
+        "hit": true,
+        "impact_cm": [
+          1510.0,
+          -300.0,
+          150.0
+        ],
+        "actor": "VS_SiteEastCrateTop"
+      },
+      {
+        "check": "VS_SiteEastCrateTop/side/x-",
+        "hit": true,
+        "impact_cm": [
+          1410.0,
+          -300.0,
+          150.0
+        ],
+        "actor": "VS_SiteEastCrateTop"
+      },
+      {
+        "check": "VS_SiteEastCrateTop/side/y+",
+        "hit": true,
+        "impact_cm": [
+          1460.0,
+          -250.0,
+          150.0
+        ],
+        "actor": "VS_SiteEastCrateTop"
+      },
+      {
+        "check": "VS_SiteEastCrateTop/side/y-",
+        "hit": true,
+        "impact_cm": [
+          1460.0,
+          -350.0,
+          150.0
+        ],
+        "actor": "VS_SiteEastCrateTop"
+      }
+    ],
+    "hidden_in_game": [
+      "VS_NorthCrate",
+      "VS_SiteEastCrate",
+      "VS_SiteEastCrateTop"
+    ],
+    "masked_materials": {
+      "VS_Floor": "M_Site01_Paving_PilotTileMask",
+      "VS_GalleryPaving": "M_Site01_Lane_PilotTileMask"
+    }
+  },
+  "captures": [
+    {
+      "id": "tiles_standing",
+      "camera_cm": [
+        650,
+        950,
+        152
+      ],
+      "target_cm": [
+        100,
+        950,
+        0
+      ],
+      "file": "docs/assets/meshy-pilot-integration/previews/tiles_standing.png",
+      "sha256": "e2f19add8d98483a0558f7dbda1ffdfe376b6f875f86cf3089c9aa0ddfa4d8b9",
+      "kind": "Unreal editor viewport, game view, fixed exposure; not runtime"
+    },
+    {
+      "id": "tiles_crouched_grazing",
+      "camera_cm": [
+        700,
+        820,
+        62
+      ],
+      "target_cm": [
+        0,
+        1000,
+        0
+      ],
+      "file": "docs/assets/meshy-pilot-integration/previews/tiles_crouched_grazing.png",
+      "sha256": "0930e8cd086ae6e32cd9152967d3643b53e5f7c05abb634432f6806832920537",
+      "kind": "Unreal editor viewport, game view, fixed exposure; not runtime"
+    },
+    {
+      "id": "tiles_top_down",
+      "camera_cm": [
+        100,
+        950,
+        700
+      ],
+      "target_cm": [
+        100,
+        951,
+        0
+      ],
+      "file": "docs/assets/meshy-pilot-integration/previews/tiles_top_down.png",
+      "sha256": "38e26cc356ae114cb79d7cc4de840e1a4892923e1d15ce98a13dc8160405fda9",
+      "kind": "Unreal editor viewport, game view, fixed exposure; not runtime"
+    },
+    {
+      "id": "service_panel",
+      "camera_cm": [
+        -200,
+        700,
+        152
+      ],
+      "target_cm": [
+        -200,
+        1250,
+        150
+      ],
+      "file": "docs/assets/meshy-pilot-integration/previews/service_panel.png",
+      "sha256": "a2d75c56e2e3bf7861c024305152d85ceccfc608cca39716b739142275736d3b",
+      "kind": "Unreal editor viewport, game view, fixed exposure; not runtime"
+    },
+    {
+      "id": "service_panel_close",
+      "camera_cm": [
+        -60,
+        1150,
+        140
+      ],
+      "target_cm": [
+        -200,
+        1240,
+        150
+      ],
+      "file": "docs/assets/meshy-pilot-integration/previews/service_panel_close.png",
+      "sha256": "7b5e1a7591e5b38fda6c73719cfefc58f9c150ee57e5e6c5f577475affc0f27b",
+      "kind": "Unreal editor viewport, game view, fixed exposure; not runtime"
+    },
+    {
+      "id": "service_roof_from_gallery",
+      "camera_cm": [
+        -200,
+        820,
+        152
+      ],
+      "target_cm": [
+        -200,
+        1375,
+        440
+      ],
+      "file": "docs/assets/meshy-pilot-integration/previews/service_roof_from_gallery.png",
+      "sha256": "46d401574e1b7cc52ccc8ef7e5d308e7f7d9a61e0501d7898235e60996a5b459",
+      "kind": "Unreal editor viewport, game view, fixed exposure; not runtime"
+    },
+    {
+      "id": "service_roof_elevated",
+      "camera_cm": [
+        -200,
+        600,
+        750
+      ],
+      "target_cm": [
+        -200,
+        1375,
+        420
+      ],
+      "file": "docs/assets/meshy-pilot-integration/previews/service_roof_elevated.png",
+      "sha256": "f3dc2ef503d87bd606fc8c8c3e36b8f24921151dc23428ef823ff42d04f95ce0",
+      "kind": "Unreal editor viewport, game view, fixed exposure; not runtime"
+    },
+    {
+      "id": "north_crate",
+      "camera_cm": [
+        1150,
+        600,
+        152
+      ],
+      "target_cm": [
+        1150,
+        950,
+        50
+      ],
+      "file": "docs/assets/meshy-pilot-integration/previews/north_crate.png",
+      "sha256": "d911449dc16ff9ac6a5d95eeabead070c8295726a0b46516f1856e3e9ee9868f",
+      "kind": "Unreal editor viewport, game view, fixed exposure; not runtime"
+    },
+    {
+      "id": "site_crate_stack",
+      "camera_cm": [
+        1150,
+        -300,
+        152
+      ],
+      "target_cm": [
+        1460,
+        -300,
+        100
+      ],
+      "file": "docs/assets/meshy-pilot-integration/previews/site_crate_stack.png",
+      "sha256": "2904b8d442b8f823eabdb42bbe0c880d54228d3b578e3144318b95930fab88fb",
+      "kind": "Unreal editor viewport, game view, fixed exposure; not runtime"
+    }
+  ],
+  "passed": true,
+  "error": null,
+  "map_sha256": "3d9ce01d8cb6f560384f670bc709e1d34b34f518b0daab6503cf42c350cf28ae"
+}

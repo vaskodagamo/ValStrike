@@ -1,0 +1,58 @@
+{
+  "asset_id": "K01",
+  "assignment": "ART-20",
+  "date_europe_berlin": "2026-11-04",
+  "operation_id": "art20-k01-20261104-once",
+  "resource": "image-to-3d",
+  "task_id": "01a1a6d1-dcbd-74dd-8074-6fd6634c4843",
+  "status": "SUCCEEDED",
+  "reference": "Art/Source/Weapons/Knife01/Reference/K01_reference.png",
+  "reference_sha256": "3fabb8ceaaac5782b88532e4033829888349c7a826d3f9c144aea5f4e8e23364",
+  "reference_generator": "built-in image_gen",
+  "prompt": "Art/Source/Weapons/Knife01/Reference/prompt.txt",
+  "cli_version": "0.8.2",
+  "node_version": "22.21.1",
+  "options": {
+    "ai_model": "meshy-7.1",
+    "model_type": "standard",
+    "geometry_resolution": "standard",
+    "texture_resolution": "4k",
+    "should_texture": true,
+    "enable_pbr": true,
+    "should_remesh": false,
+    "image_enhancement": false,
+    "target_formats": [
+      "glb",
+      "fbx"
+    ]
+  },
+  "approved_credits": 30,
+  "estimated_credits": 30,
+  "actual_consumed_credits": 30,
+  "pricing_source": "https://docs.meshy.ai/en/api/pricing",
+  "balance_before": 3195,
+  "extra_paid_stages_allowed": false,
+  "prepared_head": "babef7d71d2456fe213ca489b2fbb4e545a34216",
+  "workspace_exception": "CLI staging stays under exclusive Knife01/Raw rather than unowned Artifacts/.",
+  "submission": {
+    "state": "accepted",
+    "operation_id": "art20-k01-20261104-once",
+    "task_id": "01a1a6d1-dcbd-74dd-8074-6fd6634c4843",
+    "request_id": null
+  },
+  "consumed_credits": 30,
+  "face_count": null,
+  "paid_stage_count": 1,
+  "paid_retries": 0,
+  "provenance": {
+    "image": "Original built-in image_gen output, saved in Reference; exact prompt retained",
+    "mesh": "One authorized Meshy 7.1 image-to-3D task on shared authenticated account",
+    "local_revision": "Final preserves original Meshy geometry, UVs, custom normals and PBR. Local reconstructed/darkened candidate held as degraded after user correction and matched comparison. Final work: scale, grip origin, visual frames, byte-identical map extraction and FBX.",
+    "license_note": "Generated project art via user-authorized services; no third-party brand or purchased mesh introduced; no independent legal license opinion"
+  },
+  "reference_review": "Single isolated unbranded assembled knife; full silhouette; no hands or sheath; charcoal/cool steel/burgundy palette",
+  "raw_originals": [
+    "Art/Source/Weapons/Knife01/Originals/K01_Meshy.glb",
+    "Art/Source/Weapons/Knife01/Originals/K01_Meshy.fbx"
+  ]
+}

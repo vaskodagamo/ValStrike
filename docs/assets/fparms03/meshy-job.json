@@ -1,0 +1,99 @@
+{
+  "task": "ART-22",
+  "asset": "FPArms03",
+  "reservation_id": "ART-22-FPArms03-draft-1",
+  "resource": "image-to-3d",
+  "operation_id": "art22-fparms03-draft-1-20261104",
+  "status": "SUCCEEDED",
+  "task_id": "01a1a702-abc1-76dc-97f3-b5ad96d100e1",
+  "parent_task_id": null,
+  "cli": "meshy-cli 0.8.2 / Node 22.21.1",
+  "allowance_credits": 30,
+  "estimated_credits": 30,
+  "actual_credits": 30,
+  "balance_before": 3135,
+  "reference": "Art/Source/Characters/FPArms03/Reference/RightHand_BareForearm.png",
+  "reference_sha256": "9665280e0da1723ece40ece2a1c69db9b85f7c7e4e0e2d52a31bfbf519255ab3",
+  "prompt_record": "Art/Source/Characters/FPArms03/Reference/generation.json",
+  "reuse_decision": "docs/assets/fparms03/reuse-decision.json",
+  "options": {
+    "model_type": "standard",
+    "ai_model": "meshy-7.1",
+    "geometry_resolution": "standard",
+    "should_texture": true,
+    "enable_pbr": true,
+    "texture_resolution": "4k",
+    "should_remesh": false,
+    "target_formats": [
+      "glb",
+      "fbx"
+    ]
+  },
+  "texture_model": "default for meshy-7.1; no override",
+  "pricing_checked": "2026-11-04",
+  "pricing_source": "https://docs.meshy.ai/en/api/pricing",
+  "extra_paid_stages_allowed": false,
+  "producer_ledger_modified": false,
+  "progress": 100,
+  "downloads": [
+    {
+      "key": "model.glb",
+      "relative_path": "model.glb",
+      "bytes": 28637516,
+      "sha256": "d3fc0adef729b301a10e15d9957dac67f5e6ded58e9153b852b4d60502731621"
+    },
+    {
+      "key": "model.fbx",
+      "relative_path": "model.fbx",
+      "bytes": 53522876,
+      "sha256": "acb70e2ffd321ba80288f98c4fb7c7e88a78be13fcc94afd5d311c36973a03d7"
+    },
+    {
+      "key": "thumbnail.primary",
+      "relative_path": "thumbnail.png",
+      "bytes": 57014,
+      "sha256": "893b57e0367f5f1ca6201480999076abdd6584c4fab5d9a4d1187db8c91a841c"
+    },
+    {
+      "key": "texture.0.base_color",
+      "relative_path": "texture_0_base_color.png",
+      "bytes": 21873609,
+      "sha256": "e7ebeb8f5a736689f60263933362ab1c99fce8c037d8d6113901c007d4d4d76f"
+    },
+    {
+      "key": "texture.0.metallic",
+      "relative_path": "texture_0_metallic.png",
+      "bytes": 20703,
+      "sha256": "a687d9ba7540d700a457f0291ea5aa369685a14c3ce4435a1c3652bb4be81d83"
+    },
+    {
+      "key": "texture.0.roughness",
+      "relative_path": "texture_0_roughness.png",
+      "bytes": 967659,
+      "sha256": "d8a37296b0ba3a0c9ab1731ce06d43f3dd1d1936deba3a2264a76512b6d42f4c"
+    },
+    {
+      "key": "texture.0.normal",
+      "relative_path": "texture_0_normal.png",
+      "bytes": 16454468,
+      "sha256": "88b39e3ab4818b29a6fc40e448e0f7b8f398c058066ccd5b4fece51f1d6ae7af"
+    }
+  ],
+  "actual_credits_evidence": {
+    "resource": "image-to-3d",
+    "task_id": "01a1a702-abc1-76dc-97f3-b5ad96d100e1",
+    "status": "SUCCEEDED",
+    "progress": 100,
+    "consumed_credits": 30,
+    "finished_at": 1793803409164
+  },
+  "stages": [
+    {
+      "resource": "image-to-3d",
+      "task_id": "01a1a702-abc1-76dc-97f3-b5ad96d100e1",
+      "parent_task_id": null,
+      "status": "SUCCEEDED",
+      "consumed_credits": 30
+    }
+  ]
+}

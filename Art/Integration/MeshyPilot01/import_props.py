@@ -189,6 +189,8 @@ def inspect(asset):
         textures[role] = {"asset": path, "srgb": texture.get_editor_property("srgb"),
                           "compression": str(texture.get_editor_property("compression_settings")),
                           "flip_green_channel": texture.get_editor_property("flip_green_channel"),
+                          # Streamed size; a fresh process may still show the 32 px
+                          # compile placeholder, so the reopen comparison ignores it.
                           "size_px": [texture.blueprint_get_size_x(), texture.blueprint_get_size_y()]}
     return {
         "asset_id": asset["asset_id"], "mesh": mesh.get_path_name(), "source_fbx_sha256": asset["fbx"]["sha256"],
@@ -227,10 +229,15 @@ def main():
               "map_edited": False, "runtime_verified": False}
     REPORTS.mkdir(parents=True, exist_ok=True)
     target = REPORTS / ("props-reopen-report.json" if inspect_only else "props-import-report.json")
+    target.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     if inspect_only:
         prior = json.loads((REPORTS / "props-import-report.json").read_text())
-        require(report["assets"] == prior["assets"], "Saved assets differ from import-time evidence")
-    target.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+        def stable(item):  # Source dimensions are fixed by the verified PNG hashes.
+            return {**item, "textures": {r: {k: v for k, v in t.items() if k != "size_px"}
+                                         for r, t in item["textures"].items()}}
+        diffs = [(a["asset_id"], k) for a, b in zip(map(stable, report["assets"]), map(stable, prior["assets"]))
+                 for k in b if a.get(k) != b[k]]
+        require(not diffs, f"Saved assets differ from import-time evidence: {diffs}")
     for item in report["assets"]:
         require(item["native_frame_vs_record"] != "mismatch", f"{item['asset_id']}: unexpected native bounds")
         require(item["lod0_triangles"] == item["record_triangles"], f"{item['asset_id']}: triangle mismatch")
@@ -242,4 +249,6 @@ if __name__ == "__main__":
         main()
     except Exception as error:
         unreal.log_error(f"VALSTRIKE_MESHY_PROPS_IMPORT_FAILED: {error}\n{traceback.format_exc()}")
-        raise
+    finally:
+        # Bounded slot use: always close this one-shot editor process.
+        unreal.SystemLibrary.quit_editor()

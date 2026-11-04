@@ -1,0 +1,8 @@
+{
+  "date": "2026-11-04",
+  "tool": "built-in image_gen",
+  "prompt": "Use case: stylized-concept. Input image: approved glove/sleeve design reference only. Derive ONE isolated anatomical RIGHT gloved hand and forearm for image-to-3D, in the same premium grounded stylized design. Show dorsal/back of right hand facing camera, thumb to viewer LEFT, fingers pointing up and sleeve down, centered alone. All five fingers separate and fully visible in a relaxed nearly straight neutral pose with small clear gaps, natural unequal lengths, realistic thumb webbing, curved rounded anatomy. Full forearm sleeve ending cleanly just below elbow, generous margins, no cropped fingertips. Preserve fitted charcoal leather/textile gloves, curved integrated knuckle padding, ribbed flexible finger joints, understated seams and wrist strap, slate fabric sleeve with natural folds, narrow skin wrist gap, one small burgundy cuff tab and dark snap on outer wrist. Near-orthographic view with only slight obliqueness to reveal hand thickness. Plain light neutral gray background, diffuse even studio lighting. Exactly ONE hand, no second hand, no contact sheet, no weapon, ruler, text, torso, stand, logos or watermark. No block fingers, robotic joints, oversized armor, cylindrical sleeve. This is an isolated detached game viewmodel clothing asset, not injury.",
+  "input_reference_sha256": "a0f38ea2e8b0d2b7ba7c288355fd4d42b2ed98496c04f757e577c93428262a77",
+  "output": "RightHand_Dorsal.png",
+  "inspection": "One right hand, thumb viewer-left, five separate digits, full sleeve, no text or weapon. Selected for single Meshy task."
+}

@@ -232,7 +232,8 @@ class MatchMetadataTests(unittest.TestCase):
 
 class MatchLifecycleTests(unittest.TestCase):
     def run_fixture(self, *, exit_code=None, timeout=False, malformed=False, failed_check=False,
-                    changed_source=False, late_exit_code=None, late_markers=True, leave_without_join=False):
+                    changed_source=False, late_exit_code=None, late_markers=True, leave_without_join=False,
+                    spectate_stage=False):
         """Exercise runner orchestration with fake editor handles and real report files."""
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -267,6 +268,9 @@ class MatchLifecycleTests(unittest.TestCase):
                 if role == "server":
                     marker = match.LATE_LEAVE_MARKER if leave_without_join else match.LATE_JOIN_MARKER
                     (output / "server.log").write_text("LogNet: listening on port 7831\n" + (marker if late_markers else ""))
+                    if spectate_stage:
+                        with (output / "server.log").open("a") as stream:
+                            stream.write("\n" + match.SPECTATE_JOIN_MARKER + "\n" + STAGE + "\n")
                 process = Mock(pid=100 + len(handles))
                 process.fixture_role = role
                 process.poll.return_value = exit_code if role == "driver" else late_exit_code if role == "late" else None
@@ -370,9 +374,9 @@ class MatchSpectateTests(unittest.TestCase):
             check = next(item for item in self.reports[role]["checks"] if item["name"] == "replicated_match")
             check["detail"] = f"team={team} id={ident} round=1"
 
-    def statuses(self, driver="", observer=""):
+    def statuses(self, driver="", observer="", server=None):
         return {check["check"]: check["status"]
-                for check in match.evaluate_spectate(self.reports, {"driver": driver, "observer": observer})}
+                for check in match.evaluate_spectate(self.reports, {"driver": driver, "observer": observer}, server)}
 
     def test_parse_accepts_structured_lines_and_ignores_others(self):
         text = "LogNet: unrelated\n" + spectate_line("start", 1, 3, 4) + "\n" + spectate_line("stop", 1, 0, 5)
@@ -434,11 +438,82 @@ class MatchSpectateTests(unittest.TestCase):
         original = match.evaluate_spectate
         enemy = "\n".join((spectate_line("start", 1, 2, 4), spectate_line("stop", 1, 0, 5)))
         with patch.object(match, "evaluate_spectate",
-                          side_effect=lambda reports, logs: original(self.reports, {**logs, "driver": enemy})):
+                          side_effect=lambda reports, logs, server: original(self.reports, {**logs, "driver": enemy}, server)):
             status, result = MatchLifecycleTests.run_fixture(self)
         self.assertEqual(status, 1)
         self.assertFalse(result["passed"])
         self.assertIn("fail", {check["status"] for check in result["spectate_checks"]})
+
+
+STAGE = "[2026.11.04-10.00.00:000][  1]LogValStrike: Display: VSSPECTATE_STAGE " + \
+    json.dumps({"viewer": 1, "teammate": 4, "enemy": 2, "round": 7}, separators=(",", ":"))
+
+
+class MatchSpectateStageTests(unittest.TestCase):
+    """GPF-03 stage: driver (1) dies while mate (4) lives; observer (2) is the enemy."""
+
+    setUp = MatchSpectateTests.setUp
+    statuses = MatchSpectateTests.statuses
+
+    def stage_run(self, *lines):
+        return self.statuses("\n".join(lines), server="LogNet: listening\n" + STAGE)
+
+    def test_stage_line_is_strict(self):
+        self.assertEqual(match.parse_spectate_stage(STAGE), {"viewer": 1, "teammate": 4, "enemy": 2, "round": 7})
+        self.assertIsNone(match.parse_spectate_stage(None))
+        self.assertIsNone(match.parse_spectate_stage(spectate_line("start", 1, 4, 7)))
+        for payload in ('{"viewer":1', '{"viewer":1,"teammate":4,"enemy":2}', '{"viewer":1,"teammate":1,"enemy":2,"round":7}',
+                        '{"viewer":0,"teammate":4,"enemy":2,"round":7}', '{"viewer":1,"teammate":4,"enemy":2,"round":7,"x":1}'):
+            with self.subTest(payload=payload), self.assertRaisesRegex(RuntimeError, "VSSPECTATE_STAGE"):
+                match.parse_spectate_stage("VSSPECTATE_STAGE " + payload)
+        with self.assertRaisesRegex(RuntimeError, "More than one"):
+            match.parse_spectate_stage(STAGE + "\n" + STAGE)
+
+    def test_stage_start_on_teammate_and_reset_stop_pass(self):
+        statuses = self.stage_run(spectate_line("start", 1, 4, 7), spectate_line("stop", 1, 0, 8))
+        self.assertEqual(set(statuses.values()), {"pass"})
+
+    def test_stage_without_spectate_or_reset_is_a_failure_not_not_reached(self):
+        statuses = self.stage_run()
+        self.assertEqual(statuses["spectate: teammate_start"], "fail")
+        self.assertEqual(statuses["spectate: stop_on_round_reset"], "fail")
+        self.assertEqual(statuses["spectate: no_enemy_or_dead_target"], "not_reached")
+        statuses = self.stage_run(spectate_line("start", 1, 4, 7), spectate_line("stop", 1, 0, 7))
+        self.assertEqual(statuses["spectate: teammate_start"], "pass")
+        self.assertEqual(statuses["spectate: stop_on_round_reset"], "fail")
+
+    def test_stage_wrong_round_viewer_or_dead_enemy_target_fails(self):
+        for lines in ((spectate_line("start", 1, 4, 6), spectate_line("stop", 1, 0, 8)),
+                      (spectate_line("start", 1, 2, 7), spectate_line("stop", 1, 0, 8))):
+            with self.subTest(lines=lines):
+                self.assertEqual(self.stage_run(*lines)["spectate: teammate_start"], "fail")
+        statuses = self.stage_run(spectate_line("start", 1, 4, 7), spectate_line("cycle", 1, 2, 7), spectate_line("stop", 1, 0, 8))
+        self.assertEqual(statuses["spectate: no_enemy_or_dead_target"], "fail")
+        next(item for item in self.reports["driver"]["checks"] if item["name"] == "replicated_match")["detail"] = "team=1 id=9 round=1"
+        self.assertEqual(self.stage_run()["spectate: teammate_start"], "fail")
+
+
+class MatchSpectateClientTests(unittest.TestCase):
+    def test_mate_launch_identity_has_no_required_report(self):
+        command = match.launch_command(Path("/editor"), Path("/p.uproject"), Path("/out"), match.MATE_ROLE, 7831)
+        self.assertIn("-VSMatchSmoke=mate", command)
+        self.assertIn("127.0.0.1:7831?Name=VSMatchMate", command)
+        self.assertNotIn(match.MATE_ROLE, match.ROLES)
+        self.assertNotIn(match.MATE_ROLE, match.REQUIRED_CHECKS)
+        self.assertNotIn(match.SPECTATE_JOIN_MARKER, (match.LATE_JOIN_MARKER, match.LATE_LEAVE_MARKER))
+
+    def test_runner_launches_mate_on_marker_and_a_reached_stage_needs_real_spectate(self):
+        status, result = MatchLifecycleTests.run_fixture(self, spectate_stage=True)
+        self.assertTrue(result["spectate_client"]["launched"])
+        self.assertIn(match.MATE_ROLE, result["commands"])
+        self.assertEqual(result["exit_after_cleanup"][match.MATE_ROLE], -15)
+        self.assertIn(match.MATE_ROLE, result["fixture_cleanup_batches"][-1])
+        # The fixture's client logs carry no VSSPECTATE lines, so a reached stage fails the run.
+        self.assertEqual(status, 1)
+        self.assertEqual(len(result["checks"]), 43)
+        statuses = {check["check"]: check["status"] for check in result["spectate_checks"]}
+        self.assertEqual(statuses["spectate: teammate_start"], "fail")
+        self.assertEqual(result["spectate_checks"][0]["detail"]["stage"]["teammate"], 4)
 
 
 if __name__ == "__main__":
