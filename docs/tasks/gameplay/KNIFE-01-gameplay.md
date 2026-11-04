@@ -1,6 +1,6 @@
 # Task KNIFE-01 gameplay: knife as slot 3, server-authoritative slash/stab
 
-- Status: **Prepared, queued.** It waits for a producer release at the next contributor vacancy. Phase B also waits for the INT-ART-02 phase-A source freeze.
+- Status: **Phase A active** (2026-11-04, producer release). Phase B waits for the INT-ART-02 phase-A freeze and an explicit release. Gaps 1–4 below are resolved as proposed by the producer contract.
 - Contract: the producer's `docs/tasks/KNIFE-01-full-feature.md` (Direktor worktree `/Users/webproduktion3/.codex/worktrees/10a1/ValStrike`). User scope expansion of 2026-11-04. This brief is the engineering boundary only; the contract governs values and acceptance.
 - Owner: the **existing GPT-04 session** ("GPT-04 switch prediction", `local_e7f5a62b-3f49-42e2-854a-1dcddd518154`). It wrote the predicted switching, `VSWeaponLoadoutRules.h` and the Last-request semantics. It is idle, and its worktree is clean.
 - Worktree: `/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/gpt-04-switch-prediction` (clean, on the merged `claude/gpt-04-switch-prediction`). At release: confirm it is clean, then create a new branch `claude/knife-01-gameplay` from the then-current `origin/main`.
