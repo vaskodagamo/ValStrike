@@ -4,7 +4,7 @@
 #include "VSWeaponPresentationComponent.h"
 #include "VSPistolPresentationComponent.generated.h"
 
-/** P01 pistol views: accepted body/slide/magazine art (read-only), slide kick per accepted shot. */
+/** P02 pistol views (INT-ART-04): native ART-18 body/slide/magazine, slide kick per accepted shot; P01 stays for comparison. */
 UCLASS(ClassGroup = (Presentation), meta = (BlueprintSpawnableComponent))
 class VALSTRIKE_API UVSPistolPresentationComponent : public UVSWeaponPresentationComponent
 {
