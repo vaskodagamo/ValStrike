@@ -119,3 +119,34 @@ VS_Graybox (smoke map): the 120 cm `VS_Cover_2` becomes jumpable; the 180 cm `VS
 ### Next action / owner
 
 Gameplay lead reviews the PR; the user merges; integration runs the deferred checks; the lead assigns the `Scripts/test_movement.py` bound edit after GPT-12 merges; the combat owner decides on `movingSpeed`.
+
+## 2026-11-04 — GPT-15 follow-up: `test_movement.py` bounds and feel-stage checks
+
+The lead assigned the runner to GPT-15 after GPT-12 (#70) merged. The branch merges `origin/main` `09347c2` with no conflicts.
+
+- **Decision (lead):** `VSRecoilRules::movingSpeed` stays at 200. Slow-walk (rifle 174, pistol 194) counting as accurate matches CS2. No Combat change.
+- **`Scripts/test_movement.py`:**
+  - The existing bounds are now exactly the proposed ones: run 360–410, walk 155–195, crouch 135–175, jump 125 < h < 150.
+  - New `feel_checks()` adds eight checks per role, as tabled above (69 checks in all, was 45): `rifle before switch`, `pistol weight`, `Ctrl+Space crouch-jump`, `running jump`, `running crouch-jump`, `no landing gain`, `held-crouch jump`, and `feel stages completed` (a `done` event at t ≥ 42.0 s).
+  - The thresholds are named constants next to the function.
+  - GPT-12's `--net-profile` handling, the invalid-run check and every other tolerance are unchanged. `completed` itself is unchanged; the timing requirement is a separate check, so a stale 33 s smoke binary fails only that check and the stage checks.
+  - Samples without a `weapon` field (an old binary) fail the two weapon checks.
+- **`Tests/Movement/test_movement_runner.py`:** 10 new engine-free tests (23 in all), built on a synthetic three-role timeline of the new tuning:
+  - the full timeline passes all 69 checks;
+  - each speed bound passes just inside and fails just outside (and fails at the old 450 / 202.5 / 180);
+  - the old 90 cm jump fails;
+  - no pistol switch, or the rifle speed at 33.6 s, fails `pistol weight`;
+  - a missing `weapon` field fails the weapon checks;
+  - crouch-jumps without the tuck fail all three crouch-jump checks, and an overly high crouch-jump fails;
+  - a higher or faster running jump fails;
+  - a held-crouch jump that doesn't start crouched fails;
+  - `done` at 33 s fails `feel stages completed`.
+- **Checks run:**
+  - `python3 -m unittest Tests/Movement/test_movement_runner.py`: 23 OK.
+  - `python3 -m unittest Tests/test_ue.py`: OK.
+  - `py_compile` on both files: OK.
+  - The movement rules test: 61/61 with `clang++` and `g++` (Apple clang).
+  - `git diff --check`: clean.
+  - The UI runners' `from test_movement import stop` is unchanged.
+  - No Unreal build or launch.
+- **Deferred to integration:** a real `Scripts/test_movement.py` run (expect 69/69), then the `--net-profile` matrix. The new windows are the narrowest under `poor`.
