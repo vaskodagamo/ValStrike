@@ -3,6 +3,7 @@
 #include "../VSCharacter.h"
 #include "../Combat/VSHealthComponent.h"
 #include "../Combat/VSWeaponLoadoutComponent.h"
+#include "VSKnifePresentationComponent.h"
 #include "Animation/AnimSequence.h"
 #include "Components/PrimitiveComponent.h"
 #include "Components/SkeletalMeshComponent.h"
@@ -34,6 +35,16 @@ UVSCharacterPresentationComponent::UVSCharacterPresentationComponent()
     HoldAsset = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(FString::Printf(TEXT("%s/Animations/A_UE01_Pilot_RifleHold.A_UE01_Pilot_RifleHold"), CharacterRoot)));
     WalkAsset = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(FString::Printf(TEXT("%s/Animations/A_UE01_Pilot_Walk_RifleHold.A_UE01_Pilot_Walk_RifleHold"), CharacterRoot)));
     PistolHoldAsset = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(FString::Printf(TEXT("%s/Animations/A_UE01_Pilot_PistolHold.A_UE01_Pilot_PistolHold"), CharacterRoot)));
+    auto KnifeClip = [](const TCHAR* Name)
+    {
+        return TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(FString::Printf(TEXT("%s/Animations/Knife/%s.%s"), CharacterRoot, Name, Name)));
+    };
+    KnifeHoldAsset = KnifeClip(TEXT("A_UE01_Knife_Hold"));
+    KnifeWalkAsset = KnifeClip(TEXT("A_UE01_Knife_Walk"));
+    KnifeRunAsset = KnifeClip(TEXT("A_UE01_Knife_Run"));
+    KnifeEquipAsset = KnifeClip(TEXT("A_UE01_Knife_Equip"));
+    KnifeSlashAsset = KnifeClip(TEXT("A_UE01_Knife_Slash"));
+    KnifeStabAsset = KnifeClip(TEXT("A_UE01_Knife_Stab"));
 }
 
 bool UVSCharacterPresentationComponent::Initialize(USkeletalMeshComponent* InBody, TArrayView<UPrimitiveComponent* const> PrototypeVisuals)
@@ -45,6 +56,14 @@ bool UVSCharacterPresentationComponent::Initialize(USkeletalMeshComponent* InBod
     Hold = HoldAsset.LoadSynchronous();
     Walk = WalkAsset.LoadSynchronous();
     PistolHold = PistolHoldAsset.LoadSynchronous();
+    KnifeHold = KnifeHoldAsset.LoadSynchronous();
+    KnifeWalk = KnifeWalkAsset.LoadSynchronous();
+    KnifeRun = KnifeRunAsset.LoadSynchronous();
+    KnifeEquip = KnifeEquipAsset.LoadSynchronous();
+    KnifeSlash = KnifeSlashAsset.LoadSynchronous();
+    KnifeStab = KnifeStabAsset.LoadSynchronous();
+    // The knife body needs its actions; without them keep the existing fallback pose.
+    if (!KnifeEquip || !KnifeSlash || !KnifeStab) { KnifeHold = nullptr; }
     // The hold is the minimum usable pose; without it keep the prototype rather
     // than showing an unanimated bind pose.
     if (!Mesh || !Hold) { return false; }
@@ -62,6 +81,8 @@ bool UVSCharacterPresentationComponent::Initialize(USkeletalMeshComponent* InBod
     }
     bActive = true;
     bShown = true;
+    bKnifeMode = false;
+    KnifeBody.Reset();
     Current = nullptr;
     PlayClip(Hold, 1.0f);
     SetComponentTickEnabled(true);
@@ -96,6 +117,31 @@ void UVSCharacterPresentationComponent::TickComponent(float DeltaTime, ELevelTic
     if (!bAlive) { return; }
 
     // Same slot source as the weapon views, so pose and visible weapon agree.
+    if (HasKnifePose() && Pawn->GetEquippedWeaponSlot() == EVSWeaponSlot::Knife && EnterKnifeMode())
+    {
+        const float Speed = Pawn->GetVelocity().Size2D();
+        UAnimSequence* Base = KnifeHold;
+        float Rate = 1.0f;
+        if (Speed > 20.0f && Speed > KnifeRunThreshold && KnifeRun)
+        {
+            Base = KnifeRun;
+            Rate = FMath::Clamp(Speed / KnifeRunClipSpeed, 0.75f, MaxWalkPlayRate);
+        }
+        else if (Speed > 20.0f && KnifeWalk)
+        {
+            Base = KnifeWalk;
+            Rate = FMath::Clamp(Speed / KnifeWalkClipSpeed, 0.5f, MaxWalkPlayRate);
+        }
+        KnifeBody->SetBase(Base, Rate);
+        return;
+    }
+    if (bKnifeMode)
+    {
+        // Leaving the knife: PlayClip below switches the mesh back to single-node playback.
+        bKnifeMode = false;
+        KnifeBody.Reset();
+        Current = nullptr;
+    }
     if (PistolHold && Pawn->GetEquippedWeaponSlot() == EVSWeaponSlot::Pistol)
     {
         PlayClip(PistolHold, 1.0f);
@@ -106,4 +152,37 @@ void UVSCharacterPresentationComponent::TickComponent(float DeltaTime, ELevelTic
     const bool bMoving = Speed > 20.0f && Walk;
     const float PlayRate = Speed > WalkClipSpeed ? FMath::Min(Speed / WalkClipSpeed, MaxWalkPlayRate) : 1.0f;
     PlayClip(bMoving ? Walk.Get() : Hold.Get(), bMoving ? PlayRate : 1.0f);
+}
+
+bool UVSCharacterPresentationComponent::EnterKnifeMode()
+{
+    USkeletalMeshComponent* Mesh = Body.Get();
+    if (!Mesh || !HasKnifePose()) { return false; }
+    if (!bKnifeMode || !KnifeBody.IsValid() || Mesh->GetAnimInstance() != KnifeBody.Get())
+    {
+        Mesh->SetAnimInstanceClass(UVSKnifeBodyAnimInstance::StaticClass());
+        KnifeBody = Cast<UVSKnifeBodyAnimInstance>(Mesh->GetAnimInstance());
+        Current = nullptr;
+        bKnifeMode = KnifeBody.IsValid();
+        if (bKnifeMode) { KnifeBody->SetBase(KnifeHold, 1.0f); }
+    }
+    return bKnifeMode;
+}
+
+void UVSCharacterPresentationComponent::PlayKnifeAction(EVSKnifeBodyAction Action)
+{
+    if (Action == EVSKnifeBodyAction::Stop)
+    {
+        // Never re-enters knife mode: holster/cancel only end a running action.
+        if (bKnifeMode && KnifeBody.IsValid()) { KnifeBody->StopAction(); }
+        return;
+    }
+    if (!EnterKnifeMode()) { return; }
+    switch (Action)
+    {
+    case EVSKnifeBodyAction::Equip: KnifeBody->PlayAction(KnifeEquip); break;
+    case EVSKnifeBodyAction::Slash: KnifeBody->PlayAction(KnifeSlash); break;
+    case EVSKnifeBodyAction::Stab: KnifeBody->PlayAction(KnifeStab); break;
+    case EVSKnifeBodyAction::Stop: break;
+    }
 }

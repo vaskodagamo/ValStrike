@@ -8,6 +8,16 @@ class UAnimSequence;
 class UPrimitiveComponent;
 class USkeletalMesh;
 class USkeletalMeshComponent;
+class UVSKnifeBodyAnimInstance;
+
+/** Third-person knife body actions, cued by UVSKnifePresentationComponent. */
+enum class EVSKnifeBodyAction : uint8
+{
+    Equip,
+    Slash,
+    Stab,
+    Stop,
+};
 
 /**
  * Cosmetic third-person body for the Meshy Urban Entry pilot character (INT-ART-01).
@@ -21,6 +31,10 @@ class USkeletalMeshComponent;
  * while moving (no pistol locomotion clip). Temporary pilot fallbacks (no approved
  * clips): every rifle movement direction plays the forward rifle walk, crouch keeps
  * the standing pose, and the body is hidden while dead. No jump/fire/reload/death.
+ *
+ * With the knife equipped (INT-ART-03) the body uses ART-27's in-place knife hold,
+ * walk or run, and equip/slash/stab play on the upper body (spine_01 and children)
+ * over that base, so moving attacks keep the legs (UVSKnifeBodyAnimInstance).
  */
 UCLASS(ClassGroup = (Presentation))
 class VALSTRIKE_API UVSCharacterPresentationComponent : public UActorComponent
@@ -44,6 +58,10 @@ public:
     // weapons-import-report.json). Use only when HasPistolPose().
     static const FTransform PistolGripOffset;
     bool HasPistolPose() const { return bActive && PistolHold != nullptr; }
+    // ART-27 knife body; requires hold, equip, slash and stab (walk/run optional).
+    bool HasKnifePose() const { return bActive && KnifeHold != nullptr; }
+    // Cosmetic; Stop blends an action out. Ignored unless the knife body is active.
+    void PlayKnifeAction(EVSKnifeBodyAction Action);
 
 protected:
     virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* TickFunction) override;
@@ -59,6 +77,27 @@ protected:
     // Stationary pistol ready hold, played whenever the pistol is equipped.
     UPROPERTY(EditDefaultsOnly, Category = "Character Presentation")
     TSoftObjectPtr<UAnimSequence> PistolHoldAsset;
+    // ART-27 knife clips (INT-ART-03 import, root motion off).
+    UPROPERTY(EditDefaultsOnly, Category = "Character Presentation|Knife")
+    TSoftObjectPtr<UAnimSequence> KnifeHoldAsset;
+    UPROPERTY(EditDefaultsOnly, Category = "Character Presentation|Knife")
+    TSoftObjectPtr<UAnimSequence> KnifeWalkAsset;
+    UPROPERTY(EditDefaultsOnly, Category = "Character Presentation|Knife")
+    TSoftObjectPtr<UAnimSequence> KnifeRunAsset;
+    UPROPERTY(EditDefaultsOnly, Category = "Character Presentation|Knife")
+    TSoftObjectPtr<UAnimSequence> KnifeEquipAsset;
+    UPROPERTY(EditDefaultsOnly, Category = "Character Presentation|Knife")
+    TSoftObjectPtr<UAnimSequence> KnifeSlashAsset;
+    UPROPERTY(EditDefaultsOnly, Category = "Character Presentation|Knife")
+    TSoftObjectPtr<UAnimSequence> KnifeStabAsset;
+    // Stance-foot ground speeds of the in-place knife walk/run clips (measured,
+    // knife-import-report.json) and the speed above which the run plays (cm/s).
+    UPROPERTY(EditDefaultsOnly, Category = "Character Presentation|Knife", meta = (ClampMin = "10"))
+    float KnifeWalkClipSpeed = 138.0f;
+    UPROPERTY(EditDefaultsOnly, Category = "Character Presentation|Knife", meta = (ClampMin = "10"))
+    float KnifeRunClipSpeed = 287.0f;
+    UPROPERTY(EditDefaultsOnly, Category = "Character Presentation|Knife", meta = (ClampMin = "10"))
+    float KnifeRunThreshold = 210.0f;
     // Ground speed of the in-place walk clip, measured from its stance foot (cm/s).
     UPROPERTY(EditDefaultsOnly, Category = "Character Presentation", meta = (ClampMin = "10"))
     float WalkClipSpeed = 145.0f;
@@ -68,12 +107,21 @@ protected:
 
 private:
     void PlayClip(UAnimSequence* Clip, float PlayRate);
+    bool EnterKnifeMode();
 
     TWeakObjectPtr<USkeletalMeshComponent> Body;
     UPROPERTY(Transient) TObjectPtr<UAnimSequence> Hold;
     UPROPERTY(Transient) TObjectPtr<UAnimSequence> Walk;
     UPROPERTY(Transient) TObjectPtr<UAnimSequence> PistolHold;
     UPROPERTY(Transient) TObjectPtr<UAnimSequence> Current;
+    UPROPERTY(Transient) TObjectPtr<UAnimSequence> KnifeHold;
+    UPROPERTY(Transient) TObjectPtr<UAnimSequence> KnifeWalk;
+    UPROPERTY(Transient) TObjectPtr<UAnimSequence> KnifeRun;
+    UPROPERTY(Transient) TObjectPtr<UAnimSequence> KnifeEquip;
+    UPROPERTY(Transient) TObjectPtr<UAnimSequence> KnifeSlash;
+    UPROPERTY(Transient) TObjectPtr<UAnimSequence> KnifeStab;
+    TWeakObjectPtr<UVSKnifeBodyAnimInstance> KnifeBody;
+    bool bKnifeMode = false;
     bool bActive = false;
     bool bShown = true;
 };

@@ -9,6 +9,7 @@
 #include "Damage/VSHitZoneSet.h"
 #include "Combat/VSCombatSmoke.h"
 #include "Presentation/VSCharacterPresentationComponent.h"
+#include "Presentation/VSKnifePresentationComponent.h"
 #include "Presentation/VSPistolPresentationComponent.h"
 #include "Presentation/VSRiflePresentationComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -48,6 +49,7 @@ AVSCharacter::AVSCharacter(const FObjectInitializer& ObjectInitializer)
     RiflePresentation = CreateDefaultSubobject<UVSRiflePresentationComponent>(TEXT("RiflePresentation"));
     PistolPresentation = CreateDefaultSubobject<UVSPistolPresentationComponent>(TEXT("PistolPresentation"));
     CharacterPresentation = CreateDefaultSubobject<UVSCharacterPresentationComponent>(TEXT("CharacterPresentation"));
+    KnifePresentation = CreateDefaultSubobject<UVSKnifePresentationComponent>(TEXT("KnifePresentation"));
     // 13 query-only zones (head, torso, arms, legs, feet) block the weapons' Visibility
     // traces. They are built at BeginPlay, follow crouch and switch off on death.
     HitZones = CreateDefaultSubobject<UVSHitZoneSet>(TEXT("HitZones"));
@@ -269,6 +271,11 @@ void AVSCharacter::BeginPlay()
         if (!PistolPresentation->Initialize(this, FirstPersonCamera, GetMesh()))
         {
             UE_LOG(LogValStrike, Error, TEXT("Pistol presentation failed to initialize on %s; no pistol visual is shown."), *GetName());
+        }
+        // After the body: the remote K01 needs the native hand_r and knife pose.
+        if (!KnifePresentation->Initialize(this, FirstPersonCamera, GetMesh()))
+        {
+            UE_LOG(LogValStrike, Error, TEXT("Knife presentation failed to initialize on %s; no knife visual is shown."), *GetName());
         }
     }
     ValStrikeTests::StartCombatSmoke();
