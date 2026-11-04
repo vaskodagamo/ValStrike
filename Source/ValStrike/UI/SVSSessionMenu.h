@@ -42,6 +42,7 @@ private:
     const TArray<TSharedPtr<SWidget>>& ActiveNavigation() const;
     void FocusWidget(const TSharedPtr<SWidget>& Widget) const;
     bool IsConnecting() const;
+    void CancelConnection(const TCHAR* Source);
     FReply Connect();
 
     float GetSensitivity() const;

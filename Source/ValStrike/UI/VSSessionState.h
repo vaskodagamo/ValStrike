@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Containers/Ticker.h"
 #include "Engine/EngineBaseTypes.h"
 #include "Subsystems/GameInstanceSubsystem.h"
 #include "VSSessionState.generated.h"
@@ -31,6 +32,11 @@ private:
     void NetworkFailure(UWorld* World, UNetDriver* Driver, ENetworkFailure::Type Type, const FString& Error);
     void TravelFailure(UWorld* World, ETravelFailure::Type Type, const FString& Error);
     void ShowFailure(const FText& Message);
+    // Catches a connect attempt that ends without a network or travel failure
+    // broadcast, so the menu can never stay at "Connecting…".
+    bool WatchConnectAttempt(float DeltaTime);
+    FTSTicker::FDelegateHandle ConnectWatchHandle;
+    int32 EndedAttemptTicks = 0;
     FDelegateHandle NetworkFailureHandle;
     FDelegateHandle TravelFailureHandle;
 };
