@@ -6,8 +6,12 @@
 #include "Engine/GameViewportClient.h"
 #include "Engine/LocalPlayer.h"
 #include "Engine/World.h"
+#include "GameFramework/Pawn.h"
+#include "GameFramework/PlayerState.h"
 #include "InputCoreTypes.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "Damage/VSDamageModel.h"
+#include "Scoreboard/VSScoreboardModel.h"
 #include "UI/SVSSessionMenu.h"
 #include "UI/VSJoinSmoke.h"
 #include "UI/VSServerAddress.h"
@@ -35,6 +39,7 @@ void AVSPlayerController::PlayerTick(float DeltaTime)
     Super::PlayerTick(DeltaTime);
     // Local player/viewport can become available after BeginPlay during travel.
     CreateSessionMenu();
+    SyncFeedbackLife();
 #if !UE_BUILD_SHIPPING && !UE_BUILD_TEST
     VSUISmoke::Tick(this, DeltaTime);
     VSSettingsSmoke::Tick(this, DeltaTime);
@@ -83,6 +88,153 @@ FVSMatchHUDData AVSPlayerController::GetMatchHUDData() const
 
 void AVSPlayerController::CancelObjectiveInput() {}
 void AVSPlayerController::RequestMatchRematch() {}
+
+void AVSPlayerController::SendHitConfirmed(APawn* ShooterPawn, bool bHeadshot, bool bKilled, float Damage)
+{
+    if (!HasAuthority() || !ShooterPawn)
+    {
+        return;
+    }
+    using namespace VSHitFeedback;
+    const uint8 Flags = static_cast<uint8>((bHeadshot ? FlagHeadshot : 0) | (bKilled ? FlagKilled : 0));
+    if (bKilled) { ClientKillConfirmed(++FeedbackSequence, ShooterPawn, Flags, Damage); }
+    else { ClientHitConfirmed(++FeedbackSequence, ShooterPawn, Flags, Damage); }
+}
+
+void AVSPlayerController::SendDamageTaken(APawn* VictimPawn, const APawn* InstigatorPawn, APlayerState* Killer,
+    uint8 Weapon, bool bHeadshot, bool bKilled, float Damage)
+{
+    if (!HasAuthority() || !VictimPawn)
+    {
+        return;
+    }
+    using namespace VSHitFeedback;
+    // Only the instigator's location travels; the client turns it into a direction.
+    const bool bSource = InstigatorPawn && InstigatorPawn != VictimPawn;
+    const FVector Source = bSource ? InstigatorPawn->GetActorLocation() : FVector::ZeroVector;
+    const uint8 Flags = static_cast<uint8>(
+        (bHeadshot ? FlagHeadshot : 0) | (bKilled ? FlagKilled : 0) | (bSource ? FlagHasSource : 0));
+    if (bKilled) { ClientEliminated(++FeedbackSequence, VictimPawn, Flags, Damage, Source, Killer, Weapon); }
+    else { ClientDamageTaken(++FeedbackSequence, VictimPawn, Flags, Damage, Source); }
+}
+
+void AVSPlayerController::ClientHitConfirmed_Implementation(uint32 Sequence, APawn* ForPawn, uint8 Flags, float Damage)
+{
+    ReceiveHitConfirmed(Sequence, ForPawn, Flags, Damage);
+}
+
+void AVSPlayerController::ClientKillConfirmed_Implementation(uint32 Sequence, APawn* ForPawn, uint8 Flags, float Damage)
+{
+    ReceiveHitConfirmed(Sequence, ForPawn, Flags, Damage);
+}
+
+void AVSPlayerController::ClientDamageTaken_Implementation(uint32 Sequence, APawn* ForPawn, uint8 Flags, float Damage,
+    FVector_NetQuantize Source)
+{
+    ReceiveDamageTaken(Sequence, ForPawn, Flags, Damage, Source, nullptr, 0);
+}
+
+void AVSPlayerController::ClientEliminated_Implementation(uint32 Sequence, APawn* ForPawn, uint8 Flags, float Damage,
+    FVector_NetQuantize Source, APlayerState* Killer, uint8 Weapon)
+{
+    ReceiveDamageTaken(Sequence, ForPawn, Flags, Damage, Source, Killer, Weapon);
+}
+
+double AVSPlayerController::FeedbackNow() const
+{
+    // Real time: feedback lifetimes are presentation and ignore pause/dilation.
+    return GetWorld() ? GetWorld()->GetRealTimeSeconds() : 0.0;
+}
+
+bool AVSPlayerController::SyncFeedbackLife()
+{
+    if (!IsLocalController())
+    {
+        return false;
+    }
+    if (GetPawn() != FeedbackPawn.Get())
+    {
+        FeedbackPawn = GetPawn();
+        Feedback.BeginLife();
+        KillerName.Reset();
+    }
+    return FeedbackPawn.IsValid();
+}
+
+void AVSPlayerController::ReceiveHitConfirmed(uint32 Sequence, APawn* ForPawn, uint8 Flags, float Damage)
+{
+    // Unresolved or previous-life pawns drop the event rather than mark a new life.
+    if (!SyncFeedbackLife() || !ForPawn || ForPawn != FeedbackPawn.Get())
+    {
+        return;
+    }
+    VSHitFeedback::Event Event;
+    Event.sequence = Sequence;
+    Event.flags = static_cast<uint8>(Flags & (VSHitFeedback::FlagHeadshot | VSHitFeedback::FlagKilled));
+    Event.damage = FMath::IsFinite(Damage) ? FMath::Max(0.0f, Damage) : 0.0f;
+    Feedback.OnHitConfirmed(Event, FeedbackNow());
+}
+
+void AVSPlayerController::ReceiveDamageTaken(uint32 Sequence, APawn* ForPawn, uint8 Flags, float Damage,
+    const FVector& Source, APlayerState* Killer, uint8 Weapon)
+{
+    if (!SyncFeedbackLife() || !ForPawn || ForPawn != FeedbackPawn.Get())
+    {
+        return;
+    }
+    VSHitFeedback::Event Event;
+    Event.sequence = Sequence;
+    Event.flags = static_cast<uint8>(Flags & (VSHitFeedback::FlagHeadshot | VSHitFeedback::FlagKilled | VSHitFeedback::FlagHasSource));
+    Event.damage = FMath::IsFinite(Damage) ? FMath::Max(0.0f, Damage) : 0.0f;
+    const FVector Offset = Source - ForPawn->GetActorLocation();
+    if (Offset.SizeSquared2D() < 1.0f) { Event.flags = static_cast<uint8>(Event.flags & ~VSHitFeedback::FlagHasSource); }
+    Event.sourceYawDeg = static_cast<float>(Offset.Rotation().Yaw);
+    Event.weapon = Weapon;
+    const bool bWasEliminated = Feedback.CurrentDeath().eliminated;
+    if (Feedback.OnDamageTaken(Event, FeedbackNow()) == VSHitFeedback::Outcome::Shown &&
+        !bWasEliminated && Feedback.CurrentDeath().eliminated)
+    {
+        KillerName = Killer ? VSScoreboardModel::DisplayName(Killer->GetPlayerName()) : FString();
+    }
+}
+
+FVSHitFeedbackView AVSPlayerController::GetHitFeedbackView() const
+{
+    FVSHitFeedbackView View;
+    if (!IsLocalController() || !GetPawn() || GetPawn() != FeedbackPawn.Get())
+    {
+        return View;
+    }
+    const double Now = FeedbackNow();
+    const VSHitFeedback::Marker Marker = Feedback.CurrentMarker(Now);
+    View.Marker = Marker.kind;
+    View.MarkerAlpha = Marker.alpha;
+    View.MarkerDamage = Marker.damage;
+
+    VSHitFeedback::Indicator Indicators[VSHitFeedback::MaxIndicators];
+    const int32 Count = static_cast<int32>(Feedback.CurrentIndicators(Now, Indicators, VSHitFeedback::MaxIndicators));
+    const float ViewYaw = static_cast<float>(GetControlRotation().Yaw);
+    for (int32 Index = 0; Index < Count; ++Index)
+    {
+        View.Indicators.Add({VSHitFeedback::DeltaDegrees(ViewYaw, Indicators[Index].sourceYawDeg), Indicators[Index].alpha});
+    }
+
+    const VSHitFeedback::Death& Death = Feedback.CurrentDeath();
+    View.bEliminated = Death.eliminated;
+    if (Death.eliminated)
+    {
+        namespace VSD = ValStrike::Damage;
+        const VSD::WeaponClass Weapon = static_cast<VSD::WeaponClass>(Death.weapon);
+        View.EliminatedText = KillerName.IsEmpty() ? FString(TEXT("Eliminated"))
+            : FString::Printf(TEXT("Eliminated by %s"), *KillerName);
+        if (VSD::IsValidWeapon(Weapon))
+        {
+            View.EliminatedText += FString(TEXT(" \u00B7 ")) + FString(UTF8_TO_TCHAR(VSD::WeaponName(Weapon)));
+        }
+        if (Death.headshot) { View.EliminatedText += TEXT(" \u00B7 headshot"); }
+    }
+    return View;
+}
 
 void AVSPlayerController::CreateSessionMenu()
 {

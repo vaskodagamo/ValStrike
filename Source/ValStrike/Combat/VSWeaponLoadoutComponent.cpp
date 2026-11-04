@@ -35,7 +35,11 @@ void UVSWeaponLoadoutComponent::BeginPlay()
 
 void UVSWeaponLoadoutComponent::EndPlay(const EEndPlayReason::Type Reason)
 {
-    if (GetWorld()) { GetWorld()->GetTimerManager().ClearTimer(EquipTimer); }
+    if (GetWorld())
+    {
+        GetWorld()->GetTimerManager().ClearTimer(EquipTimer);
+        GetWorld()->GetTimerManager().ClearTimer(SendTimer);
+    }
     Super::EndPlay(Reason);
 }
 
@@ -57,12 +61,36 @@ UVSWeaponComponent* UVSWeaponLoadoutComponent::GetWeapon(EVSWeaponSlot Slot) con
     return nullptr;
 }
 
+EVSWeaponSlot UVSWeaponLoadoutComponent::GetEquippedSlot() const
+{
+    // Only the owning client ever activates the prediction.
+    return Prediction.active ? static_cast<EVSWeaponSlot>(Prediction.equipped) : State.Equipped;
+}
+
+bool UVSWeaponLoadoutComponent::IsEquipping() const
+{
+    return Prediction.active ? GetWorld()->GetTimeSeconds() < Prediction.readyTime : State.bEquipping;
+}
+
+VSWeaponLoadoutRules::ServerView UVSWeaponLoadoutComponent::GetServerView() const
+{
+    VSWeaponLoadoutRules::ServerView View;
+    View.equipped = static_cast<VSWeaponLoadoutRules::Slot>(State.Equipped);
+    View.previous = static_cast<VSWeaponLoadoutRules::Slot>(State.Previous);
+    View.equipping = State.bEquipping;
+    View.equipCount = State.EquipCount;
+    View.ack = State.AckSequence;
+    return View;
+}
+
 EVSWeaponReadiness UVSWeaponLoadoutComponent::GetReadiness(const UVSWeaponComponent* Weapon) const
 {
     if (!Weapon || Weapon != GetEquippedWeapon()) { return EVSWeaponReadiness::Holstered; }
+    // The owner's predicted readiness only gates its own requests; the server
+    // still rejects fire for a weapon that is holstered or equipping there.
     const bool bReady = GetOwner()->HasAuthority()
         ? VSWeaponLoadoutRules::IsReady(true, GetWorld()->GetTimeSeconds(), EquipReadyTime)
-        : !State.bEquipping;
+        : !IsEquipping();
     return bReady ? EVSWeaponReadiness::Ready : EVSWeaponReadiness::Equipping;
 }
 
@@ -78,14 +106,53 @@ void UVSWeaponLoadoutComponent::RequestEquip(EVSEquipRequest Request)
 {
     AVSCharacter* Pawn = Character();
     if (!Pawn || !Pawn->IsLocallyControlled() || !Pawn->CanMatchCombat()) { return; }
-    const EVSWeaponSlot Target = Request == EVSEquipRequest::Last ? State.Previous : static_cast<EVSWeaponSlot>(Request);
-    // Mirror the server's duplicate and rate checks so a normal client does not
-    // send requests that can only be rejected.
     const double Now = GetWorld()->GetTimeSeconds();
-    if (Target == State.Equipped || Now - LastLocalRequestTime < MinSwitchInterval) { return; }
-    LastLocalRequestTime = Now;
+    if (Pawn->HasAuthority())
+    {
+        // A listen-server host switches on the call itself; nothing to predict.
+        // Mirror the server's duplicate and rate checks.
+        const EVSWeaponSlot Target = Request == EVSEquipRequest::Last ? State.Previous : static_cast<EVSWeaponSlot>(Request);
+        if (Target == State.Equipped || Now - LastLocalRequestTime < MinSwitchInterval) { return; }
+        LastLocalRequestTime = Now;
+        Pawn->StopCombatInput();
+        ServerRequestEquip(static_cast<uint8>(Request), 0);
+        return;
+    }
+    // Switch the local view and start the equip timer now; the request follows
+    // within the server's rate limit, coalesced to the newest press.
+    if (!Prediction.Press(static_cast<uint8>(Request), GetServerView(), Now, EquipDuration)) { return; }
     Pawn->StopCombatInput();
-    ServerRequestEquip(static_cast<uint8>(Request));
+    SendPredictedRequest();
+}
+
+void UVSWeaponLoadoutComponent::SendPredictedRequest()
+{
+    UWorld* World = GetWorld();
+    const AVSCharacter* Pawn = Character();
+    if (!World || !Pawn) { return; }
+    const double Now = World->GetTimeSeconds();
+    // A queued press that can no longer be accepted falls back to server state.
+    if (!Pawn->CanMatchCombat()) { Prediction.DropQueued(); }
+    uint32 Sequence = 0;
+    VSWeaponLoadoutRules::Slot Target = VSWeaponLoadoutRules::Slot::Rifle;
+    if (Prediction.TakeSend(Now, MinSwitchInterval, Sequence, Target))
+    {
+        ServerRequestEquip(static_cast<uint8>(Target), Sequence);
+    }
+    else if (Prediction.queued)
+    {
+        const double Delay = FMath::Max(Prediction.NextSendTime(MinSwitchInterval) - Now, 0.001);
+        World->GetTimerManager().SetTimer(SendTimer, this, &UVSWeaponLoadoutComponent::SendPredictedRequest, static_cast<float>(Delay), false);
+        return;
+    }
+    // A cancelled or dropped request may already be settled by the last snapshot.
+    ReconcilePrediction();
+    StopStowedWeapons();
+}
+
+void UVSWeaponLoadoutComponent::ReconcilePrediction()
+{
+    if (Prediction.active) { Prediction.Reconcile(GetServerView(), GetWorld()->GetTimeSeconds()); }
 }
 
 void UVSWeaponLoadoutComponent::Reject(FName Reason)
@@ -95,9 +162,16 @@ void UVSWeaponLoadoutComponent::Reject(FName Reason)
 #endif
 }
 
-void UVSWeaponLoadoutComponent::ServerRequestEquip_Implementation(uint8 Request)
+void UVSWeaponLoadoutComponent::ServerRequestEquip_Implementation(uint8 Request, uint32 Sequence)
 {
     if (!HasValidOwner()) { Reject(TEXT("owner")); return; }
+    // Ack every processed sequenced request, accepted or not, so the owner can
+    // keep or snap back its prediction. Reliable ordering keeps acks monotonic.
+    if (Sequence != 0)
+    {
+        State.AckSequence = Sequence;
+        GetOwner()->ForceNetUpdate();
+    }
     namespace Rules = VSWeaponLoadoutRules;
     AVSCharacter* Pawn = Character();
     Rules::Request In;
@@ -154,10 +228,17 @@ void UVSWeaponLoadoutComponent::FinishEquip()
 
 void UVSWeaponLoadoutComponent::OnRep_State()
 {
+    ReconcilePrediction();
+    StopStowedWeapons();
+}
+
+void UVSWeaponLoadoutComponent::StopStowedWeapons()
+{
     // A stowed weapon never keeps a held local fire timer.
+    const EVSWeaponSlot Equipped = GetEquippedSlot();
     for (const EVSWeaponSlot Slot : {EVSWeaponSlot::Rifle, EVSWeaponSlot::Pistol})
     {
-        if (Slot != State.Equipped)
+        if (Slot != Equipped)
         {
             if (UVSWeaponComponent* Weapon = GetWeapon(Slot)) { Weapon->StopFire(); }
         }
@@ -171,7 +252,7 @@ void UVSWeaponLoadoutComponent::DevelopmentRequestEquip(uint8 RawRequest)
     if (FParse::Value(FCommandLine::Get(), TEXT("VSWeaponSmoke="), Role)
         && (Role == TEXT("server") || Role == TEXT("driver") || Role == TEXT("observer")))
     {
-        ServerRequestEquip(RawRequest);
+        ServerRequestEquip(RawRequest, 0);
     }
 }
 
@@ -184,8 +265,10 @@ bool UVSWeaponLoadoutComponent::DevelopmentReset()
     if (!GetOwner()->HasAuthority() || !bOptIn) { return false; }
     GetWorld()->GetTimerManager().ClearTimer(EquipTimer);
     const uint32 EquipCount = State.EquipCount;
+    const uint32 AckSequence = State.AckSequence;
     State = FVSLoadoutState();
     State.EquipCount = EquipCount;
+    State.AckSequence = AckSequence;
     EquipReadyTime = 0.0;
     LastSwitchTime = -1.0e9;
     OnRep_State();

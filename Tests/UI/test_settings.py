@@ -3,9 +3,9 @@
 
 Two sequential Development editor game processes share an isolated -UserDir, so
 the checkout's own GameUserSettings.ini is never read or written. The first run
-starts from unset settings, changes sensitivity and window mode through the
-menu and quits; the second run starts without window overrides and must restore
-both. Local evidence only: no server, packaged client or cross-machine claims.
+starts from unset settings, changes sensitivity, volume and window mode through
+the menu and quits; the second run starts without window overrides and must
+restore them. Local evidence only: no server, packaged client or cross-machine claims.
 """
 
 import argparse
@@ -28,12 +28,13 @@ import ue
 from test_movement import stop
 
 FIRST_CHECKS = (
-    "fresh_settings_have_no_sensitivity", "unset_sensitivity_uses_default", "initial_window_is_windowed_960x540",
+    "fresh_settings_have_no_sensitivity", "unset_volume_uses_default", "unset_sensitivity_uses_default", "initial_window_is_windowed_960x540",
     "default_sensitivity_turns_expected_degrees", "escape_opens_menu", "menu_focuses_resume",
     "tab_reaches_settings_button", "enter_opens_settings", "settings_focuses_slider", "settings_show_default_sensitivity", "settings_show_current_window",
     "slider_right_arrow_applies_immediately", "slider_left_arrow_steps_back", "tab_reaches_sensitivity_value",
     "typed_value_clamps_to_maximum", "invalid_text_rejected_with_error", "typed_value_applies_immediately",
-    "sensitivity_in_game_user_settings", "tab_reaches_window_mode", "left_selects_windowed_fullscreen",
+    "sensitivity_in_game_user_settings", "tab_reaches_volume_slider", "volume_left_arrow_applies_immediately",
+    "tab_reaches_volume_value", "tab_reaches_window_mode", "left_selects_windowed_fullscreen",
     "window_mode_waits_for_apply", "tab_skips_fixed_desktop_resolution", "windowed_fullscreen_applied",
     "windowed_fullscreen_saved_to_game_user_settings", "shift_tab_returns_to_window_mode",
     "mouse_click_window_mode_arrow", "arrow_selects_windowed", "tab_reaches_resolution",
@@ -46,7 +47,7 @@ FIRST_CHECKS = (
 )
 EXCLUSIVE_CHECKS = ("left_selects_fullscreen", "click_apply_display", "exclusive_fullscreen_applied")
 RESTART_CHECKS = (
-    "restart_loads_saved_sensitivity", "restart_restores_windowed_1280x720", "restart_look_uses_saved_sensitivity",
+    "restart_loads_saved_sensitivity", "restart_loads_saved_volume", "restart_restores_windowed_1280x720", "restart_look_uses_saved_sensitivity",
     "restart_escape_opens_menu", "restart_tab_reaches_settings_button", "restart_enter_opens_settings",
     "restart_settings_show_saved_values", "restart_escape_twice_resumes",
 )
@@ -183,6 +184,8 @@ def main(argv=None):
     engine_settings = sections.get("/Script/Engine.GameUserSettings", {})
     checks.append({"check": "disk:sensitivity_saved", "passed": ours.get("MouseSensitivity") == "0.360",
                    "value": ours.get("MouseSensitivity")})
+    checks.append({"check": "disk:volume_saved", "passed": ours.get("MasterVolume") == "95",
+                   "value": ours.get("MasterVolume")})
     checks.append({"check": "disk:windowed_1280x720_saved", "passed": engine_settings.get("FullscreenMode") == "2"
                    and engine_settings.get("ResolutionSizeX") == "1280" and engine_settings.get("ResolutionSizeY") == "720",
                    "values": {key: engine_settings.get(key) for key in ("FullscreenMode", "ResolutionSizeX", "ResolutionSizeY")}})
