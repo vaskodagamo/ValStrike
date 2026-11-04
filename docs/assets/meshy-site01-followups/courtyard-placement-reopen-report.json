@@ -1,0 +1,348 @@
+{
+  "engine": "5.8.4-58902052+++UE5+Release-5.8",
+  "map": "/Game/Maps/Site01/VS_Site01",
+  "mode": "reopen_inspect",
+  "recipe": "docs/assets/meshy-site01/courtyard-pilot/placement.md",
+  "runtime_verified": false,
+  "preflight": null,
+  "verification": {
+    "preexisting_actors_unchanged": 86,
+    "placed": [
+      {
+        "label": "VS_ART25_WallWest",
+        "world_bounds_cm": [
+          [
+            400.0,
+            1491.793,
+            0.0
+          ],
+          [
+            594.243,
+            1510.0,
+            300.0
+          ]
+        ],
+        "collision": "NoCollision"
+      },
+      {
+        "label": "VS_ART25_DoorRecess",
+        "world_bounds_cm": [
+          [
+            595.243,
+            1461.257,
+            0.0
+          ],
+          [
+            850.455,
+            1510.0,
+            300.0
+          ]
+        ],
+        "collision": "NoCollision"
+      },
+      {
+        "label": "VS_ART25_WallEast",
+        "world_bounds_cm": [
+          [
+            851.456,
+            1491.793,
+            0.0
+          ],
+          [
+            1045.698,
+            1510.0,
+            300.0
+          ]
+        ],
+        "collision": "NoCollision"
+      },
+      {
+        "label": "VS_ART25_RoofParapet1",
+        "world_bounds_cm": [
+          [
+            421.849,
+            1462.627,
+            394.0
+          ],
+          [
+            621.849,
+            1500.0,
+            457.591
+          ]
+        ],
+        "collision": "NoCollision"
+      },
+      {
+        "label": "VS_ART25_RoofParapet2",
+        "world_bounds_cm": [
+          [
+            622.849,
+            1462.627,
+            394.0
+          ],
+          [
+            822.849,
+            1500.0,
+            457.591
+          ]
+        ],
+        "collision": "NoCollision"
+      },
+      {
+        "label": "VS_ART25_RoofParapet3",
+        "world_bounds_cm": [
+          [
+            823.849,
+            1462.627,
+            394.0
+          ],
+          [
+            1023.849,
+            1500.0,
+            457.591
+          ]
+        ],
+        "collision": "NoCollision"
+      }
+    ],
+    "facade_pawn_traces": [
+      {
+        "x": 450,
+        "hit": true,
+        "impact_cm": [
+          450.0,
+          1500.0,
+          90.0
+        ],
+        "actor": "VS_ServicePanel_1_2"
+      },
+      {
+        "x": 600,
+        "hit": true,
+        "impact_cm": [
+          600.0,
+          1500.0,
+          90.0
+        ],
+        "actor": "VS_ServicePanel_1_2"
+      },
+      {
+        "x": 722.849,
+        "hit": true,
+        "impact_cm": [
+          722.849,
+          1500.0,
+          90.0
+        ],
+        "actor": "VS_ServicePanel_1_2"
+      },
+      {
+        "x": 845,
+        "hit": true,
+        "impact_cm": [
+          845.0,
+          1500.0,
+          90.0
+        ],
+        "actor": "VS_ServicePanel_1_3"
+      },
+      {
+        "x": 1000,
+        "hit": true,
+        "impact_cm": [
+          1000.0,
+          1500.0,
+          90.0
+        ],
+        "actor": "VS_ServicePanel_1_3"
+      }
+    ],
+    "visibility_trace": {
+      "hit": true,
+      "impact_cm": [
+        722.849,
+        1500.0,
+        152.0
+      ],
+      "actor": "VS_ServicePanel_1_2"
+    },
+    "directional_lights_after": {
+      "VS_Sun": {
+        "intensity": 3.0,
+        "cast_shadows": true,
+        "atmosphere_sun_light": true,
+        "forward_shading_priority": 1,
+        "mobility": "<ComponentMobility.MOVABLE: 2>",
+        "light_color_rgba": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "rotation": [
+          -0.0,
+          -48.0,
+          -35.0
+        ]
+      },
+      "VS_StylizedFill": {
+        "intensity": 1.5,
+        "cast_shadows": false,
+        "atmosphere_sun_light": true,
+        "forward_shading_priority": 0,
+        "mobility": "<ComponentMobility.MOVABLE: 2>",
+        "light_color_rgba": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "rotation": [
+          -0.0,
+          -45.0,
+          145.0
+        ]
+      }
+    }
+  },
+  "passed": true,
+  "error": null,
+  "captures": [
+    {
+      "id": "after_approach_service_route",
+      "camera_cm": [
+        100,
+        1750,
+        152
+      ],
+      "target_cm": [
+        690,
+        1510,
+        185
+      ],
+      "file": "docs/assets/meshy-site01-followups/courtyard-previews/after_approach_service_route.png",
+      "sha256": "99f2ceb7e071ebb76c5ff6887932deb19097b26872a8bdfeb9dc77fe00e9ca54"
+    },
+    {
+      "id": "after_route_facing_facade",
+      "camera_cm": [
+        722.849,
+        1750,
+        152
+      ],
+      "target_cm": [
+        722.849,
+        1500,
+        170
+      ],
+      "file": "docs/assets/meshy-site01-followups/courtyard-previews/after_route_facing_facade.png",
+      "sha256": "a81e39c7ed30035106cca583640e0033e30f9a13664b7fbb7b25b6eb147c3dfd"
+    },
+    {
+      "id": "after_route_crouched",
+      "camera_cm": [
+        722.849,
+        1750,
+        62
+      ],
+      "target_cm": [
+        722.849,
+        1500,
+        120
+      ],
+      "file": "docs/assets/meshy-site01-followups/courtyard-previews/after_route_crouched.png",
+      "sha256": "34eb2f9bfcb09f776123ec753214e8a7742287c45d5ca1dee1696c4a6c0fb4f4"
+    },
+    {
+      "id": "after_oblique_from_west",
+      "camera_cm": [
+        300,
+        1820,
+        152
+      ],
+      "target_cm": [
+        720,
+        1505,
+        190
+      ],
+      "file": "docs/assets/meshy-site01-followups/courtyard-previews/after_oblique_from_west.png",
+      "sha256": "581f296198a07c81bdb8b1fafd7c0d7911a9d989cc0afec2c9333a072ebf1561"
+    },
+    {
+      "id": "after_oblique_from_east",
+      "camera_cm": [
+        1150,
+        1820,
+        152
+      ],
+      "target_cm": [
+        720,
+        1505,
+        190
+      ],
+      "file": "docs/assets/meshy-site01-followups/courtyard-previews/after_oblique_from_east.png",
+      "sha256": "d8bc3e691dc39ff8c4e6f5a1c80d61bb75ac78faab7976c0a57017d997d67c91"
+    },
+    {
+      "id": "after_close_west_joint",
+      "camera_cm": [
+        600,
+        1590,
+        150
+      ],
+      "target_cm": [
+        595,
+        1500,
+        150
+      ],
+      "file": "docs/assets/meshy-site01-followups/courtyard-previews/after_close_west_joint.png",
+      "sha256": "4d470922abd8934f6321af6af66f312607d3b7300d082e67670a66cc99934b04"
+    },
+    {
+      "id": "after_close_blind_recess",
+      "camera_cm": [
+        722.849,
+        1620,
+        165
+      ],
+      "target_cm": [
+        722.849,
+        1470,
+        150
+      ],
+      "file": "docs/assets/meshy-site01-followups/courtyard-previews/after_close_blind_recess.png",
+      "sha256": "723495ce901c99c16501ffb6ff25acdf4739d89479b6f6b80fe1d2c5abc9fe86"
+    },
+    {
+      "id": "after_overhead_diagnostic",
+      "camera_cm": [
+        722.849,
+        1760,
+        1500
+      ],
+      "target_cm": [
+        722.849,
+        1755,
+        0
+      ],
+      "file": "docs/assets/meshy-site01-followups/courtyard-previews/after_overhead_diagnostic.png",
+      "sha256": "6a15644ebf503dafb571592dd2fe6f5f1635cdfc260a43ea98442e4e3a93290e"
+    },
+    {
+      "id": "after_roof_diagnostic",
+      "camera_cm": [
+        722.849,
+        2000,
+        650
+      ],
+      "target_cm": [
+        722.849,
+        1480,
+        420
+      ],
+      "file": "docs/assets/meshy-site01-followups/courtyard-previews/after_roof_diagnostic.png",
+      "sha256": "29df961418fccaf6b6dde4d46f5561e622c8c83721e258b82771659e769cc694"
+    }
+  ],
+  "map_sha256": "9f28c23b3e8e3d035c671921b05f7200b64dff1da312abab6d7a27fc99f992aa"
+}

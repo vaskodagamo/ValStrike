@@ -8,3 +8,9 @@
 - For the gameplay owner: D3 shows no in-motion corrections in this one valid `typical` run on #97; closure is the owner's/lead's call. GPF-02/03 checks passed as above.
 - Limits: stationary pistol pose only (glides when moving); ART-23 close-up glove limits; existing crouch/directional/death fallbacks unchanged. Not run: two-Mac LAN, packaged, four players.
 - Phase B status: ART-25 W01/W08/W09 source `31b74bd` and readiness `3089486` (handoff `0c70b2f`) are frozen in the `art25-courtyard-structure` checkout, but **not published**: its handoff records that publishing the payload to the public repository awaits direct user authorization. Phase B native work can proceed locally from those frozen commits; no branch containing ART-25 files is pushed until that authorization exists.
+
+## 2026-11-04 (Europe/Berlin) — Phase B verified locally; publication awaits user authorization
+
+- Candidate `c7386b6c054ca2ad4bc58ee8aec29a6020a37d4e` on local branch `claude/int-art-02b-site01-courtyard` (phase A + ART-25 `0c70b2f`). Map/assets only; phase A build reused.
+- Imported/reopened W01/W08/W09 (bounds = ART-25 expectations); placed the six-piece north service facade section with ART-25's pivots; 86 existing actors unchanged; route collision/visibility at Y=1500 unchanged; Site01 inspection 486/486 (same set); match 46/46; Site01 weapons match 29/29. Light warning removed by `VS_Sun` ForwardShadingPriority=1 (engine already chose it). [Evidence](../assets/meshy-site01-followups/README.md).
+- Stop: not pushed. Pushing this branch publishes ART-25's source payload, which its handoff reserves for direct user authorization. Next trigger: user authorizes ART-25 publication (via ART-25's own PR or this PR) → push and open the phase B PR.

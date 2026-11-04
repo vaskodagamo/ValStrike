@@ -78,6 +78,7 @@ Both Macs need the same commit and their own build. **This two-Mac LAN run has n
 ## What to look at
 
 - The other player: Urban Entry body, rifle shouldered in both hands, walking when moving; with the pistol (key 2), a two-handed pistol ready pose.
+- Site01 (INT-ART-02 phase B branch only, once published): a grey concrete wall/blind-recess/wall section on the north side of the service building along the north service route, with three roof parapets above it.
 - Site01: four light concrete tiles in the Gallery (around X 100, Y 950), a dark panel on the service-building wall facing the Gallery, a long crate on the service roof, and Meshy cube crates replacing the north crate and the two-high site crate stack. Walk against the replaced crates: collision is the original crate collision.
 - Your own view: unchanged first-person rifle/pistol, no body parts blocking the camera.
 
@@ -90,5 +91,5 @@ Both Macs need the same commit and their own build. **This two-Mac LAN run has n
 - **Pistol (remote):** held two-handed in a stationary ready pose (INT-ART-02). While moving with the pistol the body keeps that pose and glides; there is no pistol walk. Glove/finger contact is pilot quality up close.
 - **Rifle size:** the existing R01 rifle is a temporary baseline and looks large next to the 170 cm character (ART-17/18 replacements are separate work).
 - **Character quality:** generated face/hair, cloth folds and finger contact are pilot quality, not close-up/hero quality.
-- **Lighting message:** Site01 shows an orange on-screen "multiple directional lights" development warning; it comes from the map's existing two directional lights and predates this change.
+- **Lighting message:** Site01 shows an orange on-screen "multiple directional lights" development warning on the INT-ART-01 and phase A revisions; INT-ART-02 phase B removes it (same sun, no visual change).
 - Not verified: two-Mac LAN, packaged builds, Windows/Linux, four players, performance.
