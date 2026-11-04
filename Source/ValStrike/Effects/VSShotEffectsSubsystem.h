@@ -31,6 +31,7 @@ struct FVSShotEffectRecord
     uint32 RepresentedShots = 0;
     FVector Eye = FVector::ZeroVector;
     FVector Direction = FVector::ForwardVector;
+    VSShotEffects::DirectionSource DirectionSource = VSShotEffects::DirectionSource::BaseAim;
     FVector TracerStart = FVector::ZeroVector;
     FVector TracerEnd = FVector::ZeroVector;
     FVector ImpactPoint = FVector::ZeroVector;
@@ -79,6 +80,9 @@ struct FVSShotEffectsStats
     uint32 CharacterMarks = 0;
     uint32 SelfHitsSuppressed = 0;
     uint32 Baselines = 0;        // Counters adopted without effects (first sight, reset, stale jump).
+    uint32 PredictedDirections = 0; // Effects traced along the local shooter's predicted spread.
+    uint32 ServerDirections = 0;    // Effects traced along this machine's server-resolved shot.
+    uint32 BaseAimDirections = 0;   // Effects traced along base aim (no shot direction known).
     uint32 TracersRecycled = 0;
     uint32 MarksRecycled = 0;
     int32 MaxActiveMarks = 0;
@@ -92,10 +96,12 @@ struct FVSShotEffectsStats
  * gameplay state. It is never created on a dedicated server.
  *
  * The impact point comes from a cosmetic trace that mirrors the server's rifle
- * trace (pawn view location, base aim, rifle range, Visibility channel,
- * shooter ignored). For moving targets, or a shooter turning between the shot
- * and its replication, the cosmetic point can differ from the server's
- * authoritative hit.
+ * trace (pawn view location, rifle range, Visibility channel, shooter ignored).
+ * Its direction includes recoil/spread where this machine knows it: the local
+ * shooter's prediction for that accepted shot, or the server-resolved shot on
+ * a listen host. Remote clients have no replicated shot direction and trace
+ * base aim. For moving targets, or a shooter turning between the shot and its
+ * replication, the cosmetic point can differ from the server's authoritative hit.
  */
 UCLASS()
 class VALSTRIKE_API UVSShotEffectsSubsystem : public UTickableWorldSubsystem
@@ -145,11 +151,16 @@ private:
     struct FShotWatch
     {
         VSShotEffects::ShotCounter Counter;
+        // Locally controlled shooter: predicted directions awaiting acceptance.
+        VSShotEffects::PredictedShots<FVector> Predicted;
+        // Server-resolved shot id the latest effect used (0: none yet).
+        uint32 LastServerShotId = 0;
     };
 
     bool IsEffectsWorld() const;
     void ObserveCharacters(double Now);
-    void SpawnShotEffect(const AVSCharacter& Shooter, const UActorComponent& Weapon, uint32 Represented, double Now);
+    void SpawnShotEffect(const AVSCharacter& Shooter, const UActorComponent& Weapon, uint32 Represented,
+        VSShotEffects::DirectionSource Source, const FVector& ShotDirection, double Now);
     FVector TracerOrigin(const AVSCharacter& Shooter, bool bFirstPersonView, const FVector& Eye, const FRotator& Aim,
         bool& bOutMuzzle, const USceneComponent*& OutMuzzle) const;
     void WarmUp();

@@ -7,6 +7,8 @@
 #include "VSMatchGameMode.h"
 #include "VSMatchGameState.h"
 #include "VSMatchPlayerState.h"
+#include "VSSpectateRules.h"
+#include "../Combat/VSHealthComponent.h"
 #include "../Rules/VSMatchRules.h"
 #include "Tests/VSMatchSmoke.h"
 #include "../VSCharacter.h"
@@ -45,12 +47,63 @@ bool IsPlaying(uint8 Phase)
 {
     return Phase == static_cast<uint8>(RulesPhase::Active) || Phase == static_cast<uint8>(RulesPhase::Planted);
 }
+
+// Keep the teammate view through the result display; preparation's fresh
+// possession, roster loss and match completion all restore the normal view.
+bool AllowsDeathSpectate(const FVSMatchRepState& Match)
+{
+    return Match.bReady && (IsPlaying(Match.Phase) || Match.Phase == static_cast<uint8>(RulesPhase::Resolved));
+}
+
+bool HasLivePawn(const AVSMatchPlayerState* Player)
+{
+    const AVSCharacter* Pawn = Player ? Player->GetPawn<AVSCharacter>() : nullptr;
+    return IsValid(Pawn) && Pawn->GetHealthComponent() && Pawn->GetHealthComponent()->IsAlive();
+}
+
+ValStrike::Spectate::Viewer SpectateViewer(const AVSMatchPlayerState& Self)
+{
+    ValStrike::Spectate::Viewer Viewer;
+    Viewer.PlayerId = Self.ConnectionId;
+    Viewer.TeamId = Self.TeamId;
+    return Viewer;
+}
+
+ValStrike::Spectate::Candidate SpectateCandidate(const AVSMatchPlayerState& Player)
+{
+    ValStrike::Spectate::Candidate Candidate;
+    Candidate.PlayerId = Player.ConnectionId;
+    Candidate.TeamId = Player.TeamId;
+    Candidate.Participating = Player.bParticipating;
+    // Replicated life state and the pawn can arrive in either order; require both.
+    Candidate.Alive = Player.bAlive && HasLivePawn(&Player);
+    return Candidate;
+}
+
+TArray<ValStrike::Spectate::Candidate> SpectateCandidates(const AVSMatchGameState& State)
+{
+    TArray<ValStrike::Spectate::Candidate> Candidates;
+    for (const APlayerState* Entry : State.PlayerArray)
+    {
+        if (const AVSMatchPlayerState* Player = Cast<AVSMatchPlayerState>(Entry))
+        {
+            Candidates.Add(SpectateCandidate(*Player));
+        }
+    }
+    return Candidates;
+}
 }
 
 void AVSMatchPlayerController::BeginPlay()
 {
     Super::BeginPlay();
     ValStrikeTests::StartMatchSmoke();
+}
+
+void AVSMatchPlayerController::PlayerTick(float DeltaTime)
+{
+    Super::PlayerTick(DeltaTime);
+    UpdateDeathSpectate();
 }
 
 bool AVSMatchPlayerController::NotifyServerReceivedClientData(APawn* InPawn, float TimeStamp)
@@ -76,6 +129,12 @@ bool AVSMatchPlayerController::InputKey(const FInputKeyEventArgs& Params)
     if (Params.Key == EKeys::E && Params.Event == IE_Pressed)
     {
         bFreshObjectivePress = !IsSessionMenuOpen();
+    }
+    // Raw key: the fire action lives on the pawn's Enhanced Input context.
+    // The dead pawn's own fire attempt stays rejected by its health gate.
+    if (Params.Key == EKeys::LeftMouseButton && Params.Event == IE_Pressed && !IsSessionMenuOpen())
+    {
+        CycleSpectateTarget();
     }
     return Super::InputKey(Params);
 }
@@ -159,6 +218,103 @@ void AVSMatchPlayerController::RequestMatchRematch()
     }
 }
 
+void AVSMatchPlayerController::UpdateDeathSpectate()
+{
+    const AVSMatchGameState* State = IsLocalController() && GetWorld() ? GetWorld()->GetGameState<AVSMatchGameState>() : nullptr;
+    const AVSMatchPlayerState* Self = GetPlayerState<AVSMatchPlayerState>();
+    AVSCharacter* Own = Cast<AVSCharacter>(GetPawn());
+    // Only a possessed, dead combatant pawn has a death view. Late joins and
+    // ClearPawns spectators have no pawn and keep the engine spectator state.
+    const bool bOwnDead = State && Self && Own && (!Self->bAlive ||
+        (Own->GetHealthComponent() && !Own->GetHealthComponent()->IsAlive()));
+    const double Now = GetWorld() ? GetWorld()->GetTimeSeconds() : 0.0;
+    if (!bOwnDead)
+    {
+        DeathPawn.Reset();
+    }
+    else if (DeathPawn.Get() != Own)
+    {
+        DeathPawn = Own;
+        DeathSeconds = Now;
+    }
+    if (!ValStrike::Spectate::ShouldSpectate(State && AllowsDeathSpectate(State->Match),
+        Self && Self->bParticipating, !bOwnDead, Now - DeathSeconds))
+    {
+        StopDeathSpectate();
+        return;
+    }
+    const TArray<ValStrike::Spectate::Candidate> Candidates = SpectateCandidates(*State);
+    const uint64 Target = ValStrike::Spectate::Keep(Candidates.GetData(), static_cast<std::size_t>(Candidates.Num()),
+        SpectateViewer(*Self), SpectateTargetId);
+    if (!WatchSpectateTarget(Target))
+    {
+        StopDeathSpectate(); // Nobody left alive: back to the death view.
+    }
+}
+
+void AVSMatchPlayerController::CycleSpectateTarget()
+{
+    const AVSMatchGameState* State = GetWorld() ? GetWorld()->GetGameState<AVSMatchGameState>() : nullptr;
+    const AVSMatchPlayerState* Self = GetPlayerState<AVSMatchPlayerState>();
+    if (SpectateTargetId == 0 || !IsLocalController() || !State || !Self)
+    {
+        return;
+    }
+    const TArray<ValStrike::Spectate::Candidate> Candidates = SpectateCandidates(*State);
+    WatchSpectateTarget(ValStrike::Spectate::Next(Candidates.GetData(), static_cast<std::size_t>(Candidates.Num()),
+        SpectateViewer(*Self), SpectateTargetId));
+}
+
+bool AVSMatchPlayerController::WatchSpectateTarget(uint64 TargetId)
+{
+    const AVSMatchPlayerState* Target = FindSpectateTarget(TargetId);
+    APawn* TargetPawn = Target ? Target->GetPawn() : nullptr;
+    if (!TargetPawn)
+    {
+        return false;
+    }
+    SpectateTargetId = TargetId;
+    if (GetViewTarget() != TargetPawn)
+    {
+        SetViewTarget(TargetPawn);
+    }
+    return true;
+}
+
+void AVSMatchPlayerController::StopDeathSpectate()
+{
+    if (SpectateTargetId == 0)
+    {
+        return;
+    }
+    SpectateTargetId = 0;
+    // A fresh possession already set its own view; this covers a still-held death pawn.
+    if (APawn* Own = GetPawnOrSpectator())
+    {
+        SetViewTarget(Own);
+    }
+}
+
+const AVSMatchPlayerState* AVSMatchPlayerController::FindSpectateTarget(uint64 TargetId) const
+{
+    const AVSMatchGameState* State = GetWorld() ? GetWorld()->GetGameState<AVSMatchGameState>() : nullptr;
+    const AVSMatchPlayerState* Self = GetPlayerState<AVSMatchPlayerState>();
+    if (TargetId == 0 || !State || !Self)
+    {
+        return nullptr;
+    }
+    for (const APlayerState* Entry : State->PlayerArray)
+    {
+        const AVSMatchPlayerState* Player = Cast<AVSMatchPlayerState>(Entry);
+        if (Player && Player->ConnectionId == TargetId)
+        {
+            // Re-check the team rule at the point of use, never trusting a cached id alone.
+            return ValStrike::Spectate::CanWatch(SpectateCandidate(*Player), SpectateViewer(*Self)) ? Player : nullptr;
+        }
+    }
+    return nullptr;
+}
+
 void AVSMatchPlayerController::ServerCommand_Implementation(
     EVSMatchCommand Command, uint32 RequestId, uint64 RoundId, uint64 DeviceRevision)
 {
@@ -224,6 +380,17 @@ FVSMatchHUDData AVSMatchPlayerController::GetMatchHUDData() const
         Match.CarrierId == Player->ConnectionId && Data.Objective == EVSMatchHUDObjective::Carried;
     Data.bCanRequestRematch = Match.bReady && Player->ConnectionId != 0 && Player->bParticipating &&
         Data.Phase == EVSMatchHUDPhase::MatchComplete;
+
+    if (const AVSMatchPlayerState* Watched = FindSpectateTarget(SpectateTargetId))
+    {
+        Data.bSpectating = true;
+        Data.SpectatingName = Watched->GetPlayerName();
+        // The result panel owns StatusText while a round result is shown; a map error stays first.
+        if (Data.StatusText.IsEmpty() && IsPlaying(Match.Phase))
+        {
+            Data.StatusText = TEXT("Spectating ") + Data.SpectatingName;
+        }
+    }
 
     if (Match.bReady && IsPlaying(Match.Phase) && Player->bParticipating && Player->bAlive)
     {

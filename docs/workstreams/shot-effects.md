@@ -74,3 +74,28 @@ No shared file, build file, config, other stream's file or central document is c
 - The fixture runs on the normal practice mode, started by a module hook. The tracer is expected from any visible `Muzzle` mesh.
 
 **Next action:** integration compiles `22b1d98` and runs `test_shot_effects.py` plus the movement, combat and match suites in its batch, then reports any failures to this stream. A failing `first_effect_no_stall` would mean the warm-up does not remove the first-shot pipeline stall; that is a real gameplay defect to fix here, not a test-only issue.
+
+## 2026-11-04 — GPT-08: tracers and impacts follow the recoil/spread direction (verification pending)
+
+**Status:** implementation ready; compile and runtime verification pending (integration). Built on GPT-02 (PR #35, base `a64dfa5`). #35 is merged; the branch now includes `origin/main`, so this is a normal PR to main.
+
+**Change (Effects only; Combat, Presentation, runners and Content untouched):**
+- The cosmetic trace, and so the tracer end and impact mark, now uses a per-effect direction, recorded as `FVSShotEffectRecord::DirectionSource`. Base aim is still the default.
+  - **Local shooter:** the subsystem notes `GetLastPredictedShot()` once per frame into a small per-weapon queue (`VSShotEffects::PredictedShots`). Each accepted-shot increment consumes entries oldest first, so a tracer pairs with the prediction for its own shot, even when several shots are in flight. If two shots are sent in one frame, the skipped id becomes an unknown entry, which keeps the order. A coalesced batch draws its latest shot. Entries expire after 1 s. A shot the server rejected therefore shifts the pairing by at most one burst. The queue holds at most 32 entries.
+  - **Listen host, other pawns:** uses `GetLastServerShot()` when its shot id is new since the last effect for that weapon.
+  - **Remote clients observing others, and any shot with no known direction:** base aim, as before. Runner/`DevelopmentRequest` shots never set a prediction, so they also use base aim.
+- `ChooseDirection` takes the prediction first for the local shooter, then a new server shot, then base aim. The same accepted-shot counter still produces exactly one effect per observation. Once-only, coalescing, pool cap and no-replay are unchanged.
+- New stats: `PredictedDirections`, `ServerDirections`, `BaseAimDirections`.
+
+**Checks actually run:**
+- `clang++ -std=c++17 -Wall -Wextra -Werror -pedantic Tests/Effects/shot_effects_state_test.cpp`: 95/95, up from 68. New cases: direction choice; in-order pairing at high latency; coalesced batches; no prediction; same-frame gap; expiry of a rejected shot; id jump; capacity; wrap-around.
+- `git diff --check` clean.
+
+**Deferred to integration:**
+- Combined build on current main (verification pending).
+- `Scripts/test_shot_effects.py`: baseline 73/73. Its shots are first-shot-accurate, so the predicted direction equals aim at send. No expectation change is expected.
+- Sustained-fire visual check: the local tracers should fan out with the spread pattern. Observers on a dedicated server still see base-aim tracers.
+
+**Remaining limit / follow-up for the lead:** a remote observer cannot show spread without a replicated shot direction or impact. None exists today, and none was added, per the brief. Showing spread there would need a Combat-owned replicated field, for example the last shot's seed index or its impact point.
+
+**Next action:** gameplay lead reviews; integration builds and runs the shot-effects suite.

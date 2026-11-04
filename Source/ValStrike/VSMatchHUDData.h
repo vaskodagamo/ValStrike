@@ -40,4 +40,6 @@ struct FVSMatchHUDData
     FString InteractionPrompt; // Only actions currently eligible for this player.
     FString StatusText; // Waiting, spectator, round-result or match-result feedback.
     bool bCanRequestRematch = false;
+    // Dead participant following a living teammate; bSpectating is also set then.
+    FString SpectatingName;
 };

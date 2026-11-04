@@ -368,6 +368,15 @@ The gameplay/integration idle slots were checked clean at their original heads b
 **Verification/limits:** Visually inspected all six images; checked seven PNGs including the copied anchor, JSON/local links and ZIP integrity. This is concept/reference delivery only: no new tests or Unreal build, no native meshes/materials/maps, no tiling-texture claim. Dimensions are artist proposals; existing validated map/cover/objective/collision contracts take priority. No new worker was dispatched and no existing artist's ownership changed.
 
 **Next action:** Use this pack to brief a bounded environment-asset sample (wall/corner, medium crate, paving) before expanding the kit. Central review should approve the representative visual quality before further production and native integration.
+## 2026-11-04 — Selected Urban Entry concept and reference package
+
+**Request and selection:** The user rejected the blocky FPArms01/Player01 visual quality and requested image concepts/references for a third-party 3D draft and artist finishing workflow. Both source sessions received a stop-and-preserve direction. Generated three original character directions with built-in image_gen; the user explicitly selected “A — Urban entry: cropped jacket, single shoulder plate.”
+
+**Delivered:** `Art/References/Characters/OperatorV2/` contains the three concepts, four separate selected-character views, glove dorsal/palm detail and a first-person rifle composition. The existing R01 studio image was a reference for the illustration; the native rifle asset was not changed. The first rear-view draft incorrectly showed knuckles from the back; a targeted image edit corrected palm visibility. The rejected draft remains for history and is excluded from the delivery archive. Full prompts, provenance, file hashes and artist notes are saved. ZIP: ignored `Artifacts/OperatorV2-ReferencePack.zip`.
+
+**Checks and limits:** Inspected generated images; checked nine delivery PNGs, JSON, local links and ZIP integrity. No new tests or Unreal build. The selected concept is approved as direction, not as a production mesh. Generated multi-view anatomy/seams/projection still require artist reconciliation; the FPS image is illustrative, not an engine screenshot. No third-party model service, paid credits, native import, rig or animation was executed.
+
+**Next action:** Use the selected front view and consistent supplemental views to obtain a 3D draft, then commission/follow an explicit artist brief for anatomical/topology/material cleanup, rigging and deformation review before central Unreal integration. Old prototype models remain unapproved; do not automatically resume procedural modeling from the old briefs.
 
 ## Entry template
 
