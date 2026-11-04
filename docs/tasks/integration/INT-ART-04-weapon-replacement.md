@@ -1,0 +1,25 @@
+# INT-ART-04 — Put R02 and P02 into the game
+
+The user explicitly requested replacing the old rifle and pistol in first and third person. Producer admits the existing sole native integrator, Claude “INT-ART-01 Meshy playtest integration”, after KNIFE-01 phase B froze and its owner stopped. This task can proceed while ART-26-C1 fixes first-person knife art; it does not wait for those hands. No extra QA worker or source artist is launched.
+
+**Dispatch status:** prepared and paths reserved; not delivered yet because the Mac is locked and the verified Claude desktop route is unavailable. Resume the existing owner when the Mac is unlocked. Do not start a CLI replacement or count this reservation as running.
+
+## Checkout and exact ownership
+
+Use the existing clean `/Users/webproduktion3/Documents/ValStrike/.parallel-worktrees/int-art-01-meshy-playtest`. Preserve local `claude/int-art-02b-site01-courtyard` at `7436d57` and its unpublished ART-25 payload. Create `claude/int-art-04-weapon-replacement` from current merged main, expected admission base `890155bc6d7093a197fb93918682dcf0065bb517`; record the actual base. Do not include or publish the held ART-25 branch. Current main contains KNIFE-01 phase A; #108 `22df932` is separately frozen and not an unrecorded task dependency.
+
+Exclusive writes: `Content/Art/Weapons/Rifle02/`, `Content/Art/Weapons/Pistol02/`, new reproducible scripts `Art/Integration/WeaponReplacement02/`, evidence `docs/assets/weapon-replacement02/`, `docs/workstreams/int-art-04-weapon-replacement.md`, and the existing `docs/playtest/meshy-pilot.md`. C++ exception: mesh paths, visual identity, sockets/part offsets and grip/view tuning in `Presentation/VSRiflePresentationComponent.*`, `VSPistolPresentationComponent.*`; rifle/pistol attachment constants only in `VSCharacterPresentationComponent.*`; presentation attachment calls only in `VSCharacter.cpp` if actually necessary. All under `Source/ValStrike/`. Keep current base `VSWeaponPresentationComponent` behavior unless an exact import-contract incompatibility is reported to the producer. No gameplay authority, loadout, input, HUD, smoke/test, map, source-art or character-animation edits. No concurrent native writer; INT-ART-03 remains queued until this task freezes.
+
+## Inputs and result
+
+- Corrected R02 #89 at `f209b66472c11ffc53a8ab8c1113693c8c2de25f`, and P02 #81 at `ccb08f06e22d23573697a1494a34436f901fa006`, already on main. Read their source README, measurements, exported-part/socket/import recipes and exact PBR maps. Preserve original high-detail appearance; do not rerun cleanup/decimation or reconstruct from previews. R02 body/magazine and P02 body/slide/magazine have different pivot conventions: measure and use each recipe, never assume R01/P01 compatibility.
+- Genuine editor import/save/reopen, measured centimeter bounds and native axes, correct textures/sRGB/normal convention, separate moving parts and required sockets. Keep original R01/P01 assets intact for comparison; active first-person and remote third-person paths use the new assets.
+- Refit native hand attachment to the current frozen UrbanEntry rifle stance and #103 two-hand pistol stance. P02 has an ART-23 source fit recipe to consult read-only. Preserve source sizes and poses. Record any irreducible contact defect for the existing artist rather than hiding it by scaling or altering character geometry.
+- Inspect actual first-person idle/fire/reload composition and remote held/fire/reload/switch views for both weapons. Confirm muzzle flashes/tracers come from the new muzzle; magazine/slide motion and owner/remote visibility still work. Hands remain a separately held knife task; do not claim first-person hand completion here.
+- These approximately 460K-triangle sources are pilot assets. Report native asset settings and observed rendering issues honestly; no performance target, broad benchmark or new optimization workstream is implied.
+
+## Verification and stop
+
+All Unreal work uses `Scripts/with_ue_slot.py`, pinned UE 5.8.4/Xcode 26.1.1. Exit 75 means stop/return to queue until an explicit release/new slot; no checking a lock and immediately retrying. No simultaneous native/QA process. Once the import and presentation candidate is coherent, one normal Editor build if C++ changed, then affected existing weapon presentation/visual and Site01 match scenarios once. Reuse existing phase-A gameplay/phase-B map evidence; do not rerun movement/session/full regression. If tests expose hardcoded R01/P01 expectations, report exact paths/required adjustment before changing them; do not weaken checks or create another harness.
+
+Deliver actual before/after first-person and remote screenshots, import/reopen reports, exact candidate and commands, and one main-targeted PR. Runtime verification is distinct from source-ready and from merged. Stop after frozen handoff; full knife integration is the next separately admitted native batch. User retains merges. Zero paid jobs/credits.

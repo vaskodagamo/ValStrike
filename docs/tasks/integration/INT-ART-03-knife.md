@@ -1,6 +1,6 @@
 # INT-ART-03 — Complete knife native integration (queued)
 
-Owner: existing sole native integrator, **not dispatched yet**. Admission follows the current INT-ART-02 candidate/map handoff and exact reviewed gameplay + ART-26/27 source freezes. Producer records a new branch and combined candidate in the existing owned integration checkout. No concurrent map/presentation writer, no separate QA contributor or contributor build.
+Owner: existing sole native integrator, **not dispatched yet**. Admission follows INT-ART-04 R02/P02 presentation/engine release and exact reviewed gameplay + ART-26/27 source freezes. INT-ART-02 has finished locally; its map-publication hold is separate. ART-26 draft #109 is held for ART-26-C1 contact/framing correction; do not import it as accepted art. ART-27 #110 at `bca668a` passed bounded third-person source review, and gameplay #108 at `22df932` is frozen with the new cosmetic cue API. Producer records a new branch and combined candidate in the existing owned integration checkout. No concurrent map/presentation writer, no separate QA contributor or contributor build.
 
 Full acceptance is [KNIFE-01](../KNIFE-01-full-feature.md), including real hands, slots 1/2/3/Q, slash/stab, remote character, feedback and authoritative cancellation. K01 #85, frozen ART-26 FPArms03 KnifePilot, frozen ART-27 UrbanEntry KnifePilot and reviewed gameplay PR must be exact allowlisted inputs. Source-ready alone does not release runtime claims. If a source is held, preflight and return the precise dependency; no placeholder acceptance.
 
