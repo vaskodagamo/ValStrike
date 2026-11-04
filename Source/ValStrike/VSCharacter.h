@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "VSHUDData.h"
+#include "VSMovementRules.h"
 #include "VSCharacter.generated.h"
 
 class UCameraComponent;
@@ -30,7 +31,7 @@ class VALSTRIKE_API AVSCharacter : public ACharacter
     GENERATED_BODY()
 
 public:
-    AVSCharacter();
+    explicit AVSCharacter(const FObjectInitializer& ObjectInitializer);
 
     FVSPlayerHUDData GetHUDData() const;
     // Release held combat input when a menu takes focus; gameplay stays server-owned.
@@ -42,6 +43,9 @@ public:
     UVSWeaponComponent* GetWeapon(EVSWeaponSlot Slot) const;
     UVSWeaponComponent* GetEquippedWeapon() const;
     EVSWeaponSlot GetEquippedWeaponSlot() const;
+    // Weapon weight for movement speed: this machine's equipped slot (the owner's
+    // prediction, server state elsewhere), read inside every predicted move.
+    VSMovementRules::WeaponKind GetMovementWeaponKind() const;
     // Read-only server-accepted shots by one weapon (replicated). Each weapon's
     // counter only advances while it is equipped; cosmetic consumers such as
     // tracers can watch both counters independently.
@@ -63,8 +67,11 @@ public:
     virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
     virtual void OnStartCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust) override;
     virtual void OnEndCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust) override;
+    virtual void CheckJumpInput(float DeltaTime) override;
 
 protected:
+    // Jumping is allowed while crouched (CS2 Ctrl+Space crouch-jump).
+    virtual bool CanJumpInternal_Implementation() const override;
     virtual void BeginPlay() override;
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
