@@ -3,14 +3,18 @@
 #if !UE_BUILD_SHIPPING && !UE_BUILD_TEST
 
 #include "VSHealthComponent.h"
+#include "VSKnifeComponent.h"
 #include "VSTestServerClock.h"
 #include "VSWeaponComponent.h"
 #include "VSWeaponLoadoutComponent.h"
 #include "../VSCharacter.h"
 #include "../ValStrike.h"
 #include "../Match/VSMatchGameState.h"
+#include "../Presentation/VSKnifePresentationEvents.h"
 #include "../Presentation/VSWeaponPresentationComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Engine/CollisionProfile.h"
+#include "Engine/StaticMeshActor.h"
 #include "Engine/GameViewportClient.h"
 #include "Engine/StaticMesh.h"
 #include "Engine/World.h"
@@ -34,7 +38,9 @@ namespace
 /**
  * Opt-in server/driver/observer weapon switching harness.
  * practice: graybox, practice game mode; dense equip validation, ammo, damage and
- *   model visibility timeline. Run with null-RHI clients (no rendering stalls).
+ *   model visibility timeline, then the knife (KNIFE-01) from 13 s: equip 3/Q,
+ *   slash/stab hit, miss, wall, raw rejections and lifecycle cancellation.
+ *   Run with null-RHI clients (no rendering stalls).
  * visual: graybox, rendered clients; spaced first-person/observer captures.
  * match: Site01, match game mode; preparation gate, combat and a real round reset.
  * Ordinary actions go through PlayerController -> Enhanced Input; raw RPCs are
@@ -79,6 +85,7 @@ private:
     void Finish(const TCHAR* Error = nullptr)
     {
         bFinished = true;
+        KnifeCues.Unbind();
         // Frame pacing is diagnostic context for timing-sensitive failures.
         const FString Report = FString::Printf(
             TEXT("{\"schema_version\":1,\"role\":\"%s\",\"scenario\":\"%s\",\"completed\":true,\"frames\":{\"count\":%d,\"mean_ms\":%.1f,\"max_ms\":%.1f},\"checks\":[%s],\"error\":%s}\n"),
@@ -304,7 +311,8 @@ private:
         if (Role == TEXT("driver"))
         {
             const bool bAim = (Time >= 2.2 && Time < 3.1) || (Time >= 3.3 && Time < 4.2) || (Time >= 4.9 && Time < 6.3);
-            PC->SetControlRotation(bAim ? AimAt(Driver, Target, false) : FRotator::ZeroRotator);
+            PC->SetControlRotation(Time >= 13.0 ? KnifeAim(Driver, Target)
+                : bAim ? AimAt(Driver, Target, false) : FRotator::ZeroRotator);
             ReleaseTaps(PC);
             if (Once(120, Time, 1.0)) { Tap(PC, EKeys::Two); }
             if (Once(121, Time, 1.2)) { Tap(PC, EKeys::LeftMouseButton); }
@@ -504,6 +512,197 @@ private:
         if (Once(20, Time, 13.0))
         {
             Check(TEXT("fresh_pawn_loadout"), Target->GetUniqueID() != OldTargetId && Full(Target), Detail(Target, Driver));
+        }
+        if (Steps.Contains(20)) { TickKnife(World, Time, Driver, Target, PC); }
+    }
+
+    // Straight at the point the server's knife probe aims for: the target's
+    // capsule axis at the driver's eye height (clamped to the axis top).
+    static FRotator KnifeAim(const AVSCharacter* Driver, const AVSCharacter* Target)
+    {
+        return (Target->GetActorLocation() + FVector(0, 0, 54) - Driver->GetPawnViewLocation()).Rotation();
+    }
+
+    static FString KnifeDetail(const AVSCharacter* Driver, const AVSCharacter* Target)
+    {
+        const FVSKnifeState& K = Driver->GetKnifeComponent()->GetState();
+        const FVSLoadoutState& L = Driver->GetLoadoutComponent()->GetState();
+        return FString::Printf(TEXT("attacks=%u impacts=%u last=%d cancels=%u equipped=%d previous=%d equipping=%d switches=%u driver=%.1f target=%.1f rifle_shots=%u pistol_shots=%u"),
+            K.AttackCount, K.ImpactCount, static_cast<int32>(K.LastImpact), K.CancelCount, static_cast<int32>(L.Equipped),
+            static_cast<int32>(L.Previous), L.bEquipping, L.EquipCount, Driver->GetHealthComponent()->GetHealth(),
+            Target->GetHealthComponent()->GetHealth(), Driver->GetAcceptedShotCount(EVSWeaponSlot::Rifle),
+            Driver->GetAcceptedShotCount(EVSWeaponSlot::Pistol));
+    }
+
+    // Server only: a thin blocking slab between the driver and a target 100 cm ahead.
+    bool SpawnWall(UWorld* World)
+    {
+        UStaticMesh* Cube = LoadObject<UStaticMesh>(nullptr, TEXT("/Engine/BasicShapes/Cube.Cube"));
+        FActorSpawnParameters Params;
+        Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+        AStaticMeshActor* Slab = Cube ? World->SpawnActor<AStaticMeshActor>(Base + FVector(55, 0, 0), FRotator::ZeroRotator, Params) : nullptr;
+        if (!Slab) { return false; }
+        UStaticMeshComponent* Mesh = Slab->GetStaticMeshComponent();
+        Mesh->SetMobility(EComponentMobility::Movable);
+        Mesh->SetStaticMesh(Cube);
+        Mesh->SetCollisionProfileName(UCollisionProfile::BlockAll_ProfileName);
+        Slab->SetActorScale3D(FVector(0.1, 2.0, 3.0));
+        Wall = Slab;
+        return true;
+    }
+
+    void BindKnifeCues(AVSCharacter* Driver)
+    {
+        if (bKnifeCuesBound || !KnifeCues.Bind(Driver)) { return; }
+        bKnifeCuesBound = true;
+        KnifeCues.OnCue().AddLambda([this](const FVSKnifeCueEvent& Event)
+        {
+            ++KnifeCueCounts[static_cast<int32>(Event.Cue)];
+            if (Event.bLocal) { ++LocalKnifeCues; }
+        });
+    }
+
+    // KNIFE-01 after the firearm timeline. Knife counters: 8 accepted attacks
+    // (3 slashes, 5 stabs), 4 impacts (hit, miss, wall, killing stab) and 4
+    // cancellations (switch, phase, reset, death). The server triggers each
+    // lifecycle transition on the tick it sees the stab accepted, so the stab's
+    // impact is always still pending.
+    void TickKnife(UWorld* World, double Time, AVSCharacter* Driver, AVSCharacter* Target, APlayerController* PC)
+    {
+        const bool bServer = Role == TEXT("server");
+        UVSKnifeComponent* Knife = Driver->GetKnifeComponent();
+        UVSWeaponLoadoutComponent* Loadout = Driver->GetLoadoutComponent();
+        if (!Knife || !Loadout) { Finish(TEXT("knife_missing")); return; }
+        const FVSKnifeState& K = Knife->GetState();
+        const FVSLoadoutState& L = Loadout->GetState();
+        const auto State = [&]() { return KnifeDetail(Driver, Target); };
+        const float TargetHealth = Target->GetHealthComponent()->GetHealth();
+        const FVector Front = Base + FVector(100, 0, 0);
+        const FRotator FacingDriver(0, 180, 0);
+        if (!bServer)
+        {
+            BindKnifeCues(Driver);
+            KnifeCues.Tick();
+        }
+
+        if (bServer)
+        {
+            if (Once(400, Time, 13.2) && !(Place(Driver, Base, FRotator::ZeroRotator) && Place(Target, Front, FacingDriver)))
+            {
+                Finish(TEXT("knife_placement_failed")); return;
+            }
+            if (Once(401, Time, 15.4) && !Place(Target, Base + FVector(300, 0, 0), FacingDriver)) { Finish(TEXT("knife_placement_failed")); return; }
+            if (Once(402, Time, 16.6) && !(Place(Target, Front, FacingDriver) && SpawnWall(World))) { Finish(TEXT("knife_wall_failed")); return; }
+            if (Once(403, Time, 17.7) && Wall.IsValid()) { Wall->Destroy(); }
+            if (K.AttackCount == 4 && Once(404, Time, 18.0)) { Loadout->DevelopmentRequestEquip(RifleRequest); }
+            if (K.AttackCount == 5 && Once(405, Time, 19.8)) { Driver->SetMatchGates(true, false); }
+            if (Steps.Contains(405) && Once(406, Time, 20.4)) { Driver->SetMatchGates(true, true); }
+            if (K.AttackCount == 6 && Once(407, Time, 20.9)) { Loadout->DevelopmentReset(); }
+            if (K.AttackCount == 8 && Once(408, Time, 23.6)) { Driver->GetHealthComponent()->ApplyPointDamage(1000); }
+        }
+        if (Role == TEXT("driver"))
+        {
+            if (Once(300, Time, 13.5)) { Tap(PC, EKeys::Three); }
+            if (Once(301, Time, 13.6)) { Knife->DevelopmentRequestAttack(0); }
+            if (Once(302, Time, 14.4)) { Tap(PC, EKeys::LeftMouseButton); }
+            if (Once(303, Time, 14.5)) { Knife->DevelopmentRequestAttack(0); }
+            if (Once(304, Time, 14.6))
+            {
+                Knife->DevelopmentRequestAttack(7);
+                Knife->DevelopmentRequestAttack(1, Knife->DevelopmentLastSequence());
+            }
+            if (Once(305, Time, 15.8)) { Tap(PC, EKeys::LeftMouseButton); }
+            if (Once(306, Time, 17.0)) { Tap(PC, EKeys::LeftMouseButton); }
+            if (Once(307, Time, 18.0)) { Tap(PC, EKeys::RightMouseButton); }
+            if (Once(308, Time, 18.9)) { Knife->DevelopmentRequestAttack(1); }
+            if (Once(309, Time, 19.0)) { Tap(PC, EKeys::Q); }
+            if (Once(310, Time, 19.8)) { Tap(PC, EKeys::RightMouseButton); }
+            if (Once(311, Time, 20.9)) { Tap(PC, EKeys::RightMouseButton); }
+            if (Once(312, Time, 21.8)) { Tap(PC, EKeys::Three); }
+            if (Once(313, Time, 22.6)) { Tap(PC, EKeys::RightMouseButton); }
+            if (Once(314, Time, 23.6)) { Tap(PC, EKeys::RightMouseButton); }
+        }
+
+        if (Once(200, Time, 14.2))
+        {
+            const FVSPlayerHUDData D = Driver->GetHUDData();
+            Check(TEXT("knife_equipped"), Equipped(Driver, EVSWeaponSlot::Knife, false) && L.Previous == EVSWeaponSlot::Rifle
+                && L.EquipCount == 5 && !Driver->GetEquippedWeapon()
+                && Driver->GetMovementWeaponKind() == VSMovementRules::WeaponKind::Knife
+                && D.WeaponName == TEXT("KNIFE") && !D.bHasWeapon, State());
+            if (bServer) { Check(TEXT("knife_reject_equip"), Knife->DevelopmentRejections(TEXT("equip")) >= 1, TEXT("raw attack during knife equip")); }
+            else
+            {
+                FString Views;
+                Check(TEXT("knife_hides_firearms"), ModelsShow(Driver, EVSWeaponSlot::Knife, Views), Views);
+            }
+        }
+        if (Once(201, Time, 15.2))
+        {
+            // Exactly one 40-point application; LMB with the knife never fires a firearm.
+            Check(TEXT("knife_slash_hit_once"), TargetHealth == 60.0f && K.AttackCount == 1 && K.ImpactCount == 1
+                && K.LastImpact == EVSKnifeImpact::Player && Driver->GetAcceptedShotCount(EVSWeaponSlot::Rifle) == 1
+                && Driver->GetAcceptedShotCount(EVSWeaponSlot::Pistol) == 3, State());
+            if (bServer)
+            {
+                Check(TEXT("knife_reject_cooldown"), Knife->DevelopmentRejections(TEXT("cooldown")) >= 1, TEXT("raw slash 0.1 s after a slash"));
+                Check(TEXT("knife_reject_invalid"), Knife->DevelopmentRejections(TEXT("invalid")) >= 1, TEXT("raw attack kind 7"));
+                Check(TEXT("knife_reject_replay"), Knife->DevelopmentRejections(TEXT("sequence")) >= 1, TEXT("raw attack replaying a sequence"));
+            }
+        }
+        if (Once(202, Time, 16.5))
+        {
+            Check(TEXT("knife_out_of_range"), TargetHealth == 60.0f && K.AttackCount == 2 && K.ImpactCount == 2
+                && K.LastImpact == EVSKnifeImpact::Miss, State());
+        }
+        if (Once(203, Time, 17.6))
+        {
+            Check(TEXT("knife_wall"), TargetHealth == 60.0f && K.AttackCount == 3 && K.ImpactCount == 3
+                && K.LastImpact == EVSKnifeImpact::Wall, State());
+        }
+        if (Once(204, Time, 18.8))
+        {
+            // The pending stab never lands after the switch, even past its impact time.
+            Check(TEXT("knife_cancel_switch"), TargetHealth == 60.0f && K.AttackCount == 4 && K.ImpactCount == 3 && K.CancelCount == 1
+                && Equipped(Driver, EVSWeaponSlot::Rifle, false) && L.Previous == EVSWeaponSlot::Knife, State());
+        }
+        if (Once(205, Time, 19.7))
+        {
+            Check(TEXT("knife_equip_last"), Equipped(Driver, EVSWeaponSlot::Knife, false) && L.Previous == EVSWeaponSlot::Rifle
+                && L.EquipCount == 7, State());
+            if (bServer) { Check(TEXT("knife_reject_holstered"), Knife->DevelopmentRejections(TEXT("holstered")) >= 1, TEXT("raw attack with the rifle equipped")); }
+        }
+        if (Once(206, Time, 20.6))
+        {
+            Check(TEXT("knife_cancel_phase"), TargetHealth == 60.0f && K.AttackCount == 5 && K.ImpactCount == 3 && K.CancelCount == 2
+                && Driver->CanMatchCombat(), State());
+        }
+        if (Once(207, Time, 21.6))
+        {
+            Check(TEXT("knife_cancel_reset"), TargetHealth == 60.0f && K.AttackCount == 6 && K.ImpactCount == 3 && K.CancelCount == 3
+                && Equipped(Driver, EVSWeaponSlot::Rifle, false), State());
+        }
+        if (Once(208, Time, 23.3))
+        {
+            Check(TEXT("knife_stab_hit"), !Target->GetHealthComponent()->IsAlive() && K.AttackCount == 7 && K.ImpactCount == 4
+                && K.LastImpact == EVSKnifeImpact::Player && Equipped(Driver, EVSWeaponSlot::Knife, false), State());
+        }
+        if (Once(209, Time, 24.4))
+        {
+            Check(TEXT("knife_cancel_death"), !Driver->GetHealthComponent()->IsAlive() && K.AttackCount == 8 && K.ImpactCount == 4
+                && K.CancelCount == 4, State());
+            if (!bServer)
+            {
+                // Native binding API: every cue reached this view, local only on the owner.
+                const auto Count = [this](EVSKnifeCue Cue) { return KnifeCueCounts[static_cast<int32>(Cue)]; };
+                const bool bOwner = Role == TEXT("driver");
+                Check(TEXT("knife_presentation_cues"), Count(EVSKnifeCue::Equip) >= 3 && Count(EVSKnifeCue::Holster) >= 2
+                    && Count(EVSKnifeCue::Slash) >= 1 && Count(EVSKnifeCue::Stab) >= 1 && Count(EVSKnifeCue::Impact) >= 4
+                    && Count(EVSKnifeCue::Cancel) >= 4 && (bOwner ? LocalKnifeCues >= 8 : LocalKnifeCues == 0),
+                    FString::Printf(TEXT("equip=%d holster=%d slash=%d stab=%d impact=%d cancel=%d local=%d"), Count(EVSKnifeCue::Equip),
+                        Count(EVSKnifeCue::Holster), Count(EVSKnifeCue::Slash), Count(EVSKnifeCue::Stab), Count(EVSKnifeCue::Impact),
+                        Count(EVSKnifeCue::Cancel), LocalKnifeCues));
+            }
             Finish();
         }
     }
@@ -701,6 +900,11 @@ private:
     bool bNameRequested = false, bReady = false, bFinished = false, bLookIsolated = false;
     bool bFireHeld = false;
     uint32 OldTargetId = 0, OldDriverId = 0;
+    TWeakObjectPtr<AActor> Wall;
+    FVSKnifePresentationEvents KnifeCues;
+    int32 KnifeCueCounts[6] = {};
+    int32 LocalKnifeCues = 0;
+    bool bKnifeCuesBound = false;
     uint64 FirstRound = 0;
     double PrepStart = -1, ActiveStart = -1, ResetSeen = -1;
 };
