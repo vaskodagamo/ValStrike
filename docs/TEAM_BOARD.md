@@ -1,5 +1,9 @@
 # Team board
 
+## ART-13 — Extracted Meshy character (2026-11-04)
+
+User requested the other artist start on the extracted character. [ART-13](tasks/art/ART-13-meshy-character.md) assigns the idle “Art — Third-person player model” chat at High reasoning to a new `.parallel-worktrees/meshy-character` / `codex/meshy-character` worktree. Exclusive source `Art/Source/Characters/UrbanEntry01/`, asset docs `docs/assets/urban-entry01/` and its handoff. MSH-C01's ten extracted files match the original ZIP by SHA-256. Work covers actual model/rig/material cleanup and six supplied animations; no resumption of rejected procedural ART-07, no native Content/gameplay edits or Unreal slot. Source review precedes centralized character integration. Coordinator owns this assignment, intake metadata and register on `codex/meshy-world-dispatch`.
+
 ## Meshy world production dispatch — 2026-11-04
 
 Dispatch confirmed: both existing chats are active at High reasoning, using their new worktrees at `b6e4a5f`. Character package MSH-C01 downloaded through Meshy UI with FBX, UE5 Mannequin, rigged character on, separate files, with skin, 60 FPS; original ZIP saved locally under `meshy_ai_assets/characters/UrbanEntry/`. Inventory/settings in `docs/assets/meshy-character-intake.json`; six clips plus base character and three textures present. Skeleton/deformation/native verification remains pending. No character worker or vault gameplay authorized by this download.

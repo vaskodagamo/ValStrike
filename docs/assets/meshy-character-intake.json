@@ -67,5 +67,58 @@
     "Vault clip is retained as source only; vault gameplay is not authorized by its presence",
     "Vendor generation/license evidence not supplied; retain provenance follow-up"
   ],
-  "screenshot_local": "Artifacts/MeshyCharacterExport/export-settings.jpg"
+  "screenshot_local": "Artifacts/MeshyCharacterExport/export-settings.jpg",
+  "extracted_files": [
+    {
+      "file": "characters/UrbanEntry/Meshy_AI_TacticalCharacterRemeshed_20261104_animate_7c537b23/Meshy_AI_Animation_Crouch_Walk_Left_with_Gun_withSkin.fbx",
+      "bytes": 24884812,
+      "sha256": "006cba62103eaacda1812f59a440317274a9c60103d666d9b712c8563d3e31c2"
+    },
+    {
+      "file": "characters/UrbanEntry/Meshy_AI_TacticalCharacterRemeshed_20261104_animate_7c537b23/Meshy_AI_Animation_Running_withSkin.fbx",
+      "bytes": 24786588,
+      "sha256": "fcc5880b91c9db89d1d0ec74cd467b1fb566e84e13f107fd3f011b8bdaf5d6e2"
+    },
+    {
+      "file": "characters/UrbanEntry/Meshy_AI_TacticalCharacterRemeshed_20261104_animate_7c537b23/Meshy_AI_Animation_Vault_with_Rifle_withSkin.fbx",
+      "bytes": 24807388,
+      "sha256": "a8612260622ab77b1c27e4618e5612661a8ee379e14396321ffde78d570a2077"
+    },
+    {
+      "file": "characters/UrbanEntry/Meshy_AI_TacticalCharacterRemeshed_20261104_animate_7c537b23/Meshy_AI_Animation_Walk_Backward_While_Shooting_withSkin.fbx",
+      "bytes": 24895276,
+      "sha256": "40e2d0e044c0815bdacdba92702e458b85ab868f23d008dcb62429b9f6b6919e"
+    },
+    {
+      "file": "characters/UrbanEntry/Meshy_AI_TacticalCharacterRemeshed_20261104_animate_7c537b23/Meshy_AI_Animation_Walk_Backward_with_Gun_withSkin.fbx",
+      "bytes": 24838092,
+      "sha256": "8c1cd0b7d6c3e888e4b48c464115b077f18f47688e649eac242bc27f51fbef36"
+    },
+    {
+      "file": "characters/UrbanEntry/Meshy_AI_TacticalCharacterRemeshed_20261104_animate_7c537b23/Meshy_AI_Animation_Walking_withSkin.fbx",
+      "bytes": 24854476,
+      "sha256": "cd7ba78068801a74c207b0216d86c227aeb6a7e94d9639911d71956f3faa2648"
+    },
+    {
+      "file": "characters/UrbanEntry/Meshy_AI_TacticalCharacterRemeshed_20261104_animate_7c537b23/Meshy_AI_Character_output.fbx",
+      "bytes": 24672124,
+      "sha256": "8b49f8e8ef7ce36600bde9edd53f3dbcaa0d39aa3f164392105f32dc095e83ee"
+    },
+    {
+      "file": "characters/UrbanEntry/Meshy_AI_TacticalCharacterRemeshed_20261104_animate_7c537b23/Meshy_AI_texture_0.png",
+      "bytes": 17077891,
+      "sha256": "70555f5060a8dccdb67936ac48b827888c629e8fe8f013b6ffa53a55fb85e50a"
+    },
+    {
+      "file": "characters/UrbanEntry/Meshy_AI_TacticalCharacterRemeshed_20261104_animate_7c537b23/Meshy_AI_texture_0_metallic.png",
+      "bytes": 1494124,
+      "sha256": "ab0af3e46fc01f463a4432429efce8e068393e56c27b32c63cd4cf837374ed91"
+    },
+    {
+      "file": "characters/UrbanEntry/Meshy_AI_TacticalCharacterRemeshed_20261104_animate_7c537b23/Meshy_AI_texture_0_roughness.png",
+      "bytes": 2589732,
+      "sha256": "5c4ca64d278d86c9dbea3c7c7b1acb03a96eb50194b0264d8d05b53773647dbf"
+    }
+  ],
+  "extracted_verification": "All 10 extracted files matched the original downloaded ZIP by SHA-256 on 2026-11-04; originals not modified."
 }
