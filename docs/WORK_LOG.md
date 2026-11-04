@@ -438,6 +438,14 @@ The gameplay/integration idle slots were checked clean at their original heads b
 
 **Queue update before final handoff:** Main advanced to `5e9048f` with PRs #58–61 while sessions started. INT-04 is complete/released; the live engineering board now schedules INT-05 for the merged crosshair/fire-validation changes. Updated the native brief and Claude prompt to wait for the current engineering batch release (INT-05), preserving existing gameplay ownership. Coordinator kickoff is published as PR #62; art chats are active.
 
+## 2026-11-04 — Meshy rifle and pistol replacement assignments
+
+**Request/direction:** User reports the current gun looks too large beside the character and requested two new model sessions, then explicitly confirmed Meshy AI as the intended generation route. Prepared ART-17 R02 rifle and ART-18 P02 pistol with separate new source/docs ownership. Their shared brief requires isolated image references, actual Meshy drafts, artist cleanup/part separation and same-scale character/hand-fit previews. Initial compact targets are 72–78 cm rifle / 20–22 cm pistol; actual fit is the acceptance criterion. Existing measured source envelopes are 86 × 9.04 × 32.2 cm (R01) and 23.929 × 4.30 × 18.325 cm (P01); no native root-cause claim is made from these measurements.
+
+**Budget/workflow:** Read the shared valstrike-meshy skill; checked official current image-to-3D/pricing docs and official CLI 0.8.2 create help. One free authenticated balance check returned 3,255 credits. User then approved “60 credits total”: one textured standard Meshy 7.1 image task per weapon, 30 per chat, no extra stages/retries. Built-in imagegen references precede Meshy; Blender finishes the actual generated geometry. Jobs must be submitted once with task IDs recorded and resumed; do not substitute a procedural-only mesh or silently spend beyond the caps. No paid job has been submitted by this coordinator at kickoff.
+
+**Coordination/verification:** ART-15 received the scale feedback and direction to preserve its temporary R01 pilot, finish its existing handoff and avoid character scaling/extra pose polishing. Existing props/Claude native pilot continue; new weapon import needs a later explicit integration assignment. New art chats have no native Content/code/engine slot. Coordinator changes are brief/board/log only; source/native/runtime verification remains with the assigned future stages. User merges.
+
 ## Entry template
 
 Copy this structure for the next completed session; do not replace earlier entries.
