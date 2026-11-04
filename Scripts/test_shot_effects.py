@@ -240,7 +240,7 @@ def evidence_metadata(root):
                                        for path in paths if path.is_file()})
     metadata["asset_sha256"] = {
         str(path.relative_to(root)): hashlib.sha256(path.read_bytes()).hexdigest()
-        for folder in ("Content/Effects", "Content/Art/Weapons/Rifle01", "Content/Presentation/Rifle01")
+        for folder in ("Content/Effects", "Content/Art/Weapons/Rifle02", "Content/Art/Weapons/Rifle01", "Content/Presentation/Rifle01")
         for path in sorted((root / folder).rglob("*")) if path.is_file()
     }
     return metadata
