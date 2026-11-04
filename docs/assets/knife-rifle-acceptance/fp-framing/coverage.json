@@ -1,0 +1,78 @@
+{
+ "center_box": "x 40-60%, y 25-75% (crosshair and target at 125 cm)",
+ "threshold": 18,
+ "metrics": {
+  "A_current": {
+   "idle": {
+    "screen_coverage": 0.132,
+    "center_box_coverage": 0.041
+   },
+   "slash_impact": {
+    "screen_coverage": 0.153,
+    "center_box_coverage": 0.325
+   },
+   "slash_follow": {
+    "screen_coverage": 0.237,
+    "center_box_coverage": 0.411
+   },
+   "stab_impact": {
+    "screen_coverage": 0.101,
+    "center_box_coverage": 0.058
+   }
+  },
+  "B": {
+   "idle": {
+    "screen_coverage": 0.121,
+    "center_box_coverage": 0.041
+   },
+   "slash_impact": {
+    "screen_coverage": 0.142,
+    "center_box_coverage": 0.281
+   },
+   "slash_follow": {
+    "screen_coverage": 0.204,
+    "center_box_coverage": 0.369
+   },
+   "stab_impact": {
+    "screen_coverage": 0.092,
+    "center_box_coverage": 0.061
+   }
+  },
+  "C": {
+   "idle": {
+    "screen_coverage": 0.109,
+    "center_box_coverage": 0.033
+   },
+   "slash_impact": {
+    "screen_coverage": 0.124,
+    "center_box_coverage": 0.219
+   },
+   "slash_follow": {
+    "screen_coverage": 0.167,
+    "center_box_coverage": 0.304
+   },
+   "stab_impact": {
+    "screen_coverage": 0.081,
+    "center_box_coverage": 0.04
+   }
+  },
+  "D": {
+   "idle": {
+    "screen_coverage": 0.102,
+    "center_box_coverage": 0.031
+   },
+   "slash_impact": {
+    "screen_coverage": 0.114,
+    "center_box_coverage": 0.183
+   },
+   "slash_follow": {
+    "screen_coverage": 0.151,
+    "center_box_coverage": 0.257
+   },
+   "stab_impact": {
+    "screen_coverage": 0.075,
+    "center_box_coverage": 0.031
+   }
+  }
+ }
+}

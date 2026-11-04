@@ -29,8 +29,9 @@ enum class EVSKnifeBodyAction : uint8
  *
  * With the pistol equipped the body holds ART-23's stationary pistol pose, also
  * while moving (no pistol locomotion clip). Temporary pilot fallbacks (no approved
- * clips): every rifle movement direction plays the forward rifle walk, crouch keeps
- * the standing pose, and the body is hidden while dead. No jump/fire/reload/death.
+ * clips): every rifle movement direction plays ART-28's forward R02 walk or run,
+ * crouch keeps the standing pose, and the body is hidden while dead. No
+ * jump/fire/reload/death.
  *
  * With the knife equipped (INT-ART-03) the body uses ART-27's in-place knife hold,
  * walk or run, and equip/slash/stab play on the upper body (spine_01 and children)
@@ -49,9 +50,9 @@ public:
     bool Initialize(USkeletalMeshComponent* Body, TArrayView<UPrimitiveComponent* const> PrototypeVisuals);
     bool IsNativeCharacterActive() const { return bActive; }
 
-    // R02 world model on hand_r in ART-15's rifle hold, converted to the native
-    // skeleton (measured: FBX import negates Y). UE 5.8 Python cannot author a named
-    // skeletal socket, so it lives here; see weapon-replacement02/weapons-import-report.json.
+    // R02 world model on hand_r in ART-28's fitted rifle hold/walk/run, measured on the
+    // native skeleton (FBX import negates Y). UE 5.8 Python cannot author a named
+    // skeletal socket, so it lives here; see knife-rifle-acceptance/rifle02-fit-import-report.json.
     static const FName RifleGripBone;
     static const FTransform RifleGripOffset;
     // P02 world model on hand_r in ART-23's pistol hold (measured, INT-ART-04
@@ -68,12 +69,14 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, Category = "Character Presentation")
     TSoftObjectPtr<USkeletalMesh> MeshAsset;
-    // Hold while still, forward rifle walk while moving (a direct switch; a
+    // ART-28 R02 hold while still, walk/run while moving (a direct switch; a
     // Python-authored blend space left the body in its bind pose at runtime).
     UPROPERTY(EditDefaultsOnly, Category = "Character Presentation")
     TSoftObjectPtr<UAnimSequence> HoldAsset;
     UPROPERTY(EditDefaultsOnly, Category = "Character Presentation")
     TSoftObjectPtr<UAnimSequence> WalkAsset;
+    UPROPERTY(EditDefaultsOnly, Category = "Character Presentation")
+    TSoftObjectPtr<UAnimSequence> RunAsset;
     // Stationary pistol ready hold, played whenever the pistol is equipped.
     UPROPERTY(EditDefaultsOnly, Category = "Character Presentation")
     TSoftObjectPtr<UAnimSequence> PistolHoldAsset;
@@ -100,7 +103,13 @@ protected:
     float KnifeRunThreshold = 210.0f;
     // Ground speed of the in-place walk clip, measured from its stance foot (cm/s).
     UPROPERTY(EditDefaultsOnly, Category = "Character Presentation", meta = (ClampMin = "10"))
-    float WalkClipSpeed = 145.0f;
+    float WalkClipSpeed = 138.0f;
+    // Stance-foot speed of the in-place R02 run (same lower body as A_UE01_Running) and
+    // the speed above which it plays (cm/s; rifle-fit import report).
+    UPROPERTY(EditDefaultsOnly, Category = "Character Presentation", meta = (ClampMin = "10"))
+    float RunClipSpeed = 287.0f;
+    UPROPERTY(EditDefaultsOnly, Category = "Character Presentation", meta = (ClampMin = "10"))
+    float RunThreshold = 210.0f;
     // Faster movement speeds the walk up to this rate; any remainder is foot slide.
     UPROPERTY(EditDefaultsOnly, Category = "Character Presentation", meta = (ClampMin = "1"))
     float MaxWalkPlayRate = 1.8f;
@@ -112,6 +121,7 @@ private:
     TWeakObjectPtr<USkeletalMeshComponent> Body;
     UPROPERTY(Transient) TObjectPtr<UAnimSequence> Hold;
     UPROPERTY(Transient) TObjectPtr<UAnimSequence> Walk;
+    UPROPERTY(Transient) TObjectPtr<UAnimSequence> Run;
     UPROPERTY(Transient) TObjectPtr<UAnimSequence> PistolHold;
     UPROPERTY(Transient) TObjectPtr<UAnimSequence> Current;
     UPROPERTY(Transient) TObjectPtr<UAnimSequence> KnifeHold;

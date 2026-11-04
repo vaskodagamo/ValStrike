@@ -10,11 +10,12 @@
 #include "Engine/SkeletalMesh.h"
 
 const FName UVSCharacterPresentationComponent::RifleGripBone(TEXT("hand_r"));
-// R02 on the ART-15 rifle hold: grips.R02_on_rifle_hold in
-// docs/assets/weapon-replacement02/weapons-import-report.json (ART-17 hand-relative fit;
-// R01's former offset was (4.1008,-13.5549,-6.1893), quat (-0.814922,0.579475,0.00887,0.00564)).
+// R02 on the accepted ART-28 hold/walk/run: fit.hand_r_offset in
+// docs/assets/knife-rifle-acceptance/rifle02-fit-import-report.json (all 66 native bones
+// equal the source; constant over 13 sampled frames). Applied only together with those
+// clips. INT-ART-04's ART-15-hold offset was (2.3021,-15.0518,-5.7134), same rotation.
 const FTransform UVSCharacterPresentationComponent::RifleGripOffset(
-    FQuat(-0.772515, 0.63491, 0.009241, 0.005007).GetNormalized(), FVector(2.3021, -15.0518, -5.7134));
+    FQuat(-0.772515, 0.63491, 0.009242, 0.005007).GetNormalized(), FVector(5.1772, -12.7049, -3.0491));
 
 // P02 on ART-23's pistol hold: grips.P02_on_pistol_hold in the same report (P02 at
 // (38,3,134); P01's former offset was (4.2582,-12.9002,-5.2861), same rotation).
@@ -32,8 +33,10 @@ UVSCharacterPresentationComponent::UVSCharacterPresentationComponent()
     PrimaryComponentTick.bStartWithTickEnabled = false;
     SetIsReplicatedByDefault(false);
     MeshAsset = TSoftObjectPtr<USkeletalMesh>(FSoftObjectPath(FString::Printf(TEXT("%s/SK_VS_UrbanEntry01.SK_VS_UrbanEntry01"), CharacterRoot)));
-    HoldAsset = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(FString::Printf(TEXT("%s/Animations/A_UE01_Pilot_RifleHold.A_UE01_Pilot_RifleHold"), CharacterRoot)));
-    WalkAsset = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(FString::Printf(TEXT("%s/Animations/A_UE01_Pilot_Walk_RifleHold.A_UE01_Pilot_Walk_RifleHold"), CharacterRoot)));
+    // ART-28 R02 shoulder/hand fit (INT-ART-05), replacing the ART-15 pilot hold/walk.
+    HoldAsset = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(FString::Printf(TEXT("%s/Animations/Rifle02/A_UE01_R02_Hold.A_UE01_R02_Hold"), CharacterRoot)));
+    WalkAsset = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(FString::Printf(TEXT("%s/Animations/Rifle02/A_UE01_R02_Walk.A_UE01_R02_Walk"), CharacterRoot)));
+    RunAsset = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(FString::Printf(TEXT("%s/Animations/Rifle02/A_UE01_R02_Run.A_UE01_R02_Run"), CharacterRoot)));
     PistolHoldAsset = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(FString::Printf(TEXT("%s/Animations/A_UE01_Pilot_PistolHold.A_UE01_Pilot_PistolHold"), CharacterRoot)));
     auto KnifeClip = [](const TCHAR* Name)
     {
@@ -55,6 +58,7 @@ bool UVSCharacterPresentationComponent::Initialize(USkeletalMeshComponent* InBod
     USkeletalMesh* Mesh = MeshAsset.LoadSynchronous();
     Hold = HoldAsset.LoadSynchronous();
     Walk = WalkAsset.LoadSynchronous();
+    Run = RunAsset.LoadSynchronous();
     PistolHold = PistolHoldAsset.LoadSynchronous();
     KnifeHold = KnifeHoldAsset.LoadSynchronous();
     KnifeWalk = KnifeWalkAsset.LoadSynchronous();
@@ -149,6 +153,11 @@ void UVSCharacterPresentationComponent::TickComponent(float DeltaTime, ELevelTic
     }
     // Simulated proxies receive this velocity through CharacterMovement replication.
     const float Speed = Pawn->GetVelocity().Size2D();
+    if (Speed > 20.0f && Speed > RunThreshold && Run)
+    {
+        PlayClip(Run, FMath::Clamp(Speed / RunClipSpeed, 0.75f, MaxWalkPlayRate));
+        return;
+    }
     const bool bMoving = Speed > 20.0f && Walk;
     const float PlayRate = Speed > WalkClipSpeed ? FMath::Min(Speed / WalkClipSpeed, MaxWalkPlayRate) : 1.0f;
     PlayClip(bMoving ? Walk.Get() : Hold.Get(), bMoving ? PlayRate : 1.0f);

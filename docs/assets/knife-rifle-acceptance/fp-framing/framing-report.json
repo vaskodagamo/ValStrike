@@ -1,0 +1,127 @@
+{
+ "engine": "5.8.4-58902052+++UE5+Release-5.8",
+ "runtime": false,
+ "candidates_arm_from_camera_cm": {
+  "A_current": [
+   20,
+   0,
+   -5
+  ],
+  "B": [
+   24,
+   0,
+   -7
+  ],
+  "C": [
+   26,
+   2,
+   -9
+  ],
+  "D": [
+   28,
+   3,
+   -10
+  ]
+ },
+ "poses": [
+  [
+   "idle",
+   "A_FPArms03_KnifeIdle",
+   0.5
+  ],
+  [
+   "slash_impact",
+   "A_FPArms03_KnifeSlash",
+   0.15
+  ],
+  [
+   "slash_follow",
+   "A_FPArms03_KnifeSlash",
+   0.25
+  ],
+  [
+   "stab_impact",
+   "A_FPArms03_KnifeStab",
+   0.3
+  ]
+ ],
+ "fov": 90,
+ "resolution": [
+  1000,
+  700
+ ],
+ "target_distance_cm": 125,
+ "captures": [
+  {
+   "file": "reference.png",
+   "sha256": "9333680472f46be1baa8f1efea629edd72676a2afa8887f1dc777ef0637e2271"
+  },
+  {
+   "file": "A_current_idle.png",
+   "sha256": "cb4fb64d1b134a63b2fa50eea4d93b8d69955618e0c3095390a1b86bece960ab"
+  },
+  {
+   "file": "A_current_slash_impact.png",
+   "sha256": "d7222b85b515469838e132feb62512762482ae6fb0d95e7722dcbad9959c5118"
+  },
+  {
+   "file": "A_current_slash_follow.png",
+   "sha256": "724df6a597c67af8cd5839400dc5b5e443d7bfb0ba4bc7a22e95df57c2af749d"
+  },
+  {
+   "file": "A_current_stab_impact.png",
+   "sha256": "e294682b7262884cfc3822f81717ec7e15926ae19418ee372be9a29179cc0c31"
+  },
+  {
+   "file": "B_idle.png",
+   "sha256": "dd8054826db548b6daa96e679cb78e63793f4708d3fd33346401fb84a5a44a46"
+  },
+  {
+   "file": "B_slash_impact.png",
+   "sha256": "df0e81e35e2b5994411e141046a30c1233220b6d2723707a0f34fdfda0b1df85"
+  },
+  {
+   "file": "B_slash_follow.png",
+   "sha256": "4a89b4d8565fd4916eac33d75c95e7887b0d5bafaae3f2ef16ae397f918ad8a4"
+  },
+  {
+   "file": "B_stab_impact.png",
+   "sha256": "2549ac5741c4f0a12c207bc5a16b4547c9e61951f655932a164e3b754eb4a49d"
+  },
+  {
+   "file": "C_idle.png",
+   "sha256": "23c755165910cd55a6cba6e91738f89f65e431d51051f14a3bd4dc7091129194"
+  },
+  {
+   "file": "C_slash_impact.png",
+   "sha256": "1caa16328ded7d14c2c5ba5b9658ce7f50606f4215d18da6133e715fe3ec37da"
+  },
+  {
+   "file": "C_slash_follow.png",
+   "sha256": "ac3fed5297f869f70f510baa6634b2c375582e5125653e578be728c195d804e0"
+  },
+  {
+   "file": "C_stab_impact.png",
+   "sha256": "96a3064f6041ca7d630692c39f5ed0ec6840cb45becf99a9e819f40b71ca7458"
+  },
+  {
+   "file": "D_idle.png",
+   "sha256": "ba4555b6e4a412fb745bfb35f0cde606cd3a0e787f4127fcae1d11daa4501403"
+  },
+  {
+   "file": "D_slash_impact.png",
+   "sha256": "f46790598e90a54b9c42af2a16be370cb0d86a9fc32c5563b4fb97a61452d250"
+  },
+  {
+   "file": "D_slash_follow.png",
+   "sha256": "9060ce7ccabbc1ae118a50ccb3def7231e6553813c4597f5d56b0e44399f9950"
+  },
+  {
+   "file": "D_stab_impact.png",
+   "sha256": "ec47c85106249e78405c996ff9312f564b2af32ae92c1d81db709c168a20ec23"
+  }
+ ],
+ "map_unchanged": true,
+ "passed": true,
+ "error": null
+}
